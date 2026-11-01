@@ -4,7 +4,7 @@
 
 Plano de execução por etapas da primeira versão do EnziTAG Optima. Recorta o [roteiro do produto](roteiro-produto.md) a partir das [decisões aprovadas](../produto/decisoes-aprovadas.md) e do [catálogo funcional](../produto/catalogo-funcional.md). A versão-alvo de cada método está na [matriz de cobertura](../produto/matriz-cobertura.md). A numeração da versão segue a [DT-0002](../decisoes-tecnicas/dt-0002-versionamento-primeira-versao.md).
 
-**Situação:** nenhuma etapa concluída. Etapa ativa: [ET01 — Fundação técnica](ativos/et01-fundacao-tecnica.md).
+**Situação:** nenhuma etapa concluída. Etapas ativas: [ET01 — Fundação técnica](ativos/et01-fundacao-tecnica.md) (só evidência Windows pendente) e [ET02 — Primeiro percurso](ativos/et02-primeiro-percurso.md).
 
 ## 1. Definição da primeira versão
 
@@ -67,7 +67,7 @@ Os destinos são indicativos e serão confirmados ao planejar cada versão. A [m
 | Etapa | Nome | Fases | Depende de | Entrega principal | Marco |
 |---|---|---|---|---|---|
 | [ET01](ativos/et01-fundacao-tecnica.md) | Fundação técnica e contratos iniciais | F00 | — | Ambiente reproduzível, pacotes reais, contrato tipado nas duas plataformas, CI | — |
-| [ET02](planejados/et02-primeiro-percurso.md) | Primeiro percurso ponta a ponta | F01 | ET01 | Interface básica, temas, idiomas, estatística descritiva nas duas plataformas | — |
+| [ET02](ativos/et02-primeiro-percurso.md) | Primeiro percurso ponta a ponta | F01 | ET01 | Interface básica, temas, idiomas, estatística descritiva nas duas plataformas | — |
 | [ET03](planejados/et03-projeto-local-importacao.md) | Projeto local, importação e recuperação | F02 | ET02 | `.enzitag`, revisões, importação, salvamento e recuperação | **M1** |
 | [ET04](planejados/et04-fundamentos-numericos-modelos.md) | Fundamentos numéricos e modelos lineares | F03 | ET03 | Álgebra, distribuições, regressão e diagnósticos validados | — |
 | [ET05](planejados/et05-anova-tukey-letras.md) | ANOVA, Tukey e letras | F04 | ET04 | Percurso de comparação completo e exportação inicial | **M2** |

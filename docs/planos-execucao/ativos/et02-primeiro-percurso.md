@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F01 |
 | Marco | Prepara M1 |
-| Depende de | ET01 |
+| Depende de | ET01 (código concluído; evidência Windows 11 pendente, ver [exceção](../README.md)) |
 | Módulos | C01–C03 e C05 iniciais, C18 inicial, E01–E04, U01–U04, U08, U12, U17–U19 |
-| Ativado em | — |
+| Ativado em | 2026-11-01 |
 | Concluído em | — |
 
 ## 1. Objetivo

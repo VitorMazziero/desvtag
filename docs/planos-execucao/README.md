@@ -8,7 +8,13 @@ Diretório exclusivo dos planos de execução do EnziTAG Optima. Requisitos de p
 
 > **ET01 — Fundação técnica e contratos iniciais** · [ativos/et01-fundacao-tecnica.md](ativos/et01-fundacao-tecnica.md)
 >
-> Versão-alvo: v0.1.0 · Fase do roteiro: F00 · Ativado em 2026-11-01
+> Versão-alvo: v0.1.0 · Fase do roteiro: F00 · Ativado em 2026-11-01 · Aberta apenas pela evidência no Windows (T01, T22)
+>
+> **ET02 — Primeiro percurso ponta a ponta** · [ativos/et02-primeiro-percurso.md](ativos/et02-primeiro-percurso.md)
+>
+> Versão-alvo: v0.1.0 · Fase do roteiro: F01 · Ativado em 2026-11-01
+
+**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a única pendência da ET01 é a execução no Windows 11, que depende de equipamento ou de ajuste da CI e não de código da ET02. ET02 avança em paralelo; a ET01 só é movida para `concluidos/` quando T01 e T22 tiverem evidência, e nenhuma etapa posterior à ET02 começa antes disso.
 
 O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se este quadro e o diretório divergirem, o diretório prevalece e este índice deve ser corrigido.
 
@@ -26,8 +32,8 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 
 | Etapa | Nome | Versão | Estado | Arquivo |
 |---|---|---|---|---|
-| ET01 | Fundação técnica e contratos iniciais | v0.1 | **Ativo** | [ativos/et01-fundacao-tecnica.md](ativos/et01-fundacao-tecnica.md) |
-| ET02 | Primeiro percurso ponta a ponta | v0.1 | Planejado | [planejados/et02-primeiro-percurso.md](planejados/et02-primeiro-percurso.md) |
+| ET01 | Fundação técnica e contratos iniciais | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et01-fundacao-tecnica.md](ativos/et01-fundacao-tecnica.md) |
+| ET02 | Primeiro percurso ponta a ponta | v0.1 | **Ativo** | [ativos/et02-primeiro-percurso.md](ativos/et02-primeiro-percurso.md) |
 | ET03 | Projeto local, importação e recuperação | v0.1 | Planejado | [planejados/et03-projeto-local-importacao.md](planejados/et03-projeto-local-importacao.md) |
 | ET04 | Fundamentos numéricos e modelos lineares | v0.1 | Planejado | [planejados/et04-fundamentos-numericos-modelos.md](planejados/et04-fundamentos-numericos-modelos.md) |
 | ET05 | ANOVA, Tukey e letras | v0.1 | Planejado | [planejados/et05-anova-tukey-letras.md](planejados/et05-anova-tukey-letras.md) |

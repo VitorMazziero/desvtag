@@ -90,7 +90,7 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 
 ### 5.5 Verificação automatizada e documentação
 
-- [ ] **T18** *(workflow escrito; aguarda a primeira execução verde na CI, ver seção 11)* — GitHub Actions: formatação, Clippy com avisos como erro, testes Rust, build WASM, verificação de tipos, lint, testes e build web, tipos gerados atualizados e links da documentação. Build Windows do Tauri apenas em `main`, etiquetas e disparo manual.
+- [x] **T18** *(execução verde dos jobs Linux: run 41315900780; o job Windows é discutido na seção 11)* — GitHub Actions: formatação, Clippy com avisos como erro, testes Rust, build WASM, verificação de tipos, lint, testes e build web, tipos gerados atualizados e links da documentação. Build Windows do Tauri apenas em `main`, etiquetas e disparo manual.
 - [x] **T19** — Criar `.github/pull_request_template.md` com referência à etapa, tarefas, critérios atendidos e documentação atualizada.
 - [x] **T20** — Criar [`docs/guias/ambiente-desenvolvimento.md`](../../guias/ambiente-desenvolvimento.md) e atualizar "Como executar" no README somente com comandos executados com sucesso.
 - [x] **T21** — Fichas em [`docs/modulos/`](../../modulos/README.md) para E01, E03, E04 e U12 (estrutura inicial); atualizar o [mapa](../../arquitetura/mapa-modulos.md) se algum nome mudar.
@@ -144,9 +144,9 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 | Item | Valor |
 |---|---|
 | Branch | `claude/epic-keller-3ad7jc` (PR [#1](https://github.com/VitorMazziero/enzitag-optima/pull/1) para `main`, rascunho) |
-| Etapa e tarefa | ET01 em andamento; pendentes **T01** (inventário Windows), **T18** (primeira CI verde) e **T22** (clone limpo no Windows 11) |
+| Etapa e tarefa | ET01 em andamento; pendentes **T01** (inventário Windows 11) e **T22** (clone limpo no Windows 11) e a execução do aplicativo no Windows (critérios 1 e 2). Evidência parcial na CI: build NSIS no Windows concluído; verificação nativa com WebView2 em diagnóstico |
 | Código entregue | Workspace Rust (`optima-core`, `-project`, `-engine`, `-wasm`), interface React/TypeScript, pacote Tauri, scripts, CI |
-| Próxima ação | Confirmar a CI no PR; obter evidência Windows (job `desktop-windows` por disparo manual e/ou máquina do usuário) |
+| Próxima ação | Resolver `DevToolsActivePort` do msedgedriver no job `desktop-windows` (diagnóstico em andamento) e/ou obter a execução em um Windows 11 real. A ET02 avança em paralelo (exceção registrada no [índice](../README.md)) |
 
 ### Evidências (2026-11-01)
 
@@ -176,9 +176,9 @@ Ambiente: Linux (Ubuntu 24.04, kernel 6.18), Rust 1.97.0, Node 22.23.4, npm 10.9
 | ET01-T05 a T10 | Commit `feat(et01): add Rust workspace…`. `optima-wasm` só tem `lib.rs` (sem `conversion.rs`/`errors.rs`), justificado em [E03](../../modulos/e03-adaptador-wasm.md) |
 | ET01-T11 a T16 | Commit `feat(et01): add React/TypeScript frontend…`. A biblioteca de i18n é `i18next` |
 | ET01-T17 | Pacote Tauri em workspace próprio ([DT-0004](../../decisoes-tecnicas/dt-0004-pacote-tauri-workspace-proprio.md)); compilado e executado em Linux, **não** em Windows |
-| ET01-T18 | `.github/workflows/ci.yml` com jobs docs, rust, web, desktop-linux e desktop-windows (este só em `main`, etiquetas e disparo manual). **Ainda sem execução na CI** |
+| ET01-T18 | `.github/workflows/ci.yml` com jobs docs, rust, web, desktop-linux e desktop-windows (este só em `main`, etiquetas e disparo manual). Execução [41315900780](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41315900780) (disparo manual, commit `07ed926`, runner `ubuntu-24.04`): **docs, rust, web (E2E em Chromium e Firefox) e Tauri/Linux (clippy, build e verificação nativa sob Xvfb) verdes**. Desktop-windows (`windows-latest`, WebView2 155.0.4283.62): `npm ci`, instalação do `wasm-bindgen-cli` e **`tauri build` com instalador NSIS concluídos**; `tauri-driver` + `msedgedriver` instalados; a verificação nativa **falhou** com `session not created: DevToolsActivePort file doesn't exist` (o WebView2 não abriu sob o msedgedriver). Uma execução com diagnóstico foi disparada (commit `76ce194`) |
 | ET01-T19 a T21 | Modelo de PR, guia de ambiente e quatro fichas de módulo |
-| ET01-T22 | **Pendente**: nenhum Windows disponível nesta sessão |
+| ET01-T22 | **Pendente**: nenhum Windows 11 disponível nesta sessão; a CI usa `windows-latest`, que não é Windows 11 de desenvolvimento nem substitui o clone limpo previsto |
 
 ## 12. Desvios e descobertas
 
@@ -186,4 +186,5 @@ Ambiente: Linux (Ubuntu 24.04, kernel 6.18), Rust 1.97.0, Node 22.23.4, npm 10.9
 - **Playwright 1.64.1 exigiu um Chromium diferente do pré-instalado** (build 1248); foi instalado pelo próprio `playwright install`.
 - **Rótulo de ambiente**: o texto "Windows (Tauri…)" apareceria também no Tauri em Linux; passou a "Aplicativo desktop (Tauri, motor nativo)".
 - **O verificador de links encontrou uma âncora quebrada** na ET03 (cabeçalho com código inline) que o verificador provisório anterior não detectava; o script versionado trata o caso.
+- **Primeira CI falhou em dois jobs** por configuração (runner `ubuntu-latest` passou a 26.04, onde `webkit2gtk-driver` foi renomeado; `beforeBuildCommand` do Tauri usava `../../web` a partir de `app/desktop`). Corrigido com `ubuntu-24.04` fixo e `../web`; o `tauri build` local passou a funcionar de ponta a ponta.
 - **`wasm-pack` ativo**: não foi adotado por escolha de simplicidade, não por abandono (DT-0003).
