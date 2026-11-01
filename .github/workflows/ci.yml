@@ -180,6 +180,16 @@ jobs:
           "EM EXECUÇÃO após 10 s"
           Stop-Process -Id $p.Id
         working-directory: app/desktop
+      - name: Compilar o executável de verificação (depuração remota do WebView2)
+        # O WebView2 recebe os argumentos do navegador pela API do Tauri, que ignora
+        # WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS (diagnóstico da execução 41324447874: o processo de
+        # renderização só trazia os argumentos do framework). A porta é habilitada apenas neste
+        # binário de teste, via TAURI_CONFIG; o instalador publicado é o do passo anterior.
+        shell: pwsh
+        env:
+          TAURI_CONFIG: '{"app":{"windows":[{"title":"EnziTAG Optima","width":1200,"height":800,"minWidth":800,"minHeight":560,"additionalBrowserArgs":"--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --remote-debugging-port=9333"}]}}'
+        run: cargo build --release --features tauri/custom-protocol
+        working-directory: app/desktop/src-tauri
       - name: Verificação nativa no Windows (WebView2 por CDP)
         run: node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
         working-directory: app/desktop

@@ -15,6 +15,8 @@ if (!app) {
 }
 const { chromium } = await import(pathToFileURL(resolve(import.meta.dirname, "../../web/node_modules/playwright-core/index.mjs")).href);
 const port = 9333;
+// A porta é habilitada no próprio executável de teste (`additionalBrowserArgs` via TAURI_CONFIG na CI);
+// a variável de ambiente é mantida por compatibilidade, mas o Tauri a ignora.
 const child = spawn(resolve(app), [], {
   stdio: "ignore",
   env: { ...process.env, WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}` },
