@@ -67,14 +67,32 @@ export function buildDataset(state: ProjectState): { dataset: Dataset; cellError
   return { dataset, cellErrors };
 }
 
+/** O caminho "Comparar tratamentos" executa a comparação de um fator; os demais, o resumo descritivo. */
+export function analysisKind(state: ProjectState): "descriptive" | "oneWay" {
+  return state.path === "compare" ? "oneWay" : "descriptive";
+}
+
 export function buildOperation(state: ProjectState, dataset: Dataset): Operation | null {
   const responseId = state.analysis.responseId;
   if (responseId === null) return null;
+  if (analysisKind(state) === "oneWay") {
+    const factorId = state.analysis.factorId;
+    if (factorId === null) return null;
+    return { type: "comparisonOneWay", dataset, responseId, factorId, alpha: state.analysis.alpha };
+  }
   return { type: "descriptiveSummarize", dataset, responseId, groupBy: state.analysis.groupBy };
 }
 
 /** Assinatura dos dados e opções: muda quando qualquer entrada do resultado muda. */
 export function inputSignature(state: ProjectState): string {
   const { dataset } = buildDataset(state);
+  if (analysisKind(state) === "oneWay")
+    return JSON.stringify([
+      "oneWay",
+      dataset,
+      state.analysis.responseId,
+      state.analysis.factorId,
+      state.analysis.alpha,
+    ]);
   return JSON.stringify([dataset, state.analysis.responseId, state.analysis.groupBy]);
 }

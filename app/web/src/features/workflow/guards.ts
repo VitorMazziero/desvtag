@@ -3,7 +3,7 @@
 // dados ou opções invalida a etapa de análise e bloqueia os resultados antigos.
 
 import type { ProjectState } from "../../state/project";
-import { inputSignature } from "../analysis/buildRequest";
+import { analysisKind, inputSignature } from "../analysis/buildRequest";
 import { STEPS, type StepId } from "./steps";
 
 export interface GuardContext {
@@ -12,7 +12,11 @@ export interface GuardContext {
 }
 
 export function resultIsCurrent(state: ProjectState): boolean {
-  return state.result !== null && state.result.signature === inputSignature(state);
+  return (
+    state.result !== null &&
+    state.result.kind === analysisKind(state) &&
+    state.result.signature === inputSignature(state)
+  );
 }
 
 /** A etapa está satisfeita (seu trabalho está feito e válido)? */
@@ -31,7 +35,11 @@ export function stepSatisfied(step: StepId, state: ProjectState, ctx: GuardConte
         state.rows.some((row) => row.responses.some((cell) => cell.trim() !== ""))
       );
     case "analysis":
-      return state.analysis.responseId !== null && resultIsCurrent(state);
+      return (
+        state.analysis.responseId !== null &&
+        (analysisKind(state) === "descriptive" || state.analysis.factorId !== null) &&
+        resultIsCurrent(state)
+      );
     case "results":
       return resultIsCurrent(state);
   }

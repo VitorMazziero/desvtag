@@ -18,7 +18,15 @@ responseId: StableId | null,
 /**
  * Fatores de agrupamento.
  */
-groupBy: Array<StableId>, };
+groupBy: Array<StableId>, 
+/**
+ * Fator que define os grupos da comparação de tratamentos (ausente nas análises descritivas).
+ */
+factorId?: StableId, 
+/**
+ * Nível de significância da comparação (ausente nas análises descritivas).
+ */
+alpha?: number, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
@@ -64,7 +72,7 @@ result: AnalysisResult, };
 /**
  * Resultado guardado, por método.
  */
-export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult;
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult;
 
 /**
  * Linha da tabela.

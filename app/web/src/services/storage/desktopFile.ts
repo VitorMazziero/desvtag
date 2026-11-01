@@ -37,6 +37,12 @@ export function createDesktopFileProvider(): StorageProvider {
         suggestedName,
       });
     },
+    exportFile(bytes, suggestedName) {
+      return invoke<{ name: string } | null>("export_file", {
+        bytesBase64: bytesToBase64(bytes),
+        suggestedName,
+      });
+    },
     recents() {
       return invoke<RecentItem[]>("project_recent");
     },

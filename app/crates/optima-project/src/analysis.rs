@@ -1,12 +1,13 @@
 //! Análises salvas, vinculadas à revisão dos dados que as geraram.
 
+use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::domain::StableId;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
 /// Opções da análise.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export)]
 pub struct AnalysisOptions {
@@ -14,6 +15,14 @@ pub struct AnalysisOptions {
     pub response_id: Option<StableId>,
     /// Fatores de agrupamento.
     pub group_by: Vec<StableId>,
+    /// Fator que define os grupos da comparação de tratamentos (ausente nas análises descritivas).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub factor_id: Option<StableId>,
+    /// Nível de significância da comparação (ausente nas análises descritivas).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub alpha: Option<f64>,
 }
 
 /// Resultado guardado, por método.
@@ -23,6 +32,8 @@ pub struct AnalysisOptions {
 pub enum AnalysisResult {
     /// Resumo descritivo.
     Descriptive(DescriptiveResult),
+    /// Comparação de tratamentos de um fator (ANOVA, Tukey, letras, diagnósticos).
+    OneWayComparison(Box<OneWayResult>),
 }
 
 /// Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.

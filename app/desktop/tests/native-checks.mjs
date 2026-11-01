@@ -131,4 +131,38 @@ export async function runChecks({ text, invoke }) {
   );
   if (Math.abs(quantile.outcome?.result?.values?.[0]?.value - 2.228138851986274) > 1e-11) throw new Error("Quantil t nativo incorreto");
   console.log("OK: distribuição t avaliada pelo motor nativo via IPC do Tauri.");
+
+  // Comparação de tratamentos pelo IPC nativo: caso 101 (SciPy/NumPy), ANOVA, Tukey e letras.
+  const caseDir = root("validation/cases/one_way_comparison/101-enzimas-quatro-condicoes");
+  const cmp = JSON.parse(readFileSync(`${caseDir}/expected.json`, "utf8"));
+  const csvLines = readFileSync(`${caseDir}/input.csv`, "utf8").trim().split("\n").slice(1);
+  const compared = JSON.parse(
+    await invoke(
+      JSON.stringify({
+        protocolVersion: 1,
+        taskId: "native-compare",
+        operation: {
+          type: "comparisonOneWay",
+          dataset: {
+            factors: [{ id: "treatment", name: "treatment", kind: "categorical", unit: null, levels: cmp.levels }],
+            responses: [{ id: "y", name: "y", unit: null }],
+            observations: csvLines.map((line, i) => {
+              const cut = line.lastIndexOf(",");
+              return { id: `o${i + 1}`, unitId: null, factors: [line.slice(0, cut)], responses: [Number(line.slice(cut + 1))] };
+            }),
+          },
+          responseId: "y",
+          factorId: "treatment",
+          alpha: 0.05,
+        },
+      }),
+    ),
+  );
+  const one = compared.outcome?.result;
+  if (Math.abs(one.anova.f.value / cmp.anova.f - 1) > 1e-9) throw new Error("F da comparação nativa incorreto");
+  if (JSON.stringify(one.letters.letters) !== JSON.stringify(cmp.letters)) throw new Error("Letras nativas incorretas");
+  for (const [i, c] of one.tukey.comparisons.entries()) {
+    if (Math.abs(c.pAdjusted.value - cmp.tukey.pairs[i].pAdjusted) > 1e-10) throw new Error(`p ajustado do par ${i} incorreto`);
+  }
+  console.log("OK: ANOVA, Tukey e letras calculados pelo motor nativo via IPC do Tauri.", one.letters.letters.join(","));
 }

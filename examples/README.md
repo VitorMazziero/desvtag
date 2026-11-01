@@ -9,9 +9,9 @@ Exemplos previstos no [plano da v0.1](../docs/planos-execucao/plano-v0.1.md):
 | Exemplo | Etapa |
 |---|---|
 | Arquivo de referência do formato `.enzitag` | ET03 |
-| Quatro condições de reação enzimática com réplicas independentes (ANOVA, Tukey e letras) | ET05 |
+| [01 — Quatro condições de reação enzimática](01-enzimas-quatro-condicoes/README.md) com réplicas independentes (ANOVA, Tukey e letras) | ET05 (existe) |
 | Triagem Plackett–Burman de componentes de meio de cultivo | ET06 |
 | DCCR com os fatores selecionados na triagem | ET07 |
 | Otimização de duas respostas e proposta de confirmação | ET08 |
 
-Ainda não há exemplos de execução nesta pasta. Os exemplos são ligados às [fichas de módulos](../docs/modulos/README.md) e à [validação](../validation/README.md).
+Existe o exemplo 01; os demais entram nas etapas indicadas. Os exemplos são ligados às [fichas de módulos](../docs/modulos/README.md) e à [validação](../validation/README.md).

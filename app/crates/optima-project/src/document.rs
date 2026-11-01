@@ -71,6 +71,8 @@ impl Experiment {
             analysis_selection: AnalysisOptions {
                 response_id: None,
                 group_by: Vec::new(),
+                factor_id: None,
+                alpha: None,
             },
             revisions: vec![Revision {
                 id: revision_id,

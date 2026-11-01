@@ -62,6 +62,7 @@ describe("revisions", () => {
       now: T1,
       result: {
         signature: "s1",
+        kind: "descriptive",
         result: {
           provenance: { methodId: "descriptive_summary", methodVersion: 1, engineVersion: "0.1.0" },
         } as never,

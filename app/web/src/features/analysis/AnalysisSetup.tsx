@@ -5,7 +5,7 @@ import { StaleResponseError } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
-import { buildDataset, buildOperation, inputSignature } from "./buildRequest";
+import { analysisKind, buildDataset, buildOperation, inputSignature } from "./buildRequest";
 
 interface Props {
   /** Chamado quando um resultado novo foi calculado e guardado. */
@@ -22,6 +22,7 @@ export function AnalysisSetup({ onDone }: Props) {
 
   if (state.responses.length === 0) return <p className="muted">{t("analysis.noResponse")}</p>;
 
+  const kind = analysisKind(state);
   const run = async () => {
     const { dataset } = buildDataset(state);
     const operation = buildOperation(state, dataset);
@@ -30,13 +31,28 @@ export function AnalysisSetup({ onDone }: Props) {
     setRunning(true);
     setMessages([]);
     try {
-      const response = await client.request(operation, { channel: "descriptive" });
+      const response = await client.request(operation, { channel: kind });
       if (
         response.outcome.status === "ok" &&
         response.outcome.result.type === "descriptiveSummarize"
       ) {
         const { type: _type, ...result } = response.outcome.result;
-        dispatch({ type: "storeResult", result: { signature, result }, now: nowIso() });
+        dispatch({
+          type: "storeResult",
+          result: { signature, kind: "descriptive", result },
+          now: nowIso(),
+        });
+        onDone();
+      } else if (
+        response.outcome.status === "ok" &&
+        response.outcome.result.type === "comparisonOneWay"
+      ) {
+        const { type: _type, ...result } = response.outcome.result;
+        dispatch({
+          type: "storeResult",
+          result: { signature, kind: "oneWay", result },
+          now: nowIso(),
+        });
         onDone();
       } else if (response.outcome.status === "error") {
         setMessages(engineErrorMessages(t, response.outcome.error));
@@ -51,8 +67,12 @@ export function AnalysisSetup({ onDone }: Props) {
 
   return (
     <section aria-labelledby="analysis-title">
-      <h2 id="analysis-title">{t("analysis.title")}</h2>
-      <p className="muted">{t("analysis.intro")}</p>
+      <h2 id="analysis-title">
+        {kind === "oneWay" ? t("analysis.compare.title") : t("analysis.title")}
+      </h2>
+      <p className="muted">
+        {kind === "oneWay" ? t("analysis.compare.intro") : t("analysis.intro")}
+      </p>
       <label className="field">
         <span>{t("analysis.response")}</span>
         <select
@@ -69,7 +89,50 @@ export function AnalysisSetup({ onDone }: Props) {
           ))}
         </select>
       </label>
-      {state.factors.length > 0 && (
+      {kind === "oneWay" && (
+        <>
+          {state.factors.length === 0 ? (
+            <p className="muted" role="status">
+              {t("analysis.compare.needFactor")}
+            </p>
+          ) : (
+            <label className="field">
+              <span>{t("analysis.compare.factor")}</span>
+              <select
+                value={state.analysis.factorId ?? ""}
+                onChange={(e) =>
+                  dispatch({ type: "setAnalysis", patch: { factorId: e.target.value || null } })
+                }
+              >
+                <option value="">—</option>
+                {state.factors.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.name || f.id}
+                  </option>
+                ))}
+              </select>
+              <small className="muted">{t("analysis.compare.factorHelp")}</small>
+            </label>
+          )}
+          <label className="field">
+            <span>{t("analysis.compare.alpha")}</span>
+            <select
+              value={String(state.analysis.alpha)}
+              onChange={(e) =>
+                dispatch({ type: "setAnalysis", patch: { alpha: Number(e.target.value) } })
+              }
+            >
+              {[0.1, 0.05, 0.01].map((a) => (
+                <option key={a} value={String(a)}>
+                  {a}
+                </option>
+              ))}
+            </select>
+            <small className="muted">{t("analysis.compare.alphaHelp")}</small>
+          </label>
+        </>
+      )}
+      {kind === "descriptive" && state.factors.length > 0 && (
         <fieldset className="editor-card">
           <legend>{t("analysis.groupBy")}</legend>
           <p className="muted small">{t("analysis.groupByHelp")}</p>
@@ -98,9 +161,17 @@ export function AnalysisSetup({ onDone }: Props) {
         type="button"
         className="button"
         onClick={run}
-        disabled={running || state.analysis.responseId === null}
+        disabled={
+          running ||
+          state.analysis.responseId === null ||
+          (kind === "oneWay" && state.analysis.factorId === null)
+        }
       >
-        {running ? t("analysis.running") : t("analysis.run")}
+        {running
+          ? t("analysis.running")
+          : kind === "oneWay"
+            ? t("analysis.compare.run")
+            : t("analysis.run")}
       </button>
       {messages.length > 0 && (
         <div role="alert" className="error">

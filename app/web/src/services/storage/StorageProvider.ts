@@ -31,6 +31,8 @@ export interface StorageProvider {
   /** `null`: cancelado. */
   save(bytes: Uint8Array, options: SaveOptions): Promise<{ name: string } | null>;
   saveCopy(bytes: Uint8Array, suggestedName: string): Promise<{ name: string } | null>;
+  /** Exporta uma figura, tabela ou relatório; `null`: cancelado. O caminho não volta à interface. */
+  exportFile(bytes: Uint8Array, suggestedName: string): Promise<{ name: string } | null>;
   recents(): Promise<RecentItem[]>;
   openRecent(index: number): Promise<OpenedFile>;
   /** Novo projeto: desliga o arquivo atual. */

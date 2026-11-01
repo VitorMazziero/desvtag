@@ -128,7 +128,19 @@
     "groupByHelp": "Check factors to summarize each combination of levels separately.",
     "run": "Calculate summary",
     "running": "Calculating…",
-    "noResponse": "Add a response to analyze."
+    "noResponse": "Add a response to analyze.",
+    "compare": {
+      "title": "Analysis: treatment comparison",
+      "intro": "Compares the means of a factor's levels: one-way ANOVA (completely randomised design), Tukey comparisons (Tukey–Kramer when group sizes differ) and comparison letters. Each row must be an independent experimental replicate.",
+      "response": "Response",
+      "factor": "Factor that defines the groups",
+      "factorHelp": "Each level of the factor forms a group. Rows without a response or without a level are left out and reported.",
+      "alpha": "Significance level (α)",
+      "alphaHelp": "Applies to the family of all pairwise comparisons (simultaneous confidence 1 − α).",
+      "run": "Compare treatments",
+      "needFactor": "Add a factor (for example, the condition being tested) to define the groups.",
+      "needLevels": "Enter the factor levels in the variables step or type the data: at least two groups are required."
+    }
   },
   "project": {
     "bar": "Project",

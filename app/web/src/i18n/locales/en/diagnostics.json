@@ -54,6 +54,37 @@
       "invalid_observation_id": "Invalid observation identifier in rows {{rows}} (use letters, digits and _ . : -, up to 64 characters).",
       "duplicate_observation_id": "Repeated observation identifier in rows {{rows}}.",
       "no_columns": "No column was chosen as a factor or response."
+    },
+    "comparison": {
+      "too_few_groups": "At least two groups with observations are required.",
+      "invalid_alpha": "The significance level must be between 0 and 1.",
+      "non_finite_result": "The values are too large for 64-bit calculation.",
+      "no_residual_df": "There are no error degrees of freedom: pairwise comparisons cannot be computed.",
+      "zero_within_variance": "There is no variation within groups: pairwise comparisons are undefined.",
+      "letters_unavailable": "Letters could not be assigned (pair pattern too complex).",
+      "singleton_groups": "Some groups have a single observation.",
+      "excluded_observations": "Some observations are outside the analysis."
+    },
+    "model": {
+      "invalid_dimensions": "The model matrix dimensions do not match.",
+      "invalid_confidence_level": "The confidence level must be between 0 and 1.",
+      "non_finite_input": "There are non-finite values in the data.",
+      "non_finite_result": "The values are too large for 64-bit calculation.",
+      "zero_rank": "The model matrix has no usable columns.",
+      "rank_deficient": "Some columns are combinations of the others and are not estimable: {{aliased}}.",
+      "no_residual_df": "There are no error degrees of freedom: standard errors are undefined.",
+      "constant_response": "The response is constant.",
+      "ill_conditioned": "The problem is ill-conditioned (condition number {{condition}}): trailing digits of the coefficients may be unreliable.",
+      "excluded_observations": "Some observations are outside the fit.",
+      "no_complete_rows": "No row has all the values required by the model.",
+      "no_columns": "The model has no columns.",
+      "invalid_interaction": "Term {{term}} is an invalid interaction.",
+      "invalid_power": "Term {{term}} is an invalid power (quantitative factors only, degree ≥ 2).",
+      "duplicate_term": "Term {{term}} is repeated."
+    },
+    "distribution": {
+      "invalid_parameter": "Invalid distribution parameter.",
+      "unsupported_function": "Function not available for this distribution."
     }
   },
   "cellErrors": {

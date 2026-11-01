@@ -18,3 +18,15 @@ describe("formatNumber", () => {
     expect(formatNumber(1234567.5, "pt-BR")).toBe("1234567,5");
   });
 });
+
+describe("formatSignificant and formatP", () => {
+  it("round to significant digits with the language's decimal separator", async () => {
+    const { formatP, formatSignificant } = await import("./format");
+    expect(formatSignificant(1.23456789, "en", 4)).toBe("1.235");
+    expect(formatSignificant(1.23456789, "pt-BR", 4)).toBe("1,235");
+    expect(formatP(0.123456, "en")).toBe("0.1235");
+    expect(formatP(1.2345e-9, "en")).toBe("1.235e-9");
+    expect(formatP(1.2345e-9, "pt-BR")).toBe("1,235e-9");
+    expect(formatP(0, "en")).toBe("0");
+  });
+});

@@ -99,3 +99,48 @@ test("axe: assistente de importação e aviso de recuperação sem violações",
   await expect(page.getByTestId("recovery-banner")).toBeVisible();
   await scan(page, "aviso de recuperação");
 });
+
+for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+  test(`axe: comparação de tratamentos (configuração, tabelas e gráficos) no tema ${theme}`, async ({
+    page,
+  }) => {
+    await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
+    await page.goto("/");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await page.getByRole("radio", { name: /Compare treatments|Comparar tratamentos/ }).check();
+    await page.getByRole("button", { name: /Next|Avançar/ }).click();
+    await page.getByRole("button", { name: /Add factor|Adicionar fator/ }).click();
+    await page
+      .getByLabel(/^(Name|Nome)$/)
+      .first()
+      .fill("Condition");
+    await page.getByRole("button", { name: /Add response|Adicionar resposta/ }).click();
+    await page
+      .getByLabel(/^(Name|Nome)$/)
+      .nth(1)
+      .fill("Activity");
+    await page.getByRole("button", { name: /Next|Avançar/ }).click();
+    await page.getByRole("button", { name: /Add row|Adicionar linha/ }).click();
+    await page
+      .getByLabel(/Condition — Obs. 1/)
+      .first()
+      .evaluate((el) => {
+        const data = new DataTransfer();
+        data.setData(
+          "text/plain",
+          "A\t1.0\nA\t1.2\nA\t0.9\nB\t2.0\nB\t2.2\nB\t1.9\nC\t3.0\nC\t3.1\nC\t2.8\n",
+        );
+        const event = new Event("paste", { bubbles: true, cancelable: true });
+        Object.defineProperty(event, "clipboardData", { value: data });
+        el.dispatchEvent(event);
+      });
+    await page.getByRole("button", { name: /Next|Avançar/ }).click();
+    await scan(page, `${theme}/comparacao-configuracao`);
+    await page
+      .getByRole("combobox", { name: /Factor that defines|Fator que define/ })
+      .selectOption({ index: 1 });
+    await page.getByRole("button", { name: /Compare treatments|Comparar tratamentos/ }).click();
+    await page.getByTestId("anova-table").waitFor();
+    await scan(page, `${theme}/comparacao-resultados`);
+  });
+}

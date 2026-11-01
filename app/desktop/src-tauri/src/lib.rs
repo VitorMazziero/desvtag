@@ -14,6 +14,7 @@ pub fn run() {
         .manage(files::FileState::default())
         .invoke_handler(tauri::generate_handler![
             commands::engine_request,
+            commands::export_file,
             commands::project_open,
             commands::project_open_recent,
             commands::project_recent,

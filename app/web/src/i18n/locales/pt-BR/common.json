@@ -128,7 +128,19 @@
     "groupByHelp": "Marque fatores para resumir cada combinação de níveis separadamente.",
     "run": "Calcular resumo",
     "running": "Calculando…",
-    "noResponse": "Cadastre uma resposta para analisar."
+    "noResponse": "Cadastre uma resposta para analisar.",
+    "compare": {
+      "title": "Análise: comparação de tratamentos",
+      "intro": "Compara as médias dos níveis de um fator: ANOVA de um fator (delineamento inteiramente casualizado), comparações de Tukey (Tukey–Kramer se os grupos tiverem tamanhos diferentes) e letras de comparação. Cada linha deve ser uma réplica experimental independente.",
+      "response": "Resposta",
+      "factor": "Fator que define os grupos",
+      "factorHelp": "Cada nível do fator forma um grupo. Linhas sem resposta ou sem nível ficam de fora e são avisadas.",
+      "alpha": "Nível de significância (α)",
+      "alphaHelp": "Vale para a família de todas as comparações de pares (confiança simultânea 1 − α).",
+      "run": "Comparar tratamentos",
+      "needFactor": "Cadastre um fator (por exemplo, a condição testada) para definir os grupos.",
+      "needLevels": "Informe os níveis do fator na aba de variáveis ou digite os dados: são necessários pelo menos dois grupos."
+    }
   },
   "project": {
     "bar": "Projeto",

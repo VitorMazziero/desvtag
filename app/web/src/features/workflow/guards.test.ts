@@ -35,6 +35,7 @@ describe("workflow guards", () => {
       now: "2026-11-01T00:00:00Z",
       result: {
         signature: inputSignature(s),
+        kind: "descriptive",
         result: {
           provenance: { methodId: "descriptive_summary", methodVersion: 1, engineVersion: "0.1.0" },
         } as never,

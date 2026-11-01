@@ -37,6 +37,17 @@ export function downloadBytes(
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+const MIME: Record<string, string> = {
+  csv: "text/csv;charset=utf-8",
+  svg: "image/svg+xml",
+  png: "image/png",
+  html: "text/html;charset=utf-8",
+};
+
+function mimeOf(name: string): string {
+  return MIME[name.split(".").pop()?.toLowerCase() ?? ""] ?? "application/octet-stream";
+}
+
 export async function readFileBytes(file: File): Promise<OpenedFile> {
   return { name: file.name, bytes: new Uint8Array(await file.arrayBuffer()) };
 }
@@ -56,6 +67,10 @@ export function createBrowserFileProvider(): StorageProvider {
     },
     async saveCopy(bytes, suggestedName) {
       downloadBytes(bytes, suggestedName);
+      return { name: suggestedName };
+    },
+    async exportFile(bytes, suggestedName) {
+      downloadBytes(bytes, suggestedName, mimeOf(suggestedName));
       return { name: suggestedName };
     },
     async recents() {

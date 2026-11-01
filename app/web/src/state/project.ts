@@ -8,6 +8,7 @@ import type {
   ExperimentData,
   FactorKind,
   FactorSpec,
+  OneWayResult,
   ResponseSpec,
   Revision,
   RevisionReason,
@@ -25,13 +26,18 @@ export type RowDraft = RowRecord;
 export interface AnalysisDraft {
   responseId: string | null;
   groupBy: string[];
+  /** Fator que define os grupos da comparação de tratamentos. */
+  factorId: string | null;
+  /** Nível de significância da família de comparações. */
+  alpha: number;
 }
 
-export interface StoredResult {
-  /** Assinatura dos dados e das opções que geraram o resultado. */
-  signature: string;
-  result: DescriptiveResult;
-}
+export const DEFAULT_ALPHA = 0.05;
+
+/** Resultado em exibição; `signature` identifica os dados e as opções que o geraram. */
+export type StoredResult =
+  | { signature: string; kind: "descriptive"; result: DescriptiveResult }
+  | { signature: string; kind: "oneWay"; result: OneWayResult };
 
 /** Estado de trabalho de UM experimento (o que a interface edita) + seu histórico salvo. */
 export interface ProjectState {
@@ -87,7 +93,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     factors: [],
     responses: [],
     rows: [],
-    analysis: { responseId: null, groupBy: [] },
+    analysis: { responseId: null, groupBy: [], factorId: null, alpha: DEFAULT_ALPHA },
     result: null,
     showUnitColumn: false,
     counters: { factor: 0, response: 0, row: 0, revision: 1, analysis: 0 },
@@ -256,6 +262,10 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
         ? state.analysis.responseId
         : firstResponse,
       groupBy: state.analysis.groupBy.filter((id) => data.factors.some((f) => f.id === id)),
+      factorId: data.factors.some((f) => f.id === state.analysis.factorId)
+        ? state.analysis.factorId
+        : null,
+      alpha: state.analysis.alpha,
     },
   };
 }
@@ -293,6 +303,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         analysis: {
           ...state.analysis,
           groupBy: state.analysis.groupBy.filter((g) => g !== action.id),
+          factorId: state.analysis.factorId === action.id ? null : state.analysis.factorId,
         },
       };
     }
@@ -375,8 +386,19 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         methodId: action.result.result.provenance.methodId,
         methodVersion: action.result.result.provenance.methodVersion,
         engineVersion: action.result.result.provenance.engineVersion,
-        options: { responseId: committed.analysis.responseId, groupBy: committed.analysis.groupBy },
-        result: { type: "descriptive", ...action.result.result },
+        options:
+          action.result.kind === "oneWay"
+            ? {
+                responseId: committed.analysis.responseId,
+                groupBy: [],
+                factorId: committed.analysis.factorId ?? undefined,
+                alpha: committed.analysis.alpha,
+              }
+            : { responseId: committed.analysis.responseId, groupBy: committed.analysis.groupBy },
+        result:
+          action.result.kind === "oneWay"
+            ? { type: "oneWayComparison", ...action.result.result }
+            : { type: "descriptive", ...action.result.result },
       };
       return {
         ...committed,

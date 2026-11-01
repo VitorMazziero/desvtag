@@ -475,3 +475,21 @@ input[aria-invalid="true"] {
 .panel > p + .button {
   margin-top: var(--space-3);
 }
+
+/* ---- ET05: comparação de tratamentos, gráficos e exportação ---- */
+.chart {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-panel);
+}
+.chart-canvas {
+  max-width: 720px;
+}
+.chart figcaption {
+  margin-top: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

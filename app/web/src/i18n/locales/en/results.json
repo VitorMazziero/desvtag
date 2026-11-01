@@ -16,7 +16,13 @@
   "undefinedReason": {
     "noValidObservations": "There is no valid observation.",
     "fewerThanTwoObservations": "The sample variance needs at least two valid observations.",
-    "nonFiniteResult": "The result cannot be represented in 64 bits."
+    "nonFiniteResult": "The result cannot be represented in 64 bits.",
+    "notEstimable": "The parameter is not estimable (column is a combination of the others).",
+    "noResidualDegreesOfFreedom": "There are no error degrees of freedom (at least one group needs more than one observation).",
+    "constantResponse": "The response is constant: there is no variation to explain.",
+    "noModelTerms": "The model has no terms besides the intercept.",
+    "outOfDomain": "Argument outside the domain.",
+    "zeroMean": "The mean is zero: the coefficient of variation does not exist."
   },
   "summary": {
     "conclusion": "{{valid}} of {{total}} observations of “{{response}}” were summarized.",
@@ -41,6 +47,134 @@
       "excluded_missing_factor_other": "{{count}} observations with no value in some grouping factor are outside the groups (but count in the overall summary).",
       "group_too_small_one": "Group “{{group}}” has {{count}} valid observation; variance and standard deviation need at least two.",
       "group_too_small_other": "Group “{{group}}” has {{count}} valid observations; variance and standard deviation need at least two."
+    },
+    "anova": {
+      "significant": "The F test detected a difference among group means (F({{df1}}, {{df2}}) = {{f}}; p = {{p}}; α = {{alpha}}). It does not say which groups differ.",
+      "not_significant": "The F test did not detect a difference among means (F({{df1}}, {{df2}}) = {{f}}; p = {{p}}; α = {{alpha}}). Failing to detect a difference does not prove the means are equal."
+    },
+    "tukey": {
+      "pairs_different": "Tukey: {{count}} of {{total}} pairs differ at α = {{alpha}} (family of all pairwise mean comparisons).",
+      "kramer": "Group sizes differ: the Tukey–Kramer extension was used."
+    },
+    "letters": {
+      "meaning": "Groups sharing a letter showed no detected difference; this does not mean they are equivalent.",
+      "unknown_pairs": "Some pairs could not be tested and were treated as different when assigning letters."
+    },
+    "diagnostics": {
+      "homogeneity_signal": "Brown–Forsythe indicates unequal variances among groups (p = {{p}}). Compare the standard deviations and the residual plot; the app does not switch methods automatically.",
+      "homogeneity_not_detected": "Brown–Forsythe did not detect a difference in variances (p = {{p}}); this does not guarantee homogeneity.",
+      "normality_visual": "Normality of the residuals should be judged on the quantile–quantile plot; there is no automatic validity badge.",
+      "independence_not_assessed": "The app does not check independence: each row was treated as an independent observation. Repeated measurements of the same experimental unit are not replicates.",
+      "outliers_one": "{{count}} standardised residual exceeds 3 in absolute value: check that observation in the plots.",
+      "outliers_other": "{{count}} standardised residuals exceed 3 in absolute value: check those observations in the plots."
+    },
+    "comparison": {
+      "singleton_groups_one": "{{count}} group has a single observation: it has no standard deviation or interval, but it enters the ANOVA.",
+      "singleton_groups_other": "{{count}} groups have a single observation: they have no standard deviation or interval, but they enter the ANOVA.",
+      "excluded_observations_one": "{{count}} observation was left out for a missing response or factor level.",
+      "excluded_observations_other": "{{count}} observations were left out for a missing response or factor level."
     }
+  },
+  "comparison": {
+    "title": "Treatment comparison",
+    "summary": {
+      "conclusion": "Compared {{groups}} groups of “{{factor}}” using {{n}} observations of “{{response}}”.",
+      "evidenceDefined": "ANOVA: F({{df1}}, {{df2}}) = {{f}}, p = {{p}}. Tukey: {{different}} of {{total}} pairs differ (α = {{alpha}}).",
+      "evidenceUndefined": "ANOVA could not be computed with these data; see the warnings below.",
+      "nextStepWithLetters": "Read the letters on the chart: groups with no letter in common differ; groups sharing a letter showed no detected difference. Check the pairs table and the diagnostics before concluding.",
+      "nextStepNoLetters": "There are no error degrees of freedom (replicates within groups) to compare pairs. Add independent replicates."
+    },
+    "groups": {
+      "caption": "Means by group of “{{factor}}”",
+      "group": "Group",
+      "n": "n",
+      "mean": "Mean",
+      "sd": "Standard deviation",
+      "se": "Standard error",
+      "ci": "{{level}}% CI (pooled variance)",
+      "letters": "Letters"
+    },
+    "anova": {
+      "caption": "One-way ANOVA for “{{response}}”",
+      "source": "Source",
+      "between": "Between groups",
+      "within": "Within groups (error)",
+      "total": "Total",
+      "df": "df",
+      "ss": "Sum of squares",
+      "ms": "Mean square",
+      "f": "F",
+      "p": "p-value"
+    },
+    "effects": {
+      "eta": "η² (share of total variation explained by the factor)",
+      "omega": "ω² (less biased estimate)",
+      "cv": "Coefficient of variation"
+    },
+    "pairs": {
+      "caption": "Pairwise comparisons ({{variant}}, α = {{alpha}})",
+      "tukey": "Tukey",
+      "tukeyKramer": "Tukey–Kramer",
+      "pair": "Pair",
+      "difference": "Difference",
+      "se": "Standard error",
+      "q": "q",
+      "pAdjusted": "Adjusted p",
+      "ciLower": "Simultaneous CI lower",
+      "ciUpper": "Simultaneous CI upper",
+      "result": "Result",
+      "different": "difference detected",
+      "notDifferent": "difference not detected",
+      "unknown": "not tested",
+      "show": "Pairs table"
+    },
+    "diagnostics": {
+      "title": "Diagnostics",
+      "bf": "Brown–Forsythe (homogeneity of variances): F({{df1}}, {{df2}}) = {{f}}, p = {{p}}",
+      "bfUndefined": "Brown–Forsythe could not be computed.",
+      "ratio": "Ratio of the largest to the smallest group standard deviation: {{ratio}}",
+      "outliers": "Far points in the boxplot: {{count}}"
+    },
+    "charts": {
+      "uncertainty": "Uncertainty bars",
+      "sd": "Group standard deviation",
+      "se": "Standard error of the group mean",
+      "ci": "Confidence interval (pooled variance)",
+      "meansTitle": "Means of “{{response}}” by “{{factor}}”",
+      "meansDescription": "Bar chart with each group's mean, uncertainty bars and comparison letters.",
+      "yLabel": "{{response}}",
+      "uncertaintySd": "Bars: mean ± group standard deviation",
+      "uncertaintySe": "Bars: mean ± standard error of the group mean",
+      "uncertaintyCi": "Bars: mean ± {{level}}% CI (pooled variance, Student t)",
+      "lettersLegend": "Shared letters = difference not detected (Tukey, α = {{alpha}}); not evidence of equivalence.",
+      "boxTitle": "Distribution of “{{response}}” by “{{factor}}”",
+      "boxDescription": "Boxplot of each group with median, quartiles, whiskers and far points.",
+      "boxLegend": "Box: 1st to 3rd quartile; bar: median; whiskers: up to 1.5 × interquartile range; circles: far points.",
+      "residualsTitle": "Residuals vs fitted values",
+      "residualsDescription": "Standardised residuals against the group mean; look for scatter with no pattern.",
+      "residualsX": "Fitted value (group mean)",
+      "residualsY": "Standardised residual",
+      "residualsLegend": "A funnel, curvature or isolated points suggest unequal variance or model problems.",
+      "qqTitle": "Normal quantile–quantile plot of residuals",
+      "qqDescription": "Ordered standardised residuals against theoretical normal quantiles.",
+      "qqX": "Theoretical normal quantile",
+      "qqY": "Standardised residual",
+      "qqLegend": "Points near the (quartile) line suggest roughly normal residuals; also use knowledge of the experiment.",
+      "tableHint": "The pairs table below lists every comparison in the chart."
+    },
+    "export": {
+      "title": "Export",
+      "figure": "Figure",
+      "tables": "Tables",
+      "csvAnova": "ANOVA (CSV)",
+      "csvGroups": "Groups (CSV)",
+      "csvPairs": "Pairs (CSV)",
+      "svg": "SVG",
+      "png": "PNG",
+      "done": "File prepared: {{name}}",
+      "failed": "The file could not be exported.",
+      "cancelled": "Export cancelled."
+    },
+    "warnings": "Warnings"
   }
 }

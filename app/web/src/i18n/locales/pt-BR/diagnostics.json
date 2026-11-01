@@ -54,6 +54,37 @@
       "invalid_observation_id": "Identificador de observação inválido nas linhas {{rows}} (use letras, números e _ . : -, até 64 caracteres).",
       "duplicate_observation_id": "Identificador de observação repetido nas linhas {{rows}}.",
       "no_columns": "Nenhuma coluna foi escolhida como fator ou resposta."
+    },
+    "comparison": {
+      "too_few_groups": "São necessários pelo menos dois grupos com observações.",
+      "invalid_alpha": "O nível de significância precisa estar entre 0 e 1.",
+      "non_finite_result": "Os valores são grandes demais para o cálculo em 64 bits.",
+      "no_residual_df": "Não há graus de liberdade do erro: as comparações de pares não podem ser calculadas.",
+      "zero_within_variance": "Não há variação dentro dos grupos: as comparações de pares não estão definidas.",
+      "letters_unavailable": "As letras não puderam ser atribuídas (combinação de pares complexa demais).",
+      "singleton_groups": "Há grupos com uma única observação.",
+      "excluded_observations": "Há observações fora da análise."
+    },
+    "model": {
+      "invalid_dimensions": "As dimensões da matriz do modelo não coincidem.",
+      "invalid_confidence_level": "O nível de confiança precisa estar entre 0 e 1.",
+      "non_finite_input": "Há valores não finitos nos dados.",
+      "non_finite_result": "Os valores são grandes demais para o cálculo em 64 bits.",
+      "zero_rank": "A matriz do modelo não tem colunas utilizáveis.",
+      "rank_deficient": "Algumas colunas são combinações das demais e não são estimáveis: {{aliased}}.",
+      "no_residual_df": "Não há graus de liberdade do erro: os erros-padrão não estão definidos.",
+      "constant_response": "A resposta é constante.",
+      "ill_conditioned": "O problema é mal condicionado (número de condição {{condition}}): os dígitos finais dos coeficientes podem não ser confiáveis.",
+      "excluded_observations": "Há observações fora do ajuste.",
+      "no_complete_rows": "Nenhuma linha tem todos os valores do modelo.",
+      "no_columns": "O modelo não tem colunas.",
+      "invalid_interaction": "O termo {{term}} é uma interação inválida.",
+      "invalid_power": "O termo {{term}} é uma potência inválida (só fatores quantitativos, grau ≥ 2).",
+      "duplicate_term": "O termo {{term}} está repetido."
+    },
+    "distribution": {
+      "invalid_parameter": "Parâmetro da distribuição inválido.",
+      "unsupported_function": "Função não disponível para esta distribuição."
     }
   },
   "cellErrors": {

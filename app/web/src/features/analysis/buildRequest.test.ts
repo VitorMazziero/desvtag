@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { initialProject, type ProjectState, projectReducer } from "../../state/project";
-import { buildDataset, buildOperation, inputSignature } from "./buildRequest";
+import { analysisKind, buildDataset, buildOperation, inputSignature } from "./buildRequest";
 
 function sample(): ProjectState {
   let s = projectReducer(initialProject, { type: "addFactor" });
@@ -50,7 +50,7 @@ describe("buildOperation and signature", () => {
     const s = sample();
     expect(
       buildOperation(
-        { ...s, analysis: { responseId: null, groupBy: [] } },
+        { ...s, analysis: { ...s.analysis, responseId: null } },
         buildDataset(s).dataset,
       ),
     ).toBeNull();
@@ -67,5 +67,34 @@ describe("buildOperation and signature", () => {
       inputSignature(projectReducer(s, { type: "setAnalysis", patch: { groupBy: ["f1"] } })),
     ).not.toBe(before);
     expect(inputSignature(s)).toBe(before);
+  });
+});
+
+describe("comparison of treatments", () => {
+  const compare = (): ProjectState => ({
+    ...sample(),
+    path: "compare",
+    analysis: { responseId: "r1", groupBy: [], factorId: "f1", alpha: 0.05 },
+  });
+
+  it("builds the one-way operation only when a factor is chosen", () => {
+    const s = compare();
+    expect(analysisKind(s)).toBe("oneWay");
+    expect(buildOperation(s, buildDataset(s).dataset)).toMatchObject({
+      type: "comparisonOneWay",
+      responseId: "r1",
+      factorId: "f1",
+      alpha: 0.05,
+    });
+    const noFactor = { ...s, analysis: { ...s.analysis, factorId: null } };
+    expect(buildOperation(noFactor, buildDataset(noFactor).dataset)).toBeNull();
+  });
+
+  it("changes the signature with the factor and with alpha, and differs from the descriptive one", () => {
+    const s = compare();
+    const base = inputSignature(s);
+    expect(inputSignature({ ...s, analysis: { ...s.analysis, alpha: 0.01 } })).not.toBe(base);
+    expect(inputSignature({ ...s, analysis: { ...s.analysis, factorId: null } })).not.toBe(base);
+    expect(inputSignature({ ...s, path: "analyze" })).not.toBe(base);
   });
 });

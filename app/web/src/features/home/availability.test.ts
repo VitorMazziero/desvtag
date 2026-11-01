@@ -15,10 +15,12 @@ describe("missingMethods", () => {
     const c = caps("descriptive_summary");
     expect(missingMethods("analyze", c)).toEqual([]);
     expect(missingMethods("plan", c)).toEqual(["plackett_burman_design"]);
-    expect(missingMethods("compare", c)).toEqual(["tukey_hsd"]);
+    expect(missingMethods("compare", c)).toEqual(["one_way_comparison"]);
   });
   it("lights up automatically when a future stage registers the method", () => {
-    expect(missingMethods("compare", caps("descriptive_summary", "tukey_hsd"))).toEqual([]);
+    expect(missingMethods("compare", caps("descriptive_summary", "one_way_comparison"))).toEqual(
+      [],
+    );
   });
   it("treats unknown capabilities as everything missing", () => {
     expect(missingMethods("analyze", null)).toEqual(["descriptive_summary"]);

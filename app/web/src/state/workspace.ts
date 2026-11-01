@@ -1,13 +1,15 @@
 // Espaço de trabalho: o projeto aberto (vários experimentos) e o controle de alterações.
 // O reducer do experimento atual vem de `project.ts`; aqui ficam as ações do projeto.
-import type { ProjectDocument, RevisionReason } from "../services/engine";
+import type { AnalysisRecord, ProjectDocument, RevisionReason } from "../services/engine";
 import {
   commitRevision,
+  DEFAULT_ALPHA,
   freshId,
   newExperiment,
   type ProjectAction,
   type ProjectState,
   projectReducer,
+  type StoredResult,
 } from "./project";
 
 export interface Workspace {
@@ -197,12 +199,11 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
     analysis: {
       responseId: doc.analysisSelection.responseId,
       groupBy: [...doc.analysisSelection.groupBy],
+      factorId: doc.analysisSelection.factorId ?? null,
+      alpha: doc.analysisSelection.alpha ?? DEFAULT_ALPHA,
     },
     // Reabrir NÃO recalcula: o resultado exibido é o guardado; a assinatura decide se está atual.
-    result:
-      last && last.result.type === "descriptive"
-        ? { signature: last.signature, result: stripType(last.result) }
-        : null,
+    result: storedResultOf(last),
     showUnitColumn: doc.showUnitColumn,
     counters: {
       factor: maxSuffix(
@@ -232,6 +233,13 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
   };
 }
 
+function storedResultOf(last: AnalysisRecord | undefined): StoredResult | null {
+  if (!last) return null;
+  if (last.result.type === "descriptive")
+    return { signature: last.signature, kind: "descriptive", result: stripType(last.result) };
+  return { signature: last.signature, kind: "oneWay", result: stripType(last.result) };
+}
+
 function stripType<T extends { type: string }>(value: T): Omit<T, "type"> {
   const { type: _type, ...rest } = value;
   return rest;
@@ -251,7 +259,13 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
       name: e.name,
       entryPath: e.path,
       showUnitColumn: e.showUnitColumn,
-      analysisSelection: { responseId: e.analysis.responseId, groupBy: e.analysis.groupBy },
+      analysisSelection: {
+        responseId: e.analysis.responseId,
+        groupBy: e.analysis.groupBy,
+        ...(e.analysis.factorId !== null
+          ? { factorId: e.analysis.factorId, alpha: e.analysis.alpha }
+          : {}),
+      },
       revisions: e.revisions,
       analyses: e.analyses,
       notes: e.notes,

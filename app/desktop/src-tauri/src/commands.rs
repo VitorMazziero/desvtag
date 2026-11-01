@@ -179,12 +179,21 @@ async fn pick_save_path(
     app: &AppHandle,
     suggested_name: String,
 ) -> Result<Option<PathBuf>, String> {
+    pick_save_path_with(app, suggested_name, "EnziTAG", "enzitag").await
+}
+
+async fn pick_save_path_with(
+    app: &AppHandle,
+    suggested_name: String,
+    filter_name: &'static str,
+    extension: &'static str,
+) -> Result<Option<PathBuf>, String> {
     let dialog_app = app.clone();
     let picked = jobs::run_blocking(move || {
         dialog_app
             .dialog()
             .file()
-            .add_filter("EnziTAG", &["enzitag"])
+            .add_filter(filter_name, &[extension])
             .set_file_name(suggested_name)
             .blocking_save_file()
     })
@@ -194,7 +203,75 @@ async fn pick_save_path(
     };
     let mut path = picked.into_path().map_err(|e| e.to_string())?;
     if path.extension().is_none() {
-        path.set_extension("enzitag");
+        path.set_extension(extension);
     }
     Ok(Some(path))
+}
+
+/// Extensões de exportação permitidas e o nome do filtro do diálogo.
+pub const EXPORT_FORMATS: [(&str, &str); 4] = [
+    ("csv", "CSV"),
+    ("svg", "SVG"),
+    ("png", "PNG"),
+    ("html", "HTML"),
+];
+/// Tamanho máximo de um arquivo exportado.
+pub const MAX_EXPORT_BYTES: usize = 64 * 1024 * 1024;
+
+/// Formato de exportação do nome sugerido, ou erro se a extensão não é permitida.
+///
+/// # Errors
+/// Extensão ausente ou fora de [`EXPORT_FORMATS`].
+pub fn export_format(suggested_name: &str) -> Result<(&'static str, &'static str), String> {
+    let extension = Path::new(suggested_name)
+        .extension()
+        .and_then(|e| e.to_str())
+        .map(str::to_ascii_lowercase)
+        .ok_or_else(|| "export.unsupported_format".to_string())?;
+    EXPORT_FORMATS
+        .iter()
+        .find(|(ext, _)| *ext == extension)
+        .copied()
+        .ok_or_else(|| "export.unsupported_format".to_string())
+}
+
+/// Exporta uma figura, tabela ou relatório: diálogo nativo de "Salvar como" e gravação segura.
+/// O caminho escolhido não é devolvido à interface.
+#[tauri::command]
+pub async fn export_file(
+    app: AppHandle,
+    bytes_base64: String,
+    suggested_name: String,
+) -> Result<Option<SavedFile>, String> {
+    let (extension, filter_name) = export_format(&suggested_name)?;
+    let bytes = STANDARD.decode(bytes_base64).map_err(|e| e.to_string())?;
+    if bytes.len() > MAX_EXPORT_BYTES {
+        return Err("export.too_large".to_string());
+    }
+    let Some(path) = pick_save_path_with(&app, suggested_name, filter_name, extension).await?
+    else {
+        return Ok(None);
+    };
+    let target = path.clone();
+    jobs::run_blocking(move || write_atomic(&target, &bytes))
+        .await?
+        .map_err(|e| e.to_string())?;
+    Ok(Some(SavedFile {
+        name: file_name(&path),
+    }))
+}
+
+#[cfg(test)]
+mod export_tests {
+    use super::export_format;
+
+    #[test]
+    fn only_listed_extensions_are_exportable() {
+        assert_eq!(export_format("grafico.SVG"), Ok(("svg", "SVG")));
+        assert_eq!(export_format("tabela.csv"), Ok(("csv", "CSV")));
+        assert_eq!(export_format("figura.png"), Ok(("png", "PNG")));
+        assert!(export_format("programa.exe").is_err());
+        assert!(export_format("semextensao").is_err());
+        assert!(export_format("projeto.enzitag").is_err());
+    }
 }

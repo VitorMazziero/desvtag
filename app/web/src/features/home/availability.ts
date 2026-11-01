@@ -7,7 +7,7 @@ import type { EntryPath } from "../../state/project";
 export const REQUIRED_METHODS: Record<EntryPath, string[]> = {
   plan: ["plackett_burman_design"], // ET06
   analyze: ["descriptive_summary"],
-  compare: ["tukey_hsd"], // ET05
+  compare: ["one_way_comparison"],
 };
 
 export function missingMethods(path: EntryPath, capabilities: Capabilities | null): string[] {
