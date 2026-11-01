@@ -4,7 +4,7 @@
 |---|---|
 | Estado | Aceita |
 | Data | 2026-11-01 |
-| Origem | ET04-T01 (registrada depois do primeiro código da etapa; ver desvio na [ET04](../planos-execucao/ativos/et04-fundamentos-numericos-modelos.md#12-desvios-e-descobertas)) |
+| Origem | ET04-T01 (registrada depois do primeiro código da etapa; ver desvio na [ET04](../planos-execucao/concluidos/et04-fundamentos-numericos-modelos.md#12-desvios-e-descobertas)) |
 | Pendências relacionadas | PD-04 (variantes, estimadores, algoritmos e tolerâncias — parte de F03) |
 | Substitui / substituída por | — |
 

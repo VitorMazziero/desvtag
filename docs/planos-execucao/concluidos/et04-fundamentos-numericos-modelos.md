@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** (Windows 10 no lugar do Windows 11, decisão do usuário) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F03 |
 | Marco | Prepara M2 |
 | Depende de | ET03 |
 | Módulos | C03, C04 (Normal, t, F, qui-quadrado), C06, C07 (`regression_anova`, `intervals`), C08, C19 |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -74,7 +74,7 @@ Base numérica e modelo linear validados, prontos para ANOVA, planejamentos e su
 3. [x] Rank deficiente e dados insuficientes produzem diagnóstico compreensível, nunca coeficientes arbitrários silenciosos. *Evidência:* casos 105 (aliasing) e 106 (saturado) e `aliasing_and_saturation_are_explicit_states`.
 4. [x] Nenhuma regressão baseada em inversão explícita indiscriminada de matrizes: QR com `R·b = Qᵀy` e `(RᵀR)⁻¹` por substituição; `XᵀX` nunca é formada.
 5. [x] Resultados nativo e WASM concordam dentro da tolerância registrada. *Evidência:* `linear.parity.test.ts` (17 casos) e `numeric.parity.test.ts` com as mesmas tolerâncias; IPC nativo no Linux em `native-checks.mjs`.
-6. [ ] **Windows 11:** a verificação nativa (`native-checks.mjs`, inclusive `modelFitLinear` e `distributionEvaluate`) roda no job `desktop-windows` da CI; o resultado é a evidência. **Pendente** (mesma pendência das ET01–ET03, ver o [índice](../README.md)). Por isso a ET04 permanece em `ativos/` e os itens da matriz não passam a "validado".
+6. [x] **Windows (10, no lugar do 11):** a verificação nativa (`native-checks.mjs`, inclusive `modelFitLinear` e `distributionEvaluate`) foi aprovada no Windows 10 Pro 22H2 (WebView2 156.0.4314.58) e roda no job `desktop-windows` da CI; `cargo test --workspace` aprovado no Windows 10 (401 testes). Windows 11 não verificado (decisão do usuário, [§15](../../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)).
 
 ## 8. Verificação
 
@@ -103,6 +103,7 @@ Especificações em `docs/metodos/`; fichas; DTs; casos em `validation/cases/`; 
 | 2026-11-01 | **Paridade e IPC:** `linear.parity.test.ts` e `numeric.parity.test.ts` (WASM em Node); `native-checks.mjs` estendido (regressão Norris e quantil t); executado localmente no Linux (Tauri sob Xvfb). Operação `distributionEvaluate` criada para esse fim. Contratos TypeScript regenerados (64 tipos). |
 | 2026-11-01 | **Documentação:** DT-0009, quatro especificações de método, fichas C03/C04 e C06–C08, mapa de módulos, dependências, estrutura do repositório e matriz de cobertura. Verificações locais: `cargo fmt/clippy -D warnings/test` (workspace e Tauri), `biome`, `tsc`, `vitest` (inclui paridade), verificação de links e de versões. |
 | 2026-11-01 | **Windows (CI):** na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (comando de disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS do instalador e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, estatística descritiva, abertura e adulteração de `.enzitag`, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento aleatorizado e análise de planejamento). **Não é Windows 11 de usuário**, não houve diálogos nativos de abrir/salvar nem clone limpo pelo guia: a evidência literal em Windows 11 continua pendente. |
+| 2026-11-01 | **Windows 10:** `cargo test --workspace` (401 aprovados) e verificação nativa por WebView2 aprovados; Windows 11 não verificado. |
 
 **Retomada.** Ramo `claude/epic-keller-3ad7jc`; todas as tarefas T01–T12 concluídas; pendente apenas o critério 6 (Windows). Próxima etapa em código: ET05 (exige decisão registrada para estender a exceção de paralelismo).
 

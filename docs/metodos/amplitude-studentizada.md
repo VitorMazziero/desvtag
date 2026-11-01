@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | — (distribuição; operação `distributionEvaluate` com `studentizedRange`) |
 | Módulos | C04 `distributions/studentized_range`, C03 `numeric/integration` |
-| Etapa | [ET05](../planos-execucao/ativos/et05-anova-tukey-letras.md) |
+| Etapa | [ET05](../planos-execucao/concluidos/et05-anova-tukey-letras.md) |
 | Decisão | [DT-0010](../decisoes-tecnicas/dt-0010-comparacao-de-tratamentos.md) |
 | Casos de validação | [`validation/cases/studentized_range/`](../../validation/cases/studentized_range/001-grade-scipy-mpmath/README.md) |
 

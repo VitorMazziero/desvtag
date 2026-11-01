@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | — (rotinas internas) |
 | Módulos | C03 `numeric/{matrix,qr,svd,summation,root_finding,special_functions}` |
-| Etapa | ET02 (soma), [ET04](../planos-execucao/ativos/et04-fundamentos-numericos-modelos.md) (demais) |
+| Etapa | ET02 (soma), [ET04](../planos-execucao/concluidos/et04-fundamentos-numericos-modelos.md) (demais) |
 | Decisão | [DT-0009](../decisoes-tecnicas/dt-0009-fundamentos-numericos-modelos-lineares.md) |
 | Casos de validação | [`validation/cases/linear_model/`](../../validation/cases/linear_model/README.md), [`distributions/`](../../validation/cases/distributions/001-normal/README.md) |
 

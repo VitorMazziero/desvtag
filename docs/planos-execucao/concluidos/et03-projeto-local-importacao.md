@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** (Windows 10 no lugar do Windows 11, decisão do usuário) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F02 |
 | Marco | **M1 — Base utilizável** |
 | Depende de | ET02 (código concluído; evidência Windows 11 pendente, ver [exceção](../README.md)) |
 | Módulos | P01–P03, C01–C02, E01, E04 (`files`), U01 (recentes), U03–U05, U11, U13 |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -69,7 +69,7 @@ Persistir o trabalho com segurança: projeto `.enzitag` com vários experimentos
 - [x] **T12** — U11: árvore com vários experimentos, histórico de revisões e indicação de análise baseada em dados anteriores.
 - [x] **T13** — Tela inicial: projetos recentes e Abrir projeto habilitado.
 - [x] **T14** — Arquivo de referência do formato em `examples/` e casos de teste de leitura em `app/crates/optima-project/tests/`.
-- [ ] **T15** *(tudo verificado em Linux e navegador; reabertura Windows ↔ navegador e diálogos no Windows pendentes, ver seção 11)* — Testes: reabertura cruzada Windows ↔ navegador; interrupção de escrita simulada; arquivo corrompido; versão futura; migração; importação com acentos, vírgula decimal, ausentes e réplicas × repetições de medição.
+- [x] **T15** — Testes: reabertura cruzada Windows ↔ navegador (projetos de exemplo escritos pelo motor WebAssembly reabertos pelo motor nativo no Windows 10, e um projeto codificado nos dois alvos com **bytes idênticos**, ver seção 11); interrupção de escrita simulada; arquivo corrompido; versão futura; migração; importação com acentos, vírgula decimal, ausentes e réplicas × repetições de medição. Diálogos nativos do Windows: gravação segura testada (`cargo test` do pacote Tauri, 8 testes); a janela de diálogo em si não foi automatizada.
 - [x] **T16** — Fichas P01–P03, U05, U11, U13; matriz de cobertura; README com abrir/salvar.
 
 ## 6. Entregas
@@ -114,6 +114,7 @@ Testes Rust de P01–P03; testes web de U05/U13; E2E de importar → salvar → 
 | Pendente para concluir | (1) execução no **Windows** (mesma pendência de ET01/ET02): resultado do job `desktop-windows` com WebView2 por CDP e verificação manual em Windows 11 dos diálogos "Abrir" e "Salvar"; (2) reabertura **cruzada**: um projeto salvo no Windows aberto no navegador e vice-versa (os dois usam o mesmo código Rust e o mesmo arquivo Python de referência é lido nos dois, mas o arquivo gravado pelo aplicativo Windows ainda não foi aberto no navegador) |
 | Próxima ação | Confirmar o resultado do Windows na CI; seguir para a ET04 sem declarar M1 |
 | Windows (CI) | na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, descritiva, `.enzitag` e adulteração, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento e análise). **Não é Windows 11 de usuário**, sem diálogos nativos e sem clone limpo pelo guia: a evidência literal em Windows 11 segue pendente e a etapa continua aberta. |
+| 2026-11-01 | **Reabertura cruzada verificada:** a verificação nativa reabre no Windows 10 os 4 projetos de `examples/` (escritos pelo WebAssembly) com as análises guardadas; o mesmo projeto com DIC e personalização por figura tem SHA-256 idêntico ao codificar no WebAssembly (`project.parity.test.ts`) e no nativo (`native-checks.mjs`). **Achado (só visível ao comparar os dois alvos no Windows):** o crate `zip` gravava a hora do salvamento no nativo (e 1980 no WebAssembly) e, no Windows, o sistema de origem “DOS” (nos demais, “Unix”), tornando os bytes diferentes mesmo com o mesmo conteúdo. Hora, sistema e permissões passaram a ser fixos (1980-01-01, Unix, 0644) no `.enzitag` e no XLSX, com teste. A integridade (SHA-256 do conteúdo) nunca dependeu disso. |
 
 ### Evidências (2026-11-01)
 

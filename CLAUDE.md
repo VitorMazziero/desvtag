@@ -28,5 +28,5 @@ EnziTAG Optima: aplicativo de planejamento experimental, estatística e otimiza�
 ## Limites
 
 - Não versionar `referencias/`, credenciais, chaves de assinatura ou tokens.
-- O repositório é privado; não alterar a visibilidade nem publicar sem decisão do usuário.
+- O repositório é **público** (decisão do usuário PD-15, 2026-11-01). Publicar release, etiquetas de versão, GitHub Pages ou mudar a visibilidade continua dependendo de decisão do usuário; nunca versionar `referencias/`, o registro local da conversa, credenciais ou chaves (a chave privada do atualizador fica só em segredo do GitHub e fora do repositório).
 - Commits no padrão `tipo(escopo): descrição` (Conventional Commits).

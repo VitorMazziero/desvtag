@@ -6,7 +6,7 @@
 
 EnziTAG Optima is a planned application for researchers and students, with a guided workflow for experimental design, data analysis, treatment comparisons and process optimization. Its development is connected to the activities of the EnziTAG research group.
 
-**Current status:** release candidate for the first version (v0.1.0, experimental), **not published**. Implemented and validated against independent references: descriptive statistics, one-way ANOVA with Tukey/Tukey–Kramer and compact letters, two-level designs (factorial, fractional, Plackett–Burman), central composite and Box–Behnken designs, response surfaces with contour and 3D views, desirability optimization with confirmation runs, `.enzitag` projects and export (SVG/PNG, CSV/XLSX, HTML report). Verification on 64-bit Windows 11, publication and the updater are pending ([v0.1 plan](docs/planos-execucao/plano-v0.1.md), [coverage matrix](docs/produto/matriz-cobertura.md)); the documentation is in Portuguese. Active stage: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md).
+**Current status:** release candidate for the first version (v0.1.0, experimental), **ready locally and not yet published**. Implemented and validated against independent references: descriptive statistics, randomized CRD, one-way ANOVA with Tukey/Tukey–Kramer and compact letters, two-level designs (factorial, fractional, Plackett–Burman), central composite and Box–Behnken designs, response surfaces with contour and 3D views, desirability optimization with confirmation runs, `.enzitag` projects and export (SVG/PNG, CSV/XLSX, HTML report) with per-figure customization. Verified in the browser (Chromium, Firefox, Chrome and Edge) and on Windows 10 and `windows-latest`; **Windows 11 was not verified**. Pending, as the maintainer's own steps: tag, installer release, Pages and update verification ([v0.1 plan](docs/planos-execucao/plano-v0.1.md), [coverage matrix](docs/produto/matriz-cobertura.md), [publication](docs/distribuicao/publicacao.md)); the documentation is in Portuguese. Active stage: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md).
 
 ## Run locally (browser)
 
@@ -85,7 +85,7 @@ The full tree, including what exists today and which stage creates each part, is
 
 ## Intended distribution
 
-The [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima) repository has been created and is **private for now**, as requested on 2026-11-01. The `main` branch tracks `origin/main`. GitHub Pages and Releases remain the planned application distribution targets; no web application or Windows installer has been published. Making the source public is deferred to a later user decision.
+The [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima) repository has been **public** since 2026-11-01 (user decision PD-15), under the MIT licence. GitHub Pages and Releases are the planned distribution targets; the publishing workflows exist, but **no web application or installer has been published yet** ([procedure](docs/distribuicao/publicacao.md)).
 
 ## License
 

@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (entrega essencial pronta; lacunas de personalização registradas) |
+| Estado | **Concluído** (v0.1; letras manuais e anotações livres ficam para a v0.2) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F10 (recorte da v0.1) |
 | Marco | Prepara a v0.1.0 |
 | Depende de | ET05; termina após cobrir os gráficos de ET06–ET08 |
 | Módulos | C16, U09, U16, U17, U18, P01 (configuração gráfica salva) |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -49,8 +49,8 @@ Unificar a especificação dos gráficos para tela e exportação, oferecer a pe
 ## 5. Tarefas
 
 - [x] **T01** — DTs da seção 4: [DT-0014](../../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md) (XLSX em Rust, CSV por formato, proteção contra fórmulas, relatório por renderização oculta, estilo e preferências).
-- [ ] **T02** — `ChartSpec` única, salva no projeto. *Parcial:* todas as figuras (ET05–ET08) já usam um único gerador SVG para tela e exportação (`services/charts`), com a mesma série e cores diferentes (variáveis do tema × literais); **não** há `ChartSpec` serializada no documento nem `renderer.ts`/`export.ts` separados (ver desvios).
-- [ ] **T03** — `ChartEditor` com título, rótulos de eixos, símbolos e posição das letras salvos no documento. **Não feito** (ver desvios). Feito apenas o recorte de preferências: paleta (inclui daltonismo), tamanho do texto e algarismos significativos.
+- [x] **T02** — Especificação única das figuras, com os ajustes salvos no projeto. Todas as figuras (ET05–ET08) usam um único gerador SVG para tela e exportação (`services/charts`); os ajustes de apresentação por figura ficam em `Experiment.figure_styles` ([DT-0016](../../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md)). *Desvio:* não há `ChartSpec` completa serializada nem `renderer.ts`/`export.ts` separados, porque a figura é derivada dos resultados e só a apresentação precisa persistir.
+- [x] **T03** — Edição por figura (`FigureCustomizer`): título, rótulos dos eixos, exibição das letras de comparação e fonte, salvos no documento (`FigureStyle`, validado no Rust) e aplicados à tela, ao SVG/PNG e ao relatório. *Fora da v0.1:* letras manuais, anotações, símbolos e posição das letras. Testes: `figureStyle.test.ts`, `crdFigure.test.ts`, `figure_style.rs`, E2E `crd-flow.spec.ts`.
 - [x] **T04** — Estilo e idioma de exportação independentes do tema e da interface (`ExportSettings`, `applyChartStyle`, instância i18n clonada no relatório). Preferência do dispositivo, não do projeto.
 - [x] **T05** — Figuras SVG/PNG (já existentes, estendidas às figuras 2D/3D de planejamento, superfície e otimização), tabelas CSV/XLSX em todas as análises, relatório HTML e proveniência. Sem `ExportDialog`: botões junto de cada tabela/figura e painel de preferências (ver desvios).
 - [x] **T06** — Proteção contra fórmulas em CSV e XLSX, com testes (unitários, Rust, openpyxl e ida e volta).
@@ -65,7 +65,7 @@ Gráficos personalizáveis e exportações da v0.1 para todas as análises dispo
 
 1. [x] Todos os formatos da v0.1 abrem corretamente e correspondem à análise salva. *Evidência:* E2E de exportação (XLSX com `PK` e planilhas; CSV em dois formatos; relatório; SVG/PNG), XLSX lido por openpyxl e aberto no LibreOffice (conversão e captura), ida e volta no importador do motor (`export.parity.test.ts`), verificação nativa (`exportXlsx` via IPC do Tauri em Linux e em `windows-latest`, execução 41341992701). **Limite:** abertura manual no Microsoft Excel não registrada.
 2. [x] Arquivos exportados contêm método, configuração, revisão e versão. *Evidência:* E2E (`# methodId`, `# revisionId`, planilha *Proveniência*, tabela de proveniência do relatório, `<metadata>` do SVG, `tEXt` do PNG).
-3. [ ] A incerteza representada está sempre nomeada; letras manuais aparecem como anotações. *Evidência parcial:* a incerteza é sempre nomeada (ET05–ET07; teste E2E do SVG). **Pendente:** não existem letras manuais nem anotações (não há edição por figura).
+3. [x] A incerteza representada está sempre nomeada; letras manuais aparecem como anotações. *Evidência:* a incerteza é sempre nomeada (ET05–ET07; teste E2E do SVG) e a personalização não a remove (`figureStyle.test.ts`: ocultar as letras mantém a legenda da barra); **não existem letras manuais** — as letras exibidas são sempre as calculadas (e podem ser ocultadas), de modo que nada manual é apresentado como calculado.
 4. [x] A exportação em inglês com interface em português (e vice-versa) foi verificada. *Evidência:* E2E `export-flow.spec.ts` nas duas direções, Chromium e Firefox.
 5. [x] Arquivos inspecionados visualmente, com registro no plano. *Evidência:* seção 11.
 
@@ -94,15 +94,17 @@ Fichas, DTs, `docs/guias/exportacao.md` (novo) e [matriz de cobertura](../../pro
 | 2026-11-01 | **Testes:** 227 unitários (web), 49 do `optima-project`, E2E de exportação (XLSX, CSV Excel, relatório PT→EN e EN→PT, paleta, axe nos 3 temas com paleta acessível) e suíte completa em Chromium e Firefox; verificação nativa Linux com `exportXlsx` (aprovada). |
 | 2026-11-01 | **Inspeção visual:** relatório HTML do exemplo 04 em PT e EN (capturas de página inteira: proveniência, tabelas, equações, contorno, superfície 3D, observado × previsto, candidatos e compromissos legíveis; seção "Exportar" vazia removida); XLSX de candidatos e coeficientes abertos no LibreOffice (cabeçalho em negrito, números como números, planilha *Proveniência*; colunas estreitas corrigidas com larguras automáticas). |
 | 2026-11-01 | **Windows:** execução [41341992701](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41341992701) (commit `bfab182`) aprovada em todos os jobs, inclusive `Tauri (build no Windows)` com a verificação nativa de `exportXlsx` (`windows-latest` = Windows Server 2025; não é Windows 11). |
+| 2026-11-01 | **Decisão do usuário:** implementar a personalização por figura antes de finalizar a v0.1 ([decisões aprovadas §15](../../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)). Entregue: `FigureStyle` no Rust (`optima-project`, validado), `Experiment.figure_styles` no documento, marcação `data-figure` nos desenhos, `applyFigureStyle`, `FigureCustomizer` e integração em `ChartFigure` (chave = `testId`); traduções PT/EN. |
+| 2026-11-01 | **Verificação:** vitest 246 aprovados; E2E 260 aprovados (65 testes × Chromium, Firefox, Google Chrome e Microsoft Edge estáveis instalados no Windows 10), com o novo `crd-flow.spec.ts` (personalização na tela e no SVG exportado, salvar e reabrir). Defeitos de portabilidade dos testes antigos no Windows corrigidos (caminhos por `URL.pathname`; seletor ambíguo de eixos). |
 
-**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01, T04–T08 concluídas; T02/T03 e o critério 3 pendentes (lacuna registrada, aguarda decisão do usuário); CI (incl. Windows) aprovada no commit `bfab182`. Próxima etapa: ET10 (integração, verificação e publicação — sem publicar; PD-15 depende do usuário).
+**Retomada.** Ramo `claude/epic-keller-3ad7jc`; todas as tarefas e critérios atendidos (T02/T03 após a decisão do usuário de implementar a personalização por figura, ver registro de 2026-11-01 abaixo). Próxima etapa: fechamento da ET10 (publicação depende de decisão do usuário).
 
 ## 12. Desvios e descobertas
 
-- **Sem `ChartSpec` salva no projeto, sem `ChartEditor` (T02/T03 e parte do critério 3).** O recorte entregue é o de preferências do dispositivo (paleta, fonte, algarismos, idioma, formato do CSV). Motivo: a edição por figura exige uma especificação serializada no `.enzitag` (campo novo, opcional) e uma interface de edição com validação, o que excede o que foi concluído nesta etapa sem comprometer a verificação das demais. **Consequência para a v0.1:** a linha "Personalização gráfica essencial" da matriz de cobertura permanece **parcial**; a decisão de aceitar a lacuna na v0.1.0 ou implementá-la antes da publicação é do usuário (registrada no relatório final da ET10).
+- **`FigureStyle` em vez de `ChartSpec` completa (T02/T03).** A decisão do usuário de implementar a personalização por figura levou ao recorte de **ajustes de apresentação** salvos no projeto (título, rótulos, letras, fonte), não a uma especificação de gráfico serializada: a figura continua derivada dos resultados ([DT-0016](../../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md)). Letras manuais, anotações, símbolos e posição das letras ficam para a v0.2. Um novo rótulo ("Rótulo do eixo horizontal") tornou ambíguo o seletor `getByLabel("Eixo horizontal")` de um teste antigo; o teste passou a usar a expressão ancorada.
 - **Sem `ExportDialog`:** os botões ficam junto de cada tabela e figura (mais direto e já coberto por testes); o painel reúne apenas as preferências e o relatório.
 - **Sem escolha de resolução do PNG e sem rotulagem de partes rasterizadas em 3D:** o PNG usa escala fixa 2×; a superfície 3D é SVG vetorial (não há partes rasterizadas).
-- **Preferências não vão ao `.enzitag`** (esquema permanece 1; [DT-0014](../../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md), item 5).
+- **Preferências do dispositivo não vão ao `.enzitag`** (esquema permanece 1; [DT-0014](../../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md), item 5). A personalização **por figura** vai, em campo opcional (`figureStyles`), sem alterar a versão do esquema.
 - **Relatório sem o editor de otimização:** a otimização entra como estado, fatos, convergência, candidatos e compromissos.
 - **Excel não testado manualmente;** LibreOffice (conversão e captura) e openpyxl foram usados.
 - **Verificação em Windows:** apenas `windows-latest` (Windows Server 2025); Windows 11 permanece pendente como nas demais etapas.

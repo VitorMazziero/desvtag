@@ -7,7 +7,7 @@
 | ID no registro do motor | `descriptive_summary` (versão 1) |
 | Operação do protocolo | `descriptiveSummarize` (`descriptive.summarize`) |
 | Módulos | C01 `domain/dataset`, C02 `validation/dataset`, C03 `numeric/summation`, C05 `descriptive/{summary,grouped}`, C18 `interpretation/{facts,rules}` |
-| Etapa | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md) |
+| Etapa | [ET02](../planos-execucao/concluidos/et02-primeiro-percurso.md) |
 | Casos de validação | [`validation/cases/descriptive_summary/`](../../validation/cases/descriptive_summary/001-nist-numacc1/README.md) (nove conjuntos NIST StRD) |
 
 ## 1. Pergunta estatística
@@ -78,7 +78,7 @@ Nove conjuntos NIST StRD univariados, com referência por aritmética racional e
 | Nativo (Rust, `optima-core/tests/descriptive_validation.rs`) | 9/9 casos dentro de erro relativo 1e-12 do valor exato |
 | WebAssembly em Node (`app/web/src/services/engine/descriptive.parity.test.ts`) | 9/9 casos, mesmas tolerâncias |
 | IPC Tauri em Linux (`app/desktop/tests/native-smoke.mjs`) | exemplo da seção 8 correto |
-| Windows 11 | **pendente** (ver [ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md)); situação do método no registro: `numericallyValidated` |
+| Windows 11 | **pendente** (ver [ET01](../planos-execucao/concluidos/et01-fundacao-tecnica.md)); situação do método no registro: `numericallyValidated` |
 
 Tolerância: erro relativo ≤ 1e-12 contra o exato. O algoritmo erra na ordem de 1e-16; 1e-12 deixa margem de quatro ordens de grandeza sem aceitar o erro de algoritmos ingênuos.
 

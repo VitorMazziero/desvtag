@@ -22,6 +22,9 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0012](dt-0012-superficie-de-resposta.md) | Superfície de resposta: α, Box–Behnken, matrizes personalizadas, extrapolação, equação e renderização 3D (ET07) | Aceita | 2026-11-01 |
 | [DT-0013](dt-0013-otimizacao-por-desejabilidade.md) | Otimização por desejabilidade: busca, domínio, candidatos, confirmação e cancelamento (ET08) | Aceita | 2026-11-01 |
 | [DT-0014](dt-0014-exportacao-e-relatorio.md) | Exportação: XLSX em Rust, CSV por formato, proteção contra fórmulas, relatório HTML e estilo das figuras (ET09) | Aceita | 2026-11-01 |
+| [DT-0015](dt-0015-migracao-node-26-na-v0-2.md) | Migração do Node.js 22 para o 26 na v0.2 (v0.1 permanece no 22) | Aceita (migração planejada) | 2026-11-01 |
+| [DT-0016](dt-0016-dic-aleatorizado-e-estilo-por-figura.md) | DIC aleatorizado e personalização gráfica por figura salva no projeto (fechamento da v0.1) | Aceita | 2026-11-01 |
+| [DT-0017](dt-0017-atualizador-assinado-e-publicacao.md) | Atualizador assinado, instalador sem assinatura de código e fluxos de publicação (ET10) | Aceita | 2026-11-01 |
 
 ## Regras
 

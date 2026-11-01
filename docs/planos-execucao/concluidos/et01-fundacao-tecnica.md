@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** (Windows 10 no lugar do Windows 11, decisão do usuário) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F00 |
 | Marco | Prepara M1 |
 | Depende de | Documentação aprovada |
 | Módulos | C01, C02, C19, E01, E03, E04, U12, U17, U18 (estruturas iniciais) |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -61,7 +61,7 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 
 ### 5.1 Ambiente e versões
 
-- [ ] **T01** *(parcial: inventário em Linux feito, ver seção 11; Windows 11 pendente)* — Inventariar no Windows 11 de desenvolvimento: Git, rustup, alvo `wasm32-unknown-unknown`, Node, pré-requisitos do Tauri 2 (ferramentas de compilação C++ da Microsoft e WebView2). Registrar versões encontradas.
+- [x] **T01** — Inventário no Windows (Windows 10 Pro 22H2 (build 19045, 64 bits) da máquina de desenvolvimento do usuário, por decisão de 2026-11-01 ([decisões aprovadas §15](../../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); Windows 11 não verificado), 2026-11-01: Git 2.55.0; Visual Studio Community 2026 18.10.3 (ferramentas C++/MSVC); WebView2 156.0.4314.58; `rustup` com Rust 1.97.0 (`rust-toolchain.toml`, alvo `wasm32-unknown-unknown`, instalado com o `rustup-init` oficial); Node 22.23.4 (cópia portátil; o `winget` também instalou o Node 26.13.0, não usado, ver [DT-0015](../../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)); `wasm-bindgen-cli` 0.2.130. Inventário em Linux feito antes (seção 11).
 - [x] **T02** — Registrar DTs de toolchain e ferramentas web; criar `rust-toolchain.toml` na raiz, versão de Node (`.nvmrc` ou `engines`) e lockfiles.
 - [x] **T03** — Verificar a situação de manutenção das ferramentas WASM e do Tauri 2 na data da execução; registrar na DT de build WASM.
 - [x] **T04** — Criar [`docs/arquitetura/dependencias.md`](../../arquitetura/dependencias.md): dependência, versão, papel, licença, compatibilidade WASM e módulo consumidor.
@@ -94,7 +94,7 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 - [x] **T19** — Criar `.github/pull_request_template.md` com referência à etapa, tarefas, critérios atendidos e documentação atualizada.
 - [x] **T20** — Criar [`docs/guias/ambiente-desenvolvimento.md`](../../guias/ambiente-desenvolvimento.md) e atualizar "Como executar" no README somente com comandos executados com sucesso.
 - [x] **T21** — Fichas em [`docs/modulos/`](../../modulos/README.md) para E01, E03, E04 e U12 (estrutura inicial); atualizar o [mapa](../../arquitetura/mapa-modulos.md) se algum nome mudar.
-- [ ] **T22** *(pendente: requer Windows 11; ver seção 11)* — Clone limpo no Windows 11: executar o guia do zero e registrar o resultado no registro de progresso.
+- [x] **T22** — Guia executado do zero no Windows (Windows 10 Pro 22H2 (build 19045, 64 bits) da máquina de desenvolvimento do usuário, por decisão de 2026-11-01 ([decisões aprovadas §15](../../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); Windows 11 não verificado): sem `node_modules` nem `target` prévios, instalação das ferramentas, `cargo fmt/clippy/test` (401 testes), `npm ci`, contratos, lint, WASM, tipos, vitest, build, E2E em quatro navegadores, `clippy`/`test` do pacote Tauri, instalador NSIS e verificação nativa por WebView2. Não foi feito um `git clone` separado: o clone limpo é exercitado pela CI em `windows-latest`. Defeitos de portabilidade encontrados e corrigidos (ver seção 11).
 
 ## 6. Entregas
 
@@ -148,6 +148,7 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 | Código entregue | Workspace Rust (`optima-core`, `-project`, `-engine`, `-wasm`), interface React/TypeScript, pacote Tauri, scripts, CI |
 | Próxima ação | Resolver `DevToolsActivePort` do msedgedriver no job `desktop-windows` (diagnóstico em andamento) e/ou obter a execução em um Windows 11 real. A ET02 avança em paralelo (exceção registrada no [índice](../README.md)) |
 | Windows (CI) | na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, descritiva, `.enzitag` e adulteração, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento e análise). **Não é Windows 11 de usuário**, sem diálogos nativos e sem clone limpo pelo guia: a evidência literal em Windows 11 segue pendente e a etapa continua aberta. |
+| 2026-11-01 | **Fechamento no Windows 10** (decisão do usuário: sem Windows 11): ferramentas instaladas do zero, `cargo test --workspace` 401 aprovados, vitest 246, E2E 260 (Chromium, Firefox, Chrome e Edge estáveis), instalador NSIS assinado construído e instalado/desinstalado, verificação nativa por WebView2 aprovada. **Defeitos encontrados só no Windows e corrigidos:** (a) `comparison_validation` filtrava casos por `"one_way_comparison/1"` e via 0 casos com `\`; (b) testes E2E montavam caminhos com `URL.pathname` (inválido no Windows). |
 
 ### Evidências (2026-11-01)
 

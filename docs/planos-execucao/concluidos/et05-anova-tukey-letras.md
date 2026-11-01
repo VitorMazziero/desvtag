@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** (Windows 10 no lugar do Windows 11, decisão do usuário) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F04 |
 | Marco | **M2 — Comparação completa** |
 | Depende de | ET04 |
 | Módulos | C04 (`studentized_range`), C06–C09, C16 (`means`, `residuals`), C18, U07–U09, U16 inicial |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -82,7 +82,7 @@ Percurso de comparação de tratamentos completo e validado, exemplo de quatro c
 3. [x] A barra de incerteza exibida está sempre nomeada no gráfico e na exportação. *Evidência:* teste do renderizador e E2E (`Barras: média ± IC 95%` na tela e no SVG exportado).
 4. [x] Diagnósticos aparecem como evidência; nenhum selo genérico de validade baseado em p ou R². *Evidência:* fatos `diagnostics.*`, [DT-0010, item 4](../../decisoes-tecnicas/dt-0010-comparacao-de-tratamentos.md).
 5. [x] Arquivos exportados contêm método, configuração, revisão e versão. *Evidência:* E2E verifica o CSV (`# methodId`, `# revisionId`), o SVG (`<metadata>`) e o PNG (chunk `tEXt`) byte a byte.
-6. [ ] **Windows 11:** `native-checks.mjs` (inclui `comparisonOneWay`) e o fluxo no job `desktop-windows` da CI; o resultado é a evidência. **Pendente** (mesma pendência de ET01–ET04; ver o [índice](../README.md)).
+6. [x] **Windows (10, no lugar do 11):** `native-checks.mjs` (inclui `comparisonOneWay`) aprovado no Windows 10 Pro 22H2 e no job `desktop-windows` da CI; o fluxo do primeiro percurso foi coberto pelo E2E em Chrome e Edge estáveis. Windows 11 não verificado (decisão do usuário, [§15](../../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)).
 
 **Marco M2** (ET04–ET05 concluídas): **não declarado**; depende dos itens pendentes no Windows de ET01–ET05.
 
@@ -113,6 +113,7 @@ Especificações de métodos, fichas, DTs, casos de validação, exemplo em `exa
 | 2026-11-01 | **CI no Windows:** o diagnóstico (execução 41324447874) mostrou que o WebView2 ignora `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS`; o passo agora compila o binário de teste com `additionalBrowserArgs` via `TAURI_CONFIG`. Resultado da nova execução registrado nas ET01–ET03. |
 | 2026-11-01 | **Documentação:** DT-0010, quatro especificações de método, fichas C09 e U07–U09/U16, formato `.enzitag`, mapa de módulos, matriz de cobertura, exemplo e casos de validação. |
 | 2026-11-01 | **Windows (CI):** na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (comando de disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS do instalador e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, estatística descritiva, abertura e adulteração de `.enzitag`, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento aleatorizado e análise de planejamento). **Não é Windows 11 de usuário**, não houve diálogos nativos de abrir/salvar nem clone limpo pelo guia: a evidência literal em Windows 11 continua pendente. |
+| 2026-11-01 | **Windows 10:** verificação nativa de `comparisonOneWay` aprovada; E2E do percurso 1 em Chromium, Firefox, Chrome e Edge. Marco M2 continua **não declarado**. |
 
 **Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01–T15 concluídas; pendente apenas o critério 6 (Windows). Próxima etapa em código: ET06.
 

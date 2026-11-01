@@ -22,7 +22,9 @@ U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: exp
 | `features/results/ComparisonResults.tsx` | Composição, seleção da incerteza, gráficos e exportação |
 | `features/results/ComparisonInterpretation.tsx` | Explicação curta, fatos e avisos localizados |
 | `features/results/ComparisonTables.tsx`, `comparisonRows.ts` | Tabelas na tela e linhas do CSV |
-| `features/results/ChartFigure.tsx`, `ExportButton.tsx` | Figura acessível e botões de SVG/PNG |
+| `features/results/ChartFigure.tsx`, `ExportButton.tsx` | Figura acessível e botões de SVG/PNG; aplica a personalização da figura (chave = `testId`) à tela e à exportação |
+| `features/results/FigureCustomizer.tsx`, `services/charts/figureStyle.ts` | Edição por figura (título, rótulos, letras, fonte) gravada em `Experiment.figure_styles`; troca os textos marcados com `data-figure` no SVG ([DT-0016](../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md)) |
+| `features/settings/UpdateCheck.tsx` | “Verificar atualizações” (só no aplicativo Windows; instalação somente com assinatura válida, [DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
 | `services/charts/{svg,means,boxplot,scatter}.ts` | Renderizador SVG (tela e exportação, mesma fonte) |
 | `services/export/{csv,png,metadata}.ts` | CSV (formatos técnico e Excel, proteção contra fórmulas), rasterização, chunk `tEXt` e proveniência |
 | `services/export/{xlsx,report,settings}.ts` | Pasta de trabalho (escrita pelo motor), documento e limpeza do relatório HTML, preferências de exportação |

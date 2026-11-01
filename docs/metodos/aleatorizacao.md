@@ -4,7 +4,7 @@
 
 | Campo | Valor |
 |---|---|
-| ID no registro do motor | parte de `two_level_design` |
+| ID no registro do motor | parte de `two_level_design`; também usada por `completely_randomized_design` ([DIC](delineamento-inteiramente-casualizado.md)) |
 | Módulos | C11 `designs/randomization` |
 | Etapa | [ET06](../planos-execucao/concluidos/et06-fatoriais-plackett-burman.md) |
 | Casos de validação | [`two_level_design/permutations.json`](../../validation/cases/two_level_design/permutations.json) |

@@ -4,7 +4,7 @@
 
 Plano de execução por etapas da primeira versão do EnziTAG Optima. Recorta o [roteiro do produto](roteiro-produto.md) a partir das [decisões aprovadas](../produto/decisoes-aprovadas.md) e do [catálogo funcional](../produto/catalogo-funcional.md). A versão-alvo de cada método está na [matriz de cobertura](../produto/matriz-cobertura.md). A numeração da versão segue a [DT-0002](../decisoes-tecnicas/dt-0002-versionamento-primeira-versao.md).
 
-**Situação:** nenhuma etapa concluída. Etapas ativas: [ET01 — Fundação técnica](ativos/et01-fundacao-tecnica.md) (só evidência Windows pendente) e [ET02 — Primeiro percurso](ativos/et02-primeiro-percurso.md).
+**Situação:** nenhuma etapa concluída. Etapas ativas: [ET01 — Fundação técnica](concluidos/et01-fundacao-tecnica.md) (só evidência Windows pendente) e [ET02 — Primeiro percurso](concluidos/et02-primeiro-percurso.md).
 
 ## 1. Definição da primeira versão
 
@@ -55,6 +55,7 @@ Nada abaixo sai do escopo final aprovado; apenas não integra a primeira versão
 | DBC e blocos em planejamentos, ANOVA multifatorial geral, médias marginais, contrastes planejados | F08 | v0.2 |
 | Welch/Games–Howell, Dunnett, Bonferroni/Holm, Kruskal–Wallis/Dunn, comparações pareadas | F08 | v0.2 |
 | PDF de figuras e relatórios; personalização gráfica completa | F10 | v0.2 |
+| Migração do Node.js 22 para o 26 (toolchain; tarefa inicial da ET11, antes de novas funcionalidades), conforme [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md) | Transversal | v0.2 |
 | Google Drive, pasta visível, abrir compartilhado e criar cópia | F11 | v0.3 |
 | Níveis mistos, misturas, ótimos/restritos, modelos mistos, medidas repetidas, não lineares (Monod), potência | F09a–F09g | v0.4 em diante |
 | Canal estável e cobertura completa do catálogo | F12–F13 completos | v1.0.0 |
@@ -66,15 +67,15 @@ Os destinos são indicativos e serão confirmados ao planejar cada versão. A [m
 
 | Etapa | Nome | Fases | Depende de | Entrega principal | Marco |
 |---|---|---|---|---|---|
-| [ET01](ativos/et01-fundacao-tecnica.md) | Fundação técnica e contratos iniciais | F00 | — | Ambiente reproduzível, pacotes reais, contrato tipado nas duas plataformas, CI | — |
-| [ET02](ativos/et02-primeiro-percurso.md) | Primeiro percurso ponta a ponta | F01 | ET01 | Interface básica, temas, idiomas, estatística descritiva nas duas plataformas | — |
-| [ET03](ativos/et03-projeto-local-importacao.md) | Projeto local, importação e recuperação | F02 | ET02 | `.enzitag`, revisões, importação, salvamento e recuperação | **M1** |
-| [ET04](ativos/et04-fundamentos-numericos-modelos.md) | Fundamentos numéricos e modelos lineares | F03 | ET03 | Álgebra, distribuições, regressão e diagnósticos validados | — |
-| [ET05](ativos/et05-anova-tukey-letras.md) | ANOVA, Tukey e letras | F04 | ET04 | Percurso de comparação completo e exportação inicial | **M2** |
+| [ET01](concluidos/et01-fundacao-tecnica.md) | Fundação técnica e contratos iniciais | F00 | — | Ambiente reproduzível, pacotes reais, contrato tipado nas duas plataformas, CI | — |
+| [ET02](concluidos/et02-primeiro-percurso.md) | Primeiro percurso ponta a ponta | F01 | ET01 | Interface básica, temas, idiomas, estatística descritiva nas duas plataformas | — |
+| [ET03](concluidos/et03-projeto-local-importacao.md) | Projeto local, importação e recuperação | F02 | ET02 | `.enzitag`, revisões, importação, salvamento e recuperação | **M1** |
+| [ET04](concluidos/et04-fundamentos-numericos-modelos.md) | Fundamentos numéricos e modelos lineares | F03 | ET03 | Álgebra, distribuições, regressão e diagnósticos validados | — |
+| [ET05](concluidos/et05-anova-tukey-letras.md) | ANOVA, Tukey e letras | F04 | ET04 | Percurso de comparação completo e exportação inicial | **M2** |
 | [ET06](concluidos/et06-fatoriais-plackett-burman.md) | Fatoriais, fracionários e Plackett–Burman | F05 | ET04, ET05 | Geração e análise de planejamentos de triagem | — |
 | [ET07](concluidos/et07-superficies-resposta.md) | Superfícies de resposta e planejamento personalizado | F06 | ET06 | Compostos centrais, Box–Behnken, modelo de 2ª ordem, superfícies | — |
 | [ET08](concluidos/et08-otimizacao.md) | Otimização de uma ou várias respostas | F07 | ET07 | Desejabilidade, candidatos e confirmação | **M3** |
-| [ET09](ativos/et09-graficos-exportacao.md) | Gráficos e exportação essenciais | F10 (recorte) | ET05 | Personalização essencial e formatos da v0.1 em todos os gráficos | — |
+| [ET09](concluidos/et09-graficos-exportacao.md) | Gráficos e exportação essenciais | F10 (recorte) | ET05 | Personalização essencial e formatos da v0.1 em todos os gráficos | — |
 | [ET10](ativos/et10-integracao-publicacao.md) | Integração, verificação e publicação | F12, F13 (recortes) | ET01–ET09 | Versão `v0.1.0` verificada e publicada | **v0.1.0** |
 
 ```mermaid
@@ -140,8 +141,8 @@ As pendências estão no [registro de decisões pendentes](../produto/decisoes-p
 | Precisão de distribuições (caudas, amplitude studentizada) | p-valores e Tukey incorretos | Validar cedo contra R, SciPy e mpmath; tolerâncias por grandeza (ET04–ET05) |
 | Diferenças nativo × WASM em funções matemáticas | Resultados divergentes entre plataformas | Testes de paridade com tolerância; avaliar implementação matemática única nos dois alvos (DT em ET04) |
 | Crescimento de escopo | Atraso da v0.1 | Seção 8, matriz de cobertura e uma etapa ativa por vez |
-| Custo de CI Windows em repositório privado | Cota de minutos consumida rapidamente | Build Windows em `main`, em etiquetas e manual; demais verificações em Linux (ET01) |
-| Publicação web com repositório privado | GitHub Pages indisponível no plano gratuito | PD-15 decidida antes da ET10 |
+| Custo de CI Windows | Resolvido: repositório público (minutos gratuitos); verificação no Windows em todo push (PD-15) | Build e verificação nativa no Windows a cada push e pull request |
+| Publicação web com repositório privado | Resolvido: repositório público (PD-15, 2026-11-01) | GitHub Pages por disparo manual (`pages.yml`) |
 | Licenças e peso de bibliotecas JS (grade, planilha, 3D) | Incompatibilidade com MIT ou pacote web grande | Critérios de licença e tamanho nas DTs (ET02, ET03, ET05, ET07) |
 | Ferramentas WASM em transição de manutenção | Build web quebrado | Verificar situação das ferramentas em ET01 e fixar versões |
 | Instalador sem assinatura de código | Alertas do Windows ao instalar | PD-11; documentar instalação nas notas da versão |

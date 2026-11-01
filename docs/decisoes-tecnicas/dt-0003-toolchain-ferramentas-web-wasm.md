@@ -6,7 +6,7 @@
 | Data | 2026-11-01 |
 | Origem | ET01-T02, ET01-T03 |
 | Pendências relacionadas | PD-01 (parcial: base técnica) |
-| Substitui / substituída por | — |
+| Substitui / substituída por | Linha "Node.js" substituída a partir da v0.2 pela [DT-0015](dt-0015-migracao-node-26-na-v0-2.md); as demais linhas continuam vigentes |
 
 ## Contexto
 
@@ -39,7 +39,7 @@ A ET01 precisa de um ambiente reproduzível para Rust, WebAssembly e interface, 
 
 ## Critérios e evidências
 
-- `cargo fmt --check`, `cargo clippy -D warnings` e `cargo test` executados no workspace (ver [registro da ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md)).
+- `cargo fmt --check`, `cargo clippy -D warnings` e `cargo test` executados no workspace (ver [registro da ET01](../planos-execucao/concluidos/et01-fundacao-tecnica.md)).
 - Build WASM release de `optima-wasm`: 149 569 bytes (`optima_wasm_bg.wasm`).
 - E2E no Chromium e no Firefox carregando o WASM real em um Worker.
 - Situação de manutenção (crates.io, 2026-11-01): `wasm-bindgen` 0.2.130 e `wasm-pack` 0.15.1 (2026-10-30); `tauri` 2.12.5 e `tauri-cli` 2.12.4 (2026-10-21). O Tauri 3 existe apenas como pré-lançamento (`3.0.0-alpha`) e não foi adotado.

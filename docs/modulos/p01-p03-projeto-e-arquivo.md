@@ -19,11 +19,12 @@ Definir o **documento** (experimentos, revisões imutáveis, análises vinculada
 
 | ID | Arquivo | Responsabilidade |
 |---|---|---|
-| P01 | `document.rs` | `ProjectDocument`, `Experiment`, `EntryPath`, validação de coerência (`validate`), `with_hashes` |
+| P01 | `document.rs` | `ProjectDocument`, `Experiment` (campos opcionais `design`, `crd`, `figure_styles`, `origin`, `confirmation`), `EntryPath`, validação de coerência (`validate`), `with_hashes` |
+| P01 | `figure_style.rs` | `FigureStyle`: título, rótulos dos eixos, exibição das letras e escala de fonte por figura (só apresentação; validado no `validate`) |
 | P01 | `experiment.rs` | `ExperimentData` (texto das células), `FactorSpec`, `ResponseSpec`, `RowRecord`, `content_hash` |
 | P01 | `revision.rs` | `Revision`, `RevisionReason` |
 | P01 | `analysis.rs` | `AnalysisRecord`, `AnalysisOptions`, `AnalysisResult` |
-| P02 | `archive.rs` | `encode`, `decode`, `decode_with_limits`, `Limits` |
+| P02 | `archive.rs` | `encode` (bytes reprodutíveis: carimbo, sistema de origem e permissões do ZIP fixos), `decode`, `decode_with_limits`, `Limits` |
 | P02 | `manifest.rs` | Manifesto e constantes do contêiner |
 | P02 | `integrity.rs` | `sha256_hex`, `matches_manifest` |
 | P03 | `migrations/mod.rs` | `migrate_to_current` (recusa de versão futura e inválida; sem passos reais ainda) |

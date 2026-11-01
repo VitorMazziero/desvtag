@@ -9,7 +9,7 @@ O que o aplicativo exporta, como e com que garantias. Decisões em [DT-0014](../
 | Conteúdo | Formatos | Onde |
 |---|---|---|
 | Figuras | SVG e PNG | Botões abaixo de cada figura |
-| Tabelas | CSV e XLSX | Pares de botões `(CSV)` / `(XLSX)` junto de cada tabela (comparação, planejamento, matriz de ensaios, superfície, malha de predições, candidatos da otimização) |
+| Tabelas | CSV e XLSX | Pares de botões `(CSV)` / `(XLSX)` junto de cada tabela (comparação, planejamento, matriz de ensaios, matriz do DIC, superfície, malha de predições, candidatos da otimização) |
 | Relatório | HTML autocontido | Painel **Exportação e aparência das figuras**, botão *Exportar relatório (HTML)* |
 | Projeto | `.enzitag` | Menu do projeto (não é exportação de resultados) |
 
@@ -26,6 +26,14 @@ Não existem PDF, DOCX, Google Drive nem DBC na v0.1. Para obter PDF, abra o rel
 | Algarismos significativos nas figuras | 3 a 6 |
 
 As preferências valem para o dispositivo, ficam registradas nos metadados dos arquivos e **não** entram no `.enzitag`.
+
+## Personalização por figura
+
+Abaixo de cada figura, **Personalizar figura** permite trocar o **título**, os **rótulos dos eixos** (quando a figura os tem), **ocultar as letras de comparação** do gráfico de médias e escolher o **tamanho da fonte** só daquela figura. Os campos aparecem conforme o que a figura possui; o texto padrão aparece como sugestão e *Restaurar padrão* desfaz tudo.
+
+- A configuração é **salva no projeto** (`.enzitag`, campo opcional `figureStyles` do experimento) e vale para a tela, o SVG, o PNG e o relatório HTML.
+- É só apresentação: dados, escalas e resultados não mudam. Ocultar as letras remove-as do desenho; as letras calculadas continuam na tabela de resultados e a legenda da barra de incerteza continua visível.
+- Textos até 200 caracteres. Letras manuais, anotações livres, símbolos e posição das letras não existem na v0.1.
 
 ## Proveniência
 
@@ -46,6 +54,6 @@ Arquivo único e offline: método, configuração, revisão, versões, tabelas, 
 
 ## Limitações conhecidas (v0.1)
 
-- Não há edição por figura (título, rótulos dos eixos, posição das letras); a personalização se limita às preferências acima.
+- A personalização por figura cobre título, rótulos, exibição das letras e fonte; não há letras manuais, anotações, símbolos nem posição das letras (v0.2). Os rótulos dos eixos da superfície 3D não são editáveis.
 - O PNG tem resolução fixa; gráficos 3D são desenhados em SVG (não há partes rasterizadas).
 - Inspeção em Excel e LibreOffice foi feita por leitura programática (openpyxl) e pelo importador do próprio aplicativo; a abertura manual nesses programas não foi registrada.

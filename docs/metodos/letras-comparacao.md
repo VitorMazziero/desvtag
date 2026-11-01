@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `one_way_comparison` (parte do mesmo método) |
 | Módulos | C09 `comparisons/letters` |
-| Etapa | [ET05](../planos-execucao/ativos/et05-anova-tukey-letras.md) |
+| Etapa | [ET05](../planos-execucao/concluidos/et05-anova-tukey-letras.md) |
 | Casos de validação | [`validation/cases/one_way_comparison/101…104`](../../validation/cases/one_way_comparison/README.md); testes `comparisons::letters::tests` |
 
 ## 1. Pergunta

@@ -32,7 +32,7 @@ O relatório é obtido **renderizando os componentes de resultado em um contêin
 
 ### 5. Estilo das figuras e preferências de exportação
 
-Paleta padrão ou acessível a daltonismo (Okabe–Ito), escala de fonte (0,85; 1; 1,2) e algarismos significativos (3–6) são aplicados por `applyChartStyle` sobre o SVG já gerado, tanto na tela quanto na exportação. As preferências (idioma dos arquivos, formato do CSV, paleta, fonte, algarismos) são **preferências do dispositivo** guardadas no armazenamento local do navegador/aplicativo e **registradas nos metadados dos arquivos**; **não** são gravadas no `.enzitag`, que permanece no esquema 1. Consequência: a personalização por figura (título, rótulos de eixos, posição de letras) não existe na v0.1 — ver [plano ET09, desvios](../planos-execucao/ativos/et09-graficos-exportacao.md#12-desvios-e-descobertas).
+Paleta padrão ou acessível a daltonismo (Okabe–Ito), escala de fonte (0,85; 1; 1,2) e algarismos significativos (3–6) são aplicados por `applyChartStyle` sobre o SVG já gerado, tanto na tela quanto na exportação. As preferências (idioma dos arquivos, formato do CSV, paleta, fonte, algarismos) são **preferências do dispositivo** guardadas no armazenamento local do navegador/aplicativo e **registradas nos metadados dos arquivos**; **não** são gravadas no `.enzitag`, que permanece no esquema 1. Consequência: a personalização por figura (título, rótulos de eixos, posição de letras) não existe na v0.1 — ver [plano ET09, desvios](../planos-execucao/concluidos/et09-graficos-exportacao.md#12-desvios-e-descobertas).
 
 ### 6. Formatos fora da v0.1
 

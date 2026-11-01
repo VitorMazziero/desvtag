@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** (Windows 10 no lugar do Windows 11, decisão do usuário) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F01 |
 | Marco | Prepara M1 |
 | Depende de | ET01 (código concluído; evidência Windows 11 pendente, ver [exceção](../README.md)) |
 | Módulos | C01–C03 e C05 iniciais, C18 inicial, E01–E04, U01–U04, U08, U12, U17–U19 |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -65,7 +65,7 @@ Entregar o primeiro caminho executável completo: cadastrar fatores e respostas,
 - [x] **T11** *(mensagens feitas; `logging/local.ts` não criado por falta de uso, ver seção 12)* — U19: códigos de erro → mensagens PT/EN; registro local sem dados experimentais.
 - [x] **T12** — Caso de validação `validation/cases/descriptive_summary/` com referência Python e conjuntos de precisão numérica do NIST StRD (estatística univariada).
 - [x] **T13** — Teste de paridade nativo × WASM com os mesmos dados.
-- [ ] **T14** *(navegador concluído; Windows pendente, ver seção 11)* — E2E no navegador (cadastro → dados → resultado em PT e EN) e verificação do aplicativo Windows conforme DT.
+- [x] **T14** — E2E no navegador (cadastro → dados → resultado em PT e EN) em Chromium, Firefox, Chrome e Edge estáveis; verificação do aplicativo Windows por WebView2 (CDP) no Windows 10 e em `windows-latest` (Windows 10 Pro 22H2 (build 19045, 64 bits) da máquina de desenvolvimento do usuário, por decisão de 2026-11-01 ([decisões aprovadas §15](../../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); Windows 11 não verificado).
 - [x] **T15** *(automatizada; leitor de tela manual pendente)* — Acessibilidade: navegação por teclado no fluxo, foco visível, rótulos de campos e verificação automatizada de contraste.
 - [x] **T16** — Documentação: [`docs/metodos/estatistica-descritiva.md`](../../metodos/README.md), fichas C05, U01–U04, U17–U19; matriz de cobertura.
 
@@ -109,6 +109,7 @@ DTs da seção 4; fichas de módulo; especificação do método descritivo; [mat
 | Pendente para concluir | Evidência no **Windows** (critério 1 e T14), a mesma pendência da [ET01](et01-fundacao-tecnica.md): job `desktop-windows` da CI e/ou máquina Windows 11. Verificação manual com leitor de tela |
 | Próxima ação | Resolver a verificação nativa no Windows; depois mover ET01 e ET02 para `concluidos/` e ativar a ET03 |
 | Windows (CI) | na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, descritiva, `.enzitag` e adulteração, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento e análise). **Não é Windows 11 de usuário**, sem diálogos nativos e sem clone limpo pelo guia: a evidência literal em Windows 11 segue pendente e a etapa continua aberta. |
+| 2026-11-01 | **Windows 10:** a verificação nativa (`native-cdp.mjs`, WebView2 156.0.4314.58) aprovou `engine.info`, descritiva e todos os métodos seguintes; E2E do fluxo guiado em quatro navegadores. Windows 11 não verificado (decisão do usuário). |
 
 ### Evidências (2026-11-01)
 

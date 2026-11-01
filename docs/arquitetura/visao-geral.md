@@ -11,7 +11,7 @@ A aprendizagem solicitada está ligada à **distinção organizada dos módulos 
 - Windows/Tauri: motor Rust nativo e integração com o sistema.
 - Navegador/WebAssembly: o mesmo motor científico, com transporte próprio.
 - Projetos locais sem login e Google Drive opcional como destino adicional.
-- Código sob MIT; repositório remoto criado e privado por enquanto, conforme decisão posterior do usuário. Web no GitHub Pages e Windows no GitHub Releases são destinos previstos, ainda sem aplicativo publicado.
+- Código sob MIT; repositório remoto público desde 2026-11-01, por decisão do usuário (PD-15). Web no GitHub Pages e Windows no GitHub Releases são destinos previstos, ainda sem aplicativo publicado.
 
 O catálogo completo está no [catálogo funcional](../produto/catalogo-funcional.md), e as políticas aprovadas nas [decisões aprovadas](../produto/decisoes-aprovadas.md). A organização de pastas e arquivos do repositório está em [estrutura do repositório](estrutura-repositorio.md).
 

@@ -65,10 +65,10 @@ Configuradas na ET01 e ampliadas a cada etapa. Previstas:
 | Tipos TypeScript gerados atualizados | Todo push e pull request |
 | Links da documentação | Todo push e pull request |
 | Casos de validação | Todo push e pull request, a partir da ET02 |
-| Build Windows (Tauri) | `main`, etiquetas e disparo manual |
+| Build e verificação nativa no Windows (Tauri) | Todo push e pull request (repositório público) |
 | E2E do navegador | Pull request, a partir da ET02 |
 
-Execuções em Windows consomem a cota de minutos de repositórios privados mais rapidamente do que em Linux; por isso ficam fora do fluxo de cada push.
+Execuções em Windows são mais lentas do que em Linux. Com o repositório público os minutos de CI são gratuitos, e a verificação no Windows roda em todos os pushes e pull requests.
 
 ## 5. Dados e segurança
 

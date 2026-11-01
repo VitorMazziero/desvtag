@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | — (funções internas, sem operação própria; avaliadas via `distributionEvaluate`) |
 | Módulos | C03 `numeric/{special_functions,root_finding}` |
-| Etapa | [ET04](../planos-execucao/ativos/et04-fundamentos-numericos-modelos.md) |
+| Etapa | [ET04](../planos-execucao/concluidos/et04-fundamentos-numericos-modelos.md) |
 | Casos de validação | [`validation/cases/distributions/`](../../validation/cases/distributions/001-normal/README.md) |
 
 ## 1. Pergunta

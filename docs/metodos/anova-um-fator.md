@@ -7,7 +7,7 @@
 | ID no registro do motor | `one_way_comparison` (versão 1; reúne ANOVA, Tukey, letras e diagnósticos) |
 | Operação do protocolo | `comparisonOneWay` (`comparison.oneWay`) |
 | Módulos | C07 `inference/one_way_anova`, C08 `diagnostics/assumptions`, C09 `comparisons/{groups,mod}`, C16 `visualization/{boxplot,residuals}`, C18 `interpretation/rules` |
-| Etapa | [ET05](../planos-execucao/ativos/et05-anova-tukey-letras.md) |
+| Etapa | [ET05](../planos-execucao/concluidos/et05-anova-tukey-letras.md) |
 | Casos de validação | [`validation/cases/one_way_comparison/`](../../validation/cases/one_way_comparison/README.md) |
 
 ## 1. Pergunta estatística

@@ -20,12 +20,12 @@ O [roteiro do produto](../planos-execucao/roteiro-produto.md) define a sequênci
 | PD-08 | Escala dos casos reais e dados autorizados para distribuição | Durante cada fase | Todas | Exemplos sintéticos identificados e referências independentes |
 | PD-09 | Credenciais públicas de cliente OAuth, origens e fluxo nativo | F11 | Posterior à v0.1 | Drive opcional, pasta visível e escopo `drive.file`; nunca exigir login local |
 | PD-10 | Detecção de conflitos e proteção contra gravações concorrentes | F11 | Posterior à v0.1 | Preservar versões e permitir escolha/cópia |
-| PD-11 | Fonte de assinatura de código do instalador, se adotada | F13 | ET10 | Assinatura dos pacotes do atualizador já prevista; são mecanismos diferentes |
+| PD-11 | Fonte de assinatura de código do instalador, se adotada | F13 | ET10 | **Resolvida em 2026-11-01:** instalador sem assinatura de código na v0.1 (aviso do Windows explicado nas notas); atualizador com chave própria ([DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
 | PD-12 | Versões exatas dos navegadores e matriz de compatibilidade | F12/F13 | ET10 | Windows 11 de 64 bits, Chrome, Edge e Firefox prioritários |
 | PD-13 | Domínio próprio, Windows 10 e Safari | F14 | Posterior à v0.1 | Adições posteriores conforme necessidade e testes |
 | PD-14 | Protocolo de comentários e colaboração simultânea | F14 | Posterior à v0.1 | Comentários posteriores; edição simultânea exige especificação própria |
-| PD-15 | Hospedagem web e visibilidade do repositório na publicação | F13 | ET10 (decisão do usuário) | GitHub Pages aprovado; repositório privado por enquanto; tornar público depende de nova decisão |
+| PD-15 | Hospedagem web e visibilidade do repositório na publicação | F13 | ET10 (decisão do usuário) | **Resolvida em 2026-11-01:** repositório público; GitHub Pages por disparo manual ([DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
 
-**Sobre PD-15:** a documentação de concepção registra que o Pages é gratuito para repositórios públicos no GitHub Free. Com o repositório privado, publicar a versão web exige tornar o repositório público, adotar um plano do GitHub que permita Pages em repositórios privados ou escolher outra hospedagem estática. Nos planos que permitem Pages em repositório privado, o site publicado em geral continua acessível publicamente. Verificar as condições vigentes do GitHub no início da ET10 e levar a escolha ao usuário.
+**Sobre PD-15:** decidida em 2026-11-01 — o repositório é público, o que permite o GitHub Pages gratuito. A publicação efetiva da versão web continua sendo um ato do mantenedor (fluxo `pages.yml`).
 
 Soft Light padrão, preferência por dispositivo, idioma independente de exportação, formatos SVG/PDF/PNG/CSV/XLSX/HTML/PDF, extensão `.enzitag`, Drive opcional e MIT já estão aprovados. DOCX e comentários são entregas posteriores previstas, não requisitos esquecidos. Nenhum item desta tabela significa que os módulos locais devem aguardar a configuração de um serviço externo.

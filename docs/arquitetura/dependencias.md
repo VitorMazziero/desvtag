@@ -42,7 +42,7 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 | `@axe-core/playwright` | 4.14.0 | Varredura automática de acessibilidade nos E2E (somente desenvolvimento) | MPL-2.0 |
 | `@biomejs/biome` | 2.6.4 | Lint e formatação | MIT OR Apache-2.0 |
 | `@tauri-apps/cli` | 2.12.4 | Build e ícones do aplicativo Windows | Apache-2.0 OR MIT |
-| `@types/node` 22.20.5, `@types/react` 19.3.0, `@types/react-dom` 19.3.0 | — | Tipos | MIT |
+| `@types/node` 22.20.5, `@types/react` 19.3.0, `@types/react-dom` 19.3.0 | — | Tipos (`@types/node` acompanha o Node 22 da v0.1 e passa para a linha 26 na migração da v0.2, [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) | MIT |
 
 ## Observações
 

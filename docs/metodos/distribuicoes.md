@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | — (operação `distributionEvaluate`, sem método estatístico próprio) |
 | Módulos | C04 `distributions/{normal,student_t,chi_square,f,quantile,evaluate}` |
-| Etapa | [ET04](../planos-execucao/ativos/et04-fundamentos-numericos-modelos.md) |
+| Etapa | [ET04](../planos-execucao/concluidos/et04-fundamentos-numericos-modelos.md) |
 | Casos de validação | [`validation/cases/distributions/`](../../validation/cases/distributions/001-normal/README.md) |
 
 ## 1. Pergunta

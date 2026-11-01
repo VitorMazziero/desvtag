@@ -6,7 +6,7 @@
 
 EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com fluxo guiado de planejamento e análise de experimentos, comparações de tratamentos e otimização de processos. O desenvolvimento está ligado às atividades do grupo de pesquisa EnziTAG.
 
-**Estado atual:** candidata à primeira versão (v0.1.0, experimental), **não publicada**. Implementados e validados contra referências independentes: estatística descritiva, ANOVA de um fator com Tukey/Tukey–Kramer e letras, planejamentos de dois níveis (fatorial, fracionário, Plackett–Burman), compostos centrais e Box–Behnken, superfície de resposta com contornos e 3D, otimização por desejabilidade com ensaios de confirmação, projetos `.enzitag` e exportação (SVG/PNG, CSV/XLSX, relatório HTML). A verificação em Windows 11 de 64 bits, a publicação e o atualizador estão pendentes ([plano da v0.1](docs/planos-execucao/plano-v0.1.md), [matriz de cobertura](docs/produto/matriz-cobertura.md)). Etapa ativa: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md).
+**Estado atual:** candidata à primeira versão (v0.1.0, experimental), **pronta localmente e ainda não publicada**. Implementados e validados contra referências independentes: estatística descritiva, DIC aleatorizado, ANOVA de um fator com Tukey/Tukey–Kramer e letras, planejamentos de dois níveis (fatorial, fracionário, Plackett–Burman), compostos centrais e Box–Behnken, superfície de resposta com contornos e 3D, otimização por desejabilidade com ensaios de confirmação, projetos `.enzitag` e exportação (SVG/PNG, CSV/XLSX, relatório HTML) com personalização por figura. Verificada no navegador (Chromium, Firefox, Chrome e Edge) e no Windows 10 e em `windows-latest`; **Windows 11 não foi verificado**. Pendentes, por ato do mantenedor: etiqueta, release do instalador, Pages e verificação da atualização ([plano da v0.1](docs/planos-execucao/plano-v0.1.md), [matriz de cobertura](docs/produto/matriz-cobertura.md), [publicação](docs/distribuicao/publicacao.md)). Etapa ativa: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md).
 
 ## Executar localmente (navegador)
 
@@ -105,7 +105,7 @@ A árvore completa, com o que já existe e a etapa que cria cada parte, está em
 
 ## Distribuição pretendida
 
-O repositório [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima) foi criado e está **privado por enquanto**, conforme decisão de 2026-11-01. A branch `main` está vinculada ao remoto `origin`. GitHub Pages e Releases permanecem como destinos previstos para o aplicativo; ainda não há versão web ou instalador publicado. Tornar o código público fica para uma decisão posterior do usuário.
+O repositório [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima) é **público** desde 2026-11-01 (decisão PD-15 do usuário), sob licença MIT. GitHub Pages e Releases são os destinos previstos para o aplicativo; os fluxos de publicação existem, mas **nenhuma versão web ou instalador foi publicado ainda** ([procedimento](docs/distribuicao/publicacao.md)).
 
 ## Licença
 

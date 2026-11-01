@@ -7,7 +7,7 @@
 | ID no registro do motor | `linear_model` (versão 1) |
 | Operação do protocolo | `modelFitLinear` (`model.fitLinear`) |
 | Módulos | C06 `models/{terms,design_matrix,linear,covariance,prediction}`, C07 `inference/{regression_anova,intervals}`, C08 `diagnostics/{residuals,influence}`, C03, C04 |
-| Etapa | [ET04](../planos-execucao/ativos/et04-fundamentos-numericos-modelos.md) |
+| Etapa | [ET04](../planos-execucao/concluidos/et04-fundamentos-numericos-modelos.md) |
 | Casos de validação | [`validation/cases/linear_model/`](../../validation/cases/linear_model/README.md) |
 
 ## 1. Pergunta estatística

@@ -72,7 +72,7 @@ Documentar problema, fórmulas, cálculo pequeno, implementação Rust, integra�
 ## 14. Publicação e suporte
 
 - **MIT** como licença escolhida; a menção à GPLv3 no texto aprovado era uma alternativa condicional, não uma segunda licença selecionada.
-- Repositório remoto criado em `VitorMazziero/enzitag-optima` e **privado por enquanto**, conforme atualização explícita do usuário em 2026-11-01. Essa decisão substitui a publicação pública imediata; tornar público depende de decisão posterior. A licença MIT permanece.
+- Repositório remoto `VitorMazziero/enzitag-optima`: privado por solicitação do usuário em 2026-11-01 e **tornado público em 2026-11-01** por decisão posterior do usuário (PD-15, ver [fechamento da v0.1](#15-fechamento-da-v01-2026-11-01)). A licença MIT permanece.
 - GitHub Pages para web; endereço previsto `https://vitormazziero.github.io/enzitag-optima/`; instaladores no GitHub Releases. Domínio próprio posterior.
 - Prioridade: Windows 11 de 64 bits e versões atuais de Chrome, Edge e Firefox. Windows 10 e Safari dependem de testes de compatibilidade posteriores.
 - Canais experimental e estável; instalação de atualizações em momento escolhido pelo usuário; pacotes de atualização assinados.
@@ -81,3 +81,13 @@ Documentar problema, fórmulas, cálculo pequeno, implementação Rust, integra�
 ## Estado e limites deste registro
 
 A aprovação define o produto e orienta a implementação. Não significa que os métodos estejam implementados, que serviços Google estejam configurados ou que exista aplicativo publicado. O repositório remoto já foi criado, recebeu a documentação e está privado. Escolhas de algoritmos, bibliotecas auxiliares, formatos internos e limites operacionais seguem o plano; somente os detalhes ainda não resolvidos estão em [decisões pendentes](decisoes-pendentes.md).
+
+## 15. Fechamento da v0.1 (2026-11-01)
+
+Decisões do usuário ao finalizar a v0.1.0 (canal experimental):
+
+1. **PD-15 — repositório público.** O repositório passa a ser público; a versão web usa o GitHub Pages (publicação por disparo manual do mantenedor).
+2. **Escopo da v0.1.0 ampliado:** implementar a geração aleatorizada de DIC com fator categórico e a personalização gráfica por figura salva no projeto ([DT-0016](../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md)). O que continua fora: letras manuais e anotações livres, símbolos e posição das letras.
+3. **PD-11 — instalador sem assinatura de código** nesta versão; o **atualizador** usa chave própria de assinatura, **cuja geração o usuário autorizou** (chave privada em segredo do GitHub, fora do repositório; [DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)).
+4. **Ambiente de verificação do Windows:** não haverá teste em Windows 11 limpo para a v0.1.0; a verificação do aplicativo Windows é feita no **Windows 10 Pro (build 19045)** da máquina de desenvolvimento do usuário, além de `windows-latest` na CI. Windows 11 fica registrado como **não verificado** nas notas de versão.
+5. Pendências que continuam do usuário: conferência da opção CCD e do rótulo no Protimiza; publicação efetiva (etiqueta, release e Pages).
