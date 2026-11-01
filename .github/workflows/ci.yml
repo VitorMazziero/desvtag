@@ -191,5 +191,10 @@ jobs:
         run: cargo build --release --features tauri/custom-protocol
         working-directory: app/desktop/src-tauri
       - name: Verificação nativa no Windows (WebView2 por CDP)
-        run: node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
+        shell: pwsh
+        run: |
+          # Registra o sistema em que a verificação foi feita (a imagem da CI não é um Windows 11 de usuário).
+          (Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber, OSArchitecture | Format-List | Out-String).Trim()
+          node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
         working-directory: app/desktop
