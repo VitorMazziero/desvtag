@@ -110,6 +110,16 @@
       "not_estimable": "{{count}} termo(s) não estimável(is) com estes ensaios; o planejamento não separa esses termos.",
       "extrapolation_note": "Predições fora da região ensaiada (hachuradas nos gráficos) são extrapolação e não são confiáveis.",
       "independence_not_assessed": "A independência dos ensaios não é verificável pelos dados; depende de como o experimento foi conduzido."
+    },
+    "optimization": {
+      "no_global_claim": "A busca é local, com vários inícios: ela não prova que o melhor candidato seja o ótimo global.",
+      "infeasible": "Nenhum candidato satisfaz os limites obrigatórios na região pesquisada.",
+      "zero_desirability": "A desejabilidade global é zero em todos os pontos viáveis encontrados: ao menos um objetivo não é atingível junto com os demais.",
+      "single_start": "A melhor solução veio de um só início: aumente o número de inícios para verificar se há soluções melhores.",
+      "boundary": "A melhor solução está no limite do domínio em: {{factors}}. O ótimo pode estar além, fora da região experimental.",
+      "extrapolated": "{{count}} candidato(s) fora da região experimental (extrapolação): trate-os com cautela.",
+      "compromise": "Com várias respostas há compromissos: veja quanto cada resposta cede em relação ao melhor que alcançaria sozinha.",
+      "confirm_with_runs": "Previsões são do modelo: confirme os candidatos com ensaios novos antes de adotá-los."
     }
   },
   "comparison": {

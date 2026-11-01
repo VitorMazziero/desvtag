@@ -94,6 +94,30 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::OptimizationRun(req) => {
+            match optima_core::optimization::optimize(req.as_ref()) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::OptimizationRun(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::OptimizationEvaluate(req) => {
+            match optima_core::optimization::evaluate_points(req.as_ref()) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::OptimizationEvaluate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::OptimizationGrid(req) => {
+            match optima_core::optimization::desirability_grid(req.as_ref()) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::OptimizationGrid(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::ComparisonOneWay(req) => match optima_core::comparisons::compare_one_way(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::ComparisonOneWay(Box::new(result)),

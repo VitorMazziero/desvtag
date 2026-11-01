@@ -42,22 +42,23 @@ ProjectDocument
 └─ experiments[]
    ├─ id, name, entryPath ("plan" | "analyze" | "compare" | null)
    ├─ showUnitColumn, notes
-   ├─ analysisSelection { responseId, groupBy[], factorId?, alpha?, terms?, includeCurvature?, surface? }
+   ├─ analysisSelection { responseId, groupBy[], factorId?, alpha?, terms?, includeCurvature?, surface?, optimization? }
    ├─ design?           DesignSpec do planejamento aplicado (ET06)
+   ├─ origin?, confirmation?   vínculo e previsões de um experimento de confirmação (ET08)
    ├─ revisions[]       instantâneos imutáveis, da mais antiga para a mais recente
    │  └─ id, parent, createdAt, reason, contentHash, data
    │     └─ data = { factors[], responses[], rows[] }   (TEXTO das células)
    └─ analyses[]
       └─ id, createdAt, revisionId, signature, methodId, methodVersion, engineVersion,
          options { responseId, groupBy[], factorId?, alpha? },
-         result { type: "descriptive" | "oneWayComparison" | "twoLevelDesign" | "responseSurface", ... }
+         result { type: "descriptive" | "oneWayComparison" | "twoLevelDesign" | "responseSurface" | "optimization", ... }
 ```
 
 `factorId` e `alpha` só existem nas comparações de tratamentos (ET05) e são **omitidos** nas análises descritivas, de modo que arquivos já escritos continuam idênticos e legíveis. O resultado `oneWayComparison` guarda o `OneWayResult` completo (grupos, ANOVA, Tukey, letras, diagnósticos, fatos e proveniência). O esquema segue `1`: as adições são campos opcionais e uma variante nova do resultado ([DT-0010](../decisoes-tecnicas/dt-0010-comparacao-de-tratamentos.md), item 8); uma versão anterior do aplicativo recusa, com diagnóstico, um arquivo que contenha a variante que não conhece.
 
 O campo opcional `design` guarda o `DesignSpec` (tipo, fatores com níveis reais, réplicas, pontos centrais, aleatorização e **semente**), de modo que a matriz e a ordem de execução possam ser reproduzidas; `terms` e `includeCurvature` registram o modelo escolhido para a análise de efeitos. O resultado `twoLevelDesign` guarda o `DesignAnalysisResult` completo. Aplicar um planejamento preserva os dados anteriores em uma revisão `edit` e registra uma revisão `design` ([DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md), item 7). Esquema segue `1` (campos opcionais).
 
-Na superfície de resposta ([DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md)), `design.kind` pode ser `centralComposite` (`axial`: `rotatable`, `faceCentered` ou `custom` com `alpha`; `inscribed`; `generators`) ou `boxBehnken`; `terms` usa o mesmo fator repetido (`[A, A]`) para o termo quadrático; `surface: true` marca a análise de matrizes personalizadas ou importadas; o resultado `responseSurface` guarda o `SurfaceResult` completo (coeficientes, ANOVA, falta de ajuste, equação nas duas escalas, região experimental). A malha das figuras **não** é guardada: é recalculada a partir do resultado e dos dados.
+Na superfície de resposta ([DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md)), `design.kind` pode ser `centralComposite` (`axial`: `rotatable`, `faceCentered` ou `custom` com `alpha`; `inscribed`; `generators`) ou `boxBehnken`; `terms` usa o mesmo fator repetido (`[A, A]`) para o termo quadrático; `surface: true` marca a análise de matrizes personalizadas ou importadas; o resultado `responseSurface` guarda o `SurfaceResult` completo (coeficientes, ANOVA, falta de ajuste, equação nas duas escalas, região experimental). A **otimização** ([DT-0013](../decisoes-tecnicas/dt-0013-otimizacao-por-desejabilidade.md)) é uma análise própria (`type: "optimization"`, método `desirability_optimization`) com os candidatos, previsões, compromissos e o relatório de convergência; `analysisSelection.optimization` guarda a configuração (objetivos, limites, domínio, busca) para restaurar a tela. Um experimento de **confirmação** traz `origin` (`experimentId` e `analysisId` da otimização que o propôs) e `confirmation` (nível de confiança e, por linha e resposta, valor previsto e intervalo de predição); o projeto é recusado se a origem não existir (`project.origin_not_found`). A malha das figuras **não** é guardada: é recalculada a partir do resultado e dos dados.
 
 Regras:
 

@@ -11,6 +11,7 @@
 
 pub mod analysis;
 pub mod archive;
+pub mod confirmation;
 pub mod document;
 pub mod experiment;
 pub mod integrity;
@@ -20,6 +21,7 @@ pub mod revision;
 pub mod xlsx;
 
 pub use analysis::{AnalysisOptions, AnalysisRecord, AnalysisResult};
+pub use confirmation::{ConfirmationPlan, ConfirmationPrediction, ExperimentOrigin};
 pub use document::{EntryPath, Experiment, ProjectDocument, SCHEMA_VERSION};
 pub use experiment::{ExperimentData, FactorSpec, ResponseSpec, RowRecord};
 pub use revision::{Revision, RevisionReason};

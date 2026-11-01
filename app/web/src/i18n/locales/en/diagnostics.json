@@ -40,7 +40,8 @@
       "revision_hash_mismatch": "The content of a version does not match its integrity digest.",
       "row_width_mismatch": "A version has rows whose number of columns differs from its definition.",
       "duplicate_analysis_id": "Two analyses have the same identifier.",
-      "analysis_unknown_revision": "An analysis points to a data version that does not exist."
+      "analysis_unknown_revision": "An analysis points to a data version that does not exist.",
+      "origin_not_found": "The confirmation experiment points to an origin experiment or analysis that does not exist in the project."
     },
     "import": {
       "not_xlsx": "The file is not a readable XLSX spreadsheet.",
@@ -130,6 +131,20 @@
       "invalid_steps": "Grid resolution must be between {{min}} and {{max}} steps per axis.",
       "invalid_fixed_value": "Invalid fixed value for factor {{id}}.",
       "grid_extrapolation": "Part of the grid lies outside the region run (extrapolation)."
+    },
+    "optimization": {
+      "invalid_goal": "Invalid goal: check the order of the limits (lowest < target < highest) and the exponents (greater than 0 and at most {{max_shape}}).",
+      "invalid_search": "Invalid search options: use 1 to {{max_starts}} starts and 1 to {{max_candidates}} candidates.",
+      "no_responses": "Include at least one response in the optimization.",
+      "invalid_alpha": "The significance level must be between 0 and 1.",
+      "invalid_importance": "The importance of response {{response}} must be a number greater than 0.",
+      "duplicate_response": "Response {{response}} appears more than once.",
+      "invalid_limit": "Invalid mandatory limit for response {{id}} (finite values, minimum ≤ maximum).",
+      "model_not_estimable": "The model of response {{id}} has terms that are not estimable with these runs; simplify the model before optimizing.",
+      "no_region": "There is no experimental region: factor values are missing.",
+      "invalid_bounds": "Invalid limits for factor {{id}} (minimum below maximum).",
+      "invalid_points": "Invalid conditions: give 1 to 200 points with every factor numeric.",
+      "infeasible": "No point of the region satisfies the mandatory limits."
     }
   },
   "cellErrors": {

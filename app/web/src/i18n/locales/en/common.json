@@ -360,5 +360,123 @@
       "cubeGeneratorsHelp": "Comma-separated generators, for example E=ABCD. Empty: full factorial.",
       "centerSuggested": "Centre points set to 5 (needed for pure error)."
     }
+  },
+  "optimization": {
+    "title": "Desirability optimization",
+    "intro": "Set the goal of each response (preference) and, if needed, mandatory limits. The search uses the second-order models fitted to your data, starts from many points and presents candidates with predictions and intervals. It does not guarantee the global optimum: confirm the candidates with new runs.",
+    "stale": "The data or the setup changed since this search: run it again to refresh the candidates.",
+    "convergence": "Search: {{starts}} starts (seed {{seed}}); {{converged}} converged by tolerance; {{feasible}} ended at feasible points; {{distinct}} distinct solution(s); the best was found by {{best}} starts.",
+    "status": {
+      "found": "Feasible candidates with positive desirability were found.",
+      "onlyZeroDesirability": "There are feasible points, but none with positive desirability: the goals cannot be met together in the region. The candidates below are the closest.",
+      "infeasible": "No point of the region satisfies the mandatory limits: there is no feasible candidate."
+    },
+    "goals": {
+      "title": "Response goals",
+      "help": "Preferences (goal and importance) are combined into a global desirability; mandatory limits (minimum or maximum predicted value) remove points and are not traded off against other responses.",
+      "include": "include in the optimization",
+      "type": "Goal",
+      "importance": "Importance",
+      "importanceHelp": "Relative weight in the global desirability (default 1).",
+      "limitMin": "Mandatory limit: predicted at least",
+      "limitMax": "Mandatory limit: predicted at most",
+      "limitHelp": "Leave empty if there is no limit."
+    },
+    "goal": {
+      "type_maximize": "Maximize",
+      "type_minimize": "Minimize",
+      "type_target": "Hit a target",
+      "type_range": "Stay within a range",
+      "low": "Lowest acceptable value",
+      "lowHelp": "Desirability is zero below it.",
+      "target": "Target",
+      "targetHelp": "Desirability is 1 from (or up to) this value.",
+      "high": "Highest acceptable value",
+      "highHelp": "Desirability is zero above it.",
+      "shape": "Exponent",
+      "shapeHelp": "1 = linear; greater than 1 demands getting closer to the target.",
+      "shapeLow": "Exponent (lower side)",
+      "shapeHigh": "Exponent (upper side)",
+      "rangeLow": "Range lower limit",
+      "rangeHigh": "Range upper limit"
+    },
+    "domain": {
+      "title": "Search domain",
+      "region": "Experimental region (default): the factor ranges actually run, no extrapolation",
+      "extended": "Extend the factor limits (extrapolation, by explicit choice)",
+      "help": "Outside the experimental region the model has not been tested: candidates outside it are marked as extrapolation.",
+      "min": "Lower limit",
+      "max": "Upper limit"
+    },
+    "search": {
+      "title": "Advanced search options",
+      "starts": "Number of starts",
+      "startsHelp": "More starts give more confidence that the best candidate is not a local optimum (1 to 5000).",
+      "seed": "Seed",
+      "seedHelp": "The same seed gives the same candidates.",
+      "candidates": "Candidates shown"
+    },
+    "run": {
+      "start": "Search for optimal conditions",
+      "running": "Searching…",
+      "cancel": "Cancel the search",
+      "cancelled": "Search cancelled; the previous results were kept.",
+      "needResponse": "Include at least one response in the optimization."
+    },
+    "candidates": {
+      "caption": "Candidates (real conditions and, in parentheses, coded)",
+      "select": "Choose",
+      "selectCandidate": "Choose candidate {{rank}}",
+      "rank": "Rank",
+      "global": "Global desirability",
+      "predicted": "predicted",
+      "interval": "prediction interval",
+      "notes": "Notes",
+      "extrapolated": "Outside the experimental region (extrapolation)",
+      "atBounds": "At the domain limit: {{factors}}",
+      "starts": "{{count}} start(s) reached this solution"
+    },
+    "tradeoffs": {
+      "title": "Trade-offs between responses",
+      "help": "Best desirability each response would reach alone (same constraints). In the candidates, the number in parentheses is how much individual desirability was given up.",
+      "response": "Response",
+      "bestAlone": "Best desirability alone",
+      "atBest": "At conditions"
+    },
+    "view": {
+      "heading": "Global desirability over two factors",
+      "title": "Global desirability",
+      "description": "Global desirability as a function of two factors, with the others fixed at the best candidate's conditions.",
+      "response": "Global desirability (0 to 1)",
+      "reading": "Lines: global desirability; darker = more desirable.",
+      "extrapolated": "Hatched: extrapolation (outside the region run).",
+      "points": "Circles: candidates.",
+      "xAxis": "Horizontal axis",
+      "yAxis": "Vertical axis",
+      "sameAxis": "Choose different factors on the two axes."
+    },
+    "confirmation": {
+      "title": "Confirmation runs",
+      "intro": "Choose candidates and replicates: the app creates a new experiment, linked to this one, with the conditions rounded to 5 significant digits and the predictions stored to compare with what is observed.",
+      "replicates": "Replicates per candidate",
+      "propose": "Propose confirmation runs",
+      "experimentName": "Confirmation — {{name}}"
+    },
+    "check": {
+      "title": "Check against the predictions",
+      "help": "Predictions stored with the proposal, with a {{level}}% prediction interval.",
+      "run": "Run",
+      "response": "Response",
+      "predicted": "Predicted",
+      "interval": "{{level}}% prediction interval",
+      "observed": "Observed",
+      "status": "Status",
+      "within": "within the interval",
+      "below": "below the interval",
+      "above": "above the interval",
+      "missing": "no observed value",
+      "noInterval": "no prediction interval",
+      "note": "A value inside the interval is compatible with the model; outside it, the model may not describe these conditions well. With few runs the conclusion is limited."
+    }
   }
 }

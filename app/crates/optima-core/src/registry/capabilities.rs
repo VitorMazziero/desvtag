@@ -41,6 +41,7 @@ mod tests {
                 "two_level_design_analysis",
                 "response_surface_design",
                 "response_surface",
+                "desirability_optimization",
                 "linear_model"
             ]
         );

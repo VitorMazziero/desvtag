@@ -1,6 +1,11 @@
 // Espaço de trabalho: o projeto aberto (vários experimentos) e o controle de alterações.
 // O reducer do experimento atual vem de `project.ts`; aqui ficam as ações do projeto.
-import type { AnalysisRecord, ProjectDocument, RevisionReason } from "../services/engine";
+import type {
+  AnalysisRecord,
+  ConfirmationPlan,
+  ProjectDocument,
+  RevisionReason,
+} from "../services/engine";
 import {
   commitRevision,
   DEFAULT_ALPHA,
@@ -39,7 +44,14 @@ export type WorkspaceAction =
   | { type: "selectExperiment"; id: string }
   | { type: "commitAll"; reason: RevisionReason; now: string }
   | { type: "markSaved"; fileName: string | null; now: string; seq: number }
-  | { type: "restoreWorkspace"; workspace: Workspace };
+  | { type: "restoreWorkspace"; workspace: Workspace }
+  | {
+      type: "addConfirmation";
+      name: string;
+      now: string;
+      rows: ProjectState["rows"];
+      plan: ConfirmationPlan;
+    };
 
 const PROJECT_ACTIONS = new Set<string>([
   "choosePath",
@@ -59,6 +71,8 @@ const PROJECT_ACTIONS = new Set<string>([
   "setNotes",
   "rename",
   "storeResult",
+  "setOptimizationSetup",
+  "storeOptimization",
   "applyImport",
   "restoreRevision",
 ]);
@@ -173,6 +187,44 @@ export function workspaceReducer(ws: Workspace, action: WorkspaceAction): Worksp
       return { ...ws, savedSeq: action.seq, fileName: action.fileName, lastSavedAt: action.now };
     case "restoreWorkspace":
       return { ...action.workspace, epoch: ws.epoch + 1 };
+    case "addConfirmation": {
+      // Experimento novo, vinculado ao atual: mesmos fatores e respostas, ensaios propostos e as
+      // previsões gravadas; a origem aponta para a última otimização do experimento atual.
+      const source = currentExperiment(ws);
+      const origin = source.analyses
+        .filter((a) => a.methodId === "desirability_optimization")
+        .at(-1);
+      if (!origin) return ws;
+      const { id, counter } = freshId(
+        "e",
+        ws.counters.experiment,
+        ws.experiments.map((e) => e.id),
+      );
+      const base = newExperiment(id, action.name, action.now);
+      const filled: ProjectState = {
+        ...base,
+        path: "analyze",
+        factors: source.factors.map((f) => ({ ...f })),
+        responses: source.responses.map((r) => ({ ...r })),
+        rows: action.rows,
+        counters: {
+          ...base.counters,
+          factor: source.counters.factor,
+          response: source.counters.response,
+          row: action.rows.length,
+        },
+        analysis: { ...base.analysis, responseId: source.responses[0]?.id ?? null },
+        origin: { experimentId: source.id, analysisId: origin.id },
+        confirmation: action.plan,
+      };
+      return {
+        ...ws,
+        experiments: [...ws.experiments, commitRevision(filled, "edit", action.now)],
+        currentId: id,
+        counters: { experiment: counter },
+        changeSeq: ws.changeSeq + 1,
+      };
+    }
     default:
       return ws;
   }
@@ -189,7 +241,10 @@ function maxSuffix(ids: string[], prefix: string): number {
 function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectState {
   const head = doc.revisions[doc.revisions.length - 1];
   const data = head?.data ?? { factors: [], responses: [], rows: [] };
-  const last = doc.analyses[doc.analyses.length - 1];
+  const last = [...doc.analyses].reverse().find((a) => a.result.type !== "optimization");
+  const lastOptimization = [...doc.analyses]
+    .reverse()
+    .find((a) => a.result.type === "optimization");
   return {
     id: doc.id,
     name: doc.name,
@@ -207,6 +262,16 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
       surface: doc.analysisSelection.surface ?? false,
     },
     design: doc.design ?? null,
+    origin: doc.origin ?? null,
+    confirmation: doc.confirmation ?? null,
+    optimization: {
+      setup: doc.analysisSelection.optimization ?? lastOptimization?.options.optimization ?? null,
+      result:
+        lastOptimization?.result.type === "optimization"
+          ? stripType(lastOptimization.result)
+          : null,
+      signature: lastOptimization?.signature ?? null,
+    },
     // Reabrir NÃO recalcula: o resultado exibido é o guardado; a assinatura decide se está atual.
     result: storedResultOf(last),
     showUnitColumn: doc.showUnitColumn,
@@ -246,6 +311,7 @@ function storedResultOf(last: AnalysisRecord | undefined): StoredResult | null {
     return { signature: last.signature, kind: "design", result: stripType(last.result) };
   if (last.result.type === "responseSurface")
     return { signature: last.signature, kind: "surface", result: stripType(last.result) };
+  if (last.result.type === "optimization") return null; // a otimização tem estado próprio
   return { signature: last.signature, kind: "oneWay", result: stripType(last.result) };
 }
 
@@ -281,6 +347,7 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
               ...(e.analysis.designTerms ? { terms: e.analysis.designTerms } : {}),
             }
           : {}),
+        ...(e.optimization.setup ? { optimization: e.optimization.setup } : {}),
         ...(e.analysis.surface
           ? {
               surface: true,
@@ -290,6 +357,8 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
           : {}),
       },
       ...(e.design !== null ? { design: e.design } : {}),
+      ...(e.origin ? { origin: e.origin } : {}),
+      ...(e.confirmation ? { confirmation: e.confirmation } : {}),
       revisions: e.revisions,
       analyses: e.analyses,
       notes: e.notes,

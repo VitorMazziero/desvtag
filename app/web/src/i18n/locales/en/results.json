@@ -103,6 +103,16 @@
       "not_estimable": "{{count}} term(s) not estimable with these runs; the design cannot separate them.",
       "extrapolation_note": "Predictions outside the region run (hatched in the charts) are extrapolation and are not reliable.",
       "independence_not_assessed": "Independence of the runs cannot be checked from the data; it depends on how the experiment was run."
+    },
+    "optimization": {
+      "no_global_claim": "The search is local with many starts: it does not prove that the best candidate is the global optimum.",
+      "infeasible": "No candidate satisfies the mandatory limits in the searched region.",
+      "zero_desirability": "Global desirability is zero at every feasible point found: at least one goal cannot be met together with the others.",
+      "single_start": "The best solution came from a single start: increase the number of starts to check whether better solutions exist.",
+      "boundary": "The best solution is at the domain limit for: {{factors}}. The optimum may lie beyond, outside the experimental region.",
+      "extrapolated": "{{count}} candidate(s) outside the experimental region (extrapolation): treat them with caution.",
+      "compromise": "With several responses there are trade-offs: see how much each response gives up relative to the best it would reach alone.",
+      "confirm_with_runs": "Predictions come from the model: confirm candidates with new runs before adopting them."
     }
   },
   "comparison": {

@@ -6,6 +6,7 @@ use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
+use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
 use serde::{Deserialize, Serialize};
@@ -36,6 +37,12 @@ pub enum Operation {
     SurfaceAnalyze(Box<SurfaceRequest>),
     /// Malha de predições e curvas de nível da superfície (`surface.grid`).
     SurfaceGrid(Box<GridRequest>),
+    /// Otimização por desejabilidade de uma ou várias respostas (`optimization.run`).
+    OptimizationRun(Box<OptimizationRequest>),
+    /// Previsões e desejabilidade em condições dadas (`optimization.evaluate`).
+    OptimizationEvaluate(Box<EvaluateRequest>),
+    /// Desejabilidade global sobre dois fatores (`optimization.grid`).
+    OptimizationGrid(Box<OptimizationGridRequest>),
     /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
     ComparisonOneWay(OneWayRequest),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).

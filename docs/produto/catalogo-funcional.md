@@ -109,7 +109,7 @@ Cada resultado deve ter explicações curtas em português e inglês. Personaliz
 
 ## Otimização
 
-Estão incluídas otimização de condições de cultivo e reações, predição a partir dos modelos, otimização de uma ou várias respostas e abordagem por desejabilidade, já discutida como opção para combinar respostas. Objetivos de maximizar, minimizar, alvo e faixa, restrições separadas de preferências, pesos avançados e apresentação de vários candidatos foram aprovados. O algoritmo e os critérios numéricos serão especificados no módulo correspondente.
+Estão incluídas otimização de condições de cultivo e reações, predição a partir dos modelos, otimização de uma ou várias respostas e abordagem por desejabilidade, já discutida como opção para combinar respostas. Objetivos de maximizar, minimizar, alvo e faixa, restrições separadas de preferências, pesos avançados e apresentação de vários candidatos foram aprovados. O algoritmo e os critérios numéricos estão em [busca e confirmação](../metodos/busca-otimizacao.md) e [desejabilidade](../metodos/desejabilidade.md) ([DT-0013](../decisoes-tecnicas/dt-0013-otimizacao-por-desejabilidade.md)).
 
 ## O que a aprovação do catálogo resolve
 

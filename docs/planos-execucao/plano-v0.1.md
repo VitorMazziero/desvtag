@@ -72,8 +72,8 @@ Os destinos são indicativos e serão confirmados ao planejar cada versão. A [m
 | [ET04](ativos/et04-fundamentos-numericos-modelos.md) | Fundamentos numéricos e modelos lineares | F03 | ET03 | Álgebra, distribuições, regressão e diagnósticos validados | — |
 | [ET05](ativos/et05-anova-tukey-letras.md) | ANOVA, Tukey e letras | F04 | ET04 | Percurso de comparação completo e exportação inicial | **M2** |
 | [ET06](concluidos/et06-fatoriais-plackett-burman.md) | Fatoriais, fracionários e Plackett–Burman | F05 | ET04, ET05 | Geração e análise de planejamentos de triagem | — |
-| [ET07](ativos/et07-superficies-resposta.md) | Superfícies de resposta e planejamento personalizado | F06 | ET06 | Compostos centrais, Box–Behnken, modelo de 2ª ordem, superfícies | — |
-| [ET08](planejados/et08-otimizacao.md) | Otimização de uma ou várias respostas | F07 | ET07 | Desejabilidade, candidatos e confirmação | **M3** |
+| [ET07](concluidos/et07-superficies-resposta.md) | Superfícies de resposta e planejamento personalizado | F06 | ET06 | Compostos centrais, Box–Behnken, modelo de 2ª ordem, superfícies | — |
+| [ET08](ativos/et08-otimizacao.md) | Otimização de uma ou várias respostas | F07 | ET07 | Desejabilidade, candidatos e confirmação | **M3** |
 | [ET09](planejados/et09-graficos-exportacao.md) | Gráficos e exportação essenciais | F10 (recorte) | ET05 | Personalização essencial e formatos da v0.1 em todos os gráficos | — |
 | [ET10](planejados/et10-integracao-publicacao.md) | Integração, verificação e publicação | F12, F13 (recortes) | ET01–ET09 | Versão `v0.1.0` verificada e publicada | **v0.1.0** |
 

@@ -188,3 +188,27 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
     await scan(page, `${theme}/planejamento-de-superficie`);
   });
 }
+
+for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+  test(`axe: otimização, candidatos e conferência da confirmação sem violações no tema ${theme}`, async ({
+    page,
+  }) => {
+    await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
+    await page.goto("/");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    const chooser = page.waitForEvent("filechooser");
+    await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
+    await (await chooser).setFiles(
+      new URL("../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag", import.meta.url)
+        .pathname,
+    );
+    await page.getByTestId("candidate-table").first().waitFor();
+    await page.getByTestId("desirability-chart").waitFor();
+    await scan(page, `${theme}/otimizacao`);
+    await page
+      .getByRole("button", { name: /Experimento: Confirmação|Experiment: Confirmação/ })
+      .click();
+    await page.getByTestId("confirmation-check").waitFor();
+    await scan(page, `${theme}/conferencia-da-confirmacao`);
+  });
+}

@@ -4,6 +4,7 @@ use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::domain::StableId;
+use optima_core::optimization::{OptimizationResult, OptimizationSetup};
 use optima_core::surface::SurfaceResult;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
@@ -40,6 +41,10 @@ pub struct AnalysisOptions {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub surface: Option<bool>,
+    /// Configuração da otimização (objetivos, limites, domínio e busca), para restaurar a tela.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub optimization: Option<OptimizationSetup>,
 }
 
 /// Resultado guardado, por método.
@@ -55,6 +60,8 @@ pub enum AnalysisResult {
     TwoLevelDesign(Box<DesignAnalysisResult>),
     /// Superfície de resposta de segunda ordem (ANOVA, falta de ajuste, equação, região).
     ResponseSurface(Box<SurfaceResult>),
+    /// Otimização por desejabilidade: candidatos, previsões, compromissos e convergência.
+    Optimization(Box<OptimizationResult>),
 }
 
 /// Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.

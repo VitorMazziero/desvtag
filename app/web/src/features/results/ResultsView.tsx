@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { useProject } from "../../state/ProjectContext";
+import { OptimizationPanel } from "../optimization";
 import { resultIsCurrent } from "../workflow/guards";
 import { ComparisonResults } from "./ComparisonResults";
 import { DescriptiveTable } from "./DescriptiveTable";
@@ -51,6 +52,7 @@ export function ResultsView({ language }: { language: Language }) {
           </p>
         )}
         <SurfaceResults result={stored.result} signature={stored.signature} language={language} />
+        <OptimizationPanel language={language} />
       </section>
     );
   const response = state.responses.find((r) => r.id === stored.result.responseId);

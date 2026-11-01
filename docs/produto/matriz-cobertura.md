@@ -70,11 +70,11 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
-| Objetivos maximizar, minimizar, alvo e faixa | F07 | v0.1 | ET08 | não iniciado | — |
-| Restrições obrigatórias × preferências, pesos | F07 | v0.1 | ET08 | não iniciado | — |
-| Desejabilidade individual e global | F07 | v0.1 | ET08 | não iniciado | — |
-| Vários candidatos, previsões e incerteza | F07 | v0.1 | ET08 | não iniciado | — |
-| Proposta de ensaios de confirmação | F07 | v0.1 | ET08 | não iniciado | — |
+| Objetivos maximizar, minimizar, alvo e faixa | F07 | v0.1 | ET08 | implementado; validado numericamente (nativo e WebAssembly); Windows 11 pendente | [desejabilidade](../metodos/desejabilidade.md#10-validação), [casos](../../validation/cases/desirability_optimization/001-um-resposta-maximizar/README.md) |
+| Restrições obrigatórias × preferências, pesos | F07 | v0.1 | ET08 | implementado; validado numericamente (nativo e WebAssembly); Windows 11 pendente (limites obrigatórios por penalidade com tolerância 1e-9; importâncias na média geométrica) | [caso 002](../../validation/cases/desirability_optimization/002-duas-respostas-conflito/README.md), [caso 005](../../validation/cases/desirability_optimization/005-regiao-inviavel/README.md) |
+| Desejabilidade individual e global | F07 | v0.1 | ET08 | implementado; validado numericamente (nativo e WebAssembly); Windows 11 pendente; fórmulas conferidas ponto a ponto com o código Python independente | [método](../metodos/desejabilidade.md#10-validação) |
+| Vários candidatos, previsões e incerteza | F07 | v0.1 | ET08 | implementado; validado numericamente (nativo e WebAssembly); Windows 11 pendente; busca local com vários inícios, comparada com busca exaustiva; sem afirmação de ótimo global | [busca](../metodos/busca-otimizacao.md#10-validação), [exemplo 04](../../examples/04-otimizacao-e-confirmacao/README.md) |
+| Proposta de ensaios de confirmação | F07 | v0.1 | ET08 | implementado: experimento vinculado com previsões gravadas e conferência com o observado; verificado em E2E (Chromium e Firefox), reabertura do projeto e exemplo 04; Windows 11 pendente | [busca](../metodos/busca-otimizacao.md), [exemplo 04](../../examples/04-otimizacao-e-confirmacao/README.md) |
 
 ## Gráficos
 
@@ -87,7 +87,7 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Pareto | F05 | v0.1 | ET06 | implementado; ordenação e linha de referência (valor absoluto de t com t crítico, Lenth ou só efeito) conferidas contra o t crítico independente; Windows pendente | [casos](../../validation/cases/two_level_design_analysis/004-saturado-lenth/README.md) |
 | Observado × predito | F05 | v0.1 | ET06 | implementado; valores ajustados conferidos com NumPy; Windows pendente | [casos](../../validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais/README.md) |
 | Superfície 3D e contorno | F06 | v0.1 | ET07 | implementado: malha, extrapolação e curvas calculadas no núcleo e conferidas com NumPy (malha 5×5 nos 6 casos); desenho em SVG próprio (DT-0012), verificado em E2E, axe e inspeção visual; Windows 11 pendente | [método](../metodos/superficie-resposta.md#10-validação), [DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md) |
-| Desejabilidade e soluções de otimização | F07 | v0.1 | ET08 | não iniciado | — |
+| Desejabilidade e soluções de otimização | F07 | v0.1 | ET08 | implementado: malha de desejabilidade calculada no núcleo, desenho em SVG (tela e exportação) e axe nos três temas; Windows 11 pendente | [busca](../metodos/busca-otimizacao.md), [DT-0013](../decisoes-tecnicas/dt-0013-otimizacao-por-desejabilidade.md) |
 
 ## Produto e plataforma
 

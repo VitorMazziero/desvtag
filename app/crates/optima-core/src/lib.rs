@@ -20,6 +20,7 @@ pub mod inference;
 pub mod interpretation;
 pub mod models;
 pub mod numeric;
+pub mod optimization;
 pub mod provenance;
 pub mod registry;
 pub mod surface;

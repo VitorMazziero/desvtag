@@ -8,4 +8,5 @@ export {
   type CellError,
   designTermIds,
   inputSignature,
+  surfaceFactors,
 } from "./buildRequest";

@@ -35,6 +35,8 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 | U06 (com U07–U09 de triagem) — planejamento de experimento | [u06-planejamento-de-experimento.md](u06-planejamento-de-experimento.md) | implementado |
 | C12 (com C16 superfície e contorno, C07 falta de ajuste) — superfície de resposta | [c12-superficie-de-resposta.md](c12-superficie-de-resposta.md) | implementado; validado numericamente |
 | U09 (superfície 3D, contorno e resultados) — com U06 e U07 | [u09-superficie-e-contorno.md](u09-superficie-e-contorno.md) | implementado |
+| C17 (com C06 predição e C16 malha) — otimização por desejabilidade | [c17-otimizacao-por-desejabilidade.md](c17-otimizacao-por-desejabilidade.md) | implementado; validado numericamente |
+| U10 (com E02 cancelamento inicial) — otimização e confirmação | [u10-otimizacao-e-confirmacao.md](u10-otimizacao-e-confirmacao.md) | implementado |
 | U01 — início e entradas | [u01-inicio-e-entradas.md](u01-inicio-e-entradas.md) | implementado |
 | U02 — fluxo guiado | [u02-fluxo-guiado.md](u02-fluxo-guiado.md) | implementado |
 | U03 — fatores e respostas | [u03-fatores-respostas.md](u03-fatores-respostas.md) | implementado |

@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `response_surface` (a análise é a mesma da [superfície de resposta](superficie-resposta.md)) |
 | Módulos | C16 `surface/model`, U03/U04/U05 (cadastro, grade, importação), U07 |
-| Etapa | [ET07](../planos-execucao/ativos/et07-superficies-resposta.md) |
+| Etapa | [ET07](../planos-execucao/concluidos/et07-superficies-resposta.md) |
 | Casos de validação | [`response_surface/004`](../../validation/cases/response_surface/004-personalizado-3-fatores/README.md) |
 | Decisão | [DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md) |
 

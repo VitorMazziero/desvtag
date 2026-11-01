@@ -11,6 +11,7 @@ use ts_rs::TS;
 use optima_core::designs::spec::DesignSpec;
 
 use crate::analysis::{AnalysisOptions, AnalysisRecord};
+use crate::confirmation::{ConfirmationPlan, ExperimentOrigin};
 use crate::experiment::ExperimentData;
 use crate::revision::{Revision, RevisionReason};
 
@@ -49,6 +50,14 @@ pub struct Experiment {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub design: Option<DesignSpec>,
+    /// Experimento de origem, quando este é uma confirmação proposta por uma otimização.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub origin: Option<ExperimentOrigin>,
+    /// Previsões gravadas na proposta de confirmação.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub confirmation: Option<ConfirmationPlan>,
     /// Seleção atual de resposta e agrupamento.
     pub analysis_selection: AnalysisOptions,
     /// Revisões, da mais antiga para a mais recente; a última é o estado atual dos dados.
@@ -76,6 +85,8 @@ impl Experiment {
             entry_path: None,
             show_unit_column: false,
             design: None,
+            origin: None,
+            confirmation: None,
             analysis_selection: AnalysisOptions {
                 response_id: None,
                 group_by: Vec::new(),
@@ -84,6 +95,7 @@ impl Experiment {
                 terms: None,
                 include_curvature: None,
                 surface: None,
+                optimization: None,
             },
             revisions: vec![Revision {
                 id: revision_id,
@@ -162,6 +174,15 @@ impl ProjectDocument {
         let error = |code: &str| Issue::new(code, Severity::Error);
         let mut experiment_ids = HashSet::new();
         for exp in &self.experiments {
+            if let Some(origin) = &exp.origin {
+                let source = self
+                    .experiments
+                    .iter()
+                    .find(|e| e.id == origin.experiment_id);
+                if source.is_none_or(|s| !s.analyses.iter().any(|a| a.id == origin.analysis_id)) {
+                    issues.push(error("project.origin_not_found").with_param("id", &exp.id));
+                }
+            }
             if !experiment_ids.insert(exp.id.as_str()) {
                 issues.push(error("project.duplicate_experiment_id").with_param("id", &exp.id));
             }
@@ -252,6 +273,14 @@ mod tests {
         let mut d = sample();
         d.experiments[0].revisions.clear();
         assert_eq!(codes(&d), vec!["project.experiment_without_revision"]);
+
+        // Origem de uma confirmação: precisa apontar para um experimento e uma análise existentes.
+        let mut d = sample();
+        d.experiments[0].origin = Some(ExperimentOrigin {
+            experiment_id: id("e9"),
+            analysis_id: id("a1"),
+        });
+        assert_eq!(codes(&d), vec!["project.origin_not_found"]);
 
         let mut d = sample();
         d.experiments[0].revisions[0].content_hash = "0".repeat(64);

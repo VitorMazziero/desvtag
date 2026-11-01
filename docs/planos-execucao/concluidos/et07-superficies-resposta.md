@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F06 |
 | Marco | Prepara M3 |
 | Depende de | ET06 |
 | Módulos | C12, C06–C08, C07 (`lack_of_fit`), C16 (`surface`, `contour`), U06–U09 |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -73,7 +73,7 @@ Superfícies de resposta completas e exemplo DCCR encadeado à triagem.
 2. [x] Superfícies e contornos reproduzem as predições do modelo; regiões fora do domínio são identificadas. *Evidência:* malha 5×5 de cada caso comparada com as predições do NumPy e com o indicador de extrapolação (alavancagem e intervalos); testes unitários das curvas (círculo, plano, níveis) e dos gráficos; E2E com a hachura no contorno.
 3. [x] A equação exibida usa a codificação indicada e coincide com o preditor. *Evidência:* teste que avalia a equação codificada e a real em todos os ensaios dos 6 casos e compara a real com um segundo ajuste independente; E2E do exemplo 03.
 4. [x] Falta de ajuste aparece apenas quando identificável; caso contrário, a ausência de informação é explícita. *Evidência:* casos 001 (disponível, `p = 0,34`) e 006 (um só ponto central: indisponível, com o fato `surface.lack_of_fit_unavailable` e o texto explicativo).
-5. [ ] **Windows:** geração do composto central, ajuste, falta de ajuste e malha no `native-checks.mjs` do job `desktop-windows`. **Pendente da execução da CI** (Linux nativo aprovado).
+5. [x] **Windows:** geração do composto central, ajuste, falta de ajuste e malha no `native-checks.mjs` do job `desktop-windows`. *Evidência:* a [execução 41337293340](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41337293340) (`windows-latest`, Windows Server 2025, build 26100, commit `b629c54`) imprimiu *composto central, ajuste de superfície, falta de ajuste e malha calculados pelo motor nativo*. **Ressalva:** a imagem da CI não é um Windows 11 de usuário.
 
 ## 8. Verificação
 
@@ -100,9 +100,10 @@ Especificações, fichas, DTs, [matriz de cobertura](../../produto/matriz-cobert
 | 2026-11-01 | **Interface:** objetivo *superfície* no painel de planejamento (DCCR, FCD, `α` informado, inscrito, parte fatorial fracionária, Box–Behnken), termos sem eliminação automática, resultados, equação, região, superfície 3D e contorno com extrapolação hachurada, exportações; matriz personalizada no caminho de dados existentes. E2E em Chromium e Firefox, axe nos três temas, verificação em PT e EN sem chaves cruas e inspeção visual (corrigidos: legenda sobre o eixo, emendas entre células, rótulos sobre a superfície, hachura nas bordas). |
 | 2026-11-01 | **Exemplo 03** (DCCR de 19 ensaios com glicose, peptona e NaCl): coeficientes, ANOVA, falta de ajuste e ponto estacionário recalculados com NumPy fora do código. |
 | 2026-11-01 | **Nativo:** `native-checks.mjs` ampliado e executado sob Xvfb no Linux (composto central, ajuste, falta de ajuste e malha): aprovado. |
+| 2026-11-01 | **Windows (CI):** a [execução 41337293340](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41337293340) passou integralmente no job do Windows com as verificações de composto central e superfície: critério 5 atendido. |
 | 2026-11-01 | **Documentação:** DT-0012, quatro especificações de método, fichas C12 e U09, matriz, catálogo, mapa de módulos, formato `.enzitag`, validação e exemplos. |
 
-**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01–T11 concluídas e critérios 1–4 com evidência; pendente o critério 5 (execução do job do Windows). Próxima etapa em código: ET08.
+**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01–T11 concluídas e critérios 1–4 com evidência; critérios 1–5 com evidência; plano movido para `concluidos/`. Ressalvas: rótulo CCD sem conferência no serviço de referência e Windows 11 literal não verificado. Próxima etapa em código: ET08.
 
 ## 12. Desvios e descobertas
 

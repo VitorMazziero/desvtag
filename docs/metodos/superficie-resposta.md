@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `response_surface` |
 | Módulos | C16 `surface/{terms,model,equation,grid,contour}`, C07 `inference/lack_of_fit`, C06 `models/linear` |
-| Etapa | [ET07](../planos-execucao/ativos/et07-superficies-resposta.md) |
+| Etapa | [ET07](../planos-execucao/concluidos/et07-superficies-resposta.md) |
 | Casos de validação | [`validation/cases/response_surface/001…006`](../../validation/cases/response_surface/001-ccd-rotacional-2-fatores/README.md) |
 | Decisão | [DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md) |
 

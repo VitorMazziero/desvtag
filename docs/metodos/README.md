@@ -34,3 +34,5 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Box–Behnken](box-behnken.md) | implementado (3 a 5 fatores); validado numericamente |
 | [Superfície de resposta de segunda ordem](superficie-resposta.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Planejamento personalizado ou matriz importada](planejamento-personalizado.md) | implementado; validado numericamente |
+| [Desejabilidade (Derringer e Suich)](desejabilidade.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Busca de condições ótimas e confirmação](busca-otimizacao.md) | implementado; validado contra busca exaustiva independente |

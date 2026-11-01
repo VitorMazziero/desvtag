@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `response_surface_design` |
 | Módulos | C12 `designs/box_behnken` |
-| Etapa | [ET07](../planos-execucao/ativos/et07-superficies-resposta.md) |
+| Etapa | [ET07](../planos-execucao/concluidos/et07-superficies-resposta.md) |
 | Casos de validação | [`validation/cases/surface_design/designs.json`](../../validation/cases/surface_design/designs.json), [`response_surface/003`](../../validation/cases/response_surface/003-box-behnken-3-fatores/README.md) |
 | Decisão | [DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md) |
 

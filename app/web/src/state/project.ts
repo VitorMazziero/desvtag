@@ -3,14 +3,18 @@
 // texto digitado; a conversão para números ocorre ao montar o conjunto de dados.
 import type {
   AnalysisRecord,
+  ConfirmationPlan,
   DescriptiveResult,
   DesignAnalysisResult,
   DesignSpec,
   EntryPath as EntryPathContract,
   ExperimentData,
+  ExperimentOrigin,
   FactorKind,
   FactorSpec,
   OneWayResult,
+  OptimizationResult,
+  OptimizationSetup,
   ResponseSpec,
   Revision,
   RevisionReason,
@@ -43,6 +47,17 @@ export interface AnalysisDraft {
 
 export const DEFAULT_ALPHA = 0.05;
 
+/** Otimização por desejabilidade do experimento: configuração, resultado e assinatura das entradas. */
+export interface OptimizationState {
+  /** Configuração em edição (objetivos, limites, domínio, busca); `null` = ainda não escolhida. */
+  setup: OptimizationSetup | null;
+  result: OptimizationResult | null;
+  /** Assinatura dos dados e da configuração que geraram `result`. */
+  signature: string | null;
+}
+
+export const EMPTY_OPTIMIZATION: OptimizationState = { setup: null, result: null, signature: null };
+
 /** Resultado em exibição; `signature` identifica os dados e as opções que o geraram. */
 export type StoredResult =
   | { signature: string; kind: "descriptive"; result: DescriptiveResult }
@@ -62,6 +77,12 @@ export interface ProjectState {
   rows: RowDraft[];
   analysis: AnalysisDraft;
   result: StoredResult | null;
+  /** Otimização (guardada como análise própria; não substitui `result`). */
+  optimization: OptimizationState;
+  /** Experimento de origem, se este é uma confirmação proposta por uma otimização. */
+  origin: ExperimentOrigin | null;
+  /** Previsões gravadas na proposta de confirmação. */
+  confirmation: ConfirmationPlan | null;
   showUnitColumn: boolean;
   counters: { factor: number; response: number; row: number; revision: number; analysis: number };
   /** Instantâneos imutáveis dos dados; a última é o estado já registrado (pode haver edições posteriores). */
@@ -117,6 +138,9 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
       surface: false,
     },
     result: null,
+    optimization: EMPTY_OPTIMIZATION,
+    origin: null,
+    confirmation: null,
     showUnitColumn: false,
     counters: { factor: 0, response: 0, row: 0, revision: 1, analysis: 0 },
     revisions: [],
@@ -205,6 +229,14 @@ export type ProjectAction =
   | { type: "setNotes"; notes: string }
   | { type: "rename"; name: string }
   | { type: "storeResult"; result: StoredResult; now: string }
+  | { type: "setOptimizationSetup"; setup: OptimizationSetup }
+  | {
+      type: "storeOptimization";
+      setup: OptimizationSetup;
+      result: OptimizationResult;
+      signature: string;
+      now: string;
+    }
   | { type: "applyImport"; data: ExperimentData; now: string }
   | { type: "restoreRevision"; revisionId: string; now: string };
 
@@ -482,6 +514,36 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         analyses: [...committed.analyses, record],
         counters: { ...committed.counters, analysis: n },
         result: action.result,
+      };
+    }
+    case "setOptimizationSetup":
+      return { ...state, optimization: { ...state.optimization, setup: action.setup } };
+    case "storeOptimization": {
+      const committed = commitRevision(state, "analysis", action.now);
+      const head = committed.revisions[committed.revisions.length - 1];
+      if (!head) return state;
+      const n = committed.counters.analysis + 1;
+      const record: AnalysisRecord = {
+        id: `a${n}`,
+        createdAt: action.now,
+        revisionId: head.id,
+        signature: action.signature,
+        methodId: action.result.provenance.methodId,
+        methodVersion: action.result.provenance.methodVersion,
+        engineVersion: action.result.provenance.engineVersion,
+        options: {
+          responseId: null,
+          groupBy: [],
+          alpha: action.setup.alpha,
+          optimization: action.setup,
+        },
+        result: { type: "optimization", ...action.result },
+      };
+      return {
+        ...committed,
+        analyses: [...committed.analyses, record],
+        counters: { ...committed.counters, analysis: n },
+        optimization: { setup: action.setup, result: action.result, signature: action.signature },
       };
     }
     case "applyImport": {

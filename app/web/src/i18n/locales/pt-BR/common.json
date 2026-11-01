@@ -360,5 +360,123 @@
       "cubeGeneratorsHelp": "Geradores separados por vírgula, por exemplo E=ABCD. Vazio: fatorial completo.",
       "centerSuggested": "Pontos centrais definidos em 5 (necessários para o erro puro)."
     }
+  },
+  "optimization": {
+    "title": "Otimização por desejabilidade",
+    "intro": "Defina o objetivo de cada resposta (preferência) e, se precisar, limites obrigatórios. A busca usa os modelos de segunda ordem ajustados aos seus dados, parte de vários pontos e apresenta candidatos com previsões e intervalos. Ela não garante o ótimo global: confirme os candidatos com ensaios novos.",
+    "stale": "Os dados ou a configuração mudaram desde esta busca: execute-a novamente para atualizar os candidatos.",
+    "convergence": "Busca: {{starts}} inícios (semente {{seed}}); {{converged}} convergiram por tolerância; {{feasible}} terminaram em pontos viáveis; {{distinct}} solução(ões) distinta(s); a melhor foi encontrada por {{best}} inícios.",
+    "status": {
+      "found": "Foram encontrados candidatos viáveis com desejabilidade positiva.",
+      "onlyZeroDesirability": "Há pontos viáveis, mas nenhum com desejabilidade positiva: os objetivos não são atingíveis juntos na região. Os candidatos abaixo são os mais próximos.",
+      "infeasible": "Nenhum ponto da região satisfaz os limites obrigatórios: não há candidato viável."
+    },
+    "goals": {
+      "title": "Objetivos das respostas",
+      "help": "Preferências (objetivo e importância) se combinam em uma desejabilidade global; limites obrigatórios (valor previsto mínimo ou máximo) eliminam pontos e não são compensados por outras respostas.",
+      "include": "incluir na otimização",
+      "type": "Objetivo",
+      "importance": "Importância",
+      "importanceHelp": "Peso relativo na desejabilidade global (padrão 1).",
+      "limitMin": "Limite obrigatório: previsto no mínimo",
+      "limitMax": "Limite obrigatório: previsto no máximo",
+      "limitHelp": "Deixe em branco se não houver limite."
+    },
+    "goal": {
+      "type_maximize": "Maximizar",
+      "type_minimize": "Minimizar",
+      "type_target": "Atingir um alvo",
+      "type_range": "Permanecer em uma faixa",
+      "low": "Menor valor aceitável",
+      "lowHelp": "Abaixo dele a desejabilidade é zero.",
+      "target": "Alvo",
+      "targetHelp": "A desejabilidade é 1 a partir (ou até) deste valor.",
+      "high": "Maior valor aceitável",
+      "highHelp": "Acima dele a desejabilidade é zero.",
+      "shape": "Expoente",
+      "shapeHelp": "1 = linear; maior que 1 exige chegar mais perto do alvo.",
+      "shapeLow": "Expoente (lado inferior)",
+      "shapeHigh": "Expoente (lado superior)",
+      "rangeLow": "Limite inferior da faixa",
+      "rangeHigh": "Limite superior da faixa"
+    },
+    "domain": {
+      "title": "Domínio da busca",
+      "region": "Região experimental (padrão): intervalos dos fatores ensaiados, sem extrapolação",
+      "extended": "Estender os limites dos fatores (extrapolação, por escolha explícita)",
+      "help": "Fora da região experimental o modelo não foi testado: candidatos fora dela são marcados como extrapolação.",
+      "min": "Limite inferior",
+      "max": "Limite superior"
+    },
+    "search": {
+      "title": "Opções avançadas da busca",
+      "starts": "Número de inícios",
+      "startsHelp": "Mais inícios dão mais confiança de que o melhor candidato não é um ótimo local (1 a 5000).",
+      "seed": "Semente",
+      "seedHelp": "A mesma semente produz os mesmos candidatos.",
+      "candidates": "Candidatos mostrados"
+    },
+    "run": {
+      "start": "Buscar condições ótimas",
+      "running": "Buscando…",
+      "cancel": "Cancelar a busca",
+      "cancelled": "Busca cancelada; os resultados anteriores foram mantidos.",
+      "needResponse": "Inclua ao menos uma resposta na otimização."
+    },
+    "candidates": {
+      "caption": "Candidatos (condições reais e, entre parênteses, codificadas)",
+      "select": "Escolher",
+      "selectCandidate": "Escolher o candidato {{rank}}",
+      "rank": "Posição",
+      "global": "Desejabilidade global",
+      "predicted": "previsto",
+      "interval": "intervalo de predição",
+      "notes": "Observações",
+      "extrapolated": "Fora da região experimental (extrapolação)",
+      "atBounds": "No limite do domínio: {{factors}}",
+      "starts": "{{count}} início(s) chegaram a esta solução"
+    },
+    "tradeoffs": {
+      "title": "Compromissos entre respostas",
+      "help": "Melhor desejabilidade que cada resposta alcançaria sozinha (mesmas restrições). Nos candidatos, o número entre parênteses é quanto da desejabilidade individual foi cedido.",
+      "response": "Resposta",
+      "bestAlone": "Melhor desejabilidade sozinha",
+      "atBest": "Nas condições"
+    },
+    "view": {
+      "heading": "Desejabilidade global sobre dois fatores",
+      "title": "Desejabilidade global",
+      "description": "Desejabilidade global em função de dois fatores, com os demais fixados nas condições do melhor candidato.",
+      "response": "Desejabilidade global (0 a 1)",
+      "reading": "Curvas: desejabilidade global; cor mais intensa = mais desejável.",
+      "extrapolated": "Hachurado: extrapolação (fora da região ensaiada).",
+      "points": "Círculos: candidatos.",
+      "xAxis": "Eixo horizontal",
+      "yAxis": "Eixo vertical",
+      "sameAxis": "Escolha fatores diferentes nos dois eixos."
+    },
+    "confirmation": {
+      "title": "Ensaios de confirmação",
+      "intro": "Escolha candidatos e repetições: o aplicativo cria um novo experimento, vinculado a este, com as condições arredondadas a 5 algarismos e as previsões gravadas para comparar com o que for observado.",
+      "replicates": "Repetições por candidato",
+      "propose": "Propor ensaios de confirmação",
+      "experimentName": "Confirmação — {{name}}"
+    },
+    "check": {
+      "title": "Conferência com as previsões",
+      "help": "Previsões gravadas na proposta, com intervalo de predição de {{level}}%.",
+      "run": "Ensaio",
+      "response": "Resposta",
+      "predicted": "Previsto",
+      "interval": "Intervalo de predição {{level}}%",
+      "observed": "Observado",
+      "status": "Situação",
+      "within": "dentro do intervalo",
+      "below": "abaixo do intervalo",
+      "above": "acima do intervalo",
+      "missing": "sem valor observado",
+      "noInterval": "sem intervalo de predição",
+      "note": "Um valor dentro do intervalo é compatível com o modelo; fora dele, o modelo pode não descrever bem essas condições. Com poucos ensaios a conclusão é limitada."
+    }
   }
 }

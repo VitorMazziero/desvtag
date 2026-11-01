@@ -20,6 +20,12 @@ export interface EngineClient {
    * antes da resposta, esta é descartada com {@link StaleResponseError}.
    */
   request(operation: Operation, options?: { channel?: string }): Promise<EngineResponse>;
+  /**
+   * Cancela a tarefa em andamento do canal: a resposta, quando e se chegar, é descartada com
+   * {@link StaleResponseError}. No navegador o Worker é encerrado e recriado (interrompe o cálculo);
+   * no Windows o comando nativo termina sozinho e apenas o resultado é descartado.
+   */
+  cancel(channel: string): void;
   dispose(): void;
 }
 
@@ -73,6 +79,7 @@ export function createEngineClient(
   kind: EngineKind,
   transport: Transport,
   dispose: () => void = () => {},
+  abort: () => void = () => {},
 ): EngineClient {
   const latestByChannel = new Map<string, string>();
   return {
@@ -82,7 +89,15 @@ export function createEngineClient(
       const taskId = nextTaskId();
       latestByChannel.set(channel, taskId);
       const request: EngineRequest = { protocolVersion: PROTOCOL_VERSION, taskId, operation };
-      const response = parseResponse(await transport(JSON.stringify(request)));
+      let text: string;
+      try {
+        text = await transport(JSON.stringify(request));
+      } catch (error) {
+        // Tarefa cancelada ou substituída: o erro de transporte é irrelevante.
+        if (latestByChannel.get(channel) !== taskId) throw new StaleResponseError(taskId);
+        throw error;
+      }
+      const response = parseResponse(text);
       if (response.taskId !== taskId) {
         throw new ProtocolError(`Response task id ${response.taskId} does not match ${taskId}`);
       }
@@ -90,6 +105,10 @@ export function createEngineClient(
         throw new StaleResponseError(taskId);
       }
       return response;
+    },
+    cancel(channel) {
+      latestByChannel.set(channel, `cancelled-${nextTaskId()}`);
+      abort();
     },
     dispose,
   };

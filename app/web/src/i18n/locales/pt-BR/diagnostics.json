@@ -40,7 +40,8 @@
       "revision_hash_mismatch": "O conteúdo de uma versão não confere com seu resumo de integridade.",
       "row_width_mismatch": "Uma versão tem linhas com número de colunas diferente do cadastro.",
       "duplicate_analysis_id": "Há duas análises com o mesmo identificador.",
-      "analysis_unknown_revision": "Uma análise aponta para uma versão dos dados inexistente."
+      "analysis_unknown_revision": "Uma análise aponta para uma versão dos dados inexistente.",
+      "origin_not_found": "O experimento de confirmação aponta para um experimento ou análise de origem que não existe no projeto."
     },
     "import": {
       "not_xlsx": "O arquivo não é uma planilha XLSX legível.",
@@ -130,6 +131,20 @@
       "invalid_steps": "A resolução da malha deve ficar entre {{min}} e {{max}} passos por eixo.",
       "invalid_fixed_value": "Valor fixado inválido para o fator {{id}}.",
       "grid_extrapolation": "Parte da malha está fora da região ensaiada (extrapolação)."
+    },
+    "optimization": {
+      "invalid_goal": "Objetivo inválido: confira a ordem dos limites (menor < alvo < maior) e os expoentes (maiores que 0 e até {{max_shape}}).",
+      "invalid_search": "Opções da busca inválidas: use de 1 a {{max_starts}} inícios e de 1 a {{max_candidates}} candidatos.",
+      "no_responses": "Inclua ao menos uma resposta na otimização.",
+      "invalid_alpha": "O nível de significância precisa estar entre 0 e 1.",
+      "invalid_importance": "A importância da resposta {{response}} deve ser um número maior que 0.",
+      "duplicate_response": "A resposta {{response}} aparece mais de uma vez.",
+      "invalid_limit": "Limite obrigatório inválido para a resposta {{id}} (valores finitos, mínimo ≤ máximo).",
+      "model_not_estimable": "O modelo da resposta {{id}} tem termos não estimáveis com estes ensaios; simplifique o modelo antes de otimizar.",
+      "no_region": "Não há região experimental: faltam valores dos fatores.",
+      "invalid_bounds": "Limites inválidos para o fator {{id}} (mínimo menor que o máximo).",
+      "invalid_points": "Condições inválidas: informe de 1 a 200 pontos com todos os fatores numéricos.",
+      "infeasible": "Nenhum ponto da região satisfaz os limites obrigatórios."
     }
   },
   "cellErrors": {

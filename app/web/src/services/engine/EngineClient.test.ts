@@ -82,3 +82,37 @@ describe("parseResponse", () => {
     expect(parseResponse(text).outcome.status).toBe("error");
   });
 });
+
+describe("EngineClient.cancel", () => {
+  it("discards the result of a cancelled task and calls the transport abort hook", async () => {
+    let aborted = 0;
+    const client = createEngineClient("wasm", fakeTransport([30]), undefined, () => {
+      aborted += 1;
+    });
+    const running = client.request({ type: "engineInfo" }, { channel: "search" });
+    client.cancel("search");
+    await expect(running).rejects.toBeInstanceOf(StaleResponseError);
+    expect(aborted).toBe(1);
+    // Depois de cancelar, o canal volta a funcionar.
+    await expect(
+      client.request({ type: "engineInfo" }, { channel: "search" }),
+    ).resolves.toBeDefined();
+  });
+
+  it("maps a transport failure of a cancelled task to a stale response, but not a real failure", async () => {
+    const failing = createEngineClient("wasm", async () => {
+      throw new Error("worker terminated");
+    });
+    await expect(failing.request({ type: "engineInfo" })).rejects.toThrow("worker terminated");
+    let rejectNow: (e: Error) => void = () => {};
+    const cancellable = createEngineClient(
+      "wasm",
+      () => new Promise<string>((_, reject) => (rejectNow = reject)),
+      undefined,
+      () => rejectNow(new Error("worker terminated")),
+    );
+    const running = cancellable.request({ type: "engineInfo" }, { channel: "x" });
+    cancellable.cancel("x");
+    await expect(running).rejects.toBeInstanceOf(StaleResponseError);
+  });
+});

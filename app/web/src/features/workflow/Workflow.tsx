@@ -8,6 +8,7 @@ import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
 import { RecentProjects, StartActions } from "../home";
 import { ImportButton } from "../import";
+import { ConfirmationCheck } from "../optimization";
 import { ResultsView } from "../results";
 import { canEnter, firstUnsatisfied, stepSatisfied } from "./guards";
 import { STEPS, type StepId } from "./steps";
@@ -19,7 +20,9 @@ export function Workflow({ language }: { language: Language }) {
   const cellErrors = useMemo(() => buildDataset(state).cellErrors, [state]);
   const ctx = { cellErrorCount: cellErrors.length };
   // Ao abrir um projeto, começa na primeira etapa pendente (ou nos resultados, se tudo está pronto).
-  const [step, setStep] = useState<StepId>(() => firstUnsatisfied(state, ctx) ?? "results");
+  const [step, setStep] = useState<StepId>(() =>
+    state.confirmation ? "data" : (firstUnsatisfied(state, ctx) ?? "results"),
+  );
   const index = STEPS.indexOf(step);
   const next = STEPS[index + 1];
   const previous = STEPS[index - 1];
@@ -109,6 +112,7 @@ export function Workflow({ language }: { language: Language }) {
               <ImportButton />
             </div>
             <DataGrid cellErrors={cellErrors} />
+            <ConfirmationCheck language={language} />
           </section>
         )}
         {step === "analysis" && <AnalysisSetup onDone={() => setStep("results")} />}

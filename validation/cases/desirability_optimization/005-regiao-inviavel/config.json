@@ -1,0 +1,44 @@
+{
+ "method": "desirability_optimization",
+ "title": "Limite obrigatório inatingível: nenhum ponto viável",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "F1",
+   "low": 30,
+   "high": 40
+  },
+  {
+   "id": "f2",
+   "name": "F2",
+   "low": 5,
+   "high": 8
+  }
+ ],
+ "responses": [
+  {
+   "id": "r1",
+   "terms": [
+    "A",
+    "B",
+    "AA",
+    "BB",
+    "AB"
+   ],
+   "goal": {
+    "type": "maximize",
+    "low": 40.0,
+    "target": 56.0,
+    "shape": 1.0
+   },
+   "importance": 1.0,
+   "limit": {
+    "min": 500.0,
+    "max": null
+   }
+  }
+ ],
+ "alpha": 0.05,
+ "seed": 20261101,
+ "starts": 40
+}

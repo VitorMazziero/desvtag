@@ -329,4 +329,61 @@ export async function runChecks({ text, invoke }) {
     }
     console.log("OK: composto central, ajuste de superfície, falta de ajuste e malha calculados pelo motor nativo via IPC do Tauri.");
   }
+
+  // Otimização por desejabilidade pelo IPC nativo: caso 002 (duas respostas em conflito) contra a
+  // busca exaustiva independente, e a mesma semente produzindo os mesmos candidatos.
+  {
+    const dir = root("validation/cases/desirability_optimization/002-duas-respostas-conflito");
+    const config = JSON.parse(readFileSync(`${dir}/config.json`, "utf8"));
+    const want = JSON.parse(readFileSync(`${dir}/expected.json`, "utf8")).reference;
+    const csv = readFileSync(`${dir}/input.csv`, "utf8").trim().split("\n");
+    const k = config.factors.length;
+    const term = (t) => {
+      const ids = [...t].map((c) => `f${c.charCodeAt(0) - 64}`);
+      return ids.length === 1
+        ? { type: "main", factorId: ids[0] }
+        : ids[0] === ids[1]
+          ? { type: "power", factorId: ids[0], degree: 2 }
+          : { type: "interaction", factorIds: ids };
+    };
+    const optimization = {
+      dataset: {
+        factors: config.factors.map((f) => ({ id: f.id, name: f.name, kind: "numeric", unit: null, levels: [] })),
+        responses: config.responses.map((r) => ({ id: r.id, name: r.id.toUpperCase(), unit: null })),
+        observations: csv.slice(1).map((line, i) => {
+          const cells = line.split(",").map(Number);
+          return { id: `o${i + 1}`, unitId: null, factors: cells.slice(0, k), responses: cells.slice(k) };
+        }),
+      },
+      factors: config.factors.map((f) => ({ ...f, unit: null })),
+      setup: {
+        responses: config.responses.map((r) => ({
+          responseId: r.id,
+          terms: r.terms.map(term),
+          goal: r.goal,
+          importance: r.importance,
+        })),
+        limits: config.responses
+          .filter((r) => r.limit.min !== null || r.limit.max !== null)
+          .map((r) => ({ responseId: r.id, min: r.limit.min, max: r.limit.max })),
+        domain: { type: "region" },
+        search: { starts: config.starts, seed: config.seed, maxCandidates: 5, clusterTolerance: 0.05 },
+        alpha: config.alpha,
+      },
+    };
+    const call = async (taskId) =>
+      JSON.parse(
+        await invoke(JSON.stringify({ protocolVersion: 1, taskId, operation: { type: "optimizationRun", ...optimization } })),
+      );
+    const first = (await call("native-opt-1")).outcome?.result;
+    const second = (await call("native-opt-2")).outcome?.result;
+    if (!first || first.status !== "found") throw new Error("Otimização nativa não encontrou candidatos");
+    const best = first.candidates[0].globalDesirability;
+    if (best < want.bestD - 1e-9 || best > want.bestD + 5e-3) throw new Error(`D nativo ${best} fora da referência ${want.bestD}`);
+    if (JSON.stringify(first.candidates) !== JSON.stringify(second.candidates)) throw new Error("Mesma semente, candidatos diferentes");
+    for (const c of first.candidates) {
+      if (c.violation > first.convergence.feasibilityTolerance) throw new Error("Candidato viola restrição");
+    }
+    console.log("OK: otimização por desejabilidade (busca com semente) calculada pelo motor nativo via IPC do Tauri. D =", best.toFixed(6));
+  }
 }

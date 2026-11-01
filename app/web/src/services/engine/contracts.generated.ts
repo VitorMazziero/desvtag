@@ -54,7 +54,11 @@ includeCurvature?: boolean,
  * Analisar como superfície de resposta de segunda ordem (matriz personalizada ou importada,
  * no caminho "Analisar dados existentes").
  */
-surface?: boolean, };
+surface?: boolean, 
+/**
+ * Configuração da otimização (objetivos, limites, domínio e busca), para restaurar a tela.
+ */
+optimization?: OptimizationSetup, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
@@ -100,7 +104,7 @@ result: AnalysisResult, };
 /**
  * Resultado guardado, por método.
  */
-export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult;
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult | { "type": "optimization" } & OptimizationResult;
 
 /**
  * Linha da tabela.
@@ -268,6 +272,45 @@ ciLower: Stat,
 ciUpper: Stat, };
 
 /**
+ * Proposta de confirmação: previsões gravadas no momento da proposta, para comparação posterior
+ * com o observado.
+ */
+export type ConfirmationPlan = { 
+/**
+ * Nível de confiança dos intervalos de predição.
+ */
+confidenceLevel: number, 
+/**
+ * Previsões por ensaio e resposta.
+ */
+predictions: Array<ConfirmationPrediction>, };
+
+/**
+ * Previsão de uma resposta em um ensaio de confirmação (intervalo de predição de uma nova observação).
+ */
+export type ConfirmationPrediction = { 
+/**
+ * Observação (linha) do experimento de confirmação.
+ */
+rowId: StableId, 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Valor previsto.
+ */
+predicted: number, 
+/**
+ * Limite inferior do intervalo de predição.
+ */
+lower: number | null, 
+/**
+ * Limite superior do intervalo de predição.
+ */
+upper: number | null, };
+
+/**
  * Curva de nível: valor e segmentos.
  */
 export type ContourLevel = { 
@@ -279,6 +322,51 @@ level: number,
  * Segmentos da curva.
  */
 segments: Array<Segment>, };
+
+/**
+ * Relatório de convergência da busca.
+ */
+export type ConvergenceReport = { 
+/**
+ * Algoritmo.
+ */
+algorithm: string, 
+/**
+ * Semente do hipercubo latino.
+ */
+seed: number, 
+/**
+ * Inícios executados.
+ */
+starts: number, 
+/**
+ * Inícios que terminaram por tolerância (e não por limite de iterações).
+ */
+convergedStarts: number, 
+/**
+ * Inícios que terminaram em ponto viável.
+ */
+feasibleStarts: number, 
+/**
+ * Ótimos locais distintos (após o agrupamento).
+ */
+distinctOptima: number, 
+/**
+ * Inícios que chegaram à melhor solução.
+ */
+bestSolutionStarts: number, 
+/**
+ * Iterações somadas.
+ */
+iterations: number, 
+/**
+ * Avaliações do objetivo somadas.
+ */
+evaluations: number, 
+/**
+ * Tolerância de viabilidade usada (unidades da amplitude observada de cada resposta).
+ */
+feasibilityTolerance: number, };
 
 /**
  * Teste de curvatura (pontos centrais × pontos fatoriais).
@@ -666,6 +754,44 @@ export type DistributionResult = {
 values: Array<Stat>, };
 
 /**
+ * Limite real de um fator no domínio da busca.
+ */
+export type DomainRange = { 
+/**
+ * Fator.
+ */
+factorId: StableId, 
+/**
+ * Nome.
+ */
+name: string, 
+/**
+ * Menor valor real do domínio.
+ */
+min: number, 
+/**
+ * Maior valor real do domínio.
+ */
+max: number, 
+/**
+ * Menor valor real da região experimental.
+ */
+regionMin: number, 
+/**
+ * Maior valor real da região experimental.
+ */
+regionMax: number, };
+
+/**
+ * Domínio da busca.
+ */
+export type DomainSpec = { "type": "region" } | { "type": "extended", 
+/**
+ * Limites por fator (fatores ausentes mantêm o intervalo observado).
+ */
+bounds: Array<FactorBounds>, };
+
+/**
  * Termo estimado.
  */
 export type EffectRow = { 
@@ -855,6 +981,32 @@ export type EquationTermKind = "intercept" | "linear" | "square" | "interaction"
 export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion" | "invalidInput" | "invalidProject" | "invalidImport";
 
 /**
+ * Pedido de avaliação: os mesmos modelos e objetivos, em condições reais dadas.
+ */
+export type EvaluateRequest = { 
+/**
+ * Modelos e objetivos.
+ */
+optimization: OptimizationRequest, 
+/**
+ * Condições reais (um vetor por ponto, na ordem dos fatores).
+ */
+points: Array<Array<number>>, };
+
+/**
+ * Previsões nos pontos pedidos.
+ */
+export type Evaluation = { 
+/**
+ * Um candidato por ponto (com `rank` = posição no pedido e `starts` = 0).
+ */
+points: Array<OptimumCandidate>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * Observação fora do ajuste.
  */
 export type ExcludedObservation = { 
@@ -898,6 +1050,14 @@ showUnitColumn: boolean,
  */
 design?: DesignSpec, 
 /**
+ * Experimento de origem, quando este é uma confirmação proposta por uma otimização.
+ */
+origin?: ExperimentOrigin, 
+/**
+ * Previsões gravadas na proposta de confirmação.
+ */
+confirmation?: ConfirmationPlan, 
+/**
  * Seleção atual de resposta e agrupamento.
  */
 analysisSelection: AnalysisOptions, 
@@ -930,6 +1090,19 @@ responses: Array<ResponseSpec>,
  * Observações.
  */
 rows: Array<RowRecord>, };
+
+/**
+ * Origem de um experimento derivado de outro.
+ */
+export type ExperimentOrigin = { 
+/**
+ * Experimento de origem (os modelos e a otimização).
+ */
+experimentId: StableId, 
+/**
+ * Análise de otimização que propôs os ensaios.
+ */
+analysisId: StableId, };
 
 /**
  * Fato que a interface explica ao usuário.
@@ -969,6 +1142,23 @@ unit: string | null,
  * níveis são os valores presentes nos dados, em ordem alfabética.
  */
 levels: Array<string>, };
+
+/**
+ * Limites reais de um fator.
+ */
+export type FactorBounds = { 
+/**
+ * Fator.
+ */
+factorId: StableId, 
+/**
+ * Menor valor real.
+ */
+min: number, 
+/**
+ * Maior valor real.
+ */
+max: number, };
 
 /**
  * Tipo de um fator: quantitativo (níveis numéricos) ou categórico (rótulos).
@@ -1125,6 +1315,66 @@ issues: Array<Issue>,
  * Proveniência.
  */
 provenance: Provenance, };
+
+/**
+ * Objetivo de uma resposta (Derringer e Suich, 1980).
+ *
+ * `shape` é o expoente da função: 1 = linear; maior que 1 exige chegar mais perto do alvo; menor que
+ * 1 aceita valores intermediários.
+ */
+export type Goal = { "type": "maximize", 
+/**
+ * Menor valor aceitável (desejabilidade zero abaixo dele).
+ */
+low: number, 
+/**
+ * Valor a partir do qual a desejabilidade é 1.
+ */
+target: number, 
+/**
+ * Expoente.
+ */
+shape: number, } | { "type": "minimize", 
+/**
+ * Valor até o qual a desejabilidade é 1.
+ */
+target: number, 
+/**
+ * Maior valor aceitável (desejabilidade zero a partir dele).
+ */
+high: number, 
+/**
+ * Expoente.
+ */
+shape: number, } | { "type": "target", 
+/**
+ * Limite inferior (zero abaixo dele).
+ */
+low: number, 
+/**
+ * Alvo (`d = 1`).
+ */
+target: number, 
+/**
+ * Limite superior (zero acima dele).
+ */
+high: number, 
+/**
+ * Expoente do lado inferior.
+ */
+shapeLow: number, 
+/**
+ * Expoente do lado superior.
+ */
+shapeHigh: number, } | { "type": "range", 
+/**
+ * Limite inferior.
+ */
+low: number, 
+/**
+ * Limite superior.
+ */
+high: number, };
 
 /**
  * Solicitação da malha.
@@ -1716,12 +1966,174 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+
+/**
+ * Pedido da malha de desejabilidade.
+ */
+export type OptimizationGridRequest = { 
+/**
+ * Modelos e objetivos.
+ */
+optimization: OptimizationRequest, 
+/**
+ * Fator do eixo horizontal.
+ */
+xFactor: StableId, 
+/**
+ * Fator do eixo vertical.
+ */
+yFactor: StableId, 
+/**
+ * Valores reais dos demais fatores (ausentes = centro dos níveis).
+ */
+fixed: Array<FixedValue>, 
+/**
+ * Passos por eixo (5 a 101).
+ */
+steps: number, };
+
+/**
+ * Pedido de otimização.
+ */
+export type OptimizationRequest = { 
+/**
+ * Dados com os valores reais dos fatores e as respostas.
+ */
+dataset: Dataset, 
+/**
+ * Fatores e níveis (definem a codificação).
+ */
+factors: Array<DesignFactor>, 
+/**
+ * Configuração.
+ */
+setup: OptimizationSetup, };
+
+/**
+ * Resultado da otimização.
+ */
+export type OptimizationResult = { 
+/**
+ * Situação.
+ */
+status: OptimizationStatus, 
+/**
+ * Candidatos viáveis, do melhor ao pior.
+ */
+candidates: Array<OptimumCandidate>, 
+/**
+ * Compromissos: melhor desejabilidade individual de cada resposta isolada.
+ */
+tradeOffs: Array<ResponseTradeOff>, 
+/**
+ * Convergência.
+ */
+convergence: ConvergenceReport, 
+/**
+ * Nomes dos fatores.
+ */
+factorNames: Array<string>, 
+/**
+ * Domínio da busca por fator.
+ */
+domain: Array<DomainRange>, 
+/**
+ * A busca estendeu o domínio além da região experimental por escolha explícita.
+ */
+extended: boolean, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Fatos para a interpretação.
+ */
+facts: Array<Fact>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Configuração da otimização (guardada no projeto para restaurar a tela).
+ */
+export type OptimizationSetup = { 
+/**
+ * Objetivos por resposta (ao menos um).
+ */
+responses: Array<ResponseGoal>, 
+/**
+ * Limites obrigatórios sobre as respostas previstas.
+ */
+limits: Array<ResponseLimit>, 
+/**
+ * Domínio da busca.
+ */
+domain: DomainSpec, 
+/**
+ * Opções da busca.
+ */
+search: SearchOptions, 
+/**
+ * Nível de significância dos intervalos de predição (`0 < α < 1`).
+ */
+alpha: number, };
+
+/**
+ * Situação da busca.
+ */
+export type OptimizationStatus = "found" | "onlyZeroDesirability" | "infeasible";
+
+/**
+ * Solução candidata.
+ */
+export type OptimumCandidate = { 
+/**
+ * Posição na ordenação (1 = melhor).
+ */
+rank: number, 
+/**
+ * Valores codificados dos fatores.
+ */
+coded: Array<number>, 
+/**
+ * Valores reais dos fatores.
+ */
+real: Array<number>, 
+/**
+ * Desejabilidade global.
+ */
+globalDesirability: number, 
+/**
+ * Previsões por resposta.
+ */
+predictions: Array<ResponsePrediction>, 
+/**
+ * Fora da região experimental (intervalo observado ou extrapolação oculta).
+ */
+extrapolated: boolean, 
+/**
+ * Alavancagem relativa máxima (`1` = igual à maior dos ensaios).
+ */
+leverageRatio: number, 
+/**
+ * Fatores (índices) que estão em um limite do domínio.
+ */
+atBounds: Array<number>, 
+/**
+ * Quantos inícios convergiram para esta solução.
+ */
+starts: number, 
+/**
+ * Violação máxima das restrições (≤ tolerância registrada).
+ */
+violation: number, };
 
 /**
  * Sucesso ou falha.
@@ -2050,6 +2462,70 @@ name: string,
 unit: string | null, };
 
 /**
+ * Objetivo de uma resposta, com o modelo e a importância.
+ */
+export type ResponseGoal = { 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Termos do modelo de segunda ordem; vazio = modelo completo.
+ */
+terms: Array<TermSpec>, 
+/**
+ * Objetivo.
+ */
+goal: Goal, 
+/**
+ * Importância relativa (peso da média geométrica); 1 por padrão.
+ */
+importance: number, };
+
+/**
+ * Limite **obrigatório** sobre o valor previsto de uma resposta (distinto da preferência).
+ */
+export type ResponseLimit = { 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Valor previsto mínimo, se houver.
+ */
+min: number | null, 
+/**
+ * Valor previsto máximo, se houver.
+ */
+max: number | null, };
+
+/**
+ * Previsão de uma resposta em um candidato.
+ */
+export type ResponsePrediction = { 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Nome da resposta.
+ */
+name: string, 
+/**
+ * Valor previsto e intervalos (de confiança da média e de predição de uma nova observação).
+ */
+prediction: Prediction, 
+/**
+ * Desejabilidade individual no valor previsto.
+ */
+desirability: number, 
+/**
+ * Perda em relação à melhor desejabilidade individual obtida buscando só esta resposta
+ * (compromisso entre respostas); `None` quando a busca individual não foi feita.
+ */
+lossVsBestAlone: number | null, };
+
+/**
  * Resposta medida (versão textual).
  */
 export type ResponseSpec = { 
@@ -2065,6 +2541,27 @@ name: string,
  * Unidade livre.
  */
 unit: string, };
+
+/**
+ * Melhor desejabilidade individual de uma resposta buscada isoladamente.
+ */
+export type ResponseTradeOff = { 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Nome.
+ */
+name: string, 
+/**
+ * Melhor desejabilidade individual viável (busca isolada); `None` se não houve ponto viável.
+ */
+bestAlone: number | null, 
+/**
+ * Condições reais em que ela ocorre.
+ */
+real: Array<number>, };
 
 /**
  * Instantâneo imutável dos dados.
@@ -2145,6 +2642,27 @@ centerRuns: number,
  * Total.
  */
 total: number, };
+
+/**
+ * Opções da busca.
+ */
+export type SearchOptions = { 
+/**
+ * Inícios (1 a 5000).
+ */
+starts: number, 
+/**
+ * Semente do hipercubo latino (PCG32).
+ */
+seed: number, 
+/**
+ * Candidatos devolvidos (1 a 20).
+ */
+maxCandidates: number, 
+/**
+ * Distância codificada abaixo da qual dois ótimos locais são a mesma solução.
+ */
+clusterTolerance: number, };
 
 /**
  * Segmento de uma curva de nível, em coordenadas reais dos eixos.

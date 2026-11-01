@@ -42,6 +42,7 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "two_level_design_analysis",
                     "response_surface_design",
                     "response_surface",
+                    "desirability_optimization",
                     "linear_model"
                 ]
             );
