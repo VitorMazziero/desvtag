@@ -2,13 +2,12 @@
 
 Atualizado em 1º de novembro de 2026.
 
-O nome **EnziTAG Optima** foi escolhido. Estão aceitos o motor Rust, interface TypeScript/React, Windows/Tauri, navegador/WebAssembly, aprendizagem por módulos, cálculos explícitos e uso local sem login.
+O nome **EnziTAG Optima** foi escolhido. Estão aceitos o motor Rust, interface TypeScript/React, Windows/Tauri, navegador/WebAssembly, aprendizagem por módulos, cálculos explícitos e uso local sem login. Também estão definidos **português e inglês desde o início** e o **catálogo abrangendo o Protimiza e os métodos já discutidos**, descrito em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md).
 
 | Tema | O que falta definir |
 |---|---|
 | Identidade visual | Aparência, cores e símbolo do aplicativo |
-| Idiomas | Português inicialmente ou suporte inicial a outros idiomas |
-| Catálogo | Métodos, planejamentos e modelos que comporão o produto completo, com sequência de implementação |
+| Detalhamento do catálogo | Sequência de implementação, variantes e configurações dos métodos aprovados; completar a conferência das funções do Protimiza não visíveis nas capturas |
 | Entrada no aplicativo | Apresentação dos caminhos de planejamento, análise de dados e comparação de tratamentos |
 | Orientação | Recomendações, escolhas manuais, diagnósticos e explicações para iniciantes |
 | Entrada de dados | Digitação, colagem, CSV, XLSX e matrizes criadas em outros programas |
@@ -23,4 +22,4 @@ O nome **EnziTAG Optima** foi escolhido. Estão aceitos o motor Rust, interface 
 | Licença | Licença a aplicar ao código público |
 | Distribuição | Configuração de hospedagem, endereço, ambientes atendidos e atualizações |
 
-O catálogo, as integrações e as políticas ainda em discussão não devem aparecer como funcionalidades disponíveis. As escolhas técnicas podem ser detalhadas durante o desenvolvimento de cada módulo.
+O catálogo está aprovado como escopo; ainda não há métodos implementados. As integrações e políticas em discussão permanecem propostas. As escolhas técnicas podem ser detalhadas durante o desenvolvimento de cada módulo.

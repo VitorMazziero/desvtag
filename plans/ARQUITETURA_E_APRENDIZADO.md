@@ -8,6 +8,8 @@ Este documento organiza a arquitetura aceita e propõe uma sequência de desenvo
 
 - **Rust:** procedimentos estatísticos, geração de planejamentos, modelos, comparações e otimização.
 - **TypeScript/React:** interface compartilhada, tabelas, controles e apresentação gráfica.
+- **Idiomas do produto:** português e inglês desde o início, com textos separados da lógica de cálculo e cobertura equivalente nos dois ambientes.
+- **Catálogo científico aprovado:** cobertura do Protimiza e dos métodos já discutidos, consolidada em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md).
 - **Windows:** aplicativo com Tauri e motor Rust compilado para o sistema.
 - **Navegador:** interface web com o mesmo motor Rust compilado para WebAssembly.
 - **Distribuição proposta:** repositório público, versão web no GitHub Pages e instaladores no GitHub Releases. Licença e configuração de hospedagem ainda serão definidas.
@@ -46,6 +48,8 @@ Cada módulo deve vir acompanhado de:
 8. Ligação com a interface e demonstração no Windows e no navegador, quando aplicável.
 
 A explicação detalhada é material de aprendizagem e documentação do projeto. A interface para alunos do laboratório mantém as explicações curtas junto aos resultados, conforme solicitado.
+
+Cada funcionalidade apresentada ao usuário deve nascer com seus textos em português e inglês. O núcleo fornece resultados e diagnósticos identificáveis; a camada de apresentação escolhe os textos e formatos conforme o idioma, preservando dados e escolhas estatísticas.
 
 ## Política para bibliotecas
 

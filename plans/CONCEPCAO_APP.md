@@ -9,6 +9,8 @@ Documento de trabalho iniciado em 1º de novembro de 2026. Reúne decisões do u
 - **Experiência desejada:** intuitiva e guiada, mais próxima do Protimiza do que de uma ferramenta generalista como o Minitab.
 - **Casos típicos:** planejamento Plackett–Burman (PB) e otimização de parâmetros de cultivos ou reações enzimáticas.
 - **Plataformas:** aplicativo desktop e versão no navegador desde o início.
+- **Idiomas:** português e inglês desde o início, nas versões Windows e navegador.
+- **Catálogo aprovado:** todos os métodos existentes no Protimiza e as famílias de planejamentos, análises, comparações, modelos, gráficos e otimização discutidas no projeto. O inventário consolidado está em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md); o detalhamento e a implementação serão progressivos.
 - **Referência de fluxo:** preservar o pipeline do Protimiza, acrescentando interpretação dos resultados e mais recursos gráficos.
 - **Além de DoE:** incluir Tukey e outros testes de comparação utilizados fora de um planejamento experimental.
 - **Abrangência desejada:** aplicativo completo e extensível, sem restringir a concepção a um único experimento ou conjunto fixo de fatores.
@@ -56,15 +58,16 @@ As instruções e recomendações nas telas pertencem ao produto de referência.
 
 ### Planejamento e análises
 
-- Quais famílias de planejamentos e modelos comporão a cobertura completa pretendida, e em que sequência serão implementadas e validadas?
+- Em que sequência os métodos do catálogo aprovado serão especificados, implementados e validados?
+- Como completar a conferência das funcionalidades do Protimiza que não aparecem nas capturas disponíveis?
 - Quais tamanhos de projeto serão usados para avaliar desempenho, sem transformar um exemplo em limite arbitrário para o cadastro de fatores?
-- Quais testes de comparação, além de Tukey, serão oferecidos para as estruturas experimentais já aceitas como base?
+- Quais variantes, estimadores e configurações de cada família de comparação e modelo serão implementados em cada etapa?
 - O aplicativo também precisará analisar matrizes experimentais criadas em outros programas?
 
 ### Orientação e apresentação
 
 - Como apresentar recomendações, escolhas manuais e explicações para iniciantes?
-- Quais idiomas e formas de exportação serão necessários?
+- Quais formatos de exportação serão necessários?
 - Como permitir a edição e exportação dos gráficos, incluindo letras, eixos, cores e medidas de incerteza?
 
 ### Dados e uso em duas plataformas
@@ -79,6 +82,16 @@ As instruções e recomendações nas telas pertencem ao produto de referência.
 - Qual caso real será usado como primeiro exemplo completo e critério de utilidade?
 - Como organizar a implementação e a validação progressivas para alcançar o aplicativo completo desejado?
 - Quais rotinas numéricas auxiliares também terão implementação própria, e quais dependências de apoio terão algoritmo, papel e limitações documentados?
+
+## Português e inglês desde o início
+
+A interface deve oferecer os dois idiomas nas mesmas funcionalidades, tanto no Windows quanto no navegador. Isso inclui navegação, campos, ajuda, mensagens de validação, diagnósticos, explicações curtas e textos gerados para tabelas e gráficos.
+
+Como organização inicial, serão usados português do Brasil (`pt-BR`) e inglês (`en`). Os textos da interface devem ser separados da lógica de cálculo e identificados por chaves estáveis. O idioma de apresentação não altera o método, as opções numéricas ou o resultado científico.
+
+Nomes de fatores, respostas, projetos e observações digitados pelo usuário devem ser preservados. A apresentação de números e os rótulos gerados pelo aplicativo acompanharão o idioma selecionado; as regras de importação e os formatos de exportação serão definidos em seus módulos.
+
+O README público também possui uma apresentação inicial em inglês. A tradução da documentação detalhada de desenvolvimento poderá ser ampliada progressivamente; a exigência de dois idiomas desde o início se aplica ao produto.
 
 ## Avaliação da linguagem — arquitetura aceita
 
@@ -155,4 +168,4 @@ A integração fica sujeita ao espaço disponível na conta e às [cotas e condi
 
 ## Situação atual
 
-Nome, arquitetura e abordagem de aprendizagem aceitos. A pasta foi organizada para o repositório `enzitag-optima`, com apresentação, documentação e áreas reservadas ao código. A definição funcional continua em andamento e ainda não há implementação executável. O mapa de responsabilidades está em [ARQUITETURA_E_APRENDIZADO.md](ARQUITETURA_E_APRENDIZADO.md), e as escolhas em aberto estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).
+Nome, idiomas, catálogo abrangente, arquitetura e abordagem de aprendizagem aceitos. A pasta foi organizada para o repositório `enzitag-optima`, com apresentação, documentação e áreas reservadas ao código. O detalhamento funcional continua em andamento e ainda não há implementação executável. O mapa de responsabilidades está em [ARQUITETURA_E_APRENDIZADO.md](ARQUITETURA_E_APRENDIZADO.md), e as escolhas em aberto estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).

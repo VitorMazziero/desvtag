@@ -1,5 +1,7 @@
 # EnziTAG Optima
 
+[Português](README.md) | [English](README.en.md)
+
 **Planejamento experimental, estatística e otimização.**
 
 EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com fluxo guiado de planejamento e análise de experimentos, comparações de tratamentos e otimização de processos. O desenvolvimento está ligado às atividades do grupo de pesquisa EnziTAG.
@@ -9,6 +11,8 @@ EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com 
 ## Direção do projeto
 
 - Interface intuitiva para usuários iniciantes, com fatores e respostas definidos pelo usuário.
+- Português e inglês desde o início, no Windows e no navegador.
+- Catálogo completo do Protimiza, acrescido dos métodos discutidos para o EnziTAG Optima.
 - Planejamento de experimentos e análise de dados já coletados.
 - Comparações de tratamentos, incluindo Tukey e letras nos gráficos.
 - Superfícies 3D, contornos, efeitos, interações e diagnóstico de resíduos.
@@ -53,6 +57,7 @@ As áreas de código contêm, nesta etapa, apenas a descrição de suas responsa
 ## Documentação
 
 - [Concepção e requisitos](plans/CONCEPCAO_APP.md).
+- [Catálogo funcional aprovado](plans/CATALOGO_FUNCIONAL.md).
 - [Arquitetura e sequência de aprendizagem](plans/ARQUITETURA_E_APRENDIZADO.md).
 - [Decisões pendentes](plans/DECISOES_PENDENTES.md).
 - [Organização da implementação](app/README.md).
