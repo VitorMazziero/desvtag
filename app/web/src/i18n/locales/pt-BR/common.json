@@ -1,0 +1,43 @@
+{
+  "app": {
+    "name": "EnziTAG Optima",
+    "tagline": "Planejamento experimental, estatística e otimização",
+    "skipToContent": "Ir para o conteúdo"
+  },
+  "settings": {
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "language": {
+    "pt-BR": "Português (Brasil)",
+    "en": "English"
+  },
+  "theme": {
+    "soft-light": "Soft Light",
+    "modern-dark": "Modern Dark",
+    "professional": "Professional"
+  },
+  "engine": {
+    "title": "Motor científico",
+    "provisional": "Tela provisória da fundação técnica (ET01). Ainda não há método estatístico implementado.",
+    "loading": "Consultando o motor…",
+    "environment": "Ambiente",
+    "environmentValue": {
+      "wasm": "Navegador (WebAssembly)",
+      "tauri": "Windows (Tauri, motor nativo)"
+    },
+    "engineVersion": "Versão do motor",
+    "protocolVersion": "Versão do protocolo",
+    "schemaVersion": "Versão do esquema do projeto",
+    "methods": "Métodos disponíveis",
+    "methodsNone": "Nenhum método científico nesta versão",
+    "methodsCount_one": "{{count}} método",
+    "methodsCount_other": "{{count}} métodos"
+  },
+  "errors": {
+    "engineUnavailable": "Não foi possível comunicar com o motor de cálculo.",
+    "invalidRequest": "A solicitação ao motor é inválida.",
+    "unsupportedProtocolVersion": "Versão de protocolo incompatível: o motor espera {{expected}}, a interface enviou {{received}}.",
+    "unknown": "Erro desconhecido do motor."
+  }
+}

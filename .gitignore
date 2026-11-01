@@ -47,3 +47,6 @@ token*.json
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Cola WASM gerada por app/web/scripts/build-wasm.mjs.
+/app/web/src/services/engine/wasm/

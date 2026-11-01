@@ -1,0 +1,28 @@
+/* Soft Light: base do prompt Software; azul elétrico substituído pela paleta do
+   logo EnziTAG (docs/temas/adaptacao-soft-light.md). Laranja só em elementos
+   gráficos: contraste ≈ 3,3:1 sobre branco. */
+:root,
+[data-theme="soft-light"] {
+  color-scheme: light;
+  --color-ground: #fcfcfd;
+  --color-ground-muted: #f3f4f6;
+  --color-panel: #ffffff;
+  --color-ink: #16191f;
+  --color-ink-secondary: #454c58;
+  --color-rule: #dde0e6;
+  --color-action: #005a99;
+  --color-on-action: #ffffff;
+  --color-action-hover: #004a80;
+  --color-accent-text: #005a99;
+  --color-ok: #008300;
+  --color-focus: #005a99;
+  --font-display: "Host Grotesk", sans-serif;
+  --font-body: "Instrument Sans", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-tracking: -0.02em;
+  --radius-panel: 12px;
+  --radius-control: 8px;
+  --shadow-panel: 0 1px 2px rgb(22 25 31 / 6%), 0 4px 12px rgb(22 25 31 / 5%);
+  --motion-duration: 160ms;
+  --motion-ease: ease-out;
+}

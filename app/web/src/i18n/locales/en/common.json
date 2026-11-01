@@ -1,0 +1,43 @@
+{
+  "app": {
+    "name": "EnziTAG Optima",
+    "tagline": "Experimental design, statistics and optimization",
+    "skipToContent": "Skip to content"
+  },
+  "settings": {
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "language": {
+    "pt-BR": "Português (Brasil)",
+    "en": "English"
+  },
+  "theme": {
+    "soft-light": "Soft Light",
+    "modern-dark": "Modern Dark",
+    "professional": "Professional"
+  },
+  "engine": {
+    "title": "Scientific engine",
+    "provisional": "Provisional technical-foundation screen (ET01). No statistical method is implemented yet.",
+    "loading": "Querying the engine…",
+    "environment": "Environment",
+    "environmentValue": {
+      "wasm": "Browser (WebAssembly)",
+      "tauri": "Windows (Tauri, native engine)"
+    },
+    "engineVersion": "Engine version",
+    "protocolVersion": "Protocol version",
+    "schemaVersion": "Project schema version",
+    "methods": "Available methods",
+    "methodsNone": "No scientific method in this version",
+    "methodsCount_one": "{{count}} method",
+    "methodsCount_other": "{{count}} methods"
+  },
+  "errors": {
+    "engineUnavailable": "Could not communicate with the calculation engine.",
+    "invalidRequest": "The request sent to the engine is invalid.",
+    "unsupportedProtocolVersion": "Incompatible protocol version: the engine expects {{expected}}, the interface sent {{received}}.",
+    "unknown": "Unknown engine error."
+  }
+}
