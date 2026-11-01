@@ -5,6 +5,8 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 ## Planejado para 0.2
 
 - Migração do Node.js 22 para o 26 como primeira tarefa da ET11, antes de novas funcionalidades ([DT-0015](docs/decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)). Ainda não executada; a 0.1 permanece no Node 22.
+- Seleção e comparação de modelos: termos ligáveis na tabela de resultados, comparação entre o modelo completo, o atual e o recomendado, e recomendação de remoção de termos; um modelo por resposta ([plano da ET11](docs/planos-execucao/planejados/et11-selecao-de-modelos-e-navegacao.md)).
+- Resultados organizados em seções com barra lateral (otimização por desejabilidade, confirmação e outras), com a exportação ao final.
 
 ## [0.1.0] — candidata pronta, aguardando publicação
 

@@ -25,6 +25,7 @@ O [roteiro do produto](../planos-execucao/roteiro-produto.md) define a sequênci
 | PD-13 | Domínio próprio, Windows 10 e Safari | F14 | Posterior à v0.1 | Adições posteriores conforme necessidade e testes |
 | PD-14 | Protocolo de comentários e colaboração simultânea | F14 | Posterior à v0.1 | Comentários posteriores; edição simultânea exige especificação própria |
 | PD-15 | Hospedagem web e visibilidade do repositório na publicação | F13 | ET10 (decisão do usuário) | **Resolvida em 2026-11-01:** repositório público; GitHub Pages por disparo manual ([DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
+| PD-16 | Autorização para distribuir os dados reais do exemplo `kLa` (repositório público) | F12 | ET11 (T13) | O arquivo está só na máquina do usuário (não versionado); sem confirmação, usar dados sintéticos equivalentes |
 
 **Sobre PD-15:** decidida em 2026-11-01 — o repositório é público, o que permite o GitHub Pages gratuito. A publicação efetiva da versão web continua sendo um ato do mantenedor (fluxo `pages.yml`).
 

@@ -40,6 +40,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET08 | Otimização de uma ou várias respostas | v0.1 | **Concluído** (2026-11-01) | [concluidos/et08-otimizacao.md](concluidos/et08-otimizacao.md) |
 | ET09 | Gráficos e exportação essenciais | v0.1 | **Concluído** (2026-11-01) | [concluidos/et09-graficos-exportacao.md](concluidos/et09-graficos-exportacao.md) |
 | ET10 | Integração, verificação e publicação | v0.1 | **Ativo** (publicação pendente) | [ativos/et10-integracao-publicacao.md](ativos/et10-integracao-publicacao.md) |
+| ET11 | Seleção e comparação de modelos e navegação por seções dos resultados (v0.2; começa pela migração do Node.js, DT-0015) | v0.2 | Planejado | [planejados/et11-selecao-de-modelos-e-navegacao.md](planejados/et11-selecao-de-modelos-e-navegacao.md) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.
 
