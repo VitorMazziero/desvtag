@@ -117,13 +117,19 @@ export function text(
     role?: Paint;
     weight?: number;
     rotate?: number;
+    /** Contorno na cor do painel, para ler o texto sobre desenhos (superfície 3D). */
+    halo?: boolean;
   } = {},
 ): string {
-  const { anchor = "middle", size = 12, role = "ink", weight = 400, rotate } = options;
+  const { anchor = "middle", size = 12, role = "ink", weight = 400, rotate, halo } = options;
   const transform = rotate === undefined ? "" : ` transform="rotate(${rotate} ${n(x)} ${n(y)})"`;
   return (
     `<text x="${n(x)}" y="${n(y)}" text-anchor="${anchor}" font-size="${size}" ` +
-    `font-weight="${weight}" fill="${paint(role, mode)}"${transform}>${esc(content)}</text>`
+    `font-weight="${weight}" fill="${paint(role, mode)}"${transform}` +
+    (halo
+      ? ` stroke="${paint("panel", mode)}" stroke-width="3" paint-order="stroke" stroke-linejoin="round"`
+      : "") +
+    `>${esc(content)}</text>`
   );
 }
 

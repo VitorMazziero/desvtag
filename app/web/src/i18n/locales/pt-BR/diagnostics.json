@@ -108,7 +108,28 @@
       "saturated": "Modelo saturado: sem graus de liberdade do erro.",
       "not_estimable_terms": "Termos confundidos foram omitidos do ajuste.",
       "single_center_point": "Com um só ponto central não há erro puro; use pelo menos dois.",
-      "main_effects_aliased_with_two_factor": "Resolução {{resolution}}: efeitos principais confundidos com interações de dois fatores."
+      "main_effects_aliased_with_two_factor": "Resolução {{resolution}}: efeitos principais confundidos com interações de dois fatores.",
+      "invalid_axial_distance": "A distância axial α deve ser um número maior que 0 e no máximo {{max}}.",
+      "box_behnken_unsupported": "Box–Behnken está disponível para 3 a 5 fatores (recebidos: {{factors}}).",
+      "cube_resolution_low": "A parte fatorial fracionária tem resolução {{resolution}}: nem todas as interações de dois fatores serão estimáveis no modelo de segunda ordem.",
+      "surface_needs_center": "Sem pontos centrais não há erro puro e o modelo quadrático pode não ser estimável; inclua ao menos dois."
+    },
+    "surface": {
+      "invalid_alpha": "O nível de significância precisa estar entre 0 e 1.",
+      "too_few_factors": "A superfície exige ao menos dois fatores quantitativos.",
+      "factor_not_numeric": "Os fatores da superfície precisam ser quantitativos.",
+      "invalid_levels": "Cada fator precisa de valores distintos (nível baixo menor que o alto).",
+      "unsupported_term": "O termo {{term}} não é suportado: use efeitos principais, quadráticos e interações de dois fatores.",
+      "term_not_in_design": "O termo {{term}} usa um fator que não está no modelo.",
+      "duplicate_term": "O termo {{term}} está repetido.",
+      "no_terms": "Escolha ao menos um termo do modelo.",
+      "hierarchy_gaps": "Hierarquia incompleta: {{terms}} está no modelo sem o efeito principal correspondente. A equação continua válida, mas a interpretação dos coeficientes muda.",
+      "saturated": "Modelo saturado: sem graus de liberdade do erro.",
+      "not_estimable_terms": "{{count}} termo(s) do modelo não são estimáveis com estes ensaios.",
+      "invalid_axes": "Escolha dois fatores diferentes para os eixos.",
+      "invalid_steps": "A resolução da malha deve ficar entre {{min}} e {{max}} passos por eixo.",
+      "invalid_fixed_value": "Valor fixado inválido para o fator {{id}}.",
+      "grid_extrapolation": "Parte da malha está fora da região ensaiada (extrapolação)."
     }
   },
   "cellErrors": {

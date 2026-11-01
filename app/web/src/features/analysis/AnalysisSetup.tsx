@@ -11,6 +11,7 @@ import {
   buildOperation,
   designTermIds,
   inputSignature,
+  surfaceFactors,
 } from "./buildRequest";
 
 interface Props {
@@ -71,6 +72,17 @@ export function AnalysisSetup({ onDone }: Props) {
           now: nowIso(),
         });
         onDone();
+      } else if (
+        response.outcome.status === "ok" &&
+        response.outcome.result.type === "surfaceAnalyze"
+      ) {
+        const { type: _type, ...result } = response.outcome.result;
+        dispatch({
+          type: "storeResult",
+          result: { signature, kind: "surface", result },
+          now: nowIso(),
+        });
+        onDone();
       } else if (response.outcome.status === "error") {
         setMessages(engineErrorMessages(t, response.outcome.error));
       }
@@ -89,15 +101,37 @@ export function AnalysisSetup({ onDone }: Props) {
           ? t("analysis.compare.title")
           : kind === "design"
             ? t("analysis.design.title")
-            : t("analysis.title")}
+            : kind === "surface"
+              ? t("analysis.surface.title")
+              : t("analysis.title")}
       </h2>
       <p className="muted">
         {kind === "oneWay"
           ? t("analysis.compare.intro")
           : kind === "design"
             ? t("analysis.design.intro")
-            : t("analysis.intro")}
+            : kind === "surface"
+              ? t("analysis.surface.intro")
+              : t("analysis.intro")}
       </p>
+      {state.path === "analyze" && (
+        <>
+          <label className="check">
+            <input
+              type="checkbox"
+              checked={state.analysis.surface}
+              onChange={(e) =>
+                dispatch({
+                  type: "setAnalysis",
+                  patch: { surface: e.target.checked, designTerms: null },
+                })
+              }
+            />
+            <span>{t("analysis.surface.asSurface")}</span>
+          </label>
+          <p className="muted small">{t("analysis.surface.asSurfaceHelp")}</p>
+        </>
+      )}
       <label className="field">
         <span>{t("analysis.response")}</span>
         <select
@@ -163,6 +197,7 @@ export function AnalysisSetup({ onDone }: Props) {
           onChange={(terms) => dispatch({ type: "setAnalysis", patch: { designTerms: terms } })}
         />
       )}
+      {kind === "surface" && <SurfaceModel />}
       {kind === "descriptive" && state.factors.length > 0 && (
         <fieldset className="editor-card">
           <legend>{t("analysis.groupBy")}</legend>
@@ -196,7 +231,9 @@ export function AnalysisSetup({ onDone }: Props) {
           running ||
           state.analysis.responseId === null ||
           (kind === "oneWay" && state.analysis.factorId === null) ||
-          (kind === "design" && state.design === null)
+          (kind === "design" && state.design === null) ||
+          (kind === "surface" &&
+            (surfaceFactors(state).length < 2 || state.analysis.designTerms?.length === 0))
         }
       >
         {running
@@ -205,7 +242,9 @@ export function AnalysisSetup({ onDone }: Props) {
             ? t("analysis.compare.run")
             : kind === "design"
               ? t("analysis.design.run")
-              : t("analysis.run")}
+              : kind === "surface"
+                ? t("analysis.surface.run")
+                : t("analysis.run")}
       </button>
       {messages.length > 0 && (
         <div role="alert" className="error">
@@ -326,6 +365,99 @@ function DesignModel({
             ? t("analysis.design.curvature")
             : t("analysis.design.curvatureUnavailable")}
         </span>
+      </label>
+    </>
+  );
+}
+
+/** Termos do modelo de segunda ordem: completo (padrão do motor) ou escolhidos à mão, sem eliminação automática. */
+function SurfaceModel() {
+  const { t } = useTranslation();
+  const state = useProject();
+  const dispatch = useProjectDispatch();
+  const factors = surfaceFactors(state);
+  if (factors.length < 2)
+    return (
+      <p className="muted" role="status">
+        {t("analysis.surface.needFactors")}
+      </p>
+    );
+  const ids = factors.map((f) => f.id);
+  const all: string[][] = [
+    ...ids.map((id) => [id]),
+    ...ids.map((id) => [id, id]),
+    ...ids.flatMap((a, i) => ids.slice(i + 1).map((b) => [a, b])),
+  ];
+  const key = (term: string[]) => term.join("|");
+  const selected = state.analysis.designTerms;
+  const selectedKeys = new Set((selected ?? all).map(key));
+  const nameOf = (id: string) => factors.find((f) => f.id === id)?.name ?? id;
+  const label = (term: string[]) =>
+    term.length === 2 && term[0] === term[1]
+      ? `${nameOf(term[0] as string)}²`
+      : term.map(nameOf).join(" × ");
+  const toggle = (term: string[], on: boolean) =>
+    dispatch({
+      type: "setAnalysis",
+      patch: {
+        designTerms: on
+          ? all.filter((x) => selectedKeys.has(key(x)) || key(x) === key(term))
+          : all.filter((x) => selectedKeys.has(key(x)) && key(x) !== key(term)),
+      },
+    });
+  return (
+    <>
+      <fieldset className="editor-card">
+        <legend>{t("analysis.surface.model")}</legend>
+        <label className="check">
+          <input
+            type="radio"
+            name="surface-model"
+            checked={selected === null}
+            onChange={() => dispatch({ type: "setAnalysis", patch: { designTerms: null } })}
+          />
+          <span>{t("analysis.surface.modelFull")}</span>
+        </label>
+        <label className="check">
+          <input
+            type="radio"
+            name="surface-model"
+            checked={selected !== null}
+            onChange={() => dispatch({ type: "setAnalysis", patch: { designTerms: all } })}
+          />
+          <span>{t("analysis.surface.modelCustom")}</span>
+        </label>
+        <p className="muted small">{t("analysis.surface.modelHelp")}</p>
+        {selected !== null && (
+          <fieldset>
+            <legend>{t("analysis.surface.termsLegend")}</legend>
+            {all.map((term) => (
+              <label className="check" key={key(term)}>
+                <input
+                  type="checkbox"
+                  checked={selectedKeys.has(key(term))}
+                  onChange={(e) => toggle(term, e.target.checked)}
+                />
+                <span>{label(term)}</span>
+              </label>
+            ))}
+          </fieldset>
+        )}
+      </fieldset>
+      <label className="field">
+        <span>{t("analysis.compare.alpha")}</span>
+        <select
+          value={String(state.analysis.alpha)}
+          onChange={(e) =>
+            dispatch({ type: "setAnalysis", patch: { alpha: Number(e.target.value) } })
+          }
+        >
+          {[0.1, 0.05, 0.01].map((a) => (
+            <option key={a} value={String(a)}>
+              {a}
+            </option>
+          ))}
+        </select>
       </label>
     </>
   );

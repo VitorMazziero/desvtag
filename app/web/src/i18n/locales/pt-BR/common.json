@@ -154,6 +154,20 @@
       "curvature": "Testar curvatura (pontos centrais)",
       "curvatureUnavailable": "O planejamento não tem pontos centrais.",
       "run": "Analisar planejamento"
+    },
+    "surface": {
+      "title": "Análise: superfície de resposta",
+      "intro": "Ajusta o modelo de segunda ordem (efeitos principais, quadráticos e interações de dois fatores) na escala codificada e mostra ANOVA, falta de ajuste, equação e superfície.",
+      "needFactors": "A superfície exige ao menos dois fatores quantitativos com valores numéricos.",
+      "model": "Termos do modelo",
+      "modelFull": "Modelo completo de segunda ordem",
+      "modelCustom": "Escolher os termos",
+      "modelHelp": "Termos podem ser retirados manualmente; o aplicativo nunca elimina termos sozinho. Quadráticos e interações sem o efeito principal correspondente são avisados.",
+      "termsLegend": "Termos",
+      "run": "Calcular superfície",
+      "asSurface": "Ajustar superfície de resposta (modelo de segunda ordem)",
+      "asSurfaceHelp": "Use para matrizes personalizadas ou importadas com fatores quantitativos; a escala codificada usa o menor e o maior valor de cada fator.",
+      "needDesign": "Gere o planejamento na etapa de dados."
     }
   },
   "project": {
@@ -277,7 +291,14 @@
     "kind": {
       "fullFactorial": "Fatorial completo",
       "fractional": "Fracionário {{generators}}",
-      "plackettBurman": "Plackett–Burman"
+      "plackettBurman": "Plackett–Burman",
+      "centralComposite": "Composto central ({{axial}})",
+      "boxBehnken": "Box–Behnken",
+      "axial": {
+        "rotatable": "rotacional",
+        "faceCentered": "face centrada",
+        "custom": "α = {{alpha}}"
+      }
     },
     "replicates": "Repetições do planejamento",
     "replicatesHelp": "Cada repetição refaz todos os ensaios. São réplicas experimentais apenas se cada ensaio for um novo preparo independente.",
@@ -307,7 +328,8 @@
       "exportCsv": "Baixar matriz (CSV)",
       "exported": "Matriz exportada: {{name}}",
       "cancelled": "Exportação cancelada.",
-      "failed": "Não foi possível exportar a matriz."
+      "failed": "Não foi possível exportar a matriz.",
+      "axial": "axial"
     },
     "properties": {
       "title": "Propriedades",
@@ -317,7 +339,26 @@
       "aliasesHelp": "Efeitos na mesma linha não podem ser separados por este planejamento: o que se estima é a soma.",
       "pbPartial": "Plackett–Burman: efeitos principais confundidos parcialmente com interações de dois fatores (correlação absoluta máxima {{value}}).",
       "dummy": "{{count}} colunas fictícias (contrastes não usados por fatores): ficam como graus de liberdade do erro.",
-      "algorithm": "Aleatorização: {{algorithm}}, semente {{seed}}."
+      "algorithm": "Aleatorização: {{algorithm}}, semente {{seed}}.",
+      "axial": "Composto central: α = {{alpha}}; {{factorial}} pontos fatoriais, {{axial}} axiais e {{center}} centrais."
+    },
+    "goal": "Objetivo do planejamento",
+    "goalScreening": "Triagem de fatores (dois níveis)",
+    "goalSurface": "Superfície de resposta (segunda ordem)",
+    "surface": {
+      "legend": "Planejamentos de superfície de resposta para {{count}} fatores",
+      "intro": "Compostos centrais e Box–Behnken estimam curvatura (termos quadráticos). Use depois da triagem, com os fatores que importam. Pontos centrais são necessários para estimar o erro puro.",
+      "rotatable": "Composto central rotacional (DCCR/CCRD): α = (pontos fatoriais)^¼",
+      "face": "Composto central de face centrada (FCD): α = 1",
+      "custom": "Composto central com α informado",
+      "boxBehnken": "Box–Behnken (3 a 5 fatores)",
+      "boxBehnkenUnavailable": "Box–Behnken exige de 3 a 5 fatores.",
+      "alpha": "Distância axial α (0 a 10)",
+      "inscribed": "Inscrito: os pontos axiais ficam nos níveis informados e a parte fatorial dentro deles",
+      "inscribedHelp": "Circunscrito (padrão): a parte fatorial fica nos níveis informados e os pontos axiais além deles, em ±α.",
+      "cubeGenerators": "Parte fatorial fracionária (opcional)",
+      "cubeGeneratorsHelp": "Geradores separados por vírgula, por exemplo E=ABCD. Vazio: fatorial completo.",
+      "centerSuggested": "Pontos centrais definidos em 5 (necessários para o erro puro)."
     }
   }
 }

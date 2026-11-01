@@ -13,8 +13,25 @@ pub const MAX_RUNS: u32 = 5000;
 /// Número máximo de fatores de um fatorial completo (`2¹² = 4096`).
 pub const MAX_FULL_FACTORS: usize = 12;
 
+/// Distância axial do composto central.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, TS)]
+#[serde(tag = "type", rename_all = "camelCase")]
+#[ts(export)]
+pub enum AxialKind {
+    /// Rotacional: `α = F^(1/4)`, com `F` os pontos da parte fatorial (DCCR/CCRD).
+    Rotatable,
+    /// Face centrada: `α = 1` (FCD).
+    FaceCentered,
+    /// `α` informado (`0 < α ≤ 10`): caso geral, que cobre as demais variantes.
+    #[serde(rename_all = "camelCase")]
+    Custom {
+        /// Distância axial na escala codificada.
+        alpha: f64,
+    },
+}
+
 /// Tipo de planejamento.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(tag = "type", rename_all = "camelCase")]
 #[ts(export)]
 pub enum DesignKind {
@@ -32,6 +49,19 @@ pub enum DesignKind {
         /// Número de ensaios do planejamento básico.
         runs: u32,
     },
+    /// Composto central: parte fatorial (completa ou fracionária), pontos axiais ±α e centrais.
+    #[serde(rename_all = "camelCase")]
+    CentralComposite {
+        /// Distância axial.
+        axial: AxialKind,
+        /// Inscrito: os pontos **axiais** ficam nos níveis informados (±1) e a parte fatorial em
+        /// ±1/α. Circunscrito (padrão): fatorial em ±1 e axiais em ±α.
+        inscribed: bool,
+        /// Geradores da parte fatorial fracionária (vazio = fatorial completo).
+        generators: Vec<String>,
+    },
+    /// Box–Behnken (3 a 5 fatores): pares de fatores em ±1 com os demais no centro.
+    BoxBehnken,
 }
 
 /// Fator de dois níveis.
@@ -80,6 +110,8 @@ pub struct RunCount {
     pub base_runs: u32,
     /// Ensaios fatoriais, com as repetições.
     pub factorial_runs: u32,
+    /// Pontos axiais incluídos em `factorial_runs` (composto central; 0 nos demais).
+    pub axial_runs: u32,
     /// Pontos centrais.
     pub center_runs: u32,
     /// Total.
@@ -95,6 +127,8 @@ pub enum PointType {
     Factorial,
     /// Ponto central.
     Center,
+    /// Ponto axial (±α) do composto central.
+    Axial,
 }
 
 /// Um ensaio.
@@ -144,6 +178,8 @@ pub struct GeneratedDesign {
     pub resolution: Option<u32>,
     /// Confundimento de efeitos principais e de interações de dois fatores (fracionários).
     pub aliases: Vec<AliasRow>,
+    /// Distância axial `α` (composto central).
+    pub axial_distance: Option<f64>,
     /// Colunas fictícias do Plackett–Burman.
     pub dummy_columns: u32,
     /// Maior correlação absoluta entre um efeito principal e uma interação de dois fatores

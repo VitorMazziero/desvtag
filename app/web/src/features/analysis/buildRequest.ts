@@ -1,6 +1,12 @@
 // Monta o conjunto de dados e a solicitação ao motor a partir do estado digitado.
 // Aqui só há conversão de texto em número e erros de célula; nenhuma estatística.
-import type { Dataset, Operation } from "../../services/engine";
+import type {
+  Dataset,
+  DesignFactor,
+  Operation,
+  SurfaceRequest,
+  TermSpec,
+} from "../../services/engine";
 import type { ProjectState } from "../../state/project";
 import { parseNumberCell } from "../data/editing";
 
@@ -67,14 +73,53 @@ export function buildDataset(state: ProjectState): { dataset: Dataset; cellError
   return { dataset, cellErrors };
 }
 
-export type AnalysisKind = "descriptive" | "oneWay" | "design";
+export type AnalysisKind = "descriptive" | "oneWay" | "design" | "surface";
+
+/** O planejamento gerado é de superfície de resposta (composto central ou Box–Behnken). */
+export function isSurfaceDesign(state: ProjectState): boolean {
+  const type = state.design?.kind.type;
+  return type === "centralComposite" || type === "boxBehnken";
+}
 
 /**
  * "Comparar tratamentos" executa a comparação de um fator; "Planejar experimento", a análise do
  * planejamento de dois níveis; "Analisar dados existentes", o resumo descritivo.
  */
 export function analysisKind(state: ProjectState): AnalysisKind {
-  return state.path === "compare" ? "oneWay" : state.path === "plan" ? "design" : "descriptive";
+  if (state.path === "compare") return "oneWay";
+  if (state.path === "plan") return isSurfaceDesign(state) ? "surface" : "design";
+  return state.analysis.surface ? "surface" : "descriptive";
+}
+
+/**
+ * Fatores da superfície e seus níveis (que definem a codificação). Com planejamento gerado, são os
+ * níveis do planejamento; com matriz personalizada ou importada, o menor e o maior valor digitado de
+ * cada fator quantitativo (apenas definem a escala; nenhuma estatística).
+ */
+export function surfaceFactors(state: ProjectState): DesignFactor[] {
+  if (state.design) return state.design.factors;
+  const { dataset } = buildDataset(state);
+  return dataset.factors.flatMap((factor, index) => {
+    if (factor.kind !== "numeric") return [];
+    const values = dataset.observations
+      .map((o) => o.factors[index])
+      .filter((v): v is number => typeof v === "number");
+    if (values.length === 0) return [];
+    const low = Math.min(...values);
+    const high = Math.max(...values);
+    return [{ id: factor.id, name: factor.name || factor.id, low, high, unit: factor.unit }];
+  });
+}
+
+/** Termos da superfície: lista vazia = modelo completo de segunda ordem (padrão do motor). */
+export function surfaceTerms(state: ProjectState): TermSpec[] {
+  return (state.analysis.designTerms ?? []).map((ids) =>
+    ids.length === 1
+      ? { type: "main", factorId: ids[0] as string }
+      : ids.length === 2 && ids[0] === ids[1]
+        ? { type: "power", factorId: ids[0] as string, degree: 2 }
+        : { type: "interaction", factorIds: ids },
+  );
 }
 
 /** Termos do modelo do planejamento: os escolhidos ou, por padrão, os efeitos principais. */
@@ -83,9 +128,25 @@ export function designTermIds(state: ProjectState): string[][] {
   return (state.design?.factors ?? []).map((f) => [f.id]);
 }
 
+export function buildSurfaceRequest(
+  state: ProjectState,
+  dataset: Dataset,
+  responseId: string,
+): SurfaceRequest {
+  return {
+    dataset,
+    responseId,
+    factors: surfaceFactors(state),
+    terms: surfaceTerms(state),
+    alpha: state.analysis.alpha,
+  };
+}
+
 export function buildOperation(state: ProjectState, dataset: Dataset): Operation | null {
   const responseId = state.analysis.responseId;
   if (responseId === null) return null;
+  if (analysisKind(state) === "surface")
+    return { type: "surfaceAnalyze", ...buildSurfaceRequest(state, dataset, responseId) };
   if (analysisKind(state) === "design") {
     if (state.design === null) return null;
     return {
@@ -113,6 +174,15 @@ export function buildOperation(state: ProjectState, dataset: Dataset): Operation
 /** Assinatura dos dados e opções: muda quando qualquer entrada do resultado muda. */
 export function inputSignature(state: ProjectState): string {
   const { dataset } = buildDataset(state);
+  if (analysisKind(state) === "surface")
+    return JSON.stringify([
+      "surface",
+      dataset,
+      state.analysis.responseId,
+      surfaceFactors(state),
+      state.analysis.designTerms,
+      state.analysis.alpha,
+    ]);
   if (analysisKind(state) === "design")
     return JSON.stringify([
       "design",

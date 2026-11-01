@@ -6,6 +6,7 @@ import { ComparisonResults } from "./ComparisonResults";
 import { DescriptiveTable } from "./DescriptiveTable";
 import { DesignResults } from "./DesignResults";
 import { Interpretation } from "./Interpretation";
+import { SurfaceResults } from "./SurfaceResults";
 
 export function ResultsView({ language }: { language: Language }) {
   const { t } = useTranslation("results");
@@ -38,6 +39,18 @@ export function ResultsView({ language }: { language: Language }) {
           </p>
         )}
         <DesignResults result={stored.result} signature={stored.signature} language={language} />
+      </section>
+    );
+  if (stored.kind === "surface")
+    return (
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">{t("surface.title")}</h2>
+        {!resultIsCurrent(state) && (
+          <p role="status" className="error">
+            {t("stale")}
+          </p>
+        )}
+        <SurfaceResults result={stored.result} signature={stored.signature} language={language} />
       </section>
     );
   const response = state.responses.find((r) => r.id === stored.result.responseId);

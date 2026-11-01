@@ -91,6 +91,18 @@
       "independence_not_assessed": "The app does not check independence: each row was treated as an independent run.",
       "not_estimable_one": "{{count}} term is not estimable (aliased with another in the model) and was left out.",
       "not_estimable_other": "{{count}} terms are not estimable (aliased with others in the model) and were left out."
+    },
+    "surface": {
+      "model_significant": "The model is significant at the {{alpha}} level (p = {{p}}).",
+      "model_not_significant": "The model is not significant at the {{alpha}} level (p = {{p}}): the surface cannot be told apart from a constant response.",
+      "saturated": "There are no error degrees of freedom (the model uses every run): standard errors, tests and p-values do not exist.",
+      "fit_measures": "R² = {{r2}}; adjusted R² = {{adjusted}}.",
+      "lack_of_fit_significant": "There is lack of fit (p = {{p}}): the second-order model does not describe the studied region well; consider a smaller region or additional terms.",
+      "lack_of_fit_not_significant": "No lack of fit detected (p = {{p}}).",
+      "lack_of_fit_unavailable": "Lack of fit could not be assessed: runs must be repeated at the same conditions (for example, the centre point).",
+      "not_estimable": "{{count}} term(s) not estimable with these runs; the design cannot separate them.",
+      "extrapolation_note": "Predictions outside the region run (hatched in the charts) are extrapolation and are not reliable.",
+      "independence_not_assessed": "Independence of the runs cannot be checked from the data; it depends on how the experiment was run."
     }
   },
   "comparison": {
@@ -280,6 +292,72 @@
     },
     "export": {
       "effectsCsv": "Effects (CSV)"
+    }
+  },
+  "surface": {
+    "title": "Results: response surface",
+    "summary": {
+      "conclusion": "Second-order model fitted to {{n}} runs of “{{response}}” with {{factors}} factors ({{terms}} terms).",
+      "evidence": "Regression ANOVA: F = {{f}}, p = {{p}}; R² = {{r2}}; adjusted R² = {{adjusted}}.",
+      "evidenceUnavailable": "Without error degrees of freedom there are no tests; see the warnings.",
+      "nextStep": "The model describes only the studied region. Check lack of fit and the residuals before using the equation, and confirm any promising point with new runs."
+    },
+    "terms": {
+      "caption": "Model coefficients (coded scale) for “{{response}}”",
+      "term": "Term",
+      "estimate": "Estimate",
+      "se": "Standard error",
+      "t": "t",
+      "p": "p-value",
+      "ci": "{{level}}% CI",
+      "intercept": "Intercept",
+      "help": "Coefficients are on the coded scale (−1 and +1 at the stated levels): they can be compared with one another regardless of units."
+    },
+    "lackOfFit": {
+      "unavailable": "Lack of fit unavailable: there are no repeated runs at the same conditions (pure error) or not enough degrees of freedom. Repeat the centre point to test it."
+    },
+    "equation": {
+      "title": "Model equation",
+      "coded": "Coded scale",
+      "real": "Real units",
+      "realUnavailable": "Unavailable: some terms are not estimable.",
+      "help": "Both equations give the same prediction; the coded one is the one fitted and the real one is the same equation rewritten in the factor values.",
+      "prefix": "ŷ"
+    },
+    "region": {
+      "title": "Experimental region",
+      "factor": "Factor",
+      "center": "Centre",
+      "halfRange": "Half-range",
+      "min": "Lowest value run",
+      "max": "Highest value run",
+      "help": "Predictions outside the region, or at level combinations never run, are extrapolation."
+    },
+    "view": {
+      "title": "Response surface",
+      "intro": "Choose two factors for the axes and fix the others. Predictions come from the model; the hatched region is extrapolation.",
+      "xAxis": "Horizontal axis",
+      "yAxis": "Vertical axis",
+      "fixed": "{{name}} fixed at",
+      "steps": "Grid resolution",
+      "azimuth": "Rotation (degrees)",
+      "elevation": "Elevation (degrees)",
+      "sameAxis": "Choose different factors on the two axes.",
+      "loading": "Computing the grid…",
+      "failed": "The grid could not be computed.",
+      "contourTitle": "Contour of “{{response}}”",
+      "contourDescription": "Contour lines of the response predicted by the model as a function of two factors.",
+      "surfaceTitle": "Surface of “{{response}}”",
+      "surfaceDescription": "Surface of the response predicted by the model as a function of two factors, in orthographic projection.",
+      "readingContour": "Lines: predicted response values; darker = higher response.",
+      "readingSurface": "Darker = higher predicted response.",
+      "extrapolated": "Hatched: extrapolation (outside the region run).",
+      "points": "Circles: runs, projected on the two axes.",
+      "needTwo": "The surface needs at least two quantitative factors.",
+      "gridCsv": "Prediction grid (CSV)"
+    },
+    "export": {
+      "coefficientsCsv": "Coefficients (CSV)"
     }
   }
 }

@@ -15,7 +15,7 @@ export function matrixCsv(design: GeneratedDesign, metadata: Record<string, stri
   const rows: Cell[][] = design.runs.map((r) => [
     r.run,
     r.standardOrder,
-    r.point === "center" ? "center" : "factorial",
+    r.point,
     r.replicate,
     ...r.real,
     ...r.coded,
@@ -25,7 +25,11 @@ export function matrixCsv(design: GeneratedDesign, metadata: Record<string, stri
       ? `fractional (${design.spec.kind.generators.join(", ")})`
       : design.spec.kind.type === "plackettBurman"
         ? `plackett-burman (${design.spec.kind.runs} runs)`
-        : "full factorial";
+        : design.spec.kind.type === "centralComposite"
+          ? `central composite (alpha ${design.axialDistance ?? ""}${design.spec.kind.inscribed ? ", inscribed" : ""})`
+          : design.spec.kind.type === "boxBehnken"
+            ? "box-behnken"
+            : "full factorial";
   return toCsv(header, rows, {
     ...metadata,
     method: `${design.provenance.methodId} v${design.provenance.methodVersion}`,

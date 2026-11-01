@@ -40,6 +40,8 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "one_way_comparison",
                     "two_level_design",
                     "two_level_design_analysis",
+                    "response_surface_design",
+                    "response_surface",
                     "linear_model"
                 ]
             );

@@ -15,7 +15,7 @@ use super::plackett_burman::SUPPORTED_RUNS;
 use super::spec::{DesignKind, MAX_FULL_FACTORS};
 
 /// Uma opção de planejamento.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export)]
 pub struct Candidate {
@@ -32,7 +32,7 @@ pub struct Candidate {
 }
 
 /// Lista de opções (envelope serializável do resultado).
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export)]
 pub struct DesignOptions {

@@ -262,3 +262,37 @@ test("abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de
   await expect(page.getByTestId("matrix-table").locator("tbody tr")).toHaveCount(16);
   await expect(page.getByTestId("design-properties")).toContainText("20261101");
 });
+
+test("abre o exemplo 03 (DCCR) com coeficientes, falta de ajuste e superfícies conferidos de forma independente", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const chooser = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Abrir…" }).click();
+  await (await chooser).setFiles(
+    new URL("../../../../examples/03-superficie-meio-cultivo/projeto.enzitag", import.meta.url)
+      .pathname,
+  );
+  await expect(page.getByLabel("Nome do projeto")).toHaveValue(
+    "Superfície de resposta do meio de cultivo",
+  );
+  // Regressão independente (NumPy): Glicose 5,0158; Glicose² −5,7833; R² 0,9878; falta de ajuste p = 0,692.
+  const terms = page.getByTestId("surface-terms");
+  await expect(terms).toBeVisible();
+  await expect(terms.locator("tbody tr").nth(1)).toContainText("Glicose");
+  await expect(terms.locator("tbody tr").nth(1)).toContainText("5,0158");
+  await expect(terms.locator("tbody tr").nth(4)).toContainText("-5,7833");
+  await expect(page.getByTestId("fit-measures")).toContainText("0,98776");
+  await expect(page.getByTestId("lack-of-fit")).toContainText("0,6918");
+  await expect(page.getByTestId("equation-coded")).toContainText("119,4 + 5,0158·Glicose");
+  await expect(page.getByTestId("equation-real")).toContainText("2,1753 + 3,6059·Glicose");
+  await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
+  // Superfície 3D e contorno vêm da malha do motor; a região extrapolada é identificada.
+  await expect(page.getByTestId("contour-chart")).toBeVisible();
+  await expect(page.getByTestId("surface-chart")).toBeVisible();
+  await expect(page.getByTestId("contour-chart")).toContainText("Hachurado: extrapolação");
+  // O planejamento volta com 19 ensaios, 6 axiais e α = 1,682.
+  await page.getByRole("button", { name: /Planejamento e dados/ }).click();
+  await expect(page.getByTestId("matrix-table").locator("tbody tr")).toHaveCount(19);
+  await expect(page.getByTestId("axial-distance")).toContainText("1,68179");
+});

@@ -1,0 +1,42 @@
+{
+ "method": "response_surface",
+ "title": "Planejamento personalizado (pontos irregulares, 2 repetições) com modelo completo",
+ "responseColumn": "y",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "X1",
+   "low": 1,
+   "high": 5
+  },
+  {
+   "id": "f2",
+   "name": "X2",
+   "low": 20,
+   "high": 60
+  },
+  {
+   "id": "f3",
+   "name": "X3",
+   "low": -5,
+   "high": 5
+  }
+ ],
+ "terms": [
+  "A",
+  "B",
+  "C",
+  "AA",
+  "BB",
+  "CC",
+  "AB",
+  "AC",
+  "BC"
+ ],
+ "alpha": 0.05,
+ "gridAxes": [
+  0,
+  1
+ ],
+ "gridSteps": 5
+}

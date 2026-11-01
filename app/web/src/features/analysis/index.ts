@@ -4,6 +4,7 @@ export {
   analysisKind,
   buildDataset,
   buildOperation,
+  buildSurfaceRequest,
   type CellError,
   designTermIds,
   inputSignature,

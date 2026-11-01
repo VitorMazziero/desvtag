@@ -25,6 +25,23 @@ function randomSeed(): number {
 
 const sameKind = (a: DesignKind, b: DesignKind) => JSON.stringify(a) === JSON.stringify(b);
 
+type Goal = "screening" | "surface";
+type SurfaceChoice = "rotatable" | "face" | "custom" | "boxBehnken";
+
+const isSurface = (kind: DesignKind | undefined): boolean =>
+  kind?.type === "centralComposite" || kind?.type === "boxBehnken";
+
+function surfaceChoiceOf(kind: DesignKind | undefined): SurfaceChoice {
+  if (kind?.type === "boxBehnken") return "boxBehnken";
+  if (kind?.type === "centralComposite")
+    return kind.axial.type === "rotatable"
+      ? "rotatable"
+      : kind.axial.type === "faceCentered"
+        ? "face"
+        : "custom";
+  return "rotatable";
+}
+
 export function DesignPanel({ language }: { language: Language }) {
   const { t } = useTranslation();
   const state = useProject();
@@ -42,7 +59,23 @@ export function DesignPanel({ language }: { language: Language }) {
       ]),
     ),
   );
-  const [kind, setKind] = useState<DesignKind>(state.design?.kind ?? { type: "fullFactorial" });
+  const initialKind = state.design?.kind;
+  const [kind, setKind] = useState<DesignKind>(
+    initialKind && !isSurface(initialKind) ? initialKind : { type: "fullFactorial" },
+  );
+  const [goal, setGoal] = useState<Goal>(isSurface(initialKind) ? "surface" : "screening");
+  const [choice, setChoice] = useState<SurfaceChoice>(surfaceChoiceOf(initialKind));
+  const [alphaText, setAlphaText] = useState(
+    initialKind?.type === "centralComposite" && initialKind.axial.type === "custom"
+      ? String(initialKind.axial.alpha)
+      : "1.5",
+  );
+  const [inscribed, setInscribed] = useState(
+    initialKind?.type === "centralComposite" ? initialKind.inscribed : false,
+  );
+  const [cubeGenerators, setCubeGenerators] = useState(
+    initialKind?.type === "centralComposite" ? initialKind.generators.join(", ") : "",
+  );
   const [budget, setBudget] = useState("");
   const [replicates, setReplicates] = useState(state.design?.replicates ?? 1);
   const [centerPoints, setCenterPoints] = useState(state.design?.centerPoints ?? 0);
@@ -63,10 +96,29 @@ export function DesignPanel({ language }: { language: Language }) {
   const levelsValid = parsed.every(
     (p) => p.filled && Number.isFinite(p.low) && Number.isFinite(p.high) && p.low < p.high,
   );
+  const alpha = Number(alphaText.replace(",", "."));
+  const surfaceKind: DesignKind =
+    choice === "boxBehnken"
+      ? { type: "boxBehnken" }
+      : {
+          type: "centralComposite",
+          axial:
+            choice === "rotatable"
+              ? { type: "rotatable" }
+              : choice === "face"
+                ? { type: "faceCentered" }
+                : { type: "custom", alpha },
+          inscribed,
+          generators: cubeGenerators
+            .split(/[;,]/)
+            .map((g) => g.trim())
+            .filter((g) => g !== ""),
+        };
+  const alphaValid = choice !== "custom" || Number.isFinite(alpha);
   const candidate: DesignSpec | null =
-    factors.length >= 2 && levelsValid
+    factors.length >= 2 && levelsValid && (goal === "screening" || alphaValid)
       ? {
-          kind,
+          kind: goal === "surface" ? surfaceKind : kind,
           factors: parsed.map((p) => ({
             id: p.f.id,
             name: p.f.name,
@@ -114,8 +166,8 @@ export function DesignPanel({ language }: { language: Language }) {
   // A recomendação define o tipo inicial (enquanto não há planejamento gerado).
   const recommended = candidates.find((c) => c.recommended);
   useEffect(() => {
-    if (state.design === null && recommended) setKind(recommended.kind);
-  }, [recommended, state.design]);
+    if (state.design === null && recommended && goal === "screening") setKind(recommended.kind);
+  }, [recommended, state.design, goal]);
 
   // Contagem de ensaios antes de gerar.
   useEffect(() => {
@@ -240,38 +292,127 @@ export function DesignPanel({ language }: { language: Language }) {
             )}
           </fieldset>
 
-          <label className="field">
-            <span>{t("design.budget")}</span>
-            <input
-              type="text"
-              inputMode="numeric"
-              value={budget}
-              onChange={(e) => setBudget(e.target.value.replace(/[^\d]/g, ""))}
-            />
-          </label>
-          <p className="muted small">{t("design.budgetHelp")}</p>
-
           <fieldset className="editor-card">
-            <legend>{t("design.optionsTitle", { count: k })}</legend>
-            {candidates.map((c) => (
-              <label className="check" key={JSON.stringify(c.kind)}>
-                <input
-                  type="radio"
-                  name="design-kind"
-                  checked={sameKind(kind, c.kind)}
-                  onChange={() => setKind(c.kind)}
-                />
-                <span>
-                  {kindLabel(c)} — {t("design.candidate", { runs: c.baseRuns })},{" "}
-                  {c.resolution === null
-                    ? t("design.noResolution")
-                    : t("design.resolution", { resolution: c.resolution })}
-                  {c.recommended && <strong> · {t("design.recommended")}</strong>}
-                  {!c.withinBudget && <em> · {t("design.overBudget")}</em>}
-                </span>
-              </label>
-            ))}
+            <legend>{t("design.goal")}</legend>
+            <label className="check">
+              <input
+                type="radio"
+                name="design-goal"
+                checked={goal === "screening"}
+                onChange={() => setGoal("screening")}
+              />
+              <span>{t("design.goalScreening")}</span>
+            </label>
+            <label className="check">
+              <input
+                type="radio"
+                name="design-goal"
+                checked={goal === "surface"}
+                onChange={() => {
+                  setGoal("surface");
+                  if (centerPoints === 0) {
+                    setCenterPoints(5);
+                    setMessage(t("design.surface.centerSuggested"));
+                  }
+                }}
+              />
+              <span>{t("design.goalSurface")}</span>
+            </label>
           </fieldset>
+
+          {goal === "screening" && (
+            <>
+              <label className="field">
+                <span>{t("design.budget")}</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value.replace(/[^\d]/g, ""))}
+                />
+              </label>
+              <p className="muted small">{t("design.budgetHelp")}</p>
+            </>
+          )}
+
+          {goal === "surface" && (
+            <fieldset className="editor-card" data-testid="surface-options">
+              <legend>{t("design.surface.legend", { count: k })}</legend>
+              <p className="muted small">{t("design.surface.intro")}</p>
+              {(["rotatable", "face", "custom", "boxBehnken"] as const).map((c) => (
+                <label className="check" key={c}>
+                  <input
+                    type="radio"
+                    name="surface-kind"
+                    checked={choice === c}
+                    disabled={c === "boxBehnken" && (k < 3 || k > 5)}
+                    onChange={() => setChoice(c)}
+                  />
+                  <span>{t(`design.surface.${c}`)}</span>
+                </label>
+              ))}
+              {(k < 3 || k > 5) && (
+                <p className="muted small">{t("design.surface.boxBehnkenUnavailable")}</p>
+              )}
+              {choice === "custom" && (
+                <label className="field">
+                  <span>{t("design.surface.alpha")}</span>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={alphaText}
+                    onChange={(e) => setAlphaText(e.target.value)}
+                  />
+                </label>
+              )}
+              {choice !== "boxBehnken" && (
+                <>
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={inscribed}
+                      onChange={(e) => setInscribed(e.target.checked)}
+                    />
+                    <span>{t("design.surface.inscribed")}</span>
+                  </label>
+                  <p className="muted small">{t("design.surface.inscribedHelp")}</p>
+                  <label className="field">
+                    <span>{t("design.surface.cubeGenerators")}</span>
+                    <input
+                      type="text"
+                      value={cubeGenerators}
+                      onChange={(e) => setCubeGenerators(e.target.value)}
+                    />
+                    <small className="muted">{t("design.surface.cubeGeneratorsHelp")}</small>
+                  </label>
+                </>
+              )}
+            </fieldset>
+          )}
+
+          {goal === "screening" && (
+            <fieldset className="editor-card">
+              <legend>{t("design.optionsTitle", { count: k })}</legend>
+              {candidates.map((c) => (
+                <label className="check" key={JSON.stringify(c.kind)}>
+                  <input
+                    type="radio"
+                    name="design-kind"
+                    checked={sameKind(kind, c.kind)}
+                    onChange={() => setKind(c.kind)}
+                  />
+                  <span>
+                    {kindLabel(c)} — {t("design.candidate", { runs: c.baseRuns })},{" "}
+                    {c.resolution === null
+                      ? t("design.noResolution")
+                      : t("design.resolution", { resolution: c.resolution })}
+                    {c.recommended && <strong> · {t("design.recommended")}</strong>}
+                    {!c.withinBudget && <em> · {t("design.overBudget")}</em>}
+                  </span>
+                </label>
+              ))}
+            </fieldset>
+          )}
 
           <div className="row">
             <label className="field">

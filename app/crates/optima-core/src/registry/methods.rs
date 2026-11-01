@@ -50,6 +50,18 @@ pub fn registered_methods() -> Vec<MethodInfo> {
             validation: Validation::NumericallyValidated,
         },
         MethodInfo {
+            id: crate::designs::generate::SURFACE_METHOD_ID.to_string(),
+            version: crate::designs::generate::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::surface::model::METHOD_ID.to_string(),
+            version: crate::surface::model::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
             id: crate::models::linear::METHOD_ID.to_string(),
             version: crate::models::linear::METHOD_VERSION,
             implementation: Implementation::Implemented,

@@ -1,6 +1,8 @@
 //! Geração do planejamento: matriz básica, réplicas, pontos centrais e ordem de execução.
 
 use super::alias::{alias_sets, effect_name};
+use super::box_behnken::box_behnken;
+use super::central_composite::{central_composite, factorial_points};
 use super::coding::Levels;
 use super::factorial::full_factorial;
 use super::fractional::{fractional_matrix, parse_generators, relation_and_resolution};
@@ -18,6 +20,9 @@ use crate::validation::{Issue, Severity};
 pub const METHOD_ID: &str = "two_level_design";
 /// Versão do método.
 pub const METHOD_VERSION: u32 = 1;
+/// Identificador do método dos planejamentos de superfície de resposta (composto central e
+/// Box–Behnken).
+pub const SURFACE_METHOD_ID: &str = "response_surface_design";
 
 fn error(code: &str) -> Issue {
     Issue::new(code, Severity::Error)
@@ -29,6 +34,10 @@ struct Base {
     dummies: u32,
     words: Vec<super::alias::Word>,
     resolution: Option<u32>,
+    /// Últimas linhas da matriz que são pontos axiais.
+    axial: usize,
+    /// Distância axial (composto central).
+    alpha: Option<f64>,
 }
 
 fn validate_common(spec: &DesignSpec) -> Vec<Issue> {
@@ -75,6 +84,8 @@ fn base(spec: &DesignSpec) -> Result<Base, Vec<Issue>> {
                 dummies: 0,
                 words: Vec::new(),
                 resolution: None,
+                axial: 0,
+                alpha: None,
             })
         }
         DesignKind::Fractional { generators } => {
@@ -85,6 +96,8 @@ fn base(spec: &DesignSpec) -> Result<Base, Vec<Issue>> {
                 dummies: 0,
                 words,
                 resolution,
+                axial: 0,
+                alpha: None,
             })
         }
         DesignKind::PlackettBurman { runs } => {
@@ -109,17 +122,43 @@ fn base(spec: &DesignSpec) -> Result<Base, Vec<Issue>> {
                 dummies: u32::try_from(n - 1 - k).unwrap_or(0),
                 words: Vec::new(),
                 resolution: Some(3),
+                axial: 0,
+                alpha: None,
             })
         }
+        DesignKind::CentralComposite {
+            axial,
+            inscribed,
+            generators,
+        } => {
+            let c = central_composite(k, axial, *inscribed, generators)?;
+            Ok(Base {
+                matrix: c.matrix,
+                dummies: 0,
+                words: c.words,
+                resolution: c.resolution,
+                axial: c.axial,
+                alpha: Some(c.alpha),
+            })
+        }
+        DesignKind::BoxBehnken => Ok(Base {
+            matrix: box_behnken(k)?,
+            dummies: 0,
+            words: Vec::new(),
+            resolution: None,
+            axial: 0,
+            alpha: None,
+        }),
     }
 }
 
-fn counts(base_runs: usize, spec: &DesignSpec) -> RunCount {
+fn counts(base_runs: usize, axial: usize, spec: &DesignSpec) -> RunCount {
     let to_u32 = |v: usize| u32::try_from(v).unwrap_or(u32::MAX);
     let factorial_runs = to_u32(base_runs).saturating_mul(spec.replicates);
     RunCount {
         base_runs: to_u32(base_runs),
         factorial_runs,
+        axial_runs: to_u32(axial).saturating_mul(spec.replicates),
         center_runs: spec.center_points,
         total: factorial_runs.saturating_add(spec.center_points),
     }
@@ -135,6 +174,7 @@ pub fn count_runs(spec: &DesignSpec) -> Result<RunCount, CoreError> {
         return Err(CoreError::InvalidInput(issues));
     }
     let k = spec.factors.len();
+    let mut axial = 0_usize;
     let base_runs = match &spec.kind {
         DesignKind::FullFactorial => {
             if k > MAX_FULL_FACTORS {
@@ -156,8 +196,28 @@ pub fn count_runs(spec: &DesignSpec) -> Result<RunCount, CoreError> {
             }
             *runs as usize
         }
+        DesignKind::CentralComposite {
+            axial: kind,
+            generators,
+            ..
+        } => {
+            if k > 8 && generators.is_empty() {
+                return Err(CoreError::InvalidInput(vec![
+                    error("design.too_many_factors").with_param("max", &8),
+                ]));
+            }
+            if !generators.is_empty() {
+                parse_generators(k, generators).map_err(CoreError::InvalidInput)?;
+            }
+            let cube = factorial_points(k, generators.len());
+            super::central_composite::axial_distance(kind, cube)
+                .map_err(CoreError::InvalidInput)?;
+            axial = 2 * k;
+            cube + axial
+        }
+        DesignKind::BoxBehnken => box_behnken(k).map_err(CoreError::InvalidInput)?.len(),
     };
-    let count = counts(base_runs, spec);
+    let count = counts(base_runs, axial, spec);
     if count.total > MAX_RUNS {
         return Err(CoreError::InvalidInput(vec![
             error("design.too_many_runs")
@@ -188,8 +248,13 @@ pub fn generate(spec: &DesignSpec) -> Result<GeneratedDesign, CoreError> {
     // Ensaios na ordem padrão: repetições do planejamento básico, depois os pontos centrais.
     let mut standard: Vec<(PointType, u32, Vec<f64>)> = Vec::with_capacity(count.total as usize);
     for replicate in 1..=spec.replicates {
-        for row in &base.matrix {
-            standard.push((PointType::Factorial, replicate, row.clone()));
+        for (index, row) in base.matrix.iter().enumerate() {
+            let point = if index >= base.matrix.len() - base.axial {
+                PointType::Axial
+            } else {
+                PointType::Factorial
+            };
+            standard.push((point, replicate, row.clone()));
         }
     }
     for _ in 0..spec.center_points {
@@ -246,6 +311,21 @@ pub fn generate(spec: &DesignSpec) -> Result<GeneratedDesign, CoreError> {
             .with_param("resolution", &base.resolution.unwrap_or(3)),
         );
     }
+    if matches!(spec.kind, DesignKind::CentralComposite { .. })
+        && matches!(base.resolution, Some(r) if r < 5)
+    {
+        issues.push(
+            Issue::new("design.cube_resolution_low", Severity::Warning)
+                .with_param("resolution", &base.resolution.unwrap_or(0)),
+        );
+    }
+    if matches!(
+        spec.kind,
+        DesignKind::BoxBehnken | DesignKind::CentralComposite { .. }
+    ) && spec.center_points == 0
+    {
+        issues.push(Issue::new("design.surface_needs_center", Severity::Warning));
+    }
     if spec.center_points == 1 {
         issues.push(Issue::new("design.single_center_point", Severity::Warning));
     }
@@ -260,11 +340,22 @@ pub fn generate(spec: &DesignSpec) -> Result<GeneratedDesign, CoreError> {
         defining_relation,
         resolution: base.resolution,
         aliases,
+        axial_distance: base.alpha,
         dummy_columns: base.dummies,
         max_main_vs_two_factor_correlation: max_correlation,
         randomization_algorithm: ALGORITHM.to_string(),
         issues,
-        provenance: Provenance::current(METHOD_ID, METHOD_VERSION),
+        provenance: Provenance::current(
+            if matches!(
+                spec.kind,
+                DesignKind::CentralComposite { .. } | DesignKind::BoxBehnken
+            ) {
+                SURFACE_METHOD_ID
+            } else {
+                METHOD_ID
+            },
+            METHOD_VERSION,
+        ),
     })
 }
 

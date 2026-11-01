@@ -22,6 +22,7 @@ pub mod models;
 pub mod numeric;
 pub mod provenance;
 pub mod registry;
+pub mod surface;
 pub mod validation;
 pub mod visualization;
 

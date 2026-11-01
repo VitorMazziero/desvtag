@@ -10,6 +10,7 @@ use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
 use optima_core::registry::Capabilities;
+use optima_core::surface::{SurfaceGrid, SurfaceResult};
 use optima_core::validation::Issue;
 use optima_project::ProjectDocument;
 use optima_project::xlsx::SheetData;
@@ -78,6 +79,10 @@ pub enum OperationResult {
     DesignGenerate(Box<GeneratedDesign>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
+    /// Análise da superfície de resposta.
+    SurfaceAnalyze(Box<SurfaceResult>),
+    /// Malha da superfície.
+    SurfaceGrid(Box<SurfaceGrid>),
     /// Resultado da comparação de tratamentos de um fator.
     ComparisonOneWay(Box<OneWayResult>),
     /// Valores de uma função de distribuição.

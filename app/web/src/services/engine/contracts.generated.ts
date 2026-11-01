@@ -41,14 +41,20 @@ factorId?: StableId,
  */
 alpha?: number, 
 /**
- * Termos do modelo de um planejamento de dois níveis: cada termo é a lista dos fatores que o
- * compõem (um = efeito principal; dois ou mais = interação).
+ * Termos do modelo de um planejamento: cada termo é a lista dos fatores que o compõem (um =
+ * efeito principal; dois ou mais = interação). Na superfície de resposta, o mesmo fator
+ * repetido (`[A, A]`) é o termo quadrático `A²`.
  */
 terms?: Array<Array<StableId>>, 
 /**
  * Incluir o termo de curvatura (planejamentos com pontos centrais).
  */
-includeCurvature?: boolean, };
+includeCurvature?: boolean, 
+/**
+ * Analisar como superfície de resposta de segunda ordem (matriz personalizada ou importada,
+ * no caminho "Analisar dados existentes").
+ */
+surface?: boolean, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
@@ -94,7 +100,7 @@ result: AnalysisResult, };
 /**
  * Resultado guardado, por método.
  */
-export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult;
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult;
 
 /**
  * Linha da tabela.
@@ -112,6 +118,15 @@ sumSquares: Stat,
  * Quadrado médio.
  */
 meanSquare: Stat, };
+
+/**
+ * Distância axial do composto central.
+ */
+export type AxialKind = { "type": "rotatable" } | { "type": "faceCentered" } | { "type": "custom", 
+/**
+ * Distância axial na escala codificada.
+ */
+alpha: number, };
 
 /**
  * Estatísticas do boxplot de um grupo.
@@ -251,6 +266,19 @@ ciLower: Stat,
  * Limite superior do intervalo de confiança.
  */
 ciUpper: Stat, };
+
+/**
+ * Curva de nível: valor e segmentos.
+ */
+export type ContourLevel = { 
+/**
+ * Valor da resposta.
+ */
+level: number, 
+/**
+ * Segmentos da curva.
+ */
+segments: Array<Segment>, };
 
 /**
  * Teste de curvatura (pontos centrais × pontos fatoriais).
@@ -482,7 +510,20 @@ generators: Array<string>, } | { "type": "plackettBurman",
 /**
  * Número de ensaios do planejamento básico.
  */
-runs: number, };
+runs: number, } | { "type": "centralComposite", 
+/**
+ * Distância axial.
+ */
+axial: AxialKind, 
+/**
+ * Inscrito: os pontos **axiais** ficam nos níveis informados (±1) e a parte fatorial em
+ * ±1/α. Circunscrito (padrão): fatorial em ±1 e axiais em ±α.
+ */
+inscribed: boolean, 
+/**
+ * Geradores da parte fatorial fracionária (vazio = fatorial completo).
+ */
+generators: Array<string>, } | { "type": "boxBehnken" };
 
 /**
  * Lista de opções (envelope serializável do resultado).
@@ -773,6 +814,42 @@ outcome: Outcome, };
 export type EntryPath = "plan" | "analyze" | "compare";
 
 /**
+ * Equação nas duas escalas.
+ */
+export type Equation = { 
+/**
+ * Termos na escala codificada, na ordem do modelo (intercepto primeiro).
+ */
+coded: Array<EquationTerm>, 
+/**
+ * Termos em unidades reais: intercepto, lineares de todos os fatores, quadráticos e
+ * interações presentes no modelo. `None` quando algum coeficiente não é estimável.
+ */
+real: Array<EquationTerm> | null, };
+
+/**
+ * Termo da equação.
+ */
+export type EquationTerm = { 
+/**
+ * Tipo.
+ */
+kind: EquationTermKind, 
+/**
+ * Índices dos fatores (0, 1 ou 2 elementos conforme o tipo).
+ */
+factors: Array<number>, 
+/**
+ * Coeficiente.
+ */
+coefficient: Stat, };
+
+/**
+ * Tipo do termo da equação.
+ */
+export type EquationTermKind = "intercept" | "linear" | "square" | "interaction";
+
+/**
  * Código de erro do protocolo (a interface localiza a mensagem).
  */
 export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion" | "invalidInput" | "invalidProject" | "invalidImport";
@@ -902,6 +979,35 @@ levels: Array<string>, };
 export type FactorKind = "numeric" | "categorical";
 
 /**
+ * Intervalo experimental de um fator.
+ */
+export type FactorRange = { 
+/**
+ * Fator.
+ */
+id: StableId, 
+/**
+ * Nome.
+ */
+name: string, 
+/**
+ * Centro usado na codificação.
+ */
+center: number, 
+/**
+ * Meia-amplitude usada na codificação.
+ */
+halfRange: number, 
+/**
+ * Menor valor real observado nos ensaios usados.
+ */
+min: number, 
+/**
+ * Maior valor real observado nos ensaios usados.
+ */
+max: number, };
+
+/**
  * Fator definido pelo usuário (versão textual).
  */
 export type FactorSpec = { 
@@ -933,6 +1039,40 @@ levelsText: string, };
 export type FactorValue = number | string;
 
 /**
+ * Condição fixada, ecoada no resultado.
+ */
+export type FixedEcho = { 
+/**
+ * Fator.
+ */
+factorId: StableId, 
+/**
+ * Nome.
+ */
+name: string, 
+/**
+ * Valor real usado.
+ */
+value: number, 
+/**
+ * Valor codificado.
+ */
+coded: number, };
+
+/**
+ * Valor fixado de um fator (real).
+ */
+export type FixedValue = { 
+/**
+ * Fator.
+ */
+factorId: StableId, 
+/**
+ * Valor real.
+ */
+value: number, };
+
+/**
  * Planejamento gerado.
  */
 export type GeneratedDesign = { 
@@ -961,6 +1101,10 @@ resolution: number | null,
  */
 aliases: Array<AliasRow>, 
 /**
+ * Distância axial `α` (composto central).
+ */
+axialDistance: number | null, 
+/**
  * Colunas fictícias do Plackett–Burman.
  */
 dummyColumns: number, 
@@ -981,6 +1125,39 @@ issues: Array<Issue>,
  * Proveniência.
  */
 provenance: Provenance, };
+
+/**
+ * Solicitação da malha.
+ */
+export type GridRequest = { 
+/**
+ * A mesma solicitação da análise (o modelo é reajustado).
+ */
+surface: SurfaceRequest, 
+/**
+ * Fator do eixo horizontal.
+ */
+xFactor: StableId, 
+/**
+ * Fator do eixo vertical.
+ */
+yFactor: StableId, 
+/**
+ * Valores dos demais fatores (ausentes = centro dos níveis).
+ */
+fixed: Array<FixedValue>, 
+/**
+ * Passos no eixo horizontal (5 a 101).
+ */
+stepsX: number, 
+/**
+ * Passos no eixo vertical (5 a 101).
+ */
+stepsY: number, 
+/**
+ * Quantidade aproximada de curvas de nível.
+ */
+contourLevels: number, };
 
 /**
  * Rótulo de um fator em um grupo.
@@ -1539,12 +1716,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Sucesso ou falha.
@@ -1655,7 +1832,7 @@ export type ParetoBasis = "tStatistic" | "lenthEffect" | "effectOnly";
 /**
  * Tipo de ponto.
  */
-export type PointType = "factorial" | "center";
+export type PointType = "factorial" | "center" | "axial";
 
 /**
  * Predição para uma linha.
@@ -1957,6 +2134,10 @@ baseRuns: number,
  */
 factorialRuns: number, 
 /**
+ * Pontos axiais incluídos em `factorial_runs` (composto central; 0 nos demais).
+ */
+axialRuns: number, 
+/**
  * Pontos centrais.
  */
 centerRuns: number, 
@@ -1964,6 +2145,27 @@ centerRuns: number,
  * Total.
  */
 total: number, };
+
+/**
+ * Segmento de uma curva de nível, em coordenadas reais dos eixos.
+ */
+export type Segment = { 
+/**
+ * Extremo inicial, eixo horizontal.
+ */
+x1: number, 
+/**
+ * Extremo inicial, eixo vertical.
+ */
+y1: number, 
+/**
+ * Extremo final, eixo horizontal.
+ */
+x2: number, 
+/**
+ * Extremo final, eixo vertical.
+ */
+y2: number, };
 
 /**
  * Gravidade de um diagnóstico.
@@ -2045,6 +2247,219 @@ min: Stat,
  * Máximo.
  */
 max: Stat, };
+
+/**
+ * Observado × predito.
+ */
+export type SurfaceFitPoint = { 
+/**
+ * Observação.
+ */
+observationId: StableId, 
+/**
+ * Observado.
+ */
+observed: number, 
+/**
+ * Predito.
+ */
+predicted: number, 
+/**
+ * Resíduo.
+ */
+residual: number, 
+/**
+ * Alavancagem.
+ */
+leverage: number, };
+
+/**
+ * Malha de predições.
+ */
+export type SurfaceGrid = { 
+/**
+ * Fator do eixo horizontal.
+ */
+xFactor: StableId, 
+/**
+ * Nome do fator horizontal.
+ */
+xName: string, 
+/**
+ * Fator do eixo vertical.
+ */
+yFactor: StableId, 
+/**
+ * Nome do fator vertical.
+ */
+yName: string, 
+/**
+ * Valores reais do eixo horizontal.
+ */
+x: Array<number>, 
+/**
+ * Valores reais do eixo vertical.
+ */
+y: Array<number>, 
+/**
+ * Predições `z[iy][ix]`.
+ */
+z: Array<Array<Stat>>, 
+/**
+ * Extrapolação `[iy][ix]`.
+ */
+extrapolated: Array<Array<boolean>>, 
+/**
+ * Menor predição definida.
+ */
+zMin: number | null, 
+/**
+ * Maior predição definida.
+ */
+zMax: number | null, 
+/**
+ * Condições fixadas dos demais fatores.
+ */
+fixed: Array<FixedEcho>, 
+/**
+ * Curvas de nível.
+ */
+contours: Array<ContourLevel>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Solicitação de análise de superfície de resposta.
+ */
+export type SurfaceRequest = { 
+/**
+ * Dados com os valores **reais** dos fatores numéricos.
+ */
+dataset: Dataset, 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Fatores e seus níveis (`low`/`high` definem a codificação).
+ */
+factors: Array<DesignFactor>, 
+/**
+ * Termos do modelo; vazio = modelo completo de segunda ordem.
+ */
+terms: Array<TermSpec>, 
+/**
+ * Nível de significância (0 < α < 1).
+ */
+alpha: number, };
+
+/**
+ * Resultado da análise.
+ */
+export type SurfaceResult = { 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Nível de significância.
+ */
+alpha: number, 
+/**
+ * Nomes dos fatores.
+ */
+factorNames: Array<string>, 
+/**
+ * Intercepto.
+ */
+intercept: SurfaceTermRow, 
+/**
+ * Termos do modelo (na ordem pedida).
+ */
+terms: Array<SurfaceTermRow>, 
+/**
+ * ANOVA da regressão, com `R²` e `R²` ajustado.
+ */
+anova: RegressionAnova, 
+/**
+ * Falta de ajuste e erro puro (apenas quando há réplicas verdadeiras e graus de liberdade).
+ */
+lackOfFit: LackOfFit | null, 
+/**
+ * Equação nas escalas codificada e real.
+ */
+equation: Equation, 
+/**
+ * Intervalo experimental de cada fator.
+ */
+ranges: Array<FactorRange>, 
+/**
+ * Maior alavancagem entre os ensaios (referência da extrapolação oculta).
+ */
+maxLeverage: number, 
+/**
+ * Observado × predito.
+ */
+fitPoints: Array<SurfaceFitPoint>, 
+/**
+ * Termos sem hierarquia (quadrático ou interação sem os principais).
+ */
+hierarchyGaps: Array<string>, 
+/**
+ * Ajuste completo (diagnósticos por observação).
+ */
+fit: LinearFit, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Fatos para a interpretação.
+ */
+facts: Array<Fact>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Termo do modelo na escala codificada.
+ */
+export type SurfaceTermRow = { 
+/**
+ * Rótulo (`A`, `A²`, `A:B`).
+ */
+label: string, 
+/**
+ * Estimativa na escala codificada.
+ */
+estimate: Stat, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do IC.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do IC.
+ */
+ciUpper: Stat, };
 
 /**
  * Termo do modelo.

@@ -81,6 +81,7 @@ describe("comparison of treatments", () => {
       alpha: 0.05,
       designTerms: null,
       includeCurvature: true,
+      surface: false,
     },
   });
 

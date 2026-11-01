@@ -204,6 +204,7 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
       alpha: doc.analysisSelection.alpha ?? DEFAULT_ALPHA,
       designTerms: doc.analysisSelection.terms ?? null,
       includeCurvature: doc.analysisSelection.includeCurvature ?? true,
+      surface: doc.analysisSelection.surface ?? false,
     },
     design: doc.design ?? null,
     // Reabrir NÃO recalcula: o resultado exibido é o guardado; a assinatura decide se está atual.
@@ -243,6 +244,8 @@ function storedResultOf(last: AnalysisRecord | undefined): StoredResult | null {
     return { signature: last.signature, kind: "descriptive", result: stripType(last.result) };
   if (last.result.type === "twoLevelDesign")
     return { signature: last.signature, kind: "design", result: stripType(last.result) };
+  if (last.result.type === "responseSurface")
+    return { signature: last.signature, kind: "surface", result: stripType(last.result) };
   return { signature: last.signature, kind: "oneWay", result: stripType(last.result) };
 }
 
@@ -275,6 +278,13 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
           ? {
               alpha: e.analysis.alpha,
               includeCurvature: e.analysis.includeCurvature,
+              ...(e.analysis.designTerms ? { terms: e.analysis.designTerms } : {}),
+            }
+          : {}),
+        ...(e.analysis.surface
+          ? {
+              surface: true,
+              alpha: e.analysis.alpha,
               ...(e.analysis.designTerms ? { terms: e.analysis.designTerms } : {}),
             }
           : {}),

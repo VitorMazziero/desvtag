@@ -108,7 +108,28 @@
       "saturated": "Saturated model: no error degrees of freedom.",
       "not_estimable_terms": "Aliased terms were left out of the fit.",
       "single_center_point": "A single centre point gives no pure error; use at least two.",
-      "main_effects_aliased_with_two_factor": "Resolution {{resolution}}: main effects are aliased with two-factor interactions."
+      "main_effects_aliased_with_two_factor": "Resolution {{resolution}}: main effects are aliased with two-factor interactions.",
+      "invalid_axial_distance": "The axial distance α must be a number greater than 0 and at most {{max}}.",
+      "box_behnken_unsupported": "Box–Behnken is available for 3 to 5 factors (received: {{factors}}).",
+      "cube_resolution_low": "The fractional factorial part has resolution {{resolution}}: not every two-factor interaction will be estimable in the second-order model.",
+      "surface_needs_center": "Without centre points there is no pure error and the quadratic model may not be estimable; include at least two."
+    },
+    "surface": {
+      "invalid_alpha": "The significance level must be between 0 and 1.",
+      "too_few_factors": "The surface needs at least two quantitative factors.",
+      "factor_not_numeric": "Surface factors must be quantitative.",
+      "invalid_levels": "Each factor needs distinct values (low level below the high one).",
+      "unsupported_term": "Term {{term}} is not supported: use main effects, quadratic terms and two-factor interactions.",
+      "term_not_in_design": "Term {{term}} uses a factor that is not in the model.",
+      "duplicate_term": "Term {{term}} is repeated.",
+      "no_terms": "Choose at least one model term.",
+      "hierarchy_gaps": "Incomplete hierarchy: {{terms}} is in the model without the matching main effect. The equation is still valid, but the meaning of the coefficients changes.",
+      "saturated": "Saturated model: no error degrees of freedom.",
+      "not_estimable_terms": "{{count}} model term(s) are not estimable with these runs.",
+      "invalid_axes": "Choose two different factors for the axes.",
+      "invalid_steps": "Grid resolution must be between {{min}} and {{max}} steps per axis.",
+      "invalid_fixed_value": "Invalid fixed value for factor {{id}}.",
+      "grid_extrapolation": "Part of the grid lies outside the region run (extrapolation)."
     }
   },
   "cellErrors": {

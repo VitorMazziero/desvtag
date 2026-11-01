@@ -11,6 +11,8 @@ const NUMERIC_FACT_PARAMS: Record<string, "p" | "sig"> = {
   p: "p",
   alpha: "sig",
   ratio: "sig",
+  r2: "sig",
+  adjusted: "sig",
 };
 
 /** Formata os parâmetros numéricos de um fato de acordo com o idioma. */

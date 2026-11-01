@@ -1,19 +1,23 @@
-//! C11 — planejamentos de dois níveis: fatorial completo, fracionário e Plackett–Burman.
+//! C11/C12 — planejamentos: fatorial completo, fracionário, Plackett–Burman, composto central e
+//! Box–Behnken.
 //!
 //! - [`spec`]: especificação, contagem de ensaios e resultado gerado;
 //! - [`coding`]: codificação reversível real ↔ codificado (−1, 0, +1);
 //! - [`factorial`]: fatorial completo `2ᵏ` em ordem padrão (Yates);
 //! - [`fractional`]: geradores, relação definidora e resolução;
 //! - [`alias`]: estrutura de confundimento;
+//! - [`central_composite`] e [`box_behnken`]: planejamentos de superfície de resposta (ET07);
 //! - [`plackett_burman`]: matrizes de Hadamard (Paley e Sylvester) e colunas fictícias;
 //! - [`randomization`]: PCG32 e Fisher–Yates com semente registrada;
 //! - [`generate`]: monta o planejamento (réplicas, pontos centrais, ordem de execução).
 //!
 //! Especificações em `docs/metodos/fatorial-dois-niveis.md`, `fatorial-fracionario.md`,
-//! `plackett-burman.md` e `aleatorizacao.md`.
+//! `plackett-burman.md`, `aleatorizacao.md`, `composto-central.md` e `box-behnken.md`.
 
 pub mod alias;
 pub mod analysis;
+pub mod box_behnken;
+pub mod central_composite;
 pub mod coding;
 pub mod factorial;
 pub mod fractional;
@@ -25,5 +29,6 @@ pub mod spec;
 
 pub use generate::{count_runs, generate};
 pub use spec::{
-    DesignFactor, DesignKind, DesignRun, DesignSpec, GeneratedDesign, PointType, RunCount,
+    AxialKind, DesignFactor, DesignKind, DesignRun, DesignSpec, GeneratedDesign, PointType,
+    RunCount,
 };

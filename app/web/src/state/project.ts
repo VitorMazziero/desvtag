@@ -15,6 +15,7 @@ import type {
   Revision,
   RevisionReason,
   RowRecord,
+  SurfaceResult,
 } from "../services/engine";
 
 // Os tipos do estado são os do documento do projeto (gerados do Rust): uma única fonte.
@@ -36,6 +37,8 @@ export interface AnalysisDraft {
   designTerms: string[][] | null;
   /** Incluir o termo de curvatura quando houver pontos centrais. */
   includeCurvature: boolean;
+  /** Analisar como superfície de resposta (caminho "Analisar dados existentes"). */
+  surface: boolean;
 }
 
 export const DEFAULT_ALPHA = 0.05;
@@ -44,7 +47,8 @@ export const DEFAULT_ALPHA = 0.05;
 export type StoredResult =
   | { signature: string; kind: "descriptive"; result: DescriptiveResult }
   | { signature: string; kind: "oneWay"; result: OneWayResult }
-  | { signature: string; kind: "design"; result: DesignAnalysisResult };
+  | { signature: string; kind: "design"; result: DesignAnalysisResult }
+  | { signature: string; kind: "surface"; result: SurfaceResult };
 
 /** Estado de trabalho de UM experimento (o que a interface edita) + seu histórico salvo. */
 export interface ProjectState {
@@ -110,6 +114,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
       alpha: DEFAULT_ALPHA,
       designTerms: null,
       includeCurvature: true,
+      surface: false,
     },
     result: null,
     showUnitColumn: false,
@@ -292,6 +297,7 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
       alpha: state.analysis.alpha,
       designTerms: state.analysis.designTerms,
       includeCurvature: state.analysis.includeCurvature,
+      surface: state.analysis.surface,
     },
     // O planejamento só vale enquanto todos os seus fatores existem.
     design: state.design?.factors.every((f) => data.factors.some((d) => d.id === f.id))
@@ -400,6 +406,8 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         // Só o contador de linhas vem da ação: o de revisões já avançou em `before`.
         counters: { ...before.counters, row: action.counters.row },
         design: action.design,
+        // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
+        analysis: { ...before.analysis, designTerms: null },
         result: null,
       };
       return commitRevision(next, "design", action.now);
@@ -448,13 +456,26 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
                   terms: committed.analysis.designTerms ?? undefined,
                   includeCurvature: committed.analysis.includeCurvature,
                 }
-              : { responseId: committed.analysis.responseId, groupBy: committed.analysis.groupBy },
+              : action.result.kind === "surface"
+                ? {
+                    responseId: committed.analysis.responseId,
+                    groupBy: [],
+                    alpha: committed.analysis.alpha,
+                    terms: committed.analysis.designTerms ?? undefined,
+                    surface: committed.analysis.surface || undefined,
+                  }
+                : {
+                    responseId: committed.analysis.responseId,
+                    groupBy: committed.analysis.groupBy,
+                  },
         result:
           action.result.kind === "oneWay"
             ? { type: "oneWayComparison", ...action.result.result }
             : action.result.kind === "design"
               ? { type: "twoLevelDesign", ...action.result.result }
-              : { type: "descriptive", ...action.result.result },
+              : action.result.kind === "surface"
+                ? { type: "responseSurface", ...action.result.result }
+                : { type: "descriptive", ...action.result.result },
       };
       return {
         ...committed,

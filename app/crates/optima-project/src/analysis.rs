@@ -4,6 +4,7 @@ use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::domain::StableId;
+use optima_core::surface::SurfaceResult;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -24,8 +25,9 @@ pub struct AnalysisOptions {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub alpha: Option<f64>,
-    /// Termos do modelo de um planejamento de dois níveis: cada termo é a lista dos fatores que o
-    /// compõem (um = efeito principal; dois ou mais = interação).
+    /// Termos do modelo de um planejamento: cada termo é a lista dos fatores que o compõem (um =
+    /// efeito principal; dois ou mais = interação). Na superfície de resposta, o mesmo fator
+    /// repetido (`[A, A]`) é o termo quadrático `A²`.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub terms: Option<Vec<Vec<StableId>>>,
@@ -33,6 +35,11 @@ pub struct AnalysisOptions {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub include_curvature: Option<bool>,
+    /// Analisar como superfície de resposta de segunda ordem (matriz personalizada ou importada,
+    /// no caminho "Analisar dados existentes").
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub surface: Option<bool>,
 }
 
 /// Resultado guardado, por método.
@@ -46,6 +53,8 @@ pub enum AnalysisResult {
     OneWayComparison(Box<OneWayResult>),
     /// Análise de um planejamento de dois níveis (efeitos, curvatura, Lenth, gráficos de triagem).
     TwoLevelDesign(Box<DesignAnalysisResult>),
+    /// Superfície de resposta de segunda ordem (ANOVA, falta de ajuste, equação, região).
+    ResponseSurface(Box<SurfaceResult>),
 }
 
 /// Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.

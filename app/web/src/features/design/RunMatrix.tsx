@@ -100,7 +100,11 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
                 <th scope="row">{r.run}</th>
                 <td className="num">{r.standardOrder}</td>
                 <td>
-                  {r.point === "center" ? t("design.matrix.center") : t("design.matrix.factorial")}
+                  {r.point === "center"
+                    ? t("design.matrix.center")
+                    : r.point === "axial"
+                      ? t("design.matrix.axial")
+                      : t("design.matrix.factorial")}
                 </td>
                 <td className="num">{r.replicate === 0 ? "—" : r.replicate}</td>
                 {(view === "real" ? r.real : r.coded).map((v, j) => (
@@ -134,6 +138,16 @@ function DesignProperties({ design, language }: { design: GeneratedDesign; langu
       {design.definingRelation.length > 0 && (
         <p data-testid="defining-relation">
           <strong>{t("design.properties.relation")}:</strong> {design.definingRelation.join(", ")}
+        </p>
+      )}
+      {design.axialDistance !== null && (
+        <p data-testid="axial-distance">
+          {t("design.properties.axial", {
+            alpha: formatSignificant(design.axialDistance, language, 6),
+            factorial: design.count.factorialRuns - design.count.axialRuns,
+            axial: design.count.axialRuns,
+            center: design.count.centerRuns,
+          })}
         </p>
       )}
       {design.maxMainVsTwoFactorCorrelation > 0 && (

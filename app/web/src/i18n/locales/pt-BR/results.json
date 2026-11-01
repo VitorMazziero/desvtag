@@ -98,6 +98,18 @@
       "not_estimable_one": "{{count}} termo não é estimável (confundido com outro do modelo) e foi omitido.",
       "not_estimable_many": "{{count}} termos não são estimáveis (confundidos com outros do modelo) e foram omitidos.",
       "not_estimable_other": "{{count}} termos não são estimáveis (confundidos com outros do modelo) e foram omitidos."
+    },
+    "surface": {
+      "model_significant": "O modelo é significativo ao nível {{alpha}} (p = {{p}}).",
+      "model_not_significant": "O modelo não é significativo ao nível {{alpha}} (p = {{p}}): a superfície não se distingue de uma resposta constante.",
+      "saturated": "Não há graus de liberdade do erro (o modelo usa todos os ensaios): erros-padrão, testes e valores-p não existem.",
+      "fit_measures": "R² = {{r2}}; R² ajustado = {{adjusted}}.",
+      "lack_of_fit_significant": "Há falta de ajuste (p = {{p}}): o modelo de segunda ordem não descreve bem a região estudada; considere uma região menor ou termos adicionais.",
+      "lack_of_fit_not_significant": "Falta de ajuste não detectada (p = {{p}}).",
+      "lack_of_fit_unavailable": "A falta de ajuste não pôde ser avaliada: é preciso repetir ensaios nas mesmas condições (por exemplo, o ponto central).",
+      "not_estimable": "{{count}} termo(s) não estimável(is) com estes ensaios; o planejamento não separa esses termos.",
+      "extrapolation_note": "Predições fora da região ensaiada (hachuradas nos gráficos) são extrapolação e não são confiáveis.",
+      "independence_not_assessed": "A independência dos ensaios não é verificável pelos dados; depende de como o experimento foi conduzido."
     }
   },
   "comparison": {
@@ -287,6 +299,72 @@
     },
     "export": {
       "effectsCsv": "Efeitos (CSV)"
+    }
+  },
+  "surface": {
+    "title": "Resultados: superfície de resposta",
+    "summary": {
+      "conclusion": "Modelo de segunda ordem ajustado a {{n}} ensaios de «{{response}}» com {{factors}} fatores ({{terms}} termos).",
+      "evidence": "ANOVA da regressão: F = {{f}}, p = {{p}}; R² = {{r2}}; R² ajustado = {{adjusted}}.",
+      "evidenceUnavailable": "Sem graus de liberdade do erro não há testes; veja os avisos.",
+      "nextStep": "O modelo descreve apenas a região estudada. Confira a falta de ajuste e os resíduos antes de usar a equação e confirme qualquer ponto promissor com ensaios novos."
+    },
+    "terms": {
+      "caption": "Coeficientes do modelo (escala codificada) de «{{response}}»",
+      "term": "Termo",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "t": "t",
+      "p": "Valor-p",
+      "ci": "IC {{level}}%",
+      "intercept": "Intercepto",
+      "help": "Os coeficientes estão na escala codificada (−1 e +1 nos níveis informados): comparam-se entre si sem depender das unidades."
+    },
+    "lackOfFit": {
+      "unavailable": "Falta de ajuste indisponível: não há ensaios repetidos nas mesmas condições (erro puro) ou graus de liberdade suficientes. Repita o ponto central para testá-la."
+    },
+    "equation": {
+      "title": "Equação do modelo",
+      "coded": "Escala codificada",
+      "real": "Unidades reais",
+      "realUnavailable": "Indisponível: há termos não estimáveis.",
+      "help": "As duas equações dão a mesma predição; a codificada é a ajustada e a real é a mesma equação reescrita nos valores dos fatores.",
+      "prefix": "ŷ"
+    },
+    "region": {
+      "title": "Região experimental",
+      "factor": "Fator",
+      "center": "Centro",
+      "halfRange": "Meia-amplitude",
+      "min": "Menor valor ensaiado",
+      "max": "Maior valor ensaiado",
+      "help": "Predições fora da região, ou em combinações de níveis nunca ensaiadas, são extrapolação."
+    },
+    "view": {
+      "title": "Superfície de resposta",
+      "intro": "Escolha dois fatores para os eixos e fixe os demais. As predições vêm do modelo; a região hachurada é extrapolação.",
+      "xAxis": "Eixo horizontal",
+      "yAxis": "Eixo vertical",
+      "fixed": "{{name}} fixado em",
+      "steps": "Resolução da malha",
+      "azimuth": "Rotação (graus)",
+      "elevation": "Elevação (graus)",
+      "sameAxis": "Escolha fatores diferentes nos dois eixos.",
+      "loading": "Calculando a malha…",
+      "failed": "Não foi possível calcular a malha.",
+      "contourTitle": "Contorno de «{{response}}»",
+      "contourDescription": "Curvas de nível da resposta predita pelo modelo em função de dois fatores.",
+      "surfaceTitle": "Superfície de «{{response}}»",
+      "surfaceDescription": "Superfície da resposta predita pelo modelo em função de dois fatores, em projeção ortogonal.",
+      "readingContour": "Curvas: valores da resposta predita; cor mais intensa = resposta maior.",
+      "readingSurface": "Cor mais intensa = resposta predita maior.",
+      "extrapolated": "Hachurado: extrapolação (fora da região ensaiada).",
+      "points": "Círculos: ensaios, projetados nos dois eixos.",
+      "needTwo": "A superfície exige ao menos dois fatores quantitativos.",
+      "gridCsv": "Malha de predições (CSV)"
+    },
+    "export": {
+      "coefficientsCsv": "Coeficientes (CSV)"
     }
   }
 }

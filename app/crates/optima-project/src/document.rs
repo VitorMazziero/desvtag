@@ -83,6 +83,7 @@ impl Experiment {
                 alpha: None,
                 terms: None,
                 include_curvature: None,
+                surface: None,
             },
             revisions: vec![Revision {
                 id: revision_id,

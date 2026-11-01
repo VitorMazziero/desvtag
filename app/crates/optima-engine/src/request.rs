@@ -6,6 +6,7 @@ use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
+use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
@@ -31,6 +32,10 @@ pub enum Operation {
     DesignGenerate(DesignSpec),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
+    /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).
+    SurfaceAnalyze(Box<SurfaceRequest>),
+    /// Malha de predições e curvas de nível da superfície (`surface.grid`).
+    SurfaceGrid(Box<GridRequest>),
     /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
     ComparisonOneWay(OneWayRequest),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).

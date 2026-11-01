@@ -165,3 +165,26 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
     await scan(page, `${theme}/planejamento-e-matriz`);
   });
 }
+
+for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+  test(`axe: superfície de resposta (resultados, gráficos e planejamento de superfície) sem violações no tema ${theme}`, async ({
+    page,
+  }) => {
+    await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
+    await page.goto("/");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    const chooser = page.waitForEvent("filechooser");
+    await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
+    await (await chooser).setFiles(
+      new URL("../../../../examples/03-superficie-meio-cultivo/projeto.enzitag", import.meta.url)
+        .pathname,
+    );
+    await page.getByTestId("surface-terms").waitFor();
+    await page.getByTestId("contour-chart").waitFor();
+    await page.getByTestId("surface-chart").waitFor();
+    await scan(page, `${theme}/resultados-da-superficie`);
+    await page.getByRole("button", { name: /Design and data|Planejamento e dados/ }).click();
+    await page.getByTestId("surface-options").waitFor();
+    await scan(page, `${theme}/planejamento-de-superficie`);
+  });
+}
