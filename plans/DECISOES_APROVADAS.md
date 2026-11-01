@@ -70,6 +70,7 @@ Documentar problema, fórmulas, cálculo pequeno, implementação Rust, integra�
 ## 14. Publicação e suporte
 
 - **MIT** como licença escolhida; a menção à GPLv3 no texto aprovado era uma alternativa condicional, não uma segunda licença selecionada.
+- Repositório remoto criado em `VitorMazziero/enzitag-optima` e **privado por enquanto**, conforme atualização explícita do usuário em 1º de novembro de 2026. Essa decisão substitui a publicação pública imediata; tornar público depende de decisão posterior. A licença MIT permanece.
 - GitHub Pages para web; endereço previsto `https://vitormazziero.github.io/enzitag-optima/`; instaladores no GitHub Releases. Domínio próprio posterior.
 - Prioridade: Windows 11 de 64 bits e versões atuais de Chrome, Edge e Firefox. Windows 10 e Safari dependem de testes de compatibilidade posteriores.
 - Canais experimental e estável; instalação de atualizações em momento escolhido pelo usuário; pacotes de atualização assinados.
@@ -77,4 +78,4 @@ Documentar problema, fórmulas, cálculo pequeno, implementação Rust, integra�
 
 ## Estado e limites deste registro
 
-A aprovação define o produto e orienta a implementação. Não significa que os métodos estejam implementados, que serviços Google estejam configurados ou que exista publicação remota. Escolhas de algoritmos, bibliotecas auxiliares, formatos internos e limites operacionais seguem o plano; somente os detalhes ainda não resolvidos estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).
+A aprovação define o produto e orienta a implementação. Não significa que os métodos estejam implementados, que serviços Google estejam configurados ou que exista aplicativo publicado. O repositório remoto já foi criado, recebeu a documentação e está privado. Escolhas de algoritmos, bibliotecas auxiliares, formatos internos e limites operacionais seguem o plano; somente os detalhes ainda não resolvidos estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).

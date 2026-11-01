@@ -4,7 +4,7 @@ Data: 1º de novembro de 2026.
 
 **Objetivo:** construir o aplicativo completo para Windows e navegador, com procedimentos científicos em Rust, interface compartilhada, uso local sem login, integração opcional com Google Drive e módulos identificáveis para manutenção.
 
-**Estado:** planejamento detalhado. Não há aplicativo executável, motor científico implementado, validação numérica concluída ou publicação. Todas as fases abaixo começam como pendentes; a documentação existente é insumo, não evidência de conclusão das fases de código.
+**Estado:** planejamento detalhado. Não há aplicativo executável, motor científico implementado, validação numérica concluída ou aplicativo publicado. O repositório remoto já foi criado e está privado por enquanto. Todas as fases abaixo começam como pendentes; a documentação existente é insumo, não evidência de conclusão das fases de código.
 
 ## 1. Documentos e precedência
 
@@ -261,7 +261,7 @@ Esta fase possui entregas independentes; não tratar como uma única tarefa:
 
 **Depende de:** F12 para versão estável; versões experimentais podem publicar subconjunto explicitamente identificado após F04.
 
-- Criar/configurar remoto público `VitorMazziero/enzitag-optima`, documentação de execução, licença MIT e instruções de contribuição.
+- Remoto `VitorMazziero/enzitag-optima` já criado e privado por enquanto; manter essa visibilidade até nova decisão do usuário. Completar documentação de execução, preservando licença MIT e instruções de contribuição. Rever condições da hospedagem escolhida antes da publicação do aplicativo.
 - Preparar publicação estática web no GitHub Pages; configurar caminhos de assets/WASM/Worker para `/enzitag-optima/` e estratégia de rotas compatível com hospedagem estática.
 - Gerar instalador Windows 11 de 64 bits, registrar ambiente testado e distribuir pelo Releases.
 - Manter canais experimental e estável, notas e histórico de versões; versão experimental enumera métodos/variantes disponíveis.

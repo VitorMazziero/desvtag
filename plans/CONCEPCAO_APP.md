@@ -20,7 +20,7 @@ Documento iniciado e atualizado em 1º de novembro de 2026. As decisões de prod
 - **Gráficos desejados:** superfícies 3D, contornos, efeitos e interações, diagnóstico de resíduos, comparação de médias com letras e otimização simultânea de respostas.
 - **Tukey:** gerar as letras de comparação e incorporá-las ao gráfico.
 - **Interpretações:** explicações curtas junto aos resultados.
-- **Distribuição pretendida:** código disponível publicamente no GitHub e acesso à versão web por um endereço. GitHub Pages, Releases e licença MIT foram aprovados; publicação ainda não realizada.
+- **Distribuição pretendida:** código disponível publicamente no GitHub e acesso à versão web por um endereço. GitHub Pages, Releases e licença MIT foram aprovados. O repositório remoto foi criado e, por decisão posterior do usuário, está privado por enquanto; aplicativo ainda não publicado.
 - **Arquitetura aceita:** motor de cálculo em Rust, interface web compartilhada em TypeScript/React, aplicativo Windows com Tauri e compilação do motor para WebAssembly no navegador.
 - **Organização modular e transparência:** cada módulo deve ter arquivos e interfaces definidos para facilitar compreensão e manutenção. Fórmulas, cálculos intermediários e exemplos são documentação de apoio. A complexidade de desenvolvimento não é um impedimento para o usuário.
 - **Procedimentos próprios:** implementar os métodos estatísticos de forma compreensível em módulos do projeto, preservando o controle sobre o raciocínio e a sequência dos cálculos. Bibliotecas auxiliares não devem ocultar decisões estatísticas.
@@ -95,7 +95,7 @@ Fontes primárias consultadas:
 
 A distribuição aprovada reúne três entregas complementares:
 
-1. **Repositório público:** código-fonte, documentação dos métodos, exemplos e testes de referência.
+1. **Repositório de código:** código-fonte, documentação dos métodos, exemplos e testes de referência. O remoto foi criado e está privado por enquanto; a intenção inicial de publicação pública foi adiada por decisão do usuário.
 2. **GitHub Pages:** endereço público para abrir a interface web e carregar o motor Rust compilado para WebAssembly. Nesse desenho, os cálculos acontecem no navegador; os dados experimentais podem ser processados localmente.
 3. **GitHub Releases:** versões identificadas do instalador ou pacote Windows e respectivas notas de versão.
 

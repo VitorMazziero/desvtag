@@ -63,7 +63,7 @@ Code areas currently contain responsibility descriptions only. Build configurati
 
 ## Intended distribution
 
-The repository name selected is `enzitag-optima`, under the `VitorMazziero` account. The approved distribution plan uses GitHub Pages for the browser version and GitHub Releases for Windows packages. Remote publication has not taken place yet.
+The [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima) repository has been created and is **private for now**, as requested on November 1, 2026. The `main` branch tracks `origin/main`. GitHub Pages and Releases remain the planned application distribution targets; no web application or Windows installer has been published. Making the source public is deferred to a later user decision.
 
 ## License
 

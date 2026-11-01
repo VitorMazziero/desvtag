@@ -73,7 +73,7 @@ As áreas de código contêm, nesta etapa, apenas a descrição de suas responsa
 
 ## Distribuição pretendida
 
-O nome escolhido para o repositório é `enzitag-optima`, na conta `VitorMazziero`. Foi aprovado usar GitHub Pages para a versão web e GitHub Releases para os pacotes Windows. A publicação remota ainda não foi realizada.
+O repositório [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima) foi criado e está **privado por enquanto**, conforme decisão de 1º de novembro de 2026. A branch `main` está vinculada ao remoto `origin`. GitHub Pages e Releases permanecem como destinos previstos para o aplicativo; ainda não há versão web ou instalador publicado. Tornar o código público fica para uma decisão posterior do usuário.
 
 ## Licença
 
