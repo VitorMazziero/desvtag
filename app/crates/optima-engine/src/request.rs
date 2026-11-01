@@ -8,6 +8,7 @@ use optima_core::designs::completely_randomized::CrdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
+use optima_core::models::factorial_anova::FactorialRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
@@ -54,6 +55,8 @@ pub enum Operation {
     ComparisonOneWay(OneWayRequest),
     /// Procedimentos de comparação múltipla: Games–Howell, Dunnett, Bonferroni, Holm e Kruskal–Wallis/Dunn (`comparison.procedure`).
     ComparisonProcedure(ProcedureRequest),
+    /// ANOVA multifatorial com blocos, médias marginais e contrastes (`anova.factorial`).
+    AnovaFactorial(Box<FactorialRequest>),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
     DistributionEvaluate(DistributionRequest),
     /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).

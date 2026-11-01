@@ -38,6 +38,7 @@ mod tests {
                 "descriptive_summary",
                 "one_way_comparison",
                 "multiple_comparison_procedures",
+                "factorial_anova",
                 "two_level_design",
                 "completely_randomized_design",
                 "two_level_design_analysis",

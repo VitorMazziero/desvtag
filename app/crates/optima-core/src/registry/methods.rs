@@ -44,6 +44,12 @@ pub fn registered_methods() -> Vec<MethodInfo> {
             validation: Validation::NumericallyValidated,
         },
         MethodInfo {
+            id: crate::models::factorial_anova::METHOD_ID.to_string(),
+            version: crate::models::factorial_anova::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
             id: crate::designs::generate::METHOD_ID.to_string(),
             version: crate::designs::generate::METHOD_VERSION,
             implementation: Implementation::Implemented,

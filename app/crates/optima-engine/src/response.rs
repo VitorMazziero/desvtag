@@ -11,6 +11,7 @@ use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
+use optima_core::models::factorial_anova::FactorialResult;
 use optima_core::optimization::{Evaluation, OptimizationResult};
 use optima_core::registry::Capabilities;
 use optima_core::surface::{SurfaceGrid, SurfaceResult};
@@ -100,6 +101,8 @@ pub enum OperationResult {
     ComparisonOneWay(Box<OneWayResult>),
     /// Resultado de um procedimento de comparação múltipla.
     ComparisonProcedure(Box<ProcedureResult>),
+    /// Resultado da ANOVA multifatorial.
+    AnovaFactorial(Box<FactorialResult>),
     /// Valores de uma função de distribuição.
     DistributionEvaluate(DistributionResult),
     /// Ajuste de modelo linear.

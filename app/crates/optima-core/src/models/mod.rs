@@ -10,6 +10,7 @@
 
 pub mod covariance;
 pub mod design_matrix;
+pub mod factorial_anova;
 pub mod linear;
 pub mod prediction;
 pub mod terms;

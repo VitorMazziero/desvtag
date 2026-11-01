@@ -150,6 +150,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::AnovaFactorial(req) => {
+            match optima_core::models::factorial_anova::analyze(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::AnovaFactorial(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::DistributionEvaluate(req) => match optima_core::distributions::evaluate(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::DistributionEvaluate(result),
