@@ -1,6 +1,6 @@
-# EnziTAG Optima — arquitetura e organização modular
+# Arquitetura e organização modular
 
-Atualizado em 1º de novembro de 2026. O nome deste arquivo foi preservado para manter os links existentes.
+**Estado:** vigente · **Atualizado em:** 2026-11-01
 
 A aprendizagem solicitada está ligada à **distinção organizada dos módulos do aplicativo**, cada um com arquivos, responsabilidades e interfaces definidos para facilitar compreensão e manutenção. O plano não é um curso sequencial de programação. Exemplos e fórmulas são documentação de apoio aos módulos.
 
@@ -13,7 +13,7 @@ A aprendizagem solicitada está ligada à **distinção organizada dos módulos 
 - Projetos locais sem login e Google Drive opcional como destino adicional.
 - Código sob MIT; repositório remoto criado e privado por enquanto, conforme decisão posterior do usuário. Web no GitHub Pages e Windows no GitHub Releases são destinos previstos, ainda sem aplicativo publicado.
 
-O catálogo completo está em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md), e as políticas aprovadas em [DECISOES_APROVADAS.md](DECISOES_APROVADAS.md).
+O catálogo completo está no [catálogo funcional](../produto/catalogo-funcional.md), e as políticas aprovadas nas [decisões aprovadas](../produto/decisoes-aprovadas.md). A organização de pastas e arquivos do repositório está em [estrutura do repositório](estrutura-repositorio.md).
 
 ## Separação das responsabilidades
 
@@ -30,7 +30,7 @@ Os dois novos pacotes project/engine são a decomposição técnica prevista no 
 
 ## Onde encontrar cada módulo
 
-O [mapa de módulos e arquivos](../docs/MAPA_MODULOS.md) é o índice de manutenção. Identifica o arquivo de entrada e os subarquivos de cada responsabilidade, incluindo Tukey, letras, ANOVA, PB, modelos, gráficos e salvamento.
+O [mapa de módulos e arquivos](mapa-modulos.md) é o índice de manutenção. Identifica o arquivo de entrada e os subarquivos de cada responsabilidade, incluindo Tukey, letras, ANOVA, PB, modelos, gráficos e salvamento.
 
 Cada módulo terá:
 
@@ -51,7 +51,7 @@ Python e softwares especializados são referências independentes de validação
 
 ## Execução e verificação
 
-O [plano de implementação](PLANO_IMPLEMENTACAO.md) substitui a antiga sequência de aprendizagem como roteiro de execução. Define F00–F14, dependências, entregas e critérios de conclusão. Começa por um percurso executável nas duas plataformas, seguido de projetos locais, fundamentos, ANOVA/Tukey e planejamentos.
+O [roteiro do produto](../planos-execucao/roteiro-produto.md) substitui a antiga sequência de aprendizagem como roteiro de execução. Define F00–F14, dependências, entregas e critérios de conclusão; o [plano da v0.1](../planos-execucao/plano-v0.1.md) organiza a primeira versão em etapas executáveis. Começa por um percurso executável nas duas plataformas, seguido de projetos locais, fundamentos, ANOVA/Tukey e planejamentos.
 
 A validação acompanha cada módulo, com configurações estatísticas equivalentes, tolerâncias justificadas e evidência de integração nativa/WASM. A validação de um método/caso não valida todo o produto.
 

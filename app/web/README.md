@@ -10,6 +10,6 @@ Os temas iniciais serão Modern Dark, Professional e Soft Light. Seus [prompts e
 
 A interface chama o núcleo científico pela integração correspondente ao ambiente. Os cálculos estatísticos permanecem em Rust.
 
-O uso local deve funcionar sem login. Google Drive é uma integração opcional aprovada. O fluxo guiado, importação por digitação/colagem/CSV/XLSX e formatos de exportação estão nas [decisões aprovadas](../../plans/DECISOES_APROVADAS.md). Bibliotecas e detalhes internos serão definidos nas fases do [plano](../../plans/PLANO_IMPLEMENTACAO.md).
+O uso local deve funcionar sem login. Google Drive é uma integração opcional aprovada. O fluxo guiado, importação por digitação/colagem/CSV/XLSX e formatos de exportação estão nas [decisões aprovadas](../../docs/produto/decisoes-aprovadas.md). Bibliotecas e detalhes internos serão definidos nas etapas do [plano da v0.1](../../docs/planos-execucao/plano-v0.1.md), conforme as fases do [roteiro do produto](../../docs/planos-execucao/roteiro-produto.md).
 
 Ainda não há projeto frontend inicializado nesta pasta.

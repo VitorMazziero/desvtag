@@ -1,6 +1,8 @@
-# Mapa de módulos e arquivos — EnziTAG Optima
+# Mapa de módulos e arquivos
 
-Data: 1º de novembro de 2026. **Estrutura de implementação planejada; os arquivos de código listados ainda não existem.** Caminhos relativos à raiz do repositório. Este mapa acompanha o [plano](../plans/PLANO_IMPLEMENTACAO.md) e as [decisões aprovadas](../plans/DECISOES_APROVADAS.md).
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
+**Estrutura de implementação planejada; os arquivos de código listados ainda não existem.** Caminhos relativos à raiz do repositório. Este mapa acompanha o [roteiro do produto](../planos-execucao/roteiro-produto.md), as [decisões aprovadas](../produto/decisoes-aprovadas.md) e a [estrutura do repositório](estrutura-repositorio.md). A etapa da v0.1 que cria ou amplia cada módulo está indicada nos [planos de etapa](../planos-execucao/README.md).
 
 ## Convenção para manutenção
 
@@ -9,7 +11,7 @@ Data: 1º de novembro de 2026. **Estrutura de implementação planejada; os arqu
 - Separar cálculo, contrato, apresentação, acesso a arquivos e comunicação. Evitar arquivos genéricos como `utils.rs` para responsabilidades científicas diferentes.
 - Uma família pode ter vários arquivos: `comparisons/tukey.rs`, `comparisons/games_howell.rs` e `comparisons/letters.rs`, por exemplo. Cada procedimento tem um proprietário definido.
 - Novos arquivos surgem na fase correspondente; não criar centenas de arquivos vazios antecipadamente.
-- Documentar entradas, saídas, dependências, erros, referências e testes em `docs/modulos/<id>.md`. Fórmulas detalhadas ficam em `docs/metodos/<metodo>.md`.
+- Documentar entradas, saídas, dependências, erros, referências e testes em `docs/modulos/<id>-<slug>.md` (exemplo: `c09-comparacoes.md`). Fórmulas detalhadas ficam em `docs/metodos/<slug>.md` (exemplo: `tukey.md`). Nomes seguem a [convenção de nomenclatura](../convencoes/nomenclatura.md).
 - O mapa descreve organização interna proposta para executar requisitos aprovados. Ajustes de nomes são permitidos se o mapa, os imports e os testes forem atualizados juntos.
 
 ## Pacotes e dependências
@@ -121,12 +123,12 @@ Manutenção típica: corrigir o cálculo do Tukey em `comparisons/tukey.rs`; aj
 
 ## Documentação e verificações por módulo
 
-- `docs/modulos/<id>.md`: propósito, proprietário dos arquivos, entrada/saída, dependências, erros, exemplo de uso e impacto de mudanças.
-- `docs/metodos/<metodo>.md`: especificação estatística, fórmulas, referências e variantes suportadas.
+- `docs/modulos/<id>-<slug>.md`: propósito, proprietário dos arquivos, entrada/saída, dependências, erros, exemplo de uso e impacto de mudanças.
+- `docs/metodos/<slug>.md`: especificação estatística, fórmulas, referências e variantes suportadas.
 - `app/crates/<pacote>/tests/<modulo>_tests.rs`: invariantes e comportamento público; testes locais de rotinas privadas junto ao módulo quando necessários.
 - `app/web/src/**/<nome>.test.ts(x)`: contratos, transformação de dados e comportamento relevante da interface.
-- `validation/cases/<metodo>/<caso>/`: dados, configuração, referência independente, resultados esperados e tolerâncias.
-- `validation/reports/<versao>/`: evidências por método e plataforma, geradas nas verificações de entrega.
+- `validation/cases/<method_id>/<nnn>-<slug>/`: dados, configuração, referência independente, resultados esperados e tolerâncias.
+- `validation/reports/v<versão>/`: evidências por método e plataforma, geradas nas verificações de entrega.
 - `app/web/tests/e2e/`: percursos reais de importação, cálculo, reabertura e exportação; acrescentar verificação nativa Windows compatível com Tauri.
 
 Módulos Rust em arquivos separados seguem a organização documentada no [Rust Book](https://doc.rust-lang.org/book/ch07-02-defining-modules-to-control-scope-and-privacy.html). O transporte desktop usa os [comandos do Tauri](https://v2.tauri.app/develop/calling-rust/); o navegador terá motor isolado em Worker, apoiado pelo [guia wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen/examples/wasm-in-web-worker.html). Versões de ferramentas serão fixadas na fase de preparação.

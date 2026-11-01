@@ -1,5 +1,7 @@
 # Soft Light — adaptação para EnziTAG
 
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
 O usuário confirmou o uso do prompt [Software](prompts/software.txt) como base para o tema **Soft Light** do EnziTAG Optima.
 
 ## Alteração solicitada
@@ -22,7 +24,7 @@ As seguintes amostras foram extraídas das áreas coloridas do PNG fornecido:
 | Laranja EnziTAG | `#D57400` | Engrenagem e gota |
 | Verde EnziTAG | `#008300` | Detalhe na letra A |
 
-São amostras do arquivo raster, não uma especificação oficial de identidade visual. A distribuição entre ações, seleções e detalhes, bem como as tonalidades de apoio, será definida na implementação com verificação de contraste e legibilidade.
+São amostras do arquivo raster, não uma especificação oficial de identidade visual. Contraste calculado pela fórmula WCAG sobre branco `#FFFFFF`: azul ≈ 7,2:1, verde ≈ 5,0:1 e laranja ≈ 3,3:1. O laranja não atinge 4,5:1 para texto de tamanho normal; usar em elementos gráficos, ícones ou texto grande, ou em tonalidade escurecida verificada, quando aplicado a texto. A distribuição entre ações, seleções e detalhes, bem como as tonalidades de apoio, será definida na implementação com verificação de contraste e legibilidade.
 
 ## Direção preservada
 

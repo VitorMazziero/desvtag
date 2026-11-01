@@ -1,18 +1,24 @@
-# Plano de implementação — EnziTAG Optima
+# Roteiro do produto
 
-Data: 1º de novembro de 2026.
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
+Roteiro de fases (F00–F14) do produto completo. A primeira versão executa um recorte deste roteiro, detalhado no [plano da v0.1](plano-v0.1.md) e nos [planos de etapa](README.md).
 
 **Objetivo:** construir o aplicativo completo para Windows e navegador, com procedimentos científicos em Rust, interface compartilhada, uso local sem login, integração opcional com Google Drive e módulos identificáveis para manutenção.
 
-**Estado:** planejamento detalhado. Não há aplicativo executável, motor científico implementado, validação numérica concluída ou aplicativo publicado. O repositório remoto já foi criado e está privado por enquanto. Todas as fases abaixo começam como pendentes; a documentação existente é insumo, não evidência de conclusão das fases de código.
+**Situação da implementação:** planejamento detalhado. Não há aplicativo executável, motor científico implementado, validação numérica concluída ou aplicativo publicado. O repositório remoto já foi criado e está privado por enquanto. Todas as fases abaixo começam como pendentes; a documentação existente é insumo, não evidência de conclusão das fases de código.
 
 ## 1. Documentos e precedência
 
-- [Decisões aprovadas](DECISOES_APROVADAS.md): requisitos do produto, incluindo os 14 pontos aprovados e a correção sobre organização modular.
-- [Catálogo funcional](CATALOGO_FUNCIONAL.md): abrangência científica a entregar.
-- [Mapa de módulos e arquivos](../docs/MAPA_MODULOS.md): localização de cada responsabilidade, entradas, saídas e dependências.
-- [Temas](../docs/temas/README.md): referências visuais originais e adaptação EnziTAG.
-- [Detalhes ainda pendentes](DECISOES_PENDENTES.md): escolhas específicas que não impedem a preparação dos demais módulos.
+- [Decisões aprovadas](../produto/decisoes-aprovadas.md): requisitos do produto, incluindo os 14 pontos aprovados e a correção sobre organização modular.
+- [Catálogo funcional](../produto/catalogo-funcional.md): abrangência científica a entregar.
+- [Mapa de módulos e arquivos](../arquitetura/mapa-modulos.md): localização de cada responsabilidade, entradas, saídas e dependências.
+- [Temas](../temas/README.md): referências visuais originais e adaptação EnziTAG.
+- [Detalhes ainda pendentes](../produto/decisoes-pendentes.md): escolhas específicas que não impedem a preparação dos demais módulos.
+- [Plano da primeira versão](plano-v0.1.md) e [planos de etapa](README.md): recorte da v0.1, tarefas executáveis e situação de cada etapa.
+- [Convenções](../convencoes/README.md): nomes, documentação e fluxo de trabalho.
+
+Em caso de conflito, prevalece a ordem: decisões aprovadas → catálogo funcional → este roteiro → plano de versão → planos de etapa. O documento de nível inferior é corrigido.
 
 O objetivo de aprendizagem é poder localizar, compreender e manter cada parte do aplicativo. Não organizar o cronograma como aulas de Rust. Documentação matemática e exemplos acompanham os módulos científicos conforme necessário.
 
@@ -71,7 +77,7 @@ Migrações operam sobre cópia e preservam o original. Arquivos de versão futu
 
 ## 4. Fases, entregas e critérios de conclusão
 
-As fases são dependências de trabalho, não promessas de datas. Cada uma terá uma lista executável de tarefas em seu início. Uma entrega termina quando os critérios abaixo possuem evidência; uma tela pronta não conclui seu método científico.
+As fases são dependências de trabalho, não promessas de datas. As listas executáveis de tarefas ficam nos [planos de etapa](README.md); a correspondência entre fases e etapas da v0.1 está no [plano da primeira versão](plano-v0.1.md). Uma entrega termina quando os critérios abaixo possuem evidência; uma tela pronta não conclui seu método científico.
 
 ### F00 — Preparação e contratos iniciais
 
@@ -108,7 +114,7 @@ As fases são dependências de trabalho, não promessas de datas. Cada uma terá
 **Depende de:** F01. **Módulos:** P01–P03, U03–U05, U11, U13.
 
 - Implementar vários experimentos por projeto, IDs estáveis, revisão dos dados, observações e resultados vinculados à revisão.
-- Especificar e implementar `.enzitag`, incluir exemplos de esquema, migração e arquivo de referência em `docs/formato-projeto.md`.
+- Especificar e implementar `.enzitag`, incluir exemplos de esquema, migração e arquivo de referência em `docs/arquitetura/formato-enzitag.md`.
 - Implementar abrir, salvar, salvar cópia e reabrir nas duas plataformas; reutilizar o mesmo codificador/decodificador em Rust.
 - Implementar digitação/colagem, CSV e XLSX com prévia, papéis de colunas, decimal, separador, unidades e ausências. Fórmulas de planilhas não serão executadas; apresentar política explícita para valores armazenados/ausentes.
 - Implementar importação de matrizes externas por mapeamento de colunas; não presumir desenho a partir do nome do arquivo.
@@ -293,6 +299,8 @@ Esta fase possui entregas independentes; não tratar como uma única tarefa:
 
 Não atribuir prazos antes de executar a base e medir os módulos numéricos mais complexos. Estimativas futuras usam entregas e dependências, não contagem de arquivos.
 
+A primeira versão (v0.1) cobre M1–M3 e os recortes essenciais de F10, F12 e F13, conforme o [plano da v0.1](plano-v0.1.md). As demais fases seguem para versões posteriores sem redução do escopo final.
+
 ## 6. Validação e definição de pronto por módulo
 
 Cada módulo entregue deve ter:
@@ -323,25 +331,21 @@ Não validar um algoritmo comparando duas chamadas da mesma implementação. Com
 
 ## 7. Organização das evidências e decisões técnicas
 
-- `docs/modulos/`: documentação orientada à manutenção, um arquivo por módulo/família.
-- `docs/metodos/`: especificações científicas e referências.
-- `docs/decisoes-tecnicas/`: escolhas de contêiner, contratos, dependências, algoritmos, retenção e sincronização, com motivo e alternativas.
+- [`docs/modulos/`](../modulos/README.md): documentação orientada à manutenção, um arquivo por módulo/família.
+- [`docs/metodos/`](../metodos/README.md): especificações científicas e referências.
+- [`docs/decisoes-tecnicas/`](../decisoes-tecnicas/README.md): escolhas de contêiner, contratos, dependências, algoritmos, retenção e sincronização, com motivo e alternativas.
 - `validation/cases/`: dados, configurações, referências e tolerâncias distribuíveis.
 - `validation/reports/`: evidências por versão; relatórios indicam casos/plataformas cobertos.
 - `examples/`: projetos pequenos reproduzíveis e exemplos de laboratório autorizados.
-- `docs/COBERTURA.md`: matriz de catálogo, implementação, validação e limitações, criada com o primeiro módulo.
+- [`docs/produto/matriz-cobertura.md`](../produto/matriz-cobertura.md): matriz de catálogo, versão-alvo, implementação, validação e limitações.
+
+Nomes e caminhos seguem a [convenção de nomenclatura](../convencoes/nomenclatura.md) e a [estrutura do repositório](../arquitetura/estrutura-repositorio.md).
 
 Essas pastas/arquivos serão preenchidos com evidência real na fase correspondente, sem rótulos de validado antecipados. Nenhum material restrito de referência ou código de acesso será publicado.
 
-## 8. Primeira lista de execução
+## 8. Execução
 
-- [ ] Preparar F00 e registrar versões das ferramentas/dependências.
-- [ ] Criar pacotes reais e contrato mínimo de dados/resultado/erro.
-- [ ] Implementar o primeiro cálculo descritivo em arquivo próprio com referência independente.
-- [ ] Ligar motor aos dois adaptadores e à tabela da interface.
-- [ ] Aplicar idiomas e temas desde essa primeira tela.
-- [ ] Entregar abrir/salvar/recuperar projeto conforme F02.
-- [ ] Avançar para modelos e comparação completa conforme F03–F04.
+A antiga lista inicial foi convertida em planos de etapa. O trabalho em curso está indicado no [índice dos planos de execução](README.md); a sequência da primeira versão (ET01–ET10) e sua correspondência com F00–F07, F10, F12 e F13 estão no [plano da v0.1](plano-v0.1.md).
 
 ## 9. Referências técnicas de apoio
 
@@ -352,4 +356,4 @@ Consultadas para orientar as fronteiras técnicas, sem substituir verificação 
 - [WASM em Web Worker](https://rustwasm.github.io/docs/wasm-bindgen/examples/wasm-in-web-worker.html).
 - [GitHub Pages como hospedagem estática](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 - [Referências de validação NIST](https://www.nist.gov/itl/sed/statistical-reference-datasets).
-- As fontes de autorização/escopos Google e políticas de armazenamento estão no [registro de concepção](CONCEPCAO_APP.md); revalidar requisitos externos ao implementar F11.
+- As fontes de autorização/escopos Google e políticas de armazenamento estão no [registro de concepção](../produto/concepcao.md); revalidar requisitos externos ao implementar F11.

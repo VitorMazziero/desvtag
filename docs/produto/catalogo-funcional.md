@@ -1,8 +1,10 @@
-# Catálogo funcional — EnziTAG Optima
+# Catálogo funcional
 
-Escopo aprovado em 1º de novembro de 2026: **todos os métodos existentes no Protimiza e os métodos e recursos já discutidos para o EnziTAG Optima**. Português e inglês são requisitos do produto desde o início.
+**Estado:** vigente · **Atualizado em:** 2026-11-01
 
-**Situação:** catálogo de requisitos. Nenhum método listado está implementado ou validado nesta etapa. A sequência de implementação está em [PLANO_IMPLEMENTACAO.md](PLANO_IMPLEMENTACAO.md); a organização dos arquivos está no [mapa de módulos](../docs/MAPA_MODULOS.md).
+Escopo aprovado em 2026-11-01: **todos os métodos existentes no Protimiza e os métodos e recursos já discutidos para o EnziTAG Optima**. Português e inglês são requisitos do produto desde o início.
+
+**Situação:** catálogo de requisitos. Nenhum método listado está implementado ou validado nesta etapa. A sequência de implementação está no [roteiro do produto](../planos-execucao/roteiro-produto.md); a organização dos arquivos está no [mapa de módulos](../arquitetura/mapa-modulos.md). A versão-alvo e a situação de cada item ficam na [matriz de cobertura](matriz-cobertura.md).
 
 ## Referência Protimiza
 
@@ -75,7 +77,7 @@ A estrutura inclui grupos independentes, tratamentos contra controle, combinaç�
 - Superfícies de resposta 3D e contornos.
 - Visualização das soluções de otimização de uma ou várias respostas.
 
-Cada resultado deve ter explicações curtas em português e inglês. Personalização gráfica, opções de incerteza, formatos de exportação e fluxo guiado foram aprovados em [DECISOES_APROVADAS.md](DECISOES_APROVADAS.md); a implementação está detalhada por fase.
+Cada resultado deve ter explicações curtas em português e inglês. Personalização gráfica, opções de incerteza, formatos de exportação e fluxo guiado foram aprovados nas [decisões aprovadas](decisoes-aprovadas.md); a implementação está detalhada por fase.
 
 ## Otimização
 

@@ -6,4 +6,4 @@ Responsabilidades previstas: estruturas dos dados experimentais, validação, es
 
 O núcleo deve funcionar independentemente de interface, conta online e acesso a arquivos. As rotinas serão implementadas e documentadas progressivamente, preservando o raciocínio e as etapas intermediárias dos cálculos.
 
-Ainda não há um pacote Rust criado nesta pasta. O detalhamento está no [mapa de módulos](../../../plans/ARQUITETURA_E_APRENDIZADO.md).
+Ainda não há um pacote Rust criado nesta pasta. O detalhamento está no [mapa de módulos](../../../docs/arquitetura/mapa-modulos.md); a arquitetura, na [visão geral](../../../docs/arquitetura/visao-geral.md).

@@ -1,6 +1,8 @@
-# EnziTAG Optima — concepção do aplicativo
+# Concepção do aplicativo
 
-Documento iniciado e atualizado em 1º de novembro de 2026. As decisões de produto estão consolidadas em [DECISOES_APROVADAS.md](DECISOES_APROVADAS.md), após aprovação explícita dos 14 pontos. A execução segue o [plano detalhado](PLANO_IMPLEMENTACAO.md); ainda não há aplicativo publicado.
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
+Registro dos requisitos e da fundamentação do produto. As decisões de produto estão consolidadas em [decisões aprovadas](decisoes-aprovadas.md), após aprovação explícita dos 14 pontos. A execução segue o [roteiro do produto](../planos-execucao/roteiro-produto.md) e o [plano da primeira versão](../planos-execucao/plano-v0.1.md); ainda não há aplicativo publicado.
 
 ## Direção confirmada pelo usuário
 
@@ -10,8 +12,8 @@ Documento iniciado e atualizado em 1º de novembro de 2026. As decisões de prod
 - **Casos típicos:** planejamento Plackett–Burman (PB) e otimização de parâmetros de cultivos ou reações enzimáticas.
 - **Plataformas:** aplicativo desktop e versão no navegador desde o início.
 - **Idiomas:** português e inglês desde o início, nas versões Windows e navegador.
-- **Temas iniciais:** Modern Dark, Professional e Soft Light, nas versões Windows e navegador. O usuário confirmou que o prompt Software será a base do Soft Light, com substituição do azul elétrico pela paleta do logo EnziTAG. Soft Light é o padrão e a preferência será salva por dispositivo. As referências estão em [docs/temas](../docs/temas/README.md).
-- **Catálogo aprovado:** todos os métodos existentes no Protimiza e as famílias de planejamentos, análises, comparações, modelos, gráficos e otimização discutidas no projeto. O inventário consolidado está em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md); o detalhamento e a implementação serão progressivos.
+- **Temas iniciais:** Modern Dark, Professional e Soft Light, nas versões Windows e navegador. O usuário confirmou que o prompt Software será a base do Soft Light, com substituição do azul elétrico pela paleta do logo EnziTAG. Soft Light é o padrão e a preferência será salva por dispositivo. As referências estão em [docs/temas](../temas/README.md).
+- **Catálogo aprovado:** todos os métodos existentes no Protimiza e as famílias de planejamentos, análises, comparações, modelos, gráficos e otimização discutidas no projeto. O inventário consolidado está no [catálogo funcional](catalogo-funcional.md); o detalhamento e a implementação serão progressivos.
 - **Referência de fluxo:** preservar o pipeline do Protimiza, acrescentando interpretação dos resultados e mais recursos gráficos.
 - **Além de DoE:** incluir Tukey e outros testes de comparação utilizados fora de um planejamento experimental.
 - **Abrangência desejada:** aplicativo completo e extensível, sem restringir a concepção a um único experimento ou conjunto fixo de fatores.
@@ -29,7 +31,7 @@ Documento iniciado e atualizado em 1º de novembro de 2026. As decisões de prod
 
 ## Contexto anterior
 
-O registro histórico local `plans/conversa_rust_doe_estatistica.md` documenta a preferência por cálculos em Rust, organização modular e aprendizagem durante o desenvolvimento. Esse registro fica fora do repositório público. Os requisitos e escolhas necessários à continuidade do projeto estão sintetizados neste documento e no mapa de arquitetura.
+O registro histórico local `plans/conversa_rust_doe_estatistica.md` (mantido fora do Git no computador do usuário) documenta a preferência por cálculos em Rust, organização modular e aprendizagem durante o desenvolvimento. Esse registro fica fora do repositório público. Os requisitos e escolhas necessários à continuidade do projeto estão sintetizados neste documento e no mapa de arquitetura.
 
 ## Referências visuais preservadas
 
@@ -56,7 +58,7 @@ As instruções e recomendações nas telas pertencem ao produto de referência.
 - Exportações SVG/PDF/PNG, CSV/XLSX e HTML/PDF; DOCX posterior. Idioma e estilo de exportação independentes da interface.
 - Otimização com alvos, faixas, restrições, desejabilidade, pesos e vários candidatos, seguida de confirmação experimental.
 
-Detalhes e prioridades estão no [registro aprovado](DECISOES_APROVADAS.md). As perguntas anteriores de produto foram resolvidas por essa aprovação; os detalhes técnicos remanescentes estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).
+Detalhes e prioridades estão no [registro aprovado](decisoes-aprovadas.md). As perguntas anteriores de produto foram resolvidas por essa aprovação; os detalhes técnicos remanescentes estão em [decisões pendentes](decisoes-pendentes.md).
 
 ## Português e inglês desde o início
 
@@ -70,7 +72,7 @@ O README público também possui uma apresentação inicial em inglês. A tradu�
 
 ## Avaliação da linguagem — arquitetura aceita
 
-Consulta à documentação oficial realizada em 1º de novembro de 2026. Após discutir vantagens, limitações e alternativas, o usuário aceitou a recomendação e esclareceu que deseja aprender o funcionamento de cada módulo, mesmo com maior complexidade.
+Consulta à documentação oficial realizada em 2026-11-01. Após discutir vantagens, limitações e alternativas, o usuário aceitou a recomendação e esclareceu que deseja aprender o funcionamento de cada módulo, mesmo com maior complexidade.
 
 A arquitetura aceita mantém o **motor científico em Rust**, reutilizável entre o executável desktop e uma compilação WebAssembly para o navegador, e uma **interface web compartilhada em TypeScript/React**, com Tauri no desktop. Tauri incorpora uma interface web ao aplicativo; não transforma automaticamente seus recursos de sistema em funcionalidades disponíveis no navegador.
 
@@ -103,7 +105,7 @@ GitHub Pages hospeda arquivos estáticos; não executa um servidor Rust ou Pytho
 
 A hospedagem no Pages está disponível gratuitamente para repositórios públicos no GitHub Free, dentro dos limites do serviço. É possível usar o endereço padrão do GitHub Pages ou configurar domínio próprio. A licença MIT foi aprovada e está em `LICENSE` na raiz do repositório.
 
-Fontes oficiais consultadas em 1º de novembro de 2026:
+Fontes oficiais consultadas em 2026-11-01:
 
 - [O que é GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages).
 - [Limites do GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits).
@@ -143,4 +145,4 @@ A integração fica sujeita ao espaço disponível na conta e às [cotas e condi
 
 ## Situação atual
 
-Os 14 pontos de produto foram aprovados, a organização modular foi esclarecida e o plano detalhado foi criado. Ainda não há implementação executável. Consulte o [plano](PLANO_IMPLEMENTACAO.md), o [mapa de arquivos](../docs/MAPA_MODULOS.md) e os [detalhes técnicos pendentes](DECISOES_PENDENTES.md).
+Os 14 pontos de produto foram aprovados, a organização modular foi esclarecida, o roteiro do produto foi detalhado e a primeira versão foi dividida em etapas de execução. Ainda não há implementação executável. Consulte o [índice dos planos de execução](../planos-execucao/README.md), o [mapa de arquivos](../arquitetura/mapa-modulos.md) e os [detalhes técnicos pendentes](decisoes-pendentes.md).

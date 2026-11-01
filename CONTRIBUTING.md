@@ -1,6 +1,13 @@
 # Contribuindo com EnziTAG Optima
 
-O projeto está na etapa de planejamento. Consulte as [decisões aprovadas](plans/DECISOES_APROVADAS.md), o [plano de implementação](plans/PLANO_IMPLEMENTACAO.md), o [mapa de módulos e arquivos](docs/MAPA_MODULOS.md) e os [detalhes pendentes](plans/DECISOES_PENDENTES.md).
+O projeto está no início da implementação da primeira versão. Antes de contribuir, consulte o [plano ativo](docs/planos-execucao/README.md), o [plano da v0.1](docs/planos-execucao/plano-v0.1.md), as [decisões aprovadas](docs/produto/decisoes-aprovadas.md), o [mapa de módulos e arquivos](docs/arquitetura/mapa-modulos.md) e os [detalhes pendentes](docs/produto/decisoes-pendentes.md).
+
+## Convenções
+
+- [Nomenclatura](docs/convencoes/nomenclatura.md): nomes de documentos, pastas, identificadores, código, branches e commits.
+- [Documentação](docs/convencoes/documentacao.md): cabeçalho, estados, precedência e atualização junto com o código.
+- [Fluxo de trabalho](docs/convencoes/fluxo-trabalho.md): ciclo de uma etapa, definição de pronto e pull requests.
+- [Modelos](docs/modelos/README.md) para planos, decisões técnicas, fichas de módulo, métodos e casos de validação.
 
 ## Desenvolvimento dos módulos
 
@@ -22,4 +29,4 @@ Utilizar exemplos sintéticos ou dados cuja distribuição esteja autorizada. O 
 
 ## Licença e publicação
 
-O código e a documentação própria adotam a [licença MIT](LICENSE). Os comandos de desenvolvimento, verificações automatizadas e fluxo de publicação serão documentados à medida que a implementação correspondente existir.
+O código e a documentação própria adotam a [licença MIT](LICENSE). Os comandos de desenvolvimento e as verificações automatizadas serão documentados na [ET01](docs/planos-execucao/ativos/et01-fundacao-tecnica.md); o fluxo de publicação, na [ET10](docs/planos-execucao/planejados/et10-integracao-publicacao.md), somente depois de executados.

@@ -13,4 +13,20 @@ Para cada caso, preservar:
 
 As referências podem utilizar Python e softwares especializados. Elas não integram o motor de cálculo distribuído, que permanece em Rust.
 
+## Organização
+
+```text
+validation/
+├── cases/<method_id>/<nnn>-<slug>/   # um caso por pasta (ET02 em diante)
+│   ├── README.md                     # pergunta, origem, referência e tolerâncias
+│   ├── input.csv                     # dados de entrada distribuíveis
+│   ├── config.json                   # método, modelo, opções e semente
+│   ├── reference.py                  # referência independente, quando em Python
+│   └── expected.json                 # resultados esperados e tolerâncias
+├── tools/                            # ambiente Python de referência (ET02)
+└── reports/v<versão>/                # evidências por versão e plataforma (ET10)
+```
+
+`method_id` é o identificador do método no registro do motor (por exemplo, `tukey_hsd`). Nomes de arquivos lidos por código ficam em inglês; o `README.md` de cada caso segue o [modelo de caso de validação](../docs/modelos/caso-validacao.md). A situação de cada método está na [matriz de cobertura](../docs/produto/matriz-cobertura.md).
+
 Ao acrescentar módulos, preservar os casos aprovados para verificar que resultados anteriores continuam corretos. A validação de um caso não representa aprovação de todos os métodos, entradas ou ambientes.

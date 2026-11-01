@@ -1,6 +1,8 @@
-# Documentação dos métodos
+# Especificações de métodos
 
-Para cada procedimento implementado, registrar:
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
+Para cada procedimento implementado, registrar em `<slug>.md` (por exemplo, `tukey.md`), a partir do [modelo de especificação](../modelos/especificacao-metodo.md):
 
 - Finalidade, pressupostos e estruturas experimentais compatíveis.
 - Referências, fórmulas e algoritmo numérico.
@@ -9,4 +11,8 @@ Para cada procedimento implementado, registrar:
 - Exemplos e resultados intermediários.
 - Situação da validação e ligação com os respectivos casos de referência.
 
-O [catálogo funcional](../../plans/CATALOGO_FUNCIONAL.md) está aprovado como escopo e abrange o Protimiza e os métodos discutidos. A sequência está no [plano de implementação](../../plans/PLANO_IMPLEMENTACAO.md); variantes e configurações serão especificadas por método. Esta pasta ainda não contém métodos implementados ou validados.
+O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como escopo e abrange o Protimiza e os métodos discutidos. A sequência está no [roteiro do produto](../planos-execucao/roteiro-produto.md) e no [plano da v0.1](../planos-execucao/plano-v0.1.md); a versão-alvo de cada método está na [matriz de cobertura](../produto/matriz-cobertura.md).
+
+## Especificações
+
+Nenhuma ainda. A primeira prevista é `estatistica-descritiva.md`, na ET02.

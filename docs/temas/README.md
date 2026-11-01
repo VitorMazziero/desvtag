@@ -1,6 +1,8 @@
-# Temas visuais — EnziTAG Optima
+# Temas visuais
 
-Decisão registrada em 1º de novembro de 2026: disponibilizar **Modern Dark**, **Professional** e **Soft Light** desde o início, no Windows e no navegador.
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
+Decisão registrada em 2026-11-01: disponibilizar **Modern Dark**, **Professional** e **Soft Light** desde o início, no Windows e no navegador.
 
 ## Prompts originais
 
@@ -10,9 +12,9 @@ Decisão registrada em 1º de novembro de 2026: disponibilizar **Modern Dark**, 
 | Professional | Professional | [prompts/professional.txt](prompts/professional.txt) |
 | Soft Light | Software | [prompts/software.txt](prompts/software.txt) |
 
-Os três arquivos foram copiados dos anexos sem edição. O arquivo [manifesto_prompts.json](manifesto_prompts.json) registra os tamanhos e hashes SHA-256 para verificar a integridade. A regra correspondente em `.gitattributes` preserva as quebras de linha originais no Git.
+Os três arquivos foram copiados dos anexos sem edição. O arquivo [manifesto-prompts.json](manifesto-prompts.json) registra os tamanhos e hashes SHA-256 para verificar a integridade. A regra correspondente em `.gitattributes` preserva as quebras de linha originais no Git.
 
-O usuário confirmou que o prompt **Software** será a base do tema chamado **Soft Light** no aplicativo. A adaptação solicitada é substituir o azul elétrico da referência pela paleta do logo EnziTAG. Essa alteração está documentada separadamente em [ADAPTACAO_SOFT_LIGHT.md](ADAPTACAO_SOFT_LIGHT.md), preservando o texto original do anexo.
+O usuário confirmou que o prompt **Software** será a base do tema chamado **Soft Light** no aplicativo. A adaptação solicitada é substituir o azul elétrico da referência pela paleta do logo EnziTAG. Essa alteração está documentada separadamente em [adaptação do Soft Light](adaptacao-soft-light.md), preservando o texto original do anexo.
 
 ## Direção de cada tema
 

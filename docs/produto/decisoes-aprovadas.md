@@ -1,6 +1,8 @@
-# EnziTAG Optima — decisões aprovadas
+# Decisões aprovadas
 
-Data: 1º de novembro de 2026. Estado: requisitos aprovados; implementação ainda não iniciada.
+**Estado:** vigente · **Atualizado em:** 2026-11-01
+
+Requisitos aprovados pelo usuário; implementação ainda não iniciada.
 
 Este registro consolida as escolhas anteriores e a aprovação explícita do usuário dos 14 itens enviados no anexo desta conversa. Substitui o estado de proposta desses itens nos documentos anteriores. A correção sobre aprendizagem permanece válida: a prioridade é separar o aplicativo em módulos com arquivos, responsabilidades e interfaces definidos, facilitando compreensão e manutenção. Os exemplos e cálculos documentados são apoio, não um curso obrigatório nem uma etapa adicional de aprovação.
 
@@ -8,7 +10,7 @@ Este registro consolida as escolhas anteriores e a aprovação explícita do usu
 
 - Produto: **EnziTAG Optima**; repositório: **enzitag-optima**, conta **VitorMazziero**.
 - Três temas desde o início: **Soft Light** (padrão), **Modern Dark** e **Professional**.
-- Soft Light usa o prompt Software como base, adaptado à paleta do logo EnziTAG. Preservar os [prompts originais](../docs/temas/README.md).
+- Soft Light usa o prompt Software como base, adaptado à paleta do logo EnziTAG. Preservar os [prompts originais](../temas/README.md).
 - Preferência visual por dispositivo. Gráficos exportados têm configuração independente, com fundo branco como padrão para artigos.
 
 ## 2. Idiomas
@@ -17,9 +19,9 @@ Português e inglês desde o início, no Windows e navegador. Detectar o idioma 
 
 ## 3. Catálogo e desenvolvimento
 
-Manter o [catálogo completo aprovado](CATALOGO_FUNCIONAL.md), incluindo a cobertura do Protimiza e os métodos discutidos. O usuário define os fatores e respostas; condições matemáticas e limites de recursos são explicitados, sem restringir o produto aos exemplos.
+Manter o [catálogo completo aprovado](catalogo-funcional.md), incluindo a cobertura do Protimiza e os métodos discutidos. O usuário define os fatores e respostas; condições matemáticas e limites de recursos são explicitados, sem restringir o produto aos exemplos.
 
-A tabela da resposta anterior não veio reproduzida no anexo; a ordem de referência daquela resposta é preservada aqui: fundamentos → comparação de tratamentos → triagem → superfícies e otimização → ampliação das análises → estruturas avançadas. O [plano de implementação](PLANO_IMPLEMENTACAO.md) detalha essa sequência e suas dependências. A ordem não reduz o escopo final.
+A tabela da resposta anterior não veio reproduzida no anexo; a ordem de referência daquela resposta é preservada aqui: fundamentos → comparação de tratamentos → triagem → superfícies e otimização → ampliação das análises → estruturas avançadas. O [roteiro do produto](../planos-execucao/roteiro-produto.md) detalha essa sequência e suas dependências; o [plano da primeira versão](../planos-execucao/plano-v0.1.md) define o recorte da v0.1. A ordem não reduz o escopo final.
 
 ## 4. Entrada e navegação
 
@@ -70,7 +72,7 @@ Documentar problema, fórmulas, cálculo pequeno, implementação Rust, integra�
 ## 14. Publicação e suporte
 
 - **MIT** como licença escolhida; a menção à GPLv3 no texto aprovado era uma alternativa condicional, não uma segunda licença selecionada.
-- Repositório remoto criado em `VitorMazziero/enzitag-optima` e **privado por enquanto**, conforme atualização explícita do usuário em 1º de novembro de 2026. Essa decisão substitui a publicação pública imediata; tornar público depende de decisão posterior. A licença MIT permanece.
+- Repositório remoto criado em `VitorMazziero/enzitag-optima` e **privado por enquanto**, conforme atualização explícita do usuário em 2026-11-01. Essa decisão substitui a publicação pública imediata; tornar público depende de decisão posterior. A licença MIT permanece.
 - GitHub Pages para web; endereço previsto `https://vitormazziero.github.io/enzitag-optima/`; instaladores no GitHub Releases. Domínio próprio posterior.
 - Prioridade: Windows 11 de 64 bits e versões atuais de Chrome, Edge e Firefox. Windows 10 e Safari dependem de testes de compatibilidade posteriores.
 - Canais experimental e estável; instalação de atualizações em momento escolhido pelo usuário; pacotes de atualização assinados.
@@ -78,4 +80,4 @@ Documentar problema, fórmulas, cálculo pequeno, implementação Rust, integra�
 
 ## Estado e limites deste registro
 
-A aprovação define o produto e orienta a implementação. Não significa que os métodos estejam implementados, que serviços Google estejam configurados ou que exista aplicativo publicado. O repositório remoto já foi criado, recebeu a documentação e está privado. Escolhas de algoritmos, bibliotecas auxiliares, formatos internos e limites operacionais seguem o plano; somente os detalhes ainda não resolvidos estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).
+A aprovação define o produto e orienta a implementação. Não significa que os métodos estejam implementados, que serviços Google estejam configurados ou que exista aplicativo publicado. O repositório remoto já foi criado, recebeu a documentação e está privado. Escolhas de algoritmos, bibliotecas auxiliares, formatos internos e limites operacionais seguem o plano; somente os detalhes ainda não resolvidos estão em [decisões pendentes](decisoes-pendentes.md).

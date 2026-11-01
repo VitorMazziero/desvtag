@@ -1,4 +1,5 @@
 # Acervo e registro histórico locais; preservar no computador.
+# A pasta plans/ saiu do repositório (DT-0001); a regra abaixo mantém o registro local fora do Git.
 /referencias/
 /plans/conversa_rust_doe_estatistica.md
 /.local/
