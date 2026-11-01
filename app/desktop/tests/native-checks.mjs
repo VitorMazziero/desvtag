@@ -76,4 +76,59 @@ export async function runChecks({ text, invoke }) {
   const rows = sheet.outcome?.result?.rows;
   if (rows?.[1]?.[0] !== "Água" || rows?.[1]?.[1] !== "10,5") throw new Error("XLSX nativo incorreto");
   console.log("OK: planilha XLSX lida pelo motor nativo.");
+
+  // Modelo linear pelo IPC nativo: NIST Norris contra a referência exata (validation/cases/linear_model).
+  const norris = root("validation/cases/linear_model/001-nist-norris");
+  const [header, ...lines] = readFileSync(`${norris}/input.csv`, "utf8").trim().split("\n");
+  const names = header.split(",");
+  const rowsNorris = lines.map((l) => l.split(",").map(Number));
+  const exact = JSON.parse(readFileSync(`${norris}/expected.json`, "utf8")).exactOnBinary64Inputs;
+  const fit = JSON.parse(
+    await invoke(
+      JSON.stringify({
+        protocolVersion: 1,
+        taskId: "native-fit",
+        operation: {
+          type: "modelFitLinear",
+          dataset: {
+            factors: [{ id: "x", name: "x", kind: "numeric", unit: null, levels: [] }],
+            responses: [{ id: "y", name: "y", unit: null }],
+            observations: rowsNorris.map((r, i) => ({
+              id: `o${i + 1}`,
+              unitId: null,
+              factors: [r[names.indexOf("x")]],
+              responses: [r[names.indexOf("y")]],
+            })),
+          },
+          spec: {
+            responseId: "y",
+            intercept: true,
+            terms: [{ type: "main", factorId: "x" }],
+            coding: "treatment",
+            confidenceLevel: 0.95,
+          },
+        },
+      }),
+    ),
+  );
+  const coefficients = fit.outcome?.result?.coefficients;
+  for (const [i, c] of coefficients.entries()) {
+    const want = Number(exact.coefficients[i].estimate);
+    if (Math.abs(c.estimate.value - want) > 1e-9 * Math.abs(want)) throw new Error(`Coeficiente ${i} nativo incorreto`);
+  }
+  if (Math.abs(fit.outcome.result.anova.f.value / Number(exact.f) - 1) > 1e-9) throw new Error("F nativo incorreto");
+  console.log("OK: regressão linear (NIST Norris) calculada pelo motor nativo via IPC do Tauri.");
+
+  // Distribuições pelo IPC nativo: t de Student 0,975 com 10 g.l. = 2,228138851986274 (tabela).
+  const quantile = JSON.parse(
+    await invoke(
+      JSON.stringify({
+        protocolVersion: 1,
+        taskId: "native-dist",
+        operation: { type: "distributionEvaluate", distribution: { type: "studentT", df: 10 }, function: "quantileUpper", values: [0.025] },
+      }),
+    ),
+  );
+  if (Math.abs(quantile.outcome?.result?.values?.[0]?.value - 2.228138851986274) > 1e-11) throw new Error("Quantil t nativo incorreto");
+  console.log("OK: distribuição t avaliada pelo motor nativo via IPC do Tauri.");
 }

@@ -1,6 +1,8 @@
 //! Solicitações da interface ao motor.
 
 use optima_core::descriptive::DescriptiveRequest;
+use optima_core::distributions::DistributionRequest;
+use optima_core::models::LinearModelRequest;
 use optima_project::ProjectDocument;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
@@ -18,6 +20,10 @@ pub enum Operation {
     EngineInfo,
     /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
     DescriptiveSummarize(DescriptiveRequest),
+    /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
+    DistributionEvaluate(DistributionRequest),
+    /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).
+    ModelFitLinear(Box<LinearModelRequest>),
     /// Codifica um documento de projeto em bytes `.enzitag` (`project.encode`).
     ProjectEncode(ProjectEncodeRequest),
     /// Lê bytes `.enzitag` e devolve o documento no esquema atual (`project.decode`).

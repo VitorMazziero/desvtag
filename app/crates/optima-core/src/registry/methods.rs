@@ -24,10 +24,18 @@ pub struct MethodInfo {
 /// Cada etapa acrescenta seus métodos aqui.
 #[must_use]
 pub fn registered_methods() -> Vec<MethodInfo> {
-    vec![MethodInfo {
-        id: crate::descriptive::METHOD_ID.to_string(),
-        version: crate::descriptive::METHOD_VERSION,
-        implementation: Implementation::Implemented,
-        validation: Validation::NumericallyValidated,
-    }]
+    vec![
+        MethodInfo {
+            id: crate::descriptive::METHOD_ID.to_string(),
+            version: crate::descriptive::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::models::linear::METHOD_ID.to_string(),
+            version: crate::models::linear::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+    ]
 }

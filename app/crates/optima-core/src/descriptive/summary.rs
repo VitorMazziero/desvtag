@@ -29,6 +29,16 @@ pub enum UndefinedReason {
     FewerThanTwoObservations,
     /// O resultado não é representável em 64 bits (estouro ou entrada extrema).
     NonFiniteResult,
+    /// O parâmetro não é estimável: a coluna é combinação linear de outras (aliasing).
+    NotEstimable,
+    /// Não há graus de liberdade residuais: o ajuste é exato e a incerteza não pode ser estimada.
+    NoResidualDegreesOfFreedom,
+    /// A resposta é constante: a soma de quadrados total é nula.
+    ConstantResponse,
+    /// O argumento está fora do domínio da função (por exemplo, probabilidade fora de `(0, 1)`).
+    OutOfDomain,
+    /// O modelo não tem termos além do intercepto: não há graus de liberdade do modelo.
+    NoModelTerms,
 }
 
 /// Estatística definida ou explicitamente indefinida.
@@ -49,7 +59,7 @@ pub enum Stat {
 }
 
 impl Stat {
-    fn finite(value: f64) -> Self {
+    pub(crate) fn finite(value: f64) -> Self {
         if value.is_finite() {
             Self::Defined { value }
         } else {
@@ -59,7 +69,7 @@ impl Stat {
         }
     }
 
-    const fn undefined(reason: UndefinedReason) -> Self {
+    pub(crate) const fn undefined(reason: UndefinedReason) -> Self {
         Self::Undefined { reason }
     }
 

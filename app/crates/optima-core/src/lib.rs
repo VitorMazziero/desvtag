@@ -10,9 +10,13 @@
 //! `descriptive_summary`.
 
 pub mod descriptive;
+pub mod diagnostics;
+pub mod distributions;
 pub mod domain;
 pub mod errors;
+pub mod inference;
 pub mod interpretation;
+pub mod models;
 pub mod numeric;
 pub mod provenance;
 pub mod registry;

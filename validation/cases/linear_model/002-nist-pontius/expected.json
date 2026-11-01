@@ -1,0 +1,81 @@
+{
+  "n": 40,
+  "columns": 3,
+  "exactOnBinary64Inputs": {
+    "coefficients": [
+      {
+        "estimate": "0.0006735657894736631677019127501057881633179",
+        "sd": "0.000107938612033075341748525596884665261361"
+      },
+      {
+        "estimate": "0.0000007320591604010025464782061981837551444124",
+        "sd": "0.0000000001578173999816563041767523580403901439877"
+      },
+      {
+        "estimate": "-3.160818713450305532655149980576611350438e-15",
+        "sd": "4.866528499920285770107707206372048634752e-17"
+      }
+    ],
+    "residualSd": "0.0002051774240761815680303218543272642373471",
+    "rSquared": "0.9999999001785371589076293497883205968939",
+    "ssModel": "15.60403432441981198130221224942315977403",
+    "ssResidual": "0.000001557617687969878315685656563550744961954",
+    "ssTotal": "15.60403588203749995118052793507972332478",
+    "f": "185330865.9957571048675193323595111935018",
+    "dfModel": 2,
+    "dfResidual": 37,
+    "dfTotal": 39
+  },
+  "certifiedNist": {
+    "coefficients": [
+      {
+        "index": 0,
+        "estimate": "0.673565789473684E-03",
+        "sd": "0.107938612033077E-03"
+      },
+      {
+        "index": 1,
+        "estimate": "0.732059160401003E-06",
+        "sd": "0.157817399981659E-09"
+      },
+      {
+        "index": 2,
+        "estimate": "-0.316081871345029E-14",
+        "sd": "0.486652849992036E-16"
+      }
+    ],
+    "residualSd": "0.205177424076185E-03",
+    "rSquared": "0.999999900178537",
+    "anova": {
+      "dfModel": 2,
+      "ssModel": "15.6040343244198",
+      "f": "185330865.995752",
+      "dfResidual": 37,
+      "ssResidual": "0.155761768796992E-05"
+    }
+  },
+  "referenceVsCertifiedLre": {
+    "coefficients": 13.509642839949263,
+    "residualSd": 13.776586130962672,
+    "rSquared": 15.0
+  },
+  "tolerances": {
+    "minLre": {
+      "coefficients": 10,
+      "stdErrors": 11,
+      "sigma": 11,
+      "rSquared": 13,
+      "ssModel": 13,
+      "ssResidual": 10,
+      "f": 10
+    },
+    "note": "LRE = -log10(erro relativo) contra a refer\u00eancia exata sobre os bin\u00e1rios de 64 bits; em ajustes perfeitos (SQE/SQT < 1e-20) SQE, \u03c3 e erros-padr\u00e3o usam erro absoluto na escala dos dados e F \u00e9 omitido"
+  },
+  "reference": {
+    "software": "Python fractions (equa\u00e7\u00f5es normais exatas) + mpmath",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/lls/data/LINKS/DATA/Pontius.dat"
+  }
+}

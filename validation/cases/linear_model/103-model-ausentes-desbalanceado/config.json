@@ -1,0 +1,29 @@
+{
+  "method": "linear_model",
+  "title": "Casos completos com resposta e fator ausentes",
+  "responseColumn": "y",
+  "intercept": true,
+  "factors": {
+    "A": "categorical",
+    "B": "categorical"
+  },
+  "terms": [
+    {
+      "type": "main",
+      "factor": "A"
+    },
+    {
+      "type": "main",
+      "factor": "B"
+    },
+    {
+      "type": "interaction",
+      "factors": [
+        "A",
+        "B"
+      ]
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}

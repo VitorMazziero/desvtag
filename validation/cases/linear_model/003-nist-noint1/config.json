@@ -1,0 +1,13 @@
+{
+  "method": "linear_model",
+  "responseColumn": "y",
+  "intercept": false,
+  "terms": [
+    {
+      "type": "main",
+      "factor": "x"
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}

@@ -1,6 +1,6 @@
 # Validação dos cálculos
 
-Casos de referência e evidências de validação do EnziTAG Optima. Situação atual: `descriptive_summary` validado numericamente (9 conjuntos NIST StRD; nativo e WebAssembly); nenhum outro método.
+Casos de referência e evidências de validação do EnziTAG Optima. Situação atual: `descriptive_summary` (9 conjuntos NIST StRD), `linear_model` (11 conjuntos NIST StRD de regressão linear e 6 casos do construtor de modelos) e as distribuições Normal, t, qui-quadrado e F (531 pontos mpmath), todos validados numericamente em Rust nativo e WebAssembly; nenhum outro método.
 
 Para cada caso, preservar:
 
@@ -27,7 +27,7 @@ validation/
 └── reports/v<versão>/                # evidências por versão e plataforma (ET10)
 ```
 
-Ambiente de referência: `python -m venv .venv && .venv/bin/pip install -r validation/tools/requirements.txt` (a pasta `.venv/` é ignorada pelo Git). Os casos de `descriptive_summary` são gerados por `validation/tools/make_descriptive_cases.py <pasta com os .dat do NIST>`.
+Ambiente de referência: `python -m venv .venv && .venv/bin/pip install -r validation/tools/requirements.txt` (a pasta `.venv/` é ignorada pelo Git). Os casos são gerados por `validation/tools/make_descriptive_cases.py` e `make_regression_cases.py` (`<pasta com os .dat do NIST>`), `make_model_cases.py`, `make_distribution_cases.py`, `make_import_cases.py` e `make_project_case.py`.
 
 `method_id` é o identificador do método no registro do motor (por exemplo, `tukey_hsd`). Nomes de arquivos lidos por código ficam em inglês; o `README.md` de cada caso segue o [modelo de caso de validação](../docs/modelos/caso-validacao.md). A situação de cada método está na [matriz de cobertura](../docs/produto/matriz-cobertura.md).
 

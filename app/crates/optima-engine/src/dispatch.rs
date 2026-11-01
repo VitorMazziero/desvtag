@@ -52,6 +52,18 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::DistributionEvaluate(req) => match optima_core::distributions::evaluate(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::DistributionEvaluate(result),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::ModelFitLinear(req) => match optima_core::models::fit_model(req.as_ref()) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ModelFitLinear(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::ProjectEncode(req) => match optima_project::archive::encode(&req.document) {
             Ok(bytes) => Outcome::Ok {
                 result: OperationResult::ProjectEncode(ProjectEncodeResult {

@@ -67,6 +67,23 @@ result: AnalysisResult, };
 export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult;
 
 /**
+ * Linha da tabela.
+ */
+export type AnovaRow = { 
+/**
+ * Graus de liberdade.
+ */
+df: number, 
+/**
+ * Soma de quadrados.
+ */
+sumSquares: Stat, 
+/**
+ * Quadrado médio.
+ */
+meanSquare: Stat, };
+
+/**
  * Pedido que carrega bytes (em base64, para trafegar em JSON).
  */
 export type BytesRequest = { 
@@ -83,6 +100,44 @@ export type Capabilities = {
  * Métodos disponíveis, com situação de implementação e validação.
  */
 methods: Array<MethodInfo>, };
+
+/**
+ * Codificação dos fatores categóricos na matriz do modelo.
+ */
+export type CategoricalCoding = "treatment" | "sum";
+
+/**
+ * Linha da tabela de coeficientes.
+ */
+export type CoefficientRow = { 
+/**
+ * Rótulo da coluna.
+ */
+label: string, 
+/**
+ * Estimativa.
+ */
+estimate: Stat, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, };
 
 /**
  * Conjunto de dados.
@@ -146,6 +201,58 @@ facts: Array<Fact>,
  * Proveniência.
  */
 provenance: Provenance, };
+
+/**
+ * Distribuição e seus parâmetros.
+ */
+export type Distribution = { "type": "normal" } | { "type": "studentT", 
+/**
+ * Graus de liberdade (> 0).
+ */
+df: number, } | { "type": "chiSquare", 
+/**
+ * Graus de liberdade (> 0).
+ */
+df: number, } | { "type": "f", 
+/**
+ * Graus de liberdade do numerador (> 0).
+ */
+df1: number, 
+/**
+ * Graus de liberdade do denominador (> 0).
+ */
+df2: number, };
+
+/**
+ * Função avaliada.
+ */
+export type DistributionFunction = "cdf" | "sf" | "quantileUpper" | "quantileLower";
+
+/**
+ * Solicitação.
+ */
+export type DistributionRequest = { 
+/**
+ * Distribuição.
+ */
+distribution: Distribution, 
+/**
+ * Função.
+ */
+function: DistributionFunction, 
+/**
+ * Argumentos (`x` para `cdf` e `sf`; probabilidade para os quantis).
+ */
+values: Array<number>, };
+
+/**
+ * Resultado: um valor por argumento, na mesma ordem.
+ */
+export type DistributionResult = { 
+/**
+ * Valores.
+ */
+values: Array<Stat>, };
 
 /**
  * Erro codificado, com parâmetros para a mensagem localizada.
@@ -229,6 +336,24 @@ export type EntryPath = "plan" | "analyze" | "compare";
  * Código de erro do protocolo (a interface localiza a mensagem).
  */
 export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion" | "invalidInput" | "invalidProject" | "invalidImport";
+
+/**
+ * Observação fora do ajuste.
+ */
+export type ExcludedObservation = { 
+/**
+ * Observação.
+ */
+observationId: StableId, 
+/**
+ * Motivo.
+ */
+reason: ExclusionReason, };
+
+/**
+ * Motivo da exclusão de uma observação do ajuste.
+ */
+export type ExclusionReason = "missingResponse" | "missingFactor";
 
 /**
  * Experimento: dados com histórico de revisões, seleção de análise e análises salvas.
@@ -424,6 +549,84 @@ severity: Severity,
 params: { [key in string]: string }, };
 
 /**
+ * Resultado do ajuste.
+ */
+export type LinearFit = { 
+/**
+ * Observações usadas.
+ */
+nObservations: number, 
+/**
+ * Colunas do modelo.
+ */
+nColumns: number, 
+/**
+ * Posto numérico da matriz do modelo.
+ */
+rank: number, 
+/**
+ * Graus de liberdade residuais.
+ */
+dfResidual: number, 
+/**
+ * Nível de confiança dos intervalos.
+ */
+confidenceLevel: number, 
+/**
+ * Coeficientes, na ordem das colunas.
+ */
+coefficients: Array<CoefficientRow>, 
+/**
+ * Rótulos das colunas não estimáveis (combinações lineares das demais).
+ */
+aliased: Array<string>, 
+/**
+ * ANOVA da regressão e medidas de ajuste.
+ */
+anova: RegressionAnova, 
+/**
+ * Variância residual `σ̂²`.
+ */
+residualVariance: Stat, 
+/**
+ * Desvio-padrão residual `σ̂`.
+ */
+residualSd: Stat, 
+/**
+ * Número de condição das colunas retidas, normalizadas pela norma.
+ */
+conditionNumber: Stat, 
+/**
+ * Diagnósticos por observação.
+ */
+observations: Array<ObservationDiagnostics>, 
+/**
+ * Observações fora do ajuste (dados ausentes).
+ */
+excluded: Array<ExcludedObservation>, 
+/**
+ * Avisos do ajuste (posto, graus de liberdade, condicionamento…).
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Solicitação de ajuste linear sobre um conjunto de dados.
+ */
+export type LinearModelRequest = { 
+/**
+ * Dados.
+ */
+dataset: Dataset, 
+/**
+ * Modelo.
+ */
+spec: ModelSpec, };
+
+/**
  * Descrição de um método disponível.
  */
 export type MethodInfo = { 
@@ -443,6 +646,31 @@ implementation: Implementation,
  * Situação de validação.
  */
 validation: Validation, };
+
+/**
+ * Modelo: resposta, intercepto e termos.
+ */
+export type ModelSpec = { 
+/**
+ * Resposta modelada.
+ */
+responseId: StableId, 
+/**
+ * Inclui intercepto.
+ */
+intercept: boolean, 
+/**
+ * Termos.
+ */
+terms: Array<TermSpec>, 
+/**
+ * Codificação dos fatores categóricos.
+ */
+coding: CategoricalCoding, 
+/**
+ * Nível de confiança dos intervalos (padrão 0,95).
+ */
+confidenceLevel: number, };
 
 /**
  * Uma observação (linha).
@@ -466,14 +694,55 @@ factors: Array<FactorValue | null>,
 responses: Array<number | null>, };
 
 /**
+ * Diagnóstico por observação.
+ */
+export type ObservationDiagnostics = { 
+/**
+ * Observação do conjunto de dados (ausente nos ajustes sobre matrizes).
+ */
+observationId: StableId | null, 
+/**
+ * Linha usada no ajuste (0-based).
+ */
+row: number, 
+/**
+ * Valor observado.
+ */
+observed: number, 
+/**
+ * Valor ajustado.
+ */
+fitted: number, 
+/**
+ * Resíduo `y − ŷ`.
+ */
+residual: number, 
+/**
+ * Alavancagem `hᵢᵢ`.
+ */
+leverage: number, 
+/**
+ * Resíduo internamente studentizado (padronizado).
+ */
+standardizedResidual: Stat, 
+/**
+ * Resíduo externamente studentizado (deletado).
+ */
+studentizedResidual: Stat, 
+/**
+ * Distância de Cook.
+ */
+cooksDistance: Stat, };
+
+/**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Sucesso ou falha.
@@ -487,6 +756,35 @@ result: OperationResult, } | { "status": "error",
  * Erro codificado.
  */
 error: EngineError, };
+
+/**
+ * Predição para uma linha.
+ */
+export type Prediction = { 
+/**
+ * Valor ajustado `x₀ᵀβ̂`.
+ */
+fitted: Stat, 
+/**
+ * Erro-padrão da média prevista, `σ̂·√(x₀ᵀ(XᵀX)⁻¹x₀)`.
+ */
+meanStdError: Stat, 
+/**
+ * Limite inferior do intervalo de confiança da média.
+ */
+meanLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança da média.
+ */
+meanUpper: Stat, 
+/**
+ * Limite inferior do intervalo de predição de uma nova observação.
+ */
+predictionLower: Stat, 
+/**
+ * Limite superior do intervalo de predição de uma nova observação.
+ */
+predictionUpper: Stat, };
 
 /**
  * Projeto lido.
@@ -581,6 +879,43 @@ methodVersion: number,
  * Versão do núcleo que calculou.
  */
 engineVersion: string, };
+
+/**
+ * Tabela da ANOVA da regressão e medidas de ajuste.
+ */
+export type RegressionAnova = { 
+/**
+ * Soma centrada na média (com intercepto) ou não centrada (sem intercepto).
+ */
+centered: boolean, 
+/**
+ * Modelo.
+ */
+model: AnovaRow, 
+/**
+ * Resíduo.
+ */
+residual: AnovaRow, 
+/**
+ * Total.
+ */
+total: AnovaRow, 
+/**
+ * Estatística F global.
+ */
+f: Stat, 
+/**
+ * Valor-p do teste F global.
+ */
+pValue: Stat, 
+/**
+ * Coeficiente de determinação.
+ */
+rSquared: Stat, 
+/**
+ * Coeficiente de determinação ajustado.
+ */
+adjustedRSquared: Stat, };
 
 /**
  * Resposta medida.
@@ -753,9 +1088,30 @@ min: Stat,
 max: Stat, };
 
 /**
+ * Termo do modelo.
+ */
+export type TermSpec = { "type": "main", 
+/**
+ * Fator.
+ */
+factorId: StableId, } | { "type": "interaction", 
+/**
+ * Fatores.
+ */
+factorIds: Array<StableId>, } | { "type": "power", 
+/**
+ * Fator quantitativo.
+ */
+factorId: StableId, 
+/**
+ * Grau (≥ 2).
+ */
+degree: number, };
+
+/**
  * Motivo pelo qual uma estatística não está definida.
  */
-export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations" | "nonFiniteResult";
+export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations" | "nonFiniteResult" | "notEstimable" | "noResidualDegreesOfFreedom" | "constantResponse" | "outOfDomain" | "noModelTerms";
 
 /**
  * Situação da validação numérica.

@@ -1,0 +1,47 @@
+{
+  "n": 4,
+  "labels": [
+    "(Intercept)",
+    "A[a2]",
+    "B[b2]",
+    "A[a2]:B[b2]"
+  ],
+  "usedObservations": [
+    "o1",
+    "o2",
+    "o3",
+    "o4"
+  ],
+  "excludedObservations": [],
+  "reference": {
+    "rank": 4,
+    "dfResidual": 0,
+    "dfModel": 3,
+    "ssResidual": 2.7610131682735413e-29,
+    "ssModel": 20.687500000000014,
+    "ssTotal": 20.6875,
+    "fitted": [
+      5.000000000000001,
+      7.500000000000003,
+      6.000000000000003,
+      11.000000000000004
+    ],
+    "residuals": [
+      -8.881784197001252e-16,
+      -2.6645352591003757e-15,
+      -2.6645352591003757e-15,
+      -3.552713678800501e-15
+    ],
+    "rSquared": 1.0
+  },
+  "tolerances": {
+    "relative": 1e-09,
+    "absoluteScale": 1e-12,
+    "note": "relativa \u00e0 refer\u00eancia NumPy/SciPy em dupla precis\u00e3o; absoluta (\u00d7 escala dos dados) para valores nulos"
+  },
+  "software": {
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  }
+}

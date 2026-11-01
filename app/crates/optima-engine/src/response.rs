@@ -3,6 +3,8 @@
 use std::collections::BTreeMap;
 
 use optima_core::descriptive::DescriptiveResult;
+use optima_core::distributions::DistributionResult;
+use optima_core::models::LinearFit;
 use optima_core::registry::Capabilities;
 use optima_core::validation::Issue;
 use optima_project::ProjectDocument;
@@ -64,6 +66,10 @@ pub enum OperationResult {
     EngineInfo(EngineInfo),
     /// Resultado de `descriptive.summarize`.
     DescriptiveSummarize(DescriptiveResult),
+    /// Valores de uma função de distribuição.
+    DistributionEvaluate(DistributionResult),
+    /// Ajuste de modelo linear.
+    ModelFitLinear(Box<LinearFit>),
     /// Resultado de `project.encode`.
     ProjectEncode(ProjectEncodeResult),
     /// Resultado de `project.decode`.

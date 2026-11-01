@@ -33,7 +33,7 @@ fn engine_info_returns_versions_and_registered_methods() {
                 .iter()
                 .map(|m| m.id.as_str())
                 .collect();
-            assert_eq!(ids, vec!["descriptive_summary"]);
+            assert_eq!(ids, vec!["descriptive_summary", "linear_model"]);
         }
         other => panic!("resultado inesperado: {other:?}"),
     }
@@ -336,4 +336,77 @@ fn project_encode_accepts_revisions_without_hashes_and_fills_them() {
         back.document.experiments[0].revisions[0].content_hash.len(),
         64
     );
+}
+
+fn fit_request(spec_terms: serde_json::Value, response: &str) -> serde_json::Value {
+    let observations: Vec<_> = [(1.0, 1.0), (2.0, 3.0), (3.0, 2.0), (4.0, 5.0), (5.0, 4.0)]
+        .iter()
+        .enumerate()
+        .map(|(i, (x, y))| json!({ "id": format!("o{}", i + 1), "unitId": null, "factors": [x], "responses": [y] }))
+        .collect();
+    json!({
+        "protocolVersion": PROTOCOL_VERSION,
+        "taskId": "fit-1",
+        "operation": {
+            "type": "modelFitLinear",
+            "dataset": {
+                "factors": [{ "id": "x", "name": "x", "kind": "numeric", "unit": null, "levels": [] }],
+                "responses": [{ "id": "y", "name": "y", "unit": null }],
+                "observations": observations,
+            },
+            "spec": {
+                "responseId": response,
+                "intercept": true,
+                "terms": spec_terms,
+                "coding": "treatment",
+                "confidenceLevel": 0.95,
+            },
+        }
+    })
+}
+
+#[test]
+fn model_fit_linear_returns_the_fit_over_json() {
+    let response = call(&fit_request(
+        json!([{ "type": "main", "factorId": "x" }]),
+        "y",
+    ));
+    match response.outcome {
+        Outcome::Ok {
+            result: OperationResult::ModelFitLinear(fit),
+        } => {
+            assert_eq!(fit.rank, 2);
+            assert_eq!(fit.df_residual, 3);
+            let slope = fit.coefficients[1].estimate.value().expect("inclinação");
+            assert!((slope - 0.8).abs() < 1e-12);
+            assert!(
+                fit.anova
+                    .f
+                    .value()
+                    .is_some_and(|f| (f - 16.0 / 3.0).abs() < 1e-10)
+            );
+            assert_eq!(fit.provenance.method_id, "linear_model");
+        }
+        other => panic!("resultado inesperado: {other:?}"),
+    }
+}
+
+#[test]
+fn model_fit_linear_reports_invalid_models_as_coded_issues() {
+    let response = call(&fit_request(
+        json!([{ "type": "main", "factorId": "x" }]),
+        "w",
+    ));
+    match response.outcome {
+        Outcome::Error { error } => {
+            assert_eq!(error.code, ErrorCode::InvalidInput);
+            assert!(
+                error
+                    .issues
+                    .iter()
+                    .any(|i| i.code == "request.unknown_response")
+            );
+        }
+        other => panic!("deveria ser erro: {other:?}"),
+    }
 }

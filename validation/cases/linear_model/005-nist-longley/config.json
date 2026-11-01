@@ -1,0 +1,33 @@
+{
+  "method": "linear_model",
+  "responseColumn": "y",
+  "intercept": true,
+  "terms": [
+    {
+      "type": "main",
+      "factor": "x1"
+    },
+    {
+      "type": "main",
+      "factor": "x2"
+    },
+    {
+      "type": "main",
+      "factor": "x3"
+    },
+    {
+      "type": "main",
+      "factor": "x4"
+    },
+    {
+      "type": "main",
+      "factor": "x5"
+    },
+    {
+      "type": "main",
+      "factor": "x6"
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}

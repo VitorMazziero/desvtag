@@ -1,0 +1,29 @@
+{
+  "method": "linear_model",
+  "title": "Fatorial 2\u00d73 com intera\u00e7\u00e3o, codifica\u00e7\u00e3o de soma",
+  "responseColumn": "y",
+  "intercept": true,
+  "factors": {
+    "A": "categorical",
+    "B": "categorical"
+  },
+  "terms": [
+    {
+      "type": "main",
+      "factor": "A"
+    },
+    {
+      "type": "main",
+      "factor": "B"
+    },
+    {
+      "type": "interaction",
+      "factors": [
+        "A",
+        "B"
+      ]
+    }
+  ],
+  "coding": "sum",
+  "confidenceLevel": 0.95
+}

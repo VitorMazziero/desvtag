@@ -1,0 +1,58 @@
+{
+  "method": "linear_model",
+  "responseColumn": "y",
+  "intercept": true,
+  "terms": [
+    {
+      "type": "main",
+      "factor": "x"
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 2
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 3
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 4
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 5
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 6
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 7
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 8
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 9
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 10
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}
