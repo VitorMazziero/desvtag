@@ -18,14 +18,14 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
-| Fatorial completo de dois níveis | F05 | v0.1 | ET06 | não iniciado | — |
-| Fatorial fracionário (FFD): geradores, resolução, confundimento | F05 | v0.1 | ET06 | não iniciado | — |
-| Plackett–Burman (PB) | F05 | v0.1 | ET06 | não iniciado | — |
-| Réplicas, pontos centrais, codificação real/codificada, aleatorização com semente | F05 | v0.1 | ET06 | não iniciado | — |
-| DIC — delineamento inteiramente casualizado | F04/F05 | v0.1 | ET05, ET06 | em andamento: análise do DIC (ANOVA, Tukey, letras) implementada e validada na ET05; geração do planejamento na ET06 | [exemplo 01](../../examples/01-enzimas-quatro-condicoes/README.md), [ANOVA](../metodos/anova-um-fator.md#10-validação) |
+| Fatorial completo de dois níveis | F05 | v0.1 | ET06 | implementado; validado numericamente (nativo e WebAssembly); Windows pendente | [método](../metodos/fatorial-dois-niveis.md#10-validação), [matrizes](../../validation/cases/two_level_design/designs.json), [análise 001](../../validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais/README.md) |
+| Fatorial fracionário (FFD): geradores, resolução, confundimento | F05 | v0.1 | ET06 | implementado; validado numericamente (nativo e WebAssembly); Windows pendente | [método](../metodos/fatorial-fracionario.md#10-validação), [casos](../../validation/cases/two_level_design/fractional.json), [análise 002](../../validation/cases/two_level_design_analysis/002-fracionario-resolucao-iv/README.md) |
+| Plackett–Burman (PB) | F05 | v0.1 | ET06 | implementado; validado numericamente (nativo e WebAssembly); Windows pendente; tamanhos 8, 12, 16, 20, 24, 32, 44 e 48 | [método](../metodos/plackett-burman.md#10-validação), [casos](../../validation/cases/two_level_design/plackett-burman.json), [análise 003](../../validation/cases/two_level_design_analysis/003-plackett-burman-12-fatores-oito/README.md), [exemplo 02](../../examples/02-triagem-meio-cultivo/README.md) |
+| Réplicas, pontos centrais, codificação real/codificada, aleatorização com semente | F05 | v0.1 | ET06 | implementado; validado (ordem idêntica à reimplementação independente; nativo e WebAssembly); Windows pendente | [aleatorização](../metodos/aleatorizacao.md#10-validação), [permutações](../../validation/cases/two_level_design/permutations.json) |
+| DIC — delineamento inteiramente casualizado | F04/F05 | v0.1 | ET05, ET06 | em andamento: análise do DIC (ANOVA, Tukey, letras) implementada e validada na ET05; a geração aleatorizada de um DIC com fator categórico não está na ET06 (apenas planejamentos de dois níveis) e permanece pendente | [exemplo 01](../../examples/01-enzimas-quatro-condicoes/README.md), [ANOVA](../metodos/anova-um-fator.md#10-validação) |
 | Composto central rotacional (DCCR/CCRD) | F06 | v0.1 | ET07 | não iniciado | — |
 | Composto central de face centrada (FCD) | F06 | v0.1 | ET07 | não iniciado | — |
-| Opção rotulada CCD no Protimiza (após conferência) | F06 | v0.1 | ET06, ET07 | não iniciado | — |
+| Opção rotulada CCD no Protimiza (após conferência) | F06 | v0.1 | ET06, ET07 | em andamento: inventário e decisão de nomenclatura registrados na ET06 (cobertura pelo composto central com `α` informado, implementação na ET07); conferência no serviço pendente | [inventário](catalogo-funcional.md#inventário-protimiza-et06), [DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md) |
 | Box–Behnken | F06 | v0.1 | ET07 | não iniciado | — |
 | Planejamento personalizado ou matriz importada | F06 | v0.1 | ET07 | não iniciado | — |
 | DBC e blocos em planejamentos | F08 | posterior | — | não iniciado | — |
@@ -44,7 +44,7 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Resíduos, alavancagem e influência | F03 | v0.1 | ET04 | implementado; validado numericamente contra NumPy/SciPy e por propriedades (leave-one-out); Windows pendente | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
 | ANOVA de um fator, CV e tamanho de efeito | F04 | v0.1 | ET05 | implementado; validado numericamente (11 conjuntos NIST StRD a 15 dígitos; nativo e WebAssembly); Windows pendente | [método](../metodos/anova-um-fator.md#10-validação), [casos](../../validation/cases/one_way_comparison/README.md) |
 | Diagnóstico de resíduos e homogeneidade na comparação | F04 | v0.1 | ET05 | implementado (Brown–Forsythe, resíduos padronizados, QQ, razão de desvios; sem selo de validade); validado contra SciPy/NumPy; Windows pendente | [método](../metodos/anova-um-fator.md#2-pressupostos-e-estruturas-compatíveis), [casos](../../validation/cases/one_way_comparison/README.md) |
-| Análise de efeitos, curvatura e desenhos saturados | F05 | v0.1 | ET06 | não iniciado | — |
+| Análise de efeitos, curvatura e desenhos saturados | F05 | v0.1 | ET06 | implementado; validado numericamente (nativo e WebAssembly); Windows pendente | [método](../metodos/fatorial-dois-niveis.md#10-validação), [análises 001–005](../../validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais/README.md) |
 | Falta de ajuste e erro puro | F06 | v0.1 | ET07 | não iniciado | — |
 | ANOVA multifatorial geral com interações e médias marginais | F08 | posterior | — | não iniciado | — |
 | ANOVA de Welch | F08 | posterior | — | não iniciado | — |
@@ -83,9 +83,9 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Médias com incerteza nomeada e letras | F04 | v0.1 | ET05 | implementado (SVG próprio, três temas, PT/EN, axe; verificação visual); Windows pendente | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
 | Boxplot | F04 | v0.1 | ET05 | implementado (quartis do tipo 7 validados contra NumPy); Windows pendente | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
 | Resíduos e diagnóstico | F04 | v0.1 | ET05 | implementado (resíduos × ajustados e QQ, com pontos validados contra SciPy); Windows pendente | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
-| Efeitos principais e interações | F05 | v0.1 | ET06 | não iniciado | — |
-| Pareto | F05 | v0.1 | ET06 | não iniciado | — |
-| Observado × predito | F05 | v0.1 | ET06 | não iniciado | — |
+| Efeitos principais e interações | F05 | v0.1 | ET06 | implementado; médias dos efeitos principais conferidas com NumPy (casos 001–005); a série de interações tem testes unitários do núcleo e E2E, sem referência independente própria; Windows pendente | [casos](../../validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais/README.md) |
+| Pareto | F05 | v0.1 | ET06 | implementado; ordenação e linha de referência (valor absoluto de t com t crítico, Lenth ou só efeito) conferidas contra o t crítico independente; Windows pendente | [casos](../../validation/cases/two_level_design_analysis/004-saturado-lenth/README.md) |
+| Observado × predito | F05 | v0.1 | ET06 | implementado; valores ajustados conferidos com NumPy; Windows pendente | [casos](../../validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais/README.md) |
 | Superfície 3D e contorno | F06 | v0.1 | ET07 | não iniciado | — |
 | Desejabilidade e soluções de otimização | F07 | v0.1 | ET08 | não iniciado | — |
 
@@ -116,4 +116,4 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Google Drive opcional e compartilhamento por leitura/cópia | F11 | posterior | — | não iniciado | — |
 | Comentários e colaboração simultânea | F14 | posterior | — | não iniciado | — |
 | Windows 10, Safari e domínio próprio | F14 | posterior | — | não iniciado | — |
-| Funções do Protimiza não visíveis nas capturas | F05–F09 | a definir após inventário | ET06 | não iniciado | — |
+| Funções do Protimiza não visíveis nas capturas | F05–F09 | a definir após inventário | ET06 | em andamento: inventário parcial registrado (sem acesso ao serviço); itens incertos listados; pergunta não bloqueante ao usuário | [inventário](catalogo-funcional.md#inventário-protimiza-et06) |

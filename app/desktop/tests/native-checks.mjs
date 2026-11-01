@@ -165,4 +165,79 @@ export async function runChecks({ text, invoke }) {
     if (Math.abs(c.pAdjusted.value - cmp.tukey.pairs[i].pAdjusted) > 1e-10) throw new Error(`p ajustado do par ${i} incorreto`);
   }
   console.log("OK: ANOVA, Tukey e letras calculados pelo motor nativo via IPC do Tauri.", one.letters.letters.join(","));
+
+  {
+    // Planejamento pelo IPC nativo: a ordem aleatória (PCG32 + Fisher–Yates, semente 20261101) deve
+    // coincidir com a enumeração independente em Python, e a análise com o NumPy/SciPy.
+    const designCases = JSON.parse(readFileSync(root("validation/cases/two_level_design/designs.json"), "utf8")).cases;
+    const randomized = designCases.find((c) => c.kind === "full" && c.randomize && c.seed === 20261101);
+    const spec = {
+      kind: { type: "fullFactorial" },
+      factors: Array.from({ length: randomized.k }, (_, i) => ({
+        id: `f${i + 1}`,
+        name: `F${i + 1}`,
+        low: 10 * (i + 1),
+        high: 10 * (i + 1) + 8,
+        unit: null,
+      })),
+      replicates: randomized.replicates,
+      centerPoints: randomized.centers,
+      randomize: true,
+      seed: randomized.seed,
+    };
+    const generated = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-design", operation: { type: "designGenerate", ...spec } })),
+    );
+    const runs = generated.outcome?.result?.runs;
+    if (!runs || runs.length !== randomized.runsList.length) throw new Error("Número de ensaios nativo incorreto");
+    for (const [i, r] of runs.entries()) {
+      const w = randomized.runsList[i];
+      if (r.run !== w.run || r.standardOrder !== w.standardOrder || JSON.stringify(r.coded) !== JSON.stringify(w.coded)) {
+        throw new Error(`Ensaio ${i + 1} do planejamento nativo diverge da referência`);
+      }
+    }
+    console.log("OK: planejamento aleatorizado igual à referência independente via IPC do Tauri.", runs.length, "ensaios");
+
+    const dir = root("validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais");
+    const config = JSON.parse(readFileSync(`${dir}/config.json`, "utf8"));
+    const want = JSON.parse(readFileSync(`${dir}/expected.json`, "utf8")).reference;
+    const lines = readFileSync(`${dir}/input.csv`, "utf8").trim().split("\n");
+    const k = config.spec.factors.length;
+    const analysed = JSON.parse(
+      await invoke(
+        JSON.stringify({
+          protocolVersion: 1,
+          taskId: "native-design-analysis",
+          operation: {
+            type: "designAnalyze",
+            dataset: {
+              factors: lines[0].split(",").slice(0, k).map((n, i) => ({ id: `f${i + 1}`, name: n, kind: "numeric", unit: null, levels: [] })),
+              responses: [{ id: "y", name: "y", unit: null }],
+              observations: lines.slice(1).map((line, r) => {
+                const cells = line.split(",").map(Number);
+                return { id: `o${r + 1}`, unitId: null, factors: cells.slice(0, k), responses: [cells[k]] };
+              }),
+            },
+            responseId: "y",
+            spec: config.spec,
+            terms: config.terms.map((t) =>
+              t.length === 1
+                ? { type: "main", factorId: `f${t.charCodeAt(0) - 64}` }
+                : { type: "interaction", factorIds: [...t].map((c) => `f${c.charCodeAt(0) - 64}`) },
+            ),
+            alpha: config.alpha,
+            includeCurvature: config.includeCurvature,
+          },
+        }),
+      ),
+    );
+    const result = analysed.outcome?.result;
+    if (!result) throw new Error(`Análise de planejamento nativa falhou: ${JSON.stringify(analysed.outcome)}`);
+    for (const [i, e] of result.effects.entries()) {
+      const w = want.coefficients[i + 1];
+      if (Math.abs(e.effect.value - w.effect) > 1e-9 * Math.abs(w.effect) + 1e-10) throw new Error(`Efeito ${e.label} nativo incorreto`);
+      if (Math.abs(e.pValue.value - w.p) > 1e-9 * Math.abs(w.p) + 1e-12) throw new Error(`p de ${e.label} nativo incorreto`);
+    }
+    console.log("OK: efeitos e valores-p do planejamento 2³ calculados pelo motor nativo via IPC do Tauri.");
+  }
 }

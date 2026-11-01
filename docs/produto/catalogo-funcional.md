@@ -23,6 +23,34 @@ Também aparecem cadastro de fatores e respostas, níveis e unidades, réplicas,
 
 O requisito de cobertura do Protimiza é integral. O inventário acima se baseia nas telas fornecidas; a área interna do serviço não foi autenticada nesta sessão. As funções que não aparecem nas capturas ainda precisam ser conferidas. Em particular, a captura rotulada CCD mostra uma contagem de ensaios sem explicitar a parte axial; matriz, fórmula e nomenclatura serão verificadas antes da implementação. Os rótulos e recomendações da referência não substituem a especificação estatística dos métodos.
 
+### Inventário Protimiza (ET06)
+
+**Estado:** inventário parcial · **Atualizado em:** 2026-11-01 · Pendência [PD-05](decisoes-pendentes.md)
+
+**Base e limite da conferência.** O inventário parte da lista de funções descrita acima (as capturas fornecidas na concepção). Nesta execução **não houve acesso** ao serviço Protimiza, às capturas originais nem ao acervo `referencias/` (que não é versionado); portanto nada abaixo foi conferido diretamente no serviço. Cada item é classificado como **conferido** (consta na descrição das capturas e está coberto e verificado no EnziTAG Optima), **coberto, sem conferência no serviço** (consta na descrição, mas a equivalência de rótulos e fórmulas não pôde ser comparada) ou **incerto** (pode existir, sem evidência disponível). A cobertura de produto continua **integral**: um item incerto não é removido do escopo.
+
+| Função da referência | Classe | Cobertura no EnziTAG Optima |
+|---|---|---|
+| Cadastro de fatores e respostas, níveis e unidades | conferido | U03, ET02 |
+| Réplicas e pontos centrais | conferido | `DesignSpec.replicates/centerPoints`, ET06 |
+| Matriz experimental com valores reais e codificados | conferido | U06 `RunMatrix`, ET06 |
+| Fatorial fracionário (FFD) com geradores e confundimento | conferido | [fatorial fracionário](../metodos/fatorial-fracionario.md), ET06 |
+| Plackett & Burman (PB) | conferido | [Plackett–Burman](../metodos/plackett-burman.md), ET06 |
+| Seleção da resposta, nível de significância, erros-padrão, testes e valores-p | conferido | [fatorial de dois níveis](../metodos/fatorial-dois-niveis.md), [regressão linear](../metodos/regressao-linear.md) |
+| Pareto de efeitos | conferido | `services/charts/pareto`, ET06 |
+| Experimental × predito | conferido | `observedPredicted`, ET06 |
+| ANOVA com regressão, R², falta de ajuste e erro puro | conferido | C07, ET04/ET06 |
+| Resíduos | coberto, sem conferência no serviço | C08, ET04 (gráficos de resíduos: ET05 e ET09) |
+| Equação do modelo e seleção de termos | coberto, sem conferência no serviço | termos na ET06; equação e seleção de termos de superfície na ET07 |
+| CCRD (composto central rotacional) e FCD (face centrada) | coberto, sem conferência no serviço | ET07 |
+| Custom Design | coberto, sem conferência no serviço | ET07 (planejamento personalizado ou matriz importada) |
+| Opção rotulada CCD | incerto (ver decisão abaixo) | ET07 |
+| Funções fora das capturas (relatórios, exportações, outras análises, gerenciamento de projetos) | incerto | Cobertura pelos formatos aprovados (SVG, PNG, CSV, XLSX, HTML); itens adicionais só entram por decisão do usuário |
+
+**Decisão sobre o rótulo CCD.** A nomenclatura da referência não é copiada. O EnziTAG Optima nomeia cada planejamento pela **geometria e pela fórmula** e mostra sempre a distância axial `α`, o número de pontos fatoriais, axiais e centrais e a contagem total de ensaios antes de gerar. A ET07 oferecerá: **DCCR/CCRD** (`α = (2ᵏ)^(1/4)`, rotacional), **FCD** (`α = 1`, face centrada) e o **composto central com `α` informado** (o caso geral, que cobre a opção rotulada CCD qualquer que seja a variante usada pela referência: circunscrito, inscrito ou outro). A contagem de ensaios exibida na captura rotulada CCD não pôde ser reconciliada com uma fórmula sem acesso à matriz; a conferência com o usuário permanece como ponto aberto de PD-05 e **não bloqueia** a ET07, porque o caso geral com `α` explícito é suficiente. Registrado em [DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md); a ET07 confirma ou revisa na sua própria DT.
+
+**Pergunta ao usuário (não bloqueante).** Se houver acesso às capturas ou ao serviço, indicar quais funções internas adicionais devem ser cobertas e a contagem de ensaios e `α` da opção rotulada CCD para um caso de 2 e de 3 fatores.
+
 ## Planejamentos e organização experimental
 
 Além da cobertura da referência, estão incluídas as famílias já discutidas:

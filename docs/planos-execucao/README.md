@@ -53,7 +53,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET03 | Projeto local, importação e recuperação | v0.1 | **Ativo** (só evidência Windows e reabertura cruzada pendentes) | [ativos/et03-projeto-local-importacao.md](ativos/et03-projeto-local-importacao.md) |
 | ET04 | Fundamentos numéricos e modelos lineares | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et04-fundamentos-numericos-modelos.md](ativos/et04-fundamentos-numericos-modelos.md) |
 | ET05 | ANOVA, Tukey e letras | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et05-anova-tukey-letras.md](ativos/et05-anova-tukey-letras.md) |
-| ET06 | Fatoriais, fracionários e Plackett–Burman | v0.1 | **Ativo** | [ativos/et06-fatoriais-plackett-burman.md](ativos/et06-fatoriais-plackett-burman.md) |
+| ET06 | Fatoriais, fracionários e Plackett–Burman | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et06-fatoriais-plackett-burman.md](ativos/et06-fatoriais-plackett-burman.md) |
 | ET07 | Superfícies de resposta e planejamento personalizado | v0.1 | Planejado | [planejados/et07-superficies-resposta.md](planejados/et07-superficies-resposta.md) |
 | ET08 | Otimização de uma ou várias respostas | v0.1 | Planejado | [planejados/et08-otimizacao.md](planejados/et08-otimizacao.md) |
 | ET09 | Gráficos e exportação essenciais | v0.1 | Planejado | [planejados/et09-graficos-exportacao.md](planejados/et09-graficos-exportacao.md) |

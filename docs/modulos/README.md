@@ -31,6 +31,8 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 | C06–C08 — modelos lineares, ANOVA da regressão e diagnósticos | [c06-c08-modelos-lineares.md](c06-c08-modelos-lineares.md) | implementado; validado numericamente |
 | C09 (com C04 amplitude, C07 ANOVA de um fator, C08, C16, C18) — comparação de tratamentos | [c09-comparacao-de-tratamentos.md](c09-comparacao-de-tratamentos.md) | implementado; validado numericamente |
 | U07, U08, U09, U16 — configuração, resultados, gráficos e exportação da comparação | [u07-u09-u16-comparacao-resultados-e-exportacao.md](u07-u09-u16-comparacao-resultados-e-exportacao.md) | implementado |
+| C11 (com C07 Lenth e falta de ajuste, C16 efeitos, C18) — planejamentos de dois níveis | [c11-planejamentos-dois-niveis.md](c11-planejamentos-dois-niveis.md) | implementado; validado numericamente |
+| U06 (com U07–U09 de triagem) — planejamento de experimento | [u06-planejamento-de-experimento.md](u06-planejamento-de-experimento.md) | implementado |
 | U01 — início e entradas | [u01-inicio-e-entradas.md](u01-inicio-e-entradas.md) | implementado |
 | U02 — fluxo guiado | [u02-fluxo-guiado.md](u02-fluxo-guiado.md) | implementado |
 | U03 — fatores e respostas | [u03-fatores-respostas.md](u03-fatores-respostas.md) | implementado |

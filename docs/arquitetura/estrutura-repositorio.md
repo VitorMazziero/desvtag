@@ -53,7 +53,7 @@ enzitag-optima/
 │       │   └── assets/               # logo e fontes locais
 │       └── tests/e2e/                # existe (ET01)
 ├── docs/                             # Documentação em português (ver seção seguinte)
-├── examples/                         # existe (README); 01-enzimas-quatro-condicoes (ET05)
+├── examples/                         # existe (README); 01-enzimas-quatro-condicoes (ET05), 02-triagem-meio-cultivo (ET06)
 │   └── <nn>-<slug>/                  # README.md, dados e projeto .enzitag
 ├── validation/                       # existe (README)
 │   ├── cases/<method_id>/<nnn>-<slug>/   # existe (descriptive_summary, import_xlsx, project_file, distributions, linear_model)

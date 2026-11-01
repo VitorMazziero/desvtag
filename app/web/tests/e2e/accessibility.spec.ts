@@ -144,3 +144,24 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
     await scan(page, `${theme}/comparacao-resultados`);
   });
 }
+
+for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+  test(`axe: planejamento, matriz e resultados de triagem sem violações no tema ${theme}`, async ({
+    page,
+  }) => {
+    await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
+    await page.goto("/");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    const chooser = page.waitForEvent("filechooser");
+    await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
+    await (await chooser).setFiles(
+      new URL("../../../../examples/02-triagem-meio-cultivo/projeto.enzitag", import.meta.url)
+        .pathname,
+    );
+    await page.getByTestId("effects-table").waitFor();
+    await scan(page, `${theme}/resultados-de-triagem`);
+    await page.getByRole("button", { name: /Design and data|Planejamento e dados/ }).click();
+    await page.getByTestId("matrix-table").waitFor();
+    await scan(page, `${theme}/planejamento-e-matriz`);
+  });
+}

@@ -42,17 +42,20 @@ ProjectDocument
 └─ experiments[]
    ├─ id, name, entryPath ("plan" | "analyze" | "compare" | null)
    ├─ showUnitColumn, notes
-   ├─ analysisSelection { responseId, groupBy[], factorId?, alpha? }
+   ├─ analysisSelection { responseId, groupBy[], factorId?, alpha?, terms?, includeCurvature? }
+   ├─ design?           DesignSpec do planejamento aplicado (ET06)
    ├─ revisions[]       instantâneos imutáveis, da mais antiga para a mais recente
    │  └─ id, parent, createdAt, reason, contentHash, data
    │     └─ data = { factors[], responses[], rows[] }   (TEXTO das células)
    └─ analyses[]
       └─ id, createdAt, revisionId, signature, methodId, methodVersion, engineVersion,
          options { responseId, groupBy[], factorId?, alpha? },
-         result { type: "descriptive" | "oneWayComparison", ... }
+         result { type: "descriptive" | "oneWayComparison" | "twoLevelDesign", ... }
 ```
 
 `factorId` e `alpha` só existem nas comparações de tratamentos (ET05) e são **omitidos** nas análises descritivas, de modo que arquivos já escritos continuam idênticos e legíveis. O resultado `oneWayComparison` guarda o `OneWayResult` completo (grupos, ANOVA, Tukey, letras, diagnósticos, fatos e proveniência). O esquema segue `1`: as adições são campos opcionais e uma variante nova do resultado ([DT-0010](../decisoes-tecnicas/dt-0010-comparacao-de-tratamentos.md), item 8); uma versão anterior do aplicativo recusa, com diagnóstico, um arquivo que contenha a variante que não conhece.
+
+O campo opcional `design` guarda o `DesignSpec` (tipo, fatores com níveis reais, réplicas, pontos centrais, aleatorização e **semente**), de modo que a matriz e a ordem de execução possam ser reproduzidas; `terms` e `includeCurvature` registram o modelo escolhido para a análise de efeitos. O resultado `twoLevelDesign` guarda o `DesignAnalysisResult` completo. Aplicar um planejamento preserva os dados anteriores em uma revisão `edit` e registra uma revisão `design` ([DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md), item 7). Esquema segue `1` (campos opcionais).
 
 Regras:
 
@@ -60,7 +63,7 @@ Regras:
 - **Células guardam o texto original** (`"10,5"`, vazio = ausente). A conversão para número é refeita ao analisar; nada digitado é descartado.
 - Cada análise aponta (`revisionId`) para a revisão que a gerou e guarda o resultado calculado. **Reabrir não recalcula.** A interface compara a `signature` com a dos dados atuais para marcar um resultado como obsoleto.
 - `contentHash` = SHA-256 hexadecimal da serialização JSON compacta de `data` na ordem de campos `factors → responses → rows` (cada campo na ordem de declaração dos tipos). O Rust o **recalcula ao gravar** e o confere ao ler (`project.revision_hash_mismatch`).
-- Motivos de revisão (`reason`): `created`, `edit`, `import`, `analysis`, `manualSave`, `restore`.
+- Motivos de revisão (`reason`): `created`, `edit`, `import`, `analysis`, `manualSave`, `restore`, `design`.
 - Identificadores: texto `[A-Za-z0-9_.:-]`, 1 a 64 caracteres, únicos no escopo (experimentos no projeto; revisões e análises em cada experimento).
 - **Sem credenciais** de qualquer serviço e **sem caminhos** do computador do usuário.
 

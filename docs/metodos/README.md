@@ -26,3 +26,7 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [ANOVA de um fator](anova-um-fator.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Tukey e Tukey–Kramer](tukey.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Letras de comparação](letras-comparacao.md) | implementado; validado semanticamente e contra referência independente |
+| [Fatorial de dois níveis](fatorial-dois-niveis.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Fatorial fracionário](fatorial-fracionario.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Plackett–Burman](plackett-burman.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Aleatorização reprodutível](aleatorizacao.md) | implementado; validado contra implementação independente |
