@@ -107,4 +107,4 @@ Fichas, DTs, `docs/guias/exportacao.md` (novo) e [matriz de cobertura](../../pro
 - **Preferências do dispositivo não vão ao `.enzitag`** (esquema permanece 1; [DT-0014](../../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md), item 5). A personalização **por figura** vai, em campo opcional (`figureStyles`), sem alterar a versão do esquema.
 - **Relatório sem o editor de otimização:** a otimização entra como estado, fatos, convergência, candidatos e compromissos.
 - **Excel não testado manualmente;** LibreOffice (conversão e captura) e openpyxl foram usados.
-- **Verificação em Windows:** apenas `windows-latest` (Windows Server 2025); Windows 11 permanece pendente como nas demais etapas.
+- **Verificação em Windows:** `windows-latest` (Windows Server 2025) e Windows 10 Pro 22H2 da máquina de desenvolvimento (verificação nativa de `exportXlsx` e do restante); Windows 11 **não verificado** (decisão do usuário).
