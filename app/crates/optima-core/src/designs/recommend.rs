@@ -5,7 +5,7 @@
 //! resolução**; em empate, a de **mais ensaios** (mais informação). Se nenhuma cabe, devolve-se a
 //! menor opção, sinalizando que excede o orçamento. Opções:
 //! fatorial completo (`2ᵏ`), fracionários do catálogo (aberração mínima) e Plackett–Burman
-//! (resolução III, a partir de 8 ensaios).
+//! (resolução III; os dois menores tamanhos que comportam os fatores).
 
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
@@ -67,7 +67,9 @@ pub fn candidates(k: usize, max_runs: Option<u32>) -> Vec<Candidate> {
             Some(e.resolution),
         );
     }
-    if let Some(&n) = SUPPORTED_RUNS.iter().find(|&&n| n > k) {
+    // Os dois menores Plackett–Burman que comportam `k` fatores (o maior dá mais graus de liberdade
+    // ao erro pelas colunas fictícias).
+    for &n in SUPPORTED_RUNS.iter().filter(|&&n| n > k).take(2) {
         push(
             DesignKind::PlackettBurman {
                 runs: u32::try_from(n).unwrap_or(0),
@@ -130,6 +132,19 @@ mod tests {
                 .iter()
                 .any(|c| c.kind == DesignKind::PlackettBurman { runs: 12 })
         );
+    }
+
+    #[test]
+    fn six_factors_offer_two_plackett_burman_sizes_and_the_larger_wins_within_budget() {
+        let sizes: Vec<u32> = candidates(6, None)
+            .iter()
+            .filter(|c| matches!(c.kind, DesignKind::PlackettBurman { .. }))
+            .map(|c| c.base_runs)
+            .collect();
+        assert_eq!(sizes, [8, 12]);
+        // Com orçamento 12, o PB de 12 (mais graus de liberdade para o erro) vence o 2^(6−3) de mesma resolução.
+        let c = recommended(6, Some(12)).unwrap_or_else(|| unreachable!());
+        assert_eq!(c.kind, DesignKind::PlackettBurman { runs: 12 });
     }
 
     #[test]

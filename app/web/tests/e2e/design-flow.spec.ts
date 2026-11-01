@@ -233,3 +233,32 @@ test.describe("fracionário e Plackett–Burman", () => {
     await expect(page.getByRole("button", { name: "Gerar planejamento" })).toBeDisabled();
   });
 });
+
+test("abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de forma independente", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const chooser = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Abrir…" }).click();
+  await (await chooser).setFiles(
+    new URL("../../../../examples/02-triagem-meio-cultivo/projeto.enzitag", import.meta.url)
+      .pathname,
+  );
+  await expect(page.getByLabel("Nome do projeto")).toHaveValue("Triagem de meio de cultivo");
+  const effects = page.getByTestId("effects-table");
+  await expect(effects).toBeVisible();
+  // Efeitos e curvatura da regressão independente (NumPy): glicose 4,2833; curvatura 11 (coef. 5,5).
+  await expect(effects.locator("tbody tr").nth(1)).toContainText("Glicose");
+  await expect(effects.locator("tbody tr").nth(1)).toContainText("4,2833");
+  await expect(effects.locator("tbody tr").nth(4)).toContainText("-2,6833");
+  await expect(page.getByTestId("curvature")).toContainText("5,5");
+  await expect(page.getByTestId("curvature")).toContainText("4,581");
+  await expect(page.getByTestId("interpretation")).toContainText(
+    "Plackett–Burman é um desenho de triagem",
+  );
+  await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
+  // O planejamento volta com a mesma matriz: semente e 16 ensaios.
+  await page.getByRole("button", { name: /Planejamento e dados/ }).click();
+  await expect(page.getByTestId("matrix-table").locator("tbody tr")).toHaveCount(16);
+  await expect(page.getByTestId("design-properties")).toContainText("20261101");
+});
