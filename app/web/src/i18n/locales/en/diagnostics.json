@@ -14,6 +14,46 @@
       "unknown_response": "The chosen response does not exist.",
       "unknown_group_factor": "A chosen grouping factor does not exist.",
       "duplicate_group_factor": "A grouping factor was chosen more than once."
+    },
+    "project": {
+      "not_a_zip": "The file is not a valid EnziTAG project (it is not a ZIP file).",
+      "too_large": "The file is too large.",
+      "too_many_entries": "The file has too many entries for an EnziTAG project.",
+      "unsafe_entry_name": "The file contains an unsafe internal path and was not opened: {{path}}.",
+      "entry_missing": "The file does not contain the parts of an EnziTAG project.",
+      "entry_too_large": "A part of the file is too large ({{path}}).",
+      "archive_corrupt": "The file is corrupted.",
+      "manifest_invalid": "The project manifest is unreadable.",
+      "not_enzitag": "The file is not an EnziTAG project.",
+      "future_container": "The file uses a newer container (version {{found}}) than this app understands (version {{supported}}). Update the app.",
+      "integrity_failed": "The file was modified or is corrupted: the integrity check failed.",
+      "invalid_schema": "The file does not declare a valid schema version.",
+      "future_schema": "The file was created by a newer version of the app (schema {{found}}); this app understands up to schema {{supported}}. The file was not changed.",
+      "document_invalid": "The project content is invalid.",
+      "encode_failed": "The project file could not be built.",
+      "invalid_base64": "The file content could not be transported.",
+      "unknown_entry": "The file contains an unknown part, which was ignored: {{path}}.",
+      "duplicate_experiment_id": "Two experiments have the same identifier.",
+      "experiment_without_revision": "An experiment has no version of its data.",
+      "duplicate_revision_id": "Two versions have the same identifier.",
+      "unknown_parent_revision": "A version points to a previous version that does not exist.",
+      "revision_hash_mismatch": "The content of a version does not match its integrity digest.",
+      "row_width_mismatch": "A version has rows whose number of columns differs from its definition.",
+      "duplicate_analysis_id": "Two analyses have the same identifier.",
+      "analysis_unknown_revision": "An analysis points to a data version that does not exist."
+    },
+    "import": {
+      "not_xlsx": "The file is not a readable XLSX spreadsheet.",
+      "no_sheets": "The workbook has no sheets.",
+      "sheet_not_found": "Sheet “{{sheet}}” does not exist.",
+      "too_large": "The sheet has too many cells ({{cells}}; maximum {{max}}).",
+      "invalid_base64": "The file content could not be transported.",
+      "formula_without_value": "{{count}} formula cell(s) with no stored value were read as empty (formulas are not executed).",
+      "dates_as_serial": "{{count}} date(s)/time(s) were read as Excel serial numbers.",
+      "error_cells": "{{count}} cell(s) with an Excel error were read as empty.",
+      "invalid_observation_id": "Invalid observation identifier in rows {{rows}} (use letters, digits and _ . : -, up to 64 characters).",
+      "duplicate_observation_id": "Repeated observation identifier in rows {{rows}}.",
+      "no_columns": "No column was chosen as a factor or response."
     }
   },
   "cellErrors": {
@@ -26,6 +66,8 @@
     "invalidRequest": "The request sent to the engine is invalid.",
     "unsupportedProtocolVersion": "Incompatible protocol version: the engine expects {{expected}}, the interface sent {{received}}.",
     "invalidInput": "The data or options do not allow the calculation:",
-    "unknown": "Unknown engine error."
+    "unknown": "Unknown engine error.",
+    "invalidProject": "The project file could not be read or written:",
+    "invalidImport": "The imported file could not be read:"
   }
 }

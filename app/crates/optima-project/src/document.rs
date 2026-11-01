@@ -129,6 +129,18 @@ impl ProjectDocument {
         }
     }
 
+    /// Recalcula o resumo SHA-256 de cada revisão. A interface cria revisões sem resumo;
+    /// o Rust é a única fonte do cálculo (evita reimplementar a serialização canônica).
+    #[must_use]
+    pub fn with_hashes(mut self) -> Self {
+        for experiment in &mut self.experiments {
+            for revision in &mut experiment.revisions {
+                revision.content_hash = revision.data.content_hash();
+            }
+        }
+        self
+    }
+
     /// Verifica a coerência interna do documento: identificadores únicos, pelo menos uma
     /// revisão por experimento, pais e análises apontando para revisões existentes.
     #[must_use]
@@ -235,6 +247,19 @@ mod tests {
         let mut d = sample();
         d.experiments[0].revisions[0].parent = Some(id("ghost"));
         assert_eq!(codes(&d), vec!["project.unknown_parent_revision"]);
+    }
+
+    #[test]
+    fn with_hashes_fills_missing_hashes_and_fixes_stale_ones() {
+        let mut d = sample();
+        d.experiments[0].revisions[0].content_hash = String::new();
+        assert!(!d.validate().is_empty());
+        let d = d.with_hashes();
+        assert!(d.validate().is_empty());
+        assert_eq!(
+            d.experiments[0].revisions[0].content_hash,
+            d.experiments[0].revisions[0].data.content_hash()
+        );
     }
 
     #[test]

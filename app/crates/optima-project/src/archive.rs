@@ -68,6 +68,8 @@ fn err(code: &str) -> Vec<Issue> {
 /// # Errors
 /// Diagnósticos de documento inconsistente (`project.*`) ou falha de codificação.
 pub fn encode(document: &ProjectDocument) -> Result<Vec<u8>, Vec<Issue>> {
+    // A interface cria revisões sem resumo; o Rust é a única fonte do cálculo.
+    let document = &document.clone().with_hashes();
     let issues = document.validate();
     if issues.iter().any(Issue::is_blocking) {
         return Err(issues);
@@ -286,6 +288,19 @@ mod tests {
         assert_eq!(
             encode(&doc).err().map(|v| v[0].code.clone()),
             Some("project.experiment_without_revision".into())
+        );
+    }
+
+    #[test]
+    fn encoding_recomputes_revision_hashes_so_the_ui_can_send_them_empty() {
+        let mut doc = sample();
+        doc.experiments[0].revisions[0].content_hash = String::new();
+        let back = decode(&encode(&doc).unwrap_or_default())
+            .ok()
+            .map(|d| d.document);
+        assert_eq!(
+            back.map(|d| d.experiments[0].revisions[0].content_hash.len()),
+            Some(64)
         );
     }
 

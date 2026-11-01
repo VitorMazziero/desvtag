@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { nowIso } from "../../lib/ids";
 import { StaleResponseError } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
@@ -35,7 +36,7 @@ export function AnalysisSetup({ onDone }: Props) {
         response.outcome.result.type === "descriptiveSummarize"
       ) {
         const { type: _type, ...result } = response.outcome.result;
-        dispatch({ type: "storeResult", result: { signature, result } });
+        dispatch({ type: "storeResult", result: { signature, result }, now: nowIso() });
         onDone();
       } else if (response.outcome.status === "error") {
         setMessages(engineErrorMessages(t, response.outcome.error));

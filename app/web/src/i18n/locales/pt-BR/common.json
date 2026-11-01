@@ -55,9 +55,8 @@
       }
     },
     "recentTitle": "Projetos recentes",
-    "recentEmpty": "Nenhum projeto recente. A abertura e o salvamento de projetos chegam na etapa seguinte; por ora, os dados ficam apenas nesta sessão.",
-    "open": "Abrir projeto",
-    "openUnavailable": "Disponível quando o salvamento de projetos for entregue."
+    "recentEmpty": "Nenhum projeto recente. Os projetos abertos ou salvos no aplicativo para Windows aparecem aqui; no navegador, use Abrir e escolha o arquivo .enzitag.",
+    "open": "Abrir projeto"
   },
   "workflow": {
     "navLabel": "Etapas do fluxo",
@@ -75,8 +74,6 @@
     },
     "back": "Voltar",
     "next": "Avançar",
-    "restart": "Recomeçar",
-    "restartConfirm": "Isso descarta os dados desta sessão. Continuar?",
     "home": "Início",
     "blocked": {
       "objective": "Escolha um objetivo para continuar.",
@@ -132,5 +129,105 @@
     "run": "Calcular resumo",
     "running": "Calculando…",
     "noResponse": "Cadastre uma resposta para analisar."
+  },
+  "project": {
+    "bar": "Projeto",
+    "name": "Nome do projeto",
+    "namePlaceholder": "Projeto sem nome",
+    "new": "Novo projeto",
+    "open": "Abrir…",
+    "save": "Salvar",
+    "saveBrowserHelp": "No navegador, salvar baixa o arquivo .enzitag; o arquivo anterior não é substituído.",
+    "saveAs": "Salvar como…",
+    "saveCopy": "Salvar uma cópia…",
+    "confirmDiscard": "Há alterações não salvas em arquivo. Continuar e perder essas alterações?",
+    "newExperimentName": "Experimento {{n}}",
+    "failed": "Não foi possível concluir a operação. O projeto aberto não foi alterado.",
+    "warningsTitle": "Avisos ao abrir o arquivo:",
+    "migrated": "Arquivo da versão {{from}} do formato, atualizado em memória; o arquivo original não foi alterado."
+  },
+  "experiments": {
+    "label": "Experimentos",
+    "add": "Novo experimento",
+    "name": "Nome do experimento",
+    "tab": "Experimento: {{name}}"
+  },
+  "status": {
+    "title": "Estado do salvamento",
+    "unsaved": "Alterações não salvas em arquivo",
+    "clean": "Sem alterações pendentes",
+    "recovery": "Recuperação automática",
+    "recoveryIdle": "desligada (nada a recuperar)",
+    "recoveryPending": "aguardando uma pausa de 2 s na edição…",
+    "recoverySaved": "atualizada às {{time}}",
+    "recoveryError": "indisponível neste navegador; suas alterações não estão protegidas",
+    "recoveryNote": "Fica neste navegador; não é uma cópia de segurança externa.",
+    "file": "Arquivo",
+    "fileNone": "nenhum arquivo salvo ainda",
+    "fileSaved": "salvo em «{{name}}» às {{time}}",
+    "fileDownloaded": "baixado como «{{name}}» às {{time}}"
+  },
+  "recovery": {
+    "title": "Sessão não salva encontrada",
+    "text": "Existe uma sessão com alterações não salvas, guardada neste navegador às {{time}}. Deseja restaurá-la?",
+    "restore": "Restaurar",
+    "discard": "Descartar"
+  },
+  "history": {
+    "title": "Histórico de versões",
+    "intro": "Cada versão é um instantâneo dos dados criado ao importar, analisar, salvar ou restaurar. Nada é apagado automaticamente.",
+    "revision": "Versão {{id}}",
+    "rows": "{{count}} linha(s)",
+    "restore": "Restaurar esta versão",
+    "restoreNote": "Restaurar cria uma nova versão; a atual continua no histórico.",
+    "current": "atual",
+    "analyses": "Análises guardadas",
+    "analysisItem": "Análise {{id}} — dados da versão {{revision}} — {{time}}",
+    "reason": {
+      "created": "criado",
+      "edit": "alterações",
+      "import": "importação",
+      "analysis": "análise",
+      "manualSave": "salvamento",
+      "restore": "restauração"
+    }
+  },
+  "import": {
+    "button": "Importar arquivo (CSV ou XLSX)…",
+    "title": "Importar dados",
+    "intro": "Revise a prévia, escolha o papel de cada coluna e confirme. Os dados atuais continuam no histórico de versões.",
+    "file": "Arquivo",
+    "delimiter": "Separador",
+    "delimiterNames": {
+      ";": "ponto e vírgula (;)",
+      ",": "vírgula (,)",
+      "\t": "tabulação",
+      "|": "barra vertical (|)"
+    },
+    "encoding": "Codificação",
+    "encodingAuto": "automática",
+    "encodingFallback": "O arquivo não era UTF-8 válido; foi lido como Windows-1252. Confira os acentos na prévia.",
+    "sheet": "Planilha",
+    "header": "A primeira linha contém os nomes das colunas",
+    "preview": "Prévia (primeiras linhas)",
+    "mapping": "Papel de cada coluna",
+    "role": "Papel",
+    "roleOptions": {
+      "ignore": "Ignorar",
+      "observation": "Identificador da observação",
+      "unit": "Unidade experimental",
+      "factor": "Fator",
+      "response": "Resposta"
+    },
+    "kind": "Tipo do fator",
+    "confirm": "Importar",
+    "cancel": "Cancelar",
+    "skippedEmpty": "{{count}} linha(s) totalmente vazia(s) foram ignoradas.",
+    "replaceNote": "Os dados atuais deste experimento serão substituídos; eles ficam no histórico de versões.",
+    "unitHelp": "Linhas com a mesma unidade experimental são medidas repetidas da mesma unidade, não réplicas independentes.",
+    "failed": "Não foi possível ler o arquivo:",
+    "tooLarge": "Arquivo grande demais para importar.",
+    "formulaNote": "Planilhas: só os valores armazenados são lidos; fórmulas nunca são executadas.",
+    "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta."
   }
 }

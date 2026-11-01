@@ -132,6 +132,9 @@ jobs:
       - name: Clippy do pacote Tauri
         run: cargo clippy -- -D warnings
         working-directory: app/desktop/src-tauri
+      - name: Testes do pacote Tauri (gravação segura de arquivos)
+        run: cargo test
+        working-directory: app/desktop/src-tauri
       - name: Compilar com a interface embutida
         run: cargo build --features tauri/custom-protocol
         working-directory: app/desktop/src-tauri
@@ -177,19 +180,6 @@ jobs:
           "EM EXECUÇÃO após 10 s"
           Stop-Process -Id $p.Id
         working-directory: app/desktop
-      - name: Instalar tauri-driver e msedgedriver
-        if: always()
-        run: |
-          cargo install tauri-driver --locked
-          cargo install --git https://github.com/chippers/msedgedriver-tool
-          & "$HOME/.cargo/bin/msedgedriver-tool.exe"
+      - name: Verificação nativa no Windows (WebView2 por CDP)
+        run: node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
         working-directory: app/desktop
-      - name: Verificação nativa no Windows (WebDriver, WebView2)
-        if: always()
-        # Ainda em diagnóstico (ET01-T22): msedgedriver não consegue abrir o WebView2 na CI.
-        # Enquanto isso não deixa o job vermelho; o resultado fica registrado no plano.
-        continue-on-error: true
-        run: node tests/native-smoke.mjs src-tauri/target/release/optima-desktop.exe
-        working-directory: app/desktop
-        env:
-          NATIVE_DRIVER: ${{ github.workspace }}/app/desktop/msedgedriver.exe

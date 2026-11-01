@@ -641,14 +641,14 @@ reason: RevisionReason,
  */
 data: ExperimentData, 
 /**
- * Resumo SHA-256 dos dados.
+ * Resumo SHA-256 dos dados. A interface pode enviar vazio: o `encode` o recalcula.
  */
 contentHash: string, };
 
 /**
  * Motivo da revisão.
  */
-export type RevisionReason = "created" | "import" | "analysis" | "manualSave" | "restore";
+export type RevisionReason = "created" | "edit" | "import" | "analysis" | "manualSave" | "restore";
 
 /**
  * Uma linha de observação, com o texto de cada célula.

@@ -1,0 +1,25 @@
+{
+  "001-valid.enzitag": {
+    "ok": true
+  },
+  "002-future-schema.enzitag": {
+    "ok": false,
+    "code": "project.future_schema",
+    "params": {
+      "found": "99",
+      "supported": "1"
+    }
+  },
+  "003-tampered.enzitag": {
+    "ok": false,
+    "code": "project.integrity_failed"
+  },
+  "004-not-a-zip.enzitag": {
+    "ok": false,
+    "code": "project.not_a_zip"
+  },
+  "005-revision-hash-mismatch.enzitag": {
+    "ok": false,
+    "code": "project.revision_hash_mismatch"
+  }
+}

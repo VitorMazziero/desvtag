@@ -32,7 +32,13 @@ describe("workflow guards", () => {
     expect(canEnter("results", s, ctx)).toBe(false);
     s = projectReducer(s, {
       type: "storeResult",
-      result: { signature: inputSignature(s), result: {} as never },
+      now: "2026-11-01T00:00:00Z",
+      result: {
+        signature: inputSignature(s),
+        result: {
+          provenance: { methodId: "descriptive_summary", methodVersion: 1, engineVersion: "0.1.0" },
+        } as never,
+      },
     });
     expect(canEnter("results", s, ctx)).toBe(true);
     s = projectReducer(s, { type: "setCell", row: 0, column: 1, value: "3" });

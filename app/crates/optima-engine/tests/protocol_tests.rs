@@ -307,3 +307,33 @@ fn import_xlsx_returns_a_text_grid() {
     };
     assert_eq!(error.code, ErrorCode::InvalidImport);
 }
+
+#[test]
+fn project_encode_accepts_revisions_without_hashes_and_fills_them() {
+    let mut doc = sample_document();
+    doc["experiments"][0]["revisions"][0]["contentHash"] = json!("");
+    let enc = call(&op(
+        "enc",
+        json!({ "type": "projectEncode", "document": doc }),
+    ));
+    let Outcome::Ok {
+        result: OperationResult::ProjectEncode(file),
+    } = enc.outcome
+    else {
+        panic!("esperava bytes")
+    };
+    let dec = call(&op(
+        "dec",
+        json!({ "type": "projectDecode", "bytesBase64": file.bytes_base64 }),
+    ));
+    let Outcome::Ok {
+        result: OperationResult::ProjectDecode(back),
+    } = dec.outcome
+    else {
+        panic!("esperava documento")
+    };
+    assert_eq!(
+        back.document.experiments[0].revisions[0].content_hash.len(),
+        64
+    );
+}

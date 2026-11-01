@@ -18,6 +18,8 @@ use crate::experiment::ExperimentData;
 pub enum RevisionReason {
     /// Experimento criado.
     Created,
+    /// Alterações feitas à mão, registradas no limite de outra operação (importar, analisar, salvar).
+    Edit,
     /// Dados importados (colagem, CSV, XLSX, matriz externa).
     Import,
     /// Instantâneo anterior a uma análise.
@@ -43,6 +45,6 @@ pub struct Revision {
     pub reason: RevisionReason,
     /// Dados.
     pub data: ExperimentData,
-    /// Resumo SHA-256 dos dados.
+    /// Resumo SHA-256 dos dados. A interface pode enviar vazio: o `encode` o recalcula.
     pub content_hash: String,
 }

@@ -4,12 +4,23 @@
 //! usado pelo WebAssembly no navegador.
 
 mod commands;
+mod files;
 mod jobs;
 
 /// Inicia o aplicativo.
 pub fn run() {
     let result = tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![commands::engine_request])
+        .plugin(tauri_plugin_dialog::init())
+        .manage(files::FileState::default())
+        .invoke_handler(tauri::generate_handler![
+            commands::engine_request,
+            commands::project_open,
+            commands::project_open_recent,
+            commands::project_recent,
+            commands::project_save,
+            commands::project_save_copy,
+            commands::project_detach,
+        ])
         .run(tauri::generate_context!());
     if let Err(error) = result {
         eprintln!("erro ao executar o aplicativo EnziTAG Optima: {error}");

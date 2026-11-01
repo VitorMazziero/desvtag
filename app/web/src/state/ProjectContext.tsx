@@ -1,23 +1,37 @@
 import { createContext, type Dispatch, type ReactNode, useContext, useReducer } from "react";
-import { initialProject, type ProjectAction, type ProjectState, projectReducer } from "./project";
+import type { ProjectState } from "./project";
+import {
+  currentExperiment,
+  initialWorkspace,
+  type Workspace,
+  type WorkspaceAction,
+  workspaceReducer,
+} from "./workspace";
 
-const StateContext = createContext<ProjectState>(initialProject);
-const DispatchContext = createContext<Dispatch<ProjectAction>>(() => {});
+const WorkspaceContext = createContext<Workspace>(initialWorkspace);
+const DispatchContext = createContext<Dispatch<WorkspaceAction>>(() => {});
 
 export function ProjectProvider({
   children,
-  initial = initialProject,
+  initial = initialWorkspace,
 }: {
   children: ReactNode;
-  initial?: ProjectState;
+  initial?: Workspace;
 }) {
-  const [state, dispatch] = useReducer(projectReducer, initial);
+  const [workspace, dispatch] = useReducer(workspaceReducer, initial);
   return (
-    <StateContext.Provider value={state}>
+    <WorkspaceContext.Provider value={workspace}>
       <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
-    </StateContext.Provider>
+    </WorkspaceContext.Provider>
   );
 }
 
-export const useProject = () => useContext(StateContext);
+/** O projeto aberto. */
+export const useWorkspace = (): Workspace => useContext(WorkspaceContext);
+
+/** O experimento atual (as telas existentes editam este estado). */
+export function useProject(): ProjectState {
+  return currentExperiment(useContext(WorkspaceContext));
+}
+
 export const useProjectDispatch = () => useContext(DispatchContext);

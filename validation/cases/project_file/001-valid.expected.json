@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p-golden",
+  "name": "Projeto de referência — açúcar, ß, 日本",
+  "createdAt": "2026-11-01T12:00:00Z",
+  "modifiedAt": "2026-11-01T12:00:00Z",
+  "appVersion": "0.1.0",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Quatro condições",
+      "entryPath": "analyze",
+      "showUnitColumn": false,
+      "analysisSelection": {
+        "responseId": "r1",
+        "groupBy": [
+          "f1"
+        ]
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-01T12:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [],
+            "responses": [],
+            "rows": []
+          },
+          "contentHash": "85195020d52211eadbe7771b9cc8d8afe00bf870e82737106e519599bc66af6b"
+        },
+        {
+          "id": "v2",
+          "parent": "v1",
+          "createdAt": "2026-11-01T12:00:00Z",
+          "reason": "analysis",
+          "data": {
+            "factors": [
+              {
+                "id": "f1",
+                "name": "Condição",
+                "kind": "categorical",
+                "unit": "",
+                "levelsText": "Água; Ácido"
+              }
+            ],
+            "responses": [
+              {
+                "id": "r1",
+                "name": "Atividade",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": [
+              {
+                "id": "o1",
+                "unitId": "",
+                "factors": [
+                  "Água"
+                ],
+                "responses": [
+                  "10,5"
+                ]
+              },
+              {
+                "id": "o2",
+                "unitId": "",
+                "factors": [
+                  "Água"
+                ],
+                "responses": [
+                  "11,5"
+                ]
+              },
+              {
+                "id": "o3",
+                "unitId": "",
+                "factors": [
+                  "Ácido"
+                ],
+                "responses": [
+                  "20"
+                ]
+              },
+              {
+                "id": "o4",
+                "unitId": "",
+                "factors": [
+                  "Ácido"
+                ],
+                "responses": [
+                  ""
+                ]
+              }
+            ]
+          },
+          "contentHash": "c9e4ba31934e294b5f537f138e988c1c1275f9dbf3f7323cdb6bd812fe5f0359"
+        }
+      ],
+      "analyses": [
+        {
+          "id": "a1",
+          "createdAt": "2026-11-01T12:00:00Z",
+          "revisionId": "v2",
+          "signature": "[{\"factors\":[{\"id\":\"f1\",\"name\":\"Condição\",\"kind\":\"categorical\",\"unit\":null,\"levels\":[\"Água\",\"Ácido\"]}],\"responses\":[{\"id\":\"r1\",\"name\":\"Atividade\",\"unit\":\"U/mL\"}],\"observations\":[{\"id\":\"o1\",\"unitId\":null,\"factors\":[\"Água\"],\"responses\":[10.5]},{\"id\":\"o2\",\"unitId\":null,\"factors\":[\"Água\"],\"responses\":[11.5]},{\"id\":\"o3\",\"unitId\":null,\"factors\":[\"Ácido\"],\"responses\":[20]},{\"id\":\"o4\",\"unitId\":null,\"factors\":[\"Ácido\"],\"responses\":[null]}]},\"r1\",[\"f1\"]]",
+          "methodId": "descriptive_summary",
+          "methodVersion": 1,
+          "engineVersion": "0.1.0",
+          "options": {
+            "responseId": "r1",
+            "groupBy": [
+              "f1"
+            ]
+          },
+          "result": {
+            "type": "descriptive",
+            "responseId": "r1",
+            "overall": {
+              "nTotal": 4,
+              "nMissing": 1,
+              "nValid": 3,
+              "mean": {
+                "status": "defined",
+                "value": 14.0
+              },
+              "variance": {
+                "status": "defined",
+                "value": 27.25
+              },
+              "sd": {
+                "status": "defined",
+                "value": 5.220153254455275
+              },
+              "min": {
+                "status": "defined",
+                "value": 10.5
+              },
+              "max": {
+                "status": "defined",
+                "value": 20.0
+              }
+            },
+            "groups": [
+              {
+                "labels": [
+                  {
+                    "factorId": "f1",
+                    "label": "Água"
+                  }
+                ],
+                "summary": {
+                  "nTotal": 2,
+                  "nMissing": 0,
+                  "nValid": 2,
+                  "mean": {
+                    "status": "defined",
+                    "value": 11.0
+                  },
+                  "variance": {
+                    "status": "defined",
+                    "value": 0.5
+                  },
+                  "sd": {
+                    "status": "defined",
+                    "value": 0.7071067811865476
+                  },
+                  "min": {
+                    "status": "defined",
+                    "value": 10.5
+                  },
+                  "max": {
+                    "status": "defined",
+                    "value": 11.5
+                  }
+                }
+              },
+              {
+                "labels": [
+                  {
+                    "factorId": "f1",
+                    "label": "Ácido"
+                  }
+                ],
+                "summary": {
+                  "nTotal": 2,
+                  "nMissing": 1,
+                  "nValid": 1,
+                  "mean": {
+                    "status": "defined",
+                    "value": 20.0
+                  },
+                  "variance": {
+                    "status": "undefined",
+                    "reason": "fewerThanTwoObservations"
+                  },
+                  "sd": {
+                    "status": "undefined",
+                    "reason": "fewerThanTwoObservations"
+                  },
+                  "min": {
+                    "status": "defined",
+                    "value": 20.0
+                  },
+                  "max": {
+                    "status": "defined",
+                    "value": 20.0
+                  }
+                }
+              }
+            ],
+            "excludedMissingFactor": 0,
+            "facts": [],
+            "provenance": {
+              "methodId": "descriptive_summary",
+              "methodVersion": 1,
+              "engineVersion": "0.1.0"
+            }
+          }
+        }
+      ],
+      "notes": "Observação com acentos: ação, coração."
+    },
+    {
+      "id": "e2",
+      "name": "Segundo experimento",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-01T12:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [],
+            "responses": [],
+            "rows": []
+          },
+          "contentHash": "85195020d52211eadbe7771b9cc8d8afe00bf870e82737106e519599bc66af6b"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

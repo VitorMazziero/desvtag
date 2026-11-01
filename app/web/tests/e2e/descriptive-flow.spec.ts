@@ -33,10 +33,10 @@ test.describe("fluxo guiado em português", () => {
 
     // Fatores e respostas definidos pelo usuário.
     await page.getByRole("button", { name: "Adicionar fator" }).click();
-    await page.getByLabel("Nome").first().fill("Condição");
+    await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
     await page.getByLabel("Níveis (opcional)").fill("A; B; C");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
-    await page.getByLabel("Nome").nth(1).fill("Atividade");
+    await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
     await page.getByLabel("Unidade (opcional)").nth(1).fill("U/mL");
     await page.getByRole("button", { name: "Avançar" }).click();
 
@@ -109,7 +109,7 @@ test.describe("guided flow in English", () => {
     await page.getByRole("radio", { name: /Analyze existing data/ }).check();
     await page.getByRole("button", { name: "Next" }).click();
     await page.getByRole("button", { name: "Add response" }).click();
-    await page.getByLabel("Name").first().fill("Yield");
+    await page.getByLabel("Name", { exact: true }).first().fill("Yield");
     await page.getByRole("button", { name: "Next" }).click();
     await expect(page.getByText("Add factors and responses in the previous step")).toHaveCount(0);
     await page.getByRole("button", { name: "Add row" }).click();

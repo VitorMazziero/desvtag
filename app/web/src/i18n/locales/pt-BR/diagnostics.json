@@ -14,6 +14,46 @@
       "unknown_response": "A resposta escolhida não existe.",
       "unknown_group_factor": "Um fator de agrupamento escolhido não existe.",
       "duplicate_group_factor": "Um fator de agrupamento foi escolhido mais de uma vez."
+    },
+    "project": {
+      "not_a_zip": "O arquivo não é um projeto EnziTAG válido (não é um arquivo ZIP).",
+      "too_large": "O arquivo é grande demais.",
+      "too_many_entries": "O arquivo tem entradas demais para um projeto EnziTAG.",
+      "unsafe_entry_name": "O arquivo contém um caminho interno inseguro e não foi aberto: {{path}}.",
+      "entry_missing": "O arquivo não contém as partes de um projeto EnziTAG.",
+      "entry_too_large": "Uma parte do arquivo é grande demais ({{path}}).",
+      "archive_corrupt": "O arquivo está corrompido.",
+      "manifest_invalid": "O manifesto do projeto está ilegível.",
+      "not_enzitag": "O arquivo não é um projeto EnziTAG.",
+      "future_container": "O arquivo usa um contêiner mais novo (versão {{found}}) que este aplicativo entende (versão {{supported}}). Atualize o aplicativo.",
+      "integrity_failed": "O arquivo foi alterado ou está corrompido: a verificação de integridade falhou.",
+      "invalid_schema": "O arquivo não informa uma versão de esquema válida.",
+      "future_schema": "O arquivo foi criado por uma versão mais nova do aplicativo (esquema {{found}}); este aplicativo entende até o esquema {{supported}}. O arquivo não foi alterado.",
+      "document_invalid": "O conteúdo do projeto está inválido.",
+      "encode_failed": "Não foi possível montar o arquivo do projeto.",
+      "invalid_base64": "O conteúdo do arquivo não pôde ser transportado.",
+      "unknown_entry": "O arquivo contém uma parte desconhecida, ignorada: {{path}}.",
+      "duplicate_experiment_id": "Há dois experimentos com o mesmo identificador.",
+      "experiment_without_revision": "Um experimento não tem nenhuma versão dos dados.",
+      "duplicate_revision_id": "Há duas versões com o mesmo identificador.",
+      "unknown_parent_revision": "Uma versão aponta para uma versão anterior inexistente.",
+      "revision_hash_mismatch": "O conteúdo de uma versão não confere com seu resumo de integridade.",
+      "row_width_mismatch": "Uma versão tem linhas com número de colunas diferente do cadastro.",
+      "duplicate_analysis_id": "Há duas análises com o mesmo identificador.",
+      "analysis_unknown_revision": "Uma análise aponta para uma versão dos dados inexistente."
+    },
+    "import": {
+      "not_xlsx": "O arquivo não é uma planilha XLSX legível.",
+      "no_sheets": "A planilha não tem nenhuma aba.",
+      "sheet_not_found": "A aba «{{sheet}}» não existe.",
+      "too_large": "A planilha tem células demais ({{cells}}; máximo {{max}}).",
+      "invalid_base64": "O conteúdo do arquivo não pôde ser transportado.",
+      "formula_without_value": "{{count}} célula(s) com fórmula sem valor armazenado foram lidas como vazias (fórmulas não são executadas).",
+      "dates_as_serial": "{{count}} data(s)/hora(s) foram lidas como número de série do Excel.",
+      "error_cells": "{{count}} célula(s) com erro do Excel foram lidas como vazias.",
+      "invalid_observation_id": "Identificador de observação inválido nas linhas {{rows}} (use letras, números e _ . : -, até 64 caracteres).",
+      "duplicate_observation_id": "Identificador de observação repetido nas linhas {{rows}}.",
+      "no_columns": "Nenhuma coluna foi escolhida como fator ou resposta."
     }
   },
   "cellErrors": {
@@ -26,6 +66,8 @@
     "invalidRequest": "A solicitação ao motor é inválida.",
     "unsupportedProtocolVersion": "Versão de protocolo incompatível: o motor espera {{expected}}, a interface enviou {{received}}.",
     "invalidInput": "Os dados ou as opções não permitem o cálculo:",
-    "unknown": "Erro desconhecido do motor."
+    "unknown": "Erro desconhecido do motor.",
+    "invalidProject": "O arquivo do projeto não pôde ser lido ou gravado:",
+    "invalidImport": "O arquivo importado não pôde ser lido:"
   }
 }

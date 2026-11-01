@@ -55,9 +55,8 @@
       }
     },
     "recentTitle": "Recent projects",
-    "recentEmpty": "No recent projects. Opening and saving projects arrives in the next stage; for now, data stays only in this session.",
-    "open": "Open project",
-    "openUnavailable": "Available once project saving is delivered."
+    "recentEmpty": "No recent projects. Projects opened or saved in the Windows app appear here; in the browser, use Open and choose the .enzitag file.",
+    "open": "Open project"
   },
   "workflow": {
     "navLabel": "Workflow steps",
@@ -75,8 +74,6 @@
     },
     "back": "Back",
     "next": "Next",
-    "restart": "Start over",
-    "restartConfirm": "This discards the data in this session. Continue?",
     "home": "Home",
     "blocked": {
       "objective": "Choose an objective to continue.",
@@ -132,5 +129,105 @@
     "run": "Calculate summary",
     "running": "Calculating…",
     "noResponse": "Add a response to analyze."
+  },
+  "project": {
+    "bar": "Project",
+    "name": "Project name",
+    "namePlaceholder": "Untitled project",
+    "new": "New project",
+    "open": "Open…",
+    "save": "Save",
+    "saveBrowserHelp": "In the browser, saving downloads the .enzitag file; the previous file is not replaced.",
+    "saveAs": "Save as…",
+    "saveCopy": "Save a copy…",
+    "confirmDiscard": "There are changes not saved to a file. Continue and lose those changes?",
+    "newExperimentName": "Experiment {{n}}",
+    "failed": "The operation could not be completed. The open project was not changed.",
+    "warningsTitle": "Warnings when opening the file:",
+    "migrated": "File from format version {{from}}, upgraded in memory; the original file was not changed."
+  },
+  "experiments": {
+    "label": "Experiments",
+    "add": "New experiment",
+    "name": "Experiment name",
+    "tab": "Experiment: {{name}}"
+  },
+  "status": {
+    "title": "Saving status",
+    "unsaved": "Changes not saved to a file",
+    "clean": "No pending changes",
+    "recovery": "Automatic recovery",
+    "recoveryIdle": "off (nothing to recover)",
+    "recoveryPending": "waiting for a 2 s pause in editing…",
+    "recoverySaved": "updated at {{time}}",
+    "recoveryError": "unavailable in this browser; your changes are not protected",
+    "recoveryNote": "It stays in this browser; it is not an external backup.",
+    "file": "File",
+    "fileNone": "no file saved yet",
+    "fileSaved": "saved to “{{name}}” at {{time}}",
+    "fileDownloaded": "downloaded as “{{name}}” at {{time}}"
+  },
+  "recovery": {
+    "title": "Unsaved session found",
+    "text": "There is a session with unsaved changes, kept in this browser at {{time}}. Restore it?",
+    "restore": "Restore",
+    "discard": "Discard"
+  },
+  "history": {
+    "title": "Version history",
+    "intro": "Each version is a snapshot of the data created when importing, analyzing, saving or restoring. Nothing is deleted automatically.",
+    "revision": "Version {{id}}",
+    "rows": "{{count}} row(s)",
+    "restore": "Restore this version",
+    "restoreNote": "Restoring creates a new version; the current one stays in the history.",
+    "current": "current",
+    "analyses": "Saved analyses",
+    "analysisItem": "Analysis {{id}} — data from version {{revision}} — {{time}}",
+    "reason": {
+      "created": "created",
+      "edit": "edits",
+      "import": "import",
+      "analysis": "analysis",
+      "manualSave": "save",
+      "restore": "restore"
+    }
+  },
+  "import": {
+    "button": "Import file (CSV or XLSX)…",
+    "title": "Import data",
+    "intro": "Review the preview, choose each column's role and confirm. The current data stays in the version history.",
+    "file": "File",
+    "delimiter": "Delimiter",
+    "delimiterNames": {
+      ";": "semicolon (;)",
+      ",": "comma (,)",
+      "\t": "tab",
+      "|": "vertical bar (|)"
+    },
+    "encoding": "Encoding",
+    "encodingAuto": "automatic",
+    "encodingFallback": "The file was not valid UTF-8; it was read as Windows-1252. Check the accents in the preview.",
+    "sheet": "Sheet",
+    "header": "The first row contains the column names",
+    "preview": "Preview (first rows)",
+    "mapping": "Role of each column",
+    "role": "Role",
+    "roleOptions": {
+      "ignore": "Ignore",
+      "observation": "Observation identifier",
+      "unit": "Experimental unit",
+      "factor": "Factor",
+      "response": "Response"
+    },
+    "kind": "Factor type",
+    "confirm": "Import",
+    "cancel": "Cancel",
+    "skippedEmpty": "{{count}} completely empty row(s) were ignored.",
+    "replaceNote": "The current data of this experiment will be replaced; it stays in the version history.",
+    "unitHelp": "Rows with the same experimental unit are repeated measurements of that unit, not independent replicates.",
+    "failed": "The file could not be read:",
+    "tooLarge": "File too large to import.",
+    "formulaNote": "Spreadsheets: only stored values are read; formulas are never executed.",
+    "nothing": "Nothing to import: choose at least one column as a factor or response."
   }
 }

@@ -6,6 +6,8 @@ import "./app/app.css";
 import { createI18n } from "./i18n";
 import { createDefaultEngineClient } from "./services/engine";
 import { EngineProvider } from "./services/engine/EngineContext";
+import { createDefaultStorageProvider } from "./services/storage";
+import { StorageProviderContext } from "./services/storage/context";
 import { ProjectProvider } from "./state/ProjectContext";
 import { applyPreferences, loadPreferences, usePreferences } from "./state/preferences";
 import "./themes/fonts.css";
@@ -17,6 +19,7 @@ import "./themes/professional.css";
 const initial = loadPreferences();
 applyPreferences(initial); // antes da primeira pintura: evita piscar o tema errado
 const i18n = createI18n(initial.language);
+const storage = createDefaultStorageProvider();
 
 function Root() {
   const { preferences, setLanguage, setTheme } = usePreferences(initial);
@@ -26,14 +29,16 @@ function Root() {
   return (
     <I18nextProvider i18n={i18n}>
       <EngineProvider createClient={createDefaultEngineClient}>
-        <ProjectProvider>
-          <App
-            language={preferences.language}
-            theme={preferences.theme}
-            onLanguageChange={setLanguage}
-            onThemeChange={setTheme}
-          />
-        </ProjectProvider>
+        <StorageProviderContext provider={storage}>
+          <ProjectProvider>
+            <App
+              language={preferences.language}
+              theme={preferences.theme}
+              onLanguageChange={setLanguage}
+              onThemeChange={setTheme}
+            />
+          </ProjectProvider>
+        </StorageProviderContext>
       </EngineProvider>
     </I18nextProvider>
   );

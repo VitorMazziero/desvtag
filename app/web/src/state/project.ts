@@ -1,32 +1,26 @@
 // Estado em memória do projeto na ET02. O formato espelha os contratos C01 e
 // será substituído pelo documento persistido na ET03 (P01). Células guardam o
 // texto digitado; a conversão para números ocorre ao montar o conjunto de dados.
-import type { DescriptiveResult } from "../services/engine";
+import type {
+  AnalysisRecord,
+  DescriptiveResult,
+  EntryPath as EntryPathContract,
+  ExperimentData,
+  FactorKind,
+  FactorSpec,
+  ResponseSpec,
+  Revision,
+  RevisionReason,
+  RowRecord,
+} from "../services/engine";
 
-export type EntryPath = "plan" | "analyze" | "compare";
-export type FactorKindDraft = "numeric" | "categorical";
-
-export interface FactorDraft {
-  id: string;
-  name: string;
-  kind: FactorKindDraft;
-  unit: string;
-  /** Níveis categóricos separados por vírgula ou ponto e vírgula; vazio = os presentes nos dados. */
-  levelsText: string;
-}
-
-export interface ResponseDraft {
-  id: string;
-  name: string;
-  unit: string;
-}
-
-export interface RowDraft {
-  id: string;
-  unitId: string;
-  factors: string[];
-  responses: string[];
-}
+// Os tipos do estado são os do documento do projeto (gerados do Rust): uma única fonte.
+export type EntryPath = EntryPathContract;
+export type FactorKindDraft = FactorKind;
+/** Níveis categóricos em `levelsText`, separados por ponto e vírgula; vazio = os presentes nos dados. */
+export type FactorDraft = FactorSpec;
+export type ResponseDraft = ResponseSpec;
+export type RowDraft = RowRecord;
 
 export interface AnalysisDraft {
   responseId: string | null;
@@ -39,7 +33,10 @@ export interface StoredResult {
   result: DescriptiveResult;
 }
 
+/** Estado de trabalho de UM experimento (o que a interface edita) + seu histórico salvo. */
 export interface ProjectState {
+  id: string;
+  name: string;
   path: EntryPath | null;
   factors: FactorDraft[];
   responses: ResponseDraft[];
@@ -47,23 +44,117 @@ export interface ProjectState {
   analysis: AnalysisDraft;
   result: StoredResult | null;
   showUnitColumn: boolean;
-  counters: { factor: number; response: number; row: number };
+  counters: { factor: number; response: number; row: number; revision: number; analysis: number };
+  /** Instantâneos imutáveis dos dados; a última é o estado já registrado (pode haver edições posteriores). */
+  revisions: Revision[];
+  /** Análises guardadas, cada uma ligada à revisão que a gerou. */
+  analyses: AnalysisRecord[];
+  notes: string;
 }
 
-export const initialProject: ProjectState = {
-  path: null,
-  factors: [],
-  responses: [],
-  rows: [],
-  analysis: { responseId: null, groupBy: [] },
-  result: null,
-  showUnitColumn: false,
-  counters: { factor: 0, response: 0, row: 0 },
-};
+/** Dados atuais em ordem canônica de campos (comparação estável entre revisões). */
+export function snapshotData(
+  state: Pick<ProjectState, "factors" | "responses" | "rows">,
+): ExperimentData {
+  return {
+    factors: state.factors.map((f) => ({
+      id: f.id,
+      name: f.name,
+      kind: f.kind,
+      unit: f.unit,
+      levelsText: f.levelsText,
+    })),
+    responses: state.responses.map((r) => ({ id: r.id, name: r.name, unit: r.unit })),
+    rows: state.rows.map((r) => ({
+      id: r.id,
+      unitId: r.unitId,
+      factors: [...r.factors],
+      responses: [...r.responses],
+    })),
+  };
+}
+
+export function sameData(a: ExperimentData, b: ExperimentData): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/** Cria um experimento vazio com a revisão inicial `created`. */
+export function newExperiment(id: string, name: string, now: string): ProjectState {
+  const base: ProjectState = {
+    id,
+    name,
+    path: null,
+    factors: [],
+    responses: [],
+    rows: [],
+    analysis: { responseId: null, groupBy: [] },
+    result: null,
+    showUnitColumn: false,
+    counters: { factor: 0, response: 0, row: 0, revision: 1, analysis: 0 },
+    revisions: [],
+    analyses: [],
+    notes: "",
+  };
+  return {
+    ...base,
+    revisions: [
+      {
+        id: "v1",
+        parent: null,
+        createdAt: now,
+        reason: "created",
+        data: snapshotData(base),
+        contentHash: "",
+      },
+    ],
+  };
+}
+
+/** Registra uma revisão se os dados mudaram desde a última; devolve o mesmo estado se não mudaram. */
+export function commitRevision(
+  state: ProjectState,
+  reason: RevisionReason,
+  now: string,
+): ProjectState {
+  const data = snapshotData(state);
+  const head = state.revisions[state.revisions.length - 1];
+  if (head && sameData(head.data, data)) return state;
+  const n = state.counters.revision + 1;
+  const revision: Revision = {
+    id: `v${n}`,
+    parent: head?.id ?? null,
+    createdAt: now,
+    reason,
+    data,
+    contentHash: "",
+  };
+  return {
+    ...state,
+    revisions: [...state.revisions, revision],
+    counters: { ...state.counters, revision: n },
+  };
+}
+
+/** Primeiro identificador `prefixN` livre, a partir do contador. */
+export function freshId(
+  prefix: string,
+  counter: number,
+  used: Iterable<string>,
+): { id: string; counter: number } {
+  const taken = new Set(used);
+  let n = counter + 1;
+  while (taken.has(`${prefix}${n}`)) n += 1;
+  return { id: `${prefix}${n}`, counter: n };
+}
+
+export const initialProject: ProjectState = newExperiment(
+  "e1",
+  "Experimento 1",
+  "1970-01-01T00:00:00.000Z",
+);
 
 export type ProjectAction =
   | { type: "choosePath"; path: EntryPath }
-  | { type: "reset" }
   | { type: "addFactor" }
   | { type: "updateFactor"; id: string; patch: Partial<Omit<FactorDraft, "id">> }
   | { type: "removeFactor"; id: string }
@@ -76,20 +167,29 @@ export type ProjectAction =
   | { type: "removeRow"; row: number }
   | { type: "setUnitColumn"; visible: boolean }
   | { type: "setAnalysis"; patch: Partial<AnalysisDraft> }
-  | { type: "storeResult"; result: StoredResult };
+  | { type: "setNotes"; notes: string }
+  | { type: "rename"; name: string }
+  | { type: "storeResult"; result: StoredResult; now: string }
+  | { type: "applyImport"; data: ExperimentData; now: string }
+  | { type: "restoreRevision"; revisionId: string; now: string };
 
+/** Nova linha em branco com identificador ainda não usado. */
 export function blankRow(
-  state: Pick<ProjectState, "factors" | "responses" | "counters">,
+  state: Pick<ProjectState, "factors" | "responses" | "counters"> & { rows?: RowDraft[] },
 ): [RowDraft, ProjectState["counters"]] {
-  const n = state.counters.row + 1;
+  const { id, counter } = freshId(
+    "o",
+    state.counters.row,
+    (state.rows ?? []).map((r) => r.id),
+  );
   return [
     {
-      id: `o${n}`,
+      id,
       unitId: "",
       factors: state.factors.map(() => ""),
       responses: state.responses.map(() => ""),
     },
-    { ...state.counters, row: n },
+    { ...state.counters, row: counter },
   ];
 }
 
@@ -111,26 +211,71 @@ export function setCellText(
   return { ...row, responses };
 }
 
+function withData(state: ProjectState, data: ExperimentData): ProjectState {
+  const used = (ids: string[], prefix: string) =>
+    ids.reduce(
+      (max, id) =>
+        id.startsWith(prefix) && /^\d+$/.test(id.slice(prefix.length))
+          ? Math.max(max, Number(id.slice(prefix.length)))
+          : max,
+      0,
+    );
+  const counters = {
+    ...state.counters,
+    factor: Math.max(
+      state.counters.factor,
+      used(
+        data.factors.map((f) => f.id),
+        "f",
+      ),
+    ),
+    response: Math.max(
+      state.counters.response,
+      used(
+        data.responses.map((r) => r.id),
+        "r",
+      ),
+    ),
+    row: Math.max(
+      state.counters.row,
+      used(
+        data.rows.map((r) => r.id),
+        "o",
+      ),
+    ),
+  };
+  const firstResponse = data.responses[0]?.id ?? null;
+  return {
+    ...state,
+    factors: data.factors.map((f) => ({ ...f })),
+    responses: data.responses.map((r) => ({ ...r })),
+    rows: data.rows.map((r) => ({ ...r, factors: [...r.factors], responses: [...r.responses] })),
+    counters,
+    analysis: {
+      responseId: data.responses.some((r) => r.id === state.analysis.responseId)
+        ? state.analysis.responseId
+        : firstResponse,
+      groupBy: state.analysis.groupBy.filter((id) => data.factors.some((f) => f.id === id)),
+    },
+  };
+}
+
 export function projectReducer(state: ProjectState, action: ProjectAction): ProjectState {
   switch (action.type) {
     case "choosePath":
       return { ...state, path: action.path };
-    case "reset":
-      return initialProject;
     case "addFactor": {
-      const n = state.counters.factor + 1;
-      const factor: FactorDraft = {
-        id: `f${n}`,
-        name: "",
-        kind: "categorical",
-        unit: "",
-        levelsText: "",
-      };
+      const { id, counter } = freshId(
+        "f",
+        state.counters.factor,
+        state.factors.map((f) => f.id),
+      );
+      const factor: FactorDraft = { id, name: "", kind: "categorical", unit: "", levelsText: "" };
       return {
         ...state,
         factors: [...state.factors, factor],
         rows: state.rows.map((r) => ({ ...r, factors: [...r.factors, ""] })),
-        counters: { ...state.counters, factor: n },
+        counters: { ...state.counters, factor: counter },
       };
     }
     case "updateFactor":
@@ -152,13 +297,17 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       };
     }
     case "addResponse": {
-      const n = state.counters.response + 1;
-      const response: ResponseDraft = { id: `r${n}`, name: "", unit: "" };
+      const { id, counter } = freshId(
+        "r",
+        state.counters.response,
+        state.responses.map((r) => r.id),
+      );
+      const response: ResponseDraft = { id, name: "", unit: "" };
       return {
         ...state,
         responses: [...state.responses, response],
         rows: state.rows.map((r) => ({ ...r, responses: [...r.responses, ""] })),
-        counters: { ...state.counters, response: n },
+        counters: { ...state.counters, response: counter },
         analysis: state.analysis.responseId
           ? state.analysis
           : { ...state.analysis, responseId: response.id },
@@ -208,7 +357,60 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       return { ...state, showUnitColumn: action.visible };
     case "setAnalysis":
       return { ...state, analysis: { ...state.analysis, ...action.patch } };
-    case "storeResult":
-      return { ...state, result: action.result };
+    case "setNotes":
+      return { ...state, notes: action.notes };
+    case "rename":
+      return { ...state, name: action.name };
+    case "storeResult": {
+      // A análise aponta para a revisão dos dados que a gerou: registra-se um instantâneo se houve edições.
+      const committed = commitRevision(state, "analysis", action.now);
+      const head = committed.revisions[committed.revisions.length - 1];
+      if (!head) return state;
+      const n = committed.counters.analysis + 1;
+      const record: AnalysisRecord = {
+        id: `a${n}`,
+        createdAt: action.now,
+        revisionId: head.id,
+        signature: action.result.signature,
+        methodId: action.result.result.provenance.methodId,
+        methodVersion: action.result.result.provenance.methodVersion,
+        engineVersion: action.result.result.provenance.engineVersion,
+        options: { responseId: committed.analysis.responseId, groupBy: committed.analysis.groupBy },
+        result: { type: "descriptive", ...action.result.result },
+      };
+      return {
+        ...committed,
+        analyses: [...committed.analyses, record],
+        counters: { ...committed.counters, analysis: n },
+        result: action.result,
+      };
+    }
+    case "applyImport": {
+      const before = commitRevision(state, "edit", action.now);
+      const next = withData(before, action.data);
+      return commitRevision(next, "import", action.now);
+    }
+    case "restoreRevision": {
+      const before = commitRevision(state, "edit", action.now);
+      const source = before.revisions.find((r) => r.id === action.revisionId);
+      if (!source) return before;
+      const restored = withData(before, source.data);
+      const head = restored.revisions[restored.revisions.length - 1];
+      if (head && sameData(head.data, snapshotData(restored))) return restored;
+      const n = restored.counters.revision + 1;
+      const revision: Revision = {
+        id: `v${n}`,
+        parent: source.id,
+        createdAt: action.now,
+        reason: "restore",
+        data: snapshotData(restored),
+        contentHash: "",
+      };
+      return {
+        ...restored,
+        revisions: [...restored.revisions, revision],
+        counters: { ...restored.counters, revision: n },
+      };
+    }
   }
 }

@@ -6,30 +6,24 @@ import { AnalysisSetup, buildDataset } from "../analysis";
 import { DataGrid } from "../data";
 import { FactorEditor, ResponseEditor } from "../experiment";
 import { RecentProjects, StartActions } from "../home";
+import { ImportButton } from "../import";
 import { ResultsView } from "../results";
-import { canEnter, stepSatisfied } from "./guards";
+import { canEnter, firstUnsatisfied, stepSatisfied } from "./guards";
 import { STEPS, type StepId } from "./steps";
 
 export function Workflow({ language }: { language: Language }) {
   const { t } = useTranslation();
   const state = useProject();
   const dispatch = useProjectDispatch();
-  const [step, setStep] = useState<StepId>("objective");
-
   const cellErrors = useMemo(() => buildDataset(state).cellErrors, [state]);
   const ctx = { cellErrorCount: cellErrors.length };
+  // Ao abrir um projeto, começa na primeira etapa pendente (ou nos resultados, se tudo está pronto).
+  const [step, setStep] = useState<StepId>(() => firstUnsatisfied(state, ctx) ?? "results");
   const index = STEPS.indexOf(step);
   const next = STEPS[index + 1];
   const previous = STEPS[index - 1];
   const nextAllowed =
     next !== undefined && stepSatisfied(step, state, ctx) && canEnter(next, state, ctx);
-
-  const restart = () => {
-    if (window.confirm(t("workflow.restartConfirm"))) {
-      dispatch({ type: "reset" });
-      setStep("objective");
-    }
-  };
 
   return (
     <div className="workflow">
@@ -109,6 +103,9 @@ export function Workflow({ language }: { language: Language }) {
                 {t("data.errorsSummary", { count: cellErrors.length })}
               </p>
             )}
+            <div className="row">
+              <ImportButton />
+            </div>
             <DataGrid cellErrors={cellErrors} />
           </section>
         )}
@@ -117,9 +114,6 @@ export function Workflow({ language }: { language: Language }) {
       </div>
 
       <div className="step-actions">
-        <button type="button" className="button secondary" onClick={restart}>
-          {t("workflow.restart")}
-        </button>
         <div className="spacer" />
         {previous && (
           <button type="button" className="button secondary" onClick={() => setStep(previous)}>
