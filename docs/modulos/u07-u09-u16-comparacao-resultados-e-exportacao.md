@@ -21,7 +21,7 @@ U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: exp
 | `features/results/ResultsView.tsx` | Escolhe a visão pelo tipo do resultado |
 | `features/results/ComparisonResults.tsx` | Composição, seleção da incerteza, gráficos e exportação |
 | `features/results/ComparisonInterpretation.tsx` | Explicação curta, fatos e avisos localizados |
-| `features/results/ComparisonTables.tsx`, `comparisonTables.ts` | Tabelas na tela e linhas do CSV |
+| `features/results/ComparisonTables.tsx`, `comparisonRows.ts` | Tabelas na tela e linhas do CSV |
 | `features/results/ChartFigure.tsx`, `ExportButton.tsx` | Figura acessível e botões de SVG/PNG |
 | `services/charts/{svg,means,boxplot,scatter}.ts` | Renderizador SVG (tela e exportação, mesma fonte) |
 | `services/export/{csv,png,metadata}.ts` | CSV, rasterização, chunk `tEXt` e proveniência |

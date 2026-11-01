@@ -19,7 +19,7 @@ import {
   groupRows,
   PAIR_HEADER,
   pairRows,
-} from "./comparisonTables";
+} from "./comparisonRows";
 import { ExportButton } from "./ExportButton";
 
 type Uncertainty = "ci" | "sd" | "se";

@@ -28,6 +28,7 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/check-docs-links.mjs
+      - run: node scripts/check-case-collisions.mjs
       - run: node scripts/check-versions.mjs
 
   rust:
