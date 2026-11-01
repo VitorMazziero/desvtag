@@ -1,0 +1,29 @@
+{
+  "n": 50,
+  "exactOnBinary64Inputs": {
+    "mean": 2.001856,
+    "variance": 1.8414693877553815e-07,
+    "sd": 0.0004291234540030854,
+    "min": 2.0013,
+    "max": 2.0027
+  },
+  "certifiedNist": {
+    "mean": "2.00185600000000",
+    "sd": "0.000429123454003053"
+  },
+  "certifiedBounds": {
+    "mean": 1.106172931031324e-16,
+    "sd": 1.3249692643452928e-16
+  },
+  "tolerances": {
+    "relative": 1e-12,
+    "note": "relativa ao valor exato sobre os mesmos bin\u00e1rios de 64 bits"
+  },
+  "reference": {
+    "software": "Python fractions (exato) + mpmath; verifica\u00e7\u00e3o cruzada com NumPy",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/univ/data/Mavro.dat"
+  }
+}

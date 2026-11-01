@@ -2,6 +2,7 @@
 
 use std::collections::BTreeMap;
 
+use optima_core::errors::CoreError;
 use serde_json::Value;
 
 use crate::capabilities::engine_info;
@@ -17,7 +18,11 @@ fn error_response(
         protocol_version: PROTOCOL_VERSION,
         task_id,
         outcome: Outcome::Error {
-            error: EngineError { code, params },
+            error: EngineError {
+                code,
+                params,
+                issues: Vec::new(),
+            },
         },
     }
 }
@@ -31,13 +36,27 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             &request.protocol_version.to_string(),
         );
     }
-    let result = match request.operation {
-        Operation::EngineInfo => OperationResult::EngineInfo(engine_info()),
+    let outcome = match &request.operation {
+        Operation::EngineInfo => Outcome::Ok {
+            result: OperationResult::EngineInfo(engine_info()),
+        },
+        Operation::DescriptiveSummarize(req) => match optima_core::descriptive::summarize(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::DescriptiveSummarize(result),
+            },
+            Err(CoreError::InvalidInput(issues)) => Outcome::Error {
+                error: EngineError {
+                    code: ErrorCode::InvalidInput,
+                    params: BTreeMap::new(),
+                    issues,
+                },
+            },
+        },
     };
     EngineResponse {
         protocol_version: PROTOCOL_VERSION,
         task_id: Some(request.task_id.clone()),
-        outcome: Outcome::Ok { result },
+        outcome,
     }
 }
 

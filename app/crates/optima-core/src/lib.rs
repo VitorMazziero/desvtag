@@ -4,12 +4,16 @@
 //! rede, sistema de arquivos, idioma, tema nem interface. Os módulos seguem o
 //! mapa em `docs/arquitetura/mapa-modulos.md`.
 //!
-//! Na ET01 existem apenas as estruturas iniciais de C01 (`domain`), C02
-//! (`validation`) e C19 (`registry`, `errors`, `provenance`). Nenhum método
-//! científico está implementado.
+//! Implementado até a ET02: C01 (`domain`), C02 (`validation`), C03
+//! (`numeric::summation`), C05 (`descriptive`), C18 (`interpretation`) e C19
+//! (`registry`, `errors`, `provenance`). O único método científico é
+//! `descriptive_summary`.
 
+pub mod descriptive;
 pub mod domain;
 pub mod errors;
+pub mod interpretation;
+pub mod numeric;
 pub mod provenance;
 pub mod registry;
 pub mod validation;

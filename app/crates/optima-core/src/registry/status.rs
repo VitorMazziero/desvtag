@@ -20,6 +20,11 @@ pub enum Implementation {
 pub enum Validation {
     /// Ainda sem comparação com referência independente.
     NotValidated,
-    /// Comparado a referência independente e verificado nas plataformas.
+    /// Comparado a referência independente em casos registrados em
+    /// `validation/cases/`; a verificação em todas as plataformas declaradas
+    /// ainda não está completa.
+    NumericallyValidated,
+    /// Comparado a referência independente e verificado em todas as
+    /// plataformas declaradas.
     Validated,
 }

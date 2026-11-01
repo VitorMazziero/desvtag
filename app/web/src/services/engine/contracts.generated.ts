@@ -17,6 +17,69 @@ export type Capabilities = {
 methods: Array<MethodInfo>, };
 
 /**
+ * Conjunto de dados.
+ */
+export type Dataset = { 
+/**
+ * Fatores.
+ */
+factors: Array<Factor>, 
+/**
+ * Respostas.
+ */
+responses: Array<Response>, 
+/**
+ * Observações.
+ */
+observations: Array<Observation>, };
+
+/**
+ * Solicitação de resumo descritivo.
+ */
+export type DescriptiveRequest = { 
+/**
+ * Dados.
+ */
+dataset: Dataset, 
+/**
+ * Resposta a resumir.
+ */
+responseId: StableId, 
+/**
+ * Fatores que definem os grupos (vazio: apenas o resumo geral).
+ */
+groupBy: Array<StableId>, };
+
+/**
+ * Resultado do resumo descritivo.
+ */
+export type DescriptiveResult = { 
+/**
+ * Resposta resumida.
+ */
+responseId: StableId, 
+/**
+ * Resumo de todas as observações.
+ */
+overall: Summary, 
+/**
+ * Resumo por grupo, na ordem definida pelos níveis dos fatores.
+ */
+groups: Array<GroupSummary>, 
+/**
+ * Observações fora dos grupos por falta do valor de algum fator de agrupamento.
+ */
+excludedMissingFactor: number, 
+/**
+ * Fatos para a interpretação (textos resolvidos pela interface).
+ */
+facts: Array<Fact>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * Erro codificado, com parâmetros para a mensagem localizada.
  */
 export type EngineError = { 
@@ -27,7 +90,11 @@ code: ErrorCode,
 /**
  * Parâmetros (por exemplo, versões esperada e recebida).
  */
-params: { [key in string]: string }, };
+params: { [key in string]: string }, 
+/**
+ * Diagnósticos que bloqueiam o cálculo (`invalidInput`); vazio nos demais erros.
+ */
+issues: Array<Issue>, };
 
 /**
  * Resultado de `engine.info`.
@@ -88,7 +155,46 @@ outcome: Outcome, };
 /**
  * Código de erro do protocolo (a interface localiza a mensagem).
  */
-export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion";
+export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion" | "invalidInput";
+
+/**
+ * Fato que a interface explica ao usuário.
+ */
+export type Fact = { 
+/**
+ * Chave estável, por exemplo `descriptive.missing_excluded`.
+ */
+key: string, 
+/**
+ * Parâmetros da frase.
+ */
+params: { [key in string]: string }, };
+
+/**
+ * Fator definido pelo usuário.
+ */
+export type Factor = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome digitado (preservado como está).
+ */
+name: string, 
+/**
+ * Quantitativo ou categórico.
+ */
+kind: FactorKind, 
+/**
+ * Unidade livre, quando houver.
+ */
+unit: string | null, 
+/**
+ * Níveis categóricos declarados, na ordem de apresentação. Vazio: os
+ * níveis são os valores presentes nos dados, em ordem alfabética.
+ */
+levels: Array<string>, };
 
 /**
  * Tipo de um fator: quantitativo (níveis numéricos) ou categórico (rótulos).
@@ -97,6 +203,38 @@ export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion";
  * módulos, se a natureza do fator é compatível com o método escolhido.
  */
 export type FactorKind = "numeric" | "categorical";
+
+/**
+ * Valor de um fator em uma observação: número (fator quantitativo) ou
+ * texto (fator categórico).
+ */
+export type FactorValue = number | string;
+
+/**
+ * Rótulo de um fator em um grupo.
+ */
+export type GroupLabel = { 
+/**
+ * Fator.
+ */
+factorId: StableId, 
+/**
+ * Nível, como texto (números em notação decimal mais curta que os reproduz).
+ */
+label: string, };
+
+/**
+ * Resumo de um grupo.
+ */
+export type GroupSummary = { 
+/**
+ * Nível de cada fator de agrupamento.
+ */
+labels: Array<GroupLabel>, 
+/**
+ * Resumo da resposta no grupo.
+ */
+summary: Summary, };
 
 /**
  * Situação da implementação.
@@ -142,14 +280,35 @@ implementation: Implementation,
 validation: Validation, };
 
 /**
+ * Uma observação (linha).
+ */
+export type Observation = { 
+/**
+ * Identificador estável da observação.
+ */
+id: StableId, 
+/**
+ * Unidade experimental, se informada.
+ */
+unitId: StableId | null, 
+/**
+ * Valores dos fatores, na ordem de `Dataset::factors`; `None` = ausente.
+ */
+factors: Array<FactorValue | null>, 
+/**
+ * Valores das respostas, na ordem de `Dataset::responses`; `None` = ausente.
+ */
+responses: Array<number | null>, };
+
+/**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" };
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult;
 
 /**
  * Sucesso ou falha.
@@ -200,6 +359,23 @@ methodVersion: number,
 engineVersion: string, };
 
 /**
+ * Resposta medida.
+ */
+export type Response = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome digitado.
+ */
+name: string, 
+/**
+ * Unidade livre, quando houver.
+ */
+unit: string | null, };
+
+/**
  * Gravidade de um diagnóstico.
  */
 export type Severity = "error" | "warning" | "info";
@@ -210,6 +386,61 @@ export type Severity = "error" | "warning" | "info";
 export type StableId = string;
 
 /**
+ * Estatística definida ou explicitamente indefinida.
+ */
+export type Stat = { "status": "defined", 
+/**
+ * Valor.
+ */
+value: number, } | { "status": "undefined", 
+/**
+ * Motivo.
+ */
+reason: UndefinedReason, };
+
+/**
+ * Resumo de uma coluna.
+ */
+export type Summary = { 
+/**
+ * Observações consideradas (válidas + ausentes).
+ */
+nTotal: number, 
+/**
+ * Observações sem valor.
+ */
+nMissing: number, 
+/**
+ * Observações com valor.
+ */
+nValid: number, 
+/**
+ * Média aritmética.
+ */
+mean: Stat, 
+/**
+ * Variância amostral (denominador n − 1).
+ */
+variance: Stat, 
+/**
+ * Desvio-padrão amostral.
+ */
+sd: Stat, 
+/**
+ * Mínimo.
+ */
+min: Stat, 
+/**
+ * Máximo.
+ */
+max: Stat, };
+
+/**
+ * Motivo pelo qual uma estatística não está definida.
+ */
+export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations" | "nonFiniteResult";
+
+/**
  * Situação da validação numérica.
  */
-export type Validation = "notValidated" | "validated";
+export type Validation = "notValidated" | "numericallyValidated" | "validated";

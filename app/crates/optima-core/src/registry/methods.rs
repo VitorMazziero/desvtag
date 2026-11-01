@@ -20,9 +20,14 @@ pub struct MethodInfo {
     pub validation: Validation,
 }
 
-/// Métodos registrados. Vazio na ET01: não há método científico implementado;
-/// cada etapa seguinte acrescenta seus métodos aqui, com a situação real.
+/// Métodos registrados, com a situação real de implementação e validação.
+/// Cada etapa acrescenta seus métodos aqui.
 #[must_use]
 pub fn registered_methods() -> Vec<MethodInfo> {
-    Vec::new()
+    vec![MethodInfo {
+        id: crate::descriptive::METHOD_ID.to_string(),
+        version: crate::descriptive::METHOD_VERSION,
+        implementation: Implementation::Implemented,
+        validation: Validation::NumericallyValidated,
+    }]
 }

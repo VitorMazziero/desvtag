@@ -1,5 +1,6 @@
 //! Solicitações da interface ao motor.
 
+use optima_core::descriptive::DescriptiveRequest;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -8,17 +9,19 @@ use ts_rs::TS;
 pub const PROTOCOL_VERSION: u32 = 1;
 
 /// Operação solicitada. Cada etapa acrescenta suas variantes.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(tag = "type", rename_all = "camelCase")]
 #[ts(export)]
 pub enum Operation {
     /// Versões e capacidades do motor (`engine.info`).
     EngineInfo,
+    /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
+    DescriptiveSummarize(DescriptiveRequest),
 }
 
 /// Solicitação com identificador de tarefa. A interface descarta respostas
 /// cujo `task_id` não seja o mais recente da sua categoria.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export)]
 pub struct EngineRequest {

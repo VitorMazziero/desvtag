@@ -29,7 +29,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn no_scientific_method_is_registered_in_et01() {
-        assert!(Capabilities::current().methods.is_empty());
+    fn lists_the_implemented_methods_with_their_real_status() {
+        let methods = Capabilities::current().methods;
+        assert_eq!(methods.len(), 1);
+        assert_eq!(methods[0].id, "descriptive_summary");
     }
 }

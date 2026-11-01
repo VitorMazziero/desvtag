@@ -1,0 +1,5 @@
+# Ambiente Python das referências independentes (não faz parte do aplicativo).
+# Python 3.13; versões usadas ao gerar os casos.
+numpy==2.5.4
+scipy==1.18.1
+mpmath==1.4.1

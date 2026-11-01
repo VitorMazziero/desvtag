@@ -13,7 +13,7 @@ fn call(request: &Value) -> EngineResponse {
 }
 
 #[test]
-fn engine_info_returns_versions_and_empty_capabilities() {
+fn engine_info_returns_versions_and_registered_methods() {
     let response = call(&json!({
         "protocolVersion": PROTOCOL_VERSION,
         "taskId": "t-1",
@@ -27,7 +27,13 @@ fn engine_info_returns_versions_and_empty_capabilities() {
             assert_eq!(info.engine_version, env!("CARGO_PKG_VERSION"));
             assert_eq!(info.protocol_version, PROTOCOL_VERSION);
             assert_eq!(info.project_schema_version, optima_project::SCHEMA_VERSION);
-            assert!(info.capabilities.methods.is_empty());
+            let ids: Vec<_> = info
+                .capabilities
+                .methods
+                .iter()
+                .map(|m| m.id.as_str())
+                .collect();
+            assert_eq!(ids, vec!["descriptive_summary"]);
         }
         other => panic!("resultado inesperado: {other:?}"),
     }
@@ -105,4 +111,85 @@ fn request_round_trips_in_camel_case() {
     assert_eq!(value["operation"]["type"], "engineInfo");
     let back: EngineRequest = serde_json::from_value(value).expect("lê");
     assert_eq!(back, request);
+}
+
+fn descriptive_request(task: &str, response_id: &str, group_by: &Value, rows: &Value) -> Value {
+    json!({
+        "protocolVersion": PROTOCOL_VERSION,
+        "taskId": task,
+        "operation": {
+            "type": "descriptiveSummarize",
+            "dataset": {
+                "factors": [{ "id": "f1", "name": "Condição", "kind": "categorical", "unit": null, "levels": ["A", "B"] }],
+                "responses": [{ "id": "r1", "name": "Atividade", "unit": "U/mL" }],
+                "observations": rows
+            },
+            "responseId": response_id,
+            "groupBy": group_by
+        }
+    })
+}
+
+#[test]
+fn descriptive_summary_works_end_to_end_through_the_protocol() {
+    let rows = json!([
+        { "id": "o1", "unitId": null, "factors": ["A"], "responses": [1.0] },
+        { "id": "o2", "unitId": null, "factors": ["A"], "responses": [3.0] },
+        { "id": "o3", "unitId": null, "factors": ["B"], "responses": [10.0] },
+        { "id": "o4", "unitId": null, "factors": [null], "responses": [null] }
+    ]);
+    let response = call(&descriptive_request("d-1", "r1", &json!(["f1"]), &rows));
+    let Outcome::Ok {
+        result: OperationResult::DescriptiveSummarize(result),
+    } = response.outcome
+    else {
+        panic!("esperava resultado");
+    };
+    assert_eq!(
+        (
+            result.overall.n_total,
+            result.overall.n_missing,
+            result.overall.n_valid
+        ),
+        (4, 1, 3)
+    );
+    assert_eq!(result.excluded_missing_factor, 1);
+    assert_eq!(result.groups.len(), 2);
+    assert_eq!(result.groups[0].labels[0].label, "A");
+    assert_eq!(result.groups[0].summary.mean.value(), Some(2.0));
+    assert_eq!(result.groups[1].summary.variance.value(), None); // n = 1: indefinida
+    let keys: Vec<_> = result.facts.iter().map(|f| f.key.as_str()).collect();
+    assert!(keys.contains(&"descriptive.group_too_small"));
+    assert!(keys.contains(&"descriptive.independence_not_assessed"));
+    assert_eq!(result.provenance.method_id, "descriptive_summary");
+}
+
+#[test]
+fn descriptive_summary_reports_blocking_issues_as_invalid_input() {
+    let rows = json!([{ "id": "o1", "unitId": null, "factors": ["Z"], "responses": [1.0] }]);
+    let response = call(&descriptive_request(
+        "d-2",
+        "nope",
+        &json!(["f1", "f1"]),
+        &rows,
+    ));
+    let Outcome::Error { error } = response.outcome else {
+        panic!("esperava erro")
+    };
+    assert_eq!(error.code, ErrorCode::InvalidInput);
+    let codes: Vec<_> = error.issues.iter().map(|i| i.code.as_str()).collect();
+    assert!(codes.contains(&"dataset.undeclared_level"));
+    assert!(codes.contains(&"request.unknown_response"));
+    assert!(codes.contains(&"request.duplicate_group_factor"));
+}
+
+#[test]
+fn nan_or_infinity_cannot_reach_the_engine_as_numbers() {
+    // JSON não tem NaN/Infinity: o texto é rejeitado como solicitação inválida.
+    let text = r#"{"protocolVersion":1,"taskId":"x","operation":{"type":"descriptiveSummarize","dataset":{"factors":[],"responses":[{"id":"r1","name":"y","unit":null}],"observations":[{"id":"o1","unitId":null,"factors":[],"responses":[NaN]}]},"responseId":"r1","groupBy":[]}}"#;
+    let response: EngineResponse =
+        serde_json::from_str(&handle_json(text)).expect("JSON do protocolo");
+    assert!(
+        matches!(response.outcome, Outcome::Error { error } if error.code == ErrorCode::InvalidRequest)
+    );
 }

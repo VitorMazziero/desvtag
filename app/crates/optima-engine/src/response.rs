@@ -2,7 +2,9 @@
 
 use std::collections::BTreeMap;
 
+use optima_core::descriptive::DescriptiveResult;
 use optima_core::registry::Capabilities;
+use optima_core::validation::Issue;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -15,6 +17,8 @@ pub enum ErrorCode {
     InvalidRequest,
     /// A versão do protocolo do cliente difere da do motor.
     UnsupportedProtocolVersion,
+    /// Os dados ou a configuração não permitem o cálculo; veja `issues`.
+    InvalidInput,
 }
 
 /// Erro codificado, com parâmetros para a mensagem localizada.
@@ -26,6 +30,8 @@ pub struct EngineError {
     pub code: ErrorCode,
     /// Parâmetros (por exemplo, versões esperada e recebida).
     pub params: BTreeMap<String, String>,
+    /// Diagnósticos que bloqueiam o cálculo (`invalidInput`); vazio nos demais erros.
+    pub issues: Vec<Issue>,
 }
 
 /// Resultado de `engine.info`.
@@ -44,16 +50,18 @@ pub struct EngineInfo {
 }
 
 /// Resultado de uma operação.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(tag = "type", rename_all = "camelCase")]
 #[ts(export)]
 pub enum OperationResult {
     /// Resultado de `engine.info`.
     EngineInfo(EngineInfo),
+    /// Resultado de `descriptive.summarize`.
+    DescriptiveSummarize(DescriptiveResult),
 }
 
 /// Sucesso ou falha.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(tag = "status", rename_all = "camelCase")]
 #[ts(export)]
 pub enum Outcome {
@@ -70,7 +78,7 @@ pub enum Outcome {
 }
 
 /// Resposta: sempre carrega a versão do protocolo do motor.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export)]
 pub struct EngineResponse {

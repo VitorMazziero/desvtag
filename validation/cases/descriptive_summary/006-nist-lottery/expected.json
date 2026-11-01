@@ -1,0 +1,29 @@
+{
+  "n": 218,
+  "exactOnBinary64Inputs": {
+    "mean": 518.9587155963303,
+    "variance": 85088.73100663764,
+    "sd": 291.6997274709691,
+    "min": 4.0,
+    "max": 999.0
+  },
+  "certifiedNist": {
+    "mean": "518.958715596330",
+    "sd": "291.699727470969"
+  },
+  "certifiedBounds": {
+    "mean": 0.0,
+    "sd": 0.0
+  },
+  "tolerances": {
+    "relative": 1e-12,
+    "note": "relativa ao valor exato sobre os mesmos bin\u00e1rios de 64 bits"
+  },
+  "reference": {
+    "software": "Python fractions (exato) + mpmath; verifica\u00e7\u00e3o cruzada com NumPy",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/univ/data/Lottery.dat"
+  }
+}
