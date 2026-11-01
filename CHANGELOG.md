@@ -8,9 +8,9 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 - Seleção e comparação de modelos: termos ligáveis na tabela de resultados, comparação entre o modelo completo, o atual e o recomendado, e recomendação de remoção de termos; um modelo por resposta ([plano da ET11](docs/planos-execucao/planejados/et11-selecao-de-modelos-e-navegacao.md)).
 - Resultados organizados em seções com barra lateral (otimização por desejabilidade, confirmação e outras), com a exportação ao final.
 
-## [0.1.0] — candidata pronta, aguardando publicação
+## [0.1.0] — versão web publicada; instalador em rascunho
 
-> Esta versão está **pronta localmente e ainda não foi publicada** (sem etiqueta, release nem Pages). O texto abaixo descreve o que ela contém e a situação de validação; ver o [relatório de validação](validation/reports/v0.1.0/README.md).
+> A **versão web foi publicada em 2026-11-01** (https://vitormazziero.github.io/enzitag-optima/) e a etiqueta `v0.1.0` existe. O **instalador do Windows ainda é um rascunho de release** (não publicado) e a atualização não foi verificada; ver o [registro de publicação](docs/distribuicao/publicacao.md#registro-do-que-foi-executado) e o [relatório de validação](validation/reports/v0.1.0/README.md).
 
 ### Métodos e variantes disponíveis
 
