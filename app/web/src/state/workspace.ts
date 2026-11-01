@@ -51,6 +51,7 @@ const PROJECT_ACTIONS = new Set<string>([
   "removeResponse",
   "setCell",
   "setRows",
+  "applyDesign",
   "addRow",
   "removeRow",
   "setUnitColumn",
@@ -201,7 +202,10 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
       groupBy: [...doc.analysisSelection.groupBy],
       factorId: doc.analysisSelection.factorId ?? null,
       alpha: doc.analysisSelection.alpha ?? DEFAULT_ALPHA,
+      designTerms: doc.analysisSelection.terms ?? null,
+      includeCurvature: doc.analysisSelection.includeCurvature ?? true,
     },
+    design: doc.design ?? null,
     // Reabrir NÃO recalcula: o resultado exibido é o guardado; a assinatura decide se está atual.
     result: storedResultOf(last),
     showUnitColumn: doc.showUnitColumn,
@@ -237,6 +241,8 @@ function storedResultOf(last: AnalysisRecord | undefined): StoredResult | null {
   if (!last) return null;
   if (last.result.type === "descriptive")
     return { signature: last.signature, kind: "descriptive", result: stripType(last.result) };
+  if (last.result.type === "twoLevelDesign")
+    return { signature: last.signature, kind: "design", result: stripType(last.result) };
   return { signature: last.signature, kind: "oneWay", result: stripType(last.result) };
 }
 
@@ -265,7 +271,15 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
         ...(e.analysis.factorId !== null
           ? { factorId: e.analysis.factorId, alpha: e.analysis.alpha }
           : {}),
+        ...(e.design !== null
+          ? {
+              alpha: e.analysis.alpha,
+              includeCurvature: e.analysis.includeCurvature,
+              ...(e.analysis.designTerms ? { terms: e.analysis.designTerms } : {}),
+            }
+          : {}),
       },
+      ...(e.design !== null ? { design: e.design } : {}),
       revisions: e.revisions,
       analyses: e.analyses,
       notes: e.notes,

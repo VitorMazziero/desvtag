@@ -26,8 +26,8 @@ export interface ScatterSpec {
   xLabel: string;
   yLabel: string;
   points: ScatterPoint[];
-  /** Linha de referência: `zero` (y = 0) ou `quartiles` (reta pelos quartis, para o QQ). */
-  reference: "zero" | "quartiles";
+  /** Linha de referência: `zero` (y = 0), `quartiles` (reta pelos quartis, para o QQ) ou `identity` (y = x). */
+  reference: "zero" | "quartiles" | "identity";
   /** Texto curto sobre como ler o gráfico; sempre exibido. */
   legend: string;
   metadata?: string;
@@ -80,6 +80,15 @@ export function scatterChart(
   if (spec.reference === "zero") {
     parts.push(
       line(frame.left, axis.scale(0), frame.width - frame.right, axis.scale(0), mode, {
+        role: "ink",
+        dash: "4 3",
+      }),
+    );
+  } else if (spec.reference === "identity") {
+    const lo = Math.max(xMin - xPad, yMin - yPad);
+    const hi = Math.min(xMax + xPad, yMax + yPad);
+    parts.push(
+      line(xScale(lo), axis.scale(lo), xScale(hi), axis.scale(hi), mode, {
         role: "ink",
         dash: "4 3",
       }),

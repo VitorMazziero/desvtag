@@ -5,7 +5,13 @@ import { StaleResponseError } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
-import { analysisKind, buildDataset, buildOperation, inputSignature } from "./buildRequest";
+import {
+  analysisKind,
+  buildDataset,
+  buildOperation,
+  designTermIds,
+  inputSignature,
+} from "./buildRequest";
 
 interface Props {
   /** Chamado quando um resultado novo foi calculado e guardado. */
@@ -54,6 +60,17 @@ export function AnalysisSetup({ onDone }: Props) {
           now: nowIso(),
         });
         onDone();
+      } else if (
+        response.outcome.status === "ok" &&
+        response.outcome.result.type === "designAnalyze"
+      ) {
+        const { type: _type, ...result } = response.outcome.result;
+        dispatch({
+          type: "storeResult",
+          result: { signature, kind: "design", result },
+          now: nowIso(),
+        });
+        onDone();
       } else if (response.outcome.status === "error") {
         setMessages(engineErrorMessages(t, response.outcome.error));
       }
@@ -68,10 +85,18 @@ export function AnalysisSetup({ onDone }: Props) {
   return (
     <section aria-labelledby="analysis-title">
       <h2 id="analysis-title">
-        {kind === "oneWay" ? t("analysis.compare.title") : t("analysis.title")}
+        {kind === "oneWay"
+          ? t("analysis.compare.title")
+          : kind === "design"
+            ? t("analysis.design.title")
+            : t("analysis.title")}
       </h2>
       <p className="muted">
-        {kind === "oneWay" ? t("analysis.compare.intro") : t("analysis.intro")}
+        {kind === "oneWay"
+          ? t("analysis.compare.intro")
+          : kind === "design"
+            ? t("analysis.design.intro")
+            : t("analysis.intro")}
       </p>
       <label className="field">
         <span>{t("analysis.response")}</span>
@@ -132,6 +157,12 @@ export function AnalysisSetup({ onDone }: Props) {
           </label>
         </>
       )}
+      {kind === "design" && (
+        <DesignModel
+          selected={designTermIds(state)}
+          onChange={(terms) => dispatch({ type: "setAnalysis", patch: { designTerms: terms } })}
+        />
+      )}
       {kind === "descriptive" && state.factors.length > 0 && (
         <fieldset className="editor-card">
           <legend>{t("analysis.groupBy")}</legend>
@@ -164,14 +195,17 @@ export function AnalysisSetup({ onDone }: Props) {
         disabled={
           running ||
           state.analysis.responseId === null ||
-          (kind === "oneWay" && state.analysis.factorId === null)
+          (kind === "oneWay" && state.analysis.factorId === null) ||
+          (kind === "design" && state.design === null)
         }
       >
         {running
           ? t("analysis.running")
           : kind === "oneWay"
             ? t("analysis.compare.run")
-            : t("analysis.run")}
+            : kind === "design"
+              ? t("analysis.design.run")
+              : t("analysis.run")}
       </button>
       {messages.length > 0 && (
         <div role="alert" className="error">
@@ -181,5 +215,118 @@ export function AnalysisSetup({ onDone }: Props) {
         </div>
       )}
     </section>
+  );
+}
+
+/** Escolha dos termos do modelo do planejamento: principais, principais + interações, personalizado. */
+function DesignModel({
+  selected,
+  onChange,
+}: {
+  selected: string[][];
+  onChange: (terms: string[][]) => void;
+}) {
+  const { t } = useTranslation();
+  const state = useProject();
+  const dispatch = useProjectDispatch();
+  const design = state.design;
+  if (!design)
+    return (
+      <p className="muted" role="status">
+        {t("analysis.design.needDesign")}
+      </p>
+    );
+  const ids = design.factors.map((f) => f.id);
+  const main = ids.map((id) => [id]);
+  const pairs = ids.flatMap((a, i) => ids.slice(i + 1).map((b) => [a, b]));
+  const key = (term: string[]) => term.join("|");
+  const selectedKeys = new Set(selected.map(key));
+  const isMain = selected.length === main.length && main.every((m) => selectedKeys.has(key(m)));
+  const isTwo =
+    selected.length === main.length + pairs.length &&
+    [...main, ...pairs].every((m) => selectedKeys.has(key(m)));
+  const mode = isMain ? "main" : isTwo ? "two" : "custom";
+  const nameOf = (id: string) => design.factors.find((f) => f.id === id)?.name ?? id;
+  const toggle = (term: string[], on: boolean) =>
+    onChange(on ? [...selected, term] : selected.filter((s) => key(s) !== key(term)));
+  return (
+    <>
+      <fieldset className="editor-card">
+        <legend>{t("analysis.design.model")}</legend>
+        <label className="check">
+          <input
+            type="radio"
+            name="design-model"
+            checked={mode === "main"}
+            onChange={() => onChange(main)}
+          />
+          <span>{t("analysis.design.modelMain")}</span>
+        </label>
+        <label className="check">
+          <input
+            type="radio"
+            name="design-model"
+            checked={mode === "two"}
+            onChange={() => onChange([...main, ...pairs])}
+          />
+          <span>{t("analysis.design.modelTwoFactor")}</span>
+        </label>
+        <label className="check">
+          <input
+            type="radio"
+            name="design-model"
+            checked={mode === "custom"}
+            onChange={() => onChange(selected)}
+          />
+          <span>{t("analysis.design.modelCustom")}</span>
+        </label>
+        <p className="muted small">{t("analysis.design.modelHelp")}</p>
+        {mode === "custom" && (
+          <fieldset>
+            <legend>{t("analysis.design.termsLegend")}</legend>
+            {[...main, ...pairs].map((term) => (
+              <label className="check" key={key(term)}>
+                <input
+                  type="checkbox"
+                  checked={selectedKeys.has(key(term))}
+                  onChange={(e) => toggle(term, e.target.checked)}
+                />
+                <span>{term.map(nameOf).join(" × ")}</span>
+              </label>
+            ))}
+          </fieldset>
+        )}
+      </fieldset>
+      <label className="field">
+        <span>{t("analysis.compare.alpha")}</span>
+        <select
+          value={String(state.analysis.alpha)}
+          onChange={(e) =>
+            dispatch({ type: "setAnalysis", patch: { alpha: Number(e.target.value) } })
+          }
+        >
+          {[0.1, 0.05, 0.01].map((a) => (
+            <option key={a} value={String(a)}>
+              {a}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="check">
+        <input
+          type="checkbox"
+          checked={state.analysis.includeCurvature && design.centerPoints > 0}
+          disabled={design.centerPoints === 0}
+          onChange={(e) =>
+            dispatch({ type: "setAnalysis", patch: { includeCurvature: e.target.checked } })
+          }
+        />
+        <span>
+          {design.centerPoints > 0
+            ? t("analysis.design.curvature")
+            : t("analysis.design.curvatureUnavailable")}
+        </span>
+      </label>
+    </>
   );
 }

@@ -28,6 +28,8 @@ pub enum RevisionReason {
     ManualSave,
     /// Restauração de uma revisão anterior (cria nova revisão; a antiga permanece).
     Restore,
+    /// Matriz de ensaios gerada por um planejamento de dois níveis.
+    Design,
 }
 
 /// Instantâneo imutável dos dados.

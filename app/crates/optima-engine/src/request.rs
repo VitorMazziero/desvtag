@@ -23,6 +23,8 @@ pub enum Operation {
     EngineInfo,
     /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
     DescriptiveSummarize(DescriptiveRequest),
+    /// Opções de planejamento para um número de fatores e um orçamento de ensaios (`design.recommend`).
+    DesignRecommend(DesignRecommendRequest),
     /// Conta os ensaios de um planejamento de dois níveis sem gerá-lo (`design.count`).
     DesignCount(DesignSpec),
     /// Gera um planejamento de dois níveis (`design.generate`).
@@ -41,6 +43,17 @@ pub enum Operation {
     ProjectDecode(BytesRequest),
     /// Lê os valores armazenados de uma planilha XLSX como texto (`import.xlsx`).
     ImportXlsx(ImportXlsxRequest),
+}
+
+/// Pedido de opções de planejamento.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct DesignRecommendRequest {
+    /// Número de fatores.
+    pub factors: u32,
+    /// Orçamento de ensaios do planejamento básico, se houver.
+    pub max_runs: Option<u32>,
 }
 
 /// Pedido de codificação de projeto.

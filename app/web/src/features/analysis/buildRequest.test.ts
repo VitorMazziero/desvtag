@@ -74,7 +74,14 @@ describe("comparison of treatments", () => {
   const compare = (): ProjectState => ({
     ...sample(),
     path: "compare",
-    analysis: { responseId: "r1", groupBy: [], factorId: "f1", alpha: 0.05 },
+    analysis: {
+      responseId: "r1",
+      groupBy: [],
+      factorId: "f1",
+      alpha: 0.05,
+      designTerms: null,
+      includeCurvature: true,
+    },
   });
 
   it("builds the one-way operation only when a factor is chosen", () => {

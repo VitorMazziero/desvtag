@@ -79,6 +79,25 @@
       "excluded_observations_one": "{{count}} observação ficou fora da análise por falta de resposta ou de nível do fator.",
       "excluded_observations_many": "{{count}} observações ficaram fora da análise por falta de resposta ou de nível do fator.",
       "excluded_observations_other": "{{count}} observações ficaram fora da análise por falta de resposta ou de nível do fator."
+    },
+    "design": {
+      "saturated": "Não há graus de liberdade do erro (o modelo usa todos os ensaios): erros-padrão, testes t e valores-p não existem.",
+      "no_inference": "Sem erro estimável e sem efeitos suficientes para o método de Lenth: só as magnitudes dos efeitos podem ser comparadas.",
+      "lenth_only": "A indicação de efeitos ativos vem do método de Lenth, que é aproximado; trate-a como pista e não como teste.",
+      "active_effects": "Termos ativos ({{count}}): {{terms}}.",
+      "no_active_effects": "Nenhum termo foi indicado como ativo ao nível {{alpha}}.",
+      "aliased_active": "Atenção: {{terms}} está confundido com outros efeitos neste planejamento; a estimativa é a soma deles.",
+      "curvature_detected": "Curvatura detectada (p = {{p}}): o modelo linear não descreve bem a região; considere um planejamento com termos quadráticos.",
+      "curvature_not_detected": "Curvatura não detectada (p = {{p}}); isso não prova que a resposta seja linear.",
+      "curvature_unavailable": "A curvatura não pôde ser testada com estes dados.",
+      "lack_of_fit_significant": "Falta de ajuste significativa (p = {{p}}): o modelo escolhido deixa variação sistemática de fora.",
+      "lack_of_fit_not_significant": "Falta de ajuste não detectada (p = {{p}}).",
+      "screening_pb": "Plackett–Burman é um desenho de triagem de resolução III: efeitos principais são confundidos parcialmente com interações de dois fatores.",
+      "unexpected_levels": "{{count}} ensaios têm níveis diferentes de baixo, alto ou central; o ajuste usa os valores codificados dessas linhas.",
+      "independence_not_assessed": "O aplicativo não verifica independência: cada linha foi tratada como um ensaio independente.",
+      "not_estimable_one": "{{count}} termo não é estimável (confundido com outro do modelo) e foi omitido.",
+      "not_estimable_many": "{{count}} termos não são estimáveis (confundidos com outros do modelo) e foram omitidos.",
+      "not_estimable_other": "{{count}} termos não são estimáveis (confundidos com outros do modelo) e foram omitidos."
     }
   },
   "comparison": {
@@ -182,5 +201,92 @@
       "cancelled": "Exportação cancelada."
     },
     "warnings": "Avisos"
+  },
+  "design": {
+    "title": "Análise do planejamento",
+    "summary": {
+      "conclusion": "Foram analisados {{n}} ensaios de «{{response}}» com {{factors}} fatores (modelo com {{terms}} termos).",
+      "evidenceP": "Termos ativos (p < {{alpha}}): {{active}}.",
+      "evidenceLenth": "Sem graus de liberdade do erro: pelo método de Lenth (indicativo), termos ativos: {{active}}.",
+      "evidenceNone": "Nenhum termo ativo ao nível {{alpha}}.",
+      "evidenceUnavailable": "Não há inferência disponível com estes dados; veja os avisos.",
+      "nextStep": "Triagem indica candidatos, não os valores ótimos: confirme os fatores ativos em um novo experimento (por exemplo, com superfície de resposta) e confira o confundimento antes de concluir."
+    },
+    "effects": {
+      "caption": "Efeitos e coeficientes (escala codificada) de «{{response}}»",
+      "term": "Termo",
+      "coefficient": "Coeficiente",
+      "effect": "Efeito (2 × coeficiente)",
+      "se": "Erro-padrão do efeito",
+      "t": "t",
+      "p": "Valor-p",
+      "ci": "IC {{level}}% do efeito",
+      "lenth": "Lenth",
+      "aliases": "Confundido com",
+      "intercept": "Intercepto",
+      "active": "ativo",
+      "simultaneous": "ativo (simultâneo)",
+      "inactive": "—",
+      "help": "O coeficiente é a mudança por unidade codificada; o efeito é a diferença entre as médias dos níveis alto e baixo. Sem graus de liberdade do erro não há erro-padrão nem valor-p."
+    },
+    "anova": {
+      "caption": "ANOVA da regressão",
+      "source": "Fonte",
+      "model": "Modelo",
+      "residual": "Resíduo",
+      "total": "Total",
+      "df": "gl",
+      "ss": "Soma de quadrados",
+      "ms": "Quadrado médio",
+      "f": "F",
+      "p": "Valor-p",
+      "r2": "R²",
+      "r2adj": "R² ajustado",
+      "sigma": "Desvio-padrão residual"
+    },
+    "curvature": {
+      "title": "Curvatura",
+      "text": "Diferença entre os pontos centrais e o previsto pelo modelo linear: {{difference}} (t = {{t}}, p = {{p}}; {{points}} pontos centrais).",
+      "unavailable": "Curvatura não testada: sem graus de liberdade do erro ou sem pontos centrais."
+    },
+    "lackOfFit": {
+      "title": "Falta de ajuste e erro puro",
+      "text": "Erro puro: SQ {{ssPure}} com {{dfPure}} gl; falta de ajuste: SQ {{ssLof}} com {{dfLof}} gl; F = {{f}}, p = {{p}}.",
+      "noTest": "Falta de ajuste: SQ {{ssLof}} com {{dfLof}} gl; sem teste F disponível."
+    },
+    "lenth": {
+      "title": "Método de Lenth",
+      "text": "Erro-padrão pseudo (PSE) {{pse}}, {{df}} gl; margem de erro {{me}}, margem simultânea {{sme}}. Efeitos com |efeito| acima da margem são indicados como ativos.",
+      "help": "Indicativo, não um teste exato: usa a hipótese de que a maioria dos efeitos é nula."
+    },
+    "charts": {
+      "paretoTitle": "Pareto dos efeitos de «{{response}}»",
+      "paretoDescription": "Barras horizontais em ordem decrescente com uma linha de referência.",
+      "paretoT": "|t| de cada termo",
+      "paretoEffect": "|efeito| de cada termo",
+      "referenceT": "t crítico (α = {{alpha}})",
+      "referenceLenth": "margem de Lenth",
+      "paretoLegendT": "Barras acima da linha: termos com p < α. Termos não estimáveis não aparecem.",
+      "paretoLegendLenth": "Sem graus de liberdade do erro: a linha é a margem de erro de Lenth (indicativa).",
+      "paretoLegendEffect": "Sem erro estimável: só a magnitude dos efeitos, sem linha de referência.",
+      "mainTitle": "Efeitos principais sobre «{{response}}»",
+      "mainDescription": "Média da resposta nos níveis baixo e alto de cada fator.",
+      "interactionTitle": "Interações de dois fatores sobre «{{response}}»",
+      "interactionDescription": "Média da resposta nas combinações de níveis de dois fatores.",
+      "low": "baixo",
+      "high": "alto",
+      "center": "central",
+      "mainLegend": "Linha: média da resposta nos níveis baixo e alto; quadrado: média dos pontos centrais. Em planejamentos fracionários as médias refletem o confundimento.",
+      "interactionLegend": "Linhas não paralelas sugerem interação. Em planejamentos fracionários as médias refletem o confundimento.",
+      "opTitle": "Observado × predito de «{{response}}»",
+      "opDescription": "Valores observados contra os preditos pelo modelo, com a reta y = x.",
+      "opX": "Predito",
+      "opY": "Observado",
+      "opLegend": "Pontos próximos da reta indicam bom ajuste; afastamentos sistemáticos indicam falta de ajuste.",
+      "atLevel": "{{factor}} = {{level}}"
+    },
+    "export": {
+      "effectsCsv": "Efeitos (CSV)"
+    }
   }
 }

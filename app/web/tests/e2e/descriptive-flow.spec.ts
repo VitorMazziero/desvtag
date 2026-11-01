@@ -24,10 +24,9 @@ test.describe("fluxo guiado em português", () => {
 
     // Objetivo: o aviso de disponibilidade vem do registro de métodos do motor.
     await expect(page.getByRole("group", { name: "O que você quer fazer?" })).toBeVisible();
-    await expect(page.getByText("Disponível nesta versão")).toHaveCount(2); // análise e comparação
-    await expect(page.getByText(/Parcial.*planejamento/)).toBeVisible();
-    // A comparação de tratamentos (ET05) já está registrada no motor: o aviso de parcial some sozinho.
-    await expect(page.getByText(/Parcial.*comparação/)).toHaveCount(0);
+    await expect(page.getByText("Disponível nesta versão")).toHaveCount(3); // planejar, analisar e comparar
+    await expect(page.getByText(/Parcial/)).toHaveCount(0);
+    // Comparação (ET05) e planejamento (ET06) estão registrados no motor: o aviso de parcial some sozinho.
     await expect(page.getByRole("button", { name: "Avançar" })).toBeDisabled();
     await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
     await page.getByRole("button", { name: "Avançar" }).click();

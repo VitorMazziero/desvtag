@@ -85,6 +85,30 @@
     "distribution": {
       "invalid_parameter": "Invalid distribution parameter.",
       "unsupported_function": "Function not available for this distribution."
+    },
+    "design": {
+      "too_few_factors": "At least two factors are required.",
+      "invalid_levels": "The low level must be smaller than the high level for every factor.",
+      "empty_factor_name": "Every design factor needs a name.",
+      "duplicate_factor_id": "There are repeated factors in the design.",
+      "invalid_replicates": "The number of repetitions must be at least 1.",
+      "too_many_factors": "Too many factors for this design type (maximum {{max}}).",
+      "too_many_runs": "The design would have {{runs}} runs; the maximum is {{max}}.",
+      "unsupported_runs": "There is no Plackett–Burman construction for {{runs}} runs. Supported sizes: {{supported}}.",
+      "generator_count": "Number of generators is incompatible with {{k}} factors.",
+      "generator_syntax": "Malformed generator: {{generator}} (use, for example, D=ABC).",
+      "generator_target": "Generator {{generator}} must define factor {{expected}}.",
+      "generator_letters": "Generator {{generator}} uses invalid or repeated letters.",
+      "invalid_alpha": "The significance level must be between 0 and 1.",
+      "factor_not_numeric": "The design factor must be quantitative.",
+      "power_term_not_two_level": "Quadratic terms are not estimable in two-level designs.",
+      "term_not_in_design": "Term {{term}} uses a factor that is not in the design.",
+      "no_terms": "Choose at least one model term.",
+      "unexpected_levels": "Some runs have levels other than low, high or centre.",
+      "saturated": "Saturated model: no error degrees of freedom.",
+      "not_estimable_terms": "Aliased terms were left out of the fit.",
+      "single_center_point": "A single centre point gives no pure error; use at least two.",
+      "main_effects_aliased_with_two_factor": "Resolution {{resolution}}: main effects are aliased with two-factor interactions."
     }
   },
   "cellErrors": {

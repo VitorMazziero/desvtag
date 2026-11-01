@@ -14,10 +14,11 @@ describe("missingMethods", () => {
   it("reports what the engine registry does not have yet", () => {
     const c = caps("descriptive_summary");
     expect(missingMethods("analyze", c)).toEqual([]);
-    expect(missingMethods("plan", c)).toEqual(["plackett_burman_design"]);
+    expect(missingMethods("plan", c)).toEqual(["two_level_design"]);
     expect(missingMethods("compare", c)).toEqual(["one_way_comparison"]);
   });
-  it("lights up automatically when a future stage registers the method", () => {
+  it("lights up automatically when a stage registers the method", () => {
+    expect(missingMethods("plan", caps("descriptive_summary", "two_level_design"))).toEqual([]);
     expect(missingMethods("compare", caps("descriptive_summary", "one_way_comparison"))).toEqual(
       [],
     );

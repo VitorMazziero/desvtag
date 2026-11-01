@@ -4,6 +4,7 @@ import type { Language } from "../../i18n";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { AnalysisSetup, buildDataset } from "../analysis";
 import { DataGrid } from "../data";
+import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
 import { RecentProjects, StartActions } from "../home";
 import { ImportButton } from "../import";
@@ -85,6 +86,7 @@ export function Workflow({ language }: { language: Language }) {
           <section aria-labelledby="data-title">
             <h2 id="data-title">{t("data.title")}</h2>
             <p className="muted">{t("data.intro")}</p>
+            {state.path === "plan" && <DesignPanel language={language} />}
             <p className="muted small">{t("data.pasteNote")}</p>
             <details className="advanced">
               <summary>{t("data.advanced")}</summary>

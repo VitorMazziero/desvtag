@@ -52,6 +52,16 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::DesignRecommend(req) => Outcome::Ok {
+            result: OperationResult::DesignRecommend(
+                optima_core::designs::recommend::DesignOptions {
+                    candidates: optima_core::designs::recommend::candidates(
+                        req.factors as usize,
+                        req.max_runs,
+                    ),
+                },
+            ),
+        },
         Operation::DesignCount(req) => match optima_core::designs::count_runs(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::DesignCount(result),

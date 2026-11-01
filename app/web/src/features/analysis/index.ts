@@ -1,2 +1,10 @@
 export { AnalysisSetup } from "./AnalysisSetup";
-export { buildDataset, buildOperation, type CellError, inputSignature } from "./buildRequest";
+export {
+  type AnalysisKind,
+  analysisKind,
+  buildDataset,
+  buildOperation,
+  type CellError,
+  designTermIds,
+  inputSignature,
+} from "./buildRequest";

@@ -4,6 +4,8 @@
 import type {
   AnalysisRecord,
   DescriptiveResult,
+  DesignAnalysisResult,
+  DesignSpec,
   EntryPath as EntryPathContract,
   ExperimentData,
   FactorKind,
@@ -30,6 +32,10 @@ export interface AnalysisDraft {
   factorId: string | null;
   /** Nível de significância da família de comparações. */
   alpha: number;
+  /** Termos do modelo do planejamento (cada termo = ids dos fatores); `null` = só efeitos principais. */
+  designTerms: string[][] | null;
+  /** Incluir o termo de curvatura quando houver pontos centrais. */
+  includeCurvature: boolean;
 }
 
 export const DEFAULT_ALPHA = 0.05;
@@ -37,13 +43,16 @@ export const DEFAULT_ALPHA = 0.05;
 /** Resultado em exibição; `signature` identifica os dados e as opções que o geraram. */
 export type StoredResult =
   | { signature: string; kind: "descriptive"; result: DescriptiveResult }
-  | { signature: string; kind: "oneWay"; result: OneWayResult };
+  | { signature: string; kind: "oneWay"; result: OneWayResult }
+  | { signature: string; kind: "design"; result: DesignAnalysisResult };
 
 /** Estado de trabalho de UM experimento (o que a interface edita) + seu histórico salvo. */
 export interface ProjectState {
   id: string;
   name: string;
   path: EntryPath | null;
+  /** Planejamento de dois níveis gerado (caminho "Planejar experimento"). */
+  design: DesignSpec | null;
   factors: FactorDraft[];
   responses: ResponseDraft[];
   rows: RowDraft[];
@@ -90,10 +99,18 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     id,
     name,
     path: null,
+    design: null,
     factors: [],
     responses: [],
     rows: [],
-    analysis: { responseId: null, groupBy: [], factorId: null, alpha: DEFAULT_ALPHA },
+    analysis: {
+      responseId: null,
+      groupBy: [],
+      factorId: null,
+      alpha: DEFAULT_ALPHA,
+      designTerms: null,
+      includeCurvature: true,
+    },
     result: null,
     showUnitColumn: false,
     counters: { factor: 0, response: 0, row: 0, revision: 1, analysis: 0 },
@@ -169,6 +186,13 @@ export type ProjectAction =
   | { type: "removeResponse"; id: string }
   | { type: "setCell"; row: number; column: number; value: string }
   | { type: "setRows"; rows: RowDraft[]; counters: ProjectState["counters"] }
+  | {
+      type: "applyDesign";
+      design: DesignSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      now: string;
+    }
   | { type: "addRow" }
   | { type: "removeRow"; row: number }
   | { type: "setUnitColumn"; visible: boolean }
@@ -266,7 +290,13 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
         ? state.analysis.factorId
         : null,
       alpha: state.analysis.alpha,
+      designTerms: state.analysis.designTerms,
+      includeCurvature: state.analysis.includeCurvature,
     },
+    // O planejamento só vale enquanto todos os seus fatores existem.
+    design: state.design?.factors.every((f) => data.factors.some((d) => d.id === f.id))
+      ? state.design
+      : null,
   };
 }
 
@@ -304,6 +334,9 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           ...state.analysis,
           groupBy: state.analysis.groupBy.filter((g) => g !== action.id),
           factorId: state.analysis.factorId === action.id ? null : state.analysis.factorId,
+          designTerms: state.analysis.designTerms
+            ? state.analysis.designTerms.filter((term) => !term.includes(action.id))
+            : null,
         },
       };
     }
@@ -358,6 +391,19 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       };
     case "setRows":
       return { ...state, rows: action.rows, counters: action.counters };
+    case "applyDesign": {
+      // Dados anteriores ficam preservados em uma revisão `edit`; a matriz gerada vira a nova revisão.
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        // Só o contador de linhas vem da ação: o de revisões já avançou em `before`.
+        counters: { ...before.counters, row: action.counters.row },
+        design: action.design,
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
     case "addRow": {
       const [row, counters] = blankRow(state);
       return { ...state, rows: [...state.rows, row], counters };
@@ -394,11 +440,21 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
                 factorId: committed.analysis.factorId ?? undefined,
                 alpha: committed.analysis.alpha,
               }
-            : { responseId: committed.analysis.responseId, groupBy: committed.analysis.groupBy },
+            : action.result.kind === "design"
+              ? {
+                  responseId: committed.analysis.responseId,
+                  groupBy: [],
+                  alpha: committed.analysis.alpha,
+                  terms: committed.analysis.designTerms ?? undefined,
+                  includeCurvature: committed.analysis.includeCurvature,
+                }
+              : { responseId: committed.analysis.responseId, groupBy: committed.analysis.groupBy },
         result:
           action.result.kind === "oneWay"
             ? { type: "oneWayComparison", ...action.result.result }
-            : { type: "descriptive", ...action.result.result },
+            : action.result.kind === "design"
+              ? { type: "twoLevelDesign", ...action.result.result }
+              : { type: "descriptive", ...action.result.result },
       };
       return {
         ...committed,

@@ -2,6 +2,7 @@
 
 use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
+use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::domain::StableId;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
@@ -23,6 +24,15 @@ pub struct AnalysisOptions {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub alpha: Option<f64>,
+    /// Termos do modelo de um planejamento de dois níveis: cada termo é a lista dos fatores que o
+    /// compõem (um = efeito principal; dois ou mais = interação).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub terms: Option<Vec<Vec<StableId>>>,
+    /// Incluir o termo de curvatura (planejamentos com pontos centrais).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub include_curvature: Option<bool>,
 }
 
 /// Resultado guardado, por método.
@@ -34,6 +44,8 @@ pub enum AnalysisResult {
     Descriptive(Box<DescriptiveResult>),
     /// Comparação de tratamentos de um fator (ANOVA, Tukey, letras, diagnósticos).
     OneWayComparison(Box<OneWayResult>),
+    /// Análise de um planejamento de dois níveis (efeitos, curvatura, Lenth, gráficos de triagem).
+    TwoLevelDesign(Box<DesignAnalysisResult>),
 }
 
 /// Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.

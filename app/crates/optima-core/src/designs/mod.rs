@@ -20,6 +20,7 @@ pub mod fractional;
 pub mod generate;
 pub mod plackett_burman;
 pub mod randomization;
+pub mod recommend;
 pub mod spec;
 
 pub use generate::{count_runs, generate};

@@ -3,6 +3,7 @@ import { initialProject, newExperiment, type ProjectAction, projectReducer } fro
 import {
   commitWorkspace,
   createWorkspace,
+  currentExperiment,
   hasUnsavedChanges,
   toDocument,
   type Workspace,
@@ -194,5 +195,36 @@ describe("legacy initial state", () => {
   it("keeps the single-experiment reducer usable on its own", () => {
     const action: ProjectAction = { type: "addFactor" };
     expect(projectReducer(initialProject, action).factors).toHaveLength(1);
+  });
+});
+
+describe("applyDesign", () => {
+  it("keeps previous data in an edit revision and gives every revision a unique id", () => {
+    const design = {
+      kind: { type: "fullFactorial" as const },
+      factors: [
+        { id: "f1", name: "A", low: 0, high: 1, unit: null },
+        { id: "f2", name: "B", low: 0, high: 1, unit: null },
+      ],
+      replicates: 1,
+      centerPoints: 0,
+      randomize: false,
+      seed: 1,
+    };
+    let ws = run(withData(), { type: "setCell", row: 0, column: 1, value: "7" });
+    const before = currentExperiment(ws);
+    ws = run(ws, {
+      type: "applyDesign",
+      design,
+      rows: [{ id: "o1", unitId: "", factors: ["0", "0"], responses: [""] }],
+      counters: before.counters,
+      now: T1,
+    });
+    const e = currentExperiment(ws);
+    expect(e.design).toEqual(design);
+    expect(new Set(e.revisions.map((r) => r.id)).size).toBe(e.revisions.length);
+    expect(e.revisions.at(-1)?.reason).toBe("design");
+    expect(e.revisions.some((r) => r.reason === "edit")).toBe(true);
+    expect(e.result).toBeNull();
   });
 });

@@ -1,0 +1,41 @@
+// CSV da matriz de ensaios (U16): ordem de execução, ordem padrão, tipo, repetição, níveis reais e codificados.
+import type { GeneratedDesign } from "../../services/engine";
+import { type Cell, toCsv } from "../../services/export";
+
+export function matrixCsv(design: GeneratedDesign, metadata: Record<string, string>): string {
+  const names = design.spec.factors.map((f) => f.name);
+  const header = [
+    "run",
+    "standard_order",
+    "point",
+    "replicate",
+    ...names,
+    ...names.map((n) => `${n} (coded)`),
+  ];
+  const rows: Cell[][] = design.runs.map((r) => [
+    r.run,
+    r.standardOrder,
+    r.point === "center" ? "center" : "factorial",
+    r.replicate,
+    ...r.real,
+    ...r.coded,
+  ]);
+  const kind =
+    design.spec.kind.type === "fractional"
+      ? `fractional (${design.spec.kind.generators.join(", ")})`
+      : design.spec.kind.type === "plackettBurman"
+        ? `plackett-burman (${design.spec.kind.runs} runs)`
+        : "full factorial";
+  return toCsv(header, rows, {
+    ...metadata,
+    method: `${design.provenance.methodId} v${design.provenance.methodVersion}`,
+    engine: design.provenance.engineVersion,
+    design: kind,
+    resolution: design.resolution === null ? "none" : String(design.resolution),
+    replicates: String(design.spec.replicates),
+    center_points: String(design.spec.centerPoints),
+    randomized: String(design.spec.randomize),
+    seed: String(design.spec.seed),
+    randomization: design.randomizationAlgorithm,
+  });
+}

@@ -8,6 +8,8 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use ts_rs::TS;
 
+use optima_core::designs::spec::DesignSpec;
+
 use crate::analysis::{AnalysisOptions, AnalysisRecord};
 use crate::experiment::ExperimentData;
 use crate::revision::{Revision, RevisionReason};
@@ -42,6 +44,11 @@ pub struct Experiment {
     pub entry_path: Option<EntryPath>,
     /// A coluna de unidade experimental está visível na grade.
     pub show_unit_column: bool,
+    /// Planejamento de dois níveis gerado para este experimento (caminho "Planejar experimento");
+    /// a matriz é regenerada de forma determinística a partir da especificação e da semente.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub design: Option<DesignSpec>,
     /// Seleção atual de resposta e agrupamento.
     pub analysis_selection: AnalysisOptions,
     /// Revisões, da mais antiga para a mais recente; a última é o estado atual dos dados.
@@ -68,11 +75,14 @@ impl Experiment {
             name: name.into(),
             entry_path: None,
             show_unit_column: false,
+            design: None,
             analysis_selection: AnalysisOptions {
                 response_id: None,
                 group_by: Vec::new(),
                 factor_id: None,
                 alpha: None,
+                terms: None,
+                include_curvature: None,
             },
             revisions: vec![Revision {
                 id: revision_id,

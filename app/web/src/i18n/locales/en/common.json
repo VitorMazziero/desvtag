@@ -140,6 +140,20 @@
       "run": "Compare treatments",
       "needFactor": "Add a factor (for example, the condition being tested) to define the groups.",
       "needLevels": "Enter the factor levels in the variables step or type the data: at least two groups are required."
+    },
+    "design": {
+      "title": "Analysis: two-level design",
+      "intro": "Estimates effects and coefficients on the coded scale (−1, +1), with Pareto, main effects, interactions and observed vs predicted. Without error degrees of freedom only Lenth's method flags active effects, and it is labelled as such.",
+      "needDesign": "Generate the design in the data step (or open a project that contains it).",
+      "model": "Model terms",
+      "modelMain": "Main effects only",
+      "modelTwoFactor": "Main effects and two-factor interactions",
+      "modelCustom": "Custom",
+      "modelHelp": "Terms aliased with each other (fractional designs) appear as not estimable.",
+      "termsLegend": "Terms",
+      "curvature": "Test curvature (centre points)",
+      "curvatureUnavailable": "The design has no centre points.",
+      "run": "Analyse design"
     }
   },
   "project": {
@@ -201,7 +215,8 @@
       "import": "import",
       "analysis": "analysis",
       "manualSave": "save",
-      "restore": "restore"
+      "restore": "restore",
+      "design": "design generation"
     }
   },
   "import": {
@@ -241,5 +256,68 @@
     "tooLarge": "File too large to import.",
     "formulaNote": "Spreadsheets: only stored values are read; formulas are never executed.",
     "nothing": "Nothing to import: choose at least one column as a factor or response."
+  },
+  "design": {
+    "title": "Experiment design",
+    "intro": "Generates the two-level run matrix for factor screening. Each factor must be quantitative, with a low and a high level. The run count is shown before generating.",
+    "needFactors": "Add at least two quantitative factors (with a name) in the previous step.",
+    "categoricalIgnored": "Categorical factors are not part of a two-level design: {{names}}.",
+    "levelsTitle": "Factor levels",
+    "low": "Low level",
+    "high": "High level",
+    "levelsInvalid": "The low level must be smaller than the high level (numbers).",
+    "budget": "Maximum number of runs (optional)",
+    "budgetHelp": "Counts the basic design only, without replicates or centre points.",
+    "optionsTitle": "Options for {{count}} factors",
+    "candidate": "{{runs}} runs",
+    "recommended": "recommended",
+    "overBudget": "over budget",
+    "resolution": "resolution {{resolution}}",
+    "noResolution": "no aliasing",
+    "kind": {
+      "fullFactorial": "Full factorial",
+      "fractional": "Fractional {{generators}}",
+      "plackettBurman": "Plackett–Burman"
+    },
+    "replicates": "Design repetitions",
+    "replicatesHelp": "Each repetition redoes every run. They are experimental replicates only if each run is a new independent preparation.",
+    "centerPoints": "Centre points",
+    "centerHelp": "They allow testing for curvature. A single centre point gives no error estimate.",
+    "randomize": "Randomise the run order",
+    "seed": "Randomisation seed",
+    "seedHelp": "The same seed gives the same order on Windows and in the browser.",
+    "newSeed": "New seed",
+    "count": "Total: {{total}} runs ({{base}} design runs × {{replicates}} + {{centers}} centre)",
+    "countError": "The runs could not be counted.",
+    "generate": "Generate design",
+    "regenerate": "Generate again",
+    "confirmReplace": "Replace the current runs with the new matrix? The current data stay in the version history.",
+    "generated": "Design generated: {{total}} runs. Fill in the responses in the grid below.",
+    "matrix": {
+      "title": "Run matrix",
+      "view": "Values",
+      "real": "Real",
+      "coded": "Coded (−1, 0, +1)",
+      "run": "Run order",
+      "standard": "Standard order",
+      "point": "Type",
+      "factorial": "factorial",
+      "center": "centre",
+      "replicate": "Repetition",
+      "exportCsv": "Download matrix (CSV)",
+      "exported": "Matrix exported: {{name}}",
+      "cancelled": "Export cancelled.",
+      "failed": "The matrix could not be exported."
+    },
+    "properties": {
+      "title": "Properties",
+      "relation": "Defining relation",
+      "resolution": "Resolution {{resolution}}",
+      "aliases": "Aliasing (main effects and two-factor interactions)",
+      "aliasesHelp": "Effects on the same line cannot be separated by this design: what is estimated is their sum.",
+      "pbPartial": "Plackett–Burman: main effects are partially aliased with two-factor interactions (maximum absolute correlation {{value}}).",
+      "dummy": "{{count}} dummy columns (contrasts not used by factors): they remain as error degrees of freedom.",
+      "algorithm": "Randomisation: {{algorithm}}, seed {{seed}}."
+    }
   }
 }

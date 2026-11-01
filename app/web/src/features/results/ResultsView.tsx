@@ -4,6 +4,7 @@ import { useProject } from "../../state/ProjectContext";
 import { resultIsCurrent } from "../workflow/guards";
 import { ComparisonResults } from "./ComparisonResults";
 import { DescriptiveTable } from "./DescriptiveTable";
+import { DesignResults } from "./DesignResults";
 import { Interpretation } from "./Interpretation";
 
 export function ResultsView({ language }: { language: Language }) {
@@ -25,6 +26,18 @@ export function ResultsView({ language }: { language: Language }) {
           signature={stored.signature}
           language={language}
         />
+      </section>
+    );
+  if (stored.kind === "design")
+    return (
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">{t("design.title")}</h2>
+        {!resultIsCurrent(state) && (
+          <p role="status" className="error">
+            {t("stale")}
+          </p>
+        )}
+        <DesignResults result={stored.result} signature={stored.signature} language={language} />
       </section>
     );
   const response = state.responses.find((r) => r.id === stored.result.responseId);

@@ -85,6 +85,30 @@
     "distribution": {
       "invalid_parameter": "Parâmetro da distribuição inválido.",
       "unsupported_function": "Função não disponível para esta distribuição."
+    },
+    "design": {
+      "too_few_factors": "São necessários pelo menos dois fatores.",
+      "invalid_levels": "O nível baixo precisa ser menor que o alto em todos os fatores.",
+      "empty_factor_name": "Todo fator do planejamento precisa de um nome.",
+      "duplicate_factor_id": "Há fatores repetidos no planejamento.",
+      "invalid_replicates": "O número de repetições deve ser pelo menos 1.",
+      "too_many_factors": "Há fatores demais para este tipo de planejamento (máximo {{max}}).",
+      "too_many_runs": "O planejamento teria {{runs}} ensaios; o máximo é {{max}}.",
+      "unsupported_runs": "Não há construção de Plackett–Burman para {{runs}} ensaios. Tamanhos suportados: {{supported}}.",
+      "generator_count": "Número de geradores incompatível com {{k}} fatores.",
+      "generator_syntax": "Gerador mal escrito: {{generator}} (use, por exemplo, D=ABC).",
+      "generator_target": "O gerador {{generator}} deve definir o fator {{expected}}.",
+      "generator_letters": "O gerador {{generator}} usa letras inválidas ou repetidas.",
+      "invalid_alpha": "O nível de significância precisa estar entre 0 e 1.",
+      "factor_not_numeric": "O fator do planejamento precisa ser quantitativo.",
+      "power_term_not_two_level": "Termos quadráticos não são estimáveis em planejamentos de dois níveis.",
+      "term_not_in_design": "O termo {{term}} usa um fator que não está no planejamento.",
+      "no_terms": "Escolha ao menos um termo do modelo.",
+      "unexpected_levels": "Alguns ensaios têm níveis diferentes de baixo, alto ou central.",
+      "saturated": "Modelo saturado: sem graus de liberdade do erro.",
+      "not_estimable_terms": "Termos confundidos foram omitidos do ajuste.",
+      "single_center_point": "Com um só ponto central não há erro puro; use pelo menos dois.",
+      "main_effects_aliased_with_two_factor": "Resolução {{resolution}}: efeitos principais confundidos com interações de dois fatores."
     }
   },
   "cellErrors": {

@@ -73,6 +73,24 @@
       "singleton_groups_other": "{{count}} groups have a single observation: they have no standard deviation or interval, but they enter the ANOVA.",
       "excluded_observations_one": "{{count}} observation was left out for a missing response or factor level.",
       "excluded_observations_other": "{{count}} observations were left out for a missing response or factor level."
+    },
+    "design": {
+      "saturated": "There are no error degrees of freedom (the model uses every run): standard errors, t tests and p-values do not exist.",
+      "no_inference": "No estimable error and too few effects for Lenth's method: only effect magnitudes can be compared.",
+      "lenth_only": "Active effects come from Lenth's method, which is approximate; treat it as a clue, not a test.",
+      "active_effects": "Active terms ({{count}}): {{terms}}.",
+      "no_active_effects": "No term was flagged as active at level {{alpha}}.",
+      "aliased_active": "Note: {{terms}} is aliased with other effects in this design; the estimate is their sum.",
+      "curvature_detected": "Curvature detected (p = {{p}}): the linear model does not describe the region well; consider a design with quadratic terms.",
+      "curvature_not_detected": "Curvature not detected (p = {{p}}); this does not prove the response is linear.",
+      "curvature_unavailable": "Curvature could not be tested with these data.",
+      "lack_of_fit_significant": "Significant lack of fit (p = {{p}}): the chosen model leaves systematic variation out.",
+      "lack_of_fit_not_significant": "Lack of fit not detected (p = {{p}}).",
+      "screening_pb": "Plackett–Burman is a resolution III screening design: main effects are partially aliased with two-factor interactions.",
+      "unexpected_levels": "{{count}} runs have levels other than low, high or centre; the fit uses the coded values of those rows.",
+      "independence_not_assessed": "The app does not check independence: each row was treated as an independent run.",
+      "not_estimable_one": "{{count}} term is not estimable (aliased with another in the model) and was left out.",
+      "not_estimable_other": "{{count}} terms are not estimable (aliased with others in the model) and were left out."
     }
   },
   "comparison": {
@@ -176,5 +194,92 @@
       "cancelled": "Export cancelled."
     },
     "warnings": "Warnings"
+  },
+  "design": {
+    "title": "Design analysis",
+    "summary": {
+      "conclusion": "Analysed {{n}} runs of “{{response}}” with {{factors}} factors (model with {{terms}} terms).",
+      "evidenceP": "Active terms (p < {{alpha}}): {{active}}.",
+      "evidenceLenth": "No error degrees of freedom: by Lenth's method (indicative), active terms: {{active}}.",
+      "evidenceNone": "No active terms at level {{alpha}}.",
+      "evidenceUnavailable": "No inference is available with these data; see the warnings.",
+      "nextStep": "Screening points to candidates, not optimal values: confirm the active factors in a new experiment (for example, response surface) and check the aliasing before concluding."
+    },
+    "effects": {
+      "caption": "Effects and coefficients (coded scale) for “{{response}}”",
+      "term": "Term",
+      "coefficient": "Coefficient",
+      "effect": "Effect (2 × coefficient)",
+      "se": "Effect standard error",
+      "t": "t",
+      "p": "p-value",
+      "ci": "{{level}}% CI of the effect",
+      "lenth": "Lenth",
+      "aliases": "Aliased with",
+      "intercept": "Intercept",
+      "active": "active",
+      "simultaneous": "active (simultaneous)",
+      "inactive": "—",
+      "help": "The coefficient is the change per coded unit; the effect is the difference between the high and low level means. Without error degrees of freedom there is no standard error or p-value."
+    },
+    "anova": {
+      "caption": "Regression ANOVA",
+      "source": "Source",
+      "model": "Model",
+      "residual": "Residual",
+      "total": "Total",
+      "df": "df",
+      "ss": "Sum of squares",
+      "ms": "Mean square",
+      "f": "F",
+      "p": "p-value",
+      "r2": "R²",
+      "r2adj": "Adjusted R²",
+      "sigma": "Residual standard deviation"
+    },
+    "curvature": {
+      "title": "Curvature",
+      "text": "Difference between the centre points and the linear model's prediction: {{difference}} (t = {{t}}, p = {{p}}; {{points}} centre points).",
+      "unavailable": "Curvature not tested: no error degrees of freedom or no centre points."
+    },
+    "lackOfFit": {
+      "title": "Lack of fit and pure error",
+      "text": "Pure error: SS {{ssPure}} with {{dfPure}} df; lack of fit: SS {{ssLof}} with {{dfLof}} df; F = {{f}}, p = {{p}}.",
+      "noTest": "Lack of fit: SS {{ssLof}} with {{dfLof}} df; no F test available."
+    },
+    "lenth": {
+      "title": "Lenth's method",
+      "text": "Pseudo standard error (PSE) {{pse}}, {{df}} df; margin of error {{me}}, simultaneous margin {{sme}}. Effects with |effect| above the margin are flagged as active.",
+      "help": "Indicative, not an exact test: it assumes most effects are zero."
+    },
+    "charts": {
+      "paretoTitle": "Pareto of the effects on “{{response}}”",
+      "paretoDescription": "Horizontal bars in decreasing order with a reference line.",
+      "paretoT": "|t| of each term",
+      "paretoEffect": "|effect| of each term",
+      "referenceT": "critical t (α = {{alpha}})",
+      "referenceLenth": "Lenth margin",
+      "paretoLegendT": "Bars beyond the line: terms with p < α. Non-estimable terms are not shown.",
+      "paretoLegendLenth": "No error degrees of freedom: the line is Lenth's margin of error (indicative).",
+      "paretoLegendEffect": "No estimable error: only the effect magnitudes, with no reference line.",
+      "mainTitle": "Main effects on “{{response}}”",
+      "mainDescription": "Mean response at the low and high level of each factor.",
+      "interactionTitle": "Two-factor interactions on “{{response}}”",
+      "interactionDescription": "Mean response at combinations of two factors' levels.",
+      "low": "low",
+      "high": "high",
+      "center": "centre",
+      "mainLegend": "Line: mean response at the low and high levels; square: mean of the centre points. In fractional designs the means reflect the aliasing.",
+      "interactionLegend": "Non-parallel lines suggest an interaction. In fractional designs the means reflect the aliasing.",
+      "opTitle": "Observed vs predicted for “{{response}}”",
+      "opDescription": "Observed values against the model's predictions, with the y = x line.",
+      "opX": "Predicted",
+      "opY": "Observed",
+      "opLegend": "Points near the line indicate a good fit; systematic departures indicate lack of fit.",
+      "atLevel": "{{factor}} = {{level}}"
+    },
+    "export": {
+      "effectsCsv": "Effects (CSV)"
+    }
   }
 }

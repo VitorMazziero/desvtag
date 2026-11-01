@@ -140,6 +140,20 @@
       "run": "Comparar tratamentos",
       "needFactor": "Cadastre um fator (por exemplo, a condição testada) para definir os grupos.",
       "needLevels": "Informe os níveis do fator na aba de variáveis ou digite os dados: são necessários pelo menos dois grupos."
+    },
+    "design": {
+      "title": "Análise: planejamento de dois níveis",
+      "intro": "Estima efeitos e coeficientes na escala codificada (−1, +1), com Pareto, efeitos principais, interações e observado × predito. Sem graus de liberdade do erro, só o método de Lenth indica efeitos ativos, e é rotulado como tal.",
+      "needDesign": "Gere o planejamento na etapa de dados (ou abra um projeto que o contenha).",
+      "model": "Termos do modelo",
+      "modelMain": "Somente efeitos principais",
+      "modelTwoFactor": "Efeitos principais e interações de dois fatores",
+      "modelCustom": "Personalizado",
+      "modelHelp": "Termos confundidos entre si (fracionários) aparecem como não estimáveis.",
+      "termsLegend": "Termos",
+      "curvature": "Testar curvatura (pontos centrais)",
+      "curvatureUnavailable": "O planejamento não tem pontos centrais.",
+      "run": "Analisar planejamento"
     }
   },
   "project": {
@@ -201,7 +215,8 @@
       "import": "importação",
       "analysis": "análise",
       "manualSave": "salvamento",
-      "restore": "restauração"
+      "restore": "restauração",
+      "design": "geração do planejamento"
     }
   },
   "import": {
@@ -241,5 +256,68 @@
     "tooLarge": "Arquivo grande demais para importar.",
     "formulaNote": "Planilhas: só os valores armazenados são lidos; fórmulas nunca são executadas.",
     "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta."
+  },
+  "design": {
+    "title": "Planejamento do experimento",
+    "intro": "Gera a matriz de ensaios de dois níveis para triagem de fatores. Cada fator precisa ser quantitativo, com um nível baixo e um alto. A contagem de ensaios aparece antes de gerar.",
+    "needFactors": "Cadastre pelo menos dois fatores quantitativos (com nome) na etapa anterior.",
+    "categoricalIgnored": "Fatores categóricos não entram no planejamento de dois níveis: {{names}}.",
+    "levelsTitle": "Níveis dos fatores",
+    "low": "Nível baixo",
+    "high": "Nível alto",
+    "levelsInvalid": "O nível baixo precisa ser menor que o alto (números).",
+    "budget": "Orçamento máximo de ensaios (opcional)",
+    "budgetHelp": "Considera só o planejamento básico, sem réplicas nem pontos centrais.",
+    "optionsTitle": "Opções para {{count}} fatores",
+    "candidate": "{{runs}} ensaios",
+    "recommended": "recomendado",
+    "overBudget": "acima do orçamento",
+    "resolution": "resolução {{resolution}}",
+    "noResolution": "sem confundimento",
+    "kind": {
+      "fullFactorial": "Fatorial completo",
+      "fractional": "Fracionário {{generators}}",
+      "plackettBurman": "Plackett–Burman"
+    },
+    "replicates": "Repetições do planejamento",
+    "replicatesHelp": "Cada repetição refaz todos os ensaios. São réplicas experimentais apenas se cada ensaio for um novo preparo independente.",
+    "centerPoints": "Pontos centrais",
+    "centerHelp": "Permitem testar curvatura. Com um só ponto central não há estimativa de erro por eles.",
+    "randomize": "Aleatorizar a ordem de execução",
+    "seed": "Semente da aleatorização",
+    "seedHelp": "A mesma semente produz a mesma ordem no Windows e no navegador.",
+    "newSeed": "Nova semente",
+    "count": "Total: {{total}} ensaios ({{base}} do planejamento × {{replicates}} + {{centers}} centrais)",
+    "countError": "Não foi possível contar os ensaios.",
+    "generate": "Gerar planejamento",
+    "regenerate": "Gerar novamente",
+    "confirmReplace": "Substituir os ensaios atuais pela nova matriz? Os dados atuais permanecem no histórico de versões.",
+    "generated": "Planejamento gerado: {{total}} ensaios. Preencha as respostas na grade abaixo.",
+    "matrix": {
+      "title": "Matriz de ensaios",
+      "view": "Valores",
+      "real": "Reais",
+      "coded": "Codificados (−1, 0, +1)",
+      "run": "Ordem de execução",
+      "standard": "Ordem padrão",
+      "point": "Tipo",
+      "factorial": "fatorial",
+      "center": "central",
+      "replicate": "Repetição",
+      "exportCsv": "Baixar matriz (CSV)",
+      "exported": "Matriz exportada: {{name}}",
+      "cancelled": "Exportação cancelada.",
+      "failed": "Não foi possível exportar a matriz."
+    },
+    "properties": {
+      "title": "Propriedades",
+      "relation": "Relação definidora",
+      "resolution": "Resolução {{resolution}}",
+      "aliases": "Confundimento (efeitos principais e interações de dois fatores)",
+      "aliasesHelp": "Efeitos na mesma linha não podem ser separados por este planejamento: o que se estima é a soma.",
+      "pbPartial": "Plackett–Burman: efeitos principais confundidos parcialmente com interações de dois fatores (correlação absoluta máxima {{value}}).",
+      "dummy": "{{count}} colunas fictícias (contrastes não usados por fatores): ficam como graus de liberdade do erro.",
+      "algorithm": "Aleatorização: {{algorithm}}, semente {{seed}}."
+    }
   }
 }

@@ -39,7 +39,16 @@ factorId?: StableId,
 /**
  * Nível de significância da comparação (ausente nas análises descritivas).
  */
-alpha?: number, };
+alpha?: number, 
+/**
+ * Termos do modelo de um planejamento de dois níveis: cada termo é a lista dos fatores que o
+ * compõem (um = efeito principal; dois ou mais = interação).
+ */
+terms?: Array<Array<StableId>>, 
+/**
+ * Incluir o termo de curvatura (planejamentos com pontos centrais).
+ */
+includeCurvature?: boolean, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
@@ -85,7 +94,7 @@ result: AnalysisResult, };
 /**
  * Resultado guardado, por método.
  */
-export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult;
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult;
 
 /**
  * Linha da tabela.
@@ -170,6 +179,31 @@ export type BytesRequest = {
  * Conteúdo do arquivo em base64.
  */
 bytesBase64: string, };
+
+/**
+ * Uma opção de planejamento.
+ */
+export type Candidate = { 
+/**
+ * Tipo, pronto para compor a especificação.
+ */
+kind: DesignKind, 
+/**
+ * Ensaios do planejamento básico.
+ */
+baseRuns: number, 
+/**
+ * Resolução (`None` no fatorial completo, que não confunde efeitos).
+ */
+resolution: number | null, 
+/**
+ * Cabe no orçamento informado.
+ */
+withinBudget: boolean, 
+/**
+ * É a opção recomendada.
+ */
+recommended: boolean, };
 
 /**
  * Capacidades do motor: hoje, apenas a lista de métodos.
@@ -451,6 +485,28 @@ generators: Array<string>, } | { "type": "plackettBurman",
 runs: number, };
 
 /**
+ * Lista de opções (envelope serializável do resultado).
+ */
+export type DesignOptions = { 
+/**
+ * Opções em ordem crescente de ensaios.
+ */
+candidates: Array<Candidate>, };
+
+/**
+ * Pedido de opções de planejamento.
+ */
+export type DesignRecommendRequest = { 
+/**
+ * Número de fatores.
+ */
+factors: number, 
+/**
+ * Orçamento de ensaios do planejamento básico, se houver.
+ */
+maxRuns: number | null, };
+
+/**
  * Um ensaio.
  */
 export type DesignRun = { 
@@ -504,9 +560,9 @@ centerPoints: number,
  */
 randomize: boolean, 
 /**
- * Semente da aleatorização (registrada no resultado).
+ * Semente da aleatorização (registrada no resultado); inteiro de até 2⁵³ − 1 na interface.
  */
-seed: bigint, };
+seed: number, };
 
 /**
  * Distribuição e seus parâmetros.
@@ -759,6 +815,11 @@ entryPath: EntryPath | null,
  * A coluna de unidade experimental está visível na grade.
  */
 showUnitColumn: boolean, 
+/**
+ * Planejamento de dois níveis gerado para este experimento (caminho "Planejar experimento");
+ * a matriz é regenerada de forma determinística a partir da especificação e da semente.
+ */
+design?: DesignSpec, 
 /**
  * Seleção atual de resposta e agrupamento.
  */
@@ -1478,12 +1539,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Sucesso ou falha.
@@ -1860,7 +1921,7 @@ contentHash: string, };
 /**
  * Motivo da revisão.
  */
-export type RevisionReason = "created" | "edit" | "import" | "analysis" | "manualSave" | "restore";
+export type RevisionReason = "created" | "edit" | "import" | "analysis" | "manualSave" | "restore" | "design";
 
 /**
  * Uma linha de observação, com o texto de cada célula.

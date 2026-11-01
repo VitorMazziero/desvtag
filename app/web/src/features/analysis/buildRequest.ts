@@ -67,14 +67,41 @@ export function buildDataset(state: ProjectState): { dataset: Dataset; cellError
   return { dataset, cellErrors };
 }
 
-/** O caminho "Comparar tratamentos" executa a comparação de um fator; os demais, o resumo descritivo. */
-export function analysisKind(state: ProjectState): "descriptive" | "oneWay" {
-  return state.path === "compare" ? "oneWay" : "descriptive";
+export type AnalysisKind = "descriptive" | "oneWay" | "design";
+
+/**
+ * "Comparar tratamentos" executa a comparação de um fator; "Planejar experimento", a análise do
+ * planejamento de dois níveis; "Analisar dados existentes", o resumo descritivo.
+ */
+export function analysisKind(state: ProjectState): AnalysisKind {
+  return state.path === "compare" ? "oneWay" : state.path === "plan" ? "design" : "descriptive";
+}
+
+/** Termos do modelo do planejamento: os escolhidos ou, por padrão, os efeitos principais. */
+export function designTermIds(state: ProjectState): string[][] {
+  if (state.analysis.designTerms) return state.analysis.designTerms;
+  return (state.design?.factors ?? []).map((f) => [f.id]);
 }
 
 export function buildOperation(state: ProjectState, dataset: Dataset): Operation | null {
   const responseId = state.analysis.responseId;
   if (responseId === null) return null;
+  if (analysisKind(state) === "design") {
+    if (state.design === null) return null;
+    return {
+      type: "designAnalyze",
+      dataset,
+      responseId,
+      spec: state.design,
+      terms: designTermIds(state).map((ids) =>
+        ids.length === 1
+          ? { type: "main", factorId: ids[0] as string }
+          : { type: "interaction", factorIds: ids },
+      ),
+      alpha: state.analysis.alpha,
+      includeCurvature: state.analysis.includeCurvature,
+    };
+  }
   if (analysisKind(state) === "oneWay") {
     const factorId = state.analysis.factorId;
     if (factorId === null) return null;
@@ -86,6 +113,16 @@ export function buildOperation(state: ProjectState, dataset: Dataset): Operation
 /** Assinatura dos dados e opções: muda quando qualquer entrada do resultado muda. */
 export function inputSignature(state: ProjectState): string {
   const { dataset } = buildDataset(state);
+  if (analysisKind(state) === "design")
+    return JSON.stringify([
+      "design",
+      dataset,
+      state.analysis.responseId,
+      state.design,
+      designTermIds(state),
+      state.analysis.alpha,
+      state.analysis.includeCurvature,
+    ]);
   if (analysisKind(state) === "oneWay")
     return JSON.stringify([
       "oneWay",

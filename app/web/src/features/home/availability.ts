@@ -5,7 +5,7 @@ import type { EntryPath } from "../../state/project";
 
 /** Métodos que cada caminho precisa; ids reservados para as etapas indicadas. */
 export const REQUIRED_METHODS: Record<EntryPath, string[]> = {
-  plan: ["plackett_burman_design"], // ET06
+  plan: ["two_level_design"],
   analyze: ["descriptive_summary"],
   compare: ["one_way_comparison"],
 };

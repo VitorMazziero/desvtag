@@ -66,7 +66,8 @@ pub struct DesignSpec {
     pub center_points: u32,
     /// Aleatorizar a ordem de execução.
     pub randomize: bool,
-    /// Semente da aleatorização (registrada no resultado).
+    /// Semente da aleatorização (registrada no resultado); inteiro de até 2⁵³ − 1 na interface.
+    #[ts(type = "number")]
     pub seed: u64,
 }
 
