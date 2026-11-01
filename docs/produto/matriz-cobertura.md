@@ -22,7 +22,7 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Fatorial fracionário (FFD): geradores, resolução, confundimento | F05 | v0.1 | ET06 | não iniciado | — |
 | Plackett–Burman (PB) | F05 | v0.1 | ET06 | não iniciado | — |
 | Réplicas, pontos centrais, codificação real/codificada, aleatorização com semente | F05 | v0.1 | ET06 | não iniciado | — |
-| DIC — delineamento inteiramente casualizado | F04/F05 | v0.1 | ET05, ET06 | não iniciado | — |
+| DIC — delineamento inteiramente casualizado | F04/F05 | v0.1 | ET05, ET06 | em andamento: análise do DIC (ANOVA, Tukey, letras) implementada e validada na ET05; geração do planejamento na ET06 | [exemplo 01](../../examples/01-enzimas-quatro-condicoes/README.md), [ANOVA](../metodos/anova-um-fator.md#10-validação) |
 | Composto central rotacional (DCCR/CCRD) | F06 | v0.1 | ET07 | não iniciado | — |
 | Composto central de face centrada (FCD) | F06 | v0.1 | ET07 | não iniciado | — |
 | Opção rotulada CCD no Protimiza (após conferência) | F06 | v0.1 | ET06, ET07 | não iniciado | — |
@@ -42,8 +42,8 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Regressão linear: termos, interações, quadráticos, estimabilidade, predição | F03/F06 | v0.1 | ET04, ET07 | implementado e validado numericamente na ET04 (11 conjuntos NIST StRD, 6 casos contra NumPy/SciPy; nativo e WebAssembly); uso em superfícies (ET07) e Windows pendentes | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
 | ANOVA da regressão e intervalos | F03 | v0.1 | ET04 | implementado; validado numericamente (nativo e WebAssembly); Windows pendente | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
 | Resíduos, alavancagem e influência | F03 | v0.1 | ET04 | implementado; validado numericamente contra NumPy/SciPy e por propriedades (leave-one-out); Windows pendente | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
-| ANOVA de um fator, CV e tamanho de efeito | F04 | v0.1 | ET05 | não iniciado | — |
-| Diagnóstico de resíduos e homogeneidade na comparação | F04 | v0.1 | ET05 | não iniciado | — |
+| ANOVA de um fator, CV e tamanho de efeito | F04 | v0.1 | ET05 | implementado; validado numericamente (11 conjuntos NIST StRD a 15 dígitos; nativo e WebAssembly); Windows pendente | [método](../metodos/anova-um-fator.md#10-validação), [casos](../../validation/cases/one_way_comparison/README.md) |
+| Diagnóstico de resíduos e homogeneidade na comparação | F04 | v0.1 | ET05 | implementado (Brown–Forsythe, resíduos padronizados, QQ, razão de desvios; sem selo de validade); validado contra SciPy/NumPy; Windows pendente | [método](../metodos/anova-um-fator.md#2-pressupostos-e-estruturas-compatíveis), [casos](../../validation/cases/one_way_comparison/README.md) |
 | Análise de efeitos, curvatura e desenhos saturados | F05 | v0.1 | ET06 | não iniciado | — |
 | Falta de ajuste e erro puro | F06 | v0.1 | ET07 | não iniciado | — |
 | ANOVA multifatorial geral com interações e médias marginais | F08 | posterior | — | não iniciado | — |
@@ -57,9 +57,9 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
-| Distribuição da amplitude studentizada | F04 | v0.1 | ET05 | não iniciado | — |
-| Tukey e Tukey–Kramer | F04 | v0.1 | ET05 | não iniciado | — |
-| Letras de comparação no gráfico | F04 | v0.1 | ET05 | não iniciado | — |
+| Distribuição da amplitude studentizada | F04 | v0.1 | ET05 | implementado; validado numericamente (432 pontos SciPy e 10 mpmath; erro absoluto 5e-13; nativo e WebAssembly); Windows pendente | [método](../metodos/amplitude-studentizada.md#10-validação), [caso](../../validation/cases/studentized_range/001-grade-scipy-mpmath/README.md) |
+| Tukey e Tukey–Kramer | F04 | v0.1 | ET05 | implementado; validado numericamente contra SciPy (p ajustado a 1e-10, intervalos a 1e-9); nativo e WebAssembly; Windows pendente | [método](../metodos/tukey.md#10-validação), [casos](../../validation/cases/one_way_comparison/README.md) |
+| Letras de comparação no gráfico | F04 | v0.1 | ET05 | implementado; validado por propriedade (até 60 grupos) e contra cliques maximais independentes; nativo e WebAssembly; Windows pendente | [método](../metodos/letras-comparacao.md#8-validação) |
 | Dunnett | F08 | posterior | — | não iniciado | — |
 | Games–Howell | F08 | posterior | — | não iniciado | — |
 | Bonferroni e Holm | F08 | posterior | — | não iniciado | — |
@@ -80,9 +80,9 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
-| Médias com incerteza nomeada e letras | F04 | v0.1 | ET05 | não iniciado | — |
-| Boxplot | F04 | v0.1 | ET05 | não iniciado | — |
-| Resíduos e diagnóstico | F04 | v0.1 | ET05 | não iniciado | — |
+| Médias com incerteza nomeada e letras | F04 | v0.1 | ET05 | implementado (SVG próprio, três temas, PT/EN, axe; verificação visual); Windows pendente | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
+| Boxplot | F04 | v0.1 | ET05 | implementado (quartis do tipo 7 validados contra NumPy); Windows pendente | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
+| Resíduos e diagnóstico | F04 | v0.1 | ET05 | implementado (resíduos × ajustados e QQ, com pontos validados contra SciPy); Windows pendente | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
 | Efeitos principais e interações | F05 | v0.1 | ET06 | não iniciado | — |
 | Pareto | F05 | v0.1 | ET06 | não iniciado | — |
 | Observado × predito | F05 | v0.1 | ET06 | não iniciado | — |
@@ -98,14 +98,14 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Português e inglês | F01 | v0.1 | ET01, ET02 | implementado para as funcionalidades da ET02 (paridade de chaves e de plural testada); cada etapa seguinte estende | [U17](../modulos/u17-idiomas.md) |
 | Temas Soft Light, Modern Dark e Professional | F01 | v0.1 | ET01, ET02 | implementado para os componentes da ET02 (contraste e axe nos três temas); cada etapa seguinte estende | [U18](../modulos/u18-temas-e-acessibilidade.md) |
 | Tela inicial, três entradas e fluxo guiado | F01 | v0.1 | ET02 | implementado (E2E em Chromium e Firefox; sem projetos recentes até a ET03); Windows pendente | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
-| Explicações curtas (conclusão, evidência, próximo passo) | F01–F07 | v0.1 | ET02–ET08 | em andamento: descritiva (ET02) | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
+| Explicações curtas (conclusão, evidência, próximo passo) | F01–F07 | v0.1 | ET02–ET08 | em andamento: descritiva (ET02) e comparação de tratamentos (ET05) | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso), [ET05](../planos-execucao/ativos/et05-anova-tukey-letras.md#11-registro-de-progresso) |
 | Digitação e colagem do Excel | F01/F02 | v0.1 | ET02, ET03 | implementado (grade e colagem com vírgula decimal e erros por célula); importação de arquivos na ET03 | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
 | Importação CSV e XLSX com prévia | F02 | v0.1 | ET03 | implementado (CSV/TSV/TXT em TypeScript; XLSX em Rust validado contra openpyxl nativo e WASM); Windows pendente | [U05](../modulos/u05-importacao.md), [caso XLSX](../../validation/cases/import_xlsx/001-acentos-virgula-ausentes-formula/README.md) |
 | Importação de matrizes externas | F02 | v0.1 | ET03 | implementado (mapeamento de colunas; nunca deduz o planejamento pelo nome do arquivo) | [U05](../modulos/u05-importacao.md) |
 | Projeto `.enzitag`, vários experimentos, revisões | F02 | v0.1 | ET03 | implementado; formato validado contra arquivos escritos em Python (Rust, WASM e IPC nativo em Linux); migração real inexistente (esquema 1); reabertura Windows ↔ navegador pendente | [formato](../arquitetura/formato-enzitag.md), [casos](../../validation/cases/project_file/README.md) |
 | Recuperação automática e checkpoints | F02 | v0.1 | ET03 | implementado (2 s, IndexedDB, três estados distintos; revisões nas operações); Windows pendente | [DT-0008](../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md), [U13](../modulos/u13-armazenamento-e-recuperacao.md) |
-| Figuras SVG e PNG | F04/F10 | v0.1 | ET05, ET09 | não iniciado | — |
-| Tabelas CSV e XLSX | F04/F10 | v0.1 | ET05, ET09 | não iniciado | — |
+| Figuras SVG e PNG | F04/F10 | v0.1 | ET05, ET09 | em andamento: exportação das figuras da comparação com proveniência (ET05; SVG e PNG verificados byte a byte); demais figuras e personalização na ET09 | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
+| Tabelas CSV e XLSX | F04/F10 | v0.1 | ET05, ET09 | em andamento: CSV das tabelas da comparação com proveniência (ET05); XLSX e demais tabelas na ET09 | [ficha](../modulos/u07-u09-u16-comparacao-resultados-e-exportacao.md) |
 | Relatório HTML | F10 | v0.1 | ET09 | não iniciado | — |
 | Personalização gráfica essencial | F10 | v0.1 | ET09 | não iniciado | — |
 | Figuras e relatórios em PDF; personalização completa | F10 | posterior | — | não iniciado | — |

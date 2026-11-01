@@ -42,14 +42,17 @@ ProjectDocument
 └─ experiments[]
    ├─ id, name, entryPath ("plan" | "analyze" | "compare" | null)
    ├─ showUnitColumn, notes
-   ├─ analysisSelection { responseId, groupBy[] }
+   ├─ analysisSelection { responseId, groupBy[], factorId?, alpha? }
    ├─ revisions[]       instantâneos imutáveis, da mais antiga para a mais recente
    │  └─ id, parent, createdAt, reason, contentHash, data
    │     └─ data = { factors[], responses[], rows[] }   (TEXTO das células)
    └─ analyses[]
       └─ id, createdAt, revisionId, signature, methodId, methodVersion, engineVersion,
-         options { responseId, groupBy[] }, result { type: "descriptive", ... }
+         options { responseId, groupBy[], factorId?, alpha? },
+         result { type: "descriptive" | "oneWayComparison", ... }
 ```
+
+`factorId` e `alpha` só existem nas comparações de tratamentos (ET05) e são **omitidos** nas análises descritivas, de modo que arquivos já escritos continuam idênticos e legíveis. O resultado `oneWayComparison` guarda o `OneWayResult` completo (grupos, ANOVA, Tukey, letras, diagnósticos, fatos e proveniência). O esquema segue `1`: as adições são campos opcionais e uma variante nova do resultado ([DT-0010](../decisoes-tecnicas/dt-0010-comparacao-de-tratamentos.md), item 8); uma versão anterior do aplicativo recusa, com diagnóstico, um arquivo que contenha a variante que não conhece.
 
 Regras:
 

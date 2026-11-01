@@ -22,3 +22,7 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Funções especiais](funcoes-especiais.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Distribuições Normal, t, qui-quadrado e F](distribuicoes.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Regressão linear](regressao-linear.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Amplitude studentizada](amplitude-studentizada.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [ANOVA de um fator](anova-um-fator.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Tukey e Tukey–Kramer](tukey.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Letras de comparação](letras-comparacao.md) | implementado; validado semanticamente e contra referência independente |

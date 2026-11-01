@@ -68,6 +68,7 @@ def main():
                       "scipy": scipy.__version__, "mpmath": mp.__version__},
     }
     (OUT / "expected.json").write_text(json.dumps(expected, indent=1) + "\n")
+    # O README do caso é mantido à mão (descreve a tolerância e a verificação com mpmath).
     print(len(points), "pontos;", len(checks), "verificações mpmath")
     for c, (k, df, level) in zip(checks, MP_POINTS):
         sc = float(stats.studentized_range.cdf(float(c["q"]), k, df))

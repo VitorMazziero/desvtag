@@ -28,7 +28,7 @@ Define o protocolo entre a interface e o motor e o despacho das operações. **N
 
 - `handle_json(&str) -> String`: entrada única dos adaptadores.
 - `handle_request(&EngineRequest) -> EngineResponse`.
-- Operações: `engineInfo` (versões e capacidades), `descriptiveSummarize` (resumo descritivo), `modelFitLinear` (ajuste linear, ANOVA da regressão e diagnósticos; resultado em caixa), `distributionEvaluate` (lote de `cdf`, `sf` e quantis), `projectEncode`/`projectDecode` (arquivo `.enzitag` em base64) e `importXlsx` (grade de texto de uma planilha).
+- Operações: `engineInfo` (versões e capacidades), `descriptiveSummarize` (resumo descritivo), `comparisonOneWay` (ANOVA de um fator, Tukey, letras e diagnósticos; resultado em caixa), `modelFitLinear` (ajuste linear, ANOVA da regressão e diagnósticos; resultado em caixa), `distributionEvaluate` (lote de `cdf`, `sf` e quantis), `projectEncode`/`projectDecode` (arquivo `.enzitag` em base64) e `importXlsx` (grade de texto de uma planilha).
 - Erros: `invalidRequest`, `unsupportedProtocolVersion` (`expected`, `received`), `invalidInput`, `invalidProject` e `invalidImport` (os três últimos com `issues` codificados).
 
 ## 4. Fluxo de dados
