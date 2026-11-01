@@ -63,7 +63,7 @@ Gráficos personalizáveis e exportações da v0.1 para todas as análises dispo
 
 ## 7. Critérios de conclusão
 
-1. [x] Todos os formatos da v0.1 abrem corretamente e correspondem à análise salva. *Evidência:* E2E de exportação (XLSX com `PK` e planilhas; CSV em dois formatos; relatório; SVG/PNG), XLSX lido por openpyxl e aberto no LibreOffice (conversão e captura), ida e volta no importador do motor (`export.parity.test.ts`), verificação nativa (`exportXlsx` via IPC do Tauri). **Limite:** abertura manual no Microsoft Excel não registrada.
+1. [x] Todos os formatos da v0.1 abrem corretamente e correspondem à análise salva. *Evidência:* E2E de exportação (XLSX com `PK` e planilhas; CSV em dois formatos; relatório; SVG/PNG), XLSX lido por openpyxl e aberto no LibreOffice (conversão e captura), ida e volta no importador do motor (`export.parity.test.ts`), verificação nativa (`exportXlsx` via IPC do Tauri em Linux e em `windows-latest`, execução 41341992701). **Limite:** abertura manual no Microsoft Excel não registrada.
 2. [x] Arquivos exportados contêm método, configuração, revisão e versão. *Evidência:* E2E (`# methodId`, `# revisionId`, planilha *Proveniência*, tabela de proveniência do relatório, `<metadata>` do SVG, `tEXt` do PNG).
 3. [ ] A incerteza representada está sempre nomeada; letras manuais aparecem como anotações. *Evidência parcial:* a incerteza é sempre nomeada (ET05–ET07; teste E2E do SVG). **Pendente:** não existem letras manuais nem anotações (não há edição por figura).
 4. [x] A exportação em inglês com interface em português (e vice-versa) foi verificada. *Evidência:* E2E `export-flow.spec.ts` nas duas direções, Chromium e Firefox.
@@ -93,9 +93,9 @@ Fichas, DTs, `docs/guias/exportacao.md` (novo) e [matriz de cobertura](../../pro
 | 2026-11-01 | **Defeito encontrado e corrigido na inspeção do relatório:** a evidência da ANOVA da superfície aparecia como `{{mean}}` (chave sem o prefixo `surface.`) também na tela desde a ET07; corrigido e coberto por asserção (`Regression ANOVA: F =`, ausência de `{{`). |
 | 2026-11-01 | **Testes:** 227 unitários (web), 49 do `optima-project`, E2E de exportação (XLSX, CSV Excel, relatório PT→EN e EN→PT, paleta, axe nos 3 temas com paleta acessível) e suíte completa em Chromium e Firefox; verificação nativa Linux com `exportXlsx` (aprovada). |
 | 2026-11-01 | **Inspeção visual:** relatório HTML do exemplo 04 em PT e EN (capturas de página inteira: proveniência, tabelas, equações, contorno, superfície 3D, observado × previsto, candidatos e compromissos legíveis; seção "Exportar" vazia removida); XLSX de candidatos e coeficientes abertos no LibreOffice (cabeçalho em negrito, números como números, planilha *Proveniência*; colunas estreitas corrigidas com larguras automáticas). |
-| 2026-11-01 | **Windows:** execução de CI com `exportXlsx` na verificação nativa pendente (será disparada após o commit). |
+| 2026-11-01 | **Windows:** execução [41341992701](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41341992701) (commit `bfab182`) aprovada em todos os jobs, inclusive `Tauri (build no Windows)` com a verificação nativa de `exportXlsx` (`windows-latest` = Windows Server 2025; não é Windows 11). |
 
-**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01, T04–T08 concluídas; T02/T03 e o critério 3 pendentes (lacuna registrada, aguarda decisão do usuário); CI do Windows com `exportXlsx` por executar. Próxima etapa: ET10 (integração, verificação e publicação — sem publicar; PD-15 depende do usuário).
+**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01, T04–T08 concluídas; T02/T03 e o critério 3 pendentes (lacuna registrada, aguarda decisão do usuário); CI (incl. Windows) aprovada no commit `bfab182`. Próxima etapa: ET10 (integração, verificação e publicação — sem publicar; PD-15 depende do usuário).
 
 ## 12. Desvios e descobertas
 
@@ -105,4 +105,4 @@ Fichas, DTs, `docs/guias/exportacao.md` (novo) e [matriz de cobertura](../../pro
 - **Preferências não vão ao `.enzitag`** (esquema permanece 1; [DT-0014](../../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md), item 5).
 - **Relatório sem o editor de otimização:** a otimização entra como estado, fatos, convergência, candidatos e compromissos.
 - **Excel não testado manualmente;** LibreOffice (conversão e captura) e openpyxl foram usados.
-- **Verificação em Windows:** apenas `windows-latest` (Windows Server 2025), quando executada; Windows 11 permanece pendente como nas demais etapas.
+- **Verificação em Windows:** apenas `windows-latest` (Windows Server 2025); Windows 11 permanece pendente como nas demais etapas.

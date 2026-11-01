@@ -37,7 +37,7 @@ Este relatório distingue o que **foi executado e tem evidência** do que **perm
 | `vitest` (inclui paridade WASM × referências) | 227 aprovados |
 | Playwright (motor WASM real, Chromium e Firefox) | 126 testes aprovados (63 em cada navegador), 0 falhas |
 | Verificação nativa Linux (WebDriver sob Xvfb, IPC do Tauri) | aprovada, inclusive `exportXlsx` |
-| CI (GitHub Actions): Rust, Web, Tauri Linux, Tauri **Windows (`windows-latest`)**, documentação | execução 41339828071 (commit `5e5a375`) aprovada nos cinco jobs; execução do commit `bfab182`: ver [CI](#ci) |
+| CI (GitHub Actions): Rust, Web, Tauri Linux, Tauri **Windows (`windows-latest`)**, documentação | execução 41339828071 (commit `5e5a375`) aprovada nos cinco jobs; execução 41341992701 (commit `bfab182`) também aprovada, ver [CI](#ci) |
 | Build estática sob `/enzitag-optima/` (Chromium e Firefox) | motor WASM e Worker carregam; sem erros no console |
 
 ### E2E
@@ -46,7 +46,7 @@ Este relatório distingue o que **foi executado e tem evidência** do que **perm
 
 ### CI
 
-O fluxo `CI` roda Rust, Web (E2E), Tauri em Linux, Tauri em `windows-latest` e documentação. O commit `bfab182` (ET09) foi disparado; o resultado do job do Windows com a verificação nativa de `exportXlsx` é registrado no plano da [ET09](../../../docs/planos-execucao/ativos/et09-graficos-exportacao.md) quando concluir.
+O fluxo `CI` roda Rust, Web (E2E), Tauri em Linux, Tauri em `windows-latest` e documentação. A execução [41341992701](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41341992701) (commit `bfab182`, ET09) foi aprovada em todos os jobs, inclusive o do Windows com a verificação nativa de `exportXlsx`. Os commits posteriores contêm apenas documentação e a medição de desempenho (teste ignorado).
 
 ## Validação numérica (referências independentes)
 
