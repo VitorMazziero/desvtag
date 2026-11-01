@@ -129,7 +129,7 @@ Executado em 2026-11-01 no **Windows 10 Pro 22H2 (build 19045, 64 bits)** da má
 |---|---|
 | Ferramentas de compilação C++ (MSVC) | Visual Studio Community 2026 com a carga de trabalho de C++ |
 | WebView2 | Já presente (156.0.4314.58) |
-| Rust 1.97.0 | `rustup-init` oficial (`rust-toolchain.toml` instala o alvo `wasm32-unknown-unknown`) |
+| Rust 1.97.0 | `rustup-init` oficial (`rust-toolchain.toml` instala o alvo `wasm32-unknown-unknown`); depois movido para `D:\Arquivos_de_Programas\Rust` ([limpeza local](limpeza-local.md#evitar-que-o-onedrive-sincronize-as-pastas-pesadas)) |
 | Node 22 | `node-v22.23.4-win-x64.zip` de nodejs.org (a versão do `.nvmrc`); o `winget install OpenJS.NodeJS.LTS` instala o Node 26, que o projeto ainda não usa ([DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) |
 | `wasm-bindgen-cli` 0.2.130 | `cargo install wasm-bindgen-cli --version 0.2.130 --locked` |
 
@@ -141,6 +141,6 @@ $env:TAURI_CONFIG='{"bundle":{"createUpdaterArtifacts":false}}'; npm --prefix ..
 
 O instalador de release (com `.sig` para o atualizador) exige `TAURI_SIGNING_PRIVATE_KEY` e `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` no ambiente e é gerado pelo fluxo `release.yml`.
 
-Dica: as pastas `target/` (Rust) e `node_modules/` ocupam gigabytes; se o repositório estiver em uma pasta sincronizada (OneDrive), exclua-as da sincronização (ou defina `CARGO_TARGET_DIR` fora dela).
+Dica: as pastas de compilação ocupam gigabytes. Em uma pasta sincronizada (OneDrive), mova o Rust e a pasta `target` para fora dela e use o [protocolo de limpeza local](limpeza-local.md).
 
 Diferenças encontradas ao rodar no Windows (já corrigidas no repositório): testes que montavam caminhos de arquivo com `URL.pathname` e um filtro de casos de validação que usava `/` em vez do separador do sistema.
