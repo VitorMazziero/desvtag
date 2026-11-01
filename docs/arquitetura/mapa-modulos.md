@@ -59,13 +59,13 @@ Os arquivos com múltiplos métodos, como `adjustments.rs`, podem ser subdividid
 
 | ID | Caminhos previstos | Responsabilidade |
 |---|---|---|
-| P01 | `app/crates/optima-project/src/{document,experiment,analysis,revision,annotation,attachment}.rs` | Documento com vários experimentos, revisões e análises imutáveis vinculadas aos dados |
+| P01 | `app/crates/optima-project/src/{document,experiment,analysis,revision}.rs` (`annotation` e `attachment` não criados: sem uso na v0.1) | Documento com vários experimentos, revisões e análises imutáveis vinculadas aos dados |
 | P02 | `app/crates/optima-project/src/{archive,manifest,schema,integrity}.rs` | Codificação/decodificação `.enzitag` em bytes, versão de esquema e integridade; sem abrir arquivos do sistema |
-| P03 | `app/crates/optima-project/src/migrations/{mod,v001}.rs` | Migrações explícitas e preservação de resultados; acrescentar versões apenas quando houver mudanças reais |
+| P03 | `app/crates/optima-project/src/migrations/mod.rs` | Migrações explícitas e preservação de resultados; `v001.rs` e seguintes só quando houver mudança real de esquema |
 | E01 | `app/crates/optima-engine/src/{request,response,dispatch,capabilities}.rs` | API comum: validar, resumir, gerar planejamento, ajustar, comparar, diagnosticar, predizer, otimizar e operar documento |
 | E02 | `app/crates/optima-engine/src/{jobs,cancellation,events}.rs` | Identidade da tarefa, checkpoints de cancelamento e progresso; sem scheduler específico de plataforma |
 | E03 | `app/crates/optima-wasm/src/lib.rs` | Transporte do texto JSON do engine para JS; mesma semântica de erros e resultados. `conversion.rs`/`errors.rs` só se surgir necessidade (ET01 não precisou) |
-| E04 | `app/desktop/src-tauri/src/{commands,jobs,files,auth,updater}.rs` | Transporte nativo, tarefas fora da thread da UI, salvamento seguro e recursos Windows |
+| E04 | `app/desktop/src-tauri/src/{commands,jobs,files}.rs` (ET03); `auth.rs` (Drive) e `updater.rs` (ET10) depois | Transporte nativo, tarefas fora da thread da UI, salvamento seguro e recursos Windows |
 
 ## Interface compartilhada e integrações
 
@@ -77,7 +77,7 @@ Todos os caminhos abaixo começam em **`app/web/src/`**, salvo indicação contr
 | U02 | `features/workflow/{index.ts,Workflow.tsx,steps.ts,guards.ts}` | Cinco etapas, navegação contextual e etapas satisfeitas/invalidadas |
 | U03 | `features/experiment/{index.ts,FactorEditor.tsx,ResponseEditor.tsx}` (ET02); `StructureEditor.tsx` na ET03 | Fatores, respostas, unidades experimentais, blocos, tempos e réplicas |
 | U04 | `features/data/{index.ts,DataGrid.tsx,columnRoles.ts,editing.ts}` | Tabela, edição e erros por célula; alterações geram revisão e invalidam resultados dependentes |
-| U05 | `features/import/{index.ts,ImportWizard.tsx,preview.ts,mapping.ts}`; `services/import/{csv,xlsx,clipboard,normalize}.ts` | Leitura e normalização, prévia e confirmação de papéis; não calcula estatística |
+| U05 | `features/import/{index.ts,ImportWizard.tsx,ImportButton.tsx,mapping.ts}`; `services/import/csv.ts` (XLSX pelo motor: `app/crates/optima-project/src/xlsx.rs`; colagem em `features/data/editing.ts`) | Leitura e normalização, prévia e confirmação de papéis; não calcula estatística |
 | U06 | `features/design/{index.ts,DesignSelector.tsx,DesignOptions.tsx,RunMatrix.tsx}` | Escolha, condições, contagem de ensaios e matriz; recebe capacidades do motor |
 | U07 | `features/analysis/{index.ts,AnalysisSetup.tsx,buildRequest.ts}` (ET02); `ModelTerms.tsx` e `ComparisonSetup.tsx` nas etapas dos modelos e das comparações | Hipóteses, modelos alternativos, comparações e configurações avançadas |
 | U08 | `features/results/{index.ts,ResultsView.tsx,DescriptiveTable.tsx,Interpretation.tsx}` (ET02); `AnovaTable`, `ComparisonTable` e `DiagnosticPanel` nas etapas seguintes | Tabelas e explicações curtas localizadas a partir de resultados do motor |
@@ -85,7 +85,7 @@ Todos os caminhos abaixo começam em **`app/web/src/`**, salvo indicação contr
 | U10 | `features/optimization/{index.ts,ObjectivesEditor.tsx,ConstraintsEditor.tsx,CandidateTable.tsx}` | Objetivos, restrições, desejabilidade e candidatos retornados pelo motor |
 | U11 | `features/project/{index.ts,ProjectTree.tsx,HistoryView.tsx,SaveStatus.tsx}` (ET03); `state/{project,preferences}.ts` e `state/ProjectContext.tsx` (ET02), `state/jobs.ts` (ET08) | Experimentos, revisões, seleção e preferências; não replica resultados em estados independentes |
 | U12 | `services/engine/{index,EngineClient,contracts.generated,wasmClient,tauriClient}.ts`, `services/engine/EngineContext.tsx`; `workers/engine.worker.ts` | Contrato único e escolha de adaptador; Worker navegador, comandos no desktop |
-| U13 | `services/storage/{StorageProvider,browserRecovery,localFile,desktopFile,autosave,revisionStore}.ts` | Abrir/salvar bytes e recuperar sessões; serialização do projeto pertence a P02 |
+| U13 | `services/storage/{StorageProvider,browserFile,desktopFile,recovery,autosave,context,bytes,index}.ts` (`revisionStore` não criado: as revisões estão no documento) | Abrir/salvar bytes e recuperar sessões; serialização do projeto pertence a P02 |
 | U14 | `services/drive/{auth.web,auth.desktop,client,folder,sync,conflicts}.ts`; `features/drive/{DrivePicker,ConnectionStatus,ConflictDialog}.tsx` | Login opcional, seleção por arquivo, reconexão, sincronização e conflitos |
 | U15 | `features/sharing/{index.ts,OpenShared.tsx,CommentsPanel.tsx}` | Compartilhar/abrir/cópia e comentários em revisão identificada; sem presumir edição simultânea |
 | U16 | `services/export/{figure,table,report,provenance}.ts`; `features/export/ExportDialog.tsx` | Figuras SVG/PDF/PNG, tabelas CSV/XLSX, relatórios HTML/PDF e, depois, DOCX |

@@ -72,12 +72,14 @@ E2E_BROWSERS=chromium,firefox npm run test:e2e
 
 ## Validação numérica (referências independentes)
 
-Os casos em `validation/cases/` são executados pelos testes: nativo em `cargo test -p optima-core` (`descriptive_validation`) e WebAssembly em `npm test` em `app/web` (`descriptive.parity.test.ts`, que exige `npm run build:wasm` antes). Para regenerar os casos descritivos (Python 3.13):
+Os casos em `validation/cases/` são executados pelos testes: nativo em `cargo test -p optima-core` (`descriptive_validation`) e WebAssembly em `npm test` em `app/web` (`descriptive.parity.test.ts`, que exige `npm run build:wasm` antes). Para regenerar os casos (Python 3.13; `make_project_case.py` e `make_import_cases.py` dispensam os dados do NIST):
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r validation/tools/requirements.txt
 .venv/bin/python validation/tools/make_descriptive_cases.py <pasta-com-os-.dat-do-NIST>
+.venv/bin/python validation/tools/make_project_case.py
+.venv/bin/python validation/tools/make_import_cases.py
 ```
 
 ## Aplicativo desktop (Tauri)
@@ -92,10 +94,16 @@ cargo clippy -- -D warnings
 cargo build --features tauri/custom-protocol
 ```
 
-Verificação nativa (WebDriver; abre o aplicativo, confere `engine.info` e a estatística descritiva pelo IPC), em `app/desktop/`; em Linux usa Xvfb:
+Verificação nativa, em `app/desktop/`. Confere `engine.info`, a estatística descritiva, a leitura do `.enzitag` escrito em Python, a recusa de arquivo adulterado e a leitura de XLSX pelo IPC. No Linux usa WebDriver sob Xvfb:
 
 ```bash
 xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop
+```
+
+No Windows, a mesma verificação usa o WebView2 por CDP (exige `npm ci` em `app/web`):
+
+```bash
+node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
 ```
 
 Instalador Windows (NSIS), em `app/desktop/`, executado em Windows:

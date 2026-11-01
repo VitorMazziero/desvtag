@@ -31,6 +31,10 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 | U02 — fluxo guiado | [u02-fluxo-guiado.md](u02-fluxo-guiado.md) | implementado |
 | U03 — fatores e respostas | [u03-fatores-respostas.md](u03-fatores-respostas.md) | implementado |
 | U04 — grade de dados | [u04-grade-de-dados.md](u04-grade-de-dados.md) | implementado |
+| P01–P03 — documento do projeto, arquivo `.enzitag`, migrações | [p01-p03-projeto-e-arquivo.md](p01-p03-projeto-e-arquivo.md) | implementado; formato validado |
+| U05 — importação | [u05-importacao.md](u05-importacao.md) | implementado |
+| U11 — estado do projeto, revisões, histórico | [u11-estado-do-projeto.md](u11-estado-do-projeto.md) | implementado |
+| U13 — armazenamento e recuperação | [u13-armazenamento-e-recuperacao.md](u13-armazenamento-e-recuperacao.md) | implementado |
 | U17 — idiomas | [u17-idiomas.md](u17-idiomas.md) | implementado (ET02) |
 | U18 — temas e acessibilidade | [u18-temas-e-acessibilidade.md](u18-temas-e-acessibilidade.md) | implementado (ET02) |
 | U19 — erros e diagnósticos | [u19-erros-e-diagnosticos.md](u19-erros-e-diagnosticos.md) | implementado |

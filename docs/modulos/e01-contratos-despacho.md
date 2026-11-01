@@ -28,8 +28,8 @@ Define o protocolo entre a interface e o motor e o despacho das operações. **N
 
 - `handle_json(&str) -> String`: entrada única dos adaptadores.
 - `handle_request(&EngineRequest) -> EngineResponse`.
-- Operação atual: `engineInfo` → `engineVersion`, `protocolVersion`, `projectSchemaVersion`, `capabilities.methods`.
-- Erros: `invalidRequest` (JSON malformado ou operação desconhecida) e `unsupportedProtocolVersion` (parâmetros `expected` e `received`).
+- Operações: `engineInfo` (versões e capacidades), `descriptiveSummarize` (resumo descritivo), `projectEncode`/`projectDecode` (arquivo `.enzitag` em base64) e `importXlsx` (grade de texto de uma planilha).
+- Erros: `invalidRequest`, `unsupportedProtocolVersion` (`expected`, `received`), `invalidInput`, `invalidProject` e `invalidImport` (os três últimos com `issues` codificados).
 
 ## 4. Fluxo de dados
 

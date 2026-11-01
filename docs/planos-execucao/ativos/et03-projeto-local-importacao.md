@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F02 |
 | Marco | **M1 — Base utilizável** |
-| Depende de | ET02 |
+| Depende de | ET02 (código concluído; evidência Windows 11 pendente, ver [exceção](../README.md)) |
 | Módulos | P01–P03, C01–C02, E01, E04 (`files`), U01 (recentes), U03–U05, U11, U13 |
-| Ativado em | — |
+| Ativado em | 2026-11-01 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -55,22 +55,22 @@ Persistir o trabalho com segurança: projeto `.enzitag` com vários experimentos
 
 ## 5. Tarefas
 
-- [ ] **T01** — DTs de contêiner, identificadores e retenção; especificação em `docs/arquitetura/formato-enzitag.md` com exemplo comentado.
-- [ ] **T02** — P01 `document`, `experiment`, `analysis`, `revision`, `annotation`, `attachment`; edição gera revisão; análise referencia revisão e configuração.
-- [ ] **T03** — P02 `archive`, `manifest`, `schema`, `integrity`: limites de tamanho descompactado e de quantidade de entradas, caminhos internos validados, verificação de integridade.
-- [ ] **T04** — P03 `migrations/{mod,v001}.rs`: migração sobre cópia; arquivo de versão futura aberto sem regravação destrutiva.
-- [ ] **T05** — Operações do engine para criar, abrir (bytes), salvar (bytes) e aplicar edição.
-- [ ] **T06** — E04 `files.rs`: diálogos, gravação segura com temporário, verificação e cópia anterior; projetos recentes no Windows.
-- [ ] **T07** — U13 `StorageProvider`, `localFile`, `desktopFile`, `browserRecovery`, `autosave`, `revisionStore`.
-- [ ] **T08** — Recuperação após 2 s de pausa e checkpoints por operação, sem cópia completa por tecla; fluxo de restauração ao abrir o aplicativo.
-- [ ] **T09** — `SaveStatus.tsx` com os três estados e mensagens de falha; recuperação local nunca apresentada como backup externo.
-- [ ] **T10** — U05: colagem do Excel, CSV e XLSX com prévia, mapeamento de papéis, decimal, separador, codificação, unidades e ausentes; normalização para `Dataset` validado em C02.
-- [ ] **T11** — Importação de matriz externa por mapeamento de colunas.
-- [ ] **T12** — U11: árvore com vários experimentos, histórico de revisões e indicação de análise baseada em dados anteriores.
-- [ ] **T13** — Tela inicial: projetos recentes e Abrir projeto habilitado.
-- [ ] **T14** — Arquivo de referência do formato em `examples/` e casos de teste de leitura em `app/crates/optima-project/tests/`.
-- [ ] **T15** — Testes: reabertura cruzada Windows ↔ navegador; interrupção de escrita simulada; arquivo corrompido; versão futura; migração; importação com acentos, vírgula decimal, ausentes e réplicas × repetições de medição.
-- [ ] **T16** — Fichas P01–P03, U05, U11, U13; matriz de cobertura; README com abrir/salvar.
+- [x] **T01** — DTs de contêiner, identificadores e retenção ([DT-0008](../../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md)); especificação em [`formato-enzitag.md`](../../arquitetura/formato-enzitag.md).
+- [x] **T02** — P01 `document`, `experiment`, `analysis`, `revision`, `annotation`, `attachment`; edição gera revisão; análise referencia revisão e configuração.
+- [x] **T03** — P02 `archive`, `manifest`, `schema`, `integrity`: limites de tamanho descompactado e de quantidade de entradas, caminhos internos validados, verificação de integridade.
+- [x] **T04** — P03 `migrations/{mod,v001}.rs`: migração sobre cópia; arquivo de versão futura aberto sem regravação destrutiva.
+- [x] **T05** — Operações do engine para criar, abrir (bytes), salvar (bytes) e aplicar edição.
+- [x] **T06** — E04 `files.rs`: diálogos, gravação segura com temporário, verificação e cópia anterior; projetos recentes no Windows.
+- [x] **T07** — U13 `StorageProvider`, `localFile`, `desktopFile`, `browserRecovery`, `autosave`, `revisionStore`.
+- [x] **T08** — Recuperação após 2 s de pausa e checkpoints por operação, sem cópia completa por tecla; fluxo de restauração ao abrir o aplicativo.
+- [x] **T09** — `SaveStatus.tsx` com os três estados e mensagens de falha; recuperação local nunca apresentada como backup externo.
+- [x] **T10** — U05: colagem do Excel, CSV e XLSX com prévia, mapeamento de papéis, decimal, separador, codificação, unidades e ausentes; normalização para `Dataset` validado em C02.
+- [x] **T11** — Importação de matriz externa por mapeamento de colunas.
+- [x] **T12** — U11: árvore com vários experimentos, histórico de revisões e indicação de análise baseada em dados anteriores.
+- [x] **T13** — Tela inicial: projetos recentes e Abrir projeto habilitado.
+- [x] **T14** — Arquivo de referência do formato em `examples/` e casos de teste de leitura em `app/crates/optima-project/tests/`.
+- [ ] **T15** *(tudo verificado em Linux e navegador; reabertura Windows ↔ navegador e diálogos no Windows pendentes, ver seção 11)* — Testes: reabertura cruzada Windows ↔ navegador; interrupção de escrita simulada; arquivo corrompido; versão futura; migração; importação com acentos, vírgula decimal, ausentes e réplicas × repetições de medição.
+- [x] **T16** — Fichas P01–P03, U05, U11, U13; matriz de cobertura; README com abrir/salvar.
 
 ## 6. Entregas
 
@@ -104,10 +104,54 @@ Testes Rust de P01–P03; testes web de U05/U13; E2E de importar → salvar → 
 
 ## 11. Registro de progresso
 
-| Data | Registro |
+### Estado atual (retomada)
+
+| Item | Valor |
 |---|---|
-| — | Etapa não iniciada. |
+| Branch | `claude/epic-keller-3ad7jc` (PR [#1](https://github.com/VitorMazziero/enzitag-optima/pull/1) para `main`, rascunho) |
+| Etapa e tarefa | ET03: T01–T14 e T16 concluídas; **T15 aberta** só pela reabertura Windows ↔ navegador e pelos diálogos nativos no Windows |
+| Código entregue | Rust: documento, revisões, análises, `.enzitag`, migrações, XLSX, operações do motor. Tauri: arquivos com gravação segura, diálogos, recentes. Web: espaço de trabalho com experimentos, recuperação, salvar/abrir, histórico, assistente de importação |
+| Pendente para concluir | (1) execução no **Windows** (mesma pendência de ET01/ET02): resultado do job `desktop-windows` com WebView2 por CDP e verificação manual em Windows 11 dos diálogos "Abrir" e "Salvar"; (2) reabertura **cruzada**: um projeto salvo no Windows aberto no navegador e vice-versa (os dois usam o mesmo código Rust e o mesmo arquivo Python de referência é lido nos dois, mas o arquivo gravado pelo aplicativo Windows ainda não foi aberto no navegador) |
+| Próxima ação | Confirmar o resultado do Windows na CI; seguir para a ET04 sem declarar M1 |
+
+### Evidências (2026-11-01)
+
+Ambiente: Linux (Ubuntu 24.04), Rust 1.97.0, Node 22.23.4, Python 3.13.18 (openpyxl 3.1.5), Chromium 1248 e Firefox 157.0, WebKitGTK 2.52.6.
+
+| Verificação | Comando | Resultado |
+|---|---|---|
+| Rust: formato, lint, testes | `cargo fmt --check`; `cargo clippy --workspace --all-targets -- -D warnings`; `cargo test --workspace` | 119 testes passam (project: 38 unitários + 3 de formato Python + 3 de XLSX) |
+| Tauri (Linux) | `cargo clippy -- -D warnings`; `cargo test` em `app/desktop/src-tauri` | sem avisos; 7 testes de gravação segura |
+| Formato contra Python | `cargo test -p optima-project --test project_file_validation` | arquivo escrito por `zipfile`/`hashlib` lido **igual ao esperado**; 4 arquivos inválidos recusados com o código esperado e sem alterar a entrada; SHA-256 de Python e Rust coincidem |
+| XLSX contra openpyxl | `cargo test -p optima-project --test import_xlsx_validation` | grade de texto e contagem de avisos idênticas ao esperado |
+| Testes web | `npm test` | 130 testes (workspace, revisões, CSV, mapeamento, assistente, recuperação com IndexedDB, paridade WASM de projeto e XLSX) |
+| WASM | `project.parity.test.ts` | mesmo arquivo Python e mesmo XLSX lidos pelo WebAssembly; ida e volta de um espaço de trabalho com acentos |
+| E2E | `E2E_BROWSERS=chromium,firefox npm run test:e2e` | 48 de 48: recuperação após 2 s (restaurar/descartar), salvar (download `.enzitag` ZIP), abrir, três estados distintos, arquivo inválido e esquema futuro sem alterar o projeto, abrir o arquivo Python (dois experimentos, resultado guardado atual), importar CSV UTF-8 e Windows-1252, XLSX com troca de planilha, ids repetidos bloqueiam |
+| Acessibilidade | axe | sem violações, inclusive no assistente de importação e no aviso de recuperação |
+| IPC nativo (Linux) | `xvfb-run -a node tests/native-smoke.mjs …` | versões, descritiva, `.enzitag` do Python lido, adulterado recusado, XLSX lido |
+
+### Registro por tarefa
+
+| Tarefa | Registro |
+|---|---|
+| ET03-T01 | [DT-0008](../../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md) e [formato `.enzitag`](../../arquitetura/formato-enzitag.md). Redigidos **depois** do código do núcleo e **antes** da interface que os usa |
+| ET03-T02..T04 | `optima-project`: documento, revisões, análises, contêiner ZIP, integridade, limites, migrações (sem passo real: esquema 1) |
+| ET03-T05 | Operações `projectEncode`, `projectDecode`, `importXlsx`; erros `invalidProject` e `invalidImport` |
+| ET03-T06 | `files.rs`/`commands.rs` do Tauri: gravação segura e diálogos nativos |
+| ET03-T07..T09 | `services/storage`, recuperação (2 s), `SaveStatus` com três estados |
+| ET03-T10, T11 | CSV (TypeScript), XLSX (Rust), assistente com papéis; matriz externa pelo mesmo assistente |
+| ET03-T12, T13 | Experimentos, histórico e restauração; projetos recentes (Windows) e Abrir |
+| ET03-T14 | Arquivos de referência gerados por Python em `validation/cases/project_file/` (o formato de arquivo de exemplo; cópia em `examples/` não criada: o caso de validação cumpre o papel) |
+| ET03-T15 | Ver pendências acima |
+| ET03-T16 | Fichas P01–P03, U05, U11, U13, E01 e E04; matriz, mapa, dependências e README atualizados |
 
 ## 12. Desvios e descobertas
 
-Nenhum até o momento.
+- **Migração**: o plano pedia teste de migração. Como não existe esquema anterior publicado, não há migração real para testar; ficam testados o mecanismo e a recusa de versões futuras e inválidas. A primeira mudança incompatível acrescenta a migração e o arquivo de teste (registrado no formato e na ficha P03).
+- **Hash de revisão**: o primeiro desenho fazia a interface calcular o resumo das revisões; passou a ser do Rust (`encode` recalcula), evitando reimplementar a serialização canônica em TypeScript.
+- **Bug do fluxo ao restaurar/abrir** (E2E): o `Workflow` não remontava quando o projeto era substituído por outro com o mesmo id e ficava na etapa antiga; `epoch` resolve.
+- **Referência com erro**: o primeiro arquivo de referência Python tinha variância guardada 30,25 (o correto é 27,25); corrigido antes do uso e a assinatura da análise agora coincide com a calculada pela interface.
+- **Diálogos nativos**: não automatizáveis; a lógica de gravação é testada diretamente e a abertura/salvamento pelo diálogo precisa de verificação manual em Windows 11.
+- **`msedgedriver` não anexou ao WebView2** na CI (`DevToolsActivePort`), embora o executável permaneça em execução; a verificação no Windows passou a usar WebView2 por CDP.
+- **Histórico**: cada revisão guarda cópia completa da tabela (sem compactação); impacto a medir na ET10.
+- **Unidade experimental**: a coluna só aparece em "Opções avançadas" e o assistente explica que linhas com a mesma unidade são medidas repetidas.

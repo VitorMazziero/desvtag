@@ -34,7 +34,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 |---|---|---|---|---|
 | ET01 | Fundação técnica e contratos iniciais | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et01-fundacao-tecnica.md](ativos/et01-fundacao-tecnica.md) |
 | ET02 | Primeiro percurso ponta a ponta | v0.1 | **Ativo** | [ativos/et02-primeiro-percurso.md](ativos/et02-primeiro-percurso.md) |
-| ET03 | Projeto local, importação e recuperação | v0.1 | Planejado | [planejados/et03-projeto-local-importacao.md](planejados/et03-projeto-local-importacao.md) |
+| ET03 | Projeto local, importação e recuperação | v0.1 | Planejado | [ativos/et03-projeto-local-importacao.md](ativos/et03-projeto-local-importacao.md) |
 | ET04 | Fundamentos numéricos e modelos lineares | v0.1 | Planejado | [planejados/et04-fundamentos-numericos-modelos.md](planejados/et04-fundamentos-numericos-modelos.md) |
 | ET05 | ANOVA, Tukey e letras | v0.1 | Planejado | [planejados/et05-anova-tukey-letras.md](planejados/et05-anova-tukey-letras.md) |
 | ET06 | Fatoriais, fracionários e Plackett–Burman | v0.1 | Planejado | [planejados/et06-fatoriais-plackett-burman.md](planejados/et06-fatoriais-plackett-burman.md) |

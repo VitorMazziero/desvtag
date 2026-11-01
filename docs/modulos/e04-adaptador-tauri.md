@@ -1,6 +1,6 @@
 # E04 — Adaptador Windows (Tauri)
 
-**Estado:** implementado (comando do motor); arquivos, autenticação e atualizador pendentes · **Atualizado em:** 2026-11-01
+**Estado:** implementado (motor e arquivos); autenticação e atualizador pendentes · **Atualizado em:** 2026-11-01
 
 | Campo | Valor |
 |---|---|
@@ -25,11 +25,14 @@ Janela do aplicativo e transporte nativo do protocolo. O cálculo roda em thread
 | `capabilities/default.json` | Sem permissões adicionais |
 | `icons/` | Gerados de `docs/imagens/logo.png` |
 
-`files.rs` (ET03), `auth.rs` (Drive, posterior) e `updater.rs` (ET10) entram nas respectivas etapas.
+| `src/files.rs` | Gravação segura (`write_atomic`), lista de recentes, leitura com limite; 7 testes |
+| `src/commands.rs` | Também `project_open`, `project_open_recent`, `project_recent`, `project_save`, `project_save_copy`, `project_detach` (diálogos nativos; o caminho nunca vem da interface) |
+
+`auth.rs` (Drive, posterior) e `updater.rs` (ET10) entram nas respectivas etapas.
 
 ## 3. Verificação
 
-`app/desktop/tests/native-smoke.mjs` abre o executável via `tauri-driver` e confere que a interface obtém `engine.info` do motor nativo. Executado em Linux (WebKitGTK sob Xvfb). Não substitui a verificação no Windows (WebView2), ainda pendente.
+`tests/native-checks.mjs` reúne as verificações (versões, descritiva, leitura do `.enzitag` escrito em Python, arquivo adulterado recusado, XLSX) e dois executores: `native-smoke.mjs` (Linux: `tauri-driver` + WebKitGTK sob Xvfb) e `native-cdp.mjs` (Windows: WebView2 por CDP com Playwright). Os diálogos de arquivo não são automatizáveis; a gravação é testada diretamente (`cargo test`).
 
 ## 4. Manutenção
 

@@ -90,7 +90,7 @@ docs/
 │   ├── mapa-modulos.md
 │   ├── estrutura-repositorio.md
 │   ├── dependencias.md               # existe (ET01)
-│   ├── formato-enzitag.md            # ET03
+│   ├── formato-enzitag.md            # existe (ET03)
 │   └── limites-operacionais.md       # ET10
 ├── planos-execucao/                  # Exclusivo para planos de execução
 │   ├── README.md                     # Índice e plano ativo

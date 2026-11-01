@@ -12,6 +12,11 @@ Inventário das dependências **diretas**, com versão, papel, licença e compat
 | `serde_json` | 1.0.154 | Texto JSON do protocolo | MIT OR Apache-2.0 | Sim | engine (e testes) |
 | `ts-rs` | 12.0.1 | Geração dos tipos TypeScript (sem efeito em execução) | MIT | Sim | core, project, engine |
 | `wasm-bindgen` | 0.2.130 (`=`) | Ligação Rust↔JavaScript no navegador | MIT OR Apache-2.0 | É o alvo | wasm |
+| `zip` | 9.2.1 (`deflate`) | Contêiner ZIP do `.enzitag` (leitura e escrita) | MIT | Sim (compila para `wasm32-unknown-unknown`) | project |
+| `sha2` | 0.11.1 | SHA-256 de integridade (arquivo e revisões) | MIT OR Apache-2.0 | Sim | project |
+| `base64` | 0.23.1 | Bytes em texto JSON no protocolo | MIT OR Apache-2.0 | Sim | project, engine, desktop |
+| `calamine` | 0.37.0 | Leitura de valores armazenados de XLSX | MIT | Sim | project |
+| `tauri-plugin-dialog` | 2.x | Diálogos nativos de abrir/salvar (Windows) | MIT OR Apache-2.0 | Não se aplica | desktop |
 | `tauri` | 2.12.5 | Aplicativo desktop (WebView e comandos) | Apache-2.0 OR MIT | Não se aplica (nativo) | desktop |
 | `tauri-build` | 2.7.4 | Geração de recursos no build | Apache-2.0 OR MIT | Não se aplica | desktop |
 
@@ -33,6 +38,7 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 | `jsdom` | 30.1.3 | DOM nos testes | MIT |
 | `@testing-library/react` 16.3.3, `dom` 10.4.2, `user-event` 14.6.8, `jest-dom` 6.9.1 | — | Testes de componentes | MIT |
 | `@playwright/test` | 1.64.1 | Testes E2E em navegadores reais | Apache-2.0 |
+| `fake-indexeddb` | 6.x | IndexedDB simulado nos testes de recuperação (somente desenvolvimento) | Apache-2.0 |
 | `@axe-core/playwright` | 4.14.0 | Varredura automática de acessibilidade nos E2E (somente desenvolvimento) | MPL-2.0 |
 | `@biomejs/biome` | 2.6.4 | Lint e formatação | MIT OR Apache-2.0 |
 | `@tauri-apps/cli` | 2.12.4 | Build e ícones do aplicativo Windows | Apache-2.0 OR MIT |

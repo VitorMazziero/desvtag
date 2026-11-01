@@ -100,10 +100,10 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Tela inicial, três entradas e fluxo guiado | F01 | v0.1 | ET02 | implementado (E2E em Chromium e Firefox; sem projetos recentes até a ET03); Windows pendente | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
 | Explicações curtas (conclusão, evidência, próximo passo) | F01–F07 | v0.1 | ET02–ET08 | em andamento: descritiva (ET02) | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
 | Digitação e colagem do Excel | F01/F02 | v0.1 | ET02, ET03 | implementado (grade e colagem com vírgula decimal e erros por célula); importação de arquivos na ET03 | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
-| Importação CSV e XLSX com prévia | F02 | v0.1 | ET03 | não iniciado | — |
-| Importação de matrizes externas | F02 | v0.1 | ET03 | não iniciado | — |
-| Projeto `.enzitag`, vários experimentos, revisões | F02 | v0.1 | ET03 | não iniciado | — |
-| Recuperação automática e checkpoints | F02 | v0.1 | ET03 | não iniciado | — |
+| Importação CSV e XLSX com prévia | F02 | v0.1 | ET03 | implementado (CSV/TSV/TXT em TypeScript; XLSX em Rust validado contra openpyxl nativo e WASM); Windows pendente | [U05](../modulos/u05-importacao.md), [caso XLSX](../../validation/cases/import_xlsx/001-acentos-virgula-ausentes-formula/README.md) |
+| Importação de matrizes externas | F02 | v0.1 | ET03 | implementado (mapeamento de colunas; nunca deduz o planejamento pelo nome do arquivo) | [U05](../modulos/u05-importacao.md) |
+| Projeto `.enzitag`, vários experimentos, revisões | F02 | v0.1 | ET03 | implementado; formato validado contra arquivos escritos em Python (Rust, WASM e IPC nativo em Linux); migração real inexistente (esquema 1); reabertura Windows ↔ navegador pendente | [formato](../arquitetura/formato-enzitag.md), [casos](../../validation/cases/project_file/README.md) |
+| Recuperação automática e checkpoints | F02 | v0.1 | ET03 | implementado (2 s, IndexedDB, três estados distintos; revisões nas operações); Windows pendente | [DT-0008](../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md), [U13](../modulos/u13-armazenamento-e-recuperacao.md) |
 | Figuras SVG e PNG | F04/F10 | v0.1 | ET05, ET09 | não iniciado | — |
 | Tabelas CSV e XLSX | F04/F10 | v0.1 | ET05, ET09 | não iniciado | — |
 | Relatório HTML | F10 | v0.1 | ET09 | não iniciado | — |
