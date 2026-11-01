@@ -30,3 +30,7 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Fatorial fracionário](fatorial-fracionario.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Plackett–Burman](plackett-burman.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Aleatorização reprodutível](aleatorizacao.md) | implementado; validado contra implementação independente |
+| [Composto central](composto-central.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Box–Behnken](box-behnken.md) | implementado (3 a 5 fatores); validado numericamente |
+| [Superfície de resposta de segunda ordem](superficie-resposta.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Planejamento personalizado ou matriz importada](planejamento-personalizado.md) | implementado; validado numericamente |

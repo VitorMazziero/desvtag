@@ -1,7 +1,7 @@
 // Gráfico de contorno (U09): malha colorida por intensidade, curvas de nível do motor, região
 // extrapolada hachurada e pontos do planejamento. Nenhum valor é calculado aqui.
 
-import { hatch, type SurfaceChartSpec, valueAt, zRange } from "./surfaceGeometry";
+import { cellExtrapolated, hatch, type SurfaceChartSpec, valueAt, zRange } from "./surfaceGeometry";
 import {
   close,
   type Frame,
@@ -64,7 +64,7 @@ export function contourChart(
           `<rect x="${n(left)}" y="${n(top)}" width="${w}" height="${h}" shape-rendering="crispEdges" fill="${paint("action", mode)}" ` +
             `fill-opacity="${n(0.06 + 0.5 * ((v - zLo) / (zHi - zLo)))}"/>`,
         );
-      if (grid.extrapolated[iy]?.[ix])
+      if (cellExtrapolated(grid, iy, ix))
         parts.push(
           `<rect x="${n(left)}" y="${n(top)}" width="${w}" height="${h}" fill="url(#${spec.id}-hatch)" fill-opacity="0.55"/>`,
         );

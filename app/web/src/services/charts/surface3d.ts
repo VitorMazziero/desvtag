@@ -1,7 +1,7 @@
 // Superfície em projeção ortogonal (U09): malha de quadriláteros ordenados por profundidade, com
 // azimute e elevação ajustáveis. É apenas geometria de desenho sobre a malha calculada no motor.
 
-import { hatch, type SurfaceChartSpec, valueAt, zRange } from "./surfaceGeometry";
+import { cellExtrapolated, hatch, type SurfaceChartSpec, valueAt, zRange } from "./surfaceGeometry";
 import { close, type Frame, legend, line, n, open, type PaintMode, paint, text } from "./svg";
 
 export interface View3d {
@@ -76,7 +76,7 @@ export function surface3dChart(
       const points = pts.map((p) => `${n(p.px)},${n(p.py)}`).join(" ");
       const intensity = n(0.1 + 0.6 * ((mean - zLo) / (zHi - zLo)));
       let svg = `<polygon points="${points}" fill="${paint("action", mode)}" fill-opacity="${intensity}" stroke="${paint("ink", mode)}" stroke-opacity="0.35" stroke-width="0.5"/>`;
-      if (grid.extrapolated[iy]?.[ix])
+      if (cellExtrapolated(grid, iy, ix))
         svg += `<polygon points="${points}" fill="url(#${spec.id}-hatch)" fill-opacity="0.6"/>`;
       quads.push({ depth: pts.reduce((s, p) => s + p.depth, 0) / 4, svg });
     }

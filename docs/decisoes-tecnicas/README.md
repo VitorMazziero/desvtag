@@ -19,6 +19,7 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0009](dt-0009-fundamentos-numericos-modelos-lineares.md) | Fundamentos numéricos e modelos lineares (ET04) | Aceita | 2026-11-01 |
 | [DT-0010](dt-0010-comparacao-de-tratamentos.md) | Comparação de tratamentos: amplitude studentizada, letras, diagnósticos, gráficos e exportação (ET05) | Aceita | 2026-11-01 |
 | [DT-0011](dt-0011-planejamentos-dois-niveis.md) | Planejamentos de dois níveis: aleatorização, fracionários, Plackett–Burman, curvatura e desenhos saturados (ET06) | Aceita | 2026-11-01 |
+| [DT-0012](dt-0012-superficie-de-resposta.md) | Superfície de resposta: α, Box–Behnken, matrizes personalizadas, extrapolação, equação e renderização 3D (ET07) | Aceita | 2026-11-01 |
 
 ## Regras
 

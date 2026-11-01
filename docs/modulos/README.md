@@ -33,6 +33,8 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 | U07, U08, U09, U16 — configuração, resultados, gráficos e exportação da comparação | [u07-u09-u16-comparacao-resultados-e-exportacao.md](u07-u09-u16-comparacao-resultados-e-exportacao.md) | implementado |
 | C11 (com C07 Lenth e falta de ajuste, C16 efeitos, C18) — planejamentos de dois níveis | [c11-planejamentos-dois-niveis.md](c11-planejamentos-dois-niveis.md) | implementado; validado numericamente |
 | U06 (com U07–U09 de triagem) — planejamento de experimento | [u06-planejamento-de-experimento.md](u06-planejamento-de-experimento.md) | implementado |
+| C12 (com C16 superfície e contorno, C07 falta de ajuste) — superfície de resposta | [c12-superficie-de-resposta.md](c12-superficie-de-resposta.md) | implementado; validado numericamente |
+| U09 (superfície 3D, contorno e resultados) — com U06 e U07 | [u09-superficie-e-contorno.md](u09-superficie-e-contorno.md) | implementado |
 | U01 — início e entradas | [u01-inicio-e-entradas.md](u01-inicio-e-entradas.md) | implementado |
 | U02 — fluxo guiado | [u02-fluxo-guiado.md](u02-fluxo-guiado.md) | implementado |
 | U03 — fatores e respostas | [u03-fatores-respostas.md](u03-fatores-respostas.md) | implementado |

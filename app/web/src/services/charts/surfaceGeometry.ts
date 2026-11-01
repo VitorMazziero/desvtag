@@ -35,3 +35,13 @@ export function hatch(id: string, color: string): string {
     `patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="${color}" stroke-width="1.5"/></pattern></defs>`
   );
 }
+
+/** Uma célula é extrapolação se algum dos quatro vértices for (critério conservador). */
+export function cellExtrapolated(grid: SurfaceGrid, iy: number, ix: number): boolean {
+  return [
+    grid.extrapolated[iy]?.[ix],
+    grid.extrapolated[iy]?.[ix + 1],
+    grid.extrapolated[iy + 1]?.[ix],
+    grid.extrapolated[iy + 1]?.[ix + 1],
+  ].some(Boolean);
+}
