@@ -13,4 +13,4 @@ Como o aplicativo e o repositório se organizam.
 | [Dependências](dependencias.md) | Dependências diretas, papel, licença e compatibilidade WASM |
 | [Formato `.enzitag`](formato-enzitag.md) | Contêiner, manifesto, documento, versões, limites e diagnósticos |
 
-Documento previsto: `limites-operacionais.md` (ET10).
+| [Limites operacionais](limites-operacionais.md) | Tempos e memória medidos; limites e comportamento ao excedê-los (ET10) |

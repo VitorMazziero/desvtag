@@ -57,7 +57,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET07 | Superfícies de resposta e planejamento personalizado | v0.1 | **Concluído** (2026-11-01) | [concluidos/et07-superficies-resposta.md](concluidos/et07-superficies-resposta.md) |
 | ET08 | Otimização de uma ou várias respostas | v0.1 | **Concluído** (2026-11-01) | [concluidos/et08-otimizacao.md](concluidos/et08-otimizacao.md) |
 | ET09 | Gráficos e exportação essenciais | v0.1 | **Ativo** | [ativos/et09-graficos-exportacao.md](ativos/et09-graficos-exportacao.md) |
-| ET10 | Integração, verificação e publicação | v0.1 | Planejado | [planejados/et10-integracao-publicacao.md](planejados/et10-integracao-publicacao.md) |
+| ET10 | Integração, verificação e publicação | v0.1 | Planejado | [ativos/et10-integracao-publicacao.md](ativos/et10-integracao-publicacao.md) |
 
 Concluídos: [ET06](concluidos/et06-fatoriais-plackett-burman.md), [ET07](concluidos/et07-superficies-resposta.md) e [ET08](concluidos/et08-otimizacao.md) (critérios do Windows atendidos em `windows-latest`; ver ressalvas nos planos).
 

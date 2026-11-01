@@ -75,7 +75,7 @@ Os destinos são indicativos e serão confirmados ao planejar cada versão. A [m
 | [ET07](concluidos/et07-superficies-resposta.md) | Superfícies de resposta e planejamento personalizado | F06 | ET06 | Compostos centrais, Box–Behnken, modelo de 2ª ordem, superfícies | — |
 | [ET08](concluidos/et08-otimizacao.md) | Otimização de uma ou várias respostas | F07 | ET07 | Desejabilidade, candidatos e confirmação | **M3** |
 | [ET09](ativos/et09-graficos-exportacao.md) | Gráficos e exportação essenciais | F10 (recorte) | ET05 | Personalização essencial e formatos da v0.1 em todos os gráficos | — |
-| [ET10](planejados/et10-integracao-publicacao.md) | Integração, verificação e publicação | F12, F13 (recortes) | ET01–ET09 | Versão `v0.1.0` verificada e publicada | **v0.1.0** |
+| [ET10](ativos/et10-integracao-publicacao.md) | Integração, verificação e publicação | F12, F13 (recortes) | ET01–ET09 | Versão `v0.1.0` verificada e publicada | **v0.1.0** |
 
 ```mermaid
 flowchart LR

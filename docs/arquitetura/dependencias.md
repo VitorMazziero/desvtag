@@ -2,7 +2,7 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-Inventário das dependências **diretas**, com versão, papel, licença e compatibilidade com WebAssembly. Versões vêm dos manifestos e dos arquivos de trava (`app/Cargo.lock`, `app/desktop/src-tauri/Cargo.lock`, `app/web/package-lock.json`). Nenhuma dependência implementa procedimento estatístico: as regras científicas permanecem em `optima-core` ([regras de arquitetura](../planos-execucao/roteiro-produto.md#2-arquitetura-e-fronteiras)). Escolhas em [DT-0003](../decisoes-tecnicas/dt-0003-toolchain-ferramentas-web-wasm.md), [DT-0005](../decisoes-tecnicas/dt-0005-contrato-serializacao-tipos.md) e [DT-0006](../decisoes-tecnicas/dt-0006-idiomas-temas-fontes.md). A auditoria completa de licenças transitivas ocorre na [ET10](../planos-execucao/planejados/et10-integracao-publicacao.md).
+Inventário das dependências **diretas**, com versão, papel, licença e compatibilidade com WebAssembly. Versões vêm dos manifestos e dos arquivos de trava (`app/Cargo.lock`, `app/desktop/src-tauri/Cargo.lock`, `app/web/package-lock.json`). Nenhuma dependência implementa procedimento estatístico: as regras científicas permanecem em `optima-core` ([regras de arquitetura](../planos-execucao/roteiro-produto.md#2-arquitetura-e-fronteiras)). Escolhas em [DT-0003](../decisoes-tecnicas/dt-0003-toolchain-ferramentas-web-wasm.md), [DT-0005](../decisoes-tecnicas/dt-0005-contrato-serializacao-tipos.md) e [DT-0006](../decisoes-tecnicas/dt-0006-idiomas-temas-fontes.md). A auditoria completa de licenças transitivas ocorre na [ET10](../planos-execucao/ativos/et10-integracao-publicacao.md).
 
 ## Rust
 

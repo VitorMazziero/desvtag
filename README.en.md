@@ -6,7 +6,25 @@
 
 EnziTAG Optima is a planned application for researchers and students, with a guided workflow for experimental design, data analysis, treatment comparisons and process optimization. Its development is connected to the activities of the EnziTAG research group.
 
-**Current status:** first version (v0.1) under staged implementation. Active stage: [ET01 — technical foundation](docs/planos-execucao/ativos/et01-fundacao-tecnica.md) (Rust workspace, engine in the browser via WebAssembly and on Windows via Tauri, typed contracts, languages and themes). No statistical method is implemented and no scientific result is validated; nothing has been published.
+**Current status:** release candidate for the first version (v0.1.0, experimental), **not published**. Implemented and validated against independent references: descriptive statistics, one-way ANOVA with Tukey/Tukey–Kramer and compact letters, two-level designs (factorial, fractional, Plackett–Burman), central composite and Box–Behnken designs, response surfaces with contour and 3D views, desirability optimization with confirmation runs, `.enzitag` projects and export (SVG/PNG, CSV/XLSX, HTML report). Verification on 64-bit Windows 11, publication and the updater are pending ([v0.1 plan](docs/planos-execucao/plano-v0.1.md), [coverage matrix](docs/produto/matriz-cobertura.md)); the documentation is in Portuguese. Active stage: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md).
+
+## Run locally (browser)
+
+Requires Rust (via `rustup`), `wasm-bindgen-cli` and Node 22 ([environment guide](docs/guias/ambiente-desenvolvimento.md)). In `app/web`:
+
+```bash
+npm ci
+```
+
+```bash
+npm run build
+```
+
+```bash
+npm run preview
+```
+
+Open `http://localhost:4173`. Reproducible examples are in [`examples/`](examples/) (open them with the *Open…* button).
 
 ## Project direction
 
@@ -42,7 +60,7 @@ The application will use clearly separated modules with defined files, responsib
 |---|---|
 | [app](app/README.md) | Reserved areas for the Rust engine, WebAssembly integration, web interface and Windows application |
 | [docs](docs/README.md) | All documentation: product (`produto`), architecture (`arquitetura`), execution plans (`planos-execucao`), technical decisions (`decisoes-tecnicas`), conventions (`convencoes`), templates (`modelos`), modules, methods and themes |
-| [examples](examples/README.md) | Reproducible examples to be developed |
+| [examples](examples/README.md) | Reproducible examples (four `.enzitag` projects) |
 | [validation](validation/README.md) | Reference cases and validation evidence |
 
 The full tree, including what exists today and which stage creates each part, is in the [repository structure](docs/arquitetura/estrutura-repositorio.md) document. Development, verification and build commands are in the [development environment guide](docs/guias/ambiente-desenvolvimento.md) (Portuguese). Planning and development documents are currently written in Portuguese; the product itself is required to support both languages from the start.
