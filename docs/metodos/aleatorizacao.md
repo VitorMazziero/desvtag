@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | parte de `two_level_design` |
 | Módulos | C11 `designs/randomization` |
-| Etapa | [ET06](../planos-execucao/ativos/et06-fatoriais-plackett-burman.md) |
+| Etapa | [ET06](../planos-execucao/concluidos/et06-fatoriais-plackett-burman.md) |
 | Casos de validação | [`two_level_design/permutations.json`](../../validation/cases/two_level_design/permutations.json) |
 | Decisão | [DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md) |
 

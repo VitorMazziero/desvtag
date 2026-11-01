@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `two_level_design` (tipo `plackettBurman`) e `two_level_design_analysis` |
 | Módulos | C11 `designs/plackett_burman` |
-| Etapa | [ET06](../planos-execucao/ativos/et06-fatoriais-plackett-burman.md) |
+| Etapa | [ET06](../planos-execucao/concluidos/et06-fatoriais-plackett-burman.md) |
 | Casos de validação | [`two_level_design/plackett-burman.json`](../../validation/cases/two_level_design/plackett-burman.json), [`two_level_design_analysis/003`](../../validation/cases/two_level_design_analysis/003-plackett-burman-12-fatores-oito/README.md) e [`004`](../../validation/cases/two_level_design_analysis/004-saturado-lenth/README.md) |
 | Decisão | [DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md) |
 

@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `two_level_design` (tipo `fractional`) e `two_level_design_analysis` |
 | Módulos | C11 `designs/{fractional,alias}` |
-| Etapa | [ET06](../planos-execucao/ativos/et06-fatoriais-plackett-burman.md) |
+| Etapa | [ET06](../planos-execucao/concluidos/et06-fatoriais-plackett-burman.md) |
 | Casos de validação | [`two_level_design/fractional.json`](../../validation/cases/two_level_design/fractional.json), [`two_level_design_analysis/002`](../../validation/cases/two_level_design_analysis/002-fracionario-resolucao-iv/README.md) |
 | Decisão | [DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md) |
 

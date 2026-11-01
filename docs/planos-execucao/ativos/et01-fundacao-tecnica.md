@@ -147,6 +147,7 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 | Etapa e tarefa | ET01 em andamento; pendentes **T01** (inventário Windows 11) e **T22** (clone limpo no Windows 11) e a execução do aplicativo no Windows (critérios 1 e 2). Evidência parcial na CI: build NSIS no Windows concluído; verificação nativa com WebView2 em diagnóstico |
 | Código entregue | Workspace Rust (`optima-core`, `-project`, `-engine`, `-wasm`), interface React/TypeScript, pacote Tauri, scripts, CI |
 | Próxima ação | Resolver `DevToolsActivePort` do msedgedriver no job `desktop-windows` (diagnóstico em andamento) e/ou obter a execução em um Windows 11 real. A ET02 avança em paralelo (exceção registrada no [índice](../README.md)) |
+| Windows (CI) | na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, descritiva, `.enzitag` e adulteração, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento e análise). **Não é Windows 11 de usuário**, sem diálogos nativos e sem clone limpo pelo guia: a evidência literal em Windows 11 segue pendente e a etapa continua aberta. |
 
 ### Evidências (2026-11-01)
 

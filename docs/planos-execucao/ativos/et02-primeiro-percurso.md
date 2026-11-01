@@ -108,6 +108,7 @@ DTs da seção 4; fichas de módulo; especificação do método descritivo; [mat
 | Código entregue | Rust: dados, validação, soma compensada, descritiva, fatos, operação `descriptiveSummarize`. Web: início, fluxo de cinco etapas, editores, grade, análise, resultados e interpretação em PT/EN nos três temas |
 | Pendente para concluir | Evidência no **Windows** (critério 1 e T14), a mesma pendência da [ET01](et01-fundacao-tecnica.md): job `desktop-windows` da CI e/ou máquina Windows 11. Verificação manual com leitor de tela |
 | Próxima ação | Resolver a verificação nativa no Windows; depois mover ET01 e ET02 para `concluidos/` e ativar a ET03 |
+| Windows (CI) | na [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (disparo manual, commit `492db19`) o job `desktop-windows` passou em `windows-latest` — Microsoft Windows Server 2025 Datacenter, build 26100, 64 bits: build NSIS e verificação nativa por WebView2/CDP com `native-checks.mjs` (`engine.info`, descritiva, `.enzitag` e adulteração, XLSX, regressão NIST, quantil t, comparação de tratamentos, planejamento e análise). **Não é Windows 11 de usuário**, sem diálogos nativos e sem clone limpo pelo guia: a evidência literal em Windows 11 segue pendente e a etapa continua aberta. |
 
 ### Evidências (2026-11-01)
 

@@ -36,7 +36,7 @@ Entregar planejamentos e modelos de segunda ordem: compostos centrais (rotaciona
 ## 3. Entradas e referências
 
 - [Roteiro — F06](../roteiro-produto.md#f06--superfícies-de-resposta-e-planejamento-personalizado).
-- Inventário Protimiza e decisão sobre CCD registrados na [ET06](../ativos/et06-fatoriais-plackett-burman.md).
+- Inventário Protimiza e decisão sobre CCD registrados na [ET06](../concluidos/et06-fatoriais-plackett-burman.md).
 - Referências de validação: pacote R rsm (`ccd`, `bbd`, ajuste de segunda ordem), pyDOE3, statsmodels e exemplos publicados.
 - Pendências: PD-04, PD-05 e PD-06 (renderização 3D).
 

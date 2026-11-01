@@ -240,4 +240,93 @@ export async function runChecks({ text, invoke }) {
     }
     console.log("OK: efeitos e valores-p do planejamento 2³ calculados pelo motor nativo via IPC do Tauri.");
   }
+
+  // Superfície de resposta pelo IPC nativo: matriz do composto central e análise do caso 002 (FCD).
+  {
+    const surfaceCases = JSON.parse(readFileSync(root("validation/cases/surface_design/designs.json"), "utf8")).cases;
+    const ccd = surfaceCases.find((c) => c.kind === "centralComposite" && c.k === 3 && c.axial === "rotatable");
+    const ccdSpec = {
+      kind: { type: "centralComposite", axial: { type: "rotatable" }, inscribed: false, generators: [] },
+      factors: [1, 2, 3].map((i) => ({ id: `f${i}`, name: `F${i}`, low: 10 * i, high: 10 * i + 8, unit: null })),
+      replicates: 1,
+      centerPoints: 0,
+      randomize: false,
+      seed: 1,
+    };
+    const generatedCcd = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-ccd", operation: { type: "designGenerate", ...ccdSpec } })),
+    );
+    const ccdRuns = generatedCcd.outcome?.result?.runs;
+    if (!ccdRuns || ccdRuns.length !== ccd.rows.length) throw new Error("Composto central nativo com número de ensaios incorreto");
+    for (const [i, r] of ccdRuns.entries()) {
+      if (r.coded.some((v, j) => Math.abs(v - ccd.rows[i][j]) > 1e-12)) throw new Error(`Ensaio ${i + 1} do composto central diverge`);
+    }
+    if (Math.abs(generatedCcd.outcome.result.axialDistance - ccd.alpha) > 1e-12) throw new Error("α nativo incorreto");
+
+    const dir = root("validation/cases/response_surface/002-fcd-3-fatores");
+    const config = JSON.parse(readFileSync(`${dir}/config.json`, "utf8"));
+    const want = JSON.parse(readFileSync(`${dir}/expected.json`, "utf8")).reference;
+    const csv = readFileSync(`${dir}/input.csv`, "utf8").trim().split("\n");
+    const k = config.factors.length;
+    const surface = {
+      dataset: {
+        factors: config.factors.map((f) => ({ id: f.id, name: f.name, kind: "numeric", unit: null, levels: [] })),
+        responses: [{ id: "y", name: "y", unit: null }],
+        observations: csv.slice(1).map((line, r) => {
+          const cells = line.split(",").map(Number);
+          return { id: `o${r + 1}`, unitId: null, factors: cells.slice(0, k), responses: [cells[k]] };
+        }),
+      },
+      responseId: "y",
+      factors: config.factors.map((f) => ({ ...f, unit: null })),
+      terms: config.terms.map((t) => {
+        const ids = [...t].map((c) => `f${c.charCodeAt(0) - 64}`);
+        return ids.length === 1
+          ? { type: "main", factorId: ids[0] }
+          : ids[0] === ids[1]
+            ? { type: "power", factorId: ids[0], degree: 2 }
+            : { type: "interaction", factorIds: ids };
+      }),
+      alpha: config.alpha,
+    };
+    const analysed = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-surface", operation: { type: "surfaceAnalyze", ...surface } })),
+    );
+    const surfaceResult = analysed.outcome?.result;
+    if (!surfaceResult) throw new Error(`Análise de superfície nativa falhou: ${JSON.stringify(analysed.outcome)}`);
+    for (const [i, row] of [surfaceResult.intercept, ...surfaceResult.terms].entries()) {
+      const w = want.coefficients[i];
+      if (Math.abs(row.estimate.value - w.coefficient) > 1e-8 * Math.abs(w.coefficient) + 1e-9) throw new Error(`Coeficiente ${row.label} nativo incorreto`);
+      if (Math.abs(row.pValue.value - w.p) > 1e-8 * Math.abs(w.p) + 1e-12) throw new Error(`p de ${row.label} nativo incorreto`);
+    }
+    if (Math.abs(surfaceResult.anova.rSquared.value - want.anova.r2) > 1e-9) throw new Error("R² nativo incorreto");
+    if (Math.abs(surfaceResult.lackOfFit.f.value - want.lackOfFit.f) > 1e-8 * want.lackOfFit.f) throw new Error("Falta de ajuste nativa incorreta");
+    const axes = config.gridAxes;
+    const gridResponse = JSON.parse(
+      await invoke(
+        JSON.stringify({
+          protocolVersion: 1,
+          taskId: "native-grid",
+          operation: {
+            type: "surfaceGrid",
+            surface,
+            xFactor: `f${axes[0] + 1}`,
+            yFactor: `f${axes[1] + 1}`,
+            fixed: [],
+            stepsX: 5,
+            stepsY: 5,
+            contourLevels: 6,
+          },
+        }),
+      ),
+    );
+    const grid = gridResponse.outcome?.result;
+    for (const [iy, row] of want.grid.entries()) {
+      for (const [ix, cell] of row.entries()) {
+        if (Math.abs(grid.z[iy][ix].value - cell.z) > 1e-8 * Math.abs(cell.z) + 1e-9) throw new Error(`Malha [${iy}][${ix}] nativa incorreta`);
+        if (grid.extrapolated[iy][ix] !== cell.extrapolated) throw new Error(`Extrapolação [${iy}][${ix}] nativa incorreta`);
+      }
+    }
+    console.log("OK: composto central, ajuste de superfície, falta de ajuste e malha calculados pelo motor nativo via IPC do Tauri.");
+  }
 }

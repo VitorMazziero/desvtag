@@ -16,7 +16,7 @@ Sintéticos, gerados com semente fixa (`numpy.random.default_rng`) a partir de u
 
 ## Referência independente
 
-NumPy 2.5.4 (`lstsq`, inversa de XᵀX) e SciPy 1.18.1 (`t`, `f`). A equação em unidades reais vem de **outro ajuste** dos valores ajustados, feito diretamente com os fatores reais; a falta de ajuste e o erro puro, pela definição; a extrapolação, pela alavancagem `x₀ᵀ(XᵀX)⁻¹x₀` comparada com a maior alavancagem dos ensaios e pelos intervalos observados. [Método](../../../docs/metodos/superficie-resposta.md).
+NumPy 2.5.4 (`lstsq`, inversa de XᵀX) e SciPy 1.18.1 (`t`, `f`). A equação em unidades reais vem de **outro ajuste** dos valores ajustados, feito diretamente com os fatores reais; a falta de ajuste e o erro puro, pela definição; a extrapolação, pela alavancagem `x₀ᵀ(XᵀX)⁻¹x₀` comparada com a maior alavancagem dos ensaios e pelos intervalos observados. [Método](../../../../docs/metodos/superficie-resposta.md).
 
 ## Resultados esperados e tolerâncias
 

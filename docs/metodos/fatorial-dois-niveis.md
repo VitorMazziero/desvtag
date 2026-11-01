@@ -6,7 +6,7 @@
 |---|---|
 | IDs no registro do motor | `two_level_design` (geração) e `two_level_design_analysis` (análise) |
 | Módulos | C11 `designs/{spec,coding,factorial,generate,recommend,analysis}`, C07 `inference/{lenth,lack_of_fit}`, C06–C08 (ajuste), C16 `visualization/effects`, C18 `design_facts` |
-| Etapa | [ET06](../planos-execucao/ativos/et06-fatoriais-plackett-burman.md) |
+| Etapa | [ET06](../planos-execucao/concluidos/et06-fatoriais-plackett-burman.md) |
 | Casos de validação | [`validation/cases/two_level_design`](../../validation/cases/two_level_design/) (matrizes) e [`two_level_design_analysis/001…005`](../../validation/cases/two_level_design_analysis/001-fatorial-2x3-replicas-centrais/README.md) |
 | Decisão | [DT-0011](../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md) |
 

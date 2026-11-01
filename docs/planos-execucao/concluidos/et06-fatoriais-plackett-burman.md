@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F05 |
 | Marco | Prepara M3 |
 | Depende de | ET04; reutiliza a apresentação da ET05 |
 | Módulos | C11, C06–C08, C07 (`lack_of_fit` para curvatura), C16 (`effects`, `interactions`, `pareto`, `observed_predicted`), C18, U06–U09 |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -74,7 +74,7 @@ Planejamento e análise de triagem completos, exemplo PB e inventário Protimiza
 
 1. [x] Matrizes e propriedades (contagem, níveis, ortogonalidade quando esperada, geradores, codificação e aleatorização reprodutível) verificadas independentemente. *Evidência:* `tests/design_validation.rs` contra enumeração em Python, força bruta em GF(2), Hadamard com NumPy e PCG32 reimplementado ([métodos](../../metodos/fatorial-dois-niveis.md#10-validação)); paridade `design.parity.test.ts`.
 2. [x] Fluxo PB funciona sem apresentar testes não estimáveis como válidos. *Evidência:* caso de validação 004 (saturado: EP, t e p indefinidos; Lenth rotulado como indicativo), caso 003 (PB 12), `design-flow.spec.ts` (inclui exemplo 02), fatos `design.saturated`/`design.lenth_only`.
-3. [ ] Mesma semente produz a mesma ordem no Windows e no navegador. *Evidência obtida:* navegador (WebAssembly) = Linux nativo = referência Python (parity e `native-checks.mjs`, que agora inclui `designGenerate`). **No Windows 11: pendente** (aritmética inteira, sem dependência de plataforma; aguarda execução do job `desktop-windows`).
+3. [x] Mesma semente produz a mesma ordem no Windows e no navegador. *Evidência:* navegador (WebAssembly) = Linux nativo = **Windows nativo** = referência Python: o job `desktop-windows` da [execução 41334658975](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41334658975) (`windows-latest`, Windows Server 2025, build 26100) confirmou, via `native-checks.mjs`, a ordem aleatória de 19 ensaios (semente 20261101) idêntica à referência independente e os efeitos e valores-p do caso 001. **Ressalva:** a imagem da CI não é um Windows 11 de usuário.
 4. [x] Inventário Protimiza e decisão sobre o rótulo CCD registrados antes da ET07. *Evidência:* [catálogo funcional](../../produto/catalogo-funcional.md#inventário-protimiza-et06), [DT-0011, item 9](../../decisoes-tecnicas/dt-0011-planejamentos-dois-niveis.md). **Limite:** sem acesso ao serviço; itens incertos e pergunta não bloqueante ao usuário permanecem.
 
 ## 8. Verificação
@@ -103,9 +103,10 @@ Especificações, fichas, DTs, [catálogo funcional](../../produto/catalogo-func
 | 2026-11-01 | **Interface:** caminho "Planejar experimento" (painel, contagem, recomendação, matriz real/codificada, CSV), aplicação à grade com revisão, termos e curvatura, resultados e gráficos de triagem. E2E em Chromium e Firefox; axe nos três temas (resultados e matriz); contrato e projeto `.enzitag` ampliados (esquema permanece 1). |
 | 2026-11-01 | **Exemplo 02** (PB 12 + 4 centrais, seis componentes de meio de cultivo): efeitos recalculados com NumPy fora do código e conferidos no E2E. A recomendação passou a oferecer **dois** tamanhos de PB. |
 | 2026-11-01 | **Nativo:** `native-checks.mjs` ampliado (planejamento aleatorizado e análise 2³) e executado sob Xvfb no Linux: aprovado. |
+| 2026-11-01 | **Windows (CI):** a execução 41334658975 passou em `windows-latest` (Windows Server 2025, build 26100) com a geração aleatorizada e a análise de planejamento no `native-checks.mjs`: critério 3 atendido. |
 | 2026-11-01 | **Documentação:** especificações de quatro métodos, DT-0011, fichas C11 e U06, catálogo (inventário Protimiza), matriz, mapa de módulos, formato `.enzitag`, validação e exemplos. |
 
-**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01–T12 concluídas; pendente apenas o critério 3 (Windows). Próxima etapa em código: ET07.
+**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01–T12 concluídas; T01–T12 concluídas e critérios 1–4 com evidência; plano movido para `concluidos/`. Ressalvas: inventário Protimiza parcial (sem acesso ao serviço) e Windows 11 literal não verificado. Próxima etapa em código: ET07.
 
 ## 12. Desvios e descobertas
 
