@@ -50,3 +50,6 @@ Desktop.ini
 
 # Cola WASM gerada por app/web/scripts/build-wasm.mjs.
 /app/web/src/services/engine/wasm/
+
+# Esquemas gerados pelo Tauri durante a compilação.
+/app/desktop/src-tauri/gen/

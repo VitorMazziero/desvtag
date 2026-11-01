@@ -10,7 +10,7 @@ O [roteiro do produto](../planos-execucao/roteiro-produto.md) define a sequênci
 
 | ID | Detalhe | Fase | Etapa | Diretriz já aprovada |
 |---|---|---|---|---|
-| PD-01 | Versões e dependências auxiliares | F00 e por módulo | ET01 e etapas consumidoras | Rust + React/TypeScript + Tauri + WASM; papel das dependências documentado |
+| PD-01 | Versões e dependências auxiliares | F00 e por módulo | ET01 (base técnica resolvida: DT-0003 a DT-0006) e etapas consumidoras | Rust + React/TypeScript + Tauri + WASM; papel das dependências documentado |
 | PD-02 | Contêiner interno, esquema e migrações | F02 | ET03 | Arquivo aberto `.enzitag`, vários experimentos, revisões e resultados preservados |
 | PD-03 | Retenção/compactação do histórico e limites de recuperação | F02 | ET03 | Recuperação após dois segundos e checkpoints; sem perda silenciosa |
 | PD-04 | Variantes, estimadores, algoritmos e tolerâncias | F03–F09 | ET04–ET08 (v0.1); demais posteriores | Catálogo completo e validação por método |

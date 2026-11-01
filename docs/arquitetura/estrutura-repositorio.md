@@ -11,34 +11,36 @@ Marcação usada abaixo: **existe** — presente no repositório; **ETnn** — c
 ```text
 enzitag-optima/
 ├── .github/
-│   ├── workflows/                    # ET01 verificações; ET10 publicação web e Releases
-│   └── pull_request_template.md      # ET01
+│   ├── workflows/ci.yml              # existe (ET01); ET10 acrescenta publicação web e Releases
+│   └── pull_request_template.md      # existe (ET01)
 ├── app/                              # Código do aplicativo
 │   ├── README.md                     # existe
-│   ├── Cargo.toml                    # ET01 workspace Rust
-│   ├── Cargo.lock                    # ET01
+│   ├── Cargo.toml                    # existe (ET01) workspace Rust
+│   ├── Cargo.lock                    # existe (ET01)
+│   ├── .cargo/config.toml            # existe (ET01) destino dos tipos gerados pelo ts-rs
 │   ├── crates/
-│   │   ├── optima-core/              # existe (README); ET01 pacote
+│   │   ├── optima-core/              # existe (ET01: ids, fator, issues, registro, proveniência)
 │   │   │   ├── Cargo.toml
 │   │   │   ├── README.md
 │   │   │   ├── src/lib.rs            # API pública pequena
 │   │   │   ├── src/<módulo>/mod.rs   # um diretório por módulo C01–C19
 │   │   │   └── tests/<módulo>_tests.rs
-│   │   ├── optima-project/           # ET01 pacote; ET03 conteúdo (P01–P03)
-│   │   ├── optima-engine/            # ET01 (E01–E02)
-│   │   └── optima-wasm/              # existe (README); ET01 pacote (E03)
+│   │   ├── optima-project/           # existe (ET01 documento mínimo); ET03 conteúdo (P01–P03)
+│   │   ├── optima-engine/            # existe (ET01: E01); E02 na ET08
+│   │   └── optima-wasm/              # existe (ET01: E03)
 │   ├── desktop/                      # existe (README)
-│   │   └── src-tauri/                # ET01 (E04)
+│   │   ├── tests/native-smoke.mjs    # existe (ET01) verificação nativa via WebDriver
+│   │   └── src-tauri/                # existe (ET01: E04), workspace Cargo próprio
 │   │       ├── Cargo.toml
 │   │       ├── tauri.conf.json
 │   │       ├── capabilities/
 │   │       ├── icons/
-│   │       └── src/{main,lib,commands,jobs,files,updater}.rs
-│   └── web/                          # existe (README); ET01 projeto
-│       ├── package.json              # ET01 (local conforme DT de workspace JS)
+│   │       └── src/{main,lib,commands,jobs}.rs   # files (ET03) e updater (ET10)
+│   └── web/                          # existe (ET01)
+│       ├── package.json              # único pacote JS (DT-0003)
+│       ├── scripts/{gen-contracts,build-wasm}.mjs
 │       ├── index.html
-│       ├── tsconfig.json
-│       ├── public/
+│       ├── tsconfig.json  biome.json  vite.config.ts  playwright.config.ts
 │       ├── src/
 │       │   ├── main.tsx
 │       │   ├── app/                  # U01
@@ -49,7 +51,7 @@ enzitag-optima/
 │       │   ├── i18n/locales/{pt-BR,en}/<namespace>.json
 │       │   ├── themes/{tokens,soft-light,modern-dark,professional}.css
 │       │   └── assets/               # logo e fontes locais
-│       └── tests/e2e/                # ET02
+│       └── tests/e2e/                # existe (ET01)
 ├── docs/                             # Documentação em português (ver seção seguinte)
 ├── examples/                         # existe (README); exemplos a partir da ET03
 │   └── <nn>-<slug>/                  # README.md, dados e projeto .enzitag
@@ -61,8 +63,9 @@ enzitag-optima/
 ├── .editorconfig                     # existe
 ├── .gitattributes                    # existe
 ├── .gitignore                        # existe
-├── rust-toolchain.toml               # ET01
-├── .nvmrc                            # ET01 (ou campo engines, conforme DT)
+├── rust-toolchain.toml               # existe (ET01)
+├── .nvmrc                            # existe (ET01)
+├── scripts/                          # existe (ET01) verificação de links da documentação e de versões
 ├── CHANGELOG.md                      # ET10
 ├── CLAUDE.md                         # existe — instruções para agentes de código
 ├── CONTRIBUTING.md                   # existe
@@ -86,7 +89,7 @@ docs/
 │   ├── visao-geral.md
 │   ├── mapa-modulos.md
 │   ├── estrutura-repositorio.md
-│   ├── dependencias.md               # ET01
+│   ├── dependencias.md               # existe (ET01)
 │   ├── formato-enzitag.md            # ET03
 │   └── limites-operacionais.md       # ET10
 ├── planos-execucao/                  # Exclusivo para planos de execução
@@ -101,7 +104,7 @@ docs/
 ├── modelos/                          # Modelos de plano, DT, ficha, método e caso
 ├── modulos/                          # Fichas por módulo: <id>-<slug>.md
 ├── metodos/                          # Especificações científicas: <slug>.md
-├── guias/                            # ET01: ambiente; ET09: exportação; uso
+├── guias/                            # existe (ET01: ambiente); ET09: exportação; uso
 ├── distribuicao/                     # Repositório, publicação e atualizações
 ├── temas/                            # Prompts originais e adaptação do Soft Light
 │   ├── prompts/                      # Arquivos originais preservados byte a byte

@@ -24,7 +24,7 @@
     "environment": "Environment",
     "environmentValue": {
       "wasm": "Browser (WebAssembly)",
-      "tauri": "Windows (Tauri, native engine)"
+      "tauri": "Desktop app (Tauri, native engine)"
     },
     "engineVersion": "Engine version",
     "protocolVersion": "Protocol version",

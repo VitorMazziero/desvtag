@@ -33,7 +33,7 @@ Todos os caminhos da tabela abaixo começam em **`app/crates/optima-core/src/`**
 
 | ID | Módulo e arquivos previstos | Entradas → saídas e dependências |
 |---|---|---|
-| C01 | `domain/{dataset,factor,response,observation,unit,design,model_spec}.rs` | Dados tipados, IDs, unidades experimentais, fatores numéricos/categóricos, papéis e configurações; base comum |
+| C01 | `domain/{ids,factor,dataset,response,observation,unit,design,model_spec}.rs` (ET01: `ids`, `factor`) | Dados tipados, IDs, unidades experimentais, fatores numéricos/categóricos, papéis e configurações; base comum |
 | C02 | `validation/{dataset,design,model,issues}.rs` | Dados/configuração → erros e avisos codificados; usa C01; sem textos de interface |
 | C03 | `numeric/{matrix,qr,cholesky,svd,summation,root_finding,integration,special_functions,random}.rs` | Operações numéricas estáveis, rank, convergência, tolerâncias e RNG com semente explícita; base matemática |
 | C04 | `distributions/{normal,student_t,f,chi_square,studentized_range,noncentral,multivariate_t}.rs` | CDF, caudas e quantis necessários; usa C03; implementações progressivas conforme métodos consumidores |
@@ -64,7 +64,7 @@ Os arquivos com múltiplos métodos, como `adjustments.rs`, podem ser subdividid
 | P03 | `app/crates/optima-project/src/migrations/{mod,v001}.rs` | Migrações explícitas e preservação de resultados; acrescentar versões apenas quando houver mudanças reais |
 | E01 | `app/crates/optima-engine/src/{request,response,dispatch,capabilities}.rs` | API comum: validar, resumir, gerar planejamento, ajustar, comparar, diagnosticar, predizer, otimizar e operar documento |
 | E02 | `app/crates/optima-engine/src/{jobs,cancellation,events}.rs` | Identidade da tarefa, checkpoints de cancelamento e progresso; sem scheduler específico de plataforma |
-| E03 | `app/crates/optima-wasm/src/{lib,conversion,errors}.rs` | Converter contratos do engine para JS; mesma semântica de erros e resultados |
+| E03 | `app/crates/optima-wasm/src/lib.rs` | Transporte do texto JSON do engine para JS; mesma semântica de erros e resultados. `conversion.rs`/`errors.rs` só se surgir necessidade (ET01 não precisou) |
 | E04 | `app/desktop/src-tauri/src/{commands,jobs,files,auth,updater}.rs` | Transporte nativo, tarefas fora da thread da UI, salvamento seguro e recursos Windows |
 
 ## Interface compartilhada e integrações
@@ -84,14 +84,15 @@ Todos os caminhos abaixo começam em **`app/web/src/`**, salvo indicação contr
 | U09 | `features/charts/{index.ts,ChartView.tsx,ChartEditor.tsx,SurfaceView.tsx,LetterLayer.tsx}`; `services/charts/{spec,renderer,export}.ts` | Aparência e renderização, rótulos e letras, projeções 2D/3D; sem inferência em JavaScript |
 | U10 | `features/optimization/{index.ts,ObjectivesEditor.tsx,ConstraintsEditor.tsx,CandidateTable.tsx}` | Objetivos, restrições, desejabilidade e candidatos retornados pelo motor |
 | U11 | `features/project/{index.ts,ProjectTree.tsx,HistoryView.tsx,SaveStatus.tsx}`; `state/{project,preferences,jobs}.ts` | Experimentos, revisões, seleção e preferências; não replica resultados em estados independentes |
-| U12 | `services/engine/{EngineClient,contracts.generated,wasmClient,tauriClient}.ts`; `workers/engine.worker.ts` | Contrato único e escolha de adaptador; Worker navegador, comandos no desktop |
+| U12 | `services/engine/{index,EngineClient,contracts.generated,wasmClient,tauriClient}.ts`; `workers/engine.worker.ts` | Contrato único e escolha de adaptador; Worker navegador, comandos no desktop |
 | U13 | `services/storage/{StorageProvider,browserRecovery,localFile,desktopFile,autosave,revisionStore}.ts` | Abrir/salvar bytes e recuperar sessões; serialização do projeto pertence a P02 |
 | U14 | `services/drive/{auth.web,auth.desktop,client,folder,sync,conflicts}.ts`; `features/drive/{DrivePicker,ConnectionStatus,ConflictDialog}.tsx` | Login opcional, seleção por arquivo, reconexão, sincronização e conflitos |
 | U15 | `features/sharing/{index.ts,OpenShared.tsx,CommentsPanel.tsx}` | Compartilhar/abrir/cópia e comentários em revisão identificada; sem presumir edição simultânea |
 | U16 | `services/export/{figure,table,report,provenance}.ts`; `features/export/ExportDialog.tsx` | Figuras SVG/PDF/PNG, tabelas CSV/XLSX, relatórios HTML/PDF e, depois, DOCX |
 | U17 | `i18n/{index,format}.ts`, `i18n/locales/{pt-BR,en}/{common,methods,diagnostics,results}.json` | Textos, formatação e idioma da exportação; preserva dados internos |
-| U18 | `themes/{tokens,soft-light,modern-dark,professional}.css`; `features/settings/{ThemeSelector,LanguageSelector,UpdateSettings}.tsx` | Três temas, acessibilidade, preferências e atualização |
+| U18 | `themes/{tokens,fonts,soft-light,modern-dark,professional}.css`; `features/settings/{index.ts,ThemeSelector,LanguageSelector,UpdateSettings}.tsx`; `state/preferences.ts` | Três temas, acessibilidade, preferências e atualização |
 | U19 | `services/errors/{codes,presentation}.ts`, `services/logging/local.ts` | Erros compreensíveis e registro local sem dados experimentais/credenciais por padrão |
+| U20 | `features/engine-status/{index.ts,EngineStatus.tsx}` | Tela provisória da ET01 que exibe `engine.info`; substituída pelo fluxo guiado na ET02 |
 
 Convenção das funcionalidades: lógica e contratos em `.ts`, componentes em `.tsx`; `index.ts` exporta a API pública.
 

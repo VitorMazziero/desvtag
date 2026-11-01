@@ -10,6 +10,10 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 |---|---|---|---|
 | [DT-0001](dt-0001-estrutura-documentacao-nomenclatura.md) | Estrutura da documentação, nomenclatura e planos de execução | Aceita | 2026-11-01 |
 | [DT-0002](dt-0002-versionamento-primeira-versao.md) | Versionamento e definição da primeira versão | Aceita | 2026-11-01 |
+| [DT-0003](dt-0003-toolchain-ferramentas-web-wasm.md) | Toolchain, ferramentas web e build WebAssembly | Aceita | 2026-11-01 |
+| [DT-0004](dt-0004-pacote-tauri-workspace-proprio.md) | Pacote Tauri em workspace próprio e transporte nativo | Aceita | 2026-11-01 |
+| [DT-0005](dt-0005-contrato-serializacao-tipos.md) | Contrato, serialização e geração de tipos TypeScript | Aceita | 2026-11-01 |
+| [DT-0006](dt-0006-idiomas-temas-fontes.md) | Idiomas, temas, fontes e preferências | Aceita | 2026-11-01 |
 
 ## Regras
 

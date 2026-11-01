@@ -93,10 +93,10 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
-| Windows 11 de 64 bits (Tauri) | F00–F01 | v0.1 | ET01, ET02 | não iniciado | — |
-| Chrome, Edge e Firefox atuais (WASM) | F00–F01 | v0.1 | ET01, ET02 | não iniciado | — |
-| Português e inglês | F01 | v0.1 | ET02 | não iniciado | — |
-| Temas Soft Light, Modern Dark e Professional | F01 | v0.1 | ET02 | não iniciado | — |
+| Windows 11 de 64 bits (Tauri) | F00–F01 | v0.1 | ET01, ET02 | em andamento: build Tauri e IPC nativo verificados em Linux; execução no Windows pendente | [ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md#11-registro-de-progresso) |
+| Chrome, Edge e Firefox atuais (WASM) | F00–F01 | v0.1 | ET01, ET02 | em andamento: E2E em Chromium e Firefox; Edge e Chrome estável pendentes | [ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md#11-registro-de-progresso) |
+| Português e inglês | F01 | v0.1 | ET01, ET02 | em andamento: esqueleto e paridade de chaves (ET01); interface completa na ET02 | — |
+| Temas Soft Light, Modern Dark e Professional | F01 | v0.1 | ET01, ET02 | em andamento: tokens, três temas e contraste testados (ET01); componentes na ET02 | — |
 | Tela inicial, três entradas e fluxo guiado | F01 | v0.1 | ET02 | não iniciado | — |
 | Explicações curtas (conclusão, evidência, próximo passo) | F01–F07 | v0.1 | ET02–ET08 | não iniciado | — |
 | Digitação e colagem do Excel | F01/F02 | v0.1 | ET02, ET03 | não iniciado | — |

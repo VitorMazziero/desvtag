@@ -6,7 +6,7 @@
 
 EnziTAG Optima is a planned application for researchers and students, with a guided workflow for experimental design, data analysis, treatment comparisons and process optimization. Its development is connected to the activities of the EnziTAG research group.
 
-**Current status:** product defined and first version (v0.1) planned in stages. Active stage: [ET01 — technical foundation](docs/planos-execucao/ativos/et01-fundacao-tecnica.md). There is no executable application, implemented statistical method or validated scientific result yet.
+**Current status:** first version (v0.1) under staged implementation. Active stage: [ET01 — technical foundation](docs/planos-execucao/ativos/et01-fundacao-tecnica.md) (Rust workspace, engine in the browser via WebAssembly and on Windows via Tauri, typed contracts, languages and themes). No statistical method is implemented and no scientific result is validated; nothing has been published.
 
 ## Project direction
 
@@ -45,7 +45,7 @@ The application will use clearly separated modules with defined files, responsib
 | [examples](examples/README.md) | Reproducible examples to be developed |
 | [validation](validation/README.md) | Reference cases and validation evidence |
 
-The full tree, including what exists today and which stage creates each part, is in the [repository structure](docs/arquitetura/estrutura-repositorio.md) document. Code areas currently contain responsibility descriptions only. Build configuration and execution commands will be added in stage ET01, after they have been run. Planning and development documents are currently written in Portuguese; the product itself is required to support both languages from the start.
+The full tree, including what exists today and which stage creates each part, is in the [repository structure](docs/arquitetura/estrutura-repositorio.md) document. Development, verification and build commands are in the [development environment guide](docs/guias/ambiente-desenvolvimento.md) (Portuguese). Planning and development documents are currently written in Portuguese; the product itself is required to support both languages from the start.
 
 ## Documentation
 

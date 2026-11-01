@@ -61,40 +61,40 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 
 ### 5.1 Ambiente e versões
 
-- [ ] **T01** — Inventariar no Windows 11 de desenvolvimento: Git, rustup, alvo `wasm32-unknown-unknown`, Node, pré-requisitos do Tauri 2 (ferramentas de compilação C++ da Microsoft e WebView2). Registrar versões encontradas.
-- [ ] **T02** — Registrar DTs de toolchain e ferramentas web; criar `rust-toolchain.toml` na raiz, versão de Node (`.nvmrc` ou `engines`) e lockfiles.
-- [ ] **T03** — Verificar a situação de manutenção das ferramentas WASM e do Tauri 2 na data da execução; registrar na DT de build WASM.
-- [ ] **T04** — Criar `docs/arquitetura/dependencias.md`: dependência, versão, papel, licença, compatibilidade WASM e módulo consumidor.
+- [ ] **T01** *(parcial: inventário em Linux feito, ver seção 11; Windows 11 pendente)* — Inventariar no Windows 11 de desenvolvimento: Git, rustup, alvo `wasm32-unknown-unknown`, Node, pré-requisitos do Tauri 2 (ferramentas de compilação C++ da Microsoft e WebView2). Registrar versões encontradas.
+- [x] **T02** — Registrar DTs de toolchain e ferramentas web; criar `rust-toolchain.toml` na raiz, versão de Node (`.nvmrc` ou `engines`) e lockfiles.
+- [x] **T03** — Verificar a situação de manutenção das ferramentas WASM e do Tauri 2 na data da execução; registrar na DT de build WASM.
+- [x] **T04** — Criar [`docs/arquitetura/dependencias.md`](../../arquitetura/dependencias.md): dependência, versão, papel, licença, compatibilidade WASM e módulo consumidor.
 
 ### 5.2 Pacotes Rust
 
-- [ ] **T05** — Criar `app/Cargo.toml` (workspace) com metadados comuns (licença MIT, edição, versão `0.1.0`), perfis e lints de workspace; `unsafe` proibido no core.
-- [ ] **T06** — Criar `optima-core` com `lib.rs` pequeno, `domain/` inicial (identificadores e tipos básicos de C01), `validation/issues.rs` (C02: código, severidade, parâmetros) e `registry/`, `errors.rs`, `provenance.rs` iniciais (C19).
-- [ ] **T07** — Criar `optima-project` com versão de esquema e documento mínimo vazio (sem formato de arquivo ainda).
-- [ ] **T08** — Criar `optima-engine` (E01): `request.rs`, `response.rs`, `dispatch.rs`, `capabilities.rs`; operação `engine.info` retorna versão do motor, versão do protocolo e lista de capacidades (vazia de métodos científicos).
-- [ ] **T09** — Criar `optima-wasm` (E03): `lib.rs`, `conversion.rs`, `errors.rs`; uma função exportada recebe a solicitação e devolve a resposta do engine, sem lógica própria.
-- [ ] **T10** — Testes Rust: serialização ida e volta dos contratos, erro de versão de protocolo incompatível e resposta de `engine.info`.
+- [x] **T05** — Criar `app/Cargo.toml` (workspace) com metadados comuns (licença MIT, edição, versão `0.1.0`), perfis e lints de workspace; `unsafe` proibido no core.
+- [x] **T06** — Criar `optima-core` com `lib.rs` pequeno, `domain/` inicial (identificadores e tipos básicos de C01), `validation/issues.rs` (C02: código, severidade, parâmetros) e `registry/`, `errors.rs`, `provenance.rs` iniciais (C19).
+- [x] **T07** — Criar `optima-project` com versão de esquema e documento mínimo vazio (sem formato de arquivo ainda).
+- [x] **T08** — Criar `optima-engine` (E01): `request.rs`, `response.rs`, `dispatch.rs`, `capabilities.rs`; operação `engine.info` retorna versão do motor, versão do protocolo e lista de capacidades (vazia de métodos científicos).
+- [x] **T09** — Criar `optima-wasm` (E03): `lib.rs`, `conversion.rs`, `errors.rs`; uma função exportada recebe a solicitação e devolve a resposta do engine, sem lógica própria.
+- [x] **T10** — Testes Rust: serialização ida e volta dos contratos, erro de versão de protocolo incompatível e resposta de `engine.info`.
 
 ### 5.3 Contrato TypeScript
 
-- [ ] **T11** — Gerar `app/web/src/services/engine/contracts.generated.ts` a partir do Rust; script de geração; verificação na CI que falha se o arquivo gerado estiver desatualizado.
-- [ ] **T12** — Criar `EngineClient.ts` (interface única), `wasmClient.ts` + `workers/engine.worker.ts` e `tauriClient.ts`; detecção do ambiente; cada solicitação leva ID de tarefa.
+- [x] **T11** — Gerar `app/web/src/services/engine/contracts.generated.ts` a partir do Rust; script de geração; verificação na CI que falha se o arquivo gerado estiver desatualizado.
+- [x] **T12** — Criar `EngineClient.ts` (interface única), `wasmClient.ts` + `workers/engine.worker.ts` e `tauriClient.ts`; detecção do ambiente; cada solicitação leva ID de tarefa.
 
 ### 5.4 Interface e plataformas
 
-- [ ] **T13** — Criar `app/web` com `src/main.tsx`, `src/app/App.tsx` pequeno e as pastas `features/`, `services/`, `state/`, `workers/`, `i18n/`, `themes/` conforme o mapa (somente arquivos com conteúdo real).
-- [ ] **T14** — Tela provisória mostra a resposta de `engine.info` e o ambiente (navegador ou Windows); seletores de idioma e tema funcionais.
-- [ ] **T15** — Esqueleto de idiomas (U17): biblioteca escolhida em DT, `i18n/locales/{pt-BR,en}/common.json`, detecção do idioma do sistema no primeiro acesso, preferência persistida, teste que acusa chave ausente em um dos idiomas.
-- [ ] **T16** — Esqueleto de temas (U18): `themes/tokens.css` com variáveis semânticas, `soft-light.css`, `modern-dark.css`, `professional.css`; Soft Light padrão; preferência por dispositivo; fontes locais; respeito a `prefers-reduced-motion`.
-- [ ] **T17** — Criar `app/desktop/src-tauri` (E04): configuração Tauri 2 com permissões mínimas, `src/lib.rs`, `src/main.rs`, `src/commands.rs` com comando que chama `optima-engine` fora da thread da interface.
+- [x] **T13** — Criar `app/web` com `src/main.tsx`, `src/app/App.tsx` pequeno e as pastas `features/`, `services/`, `state/`, `workers/`, `i18n/`, `themes/` conforme o mapa (somente arquivos com conteúdo real).
+- [x] **T14** — Tela provisória mostra a resposta de `engine.info` e o ambiente (navegador ou Windows); seletores de idioma e tema funcionais.
+- [x] **T15** — Esqueleto de idiomas (U17): biblioteca escolhida em DT ([DT-0006](../../decisoes-tecnicas/dt-0006-idiomas-temas-fontes.md)), `i18n/locales/{pt-BR,en}/common.json`, detecção do idioma do sistema no primeiro acesso, preferência persistida, teste que acusa chave ausente em um dos idiomas.
+- [x] **T16** — Esqueleto de temas (U18): `themes/tokens.css` com variáveis semânticas, `soft-light.css`, `modern-dark.css`, `professional.css`; Soft Light padrão; preferência por dispositivo; fontes locais; respeito a `prefers-reduced-motion`.
+- [x] **T17** — Criar `app/desktop/src-tauri` (E04): configuração Tauri 2 com permissões mínimas, `src/lib.rs`, `src/main.rs`, `src/commands.rs` com comando que chama `optima-engine` fora da thread da interface.
 
 ### 5.5 Verificação automatizada e documentação
 
-- [ ] **T18** — GitHub Actions: formatação, Clippy com avisos como erro, testes Rust, build WASM, verificação de tipos, lint, testes e build web, tipos gerados atualizados e links da documentação. Build Windows do Tauri apenas em `main`, etiquetas e disparo manual.
-- [ ] **T19** — Criar `.github/pull_request_template.md` com referência à etapa, tarefas, critérios atendidos e documentação atualizada.
-- [ ] **T20** — Criar `docs/guias/ambiente-desenvolvimento.md` e atualizar "Como executar" no README somente com comandos executados com sucesso.
-- [ ] **T21** — Fichas em `docs/modulos/` para E01, E03, E04 e U12 (estrutura inicial); atualizar o [mapa](../../arquitetura/mapa-modulos.md) se algum nome mudar.
-- [ ] **T22** — Clone limpo no Windows 11: executar o guia do zero e registrar o resultado no registro de progresso.
+- [ ] **T18** *(workflow escrito; aguarda a primeira execução verde na CI, ver seção 11)* — GitHub Actions: formatação, Clippy com avisos como erro, testes Rust, build WASM, verificação de tipos, lint, testes e build web, tipos gerados atualizados e links da documentação. Build Windows do Tauri apenas em `main`, etiquetas e disparo manual.
+- [x] **T19** — Criar `.github/pull_request_template.md` com referência à etapa, tarefas, critérios atendidos e documentação atualizada.
+- [x] **T20** — Criar [`docs/guias/ambiente-desenvolvimento.md`](../../guias/ambiente-desenvolvimento.md) e atualizar "Como executar" no README somente com comandos executados com sucesso.
+- [x] **T21** — Fichas em [`docs/modulos/`](../../modulos/README.md) para E01, E03, E04 e U12 (estrutura inicial); atualizar o [mapa](../../arquitetura/mapa-modulos.md) se algum nome mudar.
+- [ ] **T22** *(pendente: requer Windows 11; ver seção 11)* — Clone limpo no Windows 11: executar o guia do zero e registrar o resultado no registro de progresso.
 
 ## 6. Entregas
 
@@ -139,10 +139,51 @@ Cada linha gera uma DT em [`docs/decisoes-tecnicas/`](../../decisoes-tecnicas/RE
 
 ## 11. Registro de progresso
 
-| Data | Registro |
+### Estado atual (retomada)
+
+| Item | Valor |
 |---|---|
-| 2026-11-01 | Plano criado e ativado. Nenhuma tarefa iniciada. |
+| Branch | `claude/epic-keller-3ad7jc` (PR [#1](https://github.com/VitorMazziero/enzitag-optima/pull/1) para `main`, rascunho) |
+| Etapa e tarefa | ET01 em andamento; pendentes **T01** (inventário Windows), **T18** (primeira CI verde) e **T22** (clone limpo no Windows 11) |
+| Código entregue | Workspace Rust (`optima-core`, `-project`, `-engine`, `-wasm`), interface React/TypeScript, pacote Tauri, scripts, CI |
+| Próxima ação | Confirmar a CI no PR; obter evidência Windows (job `desktop-windows` por disparo manual e/ou máquina do usuário) |
+
+### Evidências (2026-11-01)
+
+Ambiente: Linux (Ubuntu 24.04, kernel 6.18), Rust 1.97.0, Node 22.23.4, npm 10.9.9, Python 3.13.18; Chromium 1248 e Firefox 157.0 do Playwright 1.64.1; WebKitGTK 2.52.6.
+
+| Verificação | Comando | Resultado |
+|---|---|---|
+| Formatação Rust | `cargo fmt --all --check` (em `app/` e em `app/desktop/src-tauri/`) | sem diferenças |
+| Lint Rust | `cargo clippy --workspace --all-targets -- -D warnings` (e no pacote Tauri) | sem avisos |
+| Testes Rust | `cargo test --workspace` | 36 testes passam (core 19, engine 6 de protocolo + 8 de exportação de tipos, project 2…) |
+| WASM | `npm run build:wasm` | `optima_wasm_bg.wasm` de 149 569 bytes; versão do CLI igual à do lock |
+| Contratos TS | `npm run check:contracts` | atualizado; com um comentário de documentação alterado no Rust, o comando falha com código 1 (critério 3) |
+| Lint, tipos | `npm run lint`, `npm run typecheck` | sem erros |
+| Testes web | `npm test` | 47 testes passam (cliente, i18n, componente, contraste dos três temas) |
+| E2E (WASM real em Worker) | `E2E_BROWSERS=chromium,firefox npm run test:e2e` | 14 de 14 passam |
+| Inspeção visual | capturas dos três temas em `app/web/test-results/` (não versionadas) | fontes, cores e layout conforme as referências |
+| Nativo (Tauri) | `xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop` | `engine.info` do motor nativo obtido pela interface: versão 0.1.0, protocolo 1 |
+| Links e versões | `node scripts/check-docs-links.mjs`, `node scripts/check-versions.mjs` | 384 links ok; versão única 0.1.0 |
+
+### Registro por tarefa
+
+| Tarefa | Registro |
+|---|---|
+| ET01-T01 | Linux: Git, `rustup` 1.28.2, Rust 1.97.0, Node 22.23.4, npm 10.9.9, pnpm 10.28.0, Python 3.13.18; alvo WASM instalado; WebKitGTK instalado via `apt`. **Windows 11 não inventariado** (ambiente da sessão é Linux) |
+| ET01-T02, T03 | DT-0003 a DT-0006. As DTs foram redigidas depois do código correspondente, ainda dentro desta etapa e antes de qualquer outro código depender delas; a ordem do plano ("DT antes do código") não foi seguida e fica registrada aqui. Manutenção das ferramentas conferida em crates.io (wasm-bindgen 0.2.130, wasm-pack 0.15.1, Tauri 2.12.5) |
+| ET01-T04 | `docs/arquitetura/dependencias.md` |
+| ET01-T05 a T10 | Commit `feat(et01): add Rust workspace…`. `optima-wasm` só tem `lib.rs` (sem `conversion.rs`/`errors.rs`), justificado em [E03](../../modulos/e03-adaptador-wasm.md) |
+| ET01-T11 a T16 | Commit `feat(et01): add React/TypeScript frontend…`. A biblioteca de i18n é `i18next` |
+| ET01-T17 | Pacote Tauri em workspace próprio ([DT-0004](../../decisoes-tecnicas/dt-0004-pacote-tauri-workspace-proprio.md)); compilado e executado em Linux, **não** em Windows |
+| ET01-T18 | `.github/workflows/ci.yml` com jobs docs, rust, web, desktop-linux e desktop-windows (este só em `main`, etiquetas e disparo manual). **Ainda sem execução na CI** |
+| ET01-T19 a T21 | Modelo de PR, guia de ambiente e quatro fichas de módulo |
+| ET01-T22 | **Pendente**: nenhum Windows disponível nesta sessão |
 
 ## 12. Desvios e descobertas
 
-Nenhum até o momento.
+- **DTs após o código** (ver T02/T03 acima).
+- **Playwright 1.64.1 exigiu um Chromium diferente do pré-instalado** (build 1248); foi instalado pelo próprio `playwright install`.
+- **Rótulo de ambiente**: o texto "Windows (Tauri…)" apareceria também no Tauri em Linux; passou a "Aplicativo desktop (Tauri, motor nativo)".
+- **O verificador de links encontrou uma âncora quebrada** na ET03 (cabeçalho com código inline) que o verificador provisório anterior não detectava; o script versionado trata o caso.
+- **`wasm-pack` ativo**: não foi adotado por escolha de simplicidade, não por abandono (DT-0003).

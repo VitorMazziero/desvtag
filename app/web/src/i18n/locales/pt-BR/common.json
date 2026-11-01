@@ -24,7 +24,7 @@
     "environment": "Ambiente",
     "environmentValue": {
       "wasm": "Navegador (WebAssembly)",
-      "tauri": "Windows (Tauri, motor nativo)"
+      "tauri": "Aplicativo desktop (Tauri, motor nativo)"
     },
     "engineVersion": "Versão do motor",
     "protocolVersion": "Versão do protocolo",

@@ -12,4 +12,4 @@ A interface chama o núcleo científico pela integração correspondente ao ambi
 
 O uso local deve funcionar sem login. Google Drive é uma integração opcional aprovada. O fluxo guiado, importação por digitação/colagem/CSV/XLSX e formatos de exportação estão nas [decisões aprovadas](../../docs/produto/decisoes-aprovadas.md). Bibliotecas e detalhes internos serão definidos nas etapas do [plano da v0.1](../../docs/planos-execucao/plano-v0.1.md), conforme as fases do [roteiro do produto](../../docs/planos-execucao/roteiro-produto.md).
 
-Ainda não há projeto frontend inicializado nesta pasta.
+Na ET01, o projeto contém o cliente do motor, idiomas, temas e uma tela provisória que exibe `engine.info`. O fluxo guiado começa na ET02.

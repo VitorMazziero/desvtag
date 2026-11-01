@@ -20,4 +20,9 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 
 ## Fichas
 
-Nenhuma ficha criada ainda; as primeiras são previstas na [ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md) (E01, E03, E04 e U12).
+| Módulo | Ficha | Estado |
+|---|---|---|
+| E01 — contratos e despacho | [e01-contratos-despacho.md](e01-contratos-despacho.md) | implementado (sem método científico) |
+| E03 — adaptador WebAssembly | [e03-adaptador-wasm.md](e03-adaptador-wasm.md) | implementado |
+| E04 — adaptador Tauri | [e04-adaptador-tauri.md](e04-adaptador-tauri.md) | comando do motor implementado |
+| U12 — cliente do motor | [u12-cliente-motor.md](u12-cliente-motor.md) | implementado |

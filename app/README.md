@@ -1,6 +1,6 @@
 # Implementação do EnziTAG Optima
 
-Nesta etapa, as pastas abaixo reservam as responsabilidades da arquitetura aceita. Não há código executável nem configuração de compilação.
+Código da implementação, criado por etapas ([plano da v0.1](../docs/planos-execucao/plano-v0.1.md)). Na ET01 existem o workspace Rust, a interface React/TypeScript e o pacote Tauri, ainda sem método estatístico. Comandos: [guia do ambiente](../docs/guias/ambiente-desenvolvimento.md).
 
 | Pasta | Responsabilidade |
 |---|---|
@@ -13,4 +13,4 @@ O núcleo recebe dados e configurações e devolve resultados estruturados. Wind
 
 O primeiro percurso é cadastrar dados, calcular média e variância e apresentar o resultado nos dois ambientes. O [roteiro do produto](../docs/planos-execucao/roteiro-produto.md) define F00–F14 e o [plano da v0.1](../docs/planos-execucao/plano-v0.1.md) organiza a primeira versão em etapas. O [mapa de módulos e arquivos](../docs/arquitetura/mapa-modulos.md) identifica cada responsabilidade e prevê os pacotes adicionais `optima-project` (documento) e `optima-engine` (operações comuns), ainda não criados. A árvore de arquivos prevista para esta pasta está na [estrutura do repositório](../docs/arquitetura/estrutura-repositorio.md).
 
-Os manifests de Rust, dependências da interface e configurações do Tauri serão criados na [ET01 — fundação técnica](../docs/planos-execucao/ativos/et01-fundacao-tecnica.md), incluindo as respectivas instruções de execução.
+Os pacotes `optima-project` e `optima-engine`, previstos no mapa, já existem em `crates/`.

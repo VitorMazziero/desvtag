@@ -6,4 +6,4 @@ Responsabilidades previstas: disponibilizar a interface compartilhada, chamar o 
 
 A integração opcional com Google Drive foi aprovada; sua autorização seguirá o fluxo apropriado para aplicativo instalado. O uso local permanece disponível sem login.
 
-Ainda não há projeto Tauri inicializado, instalador ou pacote executável nesta pasta.
+Na ET01, `src-tauri/` contém o aplicativo Tauri com o comando do motor ([ficha E04](../../docs/modulos/e04-adaptador-tauri.md)). Instalador publicado: nenhum. Verificação no Windows: pendente.

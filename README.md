@@ -6,7 +6,7 @@
 
 EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com fluxo guiado de planejamento e análise de experimentos, comparações de tratamentos e otimização de processos. O desenvolvimento está ligado às atividades do grupo de pesquisa EnziTAG.
 
-**Estado atual:** produto definido e primeira versão (v0.1) planejada em etapas. Etapa ativa: [ET01 — fundação técnica](docs/planos-execucao/ativos/et01-fundacao-tecnica.md). Ainda não há aplicativo executável, métodos implementados ou resultados científicos validados.
+**Estado atual:** primeira versão (v0.1) em implementação por etapas. Etapa ativa: [ET01 — fundação técnica](docs/planos-execucao/ativos/et01-fundacao-tecnica.md) (workspace Rust, motor no navegador via WebAssembly e no Windows via Tauri, contratos tipados, idiomas e temas). Não há método estatístico implementado nem resultado científico validado; nada foi publicado.
 
 ## Direção do projeto
 
@@ -60,7 +60,7 @@ enzitag-optima/
 └── referencias/              # Acervo local, ignorado pelo Git
 ```
 
-A árvore completa, com o que já existe e a etapa que cria cada parte, está em [estrutura do repositório](docs/arquitetura/estrutura-repositorio.md). As áreas de código contêm, nesta etapa, apenas a descrição de suas responsabilidades. Os arquivos de configuração e comandos de execução serão acrescentados na ET01, depois de executados.
+A árvore completa, com o que já existe e a etapa que cria cada parte, está em [estrutura do repositório](docs/arquitetura/estrutura-repositorio.md). Comandos de desenvolvimento, verificação e build estão no [guia do ambiente](docs/guias/ambiente-desenvolvimento.md).
 
 ## Documentação
 
@@ -76,6 +76,8 @@ A árvore completa, com o que já existe e a etapa que cria cada parte, está em
 - [Mapa de módulos e arquivos](docs/arquitetura/mapa-modulos.md).
 - [Estrutura do repositório](docs/arquitetura/estrutura-repositorio.md).
 - [Convenções de nomes, documentação e fluxo de trabalho](docs/convencoes/README.md).
+- [Guia do ambiente de desenvolvimento](docs/guias/ambiente-desenvolvimento.md).
+- [Dependências](docs/arquitetura/dependencias.md) e [decisões técnicas](docs/decisoes-tecnicas/README.md).
 - [Organização da implementação](app/README.md).
 - [Temas visuais e prompts originais](docs/temas/README.md).
 - [Validação dos cálculos](validation/README.md).
