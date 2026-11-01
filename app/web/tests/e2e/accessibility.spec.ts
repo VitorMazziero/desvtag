@@ -1,6 +1,11 @@
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
+
+test.beforeEach(async ({ page }) => {
+  await showAllSections(page);
+});
 
 // Varredura automática de acessibilidade (axe-core, regras WCAG 2.x A/AA) em cada etapa do fluxo
 // e em cada tema. Não substitui a verificação manual com leitor de tela.

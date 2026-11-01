@@ -1,12 +1,14 @@
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { useProject } from "../../state/ProjectContext";
+import { ExportSettingsPanel } from "../export";
 import { OptimizationPanel, OptimizationReport } from "../optimization";
 import { resultIsCurrent } from "../workflow/guards";
 import { ComparisonResults } from "./ComparisonResults";
 import { DescriptiveTable } from "./DescriptiveTable";
 import { DesignResults } from "./DesignResults";
 import { Interpretation } from "./Interpretation";
+import { SectionedResults } from "./SectionedResults";
 import { SurfaceResults } from "./SurfaceResults";
 
 /** `report`: versão para o relatório HTML (sem editores de otimização). */
@@ -58,11 +60,29 @@ export function ResultsView({
             {t("stale")}
           </p>
         )}
-        <SurfaceResults result={stored.result} signature={stored.signature} language={language} />
         {report ? (
-          <OptimizationReport language={language} />
+          <>
+            <SurfaceResults
+              result={stored.result}
+              signature={stored.signature}
+              language={language}
+            />
+            <OptimizationReport language={language} />
+          </>
         ) : (
-          <OptimizationPanel language={language} />
+          <SectionedResults>
+            <SurfaceResults
+              result={stored.result}
+              signature={stored.signature}
+              language={language}
+            />
+            <div data-section="optimization">
+              <OptimizationPanel language={language} />
+            </div>
+            <div data-section="export">
+              <ExportSettingsPanel />
+            </div>
+          </SectionedResults>
         )}
       </section>
     );

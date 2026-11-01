@@ -421,5 +421,58 @@
     "reset": "Restaurar padrão",
     "help": "Só muda a aparência. A configuração fica salva no projeto, vale para a tela e para os arquivos exportados e não altera nenhum resultado.",
     "tooLong": "Use no máximo 200 caracteres."
+  },
+  "sections": {
+    "label": "Seções dos resultados",
+    "summary": "Resumo",
+    "tables": "Tabelas",
+    "effects": "Efeitos",
+    "model": "Modelo",
+    "diagnostics": "Diagnóstico",
+    "charts": "Gráficos",
+    "optimization": "Otimização por desejabilidade",
+    "confirmation": "Confirmação",
+    "export": "Exportar",
+    "showAll": "Mostrar todas as seções"
+  },
+  "model": {
+    "title": "Modelo: termos e comparação",
+    "intro": "Desmarque um termo para retirá-lo do modelo (por exemplo, o efeito quadrático de um fator); o aplicativo recalcula e compara os modelos.",
+    "terms": "Termos do modelo",
+    "notSignificant": "não significativo",
+    "useFull": "Voltar ao modelo completo",
+    "applyRecommended": "Aplicar a recomendação",
+    "confirmHierarchy": "Retirar este termo deixa no modelo uma interação ou um termo quadrático do mesmo fator, o que quebra a hierarquia do modelo. Continuar?",
+    "compareCaption": "Comparação dos modelos",
+    "metric": "Métrica",
+    "full": "Completo",
+    "current": "Atual",
+    "recommended": "Recomendado",
+    "metrics": {
+      "parameters": "Parâmetros (com intercepto)",
+      "dfError": "Graus de liberdade do resíduo",
+      "r2": "R²",
+      "adjR2": "R² ajustado",
+      "predR2": "R² predito (PRESS)",
+      "rmse": "Erro-padrão do modelo (RMSE)",
+      "modelP": "Valor-p do modelo (F)",
+      "lofP": "Valor-p da falta de ajuste",
+      "aicc": "AICc",
+      "bic": "BIC"
+    },
+    "metricsHelp": "R² ajustado e R² predito penalizam termos desnecessários; AICc e BIC menores indicam melhor equilíbrio entre ajuste e simplicidade. Nenhuma métrica decide sozinha: a escolha é sua.",
+    "sequence": "Sequência sugerida de remoções",
+    "stepStart": "Modelo atual",
+    "stepRemove": "Retirar {{term}} (p = {{p}})",
+    "useStep": "Usar este modelo",
+    "stopped": {
+      "no_candidate": "A sequência para aqui: nenhum termo restante tem valor-p acima de α.",
+      "hierarchy": "A sequência para aqui: os termos restantes com valor-p alto são necessários para manter a hierarquia.",
+      "no_degrees_of_freedom": "A sequência para aqui: restariam poucos graus de liberdade no resíduo."
+    },
+    "warnLackOfFit": "Falta de ajuste significativa: o modelo atual pode ser simples demais para estes dados.",
+    "warnFewDf": "Restam só {{df}} graus de liberdade no resíduo: as estimativas de erro são pouco confiáveis.",
+    "warnOverfit": "O R² predito está bem abaixo do R² ajustado: sinal de sobreajuste. Prefira um modelo mais simples.",
+    "optimism": "Valores-p calculados depois de escolher termos pelos próprios dados são otimistas. Confirme o modelo final com ensaios novos."
   }
 }

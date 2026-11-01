@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
 
 // Exportação essencial (ET09) com o motor Rust real: tabelas em CSV (dois formatos) e XLSX,
 // relatório HTML autocontido em outro idioma que o da interface, figuras com paleta acessível.
@@ -20,6 +21,10 @@ async function openExample(page: Page) {
 }
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
+
+test.beforeEach(async ({ page }) => {
+  await showAllSections(page);
+});
 
 test.describe("exportação", () => {
   test("tabela em XLSX (arquivo zip com planilha e proveniência) e em CSV no formato do Excel", async ({

@@ -414,5 +414,58 @@
     "reset": "Restore default",
     "help": "Changes appearance only. The setting is saved in the project, applies to the screen and to exported files, and changes no result.",
     "tooLong": "Use at most 200 characters."
+  },
+  "sections": {
+    "label": "Result sections",
+    "summary": "Summary",
+    "tables": "Tables",
+    "effects": "Effects",
+    "model": "Model",
+    "diagnostics": "Diagnostics",
+    "charts": "Charts",
+    "optimization": "Desirability optimization",
+    "confirmation": "Confirmation",
+    "export": "Export",
+    "showAll": "Show all sections"
+  },
+  "model": {
+    "title": "Model: terms and comparison",
+    "intro": "Clear a term to remove it from the model (for example, the quadratic effect of a factor); the app recalculates and compares the models.",
+    "terms": "Model terms",
+    "notSignificant": "not significant",
+    "useFull": "Back to the full model",
+    "applyRecommended": "Apply the recommendation",
+    "confirmHierarchy": "Removing this term leaves an interaction or a quadratic term of the same factor in the model, which breaks model hierarchy. Continue?",
+    "compareCaption": "Model comparison",
+    "metric": "Metric",
+    "full": "Full",
+    "current": "Current",
+    "recommended": "Recommended",
+    "metrics": {
+      "parameters": "Parameters (with intercept)",
+      "dfError": "Residual degrees of freedom",
+      "r2": "R²",
+      "adjR2": "Adjusted R²",
+      "predR2": "Predicted R² (PRESS)",
+      "rmse": "Model standard error (RMSE)",
+      "modelP": "Model p-value (F)",
+      "lofP": "Lack-of-fit p-value",
+      "aicc": "AICc",
+      "bic": "BIC"
+    },
+    "metricsHelp": "Adjusted R² and predicted R² penalize unnecessary terms; lower AICc and BIC indicate a better balance between fit and simplicity. No single metric decides: the choice is yours.",
+    "sequence": "Suggested removal sequence",
+    "stepStart": "Current model",
+    "stepRemove": "Remove {{term}} (p = {{p}})",
+    "useStep": "Use this model",
+    "stopped": {
+      "no_candidate": "The sequence stops here: no remaining term has a p-value above α.",
+      "hierarchy": "The sequence stops here: the remaining terms with a high p-value are needed to keep the hierarchy.",
+      "no_degrees_of_freedom": "The sequence stops here: too few residual degrees of freedom would remain."
+    },
+    "warnLackOfFit": "Significant lack of fit: the current model may be too simple for these data.",
+    "warnFewDf": "Only {{df}} residual degrees of freedom remain: error estimates are unreliable.",
+    "warnOverfit": "Predicted R² is well below adjusted R²: a sign of overfitting. Prefer a simpler model.",
+    "optimism": "P-values computed after choosing terms from the same data are optimistic. Confirm the final model with new runs."
   }
 }

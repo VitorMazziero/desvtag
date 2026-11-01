@@ -120,7 +120,7 @@ export function Workflow({ language }: { language: Language }) {
         {step === "results" && (
           <>
             <ResultsView language={language} />
-            {state.result && <ExportSettingsPanel />}
+            {state.result && state.result.kind !== "surface" && <ExportSettingsPanel />}
           </>
         )}
       </div>

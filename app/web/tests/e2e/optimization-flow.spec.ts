@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
 
 // Otimização por desejabilidade com o motor Rust real (WebAssembly): abrir o exemplo 04, conferir os
 // candidatos, os limites obrigatórios, o domínio estendido, o cancelamento e o experimento de
@@ -19,6 +20,10 @@ async function openExample(page: Page) {
 }
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
+
+test.beforeEach(async ({ page }) => {
+  await showAllSections(page);
+});
 
 test.describe("otimização por desejabilidade", () => {
   test("exemplo 04: candidato, previsões com intervalo, compromisso e gráfico (conferidos de forma independente)", async ({
