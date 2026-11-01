@@ -1,0 +1,20 @@
+[package]
+name = "optima-project"
+description = "Documento do projeto EnziTAG Optima: experimentos, revisões e formato (sem I/O)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+optima-core = { workspace = true }
+serde = { workspace = true }
+ts-rs = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[lints]
+workspace = true
