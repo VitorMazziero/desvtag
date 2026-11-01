@@ -4,6 +4,8 @@
 
 Diretório exclusivo dos planos de execução do EnziTAG Optima. Requisitos de produto ficam em [`docs/produto/`](../produto/README.md); decisões técnicas, em [`docs/decisoes-tecnicas/`](../decisoes-tecnicas/README.md).
 
+Para iniciar ou retomar a implementação, use o [prompt de execução passo a passo da v0.1](prompt-execucao-v0.1.md). A [análise da base recebida do GitHub](analise-github-v0.1.md) registra a origem dos planos e as verificações realizadas antes de preparar o prompt. Esses documentos não alteram o estado das etapas.
+
 ## Plano ativo
 
 > **ET01 — Fundação técnica e contratos iniciais** · [ativos/et01-fundacao-tecnica.md](ativos/et01-fundacao-tecnica.md)
