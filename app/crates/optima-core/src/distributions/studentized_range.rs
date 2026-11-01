@@ -19,6 +19,7 @@
 
 use super::chi_square;
 use super::normal;
+use super::range_table::RangeTable;
 use super::quantile::{QuantileError, invert_upper_tail};
 use crate::numeric::integration::gauss_legendre;
 
@@ -61,6 +62,8 @@ pub struct StudentizedRange {
     inner: Vec<(f64, f64, f64, f64)>, // (z, peso, cdf(z), sf(z))
     /// Nós externos `s` e pesos (soma ≈ 1); vazio para `ν = ∞` (usa-se `s = 1`).
     outer: Vec<(f64, f64)>,
+    /// Tabela de `W(·; k)`; presente em [`StudentizedRange::tabulated`].
+    table: Option<RangeTable>,
 }
 
 impl StudentizedRange {
@@ -92,7 +95,24 @@ impl StudentizedRange {
         } else {
             Self::outer_nodes(df)?
         };
-        Ok(Self { k, inner, outer })
+        Ok(Self {
+            k,
+            inner,
+            outer,
+            table: None,
+        })
+    }
+
+    /// Como [`StudentizedRange::new`], mas tabula `W(·; k)` (Chebyshev por trechos): o custo
+    /// inicial (~10 ms) compensa quando há dezenas de avaliações, como nos pares de Tukey e nos
+    /// quantis; cada `cdf` fica centenas de vezes mais barata, com erro ≤ 1e-14 em `W`.
+    ///
+    /// # Errors
+    /// [`QuantileError::OutOfRange`] para parâmetros fora do domínio.
+    pub fn tabulated(k: usize, df: f64) -> Result<Self, QuantileError> {
+        let mut base = Self::new(k, df)?;
+        base.table = Some(RangeTable::build(|w| base.range_cdf_exact(w)));
+        Ok(base)
     }
 
     fn outer_nodes(df: f64) -> Result<Vec<(f64, f64)>, QuantileError> {
@@ -118,6 +138,14 @@ impl StudentizedRange {
 
     /// `W(w; k)`: função de distribuição da amplitude de `k` normais padrão.
     fn range_cdf(&self, w: f64) -> f64 {
+        match &self.table {
+            Some(table) => table.eval(w),
+            None => self.range_cdf_exact(w),
+        }
+    }
+
+    /// `W(w; k)` por quadratura direta.
+    fn range_cdf_exact(&self, w: f64) -> f64 {
         if w <= 0.0 {
             return 0.0;
         }
@@ -200,7 +228,7 @@ pub fn sf(q: f64, k: usize, df: f64) -> Result<f64, QuantileError> {
 /// # Errors
 /// [`QuantileError`] fora do domínio ou sem convergência.
 pub fn quantile_upper(alpha: f64, k: usize, df: f64) -> Result<f64, QuantileError> {
-    StudentizedRange::new(k, df)?.quantile_upper(alpha)
+    StudentizedRange::tabulated(k, df)?.quantile_upper(alpha)
 }
 
 #[cfg(test)]
@@ -258,6 +286,30 @@ mod tests {
         }
         let q = d.quantile_upper(0.01).unwrap_or(f64::NAN);
         assert!((d.sf(q) - 0.01).abs() < 1e-12);
+    }
+
+    #[test]
+    fn tabulated_kernel_matches_direct_quadrature() {
+        // A tabela de W(w; k) é a única aproximação nova: compara `cdf` e `sf` com a quadratura
+        // direta em várias combinações (k, ν), inclusive muitos grupos e ν infinito.
+        let mut worst = 0.0_f64;
+        for (k, df) in [
+            (2, 3.0),
+            (5, 12.0),
+            (40, 90.0),
+            (100, 200.0),
+            (100, 5.0),
+            (1000, 1.0e4),
+            (7, f64::INFINITY),
+        ] {
+            let direct = StudentizedRange::new(k, df).unwrap_or_else(|_| unreachable!());
+            let table = StudentizedRange::tabulated(k, df).unwrap_or_else(|_| unreachable!());
+            for i in 1..=60 {
+                let q = f64::from(i) * 0.25;
+                worst = worst.max((direct.cdf(q) - table.cdf(q)).abs());
+            }
+        }
+        assert!(worst < 1e-13, "{worst:e}");
     }
 
     #[test]

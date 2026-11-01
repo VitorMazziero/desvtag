@@ -96,7 +96,7 @@ pub fn compare(
     {
         return None;
     }
-    let kernel = StudentizedRange::new(k, df_error as f64).ok()?;
+    let kernel = StudentizedRange::tabulated(k, df_error as f64).ok()?;
     let critical = kernel.quantile_upper(alpha).ok();
     let balanced = sizes.iter().all(|&s| s == sizes[0]);
     let mut comparisons = Vec::with_capacity(k * (k - 1) / 2);
