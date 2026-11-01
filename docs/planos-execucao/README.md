@@ -12,9 +12,17 @@ Diretório exclusivo dos planos de execução do EnziTAG Optima. Requisitos de p
 >
 > **ET02 — Primeiro percurso ponta a ponta** · [ativos/et02-primeiro-percurso.md](ativos/et02-primeiro-percurso.md)
 >
-> Versão-alvo: v0.1.0 · Fase do roteiro: F01 · Ativado em 2026-11-01
+> Versão-alvo: v0.1.0 · Fase do roteiro: F01 · Ativado em 2026-11-01 · Aberta apenas pela evidência no Windows (T14)
+>
+> **ET03 — Projeto local, importação e recuperação** · [ativos/et03-projeto-local-importacao.md](ativos/et03-projeto-local-importacao.md)
+>
+> Versão-alvo: v0.1.0 · Fase do roteiro: F02 · Ativado em 2026-11-01 · Aberta apenas pelo Windows e pela reabertura cruzada (T15)
+>
+> **ET04 — Fundamentos numéricos e modelos lineares** · [ativos/et04-fundamentos-numericos-modelos.md](ativos/et04-fundamentos-numericos-modelos.md)
+>
+> Versão-alvo: v0.1.0 · Fase do roteiro: F03 · Ativado em 2026-11-01 · Tarefas T01–T12 concluídas; aberta apenas pela evidência no Windows (critério 6)
 
-**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a única pendência da ET01 é a execução no Windows 11, que depende de equipamento ou de ajuste da CI e não de código da ET02. ET02 avança em paralelo; a ET01 só é movida para `concluidos/` quando T01 e T22 tiverem evidência, e nenhuma etapa posterior à ET02 começa antes disso.
+**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a única pendência das ET01–ET03 é a execução no Windows 11 (e a reabertura de projetos entre Windows e navegador), que depende de equipamento ou de ajuste da CI e não do código das etapas seguintes. As etapas seguintes avançam em paralelo **como código**; ET01, ET02 e ET03 só são movidas para `concluidos/` quando essa evidência existir, e **nenhum marco (M1, M2…) é declarado** antes disso. A exceção estende-se somente até a ET04; a ET05 não começa sem decisão registrada.
 
 O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se este quadro e o diretório divergirem, o diretório prevalece e este índice deve ser corrigido.
 
@@ -34,8 +42,8 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 |---|---|---|---|---|
 | ET01 | Fundação técnica e contratos iniciais | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et01-fundacao-tecnica.md](ativos/et01-fundacao-tecnica.md) |
 | ET02 | Primeiro percurso ponta a ponta | v0.1 | **Ativo** | [ativos/et02-primeiro-percurso.md](ativos/et02-primeiro-percurso.md) |
-| ET03 | Projeto local, importação e recuperação | v0.1 | Planejado | [ativos/et03-projeto-local-importacao.md](ativos/et03-projeto-local-importacao.md) |
-| ET04 | Fundamentos numéricos e modelos lineares | v0.1 | Planejado | [planejados/et04-fundamentos-numericos-modelos.md](planejados/et04-fundamentos-numericos-modelos.md) |
+| ET03 | Projeto local, importação e recuperação | v0.1 | **Ativo** (só evidência Windows e reabertura cruzada pendentes) | [ativos/et03-projeto-local-importacao.md](ativos/et03-projeto-local-importacao.md) |
+| ET04 | Fundamentos numéricos e modelos lineares | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et04-fundamentos-numericos-modelos.md](ativos/et04-fundamentos-numericos-modelos.md) |
 | ET05 | ANOVA, Tukey e letras | v0.1 | Planejado | [planejados/et05-anova-tukey-letras.md](planejados/et05-anova-tukey-letras.md) |
 | ET06 | Fatoriais, fracionários e Plackett–Burman | v0.1 | Planejado | [planejados/et06-fatoriais-plackett-burman.md](planejados/et06-fatoriais-plackett-burman.md) |
 | ET07 | Superfícies de resposta e planejamento personalizado | v0.1 | Planejado | [planejados/et07-superficies-resposta.md](planejados/et07-superficies-resposta.md) |

@@ -27,6 +27,8 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 | E04 — adaptador Tauri | [e04-adaptador-tauri.md](e04-adaptador-tauri.md) | comando do motor implementado |
 | U12 — cliente do motor | [u12-cliente-motor.md](u12-cliente-motor.md) | implementado |
 | C05 — estatística descritiva (com C01, C02, C03, C18 iniciais) | [c05-estatistica-descritiva.md](c05-estatistica-descritiva.md) | implementado; validado numericamente |
+| C03, C04 — fundamentos numéricos e distribuições | [c03-c04-fundamentos-numericos-e-distribuicoes.md](c03-c04-fundamentos-numericos-e-distribuicoes.md) | implementado; validado numericamente |
+| C06–C08 — modelos lineares, ANOVA da regressão e diagnósticos | [c06-c08-modelos-lineares.md](c06-c08-modelos-lineares.md) | implementado; validado numericamente |
 | U01 — início e entradas | [u01-inicio-e-entradas.md](u01-inicio-e-entradas.md) | implementado |
 | U02 — fluxo guiado | [u02-fluxo-guiado.md](u02-fluxo-guiado.md) | implementado |
 | U03 — fatores e respostas | [u03-fatores-respostas.md](u03-fatores-respostas.md) | implementado |

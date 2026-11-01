@@ -2,7 +2,7 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-Fonte única da versão-alvo e da situação de cada item do [catálogo funcional](catalogo-funcional.md) e dos recursos de produto aprovados. Nenhum item está implementado ou validado nesta data.
+Fonte única da versão-alvo e da situação de cada item do [catálogo funcional](catalogo-funcional.md) e dos recursos de produto aprovados. A situação de cada item reflete o estado real do repositório na data de atualização.
 
 ## Legenda
 
@@ -38,10 +38,10 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
 | Estatística descritiva (contagem, ausentes, média, variância, desvio-padrão, mínimo, máximo, por grupo) | F01 | v0.1 | ET02 | implementado; validado numericamente (nativo e WebAssembly, 9 casos NIST); Windows pendente | [método](../metodos/estatistica-descritiva.md#10-validação), [casos NIST](../../validation/cases/descriptive_summary/001-nist-numacc1/README.md) |
-| Distribuições Normal, t, F e qui-quadrado | F03 | v0.1 | ET04 | não iniciado | — |
-| Regressão linear: termos, interações, quadráticos, estimabilidade, predição | F03/F06 | v0.1 | ET04, ET07 | não iniciado | — |
-| ANOVA da regressão e intervalos | F03 | v0.1 | ET04 | não iniciado | — |
-| Resíduos, alavancagem e influência | F03 | v0.1 | ET04 | não iniciado | — |
+| Distribuições Normal, t, F e qui-quadrado | F03 | v0.1 | ET04 | implementado; validado numericamente (nativo e WebAssembly, 531 pontos mpmath, caudas até 1e-290); Windows pendente | [método](../metodos/distribuicoes.md#10-validação), [casos](../../validation/cases/distributions/001-normal/README.md) |
+| Regressão linear: termos, interações, quadráticos, estimabilidade, predição | F03/F06 | v0.1 | ET04, ET07 | implementado e validado numericamente na ET04 (11 conjuntos NIST StRD, 6 casos contra NumPy/SciPy; nativo e WebAssembly); uso em superfícies (ET07) e Windows pendentes | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
+| ANOVA da regressão e intervalos | F03 | v0.1 | ET04 | implementado; validado numericamente (nativo e WebAssembly); Windows pendente | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
+| Resíduos, alavancagem e influência | F03 | v0.1 | ET04 | implementado; validado numericamente contra NumPy/SciPy e por propriedades (leave-one-out); Windows pendente | [método](../metodos/regressao-linear.md#10-validação), [casos](../../validation/cases/linear_model/README.md) |
 | ANOVA de um fator, CV e tamanho de efeito | F04 | v0.1 | ET05 | não iniciado | — |
 | Diagnóstico de resíduos e homogeneidade na comparação | F04 | v0.1 | ET05 | não iniciado | — |
 | Análise de efeitos, curvatura e desenhos saturados | F05 | v0.1 | ET06 | não iniciado | — |

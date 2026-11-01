@@ -48,4 +48,5 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 
 - A licença do projeto é MIT; as licenças acima são compatíveis. As fontes OFL-1.1 exigem preservar o aviso de licença quando distribuídas: incluir nas notas de terceiros do instalador e do site (ET10).
 - Acrescentar dependência exige nova linha nesta tabela com finalidade, licença e compatibilidade WASM no mesmo pull request.
-- Bibliotecas numéricas (álgebra, distribuições) serão avaliadas na ET04 e registradas aqui com o algoritmo e a fronteira de responsabilidade, antes de serem adotadas.
+- Bibliotecas numéricas: **nenhuma** foi adotada na ET04. Álgebra linear (QR, SVD de Jacobi), funções especiais e distribuições são implementação própria no `optima-core` ([DT-0009](../decisoes-tecnicas/dt-0009-fundamentos-numericos-modelos-lineares.md)). A única mudança de dependência é a característica `float_roundtrip` de `serde_json`, que garante a leitura exata de decimais.
+- Ambiente Python de referência (fora do aplicativo): `numpy`, `scipy`, `mpmath`, `openpyxl` em `validation/tools/requirements.txt`.

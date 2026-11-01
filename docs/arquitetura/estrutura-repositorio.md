@@ -19,7 +19,7 @@ enzitag-optima/
 │   ├── Cargo.lock                    # existe (ET01)
 │   ├── .cargo/config.toml            # existe (ET01) destino dos tipos gerados pelo ts-rs
 │   ├── crates/
-│   │   ├── optima-core/              # existe (ET01: ids, issues, registro; ET02: dados, descritiva, soma, fatos)
+│   │   ├── optima-core/              # existe (ET01: ids, issues, registro; ET02: dados, descritiva, soma, fatos; ET04: numeric, distributions, models, inference, diagnostics)
 │   │   │   ├── Cargo.toml
 │   │   │   ├── README.md
 │   │   │   ├── src/lib.rs            # API pública pequena
@@ -56,8 +56,8 @@ enzitag-optima/
 ├── examples/                         # existe (README); exemplos a partir da ET03
 │   └── <nn>-<slug>/                  # README.md, dados e projeto .enzitag
 ├── validation/                       # existe (README)
-│   ├── cases/<method_id>/<nnn>-<slug>/   # existe (ET02: descriptive_summary, 9 casos NIST)
-│   ├── tools/                        # existe (ET02: requirements.txt e gerador de casos)
+│   ├── cases/<method_id>/<nnn>-<slug>/   # existe (descriptive_summary, import_xlsx, project_file, distributions, linear_model)
+│   ├── tools/                        # existe (requirements.txt e geradores de casos em Python)
 │   └── reports/v<versão>/            # ET10
 ├── referencias/                      # Acervo local; ignorado pelo Git
 ├── .editorconfig                     # existe

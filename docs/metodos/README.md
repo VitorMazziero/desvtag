@@ -18,3 +18,7 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | Método | Situação |
 |---|---|
 | [Estatística descritiva](estatistica-descritiva.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Fundamentos numéricos](fundamentos-numericos.md) | implementado; validado por meio dos métodos que os consomem |
+| [Funções especiais](funcoes-especiais.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Distribuições Normal, t, qui-quadrado e F](distribuicoes.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Regressão linear](regressao-linear.md) | implementado; validado numericamente (nativo e WebAssembly) |

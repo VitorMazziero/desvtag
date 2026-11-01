@@ -16,6 +16,7 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0006](dt-0006-idiomas-temas-fontes.md) | Idiomas, temas, fontes e preferências | Aceita | 2026-11-01 |
 | [DT-0007](dt-0007-decisoes-et02-interface.md) | Decisões da ET02: grade de dados, navegação, estado, soma e verificação nativa | Aceita | 2026-11-01 |
 | [DT-0008](dt-0008-formato-enzitag-versoes-recuperacao.md) | Formato `.enzitag`, política de versões, recuperação e importação | Aceita | 2026-11-01 |
+| [DT-0009](dt-0009-fundamentos-numericos-modelos-lineares.md) | Fundamentos numéricos e modelos lineares (ET04) | Aceita | 2026-11-01 |
 
 ## Regras
 

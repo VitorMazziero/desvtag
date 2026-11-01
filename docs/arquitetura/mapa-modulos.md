@@ -35,12 +35,12 @@ Todos os caminhos da tabela abaixo começam em **`app/crates/optima-core/src/`**
 |---|---|---|
 | C01 | `domain/{ids,factor,dataset,response,observation,unit,design,model_spec}.rs` (ET01: `ids`, `factor`) | Dados tipados, IDs, unidades experimentais, fatores numéricos/categóricos, papéis e configurações; base comum |
 | C02 | `validation/{dataset,design,model,issues}.rs` | Dados/configuração → erros e avisos codificados; usa C01; sem textos de interface |
-| C03 | `numeric/{matrix,qr,cholesky,svd,summation,root_finding,integration,special_functions,random}.rs` | Operações numéricas estáveis, rank, convergência, tolerâncias e RNG com semente explícita; base matemática |
-| C04 | `distributions/{normal,student_t,f,chi_square,studentized_range,noncentral,multivariate_t}.rs` | CDF, caudas e quantis necessários; usa C03; implementações progressivas conforme métodos consumidores |
+| C03 | `numeric/{matrix,qr,svd,summation,root_finding,special_functions}.rs` (ET02, ET04); `cholesky`, `integration` (ET05), `random` (ET06) quando houver consumidor | Operações numéricas estáveis, rank, convergência, tolerâncias e RNG com semente explícita; base matemática |
+| C04 | `distributions/{normal,student_t,f,chi_square,quantile,evaluate}.rs` (ET04); `studentized_range` (ET05), `noncentral`, `multivariate_t` quando houver consumidor | CDF, caudas e quantis necessários; usa C03; implementações progressivas conforme métodos consumidores |
 | C05 | `descriptive/{mod,summary,grouped}.rs` (ET02); `quantiles.rs` quando houver consumidor | Dados elegíveis → n, média, dispersão e quantis; usa C01–C03 |
-| C06 | `models/{terms,design_matrix,linear,prediction,covariance,estimability,marginal_means}.rs` | Dados + especificação → coeficientes, rank, resíduos, covariância, predições e funções estimáveis; usa C01–C04 |
-| C07 | `inference/{one_way_anova,factorial_anova,regression_anova,welch,intervals,effect_sizes,lack_of_fit}.rs` | Modelos/dados + hipóteses → tabelas, testes, intervalos; usa C04–C06; especifica tipo de soma de quadrados |
-| C08 | `diagnostics/{residuals,influence,assumptions,adequacy}.rs` | Modelo + estrutura experimental → diagnósticos calculados e limitações; usa C06–C07 |
+| C06 | `models/{terms,design_matrix,linear,prediction,covariance}.rs` (ET04; a estimabilidade está em `covariance.rs`); `marginal_means.rs` nas etapas seguintes | Dados + especificação → coeficientes, rank, resíduos, covariância, predições e funções estimáveis; usa C01–C04 |
+| C07 | `inference/{regression_anova,intervals}.rs` (ET04); `one_way_anova` (ET05), `lack_of_fit` (ET07), `factorial_anova`, `welch`, `effect_sizes` quando houver consumidor | Modelos/dados + hipóteses → tabelas, testes, intervalos; usa C04–C06; especifica tipo de soma de quadrados |
+| C08 | `diagnostics/{residuals,influence}.rs` (ET04); `assumptions` (ET05), `adequacy` (ET07) | Modelo + estrutura experimental → diagnósticos calculados e limitações; usa C06–C07 |
 | C09 | `comparisons/{family,contrasts,tukey,dunnett,games_howell,adjustments,letters}.rs` | Estimativas + covariância + graus de liberdade + família → comparações e letras; usa C04, C06–C07 |
 | C10 | `nonparametric/{ranks,kruskal_wallis,dunn}.rs` | Dados independentes elegíveis → postos, testes e ajustes, com empates; usa C01–C04 e ajustes de C09 |
 | C11 | `designs/{spec,coding,factorial,fractional,alias,plackett_burman,replication,blocks,randomization}.rs` | Fatores + orçamento + semente + estrutura → matriz, codificação, ordem, geradores e confundimento; usa C01–C03 |
