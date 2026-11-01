@@ -1,0 +1,48 @@
+# Acervo e registro histórico locais; preservar no computador.
+/referencias/
+/plans/conversa_rust_doe_estatistica.md
+/.local/
+
+# Rust e WebAssembly.
+**/target/
+**/pkg/
+
+# Interface e arquivos gerados.
+**/node_modules/
+**/dist/
+**/.vite/
+**/.next/
+**/coverage/
+**/test-results/
+**/playwright-report/
+
+# Ferramentas usadas apenas como referência de validação.
+**/.venv/
+**/venv/
+**/__pycache__/
+**/.pytest_cache/
+*.pyc
+
+# Configurações e credenciais locais.
+.env
+.env.*
+!.env.example
+credentials*.json
+client_secret*.json
+token*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Arquivos temporários e configurações pessoais.
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.code-workspace
+**/.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
