@@ -25,7 +25,9 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": [
+      "nsis"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -33,6 +35,22 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "windows": { "nsis": { "installMode": "currentUser" } }
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    },
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNDMjE2MTk4NjFCODBEM0MKUldROERiaGhtR0VoUERkVnMrYk5VRXlLclc1TlAxQ0ZXRyt0YXFBaUw0dnJ1UXFxeEFLY0NrREMK",
+      "endpoints": [
+        "https://github.com/VitorMazziero/enzitag-optima/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
   }
 }

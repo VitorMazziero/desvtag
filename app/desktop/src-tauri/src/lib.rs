@@ -11,6 +11,7 @@ mod jobs;
 pub fn run() {
     let result = tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(files::FileState::default())
         .invoke_handler(tauri::generate_handler![
             commands::engine_request,

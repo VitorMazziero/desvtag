@@ -53,7 +53,14 @@ export function paretoChart(
   const x = linear([0, top], [frame.left, frame.width - frame.right]);
   const plotBottom = frame.height - frame.bottom;
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata)];
-  parts.push(text(16, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(16, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
   for (const tick of ticks) {
     parts.push(line(x(tick), frame.top, x(tick), plotBottom, mode));
     parts.push(text(x(tick), plotBottom + 16, format(tick), mode, { role: "inkSecondary" }));
@@ -61,6 +68,7 @@ export function paretoChart(
   parts.push(
     text((frame.left + frame.width - frame.right) / 2, plotBottom + 34, spec.axisLabel, mode, {
       role: "inkSecondary",
+      figure: "xLabel",
     }),
   );
   spec.bars.forEach((b, i) => {

@@ -1,13 +1,13 @@
+import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
 
 // Otimização por desejabilidade com o motor Rust real (WebAssembly): abrir o exemplo 04, conferir os
 // candidatos, os limites obrigatórios, o domínio estendido, o cancelamento e o experimento de
 // confirmação vinculado.
 
-const example = new URL(
-  "../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag",
-  import.meta.url,
-).pathname;
+const example = fileURLToPath(
+  new URL("../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag", import.meta.url),
+);
 
 async function openExample(page: Page) {
   await page.goto("/");

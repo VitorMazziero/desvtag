@@ -1,0 +1,1763 @@
+{
+ "id": "completely_randomized_design",
+ "description": "DIC: ordem de execução = Fisher–Yates/PCG32 sobre a ordem padrão agrupada por nível",
+ "cases": [
+  {
+   "levels": [
+    "Controle",
+    "pH 5",
+    "pH 7",
+    "Temperatura 37"
+   ],
+   "replicates": 5,
+   "randomize": true,
+   "seed": 42,
+   "runs": [
+    {
+     "standardOrder": 15,
+     "levelIndex": 2,
+     "level": "pH 7",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 9,
+     "levelIndex": 1,
+     "level": "pH 5",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 1,
+     "levelIndex": 0,
+     "level": "Controle",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 5,
+     "levelIndex": 0,
+     "level": "Controle",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 13,
+     "levelIndex": 2,
+     "level": "pH 7",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 20,
+     "levelIndex": 3,
+     "level": "Temperatura 37",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 14,
+     "levelIndex": 2,
+     "level": "pH 7",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 11,
+     "levelIndex": 2,
+     "level": "pH 7",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 8,
+     "levelIndex": 1,
+     "level": "pH 5",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 18,
+     "levelIndex": 3,
+     "level": "Temperatura 37",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 16,
+     "levelIndex": 3,
+     "level": "Temperatura 37",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 7,
+     "levelIndex": 1,
+     "level": "pH 5",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 10,
+     "levelIndex": 1,
+     "level": "pH 5",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 6,
+     "levelIndex": 1,
+     "level": "pH 5",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 19,
+     "levelIndex": 3,
+     "level": "Temperatura 37",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 12,
+     "levelIndex": 2,
+     "level": "pH 7",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 17,
+     "levelIndex": 3,
+     "level": "Temperatura 37",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 3,
+     "levelIndex": 0,
+     "level": "Controle",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 2,
+     "levelIndex": 0,
+     "level": "Controle",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 4,
+     "levelIndex": 0,
+     "level": "Controle",
+     "replicate": 4
+    }
+   ]
+  },
+  {
+   "levels": [
+    "A",
+    "B"
+   ],
+   "replicates": 2,
+   "randomize": true,
+   "seed": 0,
+   "runs": [
+    {
+     "standardOrder": 2,
+     "levelIndex": 0,
+     "level": "A",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 1,
+     "levelIndex": 0,
+     "level": "A",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 3,
+     "levelIndex": 1,
+     "level": "B",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 4,
+     "levelIndex": 1,
+     "level": "B",
+     "replicate": 2
+    }
+   ]
+  },
+  {
+   "levels": [
+    "A",
+    "B",
+    "C"
+   ],
+   "replicates": 3,
+   "randomize": false,
+   "seed": 99,
+   "runs": [
+    {
+     "standardOrder": 1,
+     "levelIndex": 0,
+     "level": "A",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 2,
+     "levelIndex": 0,
+     "level": "A",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 3,
+     "levelIndex": 0,
+     "level": "A",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 4,
+     "levelIndex": 1,
+     "level": "B",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 5,
+     "levelIndex": 1,
+     "level": "B",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 6,
+     "levelIndex": 1,
+     "level": "B",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 7,
+     "levelIndex": 2,
+     "level": "C",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 8,
+     "levelIndex": 2,
+     "level": "C",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 9,
+     "levelIndex": 2,
+     "level": "C",
+     "replicate": 3
+    }
+   ]
+  },
+  {
+   "levels": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6",
+    "T7",
+    "T8",
+    "T9",
+    "T10"
+   ],
+   "replicates": 4,
+   "randomize": true,
+   "seed": 12345,
+   "runs": [
+    {
+     "standardOrder": 15,
+     "levelIndex": 3,
+     "level": "T4",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 34,
+     "levelIndex": 8,
+     "level": "T9",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 28,
+     "levelIndex": 6,
+     "level": "T7",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 24,
+     "levelIndex": 5,
+     "level": "T6",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 31,
+     "levelIndex": 7,
+     "level": "T8",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 16,
+     "levelIndex": 3,
+     "level": "T4",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 13,
+     "levelIndex": 3,
+     "level": "T4",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 22,
+     "levelIndex": 5,
+     "level": "T6",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 35,
+     "levelIndex": 8,
+     "level": "T9",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 4,
+     "levelIndex": 0,
+     "level": "T1",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 21,
+     "levelIndex": 5,
+     "level": "T6",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 8,
+     "levelIndex": 1,
+     "level": "T2",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 36,
+     "levelIndex": 8,
+     "level": "T9",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 29,
+     "levelIndex": 7,
+     "level": "T8",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 17,
+     "levelIndex": 4,
+     "level": "T5",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 33,
+     "levelIndex": 8,
+     "level": "T9",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 2,
+     "levelIndex": 0,
+     "level": "T1",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 1,
+     "levelIndex": 0,
+     "level": "T1",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 12,
+     "levelIndex": 2,
+     "level": "T3",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 6,
+     "levelIndex": 1,
+     "level": "T2",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 26,
+     "levelIndex": 6,
+     "level": "T7",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 3,
+     "levelIndex": 0,
+     "level": "T1",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 27,
+     "levelIndex": 6,
+     "level": "T7",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 5,
+     "levelIndex": 1,
+     "level": "T2",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 23,
+     "levelIndex": 5,
+     "level": "T6",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 11,
+     "levelIndex": 2,
+     "level": "T3",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 9,
+     "levelIndex": 2,
+     "level": "T3",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 20,
+     "levelIndex": 4,
+     "level": "T5",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 7,
+     "levelIndex": 1,
+     "level": "T2",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 19,
+     "levelIndex": 4,
+     "level": "T5",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 14,
+     "levelIndex": 3,
+     "level": "T4",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 39,
+     "levelIndex": 9,
+     "level": "T10",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 37,
+     "levelIndex": 9,
+     "level": "T10",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 32,
+     "levelIndex": 7,
+     "level": "T8",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 38,
+     "levelIndex": 9,
+     "level": "T10",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 40,
+     "levelIndex": 9,
+     "level": "T10",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 25,
+     "levelIndex": 6,
+     "level": "T7",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 18,
+     "levelIndex": 4,
+     "level": "T5",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 30,
+     "levelIndex": 7,
+     "level": "T8",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 10,
+     "levelIndex": 2,
+     "level": "T3",
+     "replicate": 2
+    }
+   ]
+  },
+  {
+   "levels": [
+    "x",
+    "y",
+    "z"
+   ],
+   "replicates": 1,
+   "randomize": true,
+   "seed": 9223372036854775813,
+   "runs": [
+    {
+     "standardOrder": 3,
+     "levelIndex": 2,
+     "level": "z",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 1,
+     "levelIndex": 0,
+     "level": "x",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 2,
+     "levelIndex": 1,
+     "level": "y",
+     "replicate": 1
+    }
+   ]
+  },
+  {
+   "levels": [
+    "N1",
+    "N2",
+    "N3",
+    "N4",
+    "N5",
+    "N6",
+    "N7",
+    "N8",
+    "N9",
+    "N10",
+    "N11",
+    "N12",
+    "N13",
+    "N14",
+    "N15",
+    "N16",
+    "N17",
+    "N18",
+    "N19",
+    "N20",
+    "N21",
+    "N22",
+    "N23",
+    "N24",
+    "N25"
+   ],
+   "replicates": 8,
+   "randomize": true,
+   "seed": 9007199254740991,
+   "runs": [
+    {
+     "standardOrder": 70,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 184,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 35,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 25,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 8,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 55,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 127,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 87,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 88,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 100,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 176,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 56,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 38,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 82,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 13,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 71,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 198,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 165,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 21,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 12,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 68,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 179,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 99,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 141,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 14,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 156,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 124,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 136,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 105,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 144,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 125,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 166,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 197,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 46,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 97,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 126,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 31,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 154,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 190,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 149,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 200,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 52,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 153,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 61,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 164,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 44,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 139,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 168,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 174,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 83,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 78,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 130,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 85,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 134,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 188,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 10,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 49,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 16,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 18,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 181,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 95,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 57,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 143,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 90,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 150,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 19,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 23,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 162,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 110,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 34,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 183,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 135,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 94,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 167,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 151,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 109,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 59,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 187,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 63,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 155,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 131,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 123,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 157,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 129,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 138,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 93,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 48,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 84,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 41,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 152,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 50,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 111,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 147,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 177,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 2,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 92,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 65,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 103,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 102,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 53,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 73,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 196,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 66,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 20,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 119,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 199,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 193,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 120,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 75,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 107,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 54,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 37,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 45,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 28,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 27,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 11,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 5,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 132,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 171,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 76,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 39,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 112,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 24,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 69,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 186,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 169,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 60,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 9,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 77,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 117,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 140,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 146,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 106,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 172,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 22,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 180,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 122,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 4,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 137,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 148,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 3,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 116,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 81,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 159,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 47,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 89,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 29,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 101,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 113,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 114,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 108,
+     "levelIndex": 13,
+     "level": "N14",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 26,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 43,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 192,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 185,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 161,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 121,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 64,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 163,
+     "levelIndex": 20,
+     "level": "N21",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 62,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 104,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 96,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 170,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 91,
+     "levelIndex": 11,
+     "level": "N12",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 7,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 160,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 42,
+     "levelIndex": 5,
+     "level": "N6",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 1,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 115,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 182,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 191,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 72,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 133,
+     "levelIndex": 16,
+     "level": "N17",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 118,
+     "levelIndex": 14,
+     "level": "N15",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 30,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 142,
+     "levelIndex": 17,
+     "level": "N18",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 58,
+     "levelIndex": 7,
+     "level": "N8",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 36,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 4
+    },
+    {
+     "standardOrder": 51,
+     "levelIndex": 6,
+     "level": "N7",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 98,
+     "levelIndex": 12,
+     "level": "N13",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 178,
+     "levelIndex": 22,
+     "level": "N23",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 194,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 32,
+     "levelIndex": 3,
+     "level": "N4",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 158,
+     "levelIndex": 19,
+     "level": "N20",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 40,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 79,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 6,
+     "levelIndex": 0,
+     "level": "N1",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 195,
+     "levelIndex": 24,
+     "level": "N25",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 74,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 2
+    },
+    {
+     "standardOrder": 15,
+     "levelIndex": 1,
+     "level": "N2",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 173,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 128,
+     "levelIndex": 15,
+     "level": "N16",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 175,
+     "levelIndex": 21,
+     "level": "N22",
+     "replicate": 7
+    },
+    {
+     "standardOrder": 17,
+     "levelIndex": 2,
+     "level": "N3",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 86,
+     "levelIndex": 10,
+     "level": "N11",
+     "replicate": 6
+    },
+    {
+     "standardOrder": 189,
+     "levelIndex": 23,
+     "level": "N24",
+     "replicate": 5
+    },
+    {
+     "standardOrder": 67,
+     "levelIndex": 8,
+     "level": "N9",
+     "replicate": 3
+    },
+    {
+     "standardOrder": 145,
+     "levelIndex": 18,
+     "level": "N19",
+     "replicate": 1
+    },
+    {
+     "standardOrder": 80,
+     "levelIndex": 9,
+     "level": "N10",
+     "replicate": 8
+    },
+    {
+     "standardOrder": 33,
+     "levelIndex": 4,
+     "level": "N5",
+     "replicate": 1
+    }
+   ]
+  }
+ ]
+}

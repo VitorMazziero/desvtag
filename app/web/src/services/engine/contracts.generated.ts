@@ -369,6 +369,60 @@ evaluations: number,
 feasibilityTolerance: number, };
 
 /**
+ * Um ensaio (unidade experimental) do DIC.
+ */
+export type CrdRun = { 
+/**
+ * Posição de execução (1-based).
+ */
+run: number, 
+/**
+ * Posição na ordem padrão (1-based), agrupada por nível.
+ */
+standardOrder: number, 
+/**
+ * Índice do nível em `levels` (0-based).
+ */
+levelIndex: number, 
+/**
+ * Nível aplicado.
+ */
+level: string, 
+/**
+ * Unidade experimental dentro do nível (1-based).
+ */
+replicate: number, };
+
+/**
+ * Especificação do DIC.
+ */
+export type CrdSpec = { 
+/**
+ * Identificador do fator no experimento.
+ */
+factorId: StableId, 
+/**
+ * Nome do fator, como digitado.
+ */
+factorName: string, 
+/**
+ * Níveis (tratamentos) do fator, na ordem em que foram digitados.
+ */
+levels: Array<string>, 
+/**
+ * Unidades experimentais por nível (≥ 1; a ANOVA exige pelo menos 2 em algum nível).
+ */
+replicates: number, 
+/**
+ * Aleatorizar a ordem de execução.
+ */
+randomize: boolean, 
+/**
+ * Semente da aleatorização (registrada no resultado); inteiro de até 2⁵³ − 1 na interface.
+ */
+seed: number, };
+
+/**
  * Teste de curvatura (pontos centrais × pontos fatoriais).
  */
 export type CurvatureTest = { 
@@ -1050,6 +1104,15 @@ showUnitColumn: boolean,
  */
 design?: DesignSpec, 
 /**
+ * Delineamento inteiramente casualizado (um fator categórico) gerado para este experimento;
+ * a ordem de execução é regenerada de forma determinística a partir da especificação.
+ */
+crd?: CrdSpec, 
+/**
+ * Personalização gráfica por figura (chave estável da figura → ajustes).
+ */
+figureStyles?: Record<string, FigureStyle> | undefined, 
+/**
  * Experimento de origem, quando este é uma confirmação proposta por uma otimização.
  */
 origin?: ExperimentOrigin, 
@@ -1256,6 +1319,32 @@ levelsText: string, };
 export type FactorValue = number | string;
 
 /**
+ * Ajustes de uma figura. Campos ausentes mantêm o texto ou o comportamento padrão.
+ */
+export type FigureStyle = { 
+/**
+ * Título da figura.
+ */
+title?: string, 
+/**
+ * Rótulo do eixo horizontal.
+ */
+xLabel?: string, 
+/**
+ * Rótulo do eixo vertical.
+ */
+yLabel?: string, 
+/**
+ * Exibir as letras de comparação (padrão: sim). Só altera a exibição: as comparações
+ * calculadas continuam na tabela de resultados.
+ */
+showLetters?: boolean, 
+/**
+ * Escala de fonte desta figura (0,85, 1 ou 1,2); ausente: a preferência do dispositivo.
+ */
+fontScale?: number, };
+
+/**
  * Condição fixada, ecoada no resultado.
  */
 export type FixedEcho = { 
@@ -1288,6 +1377,35 @@ factorId: StableId,
  * Valor real.
  */
 value: number, };
+
+/**
+ * DIC gerado.
+ */
+export type GeneratedCrd = { 
+/**
+ * Especificação usada.
+ */
+spec: CrdSpec, 
+/**
+ * Total de ensaios (`níveis × repetições`).
+ */
+total: number, 
+/**
+ * Ensaios na ordem de execução.
+ */
+runs: Array<CrdRun>, 
+/**
+ * Algoritmo de aleatorização (ou a ordem padrão, quando não aleatorizado).
+ */
+randomizationAlgorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
 
 /**
  * Planejamento gerado.
@@ -1993,12 +2111,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Pedido da malha de desejabilidade.

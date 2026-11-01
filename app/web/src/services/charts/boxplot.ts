@@ -47,7 +47,14 @@ export function boxChart(
   const slot = (frame.width - frame.right - frame.left) / Math.max(1, spec.groups.length);
   const width = Math.min(56, slot * 0.55);
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata), axis.svg];
-  parts.push(text(frame.left, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(frame.left, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
   spec.groups.forEach((g, i) => {
     const cx = frame.left + slot * (i + 0.5);
     parts.push(

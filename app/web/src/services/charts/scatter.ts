@@ -60,7 +60,14 @@ export function scatterChart(
   const axis = yAxis(frame, [yMin - yPad, yMax + yPad], spec.yLabel, mode, format);
   const xScale = linear([xMin - xPad, xMax + xPad], [frame.left, frame.width - frame.right]);
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata), axis.svg];
-  parts.push(text(frame.left, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(frame.left, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
   for (const tick of niceTicks(xMin - xPad, xMax + xPad)) {
     const x = xScale(tick);
     if (x < frame.left || x > frame.width - frame.right) continue;
@@ -74,7 +81,7 @@ export function scatterChart(
       frame.height - frame.bottom + 40,
       spec.xLabel,
       mode,
-      { role: "inkSecondary" },
+      { role: "inkSecondary", figure: "xLabel" },
     ),
   );
   if (spec.reference === "zero") {

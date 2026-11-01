@@ -143,12 +143,12 @@ test.describe("análise da superfície", () => {
     await expect(page.getByTestId("contour-chart")).toBeVisible();
 
     // Eixos e valores fixados: trocar os eixos recalcula a malha; mesmos eixos é recusado.
-    await page.getByLabel("Eixo horizontal").selectOption({ label: "pH" });
-    await page.getByLabel("Eixo vertical").selectOption({ label: "Temperatura" });
+    await page.getByLabel(/^Eixo horizontal/).selectOption({ label: "pH" });
+    await page.getByLabel(/^Eixo vertical/).selectOption({ label: "Temperatura" });
     await expect(page.getByTestId("contour-chart")).toContainText("Temperatura");
-    await page.getByLabel("Eixo vertical").selectOption({ label: "pH" });
+    await page.getByLabel(/^Eixo vertical/).selectOption({ label: "pH" });
     await expect(page.getByRole("alert").filter({ hasText: "fatores diferentes" })).toBeVisible();
-    await page.getByLabel("Eixo vertical").selectOption({ label: "Temperatura" });
+    await page.getByLabel(/^Eixo vertical/).selectOption({ label: "Temperatura" });
 
     // Exportações: coeficientes e malha (CSV com proveniência) e figura SVG.
     const coefficients = page.waitForEvent("download");

@@ -1,14 +1,14 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 
 // Exportação essencial (ET09) com o motor Rust real: tabelas em CSV (dois formatos) e XLSX,
 // relatório HTML autocontido em outro idioma que o da interface, figuras com paleta acessível.
 
-const example = new URL(
-  "../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag",
-  import.meta.url,
-).pathname;
+const example = fileURLToPath(
+  new URL("../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag", import.meta.url),
+);
 
 async function openExample(page: Page) {
   await page.goto("/");

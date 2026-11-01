@@ -59,7 +59,14 @@ export function effectsChart(
   const max = Math.max(...values);
   const pad = (max - min || 1) * 0.12;
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata)];
-  parts.push(text(16, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(16, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
   const plotWidth = frame.width - frame.left - frame.right;
   const cell = plotWidth / perRow;
   spec.panels.forEach((panel, index) => {

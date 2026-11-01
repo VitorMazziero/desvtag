@@ -8,11 +8,14 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use ts_rs::TS;
 
+use optima_core::designs::completely_randomized::CrdSpec;
 use optima_core::designs::spec::DesignSpec;
+use std::collections::BTreeMap;
 
 use crate::analysis::{AnalysisOptions, AnalysisRecord};
 use crate::confirmation::{ConfirmationPlan, ExperimentOrigin};
 use crate::experiment::ExperimentData;
+use crate::figure_style::FigureStyle;
 use crate::revision::{Revision, RevisionReason};
 
 /// Versão do esquema do documento. Independente da versão do aplicativo e do
@@ -50,6 +53,15 @@ pub struct Experiment {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub design: Option<DesignSpec>,
+    /// Delineamento inteiramente casualizado (um fator categórico) gerado para este experimento;
+    /// a ordem de execução é regenerada de forma determinística a partir da especificação.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub crd: Option<CrdSpec>,
+    /// Personalização gráfica por figura (chave estável da figura → ajustes).
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    #[ts(type = "Record<string, FigureStyle> | undefined", optional)]
+    pub figure_styles: BTreeMap<String, FigureStyle>,
     /// Experimento de origem, quando este é uma confirmação proposta por uma otimização.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
@@ -85,6 +97,8 @@ impl Experiment {
             entry_path: None,
             show_unit_column: false,
             design: None,
+            crd: None,
+            figure_styles: BTreeMap::new(),
             origin: None,
             confirmation: None,
             analysis_selection: AnalysisOptions {
@@ -186,6 +200,9 @@ impl ProjectDocument {
             if !experiment_ids.insert(exp.id.as_str()) {
                 issues.push(error("project.duplicate_experiment_id").with_param("id", &exp.id));
             }
+            if exp.figure_styles.values().any(|s| !s.is_valid()) {
+                issues.push(error("project.invalid_figure_style").with_param("id", &exp.id));
+            }
             if exp.revisions.is_empty() {
                 issues.push(error("project.experiment_without_revision").with_param("id", &exp.id));
                 continue;
@@ -281,6 +298,16 @@ mod tests {
             analysis_id: id("a1"),
         });
         assert_eq!(codes(&d), vec!["project.origin_not_found"]);
+
+        let mut d = sample();
+        d.experiments[0].figure_styles.insert(
+            "means".to_string(),
+            FigureStyle {
+                font_scale: Some(7.0),
+                ..FigureStyle::default()
+            },
+        );
+        assert_eq!(codes(&d), vec!["project.invalid_figure_style"]);
 
         let mut d = sample();
         d.experiments[0].revisions[0].content_hash = "0".repeat(64);

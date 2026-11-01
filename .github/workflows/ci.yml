@@ -145,8 +145,7 @@ jobs:
 
   desktop-windows:
     name: Tauri (build no Windows)
-    # Windows consome mais minutos de CI em repositório privado: só em main, tags e disparo manual.
-    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    # Repositório público: minutos gratuitos, então roda em todo push e pull request.
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -164,9 +163,13 @@ jobs:
           cache-dependency-path: app/web/package-lock.json
       - run: npm ci
         working-directory: app/web
-      - name: Build do aplicativo Windows (instalador NSIS)
+      - name: Build do aplicativo Windows (instalador NSIS, sem artefatos do atualizador)
+        # A assinatura do atualizador só existe no fluxo de release (segredos do GitHub); aqui a
+        # configuração desliga os artefatos assinados para que pull requests de forks também compilem.
         run: npm --prefix ../web exec -- tauri build
         working-directory: app/desktop
+        env:
+          TAURI_CONFIG: '{"bundle":{"createUpdaterArtifacts":false}}'
       - uses: actions/upload-artifact@v4
         with:
           name: enzitag-optima-windows-nsis

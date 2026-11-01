@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 
@@ -155,8 +156,9 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
-      new URL("../../../../examples/02-triagem-meio-cultivo/projeto.enzitag", import.meta.url)
-        .pathname,
+      fileURLToPath(
+        new URL("../../../../examples/02-triagem-meio-cultivo/projeto.enzitag", import.meta.url),
+      ),
     );
     await page.getByTestId("effects-table").waitFor();
     await scan(page, `${theme}/resultados-de-triagem`);
@@ -176,8 +178,9 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
-      new URL("../../../../examples/03-superficie-meio-cultivo/projeto.enzitag", import.meta.url)
-        .pathname,
+      fileURLToPath(
+        new URL("../../../../examples/03-superficie-meio-cultivo/projeto.enzitag", import.meta.url),
+      ),
     );
     await page.getByTestId("surface-terms").waitFor();
     await page.getByTestId("contour-chart").waitFor();
@@ -199,8 +202,12 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
-      new URL("../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag", import.meta.url)
-        .pathname,
+      fileURLToPath(
+        new URL(
+          "../../../../examples/04-otimizacao-e-confirmacao/projeto.enzitag",
+          import.meta.url,
+        ),
+      ),
     );
     await page.getByTestId("candidate-table").first().waitFor();
     await page.getByTestId("desirability-chart").waitFor();

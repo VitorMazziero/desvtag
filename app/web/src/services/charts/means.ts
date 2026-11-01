@@ -53,7 +53,14 @@ export function meansChart(
   const slot = plotWidth / Math.max(1, spec.groups.length);
   const barWidth = Math.min(64, slot * 0.6);
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata), axis.svg];
-  parts.push(text(frame.left, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(frame.left, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
   const baseY = axis.scale(Math.max(0, min));
   spec.groups.forEach((g, i) => {
     const cx = plotLeft + slot * (i + 0.5);
@@ -70,7 +77,7 @@ export function meansChart(
     }
     if (g.letters !== "") {
       const y = (g.upper !== null ? axis.scale(g.upper) : top) - 8;
-      parts.push(text(cx, y, g.letters, mode, { size: 14, weight: 600 }));
+      parts.push(text(cx, y, g.letters, mode, { size: 14, weight: 600, figure: "letters" }));
     }
     parts.push(
       text(cx, frame.height - frame.bottom + 18, g.label, mode, {
@@ -83,7 +90,12 @@ export function meansChart(
   parts.push(
     legend(
       frame,
-      [spec.uncertaintyName, spec.lettersLegend].filter((l) => l !== ""),
+      [
+        spec.uncertaintyName,
+        ...(spec.lettersLegend === ""
+          ? []
+          : [{ text: spec.lettersLegend, figure: "lettersLegend" as const }]),
+      ].filter((l) => l !== ""),
       mode,
     ),
   );

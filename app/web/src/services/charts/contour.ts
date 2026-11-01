@@ -48,7 +48,14 @@ export function contourChart(
   const [zLo, zHi] = zRange(grid);
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata)];
   parts.push(hatch(spec.id, paint("alert", mode)));
-  parts.push(text(frame.left, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(frame.left, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
   // Células: intensidade proporcional à resposta; hachura onde há extrapolação.
   for (let iy = 0; iy < grid.y.length - 1; iy++) {
     for (let ix = 0; ix < grid.x.length - 1; ix++) {
@@ -100,6 +107,7 @@ export function contourChart(
       mode,
       {
         role: "inkSecondary",
+        figure: "xLabel",
       },
     ),
   );
@@ -107,6 +115,7 @@ export function contourChart(
     text(16, (frame.top + frame.height - frame.bottom) / 2, grid.yName, mode, {
       rotate: -90,
       role: "inkSecondary",
+      figure: "yLabel",
     }),
   );
   // Curvas de nível (segmentos do motor) e um rótulo por curva.

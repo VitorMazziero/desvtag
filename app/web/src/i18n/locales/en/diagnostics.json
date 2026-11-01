@@ -41,7 +41,8 @@
       "row_width_mismatch": "A version has rows whose number of columns differs from its definition.",
       "duplicate_analysis_id": "Two analyses have the same identifier.",
       "analysis_unknown_revision": "An analysis points to a data version that does not exist.",
-      "origin_not_found": "The confirmation experiment points to an origin experiment or analysis that does not exist in the project."
+      "origin_not_found": "The confirmation experiment points to an origin experiment or analysis that does not exist in the project.",
+      "invalid_figure_style": "The figure customization of experiment {{id}} has invalid values."
     },
     "import": {
       "not_xlsx": "The file is not a readable XLSX spreadsheet.",
@@ -113,7 +114,13 @@
       "invalid_axial_distance": "The axial distance α must be a number greater than 0 and at most {{max}}.",
       "box_behnken_unsupported": "Box–Behnken is available for 3 to 5 factors (received: {{factors}}).",
       "cube_resolution_low": "The fractional factorial part has resolution {{resolution}}: not every two-factor interaction will be estimable in the second-order model.",
-      "surface_needs_center": "Without centre points there is no pure error and the quadratic model may not be estimable; include at least two."
+      "surface_needs_center": "Without centre points there is no pure error and the quadratic model may not be estimable; include at least two.",
+      "crd_empty_factor_name": "The CRD factor needs a name.",
+      "crd_too_few_levels": "Enter at least two levels (treatments); received: {{count}}.",
+      "crd_too_many_levels": "{{count}} levels; the maximum is {{max}}.",
+      "crd_empty_level": "Level {{level}} is empty.",
+      "crd_duplicate_level": "Level \"{{level}}\" is repeated.",
+      "crd_single_replicate": "With a single experimental unit per level the error cannot be estimated; use at least two."
     },
     "surface": {
       "invalid_alpha": "The significance level must be between 0 and 1.",

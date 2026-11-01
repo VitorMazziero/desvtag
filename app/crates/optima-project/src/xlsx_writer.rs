@@ -225,7 +225,12 @@ pub fn write_xlsx(book: &ExportWorkbook) -> Result<Vec<u8>, Vec<Issue>> {
         error("export.write_failed")
     }
     let mut writer = ZipWriter::new(Cursor::new(Vec::new()));
-    let options = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
+    // Carimbo, sistema de origem e permissões fixos: a mesma tabela gera os mesmos bytes em qualquer plataforma.
+    let options = SimpleFileOptions::default()
+        .compression_method(CompressionMethod::Deflated)
+        .last_modified_time(zip::DateTime::default())
+        .system(zip::System::Unix)
+        .unix_permissions(0o644);
     let mut put = |name: &str, content: &str| -> Result<(), Vec<Issue>> {
         writer.start_file(name, options).map_err(failed)?;
         writer.write_all(content.as_bytes()).map_err(failed)?;

@@ -126,7 +126,10 @@ fn cases(filter: &str) -> Vec<Case> {
         .expect("casos")
         .filter_map(Result::ok)
         .map(|e| e.path())
-        .filter(|p| p.join("expected.json").exists() && p.to_string_lossy().contains(filter))
+        .filter(|p| {
+            p.join("expected.json").exists()
+                && p.to_string_lossy().replace('\\', "/").contains(filter)
+        })
         .collect();
     dirs.sort();
     dirs.iter().map(|d| load(d)).collect()

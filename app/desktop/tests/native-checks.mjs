@@ -411,4 +411,72 @@ export async function runChecks({ text, invoke }) {
       throw new Error(`XLSX nativo: ida e volta incorreta ${JSON.stringify(got)}`);
     console.log("OK: XLSX exportado pelo motor nativo via IPC do Tauri e relido (texto de fórmula preservado como texto).");
   }
+
+  // DIC aleatorizado pelo IPC nativo: ordem de execução idêntica à da reimplementação independente
+  // em Python (mesmos casos do teste nativo em Rust e do WebAssembly).
+  {
+    const reference = JSON.parse(readFileSync(root("validation/cases/completely_randomized_design/crd.json"), "utf8"));
+    for (const [index, c] of reference.cases.entries()) {
+      const reply = JSON.parse(
+        await invoke(
+          JSON.stringify({
+            protocolVersion: 1,
+            taskId: `native-crd-${index}`,
+            operation: { type: "designCrdGenerate", factorId: "f1", factorName: "Fator", levels: c.levels, replicates: c.replicates, randomize: c.randomize, seed: c.seed },
+          }),
+        ),
+      );
+      const runs = reply.outcome?.result?.runs;
+      if (reply.outcome?.status !== "ok" || runs?.length !== c.runs.length) throw new Error(`DIC nativo ${index}: ${JSON.stringify(reply.outcome)}`);
+      runs.forEach((r, i) => {
+        const w = c.runs[i];
+        if (r.standardOrder !== w.standardOrder || r.levelIndex !== w.levelIndex || r.level !== w.level || r.replicate !== w.replicate)
+          throw new Error(`DIC nativo ${index}: ensaio ${i + 1} difere da referência independente`);
+      });
+    }
+    console.log(`OK: DIC aleatorizado (${reference.cases.length} casos) idêntico à implementação independente no motor nativo via IPC do Tauri.`);
+  }
+
+  // Projeto com DIC e personalização por figura: codificar e reler pelo motor nativo preserva os campos.
+  {
+    const document = structuredClone(decoded.outcome.result.document);
+    const experiment = document.experiments[0];
+    experiment.crd = { factorId: "f1", factorName: "Condição", levels: ["A", "B"], replicates: 3, randomize: true, seed: 42 };
+    experiment.figureStyles = { "means-chart": { title: "Atividade (U/mL)", showLetters: false, fontScale: 1.2 } };
+    const encoded = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-project-encode", operation: { type: "projectEncode", document } })),
+    );
+    if (encoded.outcome?.status !== "ok") throw new Error(`projectEncode nativo: ${JSON.stringify(encoded.outcome)}`);
+    const again = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-project-decode-2", operation: { type: "projectDecode", bytesBase64: encoded.outcome.result.bytesBase64 } })),
+    );
+    const back = again.outcome?.result?.document?.experiments?.[0];
+    if (JSON.stringify(back?.crd) !== JSON.stringify(experiment.crd) || JSON.stringify(back?.figureStyles) !== JSON.stringify(experiment.figureStyles))
+      throw new Error(`Projeto nativo perdeu o DIC ou a personalização: ${JSON.stringify(back?.crd)} ${JSON.stringify(back?.figureStyles)}`);
+    // Mesmo documento codificado no WebAssembly (project.parity.test.ts): arquivo idêntico, byte a byte.
+    if (encoded.outcome.result.sha256 !== "c9bcb6ac08ec7e35606072e16996d985a3df4f16d29e1e5cce00ba1d3ff57113")
+      throw new Error(`SHA-256 do projeto nativo (${encoded.outcome.result.sha256}) difere do codificado no WebAssembly`);
+    console.log("OK: projeto com DIC e personalização por figura codificado e relido pelo motor nativo; bytes idênticos aos do WebAssembly.");
+  }
+
+  // Reabertura cruzada: os projetos de exemplo foram escritos pelo motor WebAssembly (navegador) e
+  // são lidos aqui pelo motor nativo (Windows), com resultados guardados e sem avisos.
+  {
+    const { readdirSync, existsSync } = await import("node:fs");
+    const folders = readdirSync(root("examples"), { withFileTypes: true }).filter((e) => e.isDirectory());
+    let opened = 0;
+    for (const folder of folders) {
+      const file = root(`examples/${folder.name}/projeto.enzitag`);
+      if (!existsSync(file)) continue;
+      const reply = JSON.parse(await invoke(decode(`native-example-${folder.name}`, readFileSync(file))));
+      const doc = reply.outcome?.result?.document;
+      if (reply.outcome?.status !== "ok" || !doc?.experiments?.length)
+        throw new Error(`Exemplo ${folder.name} não abriu no motor nativo: ${JSON.stringify(reply.outcome).slice(0, 300)}`);
+      if (reply.outcome.result.migratedFrom !== null) throw new Error(`Exemplo ${folder.name}: migração inesperada`);
+      if (!doc.experiments.some((e) => e.analyses?.length > 0)) throw new Error(`Exemplo ${folder.name}: sem análise guardada`);
+      opened += 1;
+    }
+    if (opened < 4) throw new Error(`Esperava abrir os 4 exemplos, abriu ${opened}`);
+    console.log(`OK: ${opened} projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo, com análises guardadas.`);
+  }
 }

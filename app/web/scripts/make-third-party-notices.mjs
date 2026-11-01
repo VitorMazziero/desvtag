@@ -23,7 +23,11 @@ for (const p of prod) {
     .map((f) => resolve("node_modules", p.name, f))
     .find(existsSync);
   const copyright = file
-    ? (readFileSync(file, "utf8").split("\n").find((l) => /copyright|\(c\)/i.test(l)) ?? "").trim()
+    ? (
+        readFileSync(file, "utf8")
+          .split("\n")
+          .find((l) => /copyright|\(c\)/i.test(l)) ?? ""
+      ).trim()
     : "";
   add(`${p.name} ${p.version} — ${p.license}${copyright ? ` — ${copyright}` : ""}`);
 }
@@ -40,10 +44,14 @@ add("Texto da licença (comum a todas as fontes acima):", "", ofl.trim(), "");
 
 function crates(manifest) {
   const out = JSON.parse(
-    execFileSync("cargo", ["metadata", "--format-version", "1", "--locked", "--offline", "--manifest-path", manifest], {
-      encoding: "utf8",
-      maxBuffer: 1 << 28,
-    }),
+    execFileSync(
+      "cargo",
+      ["metadata", "--format-version", "1", "--locked", "--offline", "--manifest-path", manifest],
+      {
+        encoding: "utf8",
+        maxBuffer: 1 << 28,
+      },
+    ),
   );
   return out.packages
     .filter((p) => p.source !== null)
@@ -53,7 +61,10 @@ add("== Crates Rust do motor (WebAssembly) ==", "");
 add(...[...new Set(crates("../Cargo.toml"))].sort(), "");
 add("== Crates Rust do aplicativo Windows (Tauri) ==", "");
 add(...[...new Set(crates("../desktop/src-tauri/Cargo.toml"))].sort(), "");
-add("Os textos completos das licenças MIT, Apache-2.0, MPL-2.0, BSD, ISC, Zlib e Unicode-3.0 aplicáveis", "acompanham o código-fonte de cada componente em seu repositório público.");
+add(
+  "Os textos completos das licenças MIT, Apache-2.0, MPL-2.0, BSD, ISC, Zlib e Unicode-3.0 aplicáveis",
+  "acompanham o código-fonte de cada componente em seu repositório público.",
+);
 
 writeFileSync("public/THIRD_PARTY_NOTICES.txt", `${lines.join("\n")}\n`);
 console.log(`public/THIRD_PARTY_NOTICES.txt: ${prod.length} pacotes npm, ${fonts.length} fontes`);

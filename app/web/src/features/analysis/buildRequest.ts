@@ -18,7 +18,7 @@ export interface CellError {
 
 const ID = /^[A-Za-z0-9_.:-]{1,64}$/;
 
-function splitLevels(text: string): string[] {
+export function splitLevels(text: string): string[] {
   return text
     .split(/[;,\n]/)
     .map((l) => l.trim())
@@ -86,7 +86,8 @@ export function isSurfaceDesign(state: ProjectState): boolean {
  * planejamento de dois níveis; "Analisar dados existentes", o resumo descritivo.
  */
 export function analysisKind(state: ProjectState): AnalysisKind {
-  if (state.path === "compare") return "oneWay";
+  // Um DIC gerado no caminho "Planejar" é analisado como comparação de tratamentos.
+  if (state.path === "compare" || (state.path === "plan" && state.crd !== null)) return "oneWay";
   if (state.path === "plan") return isSurfaceDesign(state) ? "surface" : "design";
   return state.analysis.surface ? "surface" : "descriptive";
 }

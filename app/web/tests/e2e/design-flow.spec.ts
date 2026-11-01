@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
 
 // Percurso de planejamento com o motor Rust real (WebAssembly): escolher → contar → gerar →
@@ -241,8 +242,9 @@ test("abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de
   const chooser = page.waitForEvent("filechooser");
   await page.getByRole("button", { name: "Abrir…" }).click();
   await (await chooser).setFiles(
-    new URL("../../../../examples/02-triagem-meio-cultivo/projeto.enzitag", import.meta.url)
-      .pathname,
+    fileURLToPath(
+      new URL("../../../../examples/02-triagem-meio-cultivo/projeto.enzitag", import.meta.url),
+    ),
   );
   await expect(page.getByLabel("Nome do projeto")).toHaveValue("Triagem de meio de cultivo");
   const effects = page.getByTestId("effects-table");
@@ -270,8 +272,9 @@ test("abre o exemplo 03 (DCCR) com coeficientes, falta de ajuste e superfícies 
   const chooser = page.waitForEvent("filechooser");
   await page.getByRole("button", { name: "Abrir…" }).click();
   await (await chooser).setFiles(
-    new URL("../../../../examples/03-superficie-meio-cultivo/projeto.enzitag", import.meta.url)
-      .pathname,
+    fileURLToPath(
+      new URL("../../../../examples/03-superficie-meio-cultivo/projeto.enzitag", import.meta.url),
+    ),
   );
   await expect(page.getByLabel("Nome do projeto")).toHaveValue(
     "Superfície de resposta do meio de cultivo",

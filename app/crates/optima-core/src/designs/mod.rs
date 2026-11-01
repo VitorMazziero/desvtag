@@ -8,6 +8,7 @@
 //! - [`alias`]: estrutura de confundimento;
 //! - [`central_composite`] e [`box_behnken`]: planejamentos de superfície de resposta (ET07);
 //! - [`plackett_burman`]: matrizes de Hadamard (Paley e Sylvester) e colunas fictícias;
+//! - [`completely_randomized`]: delineamento inteiramente casualizado (DIC) de um fator categórico;
 //! - [`randomization`]: PCG32 e Fisher–Yates com semente registrada;
 //! - [`generate`]: monta o planejamento (réplicas, pontos centrais, ordem de execução).
 //!
@@ -19,6 +20,7 @@ pub mod analysis;
 pub mod box_behnken;
 pub mod central_composite;
 pub mod coding;
+pub mod completely_randomized;
 pub mod factorial;
 pub mod fractional;
 pub mod generate;

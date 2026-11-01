@@ -4,6 +4,7 @@
 import type {
   AnalysisRecord,
   ConfirmationPlan,
+  CrdSpec,
   DescriptiveResult,
   DesignAnalysisResult,
   DesignSpec,
@@ -12,6 +13,7 @@ import type {
   ExperimentOrigin,
   FactorKind,
   FactorSpec,
+  FigureStyle,
   OneWayResult,
   OptimizationResult,
   OptimizationSetup,
@@ -72,6 +74,10 @@ export interface ProjectState {
   path: EntryPath | null;
   /** Planejamento de dois níveis gerado (caminho "Planejar experimento"). */
   design: DesignSpec | null;
+  /** Delineamento inteiramente casualizado (um fator categórico) gerado para o experimento. */
+  crd: CrdSpec | null;
+  /** Personalização gráfica por figura (chave estável da figura → ajustes). */
+  figureStyles: Record<string, FigureStyle>;
   factors: FactorDraft[];
   responses: ResponseDraft[];
   rows: RowDraft[];
@@ -125,6 +131,8 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     name,
     path: null,
     design: null,
+    crd: null,
+    figureStyles: {},
     factors: [],
     responses: [],
     rows: [],
@@ -222,6 +230,14 @@ export type ProjectAction =
       counters: ProjectState["counters"];
       now: string;
     }
+  | {
+      type: "applyCrd";
+      crd: CrdSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      now: string;
+    }
+  | { type: "setFigureStyle"; key: string; style: FigureStyle | null }
   | { type: "addRow" }
   | { type: "removeRow"; row: number }
   | { type: "setUnitColumn"; visible: boolean }
@@ -335,6 +351,7 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
     design: state.design?.factors.every((f) => data.factors.some((d) => d.id === f.id))
       ? state.design
       : null,
+    crd: state.crd && data.factors.some((d) => d.id === state.crd?.factorId) ? state.crd : null,
   };
 }
 
@@ -367,6 +384,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       return {
         ...state,
         factors: state.factors.filter((f) => f.id !== action.id),
+        crd: state.crd?.factorId === action.id ? null : state.crd,
         rows: state.rows.map((r) => ({ ...r, factors: r.factors.filter((_, i) => i !== index) })),
         analysis: {
           ...state.analysis,
@@ -438,11 +456,36 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         // Só o contador de linhas vem da ação: o de revisões já avançou em `before`.
         counters: { ...before.counters, row: action.counters.row },
         design: action.design,
+        crd: null,
         // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
         analysis: { ...before.analysis, designTerms: null },
         result: null,
       };
       return commitRevision(next, "design", action.now);
+    }
+    case "applyCrd": {
+      // Mesmo tratamento do planejamento de dois níveis: dados anteriores ficam em uma revisão `edit`.
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: action.crd,
+        // O fator do DIC define os grupos da comparação de tratamentos.
+        analysis: { ...before.analysis, designTerms: null, factorId: action.crd.factorId },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "setFigureStyle": {
+      const { [action.key]: _removed, ...rest } = state.figureStyles;
+      const empty = action.style === null || Object.keys(action.style).length === 0;
+      return {
+        ...state,
+        figureStyles:
+          empty || action.style === null ? rest : { ...rest, [action.key]: action.style },
+      };
     }
     case "addRow": {
       const [row, counters] = blankRow(state);

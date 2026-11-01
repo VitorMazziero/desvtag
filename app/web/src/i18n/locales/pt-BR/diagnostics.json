@@ -41,7 +41,8 @@
       "row_width_mismatch": "Uma versão tem linhas com número de colunas diferente do cadastro.",
       "duplicate_analysis_id": "Há duas análises com o mesmo identificador.",
       "analysis_unknown_revision": "Uma análise aponta para uma versão dos dados inexistente.",
-      "origin_not_found": "O experimento de confirmação aponta para um experimento ou análise de origem que não existe no projeto."
+      "origin_not_found": "O experimento de confirmação aponta para um experimento ou análise de origem que não existe no projeto.",
+      "invalid_figure_style": "A personalização gráfica do experimento {{id}} tem valores inválidos."
     },
     "import": {
       "not_xlsx": "O arquivo não é uma planilha XLSX legível.",
@@ -113,7 +114,13 @@
       "invalid_axial_distance": "A distância axial α deve ser um número maior que 0 e no máximo {{max}}.",
       "box_behnken_unsupported": "Box–Behnken está disponível para 3 a 5 fatores (recebidos: {{factors}}).",
       "cube_resolution_low": "A parte fatorial fracionária tem resolução {{resolution}}: nem todas as interações de dois fatores serão estimáveis no modelo de segunda ordem.",
-      "surface_needs_center": "Sem pontos centrais não há erro puro e o modelo quadrático pode não ser estimável; inclua ao menos dois."
+      "surface_needs_center": "Sem pontos centrais não há erro puro e o modelo quadrático pode não ser estimável; inclua ao menos dois.",
+      "crd_empty_factor_name": "O fator do DIC precisa de um nome.",
+      "crd_too_few_levels": "Informe pelo menos dois níveis (tratamentos); recebidos: {{count}}.",
+      "crd_too_many_levels": "São {{count}} níveis; o máximo é {{max}}.",
+      "crd_empty_level": "O nível {{level}} está vazio.",
+      "crd_duplicate_level": "O nível \"{{level}}\" está repetido.",
+      "crd_single_replicate": "Com uma só unidade experimental por nível não há estimativa do erro; use pelo menos duas."
     },
     "surface": {
       "invalid_alpha": "O nível de significância precisa estar entre 0 e 1.",

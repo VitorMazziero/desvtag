@@ -5,6 +5,7 @@ use std::collections::BTreeMap;
 use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
+use optima_core::designs::completely_randomized::GeneratedCrd;
 use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
@@ -78,6 +79,8 @@ pub enum OperationResult {
     DesignCount(RunCount),
     /// Planejamento gerado.
     DesignGenerate(Box<GeneratedDesign>),
+    /// DIC gerado.
+    DesignCrdGenerate(Box<GeneratedCrd>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.

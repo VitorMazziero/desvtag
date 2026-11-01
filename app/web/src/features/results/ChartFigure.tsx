@@ -1,11 +1,13 @@
 // Figura SVG com legenda acessível e exportação em SVG e PNG com proveniência (U09/U16).
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { applyChartStyle } from "../../services/charts";
+import { applyChartStyle, applyFigureStyle } from "../../services/charts";
 import { addPngText, svgToPng, utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
+import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { ExportButton } from "./ExportButton";
+import { FigureCustomizer } from "./FigureCustomizer";
 
 interface Props {
   /** SVG para a tela (cores dos temas). */
@@ -30,9 +32,13 @@ export function ChartFigure({
   const { t } = useTranslation("results");
   const storage = useStorage();
   const { settings } = useExportSettings();
-  const style = { palette: settings.palette, fontScale: settings.fontScale };
-  const screenSvg = applyChartStyle(rawScreenSvg, style);
-  const exportSvg = applyChartStyle(rawExportSvg, style);
+  const project = useProject();
+  const dispatch = useProjectDispatch();
+  // A chave da figura é o seu `testId`; o ajuste guardado no projeto vale para tela e exportação.
+  const figure = project.figureStyles[testId];
+  const style = { palette: settings.palette, fontScale: figure?.fontScale ?? settings.fontScale };
+  const screenSvg = applyChartStyle(applyFigureStyle(rawScreenSvg, figure), style);
+  const exportSvg = applyChartStyle(applyFigureStyle(rawExportSvg, figure), style);
   const [message, setMessage] = useState<string | null>(null);
 
   const finish = (name: string | null) =>
@@ -49,6 +55,11 @@ export function ChartFigure({
         dangerouslySetInnerHTML={{ __html: screenSvg }}
       />
       {children}
+      <FigureCustomizer
+        svg={rawScreenSvg}
+        style={figure}
+        onChange={(next) => dispatch({ type: "setFigureStyle", key: testId, style: next })}
+      />
       <figcaption className="row">
         <ExportButton
           label={`${t("comparison.export.figure")} — ${t("comparison.export.svg")}`}

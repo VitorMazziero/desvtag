@@ -359,6 +359,33 @@
       "cubeGenerators": "Fractional factorial part (optional)",
       "cubeGeneratorsHelp": "Comma-separated generators, for example E=ABCD. Empty: full factorial.",
       "centerSuggested": "Centre points set to 5 (needed for pure error)."
+    },
+    "mode": {
+      "legend": "Design type",
+      "factorial": "Quantitative factors (factorial, screening, surface)",
+      "crd": "One categorical factor (randomized CRD)"
+    },
+    "crd": {
+      "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
+      "needFactor": "Add a named categorical factor in the previous step to plan the CRD.",
+      "factor": "Factor",
+      "levels": "Levels (treatments)",
+      "levelsHelp": "Separate with semicolons or line breaks, for example: Control; pH 5; pH 7. The levels are stored on the factor.",
+      "replicates": "Experimental units per level",
+      "replicatesHelp": "Each unit is an independent preparation or sample. Measuring the same sample several times does not create a new unit.",
+      "count": "{{total}} runs: {{levels}} levels × {{replicates}} units.",
+      "unitNote": "Each run gets an experimental-unit identifier (for example T2-R3: level 2, unit 3).",
+      "matrix": {
+        "title": "CRD run order",
+        "run": "Run",
+        "standard": "Standard order",
+        "level": "Level",
+        "replicate": "Unit",
+        "unit": "Identifier",
+        "exportCsv": "CRD matrix (CSV)",
+        "suffix": "of-the-crd"
+      },
+      "algorithm": "Algorithm: {{algorithm}}; seed {{seed}}."
     }
   },
   "optimization": {
@@ -479,5 +506,15 @@
       "noInterval": "no prediction interval",
       "note": "A value inside the interval is compatible with the model; outside it, the model may not describe these conditions well. With few runs the conclusion is limited."
     }
+  },
+  "update": {
+    "check": "Check for updates",
+    "checking": "Checking…",
+    "current": "You already have the latest version.",
+    "available": "New version available: {{version}}.",
+    "install": "Download and install",
+    "installing": "Downloading and installing…",
+    "failed": "Could not check right now (no internet or service unavailable).",
+    "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed."
   }
 }

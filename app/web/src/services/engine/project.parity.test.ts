@@ -136,3 +136,45 @@ describe("import_xlsx in WebAssembly vs the openpyxl case", () => {
     expect(counts).toEqual(expected.warningCounts);
   });
 });
+
+describe("project with CRD and figure styles: same bytes in WebAssembly and native", () => {
+  // O motor nativo (verificação nativa do Tauri, `native-checks.mjs`) codifica o mesmo documento e
+  // compara o resumo SHA-256 com esta constante: arquivos idênticos nos dois alvos.
+  const EXPECTED_SHA256 = "c9bcb6ac08ec7e35606072e16996d985a3df4f16d29e1e5cce00ba1d3ff57113";
+
+  it("encodes deterministically, preserves the new fields and matches the native digest", () => {
+    const decoded = decode(fileOf("001-valid.enzitag"));
+    if (decoded.outcome.status !== "ok" || decoded.outcome.result.type !== "projectDecode")
+      throw new Error("decode");
+    const document = structuredClone(decoded.outcome.result.document);
+    const experiment = document.experiments[0];
+    if (!experiment) throw new Error("sem experimento");
+    experiment.crd = {
+      factorId: "f1",
+      factorName: "Condição",
+      levels: ["A", "B"],
+      replicates: 3,
+      randomize: true,
+      seed: 42,
+    };
+    experiment.figureStyles = {
+      "means-chart": { title: "Atividade (U/mL)", showLetters: false, fontScale: 1.2 },
+    };
+    const encode = () => call({ type: "projectEncode", document });
+    const first = encode();
+    if (first.outcome.status !== "ok" || first.outcome.result.type !== "projectEncode")
+      throw new Error(JSON.stringify(first.outcome));
+    const second = encode();
+    if (second.outcome.status !== "ok" || second.outcome.result.type !== "projectEncode")
+      throw new Error("encode 2");
+    expect(second.outcome.result.sha256).toBe(first.outcome.result.sha256);
+    const back = call({ type: "projectDecode", bytesBase64: first.outcome.result.bytesBase64 });
+    if (back.outcome.status !== "ok" || back.outcome.result.type !== "projectDecode")
+      throw new Error("decode 2");
+    expect(back.outcome.result.document.experiments[0]?.crd).toEqual(experiment.crd);
+    expect(back.outcome.result.document.experiments[0]?.figureStyles).toEqual(
+      experiment.figureStyles,
+    );
+    expect(first.outcome.result.sha256).toBe(EXPECTED_SHA256);
+  });
+});

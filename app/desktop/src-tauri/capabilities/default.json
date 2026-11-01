@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Permissões mínimas da janela principal: somente o comando do motor.",
+  "description": "Permissões mínimas da janela principal: o comando do motor e a verificação de atualizações assinadas.",
   "windows": ["main"],
-  "permissions": []
+  "permissions": ["updater:default"]
 }

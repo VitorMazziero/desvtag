@@ -399,5 +399,20 @@
       "provenance": "Provenance",
       "footer": "EnziTAG Optima {{version}} — self-contained file, generated locally."
     }
+  },
+  "figure": {
+    "customize": "Customize figure",
+    "title": "Title",
+    "xLabel": "Horizontal axis label",
+    "yLabel": "Vertical axis label",
+    "showLetters": "Show comparison letters",
+    "fontScale": "Font size for this figure",
+    "fontDevice": "Device default",
+    "fontSmall": "Smaller (0.85)",
+    "fontNormal": "Normal (1)",
+    "fontLarge": "Larger (1.2)",
+    "reset": "Restore default",
+    "help": "Changes appearance only. The setting is saved in the project, applies to the screen and to exported files, and changes no result.",
+    "tooLong": "Use at most 200 characters."
   }
 }

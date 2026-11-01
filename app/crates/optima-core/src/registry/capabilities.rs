@@ -38,6 +38,7 @@ mod tests {
                 "descriptive_summary",
                 "one_way_comparison",
                 "two_level_design",
+                "completely_randomized_design",
                 "two_level_design_analysis",
                 "response_surface_design",
                 "response_surface",

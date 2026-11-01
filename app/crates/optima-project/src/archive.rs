@@ -90,7 +90,14 @@ pub fn encode(document: &ProjectDocument) -> Result<Vec<u8>, Vec<Issue>> {
         serde_json::to_vec_pretty(&manifest).map_err(|_| err("project.encode_failed"))?;
 
     let mut writer = ZipWriter::new(Cursor::new(Vec::new()));
-    let options = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
+    // Carimbo, sistema de origem e permissões fixos: o mesmo documento gera os mesmos bytes no
+    // Windows, no Linux e no navegador (o crate `zip` usaria a hora atual e, no Windows, o sistema
+    // DOS), sem gravar a hora do salvamento dentro do arquivo.
+    let options = SimpleFileOptions::default()
+        .compression_method(CompressionMethod::Deflated)
+        .last_modified_time(zip::DateTime::default())
+        .system(zip::System::Unix)
+        .unix_permissions(0o644);
     for (name, bytes) in [(MANIFEST_PATH, &manifest_bytes), (DOCUMENT_PATH, &project)] {
         writer
             .start_file(name, options)
@@ -470,5 +477,17 @@ mod tests {
             codes(decode_with_limits(&bytes, &limits)),
             vec!["project.entry_too_large"]
         );
+    }
+
+    #[test]
+    fn encoding_is_reproducible_with_a_fixed_zip_timestamp() {
+        let bytes = encode(&sample()).unwrap_or_default();
+        // Cabeçalho local do primeiro arquivo: hora (offset 10) e data (offset 12) no formato DOS.
+        // 1980-01-01 00:00:00 = hora 0x0000, data 0x0021.
+        assert_eq!(&bytes[10..14], &[0x00, 0x00, 0x21, 0x00]);
+        // Diretório central: "versão feita por" com o sistema Unix (3) em qualquer plataforma.
+        let central = bytes.windows(4).position(|w| w == b"PK").unwrap_or(0);
+        assert_eq!(bytes[central + 5], 3);
+        assert_eq!(bytes, encode(&sample()).unwrap_or_default());
     }
 }

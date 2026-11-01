@@ -74,6 +74,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::DesignCrdGenerate(req) => {
+            match optima_core::designs::completely_randomized::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignCrdGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::DesignAnalyze(req) => {
             match optima_core::designs::analysis::analyze(req.as_ref()) {
                 Ok(result) => Outcome::Ok {

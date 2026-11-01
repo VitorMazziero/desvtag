@@ -3,6 +3,7 @@
 use optima_core::comparisons::OneWayRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
+use optima_core::designs::completely_randomized::CrdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
@@ -32,6 +33,8 @@ pub enum Operation {
     DesignCount(DesignSpec),
     /// Gera um planejamento de dois níveis (`design.generate`).
     DesignGenerate(DesignSpec),
+    /// Gera um delineamento inteiramente casualizado de um fator categórico (`design.crdGenerate`).
+    DesignCrdGenerate(CrdSpec),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).

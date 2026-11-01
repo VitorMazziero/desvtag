@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { EngineStatus } from "../features/engine-status";
 import { ExperimentBar, HistoryView, ProjectBar, RecoveryBanner } from "../features/project";
-import { LanguageSelector, ThemeSelector } from "../features/settings";
+import { LanguageSelector, ThemeSelector, UpdateCheck } from "../features/settings";
 import { Workflow } from "../features/workflow";
 import type { Language } from "../i18n";
 import { useAutosave } from "../services/storage/autosave";
@@ -55,6 +55,7 @@ export function App({ language, theme, onLanguageChange, onThemeChange }: Props)
       </main>
       <footer className="app-footer">
         <EngineStatus />
+        <UpdateCheck />
       </footer>
     </>
   );

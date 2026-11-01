@@ -53,7 +53,14 @@ export function surface3dChart(
 
   const parts = [open(spec.id, frame, spec.title, spec.description, mode, spec.metadata)];
   parts.push(hatch(spec.id, paint("alert", mode)));
-  parts.push(text(frame.left, 22, spec.title, mode, { anchor: "start", size: 14, weight: 600 }));
+  parts.push(
+    text(frame.left, 22, spec.title, mode, {
+      anchor: "start",
+      size: 14,
+      weight: 600,
+      figure: "title",
+    }),
+  );
 
   // Quadriláteros do mais distante ao mais próximo.
   const quads: Array<{ depth: number; svg: string }> = [];

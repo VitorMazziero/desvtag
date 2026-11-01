@@ -4,6 +4,9 @@
 export type Paint = "ink" | "inkSecondary" | "rule" | "action" | "panel" | "alert";
 export type PaintMode = "css" | "static";
 
+/** Textos que a personalização por figura pode trocar ou ocultar. */
+export type FigureText = "title" | "xLabel" | "yLabel" | "letters" | "lettersLegend";
+
 const STATIC: Record<Paint, string> = {
   ink: "#16191f",
   inkSecondary: "#454c58",
@@ -119,13 +122,24 @@ export function text(
     rotate?: number;
     /** Contorno na cor do painel, para ler o texto sobre desenhos (superfície 3D). */
     halo?: boolean;
+    /** Papel do texto na figura: permite à personalização por figura localizá-lo (`data-figure`). */
+    figure?: FigureText;
   } = {},
 ): string {
-  const { anchor = "middle", size = 12, role = "ink", weight = 400, rotate, halo } = options;
+  const {
+    anchor = "middle",
+    size = 12,
+    role = "ink",
+    weight = 400,
+    rotate,
+    halo,
+    figure,
+  } = options;
   const transform = rotate === undefined ? "" : ` transform="rotate(${rotate} ${n(x)} ${n(y)})"`;
   return (
     `<text x="${n(x)}" y="${n(y)}" text-anchor="${anchor}" font-size="${size}" ` +
     `font-weight="${weight}" fill="${paint(role, mode)}"${transform}` +
+    (figure ? ` data-figure="${figure}"` : "") +
     (halo
       ? ` stroke="${paint("panel", mode)}" stroke-width="3" paint-order="stroke" stroke-linejoin="round"`
       : "") +
@@ -172,6 +186,7 @@ export function yAxis(
     text(16, (frame.top + frame.height - frame.bottom) / 2, label, mode, {
       rotate: -90,
       role: "inkSecondary",
+      figure: "yLabel",
     }),
   );
   return { svg: parts.join(""), scale };
@@ -194,13 +209,23 @@ export function wrapText(content: string, maxChars = 84): string[] {
 }
 
 /** Legenda no pé do gráfico, em linhas que terminam a 8 px da borda inferior. */
-export function legend(frame: Frame, contents: string[], mode: PaintMode): string {
-  const lines = contents.flatMap((c) => wrapText(c));
+export function legend(
+  frame: Frame,
+  contents: Array<string | { text: string; figure: FigureText }>,
+  mode: PaintMode,
+): string {
+  const lines = contents.flatMap(
+    (c): Array<{ content: string; figure?: FigureText }> =>
+      typeof c === "string"
+        ? wrapText(c).map((content) => ({ content }))
+        : wrapText(c.text).map((content) => ({ content, figure: c.figure })),
+  );
   return lines
     .map((line, i) =>
-      text(frame.left, frame.height - 8 - 15 * (lines.length - 1 - i), line, mode, {
+      text(frame.left, frame.height - 8 - 15 * (lines.length - 1 - i), line.content, mode, {
         anchor: "start",
         role: "inkSecondary",
+        figure: line.figure,
       }),
     )
     .join("");

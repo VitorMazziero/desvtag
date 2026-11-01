@@ -20,3 +20,14 @@ if (versions.size !== 1 || versions.has(undefined)) {
   process.exit(1);
 }
 console.log(`Versão única: ${[...versions][0]}`);
+
+// Em uma etiqueta vX.Y.Z (CI de release), a etiqueta precisa coincidir com a versão do aplicativo.
+if (process.env.GITHUB_REF_TYPE === "tag") {
+  const tag = process.env.GITHUB_REF_NAME ?? "";
+  const version = [...versions][0];
+  if (tag !== `v${version}`) {
+    console.error(`A etiqueta ${tag} não coincide com a versão ${version}.`);
+    process.exit(1);
+  }
+  console.log(`Etiqueta ${tag} confere com a versão.`);
+}

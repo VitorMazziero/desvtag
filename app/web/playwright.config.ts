@@ -6,6 +6,7 @@ const browsers = (process.env.E2E_BROWSERS ?? "chromium").split(",");
 const projectFor: Record<string, object> = {
   chromium: devices["Desktop Chrome"],
   firefox: devices["Desktop Firefox"],
+  chrome: { ...devices["Desktop Chrome"], channel: "chrome" },
   msedge: { ...devices["Desktop Edge"], channel: "msedge" },
 };
 
