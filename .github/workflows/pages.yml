@@ -1,0 +1,52 @@
+name: Pages
+
+# Publica a versão web (build estática) no GitHub Pages. Disparo MANUAL: a publicação da versão web
+# é uma decisão do mantenedor (ver docs/distribuicao/publicacao.md).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  WASM_BINDGEN_VERSION: "0.2.130" # deve coincidir com a crate wasm-bindgen do Cargo.lock
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app
+      - name: Instalar wasm-bindgen-cli
+        run: cargo install wasm-bindgen-cli --version "$WASM_BINDGEN_VERSION" --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - run: npm ci
+        working-directory: app/web
+      - run: npm run build
+        working-directory: app/web
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

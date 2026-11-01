@@ -1,0 +1,58 @@
+{
+  "method": "two_level_design_analysis",
+  "title": "Fracionário 2^(4−1) IV com duas réplicas: principais e três interações (uma delas confundida com outra do modelo)",
+  "responseColumn": "y",
+  "spec": {
+    "kind": {
+      "type": "fractional",
+      "generators": [
+        "D=ABC"
+      ]
+    },
+    "factors": [
+      {
+        "id": "f1",
+        "name": "F1",
+        "low": 10.0,
+        "high": 18.0,
+        "unit": null
+      },
+      {
+        "id": "f2",
+        "name": "F2",
+        "low": 20.0,
+        "high": 28.0,
+        "unit": null
+      },
+      {
+        "id": "f3",
+        "name": "F3",
+        "low": 30.0,
+        "high": 38.0,
+        "unit": null
+      },
+      {
+        "id": "f4",
+        "name": "F4",
+        "low": 40.0,
+        "high": 48.0,
+        "unit": null
+      }
+    ],
+    "replicates": 2,
+    "centerPoints": 0,
+    "randomize": true,
+    "seed": 12
+  },
+  "terms": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "AB",
+    "AC",
+    "CD"
+  ],
+  "alpha": 0.05,
+  "includeCurvature": true
+}

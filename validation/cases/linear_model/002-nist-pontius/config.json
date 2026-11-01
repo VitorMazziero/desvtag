@@ -1,0 +1,18 @@
+{
+  "method": "linear_model",
+  "responseColumn": "y",
+  "intercept": true,
+  "terms": [
+    {
+      "type": "main",
+      "factor": "x"
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 2
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}

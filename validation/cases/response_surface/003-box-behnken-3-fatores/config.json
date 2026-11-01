@@ -1,0 +1,42 @@
+{
+ "method": "response_surface",
+ "title": "Box–Behnken com 3 fatores, 3 pontos centrais e modelo completo",
+ "responseColumn": "y",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "A",
+   "low": 0,
+   "high": 10
+  },
+  {
+   "id": "f2",
+   "name": "B",
+   "low": 10,
+   "high": 30
+  },
+  {
+   "id": "f3",
+   "name": "C",
+   "low": 100,
+   "high": 300
+  }
+ ],
+ "terms": [
+  "A",
+  "B",
+  "C",
+  "AA",
+  "BB",
+  "CC",
+  "AB",
+  "AC",
+  "BC"
+ ],
+ "alpha": 0.05,
+ "gridAxes": [
+  1,
+  2
+ ],
+ "gridSteps": 5
+}

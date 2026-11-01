@@ -1,0 +1,13 @@
+{
+  "method": "one_way_comparison",
+  "title": "Respostas ausentes e um grupo com uma observação",
+  "responseColumn": "y",
+  "factor": "treatment",
+  "levels": [
+    "x",
+    "y",
+    "z",
+    "w"
+  ],
+  "alpha": 0.05
+}

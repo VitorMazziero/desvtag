@@ -1,0 +1,25 @@
+/* Modern Dark: tokens do prompt Modern Dark (docs/temas/prompts/modern-dark.txt). */
+[data-theme="modern-dark"] {
+  color-scheme: dark;
+  --color-ground: #050505;
+  --color-ground-muted: #0e0e0e;
+  --color-panel: #0e0e0e;
+  --color-ink: #f2f2f2;
+  --color-ink-secondary: #a6a9ad;
+  --color-rule: #303030;
+  --color-action: #f2f2f2;
+  --color-on-action: #0a0a0a;
+  --color-action-hover: #ffffff;
+  --color-accent-text: #3fd6c6;
+  --color-ok: #3fd6c6;
+  --color-focus: #f2f2f2;
+  --font-display: "Geist Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Geist Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", "SFMono-Regular", Menlo, monospace;
+  --display-tracking: -0.03em;
+  --radius-panel: 6px;
+  --radius-control: 999px;
+  --shadow-panel: none;
+  --motion-duration: 120ms;
+  --motion-ease: ease-out;
+}

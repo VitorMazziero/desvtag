@@ -1,0 +1,520 @@
+{
+  "app": {
+    "name": "EnziTAG Optima",
+    "tagline": "Experimental design, statistics and optimization",
+    "skipToContent": "Skip to content"
+  },
+  "settings": {
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "language": {
+    "pt-BR": "Português (Brasil)",
+    "en": "English"
+  },
+  "theme": {
+    "soft-light": "Soft Light",
+    "modern-dark": "Modern Dark",
+    "professional": "Professional"
+  },
+  "engine": {
+    "title": "Scientific engine",
+    "loading": "Querying the engine…",
+    "environment": "Environment",
+    "environmentValue": {
+      "wasm": "Browser (WebAssembly)",
+      "tauri": "Desktop app (Tauri, native engine)"
+    },
+    "engineVersion": "Engine version",
+    "protocolVersion": "Protocol version",
+    "schemaVersion": "Project schema version",
+    "methods": "Available methods",
+    "methodsNone": "No scientific method in this version",
+    "unavailable": "Could not communicate with the calculation engine."
+  },
+  "home": {
+    "title": "What would you like to do?",
+    "plan": {
+      "title": "Plan an experiment",
+      "text": "Define factors and responses and generate the run matrix."
+    },
+    "analyze": {
+      "title": "Analyze existing data",
+      "text": "Type or paste results you have already measured and summarize them."
+    },
+    "compare": {
+      "title": "Compare treatments",
+      "text": "Compare the means of conditions or treatments."
+    },
+    "availability": {
+      "available": "Available in this version",
+      "limited": "Partial: in this version you can only enter data and get the descriptive summary. The {{missing}} part has not been delivered yet.",
+      "missing": {
+        "plan": "design (run-matrix generation)",
+        "compare": "comparison (ANOVA and Tukey)"
+      }
+    },
+    "recentTitle": "Recent projects",
+    "recentEmpty": "No recent projects. Projects opened or saved in the Windows app appear here; in the browser, use Open and choose the .enzitag file.",
+    "open": "Open project"
+  },
+  "workflow": {
+    "navLabel": "Workflow steps",
+    "step": {
+      "objective": "Objective",
+      "variables": "Factors and responses",
+      "data": "Design and data",
+      "analysis": "Analysis",
+      "results": "Results"
+    },
+    "status": {
+      "done": "done",
+      "current": "current step",
+      "locked": "locked"
+    },
+    "back": "Back",
+    "next": "Next",
+    "home": "Home",
+    "blocked": {
+      "objective": "Choose an objective to continue.",
+      "variables": "Add at least one named response.",
+      "data": "Enter at least one observation with a value and fix the cells with errors.",
+      "analysis": "Choose the response to summarize."
+    }
+  },
+  "variables": {
+    "title": "Factors and responses",
+    "intro": "Factors are the conditions you vary or compare (for example, temperature or enzyme type). Responses are what you measure. You define the names and units.",
+    "factors": "Factors",
+    "responses": "Responses",
+    "addFactor": "Add factor",
+    "addResponse": "Add response",
+    "remove": "Remove",
+    "name": "Name",
+    "unit": "Unit (optional)",
+    "kind": "Type",
+    "kindNumeric": "Quantitative (numbers)",
+    "kindCategorical": "Categorical (labels)",
+    "levels": "Levels (optional)",
+    "levelsHelp": "Separate with semicolons, in the order you want. Empty: uses the labels found in the data, in alphabetical order.",
+    "noFactors": "No factors. You can summarize a response without factors.",
+    "noResponses": "No responses. Add at least one.",
+    "factorHeading": "Factor {{n}}",
+    "responseHeading": "Response {{n}}"
+  },
+  "data": {
+    "title": "Data",
+    "intro": "Type or paste the observations (from Excel, for example). Empty cells are missing data; numbers accept a dot or comma as the decimal separator.",
+    "caption": "Observations table",
+    "rowLabel": "Obs.",
+    "addRow": "Add row",
+    "removeRow": "Remove row {{n}}",
+    "unitColumn": "Experimental unit",
+    "advanced": "Advanced options",
+    "showUnit": "Show the experimental unit column",
+    "showUnitHelp": "Fill in the experimental unit only if you know which measurement belongs to which unit. The app does not assume that rows are independent replicates.",
+    "empty": "No observations yet. Add a row or paste your data.",
+    "pasteNote": "Tip: click a cell and paste (Ctrl+V). Several values copied from Excel fill the following cells.",
+    "pasteIgnored": "{{count}} pasted column(s) beyond the last table column were ignored.",
+    "cellError": "Cell with an error",
+    "errorsSummary": "{{count}} cell(s) with errors. Fix them before analyzing.",
+    "needColumns": "Add factors and responses in the previous step to create the columns."
+  },
+  "analysis": {
+    "title": "Analysis: descriptive summary",
+    "intro": "Summarizes the chosen response with count, missing, mean, variance, standard deviation, minimum and maximum. This describes the data; it is not a comparison test.",
+    "response": "Response",
+    "groupBy": "Group by (optional)",
+    "groupByHelp": "Check factors to summarize each combination of levels separately.",
+    "run": "Calculate summary",
+    "running": "Calculating…",
+    "noResponse": "Add a response to analyze.",
+    "compare": {
+      "title": "Analysis: treatment comparison",
+      "intro": "Compares the means of a factor's levels: one-way ANOVA (completely randomised design), Tukey comparisons (Tukey–Kramer when group sizes differ) and comparison letters. Each row must be an independent experimental replicate.",
+      "response": "Response",
+      "factor": "Factor that defines the groups",
+      "factorHelp": "Each level of the factor forms a group. Rows without a response or without a level are left out and reported.",
+      "alpha": "Significance level (α)",
+      "alphaHelp": "Applies to the family of all pairwise comparisons (simultaneous confidence 1 − α).",
+      "run": "Compare treatments",
+      "needFactor": "Add a factor (for example, the condition being tested) to define the groups.",
+      "needLevels": "Enter the factor levels in the variables step or type the data: at least two groups are required."
+    },
+    "design": {
+      "title": "Analysis: two-level design",
+      "intro": "Estimates effects and coefficients on the coded scale (−1, +1), with Pareto, main effects, interactions and observed vs predicted. Without error degrees of freedom only Lenth's method flags active effects, and it is labelled as such.",
+      "needDesign": "Generate the design in the data step (or open a project that contains it).",
+      "model": "Model terms",
+      "modelMain": "Main effects only",
+      "modelTwoFactor": "Main effects and two-factor interactions",
+      "modelCustom": "Custom",
+      "modelHelp": "Terms aliased with each other (fractional designs) appear as not estimable.",
+      "termsLegend": "Terms",
+      "curvature": "Test curvature (centre points)",
+      "curvatureUnavailable": "The design has no centre points.",
+      "run": "Analyse design"
+    },
+    "surface": {
+      "title": "Analysis: response surface",
+      "intro": "Fits the second-order model (main effects, quadratic terms and two-factor interactions) on the coded scale and shows ANOVA, lack of fit, equation and surface.",
+      "needFactors": "The surface needs at least two quantitative factors with numeric values.",
+      "model": "Model terms",
+      "modelFull": "Full second-order model",
+      "modelCustom": "Choose the terms",
+      "modelHelp": "Terms can be removed manually; the app never drops terms on its own. Quadratic terms and interactions without the matching main effect are flagged.",
+      "termsLegend": "Terms",
+      "run": "Compute surface",
+      "asSurface": "Fit a response surface (second-order model)",
+      "asSurfaceHelp": "Use for custom or imported matrices with quantitative factors; the coded scale uses the lowest and highest value of each factor.",
+      "needDesign": "Generate the design in the data step."
+    }
+  },
+  "project": {
+    "bar": "Project",
+    "name": "Project name",
+    "namePlaceholder": "Untitled project",
+    "new": "New project",
+    "open": "Open…",
+    "save": "Save",
+    "saveBrowserHelp": "In the browser, saving downloads the .enzitag file; the previous file is not replaced.",
+    "saveAs": "Save as…",
+    "saveCopy": "Save a copy…",
+    "confirmDiscard": "There are changes not saved to a file. Continue and lose those changes?",
+    "newExperimentName": "Experiment {{n}}",
+    "failed": "The operation could not be completed. The open project was not changed.",
+    "warningsTitle": "Warnings when opening the file:",
+    "migrated": "File from format version {{from}}, upgraded in memory; the original file was not changed."
+  },
+  "experiments": {
+    "label": "Experiments",
+    "add": "New experiment",
+    "name": "Experiment name",
+    "tab": "Experiment: {{name}}"
+  },
+  "status": {
+    "title": "Saving status",
+    "unsaved": "Changes not saved to a file",
+    "clean": "No pending changes",
+    "recovery": "Automatic recovery",
+    "recoveryIdle": "off (nothing to recover)",
+    "recoveryPending": "waiting for a 2 s pause in editing…",
+    "recoverySaved": "updated at {{time}}",
+    "recoveryError": "unavailable in this browser; your changes are not protected",
+    "recoveryNote": "It stays in this browser; it is not an external backup.",
+    "file": "File",
+    "fileNone": "no file saved yet",
+    "fileSaved": "saved to “{{name}}” at {{time}}",
+    "fileDownloaded": "downloaded as “{{name}}” at {{time}}"
+  },
+  "recovery": {
+    "title": "Unsaved session found",
+    "text": "There is a session with unsaved changes, kept in this browser at {{time}}. Restore it?",
+    "restore": "Restore",
+    "discard": "Discard"
+  },
+  "history": {
+    "title": "Version history",
+    "intro": "Each version is a snapshot of the data created when importing, analyzing, saving or restoring. Nothing is deleted automatically.",
+    "revision": "Version {{id}}",
+    "rows": "{{count}} row(s)",
+    "restore": "Restore this version",
+    "restoreNote": "Restoring creates a new version; the current one stays in the history.",
+    "current": "current",
+    "analyses": "Saved analyses",
+    "analysisItem": "Analysis {{id}} — data from version {{revision}} — {{time}}",
+    "reason": {
+      "created": "created",
+      "edit": "edits",
+      "import": "import",
+      "analysis": "analysis",
+      "manualSave": "save",
+      "restore": "restore",
+      "design": "design generation"
+    }
+  },
+  "import": {
+    "button": "Import file (CSV or XLSX)…",
+    "title": "Import data",
+    "intro": "Review the preview, choose each column's role and confirm. The current data stays in the version history.",
+    "file": "File",
+    "delimiter": "Delimiter",
+    "delimiterNames": {
+      ";": "semicolon (;)",
+      ",": "comma (,)",
+      "\t": "tab",
+      "|": "vertical bar (|)"
+    },
+    "encoding": "Encoding",
+    "encodingAuto": "automatic",
+    "encodingFallback": "The file was not valid UTF-8; it was read as Windows-1252. Check the accents in the preview.",
+    "sheet": "Sheet",
+    "header": "The first row contains the column names",
+    "preview": "Preview (first rows)",
+    "mapping": "Role of each column",
+    "role": "Role",
+    "roleOptions": {
+      "ignore": "Ignore",
+      "observation": "Observation identifier",
+      "unit": "Experimental unit",
+      "factor": "Factor",
+      "response": "Response"
+    },
+    "kind": "Factor type",
+    "confirm": "Import",
+    "cancel": "Cancel",
+    "skippedEmpty": "{{count}} completely empty row(s) were ignored.",
+    "replaceNote": "The current data of this experiment will be replaced; it stays in the version history.",
+    "unitHelp": "Rows with the same experimental unit are repeated measurements of that unit, not independent replicates.",
+    "failed": "The file could not be read:",
+    "tooLarge": "File too large to import.",
+    "formulaNote": "Spreadsheets: only stored values are read; formulas are never executed.",
+    "nothing": "Nothing to import: choose at least one column as a factor or response."
+  },
+  "design": {
+    "title": "Experiment design",
+    "intro": "Generates the two-level run matrix for factor screening. Each factor must be quantitative, with a low and a high level. The run count is shown before generating.",
+    "needFactors": "Add at least two quantitative factors (with a name) in the previous step.",
+    "categoricalIgnored": "Categorical factors are not part of a two-level design: {{names}}.",
+    "levelsTitle": "Factor levels",
+    "low": "Low level",
+    "high": "High level",
+    "levelsInvalid": "The low level must be smaller than the high level (numbers).",
+    "budget": "Maximum number of runs (optional)",
+    "budgetHelp": "Counts the basic design only, without replicates or centre points.",
+    "optionsTitle": "Options for {{count}} factors",
+    "candidate": "{{runs}} runs",
+    "recommended": "recommended",
+    "overBudget": "over budget",
+    "resolution": "resolution {{resolution}}",
+    "noResolution": "no aliasing",
+    "kind": {
+      "fullFactorial": "Full factorial",
+      "fractional": "Fractional {{generators}}",
+      "plackettBurman": "Plackett–Burman",
+      "centralComposite": "Central composite ({{axial}})",
+      "boxBehnken": "Box–Behnken",
+      "axial": {
+        "rotatable": "rotatable",
+        "faceCentered": "face-centred",
+        "custom": "α = {{alpha}}"
+      }
+    },
+    "replicates": "Design repetitions",
+    "replicatesHelp": "Each repetition redoes every run. They are experimental replicates only if each run is a new independent preparation.",
+    "centerPoints": "Centre points",
+    "centerHelp": "They allow testing for curvature. A single centre point gives no error estimate.",
+    "randomize": "Randomise the run order",
+    "seed": "Randomisation seed",
+    "seedHelp": "The same seed gives the same order on Windows and in the browser.",
+    "newSeed": "New seed",
+    "count": "Total: {{total}} runs ({{base}} design runs × {{replicates}} + {{centers}} centre)",
+    "countError": "The runs could not be counted.",
+    "generate": "Generate design",
+    "regenerate": "Generate again",
+    "confirmReplace": "Replace the current runs with the new matrix? The current data stay in the version history.",
+    "generated": "Design generated: {{total}} runs. Fill in the responses in the grid below.",
+    "matrix": {
+      "title": "Run matrix",
+      "view": "Values",
+      "real": "Real",
+      "coded": "Coded (−1, 0, +1)",
+      "run": "Run order",
+      "standard": "Standard order",
+      "point": "Type",
+      "factorial": "factorial",
+      "center": "centre",
+      "replicate": "Repetition",
+      "exportCsv": "Download matrix (CSV)",
+      "exported": "Matrix exported: {{name}}",
+      "cancelled": "Export cancelled.",
+      "failed": "The matrix could not be exported.",
+      "axial": "axial"
+    },
+    "properties": {
+      "title": "Properties",
+      "relation": "Defining relation",
+      "resolution": "Resolution {{resolution}}",
+      "aliases": "Aliasing (main effects and two-factor interactions)",
+      "aliasesHelp": "Effects on the same line cannot be separated by this design: what is estimated is their sum.",
+      "pbPartial": "Plackett–Burman: main effects are partially aliased with two-factor interactions (maximum absolute correlation {{value}}).",
+      "dummy": "{{count}} dummy columns (contrasts not used by factors): they remain as error degrees of freedom.",
+      "algorithm": "Randomisation: {{algorithm}}, seed {{seed}}.",
+      "axial": "Central composite: α = {{alpha}}; {{factorial}} factorial points, {{axial}} axial and {{center}} centre points."
+    },
+    "goal": "Design goal",
+    "goalScreening": "Factor screening (two levels)",
+    "goalSurface": "Response surface (second order)",
+    "surface": {
+      "legend": "Response-surface designs for {{count}} factors",
+      "intro": "Central composite and Box–Behnken designs estimate curvature (quadratic terms). Use them after screening, with the factors that matter. Centre points are needed to estimate pure error.",
+      "rotatable": "Rotatable central composite (CCRD): α = (factorial points)^¼",
+      "face": "Face-centred central composite (FCD): α = 1",
+      "custom": "Central composite with a given α",
+      "boxBehnken": "Box–Behnken (3 to 5 factors)",
+      "boxBehnkenUnavailable": "Box–Behnken needs 3 to 5 factors.",
+      "alpha": "Axial distance α (0 to 10)",
+      "inscribed": "Inscribed: axial points sit at the stated levels and the factorial part inside them",
+      "inscribedHelp": "Circumscribed (default): the factorial part sits at the stated levels and the axial points beyond them, at ±α.",
+      "cubeGenerators": "Fractional factorial part (optional)",
+      "cubeGeneratorsHelp": "Comma-separated generators, for example E=ABCD. Empty: full factorial.",
+      "centerSuggested": "Centre points set to 5 (needed for pure error)."
+    },
+    "mode": {
+      "legend": "Design type",
+      "factorial": "Quantitative factors (factorial, screening, surface)",
+      "crd": "One categorical factor (randomized CRD)"
+    },
+    "crd": {
+      "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
+      "needFactor": "Add a named categorical factor in the previous step to plan the CRD.",
+      "factor": "Factor",
+      "levels": "Levels (treatments)",
+      "levelsHelp": "Separate with semicolons or line breaks, for example: Control; pH 5; pH 7. The levels are stored on the factor.",
+      "replicates": "Experimental units per level",
+      "replicatesHelp": "Each unit is an independent preparation or sample. Measuring the same sample several times does not create a new unit.",
+      "count": "{{total}} runs: {{levels}} levels × {{replicates}} units.",
+      "unitNote": "Each run gets an experimental-unit identifier (for example T2-R3: level 2, unit 3).",
+      "matrix": {
+        "title": "CRD run order",
+        "run": "Run",
+        "standard": "Standard order",
+        "level": "Level",
+        "replicate": "Unit",
+        "unit": "Identifier",
+        "exportCsv": "CRD matrix (CSV)",
+        "suffix": "of-the-crd"
+      },
+      "algorithm": "Algorithm: {{algorithm}}; seed {{seed}}."
+    }
+  },
+  "optimization": {
+    "title": "Desirability optimization",
+    "intro": "Set the goal of each response (preference) and, if needed, mandatory limits. The search uses the second-order models fitted to your data, starts from many points and presents candidates with predictions and intervals. It does not guarantee the global optimum: confirm the candidates with new runs.",
+    "stale": "The data or the setup changed since this search: run it again to refresh the candidates.",
+    "convergence": "Search: {{starts}} starts (seed {{seed}}); {{converged}} converged by tolerance; {{feasible}} ended at feasible points; {{distinct}} distinct solution(s); the best was found by {{best}} starts.",
+    "status": {
+      "found": "Feasible candidates with positive desirability were found.",
+      "onlyZeroDesirability": "There are feasible points, but none with positive desirability: the goals cannot be met together in the region. The candidates below are the closest.",
+      "infeasible": "No point of the region satisfies the mandatory limits: there is no feasible candidate."
+    },
+    "goals": {
+      "title": "Response goals",
+      "help": "Preferences (goal and importance) are combined into a global desirability; mandatory limits (minimum or maximum predicted value) remove points and are not traded off against other responses.",
+      "include": "include in the optimization",
+      "type": "Goal",
+      "importance": "Importance",
+      "importanceHelp": "Relative weight in the global desirability (default 1).",
+      "limitMin": "Mandatory limit: predicted at least",
+      "limitMax": "Mandatory limit: predicted at most",
+      "limitHelp": "Leave empty if there is no limit."
+    },
+    "goal": {
+      "type_maximize": "Maximize",
+      "type_minimize": "Minimize",
+      "type_target": "Hit a target",
+      "type_range": "Stay within a range",
+      "low": "Lowest acceptable value",
+      "lowHelp": "Desirability is zero below it.",
+      "target": "Target",
+      "targetHelp": "Desirability is 1 from (or up to) this value.",
+      "high": "Highest acceptable value",
+      "highHelp": "Desirability is zero above it.",
+      "shape": "Exponent",
+      "shapeHelp": "1 = linear; greater than 1 demands getting closer to the target.",
+      "shapeLow": "Exponent (lower side)",
+      "shapeHigh": "Exponent (upper side)",
+      "rangeLow": "Range lower limit",
+      "rangeHigh": "Range upper limit"
+    },
+    "domain": {
+      "title": "Search domain",
+      "region": "Experimental region (default): the factor ranges actually run, no extrapolation",
+      "extended": "Extend the factor limits (extrapolation, by explicit choice)",
+      "help": "Outside the experimental region the model has not been tested: candidates outside it are marked as extrapolation.",
+      "min": "Lower limit",
+      "max": "Upper limit"
+    },
+    "search": {
+      "title": "Advanced search options",
+      "starts": "Number of starts",
+      "startsHelp": "More starts give more confidence that the best candidate is not a local optimum (1 to 5000).",
+      "seed": "Seed",
+      "seedHelp": "The same seed gives the same candidates.",
+      "candidates": "Candidates shown"
+    },
+    "run": {
+      "start": "Search for optimal conditions",
+      "running": "Searching…",
+      "cancel": "Cancel the search",
+      "cancelled": "Search cancelled; the previous results were kept.",
+      "needResponse": "Include at least one response in the optimization."
+    },
+    "candidates": {
+      "caption": "Candidates (real conditions and, in parentheses, coded)",
+      "select": "Choose",
+      "selectCandidate": "Choose candidate {{rank}}",
+      "rank": "Rank",
+      "global": "Global desirability",
+      "predicted": "predicted",
+      "interval": "prediction interval",
+      "notes": "Notes",
+      "extrapolated": "Outside the experimental region (extrapolation)",
+      "atBounds": "At the domain limit: {{factors}}",
+      "starts": "{{count}} start(s) reached this solution",
+      "exportCsv": "Candidates (CSV)"
+    },
+    "tradeoffs": {
+      "title": "Trade-offs between responses",
+      "help": "Best desirability each response would reach alone (same constraints). In the candidates, the number in parentheses is how much individual desirability was given up.",
+      "response": "Response",
+      "bestAlone": "Best desirability alone",
+      "atBest": "At conditions"
+    },
+    "view": {
+      "heading": "Global desirability over two factors",
+      "title": "Global desirability",
+      "description": "Global desirability as a function of two factors, with the others fixed at the best candidate's conditions.",
+      "response": "Global desirability (0 to 1)",
+      "reading": "Lines: global desirability; darker = more desirable.",
+      "extrapolated": "Hatched: extrapolation (outside the region run).",
+      "points": "Circles: candidates.",
+      "xAxis": "Horizontal axis",
+      "yAxis": "Vertical axis",
+      "sameAxis": "Choose different factors on the two axes."
+    },
+    "confirmation": {
+      "title": "Confirmation runs",
+      "intro": "Choose candidates and replicates: the app creates a new experiment, linked to this one, with the conditions rounded to 5 significant digits and the predictions stored to compare with what is observed.",
+      "replicates": "Replicates per candidate",
+      "propose": "Propose confirmation runs",
+      "experimentName": "Confirmation — {{name}}"
+    },
+    "check": {
+      "title": "Check against the predictions",
+      "help": "Predictions stored with the proposal, with a {{level}}% prediction interval.",
+      "run": "Run",
+      "response": "Response",
+      "predicted": "Predicted",
+      "interval": "{{level}}% prediction interval",
+      "observed": "Observed",
+      "status": "Status",
+      "within": "within the interval",
+      "below": "below the interval",
+      "above": "above the interval",
+      "missing": "no observed value",
+      "noInterval": "no prediction interval",
+      "note": "A value inside the interval is compatible with the model; outside it, the model may not describe these conditions well. With few runs the conclusion is limited."
+    }
+  },
+  "update": {
+    "check": "Check for updates",
+    "checking": "Checking…",
+    "current": "You already have the latest version.",
+    "available": "New version available: {{version}}.",
+    "install": "Download and install",
+    "installing": "Downloading and installing…",
+    "failed": "Could not check right now (no internet or service unavailable).",
+    "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed."
+  }
+}

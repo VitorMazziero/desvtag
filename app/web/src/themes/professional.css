@@ -1,0 +1,27 @@
+/* Professional: tokens do prompt Professional (docs/temas/prompts/professional.txt).
+   --color-ok (verde discreto) não existe no prompt; foi escolhido para estados de
+   sucesso com contraste verificado nos testes. */
+[data-theme="professional"] {
+  color-scheme: light;
+  --color-ground: #f7f4ec;
+  --color-ground-muted: #fcfaf5;
+  --color-panel: #fcfaf5;
+  --color-ink: #29271f;
+  --color-ink-secondary: #514d44;
+  --color-rule: #d4ccbd;
+  --color-action: #29271f;
+  --color-on-action: #f7f4ec;
+  --color-action-hover: #454034;
+  --color-accent-text: #68501f;
+  --color-ok: #2d6a2d;
+  --color-focus: #68501f;
+  --font-display: "EB Garamond", Georgia, serif;
+  --font-body: "Instrument Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-tracking: -0.01em;
+  --radius-panel: 3px;
+  --radius-control: 3px;
+  --shadow-panel: none;
+  --motion-duration: 160ms;
+  --motion-ease: linear;
+}

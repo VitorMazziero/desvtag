@@ -1,0 +1,72 @@
+{
+  "n": 36,
+  "columns": 2,
+  "exactOnBinary64Inputs": {
+    "coefficients": [
+      {
+        "estimate": "-0.2623230737740267447107770654147369495469",
+        "sd": "0.2328182343011548105127747687554908797793"
+      },
+      {
+        "estimate": "1.002116818020454395992394383032700994458",
+        "sd": "0.0004297968481999411745940056526256240102981"
+      }
+    ],
+    "residualSd": "0.8847963961443813281444044582084998375632",
+    "rSquared": "0.9999937458837117249310845033270227871947",
+    "ssModel": "4255954.132323692738221215364357450260389",
+    "ssResidual": "26.61739852942288910255540829803573731628",
+    "ssTotal": "4255980.749722222161110317919765748296126",
+    "f": "5436385.540797737397736062924457718917985",
+    "dfModel": 1,
+    "dfResidual": 34,
+    "dfTotal": 35
+  },
+  "certifiedNist": {
+    "coefficients": [
+      {
+        "index": 0,
+        "estimate": "-0.262323073774029",
+        "sd": "0.232818234301152"
+      },
+      {
+        "index": 1,
+        "estimate": "1.00211681802045",
+        "sd": "0.429796848199937E-03"
+      }
+    ],
+    "residualSd": "0.884796396144373",
+    "rSquared": "0.999993745883712",
+    "anova": {
+      "dfModel": 1,
+      "ssModel": "4255954.13232369",
+      "f": "5436385.54079785",
+      "dfResidual": 34,
+      "ssResidual": "26.6173985294224"
+    }
+  },
+  "referenceVsCertifiedLre": {
+    "coefficients": 14.065634247938107,
+    "residualSd": 14.02629509809974,
+    "rSquared": 15.0
+  },
+  "tolerances": {
+    "minLre": {
+      "coefficients": 11,
+      "stdErrors": 12,
+      "sigma": 12,
+      "rSquared": 13,
+      "ssModel": 13,
+      "ssResidual": 12,
+      "f": 12
+    },
+    "note": "LRE = -log10(erro relativo) contra a refer\u00eancia exata sobre os bin\u00e1rios de 64 bits; em ajustes perfeitos (SQE/SQT < 1e-20) SQE, \u03c3 e erros-padr\u00e3o usam erro absoluto na escala dos dados e F \u00e9 omitido"
+  },
+  "reference": {
+    "software": "Python fractions (equa\u00e7\u00f5es normais exatas) + mpmath",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/lls/data/LINKS/DATA/Norris.dat"
+  }
+}

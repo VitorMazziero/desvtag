@@ -1,0 +1,32 @@
+{
+ "method": "response_surface",
+ "title": "CCD com 2 fatores e um só ponto central: falta de ajuste indisponível",
+ "responseColumn": "y",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "A",
+   "low": 0,
+   "high": 10
+  },
+  {
+   "id": "f2",
+   "name": "B",
+   "low": 0,
+   "high": 10
+  }
+ ],
+ "terms": [
+  "A",
+  "B",
+  "AA",
+  "BB",
+  "AB"
+ ],
+ "alpha": 0.05,
+ "gridAxes": [
+  0,
+  1
+ ],
+ "gridSteps": 5
+}

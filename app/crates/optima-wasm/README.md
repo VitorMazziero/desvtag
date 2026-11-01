@@ -4,4 +4,4 @@
 
 Esta camada deverá transportar entradas, resultados e erros. Os procedimentos científicos permanecem em `optima-core`, compartilhados com a versão Windows.
 
-Ainda não há um pacote Rust criado nesta pasta. A integração e a compatibilidade das dependências serão verificadas com os primeiros módulos.
+Implementado na ET01: expõe `handleRequest(texto) -> texto`. Ver [ficha E03](../../../docs/modulos/e03-adaptador-wasm.md).

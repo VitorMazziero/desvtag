@@ -1,0 +1,27 @@
+{
+  "method": "linear_model",
+  "title": "Coluna x3 = x1 + x2 (posto deficiente)",
+  "responseColumn": "y",
+  "intercept": true,
+  "factors": {
+    "x1": "numeric",
+    "x2": "numeric",
+    "x3": "numeric"
+  },
+  "terms": [
+    {
+      "type": "main",
+      "factor": "x1"
+    },
+    {
+      "type": "main",
+      "factor": "x2"
+    },
+    {
+      "type": "main",
+      "factor": "x3"
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}

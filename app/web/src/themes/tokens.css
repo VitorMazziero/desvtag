@@ -1,0 +1,55 @@
+/* Tokens semânticos comuns (U18). Cada tema define as cores e fontes em seu arquivo. */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --content-max: 1100px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-label: 0.8125rem;
+  --leading-body: 1.6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: var(--display-tracking, -0.01em);
+  line-height: 1.2;
+  margin: 0;
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: reduzir movimento deve prevalecer sobre qualquer regra */
+    transition: none !important;
+    /* biome-ignore lint/complexity/noImportantStyles: idem */
+    animation: none !important;
+  }
+}

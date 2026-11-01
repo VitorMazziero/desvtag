@@ -1,0 +1,135 @@
+{
+ "reference": {
+  "status": "onlyZeroDesirability",
+  "feasibleCount": 125629,
+  "nonzeroCount": 0,
+  "bestD": 0.0,
+  "bestCoded": null,
+  "locationCheck": false,
+  "gridResolution": 0.007071067811865475,
+  "probes": [
+   {
+    "coded": [
+     0.0,
+     0.0
+    ],
+    "responses": [
+     {
+      "fitted": 49.94799999999999,
+      "meanLower": 49.49184433511394,
+      "meanUpper": 50.40415566488605,
+      "predLower": 48.83065137774916,
+      "predUpper": 51.06534862225082,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     0.0,
+     0.0
+    ],
+    "responses": [
+     {
+      "fitted": 49.94799999999999,
+      "meanLower": 49.49184433511394,
+      "meanUpper": 50.40415566488605,
+      "predLower": 48.83065137774916,
+      "predUpper": 51.06534862225082,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     1.1313708498984762,
+     1.1313708498984762
+    ],
+    "responses": [
+     {
+      "fitted": 43.933200749651064,
+      "meanLower": 42.93899066793668,
+      "meanUpper": 44.92741083136545,
+      "predLower": 42.50882592551918,
+      "predUpper": 45.357575573782945,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": true
+   },
+   {
+    "coded": [
+     -1.1313708498984762,
+     -1.1313708498984762
+    ],
+    "responses": [
+     {
+      "fitted": 41.851759250348934,
+      "meanLower": 40.85754916863455,
+      "meanUpper": 42.84596933206332,
+      "predLower": 40.42738442621705,
+      "predUpper": 43.276134074480815,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": true
+   },
+   {
+    "coded": [
+     0.3,
+     0.6
+    ],
+    "responses": [
+     {
+      "fitted": 48.42593064147105,
+      "meanLower": 47.97509815486231,
+      "meanUpper": 48.87676312807979,
+      "predLower": 47.31074461034439,
+      "predUpper": 49.5411166725977,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     1.8384776310850237,
+     1.8384776310850237
+    ],
+    "responses": [
+     {
+      "fitted": 33.008188718183,
+      "meanLower": 30.455748102297143,
+      "meanUpper": 35.56062933406886,
+      "predLower": 30.25949028971509,
+      "predUpper": 35.75688714665091,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": true
+   }
+  ],
+  "coefficients": [
+   [
+    49.94799999999999,
+    2.900760026929376,
+    -1.9808841526796062,
+    -3.885437499999999,
+    -3.1181874999999932,
+    1.4915000000000003
+   ]
+  ]
+ },
+ "software": {
+  "numpy": "2.5.4",
+  "scipy": "1.18.1"
+ }
+}

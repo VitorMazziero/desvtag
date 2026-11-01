@@ -1,0 +1,42 @@
+{
+ "method": "response_surface",
+ "title": "Composto de face centrada com 3 fatores, 6 pontos centrais e modelo completo",
+ "responseColumn": "y",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "Glicose",
+   "low": 10,
+   "high": 30
+  },
+  {
+   "id": "f2",
+   "name": "Peptona",
+   "low": 2,
+   "high": 8
+  },
+  {
+   "id": "f3",
+   "name": "Tempo",
+   "low": 24,
+   "high": 72
+  }
+ ],
+ "terms": [
+  "A",
+  "B",
+  "C",
+  "AA",
+  "BB",
+  "CC",
+  "AB",
+  "AC",
+  "BC"
+ ],
+ "alpha": 0.05,
+ "gridAxes": [
+  0,
+  2
+ ],
+ "gridSteps": 5
+}

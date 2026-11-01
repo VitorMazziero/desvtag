@@ -1,0 +1,31 @@
+{
+ "method": "response_surface",
+ "title": "Modelo reduzido sem o efeito principal de B (B² e A:B sem hierarquia)",
+ "responseColumn": "y",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "Temperatura",
+   "low": 30,
+   "high": 40
+  },
+  {
+   "id": "f2",
+   "name": "pH",
+   "low": 5,
+   "high": 8
+  }
+ ],
+ "terms": [
+  "A",
+  "AA",
+  "BB",
+  "AB"
+ ],
+ "alpha": 0.05,
+ "gridAxes": [
+  0,
+  1
+ ],
+ "gridSteps": 5
+}

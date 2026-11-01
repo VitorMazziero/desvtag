@@ -1,4 +1,5 @@
 # Acervo e registro histórico locais; preservar no computador.
+# A pasta plans/ saiu do repositório (DT-0001); a regra abaixo mantém o registro local fora do Git.
 /referencias/
 /plans/conversa_rust_doe_estatistica.md
 /.local/
@@ -46,3 +47,9 @@ token*.json
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Cola WASM gerada por app/web/scripts/build-wasm.mjs.
+/app/web/src/services/engine/wasm/
+
+# Esquemas gerados pelo Tauri durante a compilação.
+/app/desktop/src-tauri/gen/

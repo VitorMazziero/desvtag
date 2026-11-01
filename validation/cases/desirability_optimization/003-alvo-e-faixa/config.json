@@ -1,0 +1,80 @@
+{
+ "method": "desirability_optimization",
+ "title": "Alvo em uma resposta e faixa em outra, Box–Behnken de 3 fatores",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "F1",
+   "low": 10,
+   "high": 20
+  },
+  {
+   "id": "f2",
+   "name": "F2",
+   "low": 0,
+   "high": 10
+  },
+  {
+   "id": "f3",
+   "name": "F3",
+   "low": 100,
+   "high": 200
+  }
+ ],
+ "responses": [
+  {
+   "id": "r1",
+   "terms": [
+    "A",
+    "B",
+    "C",
+    "AA",
+    "BB",
+    "CC",
+    "AB",
+    "AC",
+    "BC"
+   ],
+   "goal": {
+    "type": "target",
+    "low": 50.0,
+    "target": 62.0,
+    "high": 72.0,
+    "shapeLow": 1.0,
+    "shapeHigh": 1.5
+   },
+   "importance": 1.0,
+   "limit": {
+    "min": null,
+    "max": null
+   }
+  },
+  {
+   "id": "r2",
+   "terms": [
+    "A",
+    "B",
+    "C",
+    "AA",
+    "BB",
+    "CC",
+    "AB",
+    "AC",
+    "BC"
+   ],
+   "goal": {
+    "type": "range",
+    "low": 14.0,
+    "high": 18.0
+   },
+   "importance": 1.0,
+   "limit": {
+    "min": null,
+    "max": null
+   }
+  }
+ ],
+ "alpha": 0.05,
+ "seed": 20261101,
+ "starts": 40
+}

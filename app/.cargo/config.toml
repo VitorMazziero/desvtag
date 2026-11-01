@@ -1,0 +1,4 @@
+[env]
+# Os tipos TypeScript são gerados aqui pelos testes `export_bindings_*` do
+# ts-rs e reunidos em contracts.generated.ts por app/web/scripts/gen-contracts.mjs.
+TS_RS_EXPORT_DIR = { value = "target/ts-bindings", relative = true }

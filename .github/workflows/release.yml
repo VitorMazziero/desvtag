@@ -1,0 +1,74 @@
+name: Release
+
+# Cria um RASCUNHO de release a partir de uma etiqueta vX.Y.Z: instalador Windows assinado
+# (atualizador) e manifesto latest.json. Nada fica público até o mantenedor publicar o rascunho.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+  WASM_BINDGEN_VERSION: "0.2.130" # deve coincidir com a crate wasm-bindgen do Cargo.lock
+
+jobs:
+  windows:
+    name: Instalador Windows assinado (rascunho)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            app
+            app/desktop/src-tauri
+      - name: Instalar wasm-bindgen-cli
+        run: cargo install wasm-bindgen-cli --version "$env:WASM_BINDGEN_VERSION" --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - name: Conferir que a etiqueta coincide com a versão do aplicativo
+        shell: pwsh
+        run: node scripts/check-versions.mjs
+      - run: npm ci
+        working-directory: app/web
+      - name: Build do instalador NSIS (assinado com a chave do atualizador)
+        run: npm --prefix ../web exec -- tauri build
+        working-directory: app/desktop
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+      - name: Manifesto do atualizador e nomes sem espaços
+        shell: pwsh
+        run: |
+          $dir = "app/desktop/src-tauri/target/release/bundle/nsis"
+          $exe = Get-ChildItem $dir -Filter "*-setup.exe" | Select-Object -First 1
+          $sig = "$($exe.FullName).sig"
+          if (-not (Test-Path $sig)) { Write-Error "assinatura ausente: $sig"; exit 1 }
+          New-Item -ItemType Directory -Force release | Out-Null
+          $name = ($exe.Name -replace ' ', '-')
+          Copy-Item $exe.FullName "release/$name"
+          Copy-Item $sig "release/$name.sig"
+          node scripts/make-updater-manifest.mjs "release/$name" "release/$name.sig" release/latest.json "${{ github.ref_name }}"
+      - name: Criar o rascunho do release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $installer = Get-ChildItem release -Filter "*-setup.exe" | Select-Object -First 1
+          $hash = (Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLower()
+          $intro = @"
+          **Canal experimental (0.x).** Instalador para Windows 64 bits, sem assinatura de código: na primeira execução o Windows pode mostrar "O Windows protegeu seu computador"; escolha *Mais informações* e *Executar assim mesmo* se a soma abaixo conferir. As atualizações seguintes são verificadas pela assinatura do próprio aplicativo.
+
+          SHA-256 de $($installer.Name): ``$hash``
+
+          ---
+
+          "@
+          Set-Content release/NOTES.md ($intro) -Encoding utf8
+          Get-Content CHANGELOG.md | Add-Content release/NOTES.md -Encoding utf8
+          gh release create "${{ github.ref_name }}" --draft --title "EnziTAG Optima ${{ github.ref_name }} (canal experimental)" --notes-file release/NOTES.md (Get-ChildItem release -Exclude NOTES.md | ForEach-Object FullName)

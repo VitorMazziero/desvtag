@@ -1,0 +1,47 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/optima-core",
+    "crates/optima-project",
+    "crates/optima-engine",
+    "crates/optima-wasm",
+]
+# O pacote Tauri depende de bibliotecas do sistema (WebView) e fica em um
+# workspace próprio; consome optima-engine por caminho relativo (DT-0004).
+exclude = ["desktop/src-tauri"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.97"
+license = "MIT"
+repository = "https://github.com/VitorMazziero/enzitag-optima"
+authors = ["EnziTAG Optima contributors"]
+
+[workspace.dependencies]
+optima-core = { path = "crates/optima-core" }
+optima-project = { path = "crates/optima-project" }
+optima-engine = { path = "crates/optima-engine" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+ts-rs = { version = "12", default-features = false, features = ["serde-compat"] }
+wasm-bindgen = "=0.2.130"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+unwrap_used = "warn"
+expect_used = "warn"
+panic = "warn"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
+# Os casos de validação numérica (quadratura da amplitude studentizada) são lentos sem otimização.
+[profile.test]
+opt-level = 2

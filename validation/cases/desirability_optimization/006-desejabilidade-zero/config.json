@@ -1,0 +1,43 @@
+{
+ "method": "desirability_optimization",
+ "title": "Faixa inatingível: pontos viáveis, mas desejabilidade zero em toda a região",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "F1",
+   "low": 30,
+   "high": 40
+  },
+  {
+   "id": "f2",
+   "name": "F2",
+   "low": 5,
+   "high": 8
+  }
+ ],
+ "responses": [
+  {
+   "id": "r1",
+   "terms": [
+    "A",
+    "B",
+    "AA",
+    "BB",
+    "AB"
+   ],
+   "goal": {
+    "type": "range",
+    "low": 200.0,
+    "high": 210.0
+   },
+   "importance": 1.0,
+   "limit": {
+    "min": null,
+    "max": null
+   }
+  }
+ ],
+ "alpha": 0.05,
+ "seed": 20261101,
+ "starts": 40
+}

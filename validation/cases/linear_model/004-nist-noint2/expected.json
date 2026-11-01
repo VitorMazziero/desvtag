@@ -1,0 +1,63 @@
+{
+  "n": 3,
+  "columns": 1,
+  "exactOnBinary64Inputs": {
+    "coefficients": [
+      {
+        "estimate": "0.7272727272727272727272727272727272727273",
+        "sd": "0.04208273180784324825302576257199997829679"
+      }
+    ],
+    "residualSd": "0.3692744729379981982027219803757291067502",
+    "rSquared": "0.9933481152993348115299334811529933481153",
+    "ssModel": "40.72727272727272727272727272727272727273",
+    "ssResidual": "0.2727272727272727272727272727272727272727",
+    "ssTotal": "41.0",
+    "f": "298.6666666666666666666666666666666666667",
+    "dfModel": 1,
+    "dfResidual": 2,
+    "dfTotal": 3
+  },
+  "certifiedNist": {
+    "coefficients": [
+      {
+        "index": 1,
+        "estimate": "0.727272727272727",
+        "sd": "0.420827318078432E-01"
+      }
+    ],
+    "residualSd": "0.369274472937998",
+    "rSquared": "0.993348115299335",
+    "anova": {
+      "dfModel": 1,
+      "ssModel": "40.7272727272727",
+      "f": "298.6666666666667",
+      "dfResidual": 2,
+      "ssResidual": "0.272727272727273"
+    }
+  },
+  "referenceVsCertifiedLre": {
+    "coefficients": 15.0,
+    "residualSd": 15.0,
+    "rSquared": 15.0
+  },
+  "tolerances": {
+    "minLre": {
+      "coefficients": 13,
+      "stdErrors": 13,
+      "sigma": 13,
+      "rSquared": 13,
+      "ssModel": 13,
+      "ssResidual": 13,
+      "f": 13
+    },
+    "note": "LRE = -log10(erro relativo) contra a refer\u00eancia exata sobre os bin\u00e1rios de 64 bits; em ajustes perfeitos (SQE/SQT < 1e-20) SQE, \u03c3 e erros-padr\u00e3o usam erro absoluto na escala dos dados e F \u00e9 omitido"
+  },
+  "reference": {
+    "software": "Python fractions (equa\u00e7\u00f5es normais exatas) + mpmath",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/lls/data/LINKS/DATA/NoInt2.dat"
+  }
+}

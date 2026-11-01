@@ -1,0 +1,29 @@
+{
+  "n": 3,
+  "exactOnBinary64Inputs": {
+    "mean": 10000002.0,
+    "variance": 1.0,
+    "sd": 1.0,
+    "min": 10000001.0,
+    "max": 10000003.0
+  },
+  "certifiedNist": {
+    "mean": "10000002",
+    "sd": "1"
+  },
+  "certifiedBounds": {
+    "mean": 0.0,
+    "sd": 0.0
+  },
+  "tolerances": {
+    "relative": 1e-12,
+    "note": "relativa ao valor exato sobre os mesmos bin\u00e1rios de 64 bits"
+  },
+  "reference": {
+    "software": "Python fractions (exato) + mpmath; verifica\u00e7\u00e3o cruzada com NumPy",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/univ/data/NumAcc1.dat"
+  }
+}

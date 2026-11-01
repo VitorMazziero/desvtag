@@ -1,0 +1,27 @@
+{
+  "method": "linear_model",
+  "title": "Quadr\u00e1tico em x com fator categ\u00f3rico",
+  "responseColumn": "y",
+  "intercept": true,
+  "factors": {
+    "x": "numeric",
+    "C": "categorical"
+  },
+  "terms": [
+    {
+      "type": "main",
+      "factor": "x"
+    },
+    {
+      "type": "power",
+      "factor": "x",
+      "degree": 2
+    },
+    {
+      "type": "main",
+      "factor": "C"
+    }
+  ],
+  "coding": "treatment",
+  "confidenceLevel": 0.95
+}

@@ -1,0 +1,48 @@
+{
+  "method": "two_level_design_analysis",
+  "title": "Fatorial 2³ com duas réplicas e quatro pontos centrais, modelo com todas as interações e curvatura",
+  "responseColumn": "y",
+  "spec": {
+    "kind": {
+      "type": "fullFactorial"
+    },
+    "factors": [
+      {
+        "id": "f1",
+        "name": "F1",
+        "low": 10.0,
+        "high": 18.0,
+        "unit": null
+      },
+      {
+        "id": "f2",
+        "name": "F2",
+        "low": 20.0,
+        "high": 28.0,
+        "unit": null
+      },
+      {
+        "id": "f3",
+        "name": "F3",
+        "low": 30.0,
+        "high": 38.0,
+        "unit": null
+      }
+    ],
+    "replicates": 2,
+    "centerPoints": 4,
+    "randomize": true,
+    "seed": 11
+  },
+  "terms": [
+    "A",
+    "B",
+    "C",
+    "AB",
+    "AC",
+    "BC",
+    "ABC"
+  ],
+  "alpha": 0.05,
+  "includeCurvature": true
+}

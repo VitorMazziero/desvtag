@@ -1,0 +1,79 @@
+{
+ "method": "desirability_optimization",
+ "title": "Duas respostas em conflito (maximizar e minimizar) com limite obrigatório e pesos, DCCR de 3 fatores",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "F1",
+   "low": 20,
+   "high": 40
+  },
+  {
+   "id": "f2",
+   "name": "F2",
+   "low": 3,
+   "high": 7
+  },
+  {
+   "id": "f3",
+   "name": "F3",
+   "low": 1,
+   "high": 2
+  }
+ ],
+ "responses": [
+  {
+   "id": "r1",
+   "terms": [
+    "A",
+    "B",
+    "C",
+    "AA",
+    "BB",
+    "CC",
+    "AB",
+    "AC",
+    "BC"
+   ],
+   "goal": {
+    "type": "maximize",
+    "low": 80.0,
+    "target": 115.0,
+    "shape": 1.0
+   },
+   "importance": 2.0,
+   "limit": {
+    "min": 95.0,
+    "max": null
+   }
+  },
+  {
+   "id": "r2",
+   "terms": [
+    "A",
+    "B",
+    "C",
+    "AA",
+    "BB",
+    "CC",
+    "AB",
+    "AC",
+    "BC"
+   ],
+   "goal": {
+    "type": "minimize",
+    "target": 12.0,
+    "high": 30.0,
+    "shape": 2.0
+   },
+   "importance": 1.0,
+   "limit": {
+    "min": null,
+    "max": null
+   }
+  }
+ ],
+ "alpha": 0.05,
+ "seed": 20261101,
+ "starts": 40
+}

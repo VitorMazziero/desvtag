@@ -1,0 +1,135 @@
+{
+ "reference": {
+  "status": "infeasible",
+  "feasibleCount": 0,
+  "nonzeroCount": 0,
+  "bestD": 0.0,
+  "bestCoded": null,
+  "locationCheck": false,
+  "gridResolution": 0.007071067811865475,
+  "probes": [
+   {
+    "coded": [
+     0.0,
+     0.0
+    ],
+    "responses": [
+     {
+      "fitted": 50.07679999999999,
+      "meanLower": 49.65424659409127,
+      "meanUpper": 50.499353405908714,
+      "predLower": 49.041759766448486,
+      "predUpper": 51.1118402335515,
+      "desirability": 0.6297999999999995
+     }
+    ],
+    "global": 0.6297999999999995,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     0.0,
+     0.0
+    ],
+    "responses": [
+     {
+      "fitted": 50.07679999999999,
+      "meanLower": 49.65424659409127,
+      "meanUpper": 50.499353405908714,
+      "predLower": 49.041759766448486,
+      "predUpper": 51.1118402335515,
+      "desirability": 0.6297999999999995
+     }
+    ],
+    "global": 0.6297999999999995,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     1.1313708498984762,
+     1.1313708498984762
+    ],
+    "responses": [
+     {
+      "fitted": 44.10120195872763,
+      "meanLower": 43.18022938608153,
+      "meanUpper": 45.02217453137373,
+      "predLower": 42.78175230686831,
+      "predUpper": 45.420651610586944,
+      "desirability": 0.2563251224204768
+     }
+    ],
+    "global": 0.2563251224204768,
+    "extrapolated": true
+   },
+   {
+    "coded": [
+     -1.1313708498984762,
+     -1.1313708498984762
+    ],
+    "responses": [
+     {
+      "fitted": 41.63595004127238,
+      "meanLower": 40.71497746862628,
+      "meanUpper": 42.55692261391848,
+      "predLower": 40.316500389413065,
+      "predUpper": 42.955399693131696,
+      "desirability": 0.10224687757952378
+     }
+    ],
+    "global": 0.10224687757952378,
+    "extrapolated": true
+   },
+   {
+    "coded": [
+     0.3,
+     0.6
+    ],
+    "responses": [
+     {
+      "fitted": 48.662358850290694,
+      "meanLower": 48.24473649596039,
+      "meanUpper": 49.079981204621,
+      "predLower": 47.62932190271249,
+      "predUpper": 49.6953957978689,
+      "desirability": 0.5413974281431684
+     }
+    ],
+    "global": 0.5413974281431684,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     1.8384776310850237,
+     1.8384776310850237
+    ],
+    "responses": [
+     {
+      "fitted": 33.0456006829324,
+      "meanLower": 30.68118309778253,
+      "meanUpper": 35.410018268082275,
+      "predLower": 30.499382424182524,
+      "predUpper": 35.591818941682284,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": true
+   }
+  ],
+  "coefficients": [
+   [
+    50.07679999999999,
+    3.0111430175714915,
+    -1.9216452999679,
+    -3.956837499999999,
+    -2.8180874999999954,
+    1.1435000000000013
+   ]
+  ]
+ },
+ "software": {
+  "numpy": "2.5.4",
+  "scipy": "1.18.1"
+ }
+}

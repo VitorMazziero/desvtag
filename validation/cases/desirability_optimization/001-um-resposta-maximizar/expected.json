@@ -1,0 +1,138 @@
+{
+ "reference": {
+  "status": "found",
+  "feasibleCount": 125629,
+  "nonzeroCount": 117628,
+  "bestD": 0.6795920104549911,
+  "bestCoded": [
+   0.2969848480983499,
+   -0.2545584412271571
+  ],
+  "locationCheck": true,
+  "gridResolution": 0.007071067811865475,
+  "probes": [
+   {
+    "coded": [
+     0.0,
+     0.0
+    ],
+    "responses": [
+     {
+      "fitted": 50.17659999999999,
+      "meanLower": 49.7634351144898,
+      "meanUpper": 50.589764885510185,
+      "predLower": 49.1645568508646,
+      "predUpper": 51.18864314913539,
+      "desirability": 0.6360374999999996
+     }
+    ],
+    "global": 0.6360374999999996,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     0.0,
+     0.0
+    ],
+    "responses": [
+     {
+      "fitted": 50.17659999999999,
+      "meanLower": 49.7634351144898,
+      "meanUpper": 50.589764885510185,
+      "predLower": 49.1645568508646,
+      "predUpper": 51.18864314913539,
+      "desirability": 0.6360374999999996
+     }
+    ],
+    "global": 0.6360374999999996,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     1.1313708498984762,
+     1.1313708498984762
+    ],
+    "responses": [
+     {
+      "fitted": 44.16637318292696,
+      "meanLower": 43.265863277635724,
+      "meanUpper": 45.0668830882182,
+      "predLower": 42.87623977795642,
+      "predUpper": 45.4565065878975,
+      "desirability": 0.26039832393293505
+     }
+    ],
+    "global": 0.26039832393293505,
+    "extrapolated": true
+   },
+   {
+    "coded": [
+     -1.1313708498984762,
+     -1.1313708498984762
+    ],
+    "responses": [
+     {
+      "fitted": 42.67713081707305,
+      "meanLower": 41.77662091178181,
+      "meanUpper": 43.577640722364286,
+      "predLower": 41.38699741210251,
+      "predUpper": 43.96726422204359,
+      "desirability": 0.16732067606706558
+     }
+    ],
+    "global": 0.1673206760670656,
+    "extrapolated": true
+   },
+   {
+    "coded": [
+     0.3,
+     0.6
+    ],
+    "responses": [
+     {
+      "fitted": 48.55568060897536,
+      "meanLower": 48.14733721426929,
+      "meanUpper": 48.96402400368142,
+      "predLower": 47.545596235720666,
+      "predUpper": 49.56576498223005,
+      "desirability": 0.5347300380609599
+     }
+    ],
+    "global": 0.5347300380609599,
+    "extrapolated": false
+   },
+   {
+    "coded": [
+     1.8384776310850237,
+     1.8384776310850237
+    ],
+    "responses": [
+     {
+      "fitted": 33.54958892225632,
+      "meanLower": 31.237705247420305,
+      "meanUpper": 35.86147259709234,
+      "predLower": 31.059943919637167,
+      "predUpper": 36.039233924875475,
+      "desirability": 0.0
+     }
+    ],
+    "global": 0.0,
+    "extrapolated": true
+   }
+  ],
+  "coefficients": [
+   [
+    50.17659999999999,
+    2.834700106405805,
+    -2.176541746577308,
+    -3.973987499999999,
+    -3.184237499999993,
+    1.8810000000000002
+   ]
+  ]
+ },
+ "software": {
+  "numpy": "2.5.4",
+  "scipy": "1.18.1"
+ }
+}

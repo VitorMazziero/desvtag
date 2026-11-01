@@ -1,0 +1,32 @@
+{
+ "method": "response_surface",
+ "title": "CCD rotacional com 2 fatores, 5 pontos centrais e modelo completo",
+ "responseColumn": "y",
+ "factors": [
+  {
+   "id": "f1",
+   "name": "Temperatura",
+   "low": 30,
+   "high": 40
+  },
+  {
+   "id": "f2",
+   "name": "pH",
+   "low": 5,
+   "high": 8
+  }
+ ],
+ "terms": [
+  "A",
+  "B",
+  "AA",
+  "BB",
+  "AB"
+ ],
+ "alpha": 0.05,
+ "gridAxes": [
+  0,
+  1
+ ],
+ "gridSteps": 5
+}

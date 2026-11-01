@@ -1,0 +1,19 @@
+[package]
+name = "optima-wasm"
+description = "Adaptador WebAssembly do motor EnziTAG Optima (sem lógica científica)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+optima-engine = { workspace = true }
+wasm-bindgen = { workspace = true }
+
+[lints]
+workspace = true

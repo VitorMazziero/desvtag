@@ -1,0 +1,108 @@
+{
+  "n": 21,
+  "columns": 6,
+  "exactOnBinary64Inputs": {
+    "coefficients": [
+      {
+        "estimate": "1.0",
+        "sd": "215232.6246781696807931979247425834994111"
+      },
+      {
+        "estimate": "1.0",
+        "sd": "236355.1734696805208567610086770919612787"
+      },
+      {
+        "estimate": "1.0",
+        "sd": "77934.35243315830908070104278298576472525"
+      },
+      {
+        "estimate": "1.0",
+        "sd": "10147.55075503496479558139285293957909119"
+      },
+      {
+        "estimate": "1.0",
+        "sd": "564.5665121707515677431834314642253636034"
+      },
+      {
+        "estimate": "1.0",
+        "sd": "11.23248546793119370184850758903814333288"
+      }
+    ],
+    "residualSd": "236014.5023792676459972137348430087100914",
+    "rSquared": "0.9574784408256621788167703708804876130761",
+    "ssModel": "18814317208116.66666666666666666666666667",
+    "ssResidual": "835542680000.0",
+    "ssTotal": "19649859888116.66666666666666666666666667",
+    "f": "67.55244582401224555040084846413830110988",
+    "dfModel": 5,
+    "dfResidual": 15,
+    "dfTotal": 20
+  },
+  "certifiedNist": {
+    "coefficients": [
+      {
+        "index": 0,
+        "estimate": "1.00000000000000",
+        "sd": "215232.624678170"
+      },
+      {
+        "index": 1,
+        "estimate": "1.00000000000000",
+        "sd": "236355.173469681"
+      },
+      {
+        "index": 2,
+        "estimate": "1.00000000000000",
+        "sd": "77934.3524331583"
+      },
+      {
+        "index": 3,
+        "estimate": "1.00000000000000",
+        "sd": "10147.5507550350"
+      },
+      {
+        "index": 4,
+        "estimate": "1.00000000000000",
+        "sd": "564.566512170752"
+      },
+      {
+        "index": 5,
+        "estimate": "1.00000000000000",
+        "sd": "11.2324854679312"
+      }
+    ],
+    "residualSd": "236014.502379268",
+    "rSquared": "0.957478440825662",
+    "anova": {
+      "dfModel": 5,
+      "ssModel": "18814317208116.7",
+      "f": "67.5524458240122",
+      "dfResidual": 15,
+      "ssResidual": "835542680000.000"
+    }
+  },
+  "referenceVsCertifiedLre": {
+    "coefficients": 15.0,
+    "residualSd": 14.823932009616213,
+    "rSquared": 15.0
+  },
+  "tolerances": {
+    "minLre": {
+      "coefficients": 6,
+      "stdErrors": 13,
+      "sigma": 13,
+      "rSquared": 13,
+      "ssModel": 13,
+      "ssResidual": 13,
+      "f": 13
+    },
+    "note": "LRE = -log10(erro relativo) contra a refer\u00eancia exata sobre os bin\u00e1rios de 64 bits; em ajustes perfeitos (SQE/SQT < 1e-20) SQE, \u03c3 e erros-padr\u00e3o usam erro absoluto na escala dos dados e F \u00e9 omitido"
+  },
+  "reference": {
+    "software": "Python fractions (equa\u00e7\u00f5es normais exatas) + mpmath",
+    "python": "3.13.18",
+    "numpy": "2.5.4",
+    "mpmath": "1.4.1",
+    "source": "https://www.itl.nist.gov/div898/strd/lls/data/LINKS/DATA/Wampler4.dat"
+  }
+}

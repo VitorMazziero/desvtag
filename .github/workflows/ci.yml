@@ -1,0 +1,212 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  WASM_BINDGEN_VERSION: "0.2.130" # deve coincidir com a crate wasm-bindgen do Cargo.lock
+
+jobs:
+  docs:
+    name: Documentação e versões
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/check-docs-links.mjs
+      - run: node scripts/check-case-collisions.mjs
+      - run: node scripts/check-versions.mjs
+
+  rust:
+    name: Rust (fmt, clippy, testes, WASM)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain (rust-toolchain.toml)
+        run: rustup show active-toolchain
+        working-directory: .
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+      - name: Compilar para WebAssembly
+        run: cargo build -p optima-wasm --target wasm32-unknown-unknown --release
+
+  web:
+    name: Web (contratos, lint, tipos, testes, build, E2E)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: app/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app
+      - uses: actions/cache@v4
+        id: wbcli
+        with:
+          path: ~/.cargo/bin/wasm-bindgen
+          key: wasm-bindgen-cli-${{ env.WASM_BINDGEN_VERSION }}-${{ runner.os }}
+      - name: Instalar wasm-bindgen-cli
+        if: steps.wbcli.outputs.cache-hit != 'true'
+        run: cargo install wasm-bindgen-cli --version "$WASM_BINDGEN_VERSION" --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - run: npm ci
+      - name: Tipos TypeScript gerados atualizados
+        run: npm run check:contracts
+      - run: npm run lint
+      - run: npm run build:wasm
+      - run: npm run typecheck
+      - run: npm test
+      - run: npx playwright install --with-deps chromium firefox
+      - name: E2E com o motor WASM real (Chromium e Firefox)
+        run: E2E_BROWSERS=chromium,firefox npm run test:e2e
+        env:
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: app/web/test-results
+
+  desktop-linux:
+    name: Tauri (compilação e verificação nativa em Linux)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependências do sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libwebkit2gtk-4.1-dev libgtk-3-dev \
+            libsoup-3.0-dev librsvg2-dev patchelf build-essential pkg-config libssl-dev \
+            webkit2gtk-driver xvfb
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            app
+            app/desktop/src-tauri
+      - uses: actions/cache@v4
+        id: wbcli
+        with:
+          path: |
+            ~/.cargo/bin/wasm-bindgen
+            ~/.cargo/bin/tauri-driver
+          key: tools-wb-${{ env.WASM_BINDGEN_VERSION }}-tauri-driver-${{ runner.os }}
+      - name: Instalar wasm-bindgen-cli e tauri-driver
+        if: steps.wbcli.outputs.cache-hit != 'true'
+        run: |
+          cargo install wasm-bindgen-cli --version "$WASM_BINDGEN_VERSION" --locked
+          cargo install tauri-driver --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - run: npm ci
+        working-directory: app/web
+      - run: npm run build
+        working-directory: app/web
+      - name: Clippy do pacote Tauri
+        run: cargo clippy -- -D warnings
+        working-directory: app/desktop/src-tauri
+      - name: Testes do pacote Tauri (gravação segura de arquivos)
+        run: cargo test
+        working-directory: app/desktop/src-tauri
+      - name: Compilar com a interface embutida
+        run: cargo build --features tauri/custom-protocol
+        working-directory: app/desktop/src-tauri
+      - name: Verificação nativa (WebDriver sob Xvfb)
+        run: xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop
+        working-directory: app/desktop
+
+  desktop-windows:
+    name: Tauri (build no Windows)
+    # Repositório público: minutos gratuitos, então roda em todo push e pull request.
+    runs-on: windows-latest
+    env:
+      SIGNING_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            app
+            app/desktop/src-tauri
+      - name: Instalar wasm-bindgen-cli
+        run: cargo install wasm-bindgen-cli --version "$env:WASM_BINDGEN_VERSION" --locked
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - run: npm ci
+        working-directory: app/web
+      - name: Build do aplicativo Windows (instalador NSIS assinado para o atualizador)
+        # A chave de assinatura do atualizador está em segredos do GitHub: disponível em pushes do
+        # próprio repositório, ausente em pull requests de forks (próximo passo).
+        if: env.SIGNING_KEY != ''
+        run: npm --prefix ../web exec -- tauri build
+        working-directory: app/desktop
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+      - name: Build do aplicativo Windows sem empacotar (sem a chave do atualizador)
+        if: env.SIGNING_KEY == ''
+        run: npm --prefix ../web exec -- tauri build --no-bundle
+        working-directory: app/desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: enzitag-optima-windows-nsis
+          path: app/desktop/src-tauri/target/release/bundle/nsis/*.exe
+      - name: Diagnóstico — o executável permanece em execução por 10 s?
+        # Falha (visível no status do passo) se o aplicativo encerrar sozinho ao iniciar.
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath "src-tauri/target/release/optima-desktop.exe" -PassThru
+          Start-Sleep -Seconds 10
+          if ($p.HasExited) { Write-Error "ENCERROU com código $($p.ExitCode)"; exit 1 }
+          "EM EXECUÇÃO após 10 s"
+          Stop-Process -Id $p.Id
+        working-directory: app/desktop
+      - name: Compilar o executável de verificação (depuração remota do WebView2)
+        # O WebView2 recebe os argumentos do navegador pela API do Tauri, que ignora
+        # WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS (diagnóstico da execução 41324447874: o processo de
+        # renderização só trazia os argumentos do framework). A porta é habilitada apenas neste
+        # binário de teste, via TAURI_CONFIG; o instalador publicado é o do passo anterior.
+        shell: pwsh
+        env:
+          TAURI_CONFIG: '{"app":{"windows":[{"title":"EnziTAG Optima","width":1200,"height":800,"minWidth":800,"minHeight":560,"additionalBrowserArgs":"--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --remote-debugging-port=9333"}]}}'
+        run: cargo build --release --features tauri/custom-protocol
+        working-directory: app/desktop/src-tauri
+      - name: Verificação nativa no Windows (WebView2 por CDP)
+        shell: pwsh
+        run: |
+          # Registra o sistema em que a verificação foi feita (a imagem da CI não é um Windows 11 de usuário).
+          (Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber, OSArchitecture | Format-List | Out-String).Trim()
+          node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        working-directory: app/desktop

@@ -1,0 +1,425 @@
+{
+  "title": "Resultados",
+  "table": {
+    "caption": "Resumo descritivo de {{response}}",
+    "group": "Grupo",
+    "overall": "Todas as observações",
+    "n": "n válido",
+    "missing": "Ausentes",
+    "mean": "Média",
+    "variance": "Variância",
+    "sd": "Desvio-padrão",
+    "min": "Mínimo",
+    "max": "Máximo",
+    "undefined": "indefinido"
+  },
+  "undefinedReason": {
+    "noValidObservations": "Não há observação válida.",
+    "fewerThanTwoObservations": "A variância amostral exige ao menos duas observações válidas.",
+    "nonFiniteResult": "O resultado não é representável em 64 bits.",
+    "notEstimable": "O parâmetro não é estimável (coluna combinação das demais).",
+    "noResidualDegreesOfFreedom": "Não há graus de liberdade do erro (é preciso mais de uma observação por grupo em algum grupo).",
+    "constantResponse": "A resposta é constante: não há variação a explicar.",
+    "noModelTerms": "O modelo não tem termos além do intercepto.",
+    "outOfDomain": "Argumento fora do domínio.",
+    "zeroMean": "A média é zero: o coeficiente de variação não existe."
+  },
+  "summary": {
+    "conclusion": "Foram resumidas {{valid}} de {{total}} observações de «{{response}}».",
+    "evidence": "Média geral {{mean}} e desvio-padrão {{sd}}{{unit}}; veja a tabela por grupo.",
+    "evidenceUndefined": "Nem todas as estatísticas gerais puderam ser calculadas; veja os motivos na tabela.",
+    "nextStepGroups": "As médias dos grupos descrevem os dados, mas não mostram se os grupos diferem. Essa decisão exige um teste de comparação (ANOVA e Tukey), ainda não entregue.",
+    "nextStepNoGroups": "Para comparar condições, cadastre um fator e agrupe por ele; o teste de comparação (ANOVA e Tukey) ainda não foi entregue."
+  },
+  "labels": {
+    "conclusion": "Conclusão",
+    "evidence": "Evidência",
+    "nextStep": "Próximo passo"
+  },
+  "stale": "Os dados ou as opções mudaram depois deste cálculo. Calcule novamente para atualizar o resultado.",
+  "facts": {
+    "descriptive": {
+      "no_valid_observations": "Nenhuma observação válida para esta resposta.",
+      "independence_not_assessed": "n conta observações. O aplicativo não presume que elas sejam réplicas independentes: isso depende de como o experimento foi conduzido.",
+      "missing_excluded_one": "{{count}} observação sem valor foi contada como ausente e não entrou em média, variância, mínimo nem máximo.",
+      "missing_excluded_other": "{{count}} observações sem valor foram contadas como ausentes e não entraram em média, variância, mínimo nem máximo.",
+      "missing_excluded_many": "{{count}} observações sem valor foram contadas como ausentes e não entraram em média, variância, mínimo nem máximo.",
+      "excluded_missing_factor_one": "{{count}} observação sem valor em algum fator de agrupamento ficou fora dos grupos (mas conta no resumo geral).",
+      "excluded_missing_factor_other": "{{count}} observações sem valor em algum fator de agrupamento ficaram fora dos grupos (mas contam no resumo geral).",
+      "excluded_missing_factor_many": "{{count}} observações sem valor em algum fator de agrupamento ficaram fora dos grupos (mas contam no resumo geral).",
+      "group_too_small_one": "O grupo «{{group}}» tem {{count}} observação válida; variância e desvio-padrão exigem pelo menos duas.",
+      "group_too_small_other": "O grupo «{{group}}» tem {{count}} observações válidas; variância e desvio-padrão exigem pelo menos duas.",
+      "group_too_small_many": "O grupo «{{group}}» tem {{count}} observações válidas; variância e desvio-padrão exigem pelo menos duas."
+    },
+    "anova": {
+      "significant": "O teste F detectou diferença entre as médias dos grupos (F({{df1}}; {{df2}}) = {{f}}; p = {{p}}; α = {{alpha}}). Isso não diz quais grupos diferem.",
+      "not_significant": "O teste F não detectou diferença entre as médias (F({{df1}}; {{df2}}) = {{f}}; p = {{p}}; α = {{alpha}}). Não detectar diferença não prova que as médias sejam iguais."
+    },
+    "tukey": {
+      "pairs_different": "Tukey: {{count}} de {{total}} pares diferem a α = {{alpha}} (família de todos os pares de médias).",
+      "kramer": "Os grupos têm tamanhos diferentes: foi usada a extensão de Tukey–Kramer."
+    },
+    "letters": {
+      "meaning": "Grupos que compartilham uma letra não tiveram diferença detectada; isso não significa que sejam equivalentes.",
+      "unknown_pairs": "Alguns pares não puderam ser testados e foram tratados como diferentes ao atribuir as letras."
+    },
+    "diagnostics": {
+      "homogeneity_signal": "Brown–Forsythe indica variâncias diferentes entre os grupos (p = {{p}}). Compare os desvios-padrão e o gráfico de resíduos; o aplicativo não troca de método automaticamente.",
+      "homogeneity_not_detected": "Brown–Forsythe não detectou diferença entre as variâncias (p = {{p}}); isso não garante homogeneidade.",
+      "normality_visual": "A normalidade dos resíduos deve ser avaliada no gráfico quantil–quantil; não há selo automático de validade.",
+      "independence_not_assessed": "O aplicativo não verifica independência: cada linha foi tratada como uma observação independente. Repetições de medição da mesma unidade experimental não são réplicas.",
+      "outliers_one": "{{count}} resíduo padronizado ultrapassa 3 em módulo: verifique essa observação nos gráficos.",
+      "outliers_many": "{{count}} resíduos padronizados ultrapassam 3 em módulo: verifique essas observações nos gráficos.",
+      "outliers_other": "{{count}} resíduos padronizados ultrapassam 3 em módulo: verifique essas observações nos gráficos."
+    },
+    "comparison": {
+      "singleton_groups_one": "{{count}} grupo tem só uma observação: não há desvio-padrão nem intervalo para ele, mas ele entra na ANOVA.",
+      "singleton_groups_many": "{{count}} grupos têm só uma observação: não há desvio-padrão nem intervalo para eles, mas entram na ANOVA.",
+      "singleton_groups_other": "{{count}} grupos têm só uma observação: não há desvio-padrão nem intervalo para eles, mas entram na ANOVA.",
+      "excluded_observations_one": "{{count}} observação ficou fora da análise por falta de resposta ou de nível do fator.",
+      "excluded_observations_many": "{{count}} observações ficaram fora da análise por falta de resposta ou de nível do fator.",
+      "excluded_observations_other": "{{count}} observações ficaram fora da análise por falta de resposta ou de nível do fator."
+    },
+    "design": {
+      "saturated": "Não há graus de liberdade do erro (o modelo usa todos os ensaios): erros-padrão, testes t e valores-p não existem.",
+      "no_inference": "Sem erro estimável e sem efeitos suficientes para o método de Lenth: só as magnitudes dos efeitos podem ser comparadas.",
+      "lenth_only": "A indicação de efeitos ativos vem do método de Lenth, que é aproximado; trate-a como pista e não como teste.",
+      "active_effects": "Termos ativos ({{count}}): {{terms}}.",
+      "no_active_effects": "Nenhum termo foi indicado como ativo ao nível {{alpha}}.",
+      "aliased_active": "Atenção: {{terms}} está confundido com outros efeitos neste planejamento; a estimativa é a soma deles.",
+      "curvature_detected": "Curvatura detectada (p = {{p}}): o modelo linear não descreve bem a região; considere um planejamento com termos quadráticos.",
+      "curvature_not_detected": "Curvatura não detectada (p = {{p}}); isso não prova que a resposta seja linear.",
+      "curvature_unavailable": "A curvatura não pôde ser testada com estes dados.",
+      "lack_of_fit_significant": "Falta de ajuste significativa (p = {{p}}): o modelo escolhido deixa variação sistemática de fora.",
+      "lack_of_fit_not_significant": "Falta de ajuste não detectada (p = {{p}}).",
+      "screening_pb": "Plackett–Burman é um desenho de triagem de resolução III: efeitos principais são confundidos parcialmente com interações de dois fatores.",
+      "unexpected_levels": "{{count}} ensaios têm níveis diferentes de baixo, alto ou central; o ajuste usa os valores codificados dessas linhas.",
+      "independence_not_assessed": "O aplicativo não verifica independência: cada linha foi tratada como um ensaio independente.",
+      "not_estimable_one": "{{count}} termo não é estimável (confundido com outro do modelo) e foi omitido.",
+      "not_estimable_many": "{{count}} termos não são estimáveis (confundidos com outros do modelo) e foram omitidos.",
+      "not_estimable_other": "{{count}} termos não são estimáveis (confundidos com outros do modelo) e foram omitidos."
+    },
+    "surface": {
+      "model_significant": "O modelo é significativo ao nível {{alpha}} (p = {{p}}).",
+      "model_not_significant": "O modelo não é significativo ao nível {{alpha}} (p = {{p}}): a superfície não se distingue de uma resposta constante.",
+      "saturated": "Não há graus de liberdade do erro (o modelo usa todos os ensaios): erros-padrão, testes e valores-p não existem.",
+      "fit_measures": "R² = {{r2}}; R² ajustado = {{adjusted}}.",
+      "lack_of_fit_significant": "Há falta de ajuste (p = {{p}}): o modelo de segunda ordem não descreve bem a região estudada; considere uma região menor ou termos adicionais.",
+      "lack_of_fit_not_significant": "Falta de ajuste não detectada (p = {{p}}).",
+      "lack_of_fit_unavailable": "A falta de ajuste não pôde ser avaliada: é preciso repetir ensaios nas mesmas condições (por exemplo, o ponto central).",
+      "not_estimable": "{{count}} termo(s) não estimável(is) com estes ensaios; o planejamento não separa esses termos.",
+      "extrapolation_note": "Predições fora da região ensaiada (hachuradas nos gráficos) são extrapolação e não são confiáveis.",
+      "independence_not_assessed": "A independência dos ensaios não é verificável pelos dados; depende de como o experimento foi conduzido."
+    },
+    "optimization": {
+      "no_global_claim": "A busca é local, com vários inícios: ela não prova que o melhor candidato seja o ótimo global.",
+      "infeasible": "Nenhum candidato satisfaz os limites obrigatórios na região pesquisada.",
+      "zero_desirability": "A desejabilidade global é zero em todos os pontos viáveis encontrados: ao menos um objetivo não é atingível junto com os demais.",
+      "single_start": "A melhor solução veio de um só início: aumente o número de inícios para verificar se há soluções melhores.",
+      "boundary": "A melhor solução está no limite do domínio em: {{factors}}. O ótimo pode estar além, fora da região experimental.",
+      "extrapolated": "{{count}} candidato(s) fora da região experimental (extrapolação): trate-os com cautela.",
+      "compromise": "Com várias respostas há compromissos: veja quanto cada resposta cede em relação ao melhor que alcançaria sozinha.",
+      "confirm_with_runs": "Previsões são do modelo: confirme os candidatos com ensaios novos antes de adotá-los."
+    }
+  },
+  "comparison": {
+    "title": "Comparação de tratamentos",
+    "summary": {
+      "conclusion": "Foram comparados {{groups}} grupos de «{{factor}}» com {{n}} observações de «{{response}}».",
+      "evidenceDefined": "ANOVA: F({{df1}}; {{df2}}) = {{f}}, p = {{p}}. Tukey: {{different}} de {{total}} pares diferem (α = {{alpha}}).",
+      "evidenceUndefined": "A ANOVA não pôde ser calculada com estes dados; veja os avisos abaixo.",
+      "nextStepWithLetters": "Leia as letras no gráfico: grupos sem letra em comum diferem; grupos com letra em comum não tiveram diferença detectada. Confira a tabela de pares e os diagnósticos antes de concluir.",
+      "nextStepNoLetters": "Faltam graus de liberdade do erro (réplicas dentro dos grupos) para comparar os pares. Acrescente réplicas independentes."
+    },
+    "groups": {
+      "caption": "Médias por grupo de «{{factor}}»",
+      "group": "Grupo",
+      "n": "n",
+      "mean": "Média",
+      "sd": "Desvio-padrão",
+      "se": "Erro-padrão",
+      "ci": "IC {{level}}% (variância comum)",
+      "letters": "Letras"
+    },
+    "anova": {
+      "caption": "ANOVA de um fator para «{{response}}»",
+      "source": "Fonte",
+      "between": "Entre grupos",
+      "within": "Dentro dos grupos (erro)",
+      "total": "Total",
+      "df": "gl",
+      "ss": "Soma de quadrados",
+      "ms": "Quadrado médio",
+      "f": "F",
+      "p": "Valor-p"
+    },
+    "effects": {
+      "eta": "η² (proporção da variação total explicada pelo fator)",
+      "omega": "ω² (estimativa menos viesada)",
+      "cv": "Coeficiente de variação"
+    },
+    "pairs": {
+      "caption": "Comparações de pares ({{variant}}, α = {{alpha}})",
+      "tukey": "Tukey",
+      "tukeyKramer": "Tukey–Kramer",
+      "pair": "Par",
+      "difference": "Diferença",
+      "se": "Erro-padrão",
+      "q": "q",
+      "pAdjusted": "p ajustado",
+      "ciLower": "IC simultâneo inferior",
+      "ciUpper": "IC simultâneo superior",
+      "result": "Resultado",
+      "different": "diferença detectada",
+      "notDifferent": "diferença não detectada",
+      "unknown": "não testado",
+      "show": "Tabela de pares"
+    },
+    "diagnostics": {
+      "title": "Diagnósticos",
+      "bf": "Brown–Forsythe (homogeneidade das variâncias): F({{df1}}; {{df2}}) = {{f}}, p = {{p}}",
+      "bfUndefined": "Brown–Forsythe não pôde ser calculado.",
+      "ratio": "Razão entre o maior e o menor desvio-padrão dos grupos: {{ratio}}",
+      "outliers": "Pontos distantes no boxplot: {{count}}"
+    },
+    "charts": {
+      "uncertainty": "Barras de incerteza",
+      "sd": "Desvio-padrão do grupo",
+      "se": "Erro-padrão da média do grupo",
+      "ci": "Intervalo de confiança (variância comum)",
+      "meansTitle": "Médias de «{{response}}» por «{{factor}}»",
+      "meansDescription": "Gráfico de barras com a média de cada grupo, barras de incerteza e letras de comparação.",
+      "yLabel": "{{response}}",
+      "uncertaintySd": "Barras: média ± desvio-padrão do grupo",
+      "uncertaintySe": "Barras: média ± erro-padrão da média do grupo",
+      "uncertaintyCi": "Barras: média ± IC {{level}}% (variância comum, t de Student)",
+      "lettersLegend": "Letras em comum = diferença não detectada (Tukey, α = {{alpha}}); não indica equivalência.",
+      "boxTitle": "Distribuição de «{{response}}» por «{{factor}}»",
+      "boxDescription": "Boxplot de cada grupo com mediana, quartis, bigodes e pontos distantes.",
+      "boxLegend": "Caixa: 1º a 3º quartil; traço: mediana; bigodes: até 1,5 × amplitude interquartil; círculos: pontos distantes.",
+      "residualsTitle": "Resíduos × valores ajustados",
+      "residualsDescription": "Resíduos padronizados contra a média do grupo; busca-se dispersão sem padrão.",
+      "residualsX": "Valor ajustado (média do grupo)",
+      "residualsY": "Resíduo padronizado",
+      "residualsLegend": "Funil, curvatura ou pontos isolados sugerem variância desigual ou problemas de modelo.",
+      "qqTitle": "Gráfico quantil–quantil normal dos resíduos",
+      "qqDescription": "Resíduos padronizados ordenados contra os quantis teóricos da normal.",
+      "qqX": "Quantil teórico da normal",
+      "qqY": "Resíduo padronizado",
+      "qqLegend": "Pontos próximos da reta (quartis) sugerem resíduos aproximadamente normais; use também o conhecimento do experimento.",
+      "tableHint": "A tabela de pares abaixo traz todas as comparações do gráfico."
+    },
+    "export": {
+      "title": "Exportar",
+      "figure": "Figura",
+      "tables": "Tabelas",
+      "csvAnova": "ANOVA (CSV)",
+      "csvGroups": "Grupos (CSV)",
+      "csvPairs": "Pares (CSV)",
+      "svg": "SVG",
+      "png": "PNG",
+      "done": "Arquivo preparado: {{name}}",
+      "failed": "Não foi possível exportar o arquivo.",
+      "cancelled": "Exportação cancelada.",
+      "sheetGroups": "Grupos",
+      "sheetPairs": "Pares"
+    },
+    "warnings": "Avisos"
+  },
+  "design": {
+    "title": "Análise do planejamento",
+    "summary": {
+      "conclusion": "Foram analisados {{n}} ensaios de «{{response}}» com {{factors}} fatores (modelo com {{terms}} termos).",
+      "evidenceP": "Termos ativos (p < {{alpha}}): {{active}}.",
+      "evidenceLenth": "Sem graus de liberdade do erro: pelo método de Lenth (indicativo), termos ativos: {{active}}.",
+      "evidenceNone": "Nenhum termo ativo ao nível {{alpha}}.",
+      "evidenceUnavailable": "Não há inferência disponível com estes dados; veja os avisos.",
+      "nextStep": "Triagem indica candidatos, não os valores ótimos: confirme os fatores ativos em um novo experimento (por exemplo, com superfície de resposta) e confira o confundimento antes de concluir."
+    },
+    "effects": {
+      "caption": "Efeitos e coeficientes (escala codificada) de «{{response}}»",
+      "term": "Termo",
+      "coefficient": "Coeficiente",
+      "effect": "Efeito (2 × coeficiente)",
+      "se": "Erro-padrão do efeito",
+      "t": "t",
+      "p": "Valor-p",
+      "ci": "IC {{level}}% do efeito",
+      "lenth": "Lenth",
+      "aliases": "Confundido com",
+      "intercept": "Intercepto",
+      "active": "ativo",
+      "simultaneous": "ativo (simultâneo)",
+      "inactive": "—",
+      "help": "O coeficiente é a mudança por unidade codificada; o efeito é a diferença entre as médias dos níveis alto e baixo. Sem graus de liberdade do erro não há erro-padrão nem valor-p."
+    },
+    "anova": {
+      "caption": "ANOVA da regressão",
+      "source": "Fonte",
+      "model": "Modelo",
+      "residual": "Resíduo",
+      "total": "Total",
+      "df": "gl",
+      "ss": "Soma de quadrados",
+      "ms": "Quadrado médio",
+      "f": "F",
+      "p": "Valor-p",
+      "r2": "R²",
+      "r2adj": "R² ajustado",
+      "sigma": "Desvio-padrão residual"
+    },
+    "curvature": {
+      "title": "Curvatura",
+      "text": "Diferença entre os pontos centrais e o previsto pelo modelo linear: {{difference}} (t = {{t}}, p = {{p}}; {{points}} pontos centrais).",
+      "unavailable": "Curvatura não testada: sem graus de liberdade do erro ou sem pontos centrais."
+    },
+    "lackOfFit": {
+      "title": "Falta de ajuste e erro puro",
+      "text": "Erro puro: SQ {{ssPure}} com {{dfPure}} gl; falta de ajuste: SQ {{ssLof}} com {{dfLof}} gl; F = {{f}}, p = {{p}}.",
+      "noTest": "Falta de ajuste: SQ {{ssLof}} com {{dfLof}} gl; sem teste F disponível."
+    },
+    "lenth": {
+      "title": "Método de Lenth",
+      "text": "Erro-padrão pseudo (PSE) {{pse}}, {{df}} gl; margem de erro {{me}}, margem simultânea {{sme}}. Efeitos com |efeito| acima da margem são indicados como ativos.",
+      "help": "Indicativo, não um teste exato: usa a hipótese de que a maioria dos efeitos é nula."
+    },
+    "charts": {
+      "paretoTitle": "Pareto dos efeitos de «{{response}}»",
+      "paretoDescription": "Barras horizontais em ordem decrescente com uma linha de referência.",
+      "paretoT": "|t| de cada termo",
+      "paretoEffect": "|efeito| de cada termo",
+      "referenceT": "t crítico (α = {{alpha}})",
+      "referenceLenth": "margem de Lenth",
+      "paretoLegendT": "Barras acima da linha: termos com p < α. Termos não estimáveis não aparecem.",
+      "paretoLegendLenth": "Sem graus de liberdade do erro: a linha é a margem de erro de Lenth (indicativa).",
+      "paretoLegendEffect": "Sem erro estimável: só a magnitude dos efeitos, sem linha de referência.",
+      "mainTitle": "Efeitos principais sobre «{{response}}»",
+      "mainDescription": "Média da resposta nos níveis baixo e alto de cada fator.",
+      "interactionTitle": "Interações de dois fatores sobre «{{response}}»",
+      "interactionDescription": "Média da resposta nas combinações de níveis de dois fatores.",
+      "low": "baixo",
+      "high": "alto",
+      "center": "central",
+      "mainLegend": "Linha: média da resposta nos níveis baixo e alto; quadrado: média dos pontos centrais. Em planejamentos fracionários as médias refletem o confundimento.",
+      "interactionLegend": "Linhas não paralelas sugerem interação. Em planejamentos fracionários as médias refletem o confundimento.",
+      "opTitle": "Observado × predito de «{{response}}»",
+      "opDescription": "Valores observados contra os preditos pelo modelo, com a reta y = x.",
+      "opX": "Predito",
+      "opY": "Observado",
+      "opLegend": "Pontos próximos da reta indicam bom ajuste; afastamentos sistemáticos indicam falta de ajuste.",
+      "atLevel": "{{factor}} = {{level}}"
+    },
+    "export": {
+      "effectsCsv": "Efeitos (CSV)"
+    }
+  },
+  "surface": {
+    "title": "Resultados: superfície de resposta",
+    "summary": {
+      "conclusion": "Modelo de segunda ordem ajustado a {{n}} ensaios de «{{response}}» com {{factors}} fatores ({{terms}} termos).",
+      "evidence": "ANOVA da regressão: F = {{f}}, p = {{p}}; R² = {{r2}}; R² ajustado = {{adjusted}}.",
+      "evidenceUnavailable": "Sem graus de liberdade do erro não há testes; veja os avisos.",
+      "nextStep": "O modelo descreve apenas a região estudada. Confira a falta de ajuste e os resíduos antes de usar a equação e confirme qualquer ponto promissor com ensaios novos."
+    },
+    "terms": {
+      "caption": "Coeficientes do modelo (escala codificada) de «{{response}}»",
+      "term": "Termo",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "t": "t",
+      "p": "Valor-p",
+      "ci": "IC {{level}}%",
+      "intercept": "Intercepto",
+      "help": "Os coeficientes estão na escala codificada (−1 e +1 nos níveis informados): comparam-se entre si sem depender das unidades."
+    },
+    "lackOfFit": {
+      "unavailable": "Falta de ajuste indisponível: não há ensaios repetidos nas mesmas condições (erro puro) ou graus de liberdade suficientes. Repita o ponto central para testá-la."
+    },
+    "equation": {
+      "title": "Equação do modelo",
+      "coded": "Escala codificada",
+      "real": "Unidades reais",
+      "realUnavailable": "Indisponível: há termos não estimáveis.",
+      "help": "As duas equações dão a mesma predição; a codificada é a ajustada e a real é a mesma equação reescrita nos valores dos fatores.",
+      "prefix": "ŷ"
+    },
+    "region": {
+      "title": "Região experimental",
+      "factor": "Fator",
+      "center": "Centro",
+      "halfRange": "Meia-amplitude",
+      "min": "Menor valor ensaiado",
+      "max": "Maior valor ensaiado",
+      "help": "Predições fora da região, ou em combinações de níveis nunca ensaiadas, são extrapolação."
+    },
+    "view": {
+      "title": "Superfície de resposta",
+      "intro": "Escolha dois fatores para os eixos e fixe os demais. As predições vêm do modelo; a região hachurada é extrapolação.",
+      "xAxis": "Eixo horizontal",
+      "yAxis": "Eixo vertical",
+      "fixed": "{{name}} fixado em",
+      "steps": "Resolução da malha",
+      "azimuth": "Rotação (graus)",
+      "elevation": "Elevação (graus)",
+      "sameAxis": "Escolha fatores diferentes nos dois eixos.",
+      "loading": "Calculando a malha…",
+      "failed": "Não foi possível calcular a malha.",
+      "contourTitle": "Contorno de «{{response}}»",
+      "contourDescription": "Curvas de nível da resposta predita pelo modelo em função de dois fatores.",
+      "surfaceTitle": "Superfície de «{{response}}»",
+      "surfaceDescription": "Superfície da resposta predita pelo modelo em função de dois fatores, em projeção ortogonal.",
+      "readingContour": "Curvas: valores da resposta predita; cor mais intensa = resposta maior.",
+      "readingSurface": "Cor mais intensa = resposta predita maior.",
+      "extrapolated": "Hachurado: extrapolação (fora da região ensaiada).",
+      "points": "Círculos: ensaios, projetados nos dois eixos.",
+      "needTwo": "A superfície exige ao menos dois fatores quantitativos.",
+      "gridCsv": "Malha de predições (CSV)"
+    },
+    "export": {
+      "coefficientsCsv": "Coeficientes (CSV)"
+    }
+  },
+  "export": {
+    "provenanceSheet": "Proveniência",
+    "xlsx": "XLSX",
+    "title": "Exportação e aparência das figuras",
+    "intro": "Escolha o idioma dos arquivos, o formato das tabelas CSV e o estilo das figuras. As tabelas e figuras também podem ser baixadas nos botões ao lado de cada uma.",
+    "language": "Idioma dos arquivos exportados",
+    "languageUi": "Mesmo da interface",
+    "csv": "Formato do CSV",
+    "csvTechnical": "Técnico (vírgula e ponto decimal)",
+    "csvExcel": "Para Excel (idioma da exportação)",
+    "palette": "Paleta das figuras",
+    "paletteDefault": "Padrão",
+    "paletteColorblind": "Acessível a daltonismo",
+    "fontScale": "Tamanho do texto das figuras",
+    "fontSmall": "Menor",
+    "fontNormal": "Normal",
+    "fontLarge": "Maior",
+    "digits": "Algarismos significativos nas figuras",
+    "deviceNote": "Estas preferências valem para este dispositivo e são registradas nos metadados dos arquivos exportados; não são salvas no projeto.",
+    "report": {
+      "button": "Exportar relatório (HTML)",
+      "building": "Montando relatório…",
+      "title": "Relatório",
+      "subtitle": "Relatório gerado pelo EnziTAG Optima: método, configuração, tabelas, figuras e interpretação.",
+      "provenance": "Proveniência",
+      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente."
+    }
+  },
+  "figure": {
+    "customize": "Personalizar figura",
+    "title": "Título",
+    "xLabel": "Rótulo do eixo horizontal",
+    "yLabel": "Rótulo do eixo vertical",
+    "showLetters": "Mostrar letras de comparação",
+    "fontScale": "Tamanho da fonte desta figura",
+    "fontDevice": "Padrão do dispositivo",
+    "fontSmall": "Menor (0,85)",
+    "fontNormal": "Normal (1)",
+    "fontLarge": "Maior (1,2)",
+    "reset": "Restaurar padrão",
+    "help": "Só muda a aparência. A configuração fica salva no projeto, vale para a tela e para os arquivos exportados e não altera nenhum resultado.",
+    "tooLong": "Use no máximo 200 caracteres."
+  }
+}

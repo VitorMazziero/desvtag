@@ -1,0 +1,49 @@
+{
+ "n": 18009,
+ "groups": 9,
+ "exactOnBinary64Inputs": {
+  "n": 18009,
+  "k": 9,
+  "dfBetween": 8,
+  "dfWithin": 18000,
+  "ssBetween": "160.0800000185891985913696999984381563149",
+  "ssWithin": "180.0000000093132257613471613253259914169",
+  "ssTotal": "340.0800000279024243527168613237641477317",
+  "f": "2001.000000128832956005146137665171724476",
+  "rSquared": "0.4707127734811078894302973995252544763952",
+  "residualSd": "0.1000000000025870071558963040046894819747",
+  "grandMean": "1000000.399999999997425921419763149363361"
+ },
+ "certifiedNist": {
+  "dfBetween": 8,
+  "ssBetween": "1.60080000000000E+02",
+  "f": "2.00100000000000E+03",
+  "dfWithin": 18000,
+  "ssWithin": "1.80000000000000E+02",
+  "rSquared": "4.70712773465067E-01",
+  "residualSd": "1.00000000000000E-01"
+ },
+ "referenceVsCertifiedLre": {
+  "ssBetween": 9.935076408548468,
+  "ssWithin": 10.28617237431429,
+  "f": 10.191220117068848,
+  "rSquared": 10.467527538426618,
+  "residualSd": 10.58720236998389
+ },
+ "tolerances": {
+  "minLre": {
+   "ssBetween": 13,
+   "ssWithin": 13,
+   "f": 13,
+   "rSquared": 13,
+   "residualSd": 13
+  },
+  "note": "LRE = -log10(erro relativo) contra a refer\u00eancia exata sobre os bin\u00e1rios de 64 bits"
+ },
+ "reference": {
+  "software": "Python fractions (exato) + mpmath",
+  "python": "3.13.18",
+  "mpmath": "1.4.1",
+  "source": "https://www.itl.nist.gov/div898/strd/anova/SmLs06.dat"
+ }
+}

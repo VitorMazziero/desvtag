@@ -1,0 +1,418 @@
+{
+  "title": "Results",
+  "table": {
+    "caption": "Descriptive summary of {{response}}",
+    "group": "Group",
+    "overall": "All observations",
+    "n": "Valid n",
+    "missing": "Missing",
+    "mean": "Mean",
+    "variance": "Variance",
+    "sd": "Standard deviation",
+    "min": "Minimum",
+    "max": "Maximum",
+    "undefined": "undefined"
+  },
+  "undefinedReason": {
+    "noValidObservations": "There is no valid observation.",
+    "fewerThanTwoObservations": "The sample variance needs at least two valid observations.",
+    "nonFiniteResult": "The result cannot be represented in 64 bits.",
+    "notEstimable": "The parameter is not estimable (column is a combination of the others).",
+    "noResidualDegreesOfFreedom": "There are no error degrees of freedom (at least one group needs more than one observation).",
+    "constantResponse": "The response is constant: there is no variation to explain.",
+    "noModelTerms": "The model has no terms besides the intercept.",
+    "outOfDomain": "Argument outside the domain.",
+    "zeroMean": "The mean is zero: the coefficient of variation does not exist."
+  },
+  "summary": {
+    "conclusion": "{{valid}} of {{total}} observations of “{{response}}” were summarized.",
+    "evidence": "Overall mean {{mean}} and standard deviation {{sd}}{{unit}}; see the table by group.",
+    "evidenceUndefined": "Not every overall statistic could be calculated; see the reasons in the table.",
+    "nextStepGroups": "Group means describe the data but do not show whether the groups differ. That decision needs a comparison test (ANOVA and Tukey), which has not been delivered yet.",
+    "nextStepNoGroups": "To compare conditions, add a factor and group by it; the comparison test (ANOVA and Tukey) has not been delivered yet."
+  },
+  "labels": {
+    "conclusion": "Conclusion",
+    "evidence": "Evidence",
+    "nextStep": "Next step"
+  },
+  "stale": "The data or options changed after this calculation. Calculate again to update the result.",
+  "facts": {
+    "descriptive": {
+      "no_valid_observations": "No valid observation for this response.",
+      "independence_not_assessed": "n counts observations. The app does not assume they are independent replicates: that depends on how the experiment was run.",
+      "missing_excluded_one": "{{count}} observation without a value was counted as missing and did not enter the mean, variance, minimum or maximum.",
+      "missing_excluded_other": "{{count}} observations without a value were counted as missing and did not enter the mean, variance, minimum or maximum.",
+      "excluded_missing_factor_one": "{{count}} observation with no value in some grouping factor is outside the groups (but counts in the overall summary).",
+      "excluded_missing_factor_other": "{{count}} observations with no value in some grouping factor are outside the groups (but count in the overall summary).",
+      "group_too_small_one": "Group “{{group}}” has {{count}} valid observation; variance and standard deviation need at least two.",
+      "group_too_small_other": "Group “{{group}}” has {{count}} valid observations; variance and standard deviation need at least two."
+    },
+    "anova": {
+      "significant": "The F test detected a difference among group means (F({{df1}}, {{df2}}) = {{f}}; p = {{p}}; α = {{alpha}}). It does not say which groups differ.",
+      "not_significant": "The F test did not detect a difference among means (F({{df1}}, {{df2}}) = {{f}}; p = {{p}}; α = {{alpha}}). Failing to detect a difference does not prove the means are equal."
+    },
+    "tukey": {
+      "pairs_different": "Tukey: {{count}} of {{total}} pairs differ at α = {{alpha}} (family of all pairwise mean comparisons).",
+      "kramer": "Group sizes differ: the Tukey–Kramer extension was used."
+    },
+    "letters": {
+      "meaning": "Groups sharing a letter showed no detected difference; this does not mean they are equivalent.",
+      "unknown_pairs": "Some pairs could not be tested and were treated as different when assigning letters."
+    },
+    "diagnostics": {
+      "homogeneity_signal": "Brown–Forsythe indicates unequal variances among groups (p = {{p}}). Compare the standard deviations and the residual plot; the app does not switch methods automatically.",
+      "homogeneity_not_detected": "Brown–Forsythe did not detect a difference in variances (p = {{p}}); this does not guarantee homogeneity.",
+      "normality_visual": "Normality of the residuals should be judged on the quantile–quantile plot; there is no automatic validity badge.",
+      "independence_not_assessed": "The app does not check independence: each row was treated as an independent observation. Repeated measurements of the same experimental unit are not replicates.",
+      "outliers_one": "{{count}} standardised residual exceeds 3 in absolute value: check that observation in the plots.",
+      "outliers_other": "{{count}} standardised residuals exceed 3 in absolute value: check those observations in the plots."
+    },
+    "comparison": {
+      "singleton_groups_one": "{{count}} group has a single observation: it has no standard deviation or interval, but it enters the ANOVA.",
+      "singleton_groups_other": "{{count}} groups have a single observation: they have no standard deviation or interval, but they enter the ANOVA.",
+      "excluded_observations_one": "{{count}} observation was left out for a missing response or factor level.",
+      "excluded_observations_other": "{{count}} observations were left out for a missing response or factor level."
+    },
+    "design": {
+      "saturated": "There are no error degrees of freedom (the model uses every run): standard errors, t tests and p-values do not exist.",
+      "no_inference": "No estimable error and too few effects for Lenth's method: only effect magnitudes can be compared.",
+      "lenth_only": "Active effects come from Lenth's method, which is approximate; treat it as a clue, not a test.",
+      "active_effects": "Active terms ({{count}}): {{terms}}.",
+      "no_active_effects": "No term was flagged as active at level {{alpha}}.",
+      "aliased_active": "Note: {{terms}} is aliased with other effects in this design; the estimate is their sum.",
+      "curvature_detected": "Curvature detected (p = {{p}}): the linear model does not describe the region well; consider a design with quadratic terms.",
+      "curvature_not_detected": "Curvature not detected (p = {{p}}); this does not prove the response is linear.",
+      "curvature_unavailable": "Curvature could not be tested with these data.",
+      "lack_of_fit_significant": "Significant lack of fit (p = {{p}}): the chosen model leaves systematic variation out.",
+      "lack_of_fit_not_significant": "Lack of fit not detected (p = {{p}}).",
+      "screening_pb": "Plackett–Burman is a resolution III screening design: main effects are partially aliased with two-factor interactions.",
+      "unexpected_levels": "{{count}} runs have levels other than low, high or centre; the fit uses the coded values of those rows.",
+      "independence_not_assessed": "The app does not check independence: each row was treated as an independent run.",
+      "not_estimable_one": "{{count}} term is not estimable (aliased with another in the model) and was left out.",
+      "not_estimable_other": "{{count}} terms are not estimable (aliased with others in the model) and were left out."
+    },
+    "surface": {
+      "model_significant": "The model is significant at the {{alpha}} level (p = {{p}}).",
+      "model_not_significant": "The model is not significant at the {{alpha}} level (p = {{p}}): the surface cannot be told apart from a constant response.",
+      "saturated": "There are no error degrees of freedom (the model uses every run): standard errors, tests and p-values do not exist.",
+      "fit_measures": "R² = {{r2}}; adjusted R² = {{adjusted}}.",
+      "lack_of_fit_significant": "There is lack of fit (p = {{p}}): the second-order model does not describe the studied region well; consider a smaller region or additional terms.",
+      "lack_of_fit_not_significant": "No lack of fit detected (p = {{p}}).",
+      "lack_of_fit_unavailable": "Lack of fit could not be assessed: runs must be repeated at the same conditions (for example, the centre point).",
+      "not_estimable": "{{count}} term(s) not estimable with these runs; the design cannot separate them.",
+      "extrapolation_note": "Predictions outside the region run (hatched in the charts) are extrapolation and are not reliable.",
+      "independence_not_assessed": "Independence of the runs cannot be checked from the data; it depends on how the experiment was run."
+    },
+    "optimization": {
+      "no_global_claim": "The search is local with many starts: it does not prove that the best candidate is the global optimum.",
+      "infeasible": "No candidate satisfies the mandatory limits in the searched region.",
+      "zero_desirability": "Global desirability is zero at every feasible point found: at least one goal cannot be met together with the others.",
+      "single_start": "The best solution came from a single start: increase the number of starts to check whether better solutions exist.",
+      "boundary": "The best solution is at the domain limit for: {{factors}}. The optimum may lie beyond, outside the experimental region.",
+      "extrapolated": "{{count}} candidate(s) outside the experimental region (extrapolation): treat them with caution.",
+      "compromise": "With several responses there are trade-offs: see how much each response gives up relative to the best it would reach alone.",
+      "confirm_with_runs": "Predictions come from the model: confirm candidates with new runs before adopting them."
+    }
+  },
+  "comparison": {
+    "title": "Treatment comparison",
+    "summary": {
+      "conclusion": "Compared {{groups}} groups of “{{factor}}” using {{n}} observations of “{{response}}”.",
+      "evidenceDefined": "ANOVA: F({{df1}}, {{df2}}) = {{f}}, p = {{p}}. Tukey: {{different}} of {{total}} pairs differ (α = {{alpha}}).",
+      "evidenceUndefined": "ANOVA could not be computed with these data; see the warnings below.",
+      "nextStepWithLetters": "Read the letters on the chart: groups with no letter in common differ; groups sharing a letter showed no detected difference. Check the pairs table and the diagnostics before concluding.",
+      "nextStepNoLetters": "There are no error degrees of freedom (replicates within groups) to compare pairs. Add independent replicates."
+    },
+    "groups": {
+      "caption": "Means by group of “{{factor}}”",
+      "group": "Group",
+      "n": "n",
+      "mean": "Mean",
+      "sd": "Standard deviation",
+      "se": "Standard error",
+      "ci": "{{level}}% CI (pooled variance)",
+      "letters": "Letters"
+    },
+    "anova": {
+      "caption": "One-way ANOVA for “{{response}}”",
+      "source": "Source",
+      "between": "Between groups",
+      "within": "Within groups (error)",
+      "total": "Total",
+      "df": "df",
+      "ss": "Sum of squares",
+      "ms": "Mean square",
+      "f": "F",
+      "p": "p-value"
+    },
+    "effects": {
+      "eta": "η² (share of total variation explained by the factor)",
+      "omega": "ω² (less biased estimate)",
+      "cv": "Coefficient of variation"
+    },
+    "pairs": {
+      "caption": "Pairwise comparisons ({{variant}}, α = {{alpha}})",
+      "tukey": "Tukey",
+      "tukeyKramer": "Tukey–Kramer",
+      "pair": "Pair",
+      "difference": "Difference",
+      "se": "Standard error",
+      "q": "q",
+      "pAdjusted": "Adjusted p",
+      "ciLower": "Simultaneous CI lower",
+      "ciUpper": "Simultaneous CI upper",
+      "result": "Result",
+      "different": "difference detected",
+      "notDifferent": "difference not detected",
+      "unknown": "not tested",
+      "show": "Pairs table"
+    },
+    "diagnostics": {
+      "title": "Diagnostics",
+      "bf": "Brown–Forsythe (homogeneity of variances): F({{df1}}, {{df2}}) = {{f}}, p = {{p}}",
+      "bfUndefined": "Brown–Forsythe could not be computed.",
+      "ratio": "Ratio of the largest to the smallest group standard deviation: {{ratio}}",
+      "outliers": "Far points in the boxplot: {{count}}"
+    },
+    "charts": {
+      "uncertainty": "Uncertainty bars",
+      "sd": "Group standard deviation",
+      "se": "Standard error of the group mean",
+      "ci": "Confidence interval (pooled variance)",
+      "meansTitle": "Means of “{{response}}” by “{{factor}}”",
+      "meansDescription": "Bar chart with each group's mean, uncertainty bars and comparison letters.",
+      "yLabel": "{{response}}",
+      "uncertaintySd": "Bars: mean ± group standard deviation",
+      "uncertaintySe": "Bars: mean ± standard error of the group mean",
+      "uncertaintyCi": "Bars: mean ± {{level}}% CI (pooled variance, Student t)",
+      "lettersLegend": "Shared letters = difference not detected (Tukey, α = {{alpha}}); not evidence of equivalence.",
+      "boxTitle": "Distribution of “{{response}}” by “{{factor}}”",
+      "boxDescription": "Boxplot of each group with median, quartiles, whiskers and far points.",
+      "boxLegend": "Box: 1st to 3rd quartile; bar: median; whiskers: up to 1.5 × interquartile range; circles: far points.",
+      "residualsTitle": "Residuals vs fitted values",
+      "residualsDescription": "Standardised residuals against the group mean; look for scatter with no pattern.",
+      "residualsX": "Fitted value (group mean)",
+      "residualsY": "Standardised residual",
+      "residualsLegend": "A funnel, curvature or isolated points suggest unequal variance or model problems.",
+      "qqTitle": "Normal quantile–quantile plot of residuals",
+      "qqDescription": "Ordered standardised residuals against theoretical normal quantiles.",
+      "qqX": "Theoretical normal quantile",
+      "qqY": "Standardised residual",
+      "qqLegend": "Points near the (quartile) line suggest roughly normal residuals; also use knowledge of the experiment.",
+      "tableHint": "The pairs table below lists every comparison in the chart."
+    },
+    "export": {
+      "title": "Export",
+      "figure": "Figure",
+      "tables": "Tables",
+      "csvAnova": "ANOVA (CSV)",
+      "csvGroups": "Groups (CSV)",
+      "csvPairs": "Pairs (CSV)",
+      "svg": "SVG",
+      "png": "PNG",
+      "done": "File prepared: {{name}}",
+      "failed": "The file could not be exported.",
+      "cancelled": "Export cancelled.",
+      "sheetGroups": "Groups",
+      "sheetPairs": "Pairs"
+    },
+    "warnings": "Warnings"
+  },
+  "design": {
+    "title": "Design analysis",
+    "summary": {
+      "conclusion": "Analysed {{n}} runs of “{{response}}” with {{factors}} factors (model with {{terms}} terms).",
+      "evidenceP": "Active terms (p < {{alpha}}): {{active}}.",
+      "evidenceLenth": "No error degrees of freedom: by Lenth's method (indicative), active terms: {{active}}.",
+      "evidenceNone": "No active terms at level {{alpha}}.",
+      "evidenceUnavailable": "No inference is available with these data; see the warnings.",
+      "nextStep": "Screening points to candidates, not optimal values: confirm the active factors in a new experiment (for example, response surface) and check the aliasing before concluding."
+    },
+    "effects": {
+      "caption": "Effects and coefficients (coded scale) for “{{response}}”",
+      "term": "Term",
+      "coefficient": "Coefficient",
+      "effect": "Effect (2 × coefficient)",
+      "se": "Effect standard error",
+      "t": "t",
+      "p": "p-value",
+      "ci": "{{level}}% CI of the effect",
+      "lenth": "Lenth",
+      "aliases": "Aliased with",
+      "intercept": "Intercept",
+      "active": "active",
+      "simultaneous": "active (simultaneous)",
+      "inactive": "—",
+      "help": "The coefficient is the change per coded unit; the effect is the difference between the high and low level means. Without error degrees of freedom there is no standard error or p-value."
+    },
+    "anova": {
+      "caption": "Regression ANOVA",
+      "source": "Source",
+      "model": "Model",
+      "residual": "Residual",
+      "total": "Total",
+      "df": "df",
+      "ss": "Sum of squares",
+      "ms": "Mean square",
+      "f": "F",
+      "p": "p-value",
+      "r2": "R²",
+      "r2adj": "Adjusted R²",
+      "sigma": "Residual standard deviation"
+    },
+    "curvature": {
+      "title": "Curvature",
+      "text": "Difference between the centre points and the linear model's prediction: {{difference}} (t = {{t}}, p = {{p}}; {{points}} centre points).",
+      "unavailable": "Curvature not tested: no error degrees of freedom or no centre points."
+    },
+    "lackOfFit": {
+      "title": "Lack of fit and pure error",
+      "text": "Pure error: SS {{ssPure}} with {{dfPure}} df; lack of fit: SS {{ssLof}} with {{dfLof}} df; F = {{f}}, p = {{p}}.",
+      "noTest": "Lack of fit: SS {{ssLof}} with {{dfLof}} df; no F test available."
+    },
+    "lenth": {
+      "title": "Lenth's method",
+      "text": "Pseudo standard error (PSE) {{pse}}, {{df}} df; margin of error {{me}}, simultaneous margin {{sme}}. Effects with |effect| above the margin are flagged as active.",
+      "help": "Indicative, not an exact test: it assumes most effects are zero."
+    },
+    "charts": {
+      "paretoTitle": "Pareto of the effects on “{{response}}”",
+      "paretoDescription": "Horizontal bars in decreasing order with a reference line.",
+      "paretoT": "|t| of each term",
+      "paretoEffect": "|effect| of each term",
+      "referenceT": "critical t (α = {{alpha}})",
+      "referenceLenth": "Lenth margin",
+      "paretoLegendT": "Bars beyond the line: terms with p < α. Non-estimable terms are not shown.",
+      "paretoLegendLenth": "No error degrees of freedom: the line is Lenth's margin of error (indicative).",
+      "paretoLegendEffect": "No estimable error: only the effect magnitudes, with no reference line.",
+      "mainTitle": "Main effects on “{{response}}”",
+      "mainDescription": "Mean response at the low and high level of each factor.",
+      "interactionTitle": "Two-factor interactions on “{{response}}”",
+      "interactionDescription": "Mean response at combinations of two factors' levels.",
+      "low": "low",
+      "high": "high",
+      "center": "centre",
+      "mainLegend": "Line: mean response at the low and high levels; square: mean of the centre points. In fractional designs the means reflect the aliasing.",
+      "interactionLegend": "Non-parallel lines suggest an interaction. In fractional designs the means reflect the aliasing.",
+      "opTitle": "Observed vs predicted for “{{response}}”",
+      "opDescription": "Observed values against the model's predictions, with the y = x line.",
+      "opX": "Predicted",
+      "opY": "Observed",
+      "opLegend": "Points near the line indicate a good fit; systematic departures indicate lack of fit.",
+      "atLevel": "{{factor}} = {{level}}"
+    },
+    "export": {
+      "effectsCsv": "Effects (CSV)"
+    }
+  },
+  "surface": {
+    "title": "Results: response surface",
+    "summary": {
+      "conclusion": "Second-order model fitted to {{n}} runs of “{{response}}” with {{factors}} factors ({{terms}} terms).",
+      "evidence": "Regression ANOVA: F = {{f}}, p = {{p}}; R² = {{r2}}; adjusted R² = {{adjusted}}.",
+      "evidenceUnavailable": "Without error degrees of freedom there are no tests; see the warnings.",
+      "nextStep": "The model describes only the studied region. Check lack of fit and the residuals before using the equation, and confirm any promising point with new runs."
+    },
+    "terms": {
+      "caption": "Model coefficients (coded scale) for “{{response}}”",
+      "term": "Term",
+      "estimate": "Estimate",
+      "se": "Standard error",
+      "t": "t",
+      "p": "p-value",
+      "ci": "{{level}}% CI",
+      "intercept": "Intercept",
+      "help": "Coefficients are on the coded scale (−1 and +1 at the stated levels): they can be compared with one another regardless of units."
+    },
+    "lackOfFit": {
+      "unavailable": "Lack of fit unavailable: there are no repeated runs at the same conditions (pure error) or not enough degrees of freedom. Repeat the centre point to test it."
+    },
+    "equation": {
+      "title": "Model equation",
+      "coded": "Coded scale",
+      "real": "Real units",
+      "realUnavailable": "Unavailable: some terms are not estimable.",
+      "help": "Both equations give the same prediction; the coded one is the one fitted and the real one is the same equation rewritten in the factor values.",
+      "prefix": "ŷ"
+    },
+    "region": {
+      "title": "Experimental region",
+      "factor": "Factor",
+      "center": "Centre",
+      "halfRange": "Half-range",
+      "min": "Lowest value run",
+      "max": "Highest value run",
+      "help": "Predictions outside the region, or at level combinations never run, are extrapolation."
+    },
+    "view": {
+      "title": "Response surface",
+      "intro": "Choose two factors for the axes and fix the others. Predictions come from the model; the hatched region is extrapolation.",
+      "xAxis": "Horizontal axis",
+      "yAxis": "Vertical axis",
+      "fixed": "{{name}} fixed at",
+      "steps": "Grid resolution",
+      "azimuth": "Rotation (degrees)",
+      "elevation": "Elevation (degrees)",
+      "sameAxis": "Choose different factors on the two axes.",
+      "loading": "Computing the grid…",
+      "failed": "The grid could not be computed.",
+      "contourTitle": "Contour of “{{response}}”",
+      "contourDescription": "Contour lines of the response predicted by the model as a function of two factors.",
+      "surfaceTitle": "Surface of “{{response}}”",
+      "surfaceDescription": "Surface of the response predicted by the model as a function of two factors, in orthographic projection.",
+      "readingContour": "Lines: predicted response values; darker = higher response.",
+      "readingSurface": "Darker = higher predicted response.",
+      "extrapolated": "Hatched: extrapolation (outside the region run).",
+      "points": "Circles: runs, projected on the two axes.",
+      "needTwo": "The surface needs at least two quantitative factors.",
+      "gridCsv": "Prediction grid (CSV)"
+    },
+    "export": {
+      "coefficientsCsv": "Coefficients (CSV)"
+    }
+  },
+  "export": {
+    "provenanceSheet": "Provenance",
+    "xlsx": "XLSX",
+    "title": "Export and figure appearance",
+    "intro": "Choose the language of the files, the CSV table format and the figure style. Tables and figures can also be downloaded with the buttons next to each one.",
+    "language": "Language of exported files",
+    "languageUi": "Same as the interface",
+    "csv": "CSV format",
+    "csvTechnical": "Technical (comma and decimal point)",
+    "csvExcel": "For Excel (export language)",
+    "palette": "Figure palette",
+    "paletteDefault": "Default",
+    "paletteColorblind": "Colour-blind friendly",
+    "fontScale": "Figure text size",
+    "fontSmall": "Smaller",
+    "fontNormal": "Normal",
+    "fontLarge": "Larger",
+    "digits": "Significant digits in figures",
+    "deviceNote": "These preferences apply to this device and are recorded in the metadata of exported files; they are not saved in the project.",
+    "report": {
+      "button": "Export report (HTML)",
+      "building": "Building report…",
+      "title": "Report",
+      "subtitle": "Report generated by EnziTAG Optima: method, configuration, tables, figures and interpretation.",
+      "provenance": "Provenance",
+      "footer": "EnziTAG Optima {{version}} — self-contained file, generated locally."
+    }
+  },
+  "figure": {
+    "customize": "Customize figure",
+    "title": "Title",
+    "xLabel": "Horizontal axis label",
+    "yLabel": "Vertical axis label",
+    "showLetters": "Show comparison letters",
+    "fontScale": "Font size for this figure",
+    "fontDevice": "Device default",
+    "fontSmall": "Smaller (0.85)",
+    "fontNormal": "Normal (1)",
+    "fontLarge": "Larger (1.2)",
+    "reset": "Restore default",
+    "help": "Changes appearance only. The setting is saved in the project, applies to the screen and to exported files, and changes no result.",
+    "tooLong": "Use at most 200 characters."
+  }
+}

@@ -1,0 +1,520 @@
+{
+  "app": {
+    "name": "EnziTAG Optima",
+    "tagline": "Planejamento experimental, estatística e otimização",
+    "skipToContent": "Ir para o conteúdo"
+  },
+  "settings": {
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "language": {
+    "pt-BR": "Português (Brasil)",
+    "en": "English"
+  },
+  "theme": {
+    "soft-light": "Soft Light",
+    "modern-dark": "Modern Dark",
+    "professional": "Professional"
+  },
+  "engine": {
+    "title": "Motor científico",
+    "loading": "Consultando o motor…",
+    "environment": "Ambiente",
+    "environmentValue": {
+      "wasm": "Navegador (WebAssembly)",
+      "tauri": "Aplicativo desktop (Tauri, motor nativo)"
+    },
+    "engineVersion": "Versão do motor",
+    "protocolVersion": "Versão do protocolo",
+    "schemaVersion": "Versão do esquema do projeto",
+    "methods": "Métodos disponíveis",
+    "methodsNone": "Nenhum método científico nesta versão",
+    "unavailable": "Não foi possível comunicar com o motor de cálculo."
+  },
+  "home": {
+    "title": "O que você quer fazer?",
+    "plan": {
+      "title": "Planejar experimento",
+      "text": "Definir fatores e respostas e gerar a matriz de ensaios."
+    },
+    "analyze": {
+      "title": "Analisar dados existentes",
+      "text": "Digitar ou colar resultados já medidos e resumi-los."
+    },
+    "compare": {
+      "title": "Comparar tratamentos",
+      "text": "Comparar médias de condições ou tratamentos."
+    },
+    "availability": {
+      "available": "Disponível nesta versão",
+      "limited": "Parcial: nesta versão só é possível cadastrar dados e obter o resumo descritivo. A parte {{missing}} ainda não foi entregue.",
+      "missing": {
+        "plan": "de planejamento (geração de matrizes)",
+        "compare": "de comparação (ANOVA e Tukey)"
+      }
+    },
+    "recentTitle": "Projetos recentes",
+    "recentEmpty": "Nenhum projeto recente. Os projetos abertos ou salvos no aplicativo para Windows aparecem aqui; no navegador, use Abrir e escolha o arquivo .enzitag.",
+    "open": "Abrir projeto"
+  },
+  "workflow": {
+    "navLabel": "Etapas do fluxo",
+    "step": {
+      "objective": "Objetivo",
+      "variables": "Fatores e respostas",
+      "data": "Planejamento e dados",
+      "analysis": "Análise",
+      "results": "Resultados"
+    },
+    "status": {
+      "done": "concluída",
+      "current": "etapa atual",
+      "locked": "bloqueada"
+    },
+    "back": "Voltar",
+    "next": "Avançar",
+    "home": "Início",
+    "blocked": {
+      "objective": "Escolha um objetivo para continuar.",
+      "variables": "Cadastre ao menos uma resposta com nome.",
+      "data": "Digite ao menos uma observação com algum valor e corrija as células com erro.",
+      "analysis": "Escolha a resposta a resumir."
+    }
+  },
+  "variables": {
+    "title": "Fatores e respostas",
+    "intro": "Fatores são as condições que você varia ou compara (por exemplo, temperatura ou tipo de enzima). Respostas são o que você mede. Você define os nomes e as unidades.",
+    "factors": "Fatores",
+    "responses": "Respostas",
+    "addFactor": "Adicionar fator",
+    "addResponse": "Adicionar resposta",
+    "remove": "Remover",
+    "name": "Nome",
+    "unit": "Unidade (opcional)",
+    "kind": "Tipo",
+    "kindNumeric": "Quantitativo (números)",
+    "kindCategorical": "Categórico (rótulos)",
+    "levels": "Níveis (opcional)",
+    "levelsHelp": "Separe por ponto e vírgula, na ordem desejada. Vazio: usa os rótulos presentes nos dados, em ordem alfabética.",
+    "noFactors": "Nenhum fator. É possível resumir uma resposta sem fatores.",
+    "noResponses": "Nenhuma resposta. Cadastre ao menos uma.",
+    "factorHeading": "Fator {{n}}",
+    "responseHeading": "Resposta {{n}}"
+  },
+  "data": {
+    "title": "Dados",
+    "intro": "Digite ou cole as observações (do Excel, por exemplo). Células vazias são dados ausentes; números aceitam ponto ou vírgula decimal.",
+    "caption": "Tabela de observações",
+    "rowLabel": "Obs.",
+    "addRow": "Adicionar linha",
+    "removeRow": "Remover linha {{n}}",
+    "unitColumn": "Unidade experimental",
+    "advanced": "Opções avançadas",
+    "showUnit": "Mostrar a coluna de unidade experimental",
+    "showUnitHelp": "Informe a unidade experimental apenas se souber qual medida pertence a qual unidade. O aplicativo não presume que linhas sejam réplicas independentes.",
+    "empty": "Ainda não há observações. Adicione uma linha ou cole os dados.",
+    "pasteNote": "Dica: clique em uma célula e cole (Ctrl+V). Vários valores copiados do Excel preenchem as células seguintes.",
+    "pasteIgnored": "{{count}} coluna(s) coladas além da última coluna da tabela foram ignoradas.",
+    "cellError": "Célula com erro",
+    "errorsSummary": "{{count}} célula(s) com erro. Corrija antes de analisar.",
+    "needColumns": "Cadastre fatores e respostas na etapa anterior para criar as colunas."
+  },
+  "analysis": {
+    "title": "Análise: resumo descritivo",
+    "intro": "Resume a resposta escolhida com contagem, ausentes, média, variância, desvio-padrão, mínimo e máximo. Isto descreve os dados; não é um teste de comparação.",
+    "response": "Resposta",
+    "groupBy": "Agrupar por (opcional)",
+    "groupByHelp": "Marque fatores para resumir cada combinação de níveis separadamente.",
+    "run": "Calcular resumo",
+    "running": "Calculando…",
+    "noResponse": "Cadastre uma resposta para analisar.",
+    "compare": {
+      "title": "Análise: comparação de tratamentos",
+      "intro": "Compara as médias dos níveis de um fator: ANOVA de um fator (delineamento inteiramente casualizado), comparações de Tukey (Tukey–Kramer se os grupos tiverem tamanhos diferentes) e letras de comparação. Cada linha deve ser uma réplica experimental independente.",
+      "response": "Resposta",
+      "factor": "Fator que define os grupos",
+      "factorHelp": "Cada nível do fator forma um grupo. Linhas sem resposta ou sem nível ficam de fora e são avisadas.",
+      "alpha": "Nível de significância (α)",
+      "alphaHelp": "Vale para a família de todas as comparações de pares (confiança simultânea 1 − α).",
+      "run": "Comparar tratamentos",
+      "needFactor": "Cadastre um fator (por exemplo, a condição testada) para definir os grupos.",
+      "needLevels": "Informe os níveis do fator na aba de variáveis ou digite os dados: são necessários pelo menos dois grupos."
+    },
+    "design": {
+      "title": "Análise: planejamento de dois níveis",
+      "intro": "Estima efeitos e coeficientes na escala codificada (−1, +1), com Pareto, efeitos principais, interações e observado × predito. Sem graus de liberdade do erro, só o método de Lenth indica efeitos ativos, e é rotulado como tal.",
+      "needDesign": "Gere o planejamento na etapa de dados (ou abra um projeto que o contenha).",
+      "model": "Termos do modelo",
+      "modelMain": "Somente efeitos principais",
+      "modelTwoFactor": "Efeitos principais e interações de dois fatores",
+      "modelCustom": "Personalizado",
+      "modelHelp": "Termos confundidos entre si (fracionários) aparecem como não estimáveis.",
+      "termsLegend": "Termos",
+      "curvature": "Testar curvatura (pontos centrais)",
+      "curvatureUnavailable": "O planejamento não tem pontos centrais.",
+      "run": "Analisar planejamento"
+    },
+    "surface": {
+      "title": "Análise: superfície de resposta",
+      "intro": "Ajusta o modelo de segunda ordem (efeitos principais, quadráticos e interações de dois fatores) na escala codificada e mostra ANOVA, falta de ajuste, equação e superfície.",
+      "needFactors": "A superfície exige ao menos dois fatores quantitativos com valores numéricos.",
+      "model": "Termos do modelo",
+      "modelFull": "Modelo completo de segunda ordem",
+      "modelCustom": "Escolher os termos",
+      "modelHelp": "Termos podem ser retirados manualmente; o aplicativo nunca elimina termos sozinho. Quadráticos e interações sem o efeito principal correspondente são avisados.",
+      "termsLegend": "Termos",
+      "run": "Calcular superfície",
+      "asSurface": "Ajustar superfície de resposta (modelo de segunda ordem)",
+      "asSurfaceHelp": "Use para matrizes personalizadas ou importadas com fatores quantitativos; a escala codificada usa o menor e o maior valor de cada fator.",
+      "needDesign": "Gere o planejamento na etapa de dados."
+    }
+  },
+  "project": {
+    "bar": "Projeto",
+    "name": "Nome do projeto",
+    "namePlaceholder": "Projeto sem nome",
+    "new": "Novo projeto",
+    "open": "Abrir…",
+    "save": "Salvar",
+    "saveBrowserHelp": "No navegador, salvar baixa o arquivo .enzitag; o arquivo anterior não é substituído.",
+    "saveAs": "Salvar como…",
+    "saveCopy": "Salvar uma cópia…",
+    "confirmDiscard": "Há alterações não salvas em arquivo. Continuar e perder essas alterações?",
+    "newExperimentName": "Experimento {{n}}",
+    "failed": "Não foi possível concluir a operação. O projeto aberto não foi alterado.",
+    "warningsTitle": "Avisos ao abrir o arquivo:",
+    "migrated": "Arquivo da versão {{from}} do formato, atualizado em memória; o arquivo original não foi alterado."
+  },
+  "experiments": {
+    "label": "Experimentos",
+    "add": "Novo experimento",
+    "name": "Nome do experimento",
+    "tab": "Experimento: {{name}}"
+  },
+  "status": {
+    "title": "Estado do salvamento",
+    "unsaved": "Alterações não salvas em arquivo",
+    "clean": "Sem alterações pendentes",
+    "recovery": "Recuperação automática",
+    "recoveryIdle": "desligada (nada a recuperar)",
+    "recoveryPending": "aguardando uma pausa de 2 s na edição…",
+    "recoverySaved": "atualizada às {{time}}",
+    "recoveryError": "indisponível neste navegador; suas alterações não estão protegidas",
+    "recoveryNote": "Fica neste navegador; não é uma cópia de segurança externa.",
+    "file": "Arquivo",
+    "fileNone": "nenhum arquivo salvo ainda",
+    "fileSaved": "salvo em «{{name}}» às {{time}}",
+    "fileDownloaded": "baixado como «{{name}}» às {{time}}"
+  },
+  "recovery": {
+    "title": "Sessão não salva encontrada",
+    "text": "Existe uma sessão com alterações não salvas, guardada neste navegador às {{time}}. Deseja restaurá-la?",
+    "restore": "Restaurar",
+    "discard": "Descartar"
+  },
+  "history": {
+    "title": "Histórico de versões",
+    "intro": "Cada versão é um instantâneo dos dados criado ao importar, analisar, salvar ou restaurar. Nada é apagado automaticamente.",
+    "revision": "Versão {{id}}",
+    "rows": "{{count}} linha(s)",
+    "restore": "Restaurar esta versão",
+    "restoreNote": "Restaurar cria uma nova versão; a atual continua no histórico.",
+    "current": "atual",
+    "analyses": "Análises guardadas",
+    "analysisItem": "Análise {{id}} — dados da versão {{revision}} — {{time}}",
+    "reason": {
+      "created": "criado",
+      "edit": "alterações",
+      "import": "importação",
+      "analysis": "análise",
+      "manualSave": "salvamento",
+      "restore": "restauração",
+      "design": "geração do planejamento"
+    }
+  },
+  "import": {
+    "button": "Importar arquivo (CSV ou XLSX)…",
+    "title": "Importar dados",
+    "intro": "Revise a prévia, escolha o papel de cada coluna e confirme. Os dados atuais continuam no histórico de versões.",
+    "file": "Arquivo",
+    "delimiter": "Separador",
+    "delimiterNames": {
+      ";": "ponto e vírgula (;)",
+      ",": "vírgula (,)",
+      "\t": "tabulação",
+      "|": "barra vertical (|)"
+    },
+    "encoding": "Codificação",
+    "encodingAuto": "automática",
+    "encodingFallback": "O arquivo não era UTF-8 válido; foi lido como Windows-1252. Confira os acentos na prévia.",
+    "sheet": "Planilha",
+    "header": "A primeira linha contém os nomes das colunas",
+    "preview": "Prévia (primeiras linhas)",
+    "mapping": "Papel de cada coluna",
+    "role": "Papel",
+    "roleOptions": {
+      "ignore": "Ignorar",
+      "observation": "Identificador da observação",
+      "unit": "Unidade experimental",
+      "factor": "Fator",
+      "response": "Resposta"
+    },
+    "kind": "Tipo do fator",
+    "confirm": "Importar",
+    "cancel": "Cancelar",
+    "skippedEmpty": "{{count}} linha(s) totalmente vazia(s) foram ignoradas.",
+    "replaceNote": "Os dados atuais deste experimento serão substituídos; eles ficam no histórico de versões.",
+    "unitHelp": "Linhas com a mesma unidade experimental são medidas repetidas da mesma unidade, não réplicas independentes.",
+    "failed": "Não foi possível ler o arquivo:",
+    "tooLarge": "Arquivo grande demais para importar.",
+    "formulaNote": "Planilhas: só os valores armazenados são lidos; fórmulas nunca são executadas.",
+    "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta."
+  },
+  "design": {
+    "title": "Planejamento do experimento",
+    "intro": "Gera a matriz de ensaios de dois níveis para triagem de fatores. Cada fator precisa ser quantitativo, com um nível baixo e um alto. A contagem de ensaios aparece antes de gerar.",
+    "needFactors": "Cadastre pelo menos dois fatores quantitativos (com nome) na etapa anterior.",
+    "categoricalIgnored": "Fatores categóricos não entram no planejamento de dois níveis: {{names}}.",
+    "levelsTitle": "Níveis dos fatores",
+    "low": "Nível baixo",
+    "high": "Nível alto",
+    "levelsInvalid": "O nível baixo precisa ser menor que o alto (números).",
+    "budget": "Orçamento máximo de ensaios (opcional)",
+    "budgetHelp": "Considera só o planejamento básico, sem réplicas nem pontos centrais.",
+    "optionsTitle": "Opções para {{count}} fatores",
+    "candidate": "{{runs}} ensaios",
+    "recommended": "recomendado",
+    "overBudget": "acima do orçamento",
+    "resolution": "resolução {{resolution}}",
+    "noResolution": "sem confundimento",
+    "kind": {
+      "fullFactorial": "Fatorial completo",
+      "fractional": "Fracionário {{generators}}",
+      "plackettBurman": "Plackett–Burman",
+      "centralComposite": "Composto central ({{axial}})",
+      "boxBehnken": "Box–Behnken",
+      "axial": {
+        "rotatable": "rotacional",
+        "faceCentered": "face centrada",
+        "custom": "α = {{alpha}}"
+      }
+    },
+    "replicates": "Repetições do planejamento",
+    "replicatesHelp": "Cada repetição refaz todos os ensaios. São réplicas experimentais apenas se cada ensaio for um novo preparo independente.",
+    "centerPoints": "Pontos centrais",
+    "centerHelp": "Permitem testar curvatura. Com um só ponto central não há estimativa de erro por eles.",
+    "randomize": "Aleatorizar a ordem de execução",
+    "seed": "Semente da aleatorização",
+    "seedHelp": "A mesma semente produz a mesma ordem no Windows e no navegador.",
+    "newSeed": "Nova semente",
+    "count": "Total: {{total}} ensaios ({{base}} do planejamento × {{replicates}} + {{centers}} centrais)",
+    "countError": "Não foi possível contar os ensaios.",
+    "generate": "Gerar planejamento",
+    "regenerate": "Gerar novamente",
+    "confirmReplace": "Substituir os ensaios atuais pela nova matriz? Os dados atuais permanecem no histórico de versões.",
+    "generated": "Planejamento gerado: {{total}} ensaios. Preencha as respostas na grade abaixo.",
+    "matrix": {
+      "title": "Matriz de ensaios",
+      "view": "Valores",
+      "real": "Reais",
+      "coded": "Codificados (−1, 0, +1)",
+      "run": "Ordem de execução",
+      "standard": "Ordem padrão",
+      "point": "Tipo",
+      "factorial": "fatorial",
+      "center": "central",
+      "replicate": "Repetição",
+      "exportCsv": "Baixar matriz (CSV)",
+      "exported": "Matriz exportada: {{name}}",
+      "cancelled": "Exportação cancelada.",
+      "failed": "Não foi possível exportar a matriz.",
+      "axial": "axial"
+    },
+    "properties": {
+      "title": "Propriedades",
+      "relation": "Relação definidora",
+      "resolution": "Resolução {{resolution}}",
+      "aliases": "Confundimento (efeitos principais e interações de dois fatores)",
+      "aliasesHelp": "Efeitos na mesma linha não podem ser separados por este planejamento: o que se estima é a soma.",
+      "pbPartial": "Plackett–Burman: efeitos principais confundidos parcialmente com interações de dois fatores (correlação absoluta máxima {{value}}).",
+      "dummy": "{{count}} colunas fictícias (contrastes não usados por fatores): ficam como graus de liberdade do erro.",
+      "algorithm": "Aleatorização: {{algorithm}}, semente {{seed}}.",
+      "axial": "Composto central: α = {{alpha}}; {{factorial}} pontos fatoriais, {{axial}} axiais e {{center}} centrais."
+    },
+    "goal": "Objetivo do planejamento",
+    "goalScreening": "Triagem de fatores (dois níveis)",
+    "goalSurface": "Superfície de resposta (segunda ordem)",
+    "surface": {
+      "legend": "Planejamentos de superfície de resposta para {{count}} fatores",
+      "intro": "Compostos centrais e Box–Behnken estimam curvatura (termos quadráticos). Use depois da triagem, com os fatores que importam. Pontos centrais são necessários para estimar o erro puro.",
+      "rotatable": "Composto central rotacional (DCCR/CCRD): α = (pontos fatoriais)^¼",
+      "face": "Composto central de face centrada (FCD): α = 1",
+      "custom": "Composto central com α informado",
+      "boxBehnken": "Box–Behnken (3 a 5 fatores)",
+      "boxBehnkenUnavailable": "Box–Behnken exige de 3 a 5 fatores.",
+      "alpha": "Distância axial α (0 a 10)",
+      "inscribed": "Inscrito: os pontos axiais ficam nos níveis informados e a parte fatorial dentro deles",
+      "inscribedHelp": "Circunscrito (padrão): a parte fatorial fica nos níveis informados e os pontos axiais além deles, em ±α.",
+      "cubeGenerators": "Parte fatorial fracionária (opcional)",
+      "cubeGeneratorsHelp": "Geradores separados por vírgula, por exemplo E=ABCD. Vazio: fatorial completo.",
+      "centerSuggested": "Pontos centrais definidos em 5 (necessários para o erro puro)."
+    },
+    "mode": {
+      "legend": "Tipo de planejamento",
+      "factorial": "Fatores quantitativos (fatorial, triagem, superfície)",
+      "crd": "Um fator categórico (DIC aleatorizado)"
+    },
+    "crd": {
+      "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
+      "needFactor": "Cadastre na etapa anterior um fator categórico (com nome) para planejar o DIC.",
+      "factor": "Fator",
+      "levels": "Níveis (tratamentos)",
+      "levelsHelp": "Separe por ponto e vírgula ou quebra de linha, por exemplo: Controle; pH 5; pH 7. Os níveis ficam gravados no fator.",
+      "replicates": "Unidades experimentais por nível",
+      "replicatesHelp": "Cada unidade é um preparo ou amostra independente. Medir a mesma amostra várias vezes não conta como unidade nova.",
+      "count": "{{total}} ensaios: {{levels}} níveis × {{replicates}} unidades.",
+      "unitNote": "Cada ensaio recebe um identificador de unidade experimental (por exemplo T2-R3: nível 2, unidade 3).",
+      "matrix": {
+        "title": "Ordem de execução do DIC",
+        "run": "Execução",
+        "standard": "Ordem padrão",
+        "level": "Nível",
+        "replicate": "Unidade",
+        "unit": "Identificador",
+        "exportCsv": "Matriz do DIC (CSV)",
+        "suffix": "do-dic"
+      },
+      "algorithm": "Algoritmo: {{algorithm}}; semente {{seed}}."
+    }
+  },
+  "optimization": {
+    "title": "Otimização por desejabilidade",
+    "intro": "Defina o objetivo de cada resposta (preferência) e, se precisar, limites obrigatórios. A busca usa os modelos de segunda ordem ajustados aos seus dados, parte de vários pontos e apresenta candidatos com previsões e intervalos. Ela não garante o ótimo global: confirme os candidatos com ensaios novos.",
+    "stale": "Os dados ou a configuração mudaram desde esta busca: execute-a novamente para atualizar os candidatos.",
+    "convergence": "Busca: {{starts}} inícios (semente {{seed}}); {{converged}} convergiram por tolerância; {{feasible}} terminaram em pontos viáveis; {{distinct}} solução(ões) distinta(s); a melhor foi encontrada por {{best}} inícios.",
+    "status": {
+      "found": "Foram encontrados candidatos viáveis com desejabilidade positiva.",
+      "onlyZeroDesirability": "Há pontos viáveis, mas nenhum com desejabilidade positiva: os objetivos não são atingíveis juntos na região. Os candidatos abaixo são os mais próximos.",
+      "infeasible": "Nenhum ponto da região satisfaz os limites obrigatórios: não há candidato viável."
+    },
+    "goals": {
+      "title": "Objetivos das respostas",
+      "help": "Preferências (objetivo e importância) se combinam em uma desejabilidade global; limites obrigatórios (valor previsto mínimo ou máximo) eliminam pontos e não são compensados por outras respostas.",
+      "include": "incluir na otimização",
+      "type": "Objetivo",
+      "importance": "Importância",
+      "importanceHelp": "Peso relativo na desejabilidade global (padrão 1).",
+      "limitMin": "Limite obrigatório: previsto no mínimo",
+      "limitMax": "Limite obrigatório: previsto no máximo",
+      "limitHelp": "Deixe em branco se não houver limite."
+    },
+    "goal": {
+      "type_maximize": "Maximizar",
+      "type_minimize": "Minimizar",
+      "type_target": "Atingir um alvo",
+      "type_range": "Permanecer em uma faixa",
+      "low": "Menor valor aceitável",
+      "lowHelp": "Abaixo dele a desejabilidade é zero.",
+      "target": "Alvo",
+      "targetHelp": "A desejabilidade é 1 a partir (ou até) deste valor.",
+      "high": "Maior valor aceitável",
+      "highHelp": "Acima dele a desejabilidade é zero.",
+      "shape": "Expoente",
+      "shapeHelp": "1 = linear; maior que 1 exige chegar mais perto do alvo.",
+      "shapeLow": "Expoente (lado inferior)",
+      "shapeHigh": "Expoente (lado superior)",
+      "rangeLow": "Limite inferior da faixa",
+      "rangeHigh": "Limite superior da faixa"
+    },
+    "domain": {
+      "title": "Domínio da busca",
+      "region": "Região experimental (padrão): intervalos dos fatores ensaiados, sem extrapolação",
+      "extended": "Estender os limites dos fatores (extrapolação, por escolha explícita)",
+      "help": "Fora da região experimental o modelo não foi testado: candidatos fora dela são marcados como extrapolação.",
+      "min": "Limite inferior",
+      "max": "Limite superior"
+    },
+    "search": {
+      "title": "Opções avançadas da busca",
+      "starts": "Número de inícios",
+      "startsHelp": "Mais inícios dão mais confiança de que o melhor candidato não é um ótimo local (1 a 5000).",
+      "seed": "Semente",
+      "seedHelp": "A mesma semente produz os mesmos candidatos.",
+      "candidates": "Candidatos mostrados"
+    },
+    "run": {
+      "start": "Buscar condições ótimas",
+      "running": "Buscando…",
+      "cancel": "Cancelar a busca",
+      "cancelled": "Busca cancelada; os resultados anteriores foram mantidos.",
+      "needResponse": "Inclua ao menos uma resposta na otimização."
+    },
+    "candidates": {
+      "caption": "Candidatos (condições reais e, entre parênteses, codificadas)",
+      "select": "Escolher",
+      "selectCandidate": "Escolher o candidato {{rank}}",
+      "rank": "Posição",
+      "global": "Desejabilidade global",
+      "predicted": "previsto",
+      "interval": "intervalo de predição",
+      "notes": "Observações",
+      "extrapolated": "Fora da região experimental (extrapolação)",
+      "atBounds": "No limite do domínio: {{factors}}",
+      "starts": "{{count}} início(s) chegaram a esta solução",
+      "exportCsv": "Candidatos (CSV)"
+    },
+    "tradeoffs": {
+      "title": "Compromissos entre respostas",
+      "help": "Melhor desejabilidade que cada resposta alcançaria sozinha (mesmas restrições). Nos candidatos, o número entre parênteses é quanto da desejabilidade individual foi cedido.",
+      "response": "Resposta",
+      "bestAlone": "Melhor desejabilidade sozinha",
+      "atBest": "Nas condições"
+    },
+    "view": {
+      "heading": "Desejabilidade global sobre dois fatores",
+      "title": "Desejabilidade global",
+      "description": "Desejabilidade global em função de dois fatores, com os demais fixados nas condições do melhor candidato.",
+      "response": "Desejabilidade global (0 a 1)",
+      "reading": "Curvas: desejabilidade global; cor mais intensa = mais desejável.",
+      "extrapolated": "Hachurado: extrapolação (fora da região ensaiada).",
+      "points": "Círculos: candidatos.",
+      "xAxis": "Eixo horizontal",
+      "yAxis": "Eixo vertical",
+      "sameAxis": "Escolha fatores diferentes nos dois eixos."
+    },
+    "confirmation": {
+      "title": "Ensaios de confirmação",
+      "intro": "Escolha candidatos e repetições: o aplicativo cria um novo experimento, vinculado a este, com as condições arredondadas a 5 algarismos e as previsões gravadas para comparar com o que for observado.",
+      "replicates": "Repetições por candidato",
+      "propose": "Propor ensaios de confirmação",
+      "experimentName": "Confirmação — {{name}}"
+    },
+    "check": {
+      "title": "Conferência com as previsões",
+      "help": "Previsões gravadas na proposta, com intervalo de predição de {{level}}%.",
+      "run": "Ensaio",
+      "response": "Resposta",
+      "predicted": "Previsto",
+      "interval": "Intervalo de predição {{level}}%",
+      "observed": "Observado",
+      "status": "Situação",
+      "within": "dentro do intervalo",
+      "below": "abaixo do intervalo",
+      "above": "acima do intervalo",
+      "missing": "sem valor observado",
+      "noInterval": "sem intervalo de predição",
+      "note": "Um valor dentro do intervalo é compatível com o modelo; fora dele, o modelo pode não descrever bem essas condições. Com poucos ensaios a conclusão é limitada."
+    }
+  },
+  "update": {
+    "check": "Verificar atualizações",
+    "checking": "Verificando…",
+    "current": "Você já usa a versão mais recente.",
+    "available": "Nova versão disponível: {{version}}.",
+    "install": "Baixar e instalar",
+    "installing": "Baixando e instalando…",
+    "failed": "Não foi possível verificar agora (sem internet ou serviço indisponível).",
+    "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados."
+  }
+}
