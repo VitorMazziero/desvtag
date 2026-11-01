@@ -79,6 +79,8 @@ describe("comparison of treatments", () => {
       groupBy: [],
       factorId: "f1",
       alpha: 0.05,
+      procedure: null,
+      factorial: null,
       designTerms: null,
       includeCurvature: true,
       surface: false,

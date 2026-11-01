@@ -9,6 +9,7 @@ use std::collections::HashSet;
 use ts_rs::TS;
 
 use optima_core::designs::completely_randomized::CrdSpec;
+use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use std::collections::BTreeMap;
 
@@ -58,6 +59,10 @@ pub struct Experiment {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub crd: Option<CrdSpec>,
+    /// Delineamento em blocos completos casualizados gerado para este experimento.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub rcbd: Option<RcbdSpec>,
     /// Personalização gráfica por figura (chave estável da figura → ajustes).
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     #[ts(type = "Record<string, FigureStyle> | undefined", optional)]
@@ -98,6 +103,7 @@ impl Experiment {
             show_unit_column: false,
             design: None,
             crd: None,
+            rcbd: None,
             figure_styles: BTreeMap::new(),
             origin: None,
             confirmation: None,
@@ -110,6 +116,8 @@ impl Experiment {
                 include_curvature: None,
                 surface: None,
                 optimization: None,
+                procedure: None,
+                factorial: None,
             },
             revisions: vec![Revision {
                 id: revision_id,

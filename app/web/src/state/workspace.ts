@@ -65,6 +65,7 @@ const PROJECT_ACTIONS = new Set<string>([
   "setRows",
   "applyDesign",
   "applyCrd",
+  "applyRcbd",
   "setFigureStyle",
   "addRow",
   "removeRow",
@@ -262,9 +263,12 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
       designTerms: doc.analysisSelection.terms ?? null,
       includeCurvature: doc.analysisSelection.includeCurvature ?? true,
       surface: doc.analysisSelection.surface ?? false,
+      procedure: doc.analysisSelection.procedure ?? null,
+      factorial: doc.analysisSelection.factorial ?? null,
     },
     design: doc.design ?? null,
     crd: doc.crd ?? null,
+    rcbd: doc.rcbd ?? null,
     figureStyles: doc.figureStyles ?? {},
     origin: doc.origin ?? null,
     confirmation: doc.confirmation ?? null,
@@ -316,6 +320,10 @@ function storedResultOf(last: AnalysisRecord | undefined): StoredResult | null {
   if (last.result.type === "responseSurface")
     return { signature: last.signature, kind: "surface", result: stripType(last.result) };
   if (last.result.type === "optimization") return null; // a otimização tem estado próprio
+  if (last.result.type === "multipleComparison")
+    return { signature: last.signature, kind: "procedure", result: stripType(last.result) };
+  if (last.result.type === "factorialAnova")
+    return { signature: last.signature, kind: "factorial", result: stripType(last.result) };
   return { signature: last.signature, kind: "oneWay", result: stripType(last.result) };
 }
 
@@ -352,6 +360,12 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
             }
           : {}),
         ...(e.optimization.setup ? { optimization: e.optimization.setup } : {}),
+        ...(e.analysis.procedure
+          ? { procedure: e.analysis.procedure, alpha: e.analysis.alpha }
+          : {}),
+        ...(e.analysis.factorial
+          ? { factorial: e.analysis.factorial, alpha: e.analysis.alpha }
+          : {}),
         ...(e.analysis.surface
           ? {
               surface: true,
@@ -362,6 +376,7 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
       },
       ...(e.design !== null ? { design: e.design } : {}),
       ...(e.crd !== null ? { crd: e.crd } : {}),
+      ...(e.rcbd !== null ? { rcbd: e.rcbd } : {}),
       ...(Object.keys(e.figureStyles).length > 0 ? { figureStyles: e.figureStyles } : {}),
       ...(e.origin ? { origin: e.origin } : {}),
       ...(e.confirmation ? { confirmation: e.confirmation } : {}),

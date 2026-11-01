@@ -91,6 +91,25 @@ pub struct ContrastRequest {
     pub coefficients: Vec<f64>,
 }
 
+/// Configuração da ANOVA multifatorial (tudo o que não são os dados).
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct FactorialSetup {
+    /// Fatores de tratamento.
+    pub factor_ids: Vec<StableId>,
+    /// Fator de bloco (efeito principal aditivo), se houver.
+    pub block_id: Option<StableId>,
+    /// Maior ordem das interações (1 = só efeitos principais).
+    pub interaction_order: u8,
+    /// Tipo de soma de quadrados.
+    pub ss_type: SumOfSquaresType,
+    /// Médias marginais pedidas.
+    pub marginals: Vec<MarginalRequest>,
+    /// Contrastes pedidos.
+    pub contrasts: Vec<ContrastRequest>,
+}
+
 /// Solicitação.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]

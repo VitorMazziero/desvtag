@@ -86,6 +86,9 @@ export function ResultsView({
         )}
       </section>
     );
+  // Procedimentos novos e ANOVA multifatorial: resultados já calculados e guardados; a tela deles
+  // é a próxima tarefa da ET11 (ver o plano).
+  if (stored.kind === "procedure" || stored.kind === "factorial") return null;
   const response = state.responses.find((r) => r.id === stored.result.responseId);
   const responseName = response?.name || stored.result.responseId;
   return (

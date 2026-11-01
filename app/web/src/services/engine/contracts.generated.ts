@@ -63,7 +63,15 @@ surface?: boolean,
 /**
  * Configuração da otimização (objetivos, limites, domínio e busca), para restaurar a tela.
  */
-optimization?: OptimizationSetup, };
+optimization?: OptimizationSetup, 
+/**
+ * Procedimento de comparação múltipla escolhido (ausente = Tukey).
+ */
+procedure?: Procedure, 
+/**
+ * Configuração da ANOVA multifatorial.
+ */
+factorial?: FactorialSetup, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
@@ -109,7 +117,7 @@ result: AnalysisResult, };
 /**
  * Resultado guardado, por método.
  */
-export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult | { "type": "optimization" } & OptimizationResult;
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult | { "type": "optimization" } & OptimizationResult | { "type": "multipleComparison" } & ProcedureResult | { "type": "factorialAnova" } & FactorialResult;
 
 /**
  * Linha da tabela.
@@ -1172,6 +1180,10 @@ design?: DesignSpec,
  */
 crd?: CrdSpec, 
 /**
+ * Delineamento em blocos completos casualizados gerado para este experimento.
+ */
+rcbd?: RcbdSpec, 
+/**
  * Personalização gráfica por figura (chave estável da figura → ajustes).
  */
 figureStyles?: Record<string, FigureStyle> | undefined, 
@@ -1476,6 +1488,52 @@ issues: Array<Issue>,
 provenance: Provenance, };
 
 /**
+ * Configuração da ANOVA multifatorial (tudo o que não são os dados).
+ */
+export type FactorialSetup = { 
+/**
+ * Fatores de tratamento.
+ */
+factorIds: Array<StableId>, 
+/**
+ * Fator de bloco (efeito principal aditivo), se houver.
+ */
+blockId: StableId | null, 
+/**
+ * Maior ordem das interações (1 = só efeitos principais).
+ */
+interactionOrder: number, 
+/**
+ * Tipo de soma de quadrados.
+ */
+ssType: SumOfSquaresType, 
+/**
+ * Médias marginais pedidas.
+ */
+marginals: Array<MarginalRequest>, 
+/**
+ * Contrastes pedidos.
+ */
+contrasts: Array<ContrastRequest>, };
+
+/**
+ * Anotação livre: texto e posição relativa (`0` = esquerda/topo, `1` = direita/base).
+ */
+export type FigureAnnotation = { 
+/**
+ * Texto.
+ */
+text: string, 
+/**
+ * Posição horizontal relativa, de 0 a 1.
+ */
+x: number, 
+/**
+ * Posição vertical relativa, de 0 a 1.
+ */
+y: number, };
+
+/**
  * Ajustes de uma figura. Campos ausentes mantêm o texto ou o comportamento padrão.
  */
 export type FigureStyle = { 
@@ -1499,7 +1557,40 @@ showLetters?: boolean,
 /**
  * Escala de fonte desta figura (0,85, 1 ou 1,2); ausente: a preferência do dispositivo.
  */
-fontScale?: number, };
+fontScale?: number, 
+/**
+ * Letras digitadas pelo usuário, uma por grupo na ordem de exibição; substituem as calculadas
+ * na figura e são identificadas como manuais na legenda.
+ */
+manualLetters?: Array<string>, 
+/**
+ * Anotações livres (texto em posição relativa da figura).
+ */
+annotations?: Array<FigureAnnotation>, 
+/**
+ * Cor principal das séries (`#RRGGBB`).
+ */
+primaryColor?: string, 
+/**
+ * Fundo da figura exportada: `white` ou `transparent`.
+ */
+background?: string, 
+/**
+ * Família da fonte: `sans`, `serif` ou `mono`.
+ */
+fontFamily?: string, 
+/**
+ * Escala do PNG exportado (1, 2 ou 3).
+ */
+exportScale?: number, 
+/**
+ * Exibir as linhas de grade (padrão: sim).
+ */
+showGrid?: boolean, 
+/**
+ * Exibir a legenda (padrão: sim).
+ */
+showLegend?: boolean, };
 
 /**
  * Condição fixada, ecoada no resultado.
