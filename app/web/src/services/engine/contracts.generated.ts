@@ -624,6 +624,22 @@ ciLower: Stat,
  */
 ciUpper: Stat, 
 /**
+ * Barra `média − dp` (gráfico de médias com desvio-padrão).
+ */
+sdLower: Stat, 
+/**
+ * Barra `média + dp`.
+ */
+sdUpper: Stat, 
+/**
+ * Barra `média − EP` (erro-padrão da média do grupo).
+ */
+seLower: Stat, 
+/**
+ * Barra `média + EP`.
+ */
+seUpper: Stat, 
+/**
  * Boxplot do grupo.
  */
 boxplot: BoxStats | null, };

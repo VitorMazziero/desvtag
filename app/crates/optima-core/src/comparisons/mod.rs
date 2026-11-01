@@ -68,6 +68,14 @@ pub struct GroupStats {
     pub ci_lower: Stat,
     /// Limite superior do IC da média.
     pub ci_upper: Stat,
+    /// Barra `média − dp` (gráfico de médias com desvio-padrão).
+    pub sd_lower: Stat,
+    /// Barra `média + dp`.
+    pub sd_upper: Stat,
+    /// Barra `média − EP` (erro-padrão da média do grupo).
+    pub se_lower: Stat,
+    /// Barra `média + EP`.
+    pub se_upper: Stat,
     /// Boxplot do grupo.
     pub boxplot: Option<BoxStats>,
 }
@@ -201,7 +209,17 @@ pub fn compare_one_way(request: &OneWayRequest) -> Result<OneWayResult, CoreErro
                 .zip(critical_t)
                 .map(|(se, t)| (mean - t * se, mean + t * se));
             let se_group = summary.sd.value().map(|sd| sd / (n as f64).sqrt());
+            let bar = |spread: Option<f64>, sign: f64| {
+                spread.map_or(
+                    Stat::undefined(UndefinedReason::FewerThanTwoObservations),
+                    |s| Stat::finite(mean + sign * s),
+                )
+            };
             GroupStats {
+                sd_lower: bar(summary.sd.value(), -1.0),
+                sd_upper: bar(summary.sd.value(), 1.0),
+                se_lower: bar(se_group, -1.0),
+                se_upper: bar(se_group, 1.0),
                 label: g.label.clone(),
                 n: u32::try_from(n).unwrap_or(u32::MAX),
                 mean: Stat::finite(mean),

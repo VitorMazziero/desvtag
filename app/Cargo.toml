@@ -41,3 +41,7 @@ panic = "warn"
 opt-level = 3
 lto = true
 codegen-units = 1
+
+# Os casos de validação numérica (quadratura da amplitude studentizada) são lentos sem otimização.
+[profile.test]
+opt-level = 2

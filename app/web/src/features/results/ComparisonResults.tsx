@@ -97,14 +97,12 @@ export function ComparisonResults({ result, signature, language }: Props) {
       : "",
     groups: result.groups.map((g, i) => {
       const mean = val(g.mean) ?? 0;
-      const spread =
-        uncertainty === "sd" ? val(g.sd) : uncertainty === "se" ? val(g.stdError) : null;
       const [lower, upper] =
         uncertainty === "ci"
           ? [val(g.ciLower), val(g.ciUpper)]
-          : spread === null
-            ? [null, null]
-            : [mean - spread, mean + spread];
+          : uncertainty === "sd"
+            ? [val(g.sdLower), val(g.sdUpper)]
+            : [val(g.seLower), val(g.seUpper)];
       return { label: g.label, mean, lower, upper, letters: result.letters?.letters[i] ?? "" };
     }),
     metadata: withMetadata ? metadataText : undefined,
