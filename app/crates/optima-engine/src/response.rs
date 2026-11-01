@@ -7,6 +7,7 @@ use optima_core::comparisons::procedures::ProcedureResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::designs::completely_randomized::GeneratedCrd;
+use optima_core::designs::randomized_block::GeneratedRcbd;
 use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
@@ -14,6 +15,7 @@ use optima_core::models::LinearFit;
 use optima_core::models::factorial_anova::FactorialResult;
 use optima_core::optimization::{Evaluation, OptimizationResult};
 use optima_core::registry::Capabilities;
+use optima_core::surface::selection::SelectionResult;
 use optima_core::surface::{SurfaceGrid, SurfaceResult};
 use optima_core::validation::Issue;
 use optima_project::ProjectDocument;
@@ -83,6 +85,8 @@ pub enum OperationResult {
     DesignGenerate(Box<GeneratedDesign>),
     /// DIC gerado.
     DesignCrdGenerate(Box<GeneratedCrd>),
+    /// DBC gerado.
+    DesignRcbdGenerate(Box<GeneratedRcbd>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.
@@ -103,6 +107,8 @@ pub enum OperationResult {
     ComparisonProcedure(Box<ProcedureResult>),
     /// Resultado da ANOVA multifatorial.
     AnovaFactorial(Box<FactorialResult>),
+    /// Comparação de modelos e recomendação de remoção de termos.
+    SurfaceSelectModel(Box<SelectionResult>),
     /// Valores de uma função de distribuição.
     DistributionEvaluate(DistributionResult),
     /// Ajuste de modelo linear.

@@ -82,6 +82,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::DesignRcbdGenerate(req) => {
+            match optima_core::designs::randomized_block::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignRcbdGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::DesignAnalyze(req) => {
             match optima_core::designs::analysis::analyze(req.as_ref()) {
                 Ok(result) => Outcome::Ok {
@@ -158,6 +166,12 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::SurfaceSelectModel(req) => match optima_core::surface::selection::select(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::SurfaceSelectModel(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::DistributionEvaluate(req) => match optima_core::distributions::evaluate(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::DistributionEvaluate(result),
