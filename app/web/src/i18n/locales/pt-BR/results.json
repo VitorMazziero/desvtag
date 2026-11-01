@@ -1,0 +1,49 @@
+{
+  "title": "Resultados",
+  "table": {
+    "caption": "Resumo descritivo de {{response}}",
+    "group": "Grupo",
+    "overall": "Todas as observações",
+    "n": "n válido",
+    "missing": "Ausentes",
+    "mean": "Média",
+    "variance": "Variância",
+    "sd": "Desvio-padrão",
+    "min": "Mínimo",
+    "max": "Máximo",
+    "undefined": "indefinido"
+  },
+  "undefinedReason": {
+    "noValidObservations": "Não há observação válida.",
+    "fewerThanTwoObservations": "A variância amostral exige ao menos duas observações válidas.",
+    "nonFiniteResult": "O resultado não é representável em 64 bits."
+  },
+  "summary": {
+    "conclusion": "Foram resumidas {{valid}} de {{total}} observações de «{{response}}».",
+    "evidence": "Média geral {{mean}} e desvio-padrão {{sd}}{{unit}}; veja a tabela por grupo.",
+    "evidenceUndefined": "Nem todas as estatísticas gerais puderam ser calculadas; veja os motivos na tabela.",
+    "nextStepGroups": "As médias dos grupos descrevem os dados, mas não mostram se os grupos diferem. Essa decisão exige um teste de comparação (ANOVA e Tukey), ainda não entregue.",
+    "nextStepNoGroups": "Para comparar condições, cadastre um fator e agrupe por ele; o teste de comparação (ANOVA e Tukey) ainda não foi entregue."
+  },
+  "labels": {
+    "conclusion": "Conclusão",
+    "evidence": "Evidência",
+    "nextStep": "Próximo passo"
+  },
+  "stale": "Os dados ou as opções mudaram depois deste cálculo. Calcule novamente para atualizar o resultado.",
+  "facts": {
+    "descriptive": {
+      "no_valid_observations": "Nenhuma observação válida para esta resposta.",
+      "independence_not_assessed": "n conta observações. O aplicativo não presume que elas sejam réplicas independentes: isso depende de como o experimento foi conduzido.",
+      "missing_excluded_one": "{{count}} observação sem valor foi contada como ausente e não entrou em média, variância, mínimo nem máximo.",
+      "missing_excluded_other": "{{count}} observações sem valor foram contadas como ausentes e não entraram em média, variância, mínimo nem máximo.",
+      "missing_excluded_many": "{{count}} observações sem valor foram contadas como ausentes e não entraram em média, variância, mínimo nem máximo.",
+      "excluded_missing_factor_one": "{{count}} observação sem valor em algum fator de agrupamento ficou fora dos grupos (mas conta no resumo geral).",
+      "excluded_missing_factor_other": "{{count}} observações sem valor em algum fator de agrupamento ficaram fora dos grupos (mas contam no resumo geral).",
+      "excluded_missing_factor_many": "{{count}} observações sem valor em algum fator de agrupamento ficaram fora dos grupos (mas contam no resumo geral).",
+      "group_too_small_one": "O grupo «{{group}}» tem {{count}} observação válida; variância e desvio-padrão exigem pelo menos duas.",
+      "group_too_small_other": "O grupo «{{group}}» tem {{count}} observações válidas; variância e desvio-padrão exigem pelo menos duas.",
+      "group_too_small_many": "O grupo «{{group}}» tem {{count}} observações válidas; variância e desvio-padrão exigem pelo menos duas."
+    }
+  }
+}

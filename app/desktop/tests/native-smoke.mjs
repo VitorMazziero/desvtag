@@ -63,6 +63,33 @@ try {
   const protocol = await textOf("engine-protocol");
   console.log({ version, protocol, environment });
   if (version !== "0.1.0" || protocol !== "1") throw new Error("Versões inesperadas do motor");
+
+  // Estatística descritiva pelo IPC nativo: 2, 4, 4, 4, 5, 5, 7, 9 → média 5, variância 32/7.
+  const request = {
+    protocolVersion: 1,
+    taskId: "native-descriptive",
+    operation: {
+      type: "descriptiveSummarize",
+      dataset: {
+        factors: [],
+        responses: [{ id: "y", name: "y", unit: null }],
+        observations: [2, 4, 4, 4, 5, 5, 7, 9].map((v, i) => ({ id: `o${i + 1}`, unitId: null, factors: [], responses: [v] })),
+      },
+      responseId: "y",
+      groupBy: [],
+    },
+  };
+  const script =
+    "const done = arguments[arguments.length - 1];" +
+    "window.__TAURI_INTERNALS__.invoke('engine_request', { requestJson: arguments[0] })" +
+    ".then((r) => done(r)).catch((e) => done('ERROR:' + String(e)));";
+  const raw = await call("POST", `/session/${sessionId}/execute/async`, { script, args: [JSON.stringify(request)] });
+  const reply = JSON.parse(raw);
+  const overall = reply.outcome?.result?.overall;
+  console.log({ taskId: reply.taskId, mean: overall?.mean, variance: overall?.variance });
+  if (reply.taskId !== "native-descriptive" || overall?.mean?.value !== 5) throw new Error("Média nativa incorreta");
+  if (Math.abs(overall.variance.value - 32 / 7) > 1e-12) throw new Error("Variância nativa incorreta");
+  console.log("OK: estatística descritiva calculada pelo motor nativo via IPC do Tauri.");
   if (!/Tauri|nativo|native/i.test(environment)) throw new Error("Ambiente não é o nativo Tauri");
   console.log("OK: interface obteve engine.info do motor nativo via comando Tauri.");
 } catch (error) {

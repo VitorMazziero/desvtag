@@ -19,7 +19,6 @@
   },
   "engine": {
     "title": "Scientific engine",
-    "provisional": "Provisional technical-foundation screen (ET01). No statistical method is implemented yet.",
     "loading": "Querying the engine…",
     "environment": "Environment",
     "environmentValue": {
@@ -31,13 +30,107 @@
     "schemaVersion": "Project schema version",
     "methods": "Available methods",
     "methodsNone": "No scientific method in this version",
-    "methodsCount_one": "{{count}} method",
-    "methodsCount_other": "{{count}} methods"
+    "unavailable": "Could not communicate with the calculation engine."
   },
-  "errors": {
-    "engineUnavailable": "Could not communicate with the calculation engine.",
-    "invalidRequest": "The request sent to the engine is invalid.",
-    "unsupportedProtocolVersion": "Incompatible protocol version: the engine expects {{expected}}, the interface sent {{received}}.",
-    "unknown": "Unknown engine error."
+  "home": {
+    "title": "What would you like to do?",
+    "plan": {
+      "title": "Plan an experiment",
+      "text": "Define factors and responses and generate the run matrix."
+    },
+    "analyze": {
+      "title": "Analyze existing data",
+      "text": "Type or paste results you have already measured and summarize them."
+    },
+    "compare": {
+      "title": "Compare treatments",
+      "text": "Compare the means of conditions or treatments."
+    },
+    "availability": {
+      "available": "Available in this version",
+      "limited": "Partial: in this version you can only enter data and get the descriptive summary. The {{missing}} part has not been delivered yet.",
+      "missing": {
+        "plan": "design (run-matrix generation)",
+        "compare": "comparison (ANOVA and Tukey)"
+      }
+    },
+    "recentTitle": "Recent projects",
+    "recentEmpty": "No recent projects. Opening and saving projects arrives in the next stage; for now, data stays only in this session.",
+    "open": "Open project",
+    "openUnavailable": "Available once project saving is delivered."
+  },
+  "workflow": {
+    "navLabel": "Workflow steps",
+    "step": {
+      "objective": "Objective",
+      "variables": "Factors and responses",
+      "data": "Design and data",
+      "analysis": "Analysis",
+      "results": "Results"
+    },
+    "status": {
+      "done": "done",
+      "current": "current step",
+      "locked": "locked"
+    },
+    "back": "Back",
+    "next": "Next",
+    "restart": "Start over",
+    "restartConfirm": "This discards the data in this session. Continue?",
+    "home": "Home",
+    "blocked": {
+      "objective": "Choose an objective to continue.",
+      "variables": "Add at least one named response.",
+      "data": "Enter at least one observation with a value and fix the cells with errors.",
+      "analysis": "Choose the response to summarize."
+    }
+  },
+  "variables": {
+    "title": "Factors and responses",
+    "intro": "Factors are the conditions you vary or compare (for example, temperature or enzyme type). Responses are what you measure. You define the names and units.",
+    "factors": "Factors",
+    "responses": "Responses",
+    "addFactor": "Add factor",
+    "addResponse": "Add response",
+    "remove": "Remove",
+    "name": "Name",
+    "unit": "Unit (optional)",
+    "kind": "Type",
+    "kindNumeric": "Quantitative (numbers)",
+    "kindCategorical": "Categorical (labels)",
+    "levels": "Levels (optional)",
+    "levelsHelp": "Separate with semicolons, in the order you want. Empty: uses the labels found in the data, in alphabetical order.",
+    "noFactors": "No factors. You can summarize a response without factors.",
+    "noResponses": "No responses. Add at least one.",
+    "factorHeading": "Factor {{n}}",
+    "responseHeading": "Response {{n}}"
+  },
+  "data": {
+    "title": "Data",
+    "intro": "Type or paste the observations (from Excel, for example). Empty cells are missing data; numbers accept a dot or comma as the decimal separator.",
+    "caption": "Observations table",
+    "rowLabel": "Obs.",
+    "addRow": "Add row",
+    "removeRow": "Remove row {{n}}",
+    "unitColumn": "Experimental unit",
+    "advanced": "Advanced options",
+    "showUnit": "Show the experimental unit column",
+    "showUnitHelp": "Fill in the experimental unit only if you know which measurement belongs to which unit. The app does not assume that rows are independent replicates.",
+    "empty": "No observations yet. Add a row or paste your data.",
+    "pasteNote": "Tip: click a cell and paste (Ctrl+V). Several values copied from Excel fill the following cells.",
+    "pasteIgnored": "{{count}} pasted column(s) beyond the last table column were ignored.",
+    "cellError": "Cell with an error",
+    "errorsSummary": "{{count}} cell(s) with errors. Fix them before analyzing.",
+    "needColumns": "Add factors and responses in the previous step to create the columns."
+  },
+  "analysis": {
+    "title": "Analysis: descriptive summary",
+    "intro": "Summarizes the chosen response with count, missing, mean, variance, standard deviation, minimum and maximum. This describes the data; it is not a comparison test.",
+    "response": "Response",
+    "groupBy": "Group by (optional)",
+    "groupByHelp": "Check factors to summarize each combination of levels separately.",
+    "run": "Calculate summary",
+    "running": "Calculating…",
+    "noResponse": "Add a response to analyze."
   }
 }

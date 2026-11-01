@@ -15,4 +15,6 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 
 ## Especificações
 
-Nenhuma ainda. A primeira prevista é `estatistica-descritiva.md`, na ET02.
+| Método | Situação |
+|---|---|
+| [Estatística descritiva](estatistica-descritiva.md) | implementado; validado numericamente (nativo e WebAssembly) |

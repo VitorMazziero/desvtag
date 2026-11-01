@@ -1,0 +1,46 @@
+{
+  "title": "Results",
+  "table": {
+    "caption": "Descriptive summary of {{response}}",
+    "group": "Group",
+    "overall": "All observations",
+    "n": "Valid n",
+    "missing": "Missing",
+    "mean": "Mean",
+    "variance": "Variance",
+    "sd": "Standard deviation",
+    "min": "Minimum",
+    "max": "Maximum",
+    "undefined": "undefined"
+  },
+  "undefinedReason": {
+    "noValidObservations": "There is no valid observation.",
+    "fewerThanTwoObservations": "The sample variance needs at least two valid observations.",
+    "nonFiniteResult": "The result cannot be represented in 64 bits."
+  },
+  "summary": {
+    "conclusion": "{{valid}} of {{total}} observations of “{{response}}” were summarized.",
+    "evidence": "Overall mean {{mean}} and standard deviation {{sd}}{{unit}}; see the table by group.",
+    "evidenceUndefined": "Not every overall statistic could be calculated; see the reasons in the table.",
+    "nextStepGroups": "Group means describe the data but do not show whether the groups differ. That decision needs a comparison test (ANOVA and Tukey), which has not been delivered yet.",
+    "nextStepNoGroups": "To compare conditions, add a factor and group by it; the comparison test (ANOVA and Tukey) has not been delivered yet."
+  },
+  "labels": {
+    "conclusion": "Conclusion",
+    "evidence": "Evidence",
+    "nextStep": "Next step"
+  },
+  "stale": "The data or options changed after this calculation. Calculate again to update the result.",
+  "facts": {
+    "descriptive": {
+      "no_valid_observations": "No valid observation for this response.",
+      "independence_not_assessed": "n counts observations. The app does not assume they are independent replicates: that depends on how the experiment was run.",
+      "missing_excluded_one": "{{count}} observation without a value was counted as missing and did not enter the mean, variance, minimum or maximum.",
+      "missing_excluded_other": "{{count}} observations without a value were counted as missing and did not enter the mean, variance, minimum or maximum.",
+      "excluded_missing_factor_one": "{{count}} observation with no value in some grouping factor is outside the groups (but counts in the overall summary).",
+      "excluded_missing_factor_other": "{{count}} observations with no value in some grouping factor are outside the groups (but count in the overall summary).",
+      "group_too_small_one": "Group “{{group}}” has {{count}} valid observation; variance and standard deviation need at least two.",
+      "group_too_small_other": "Group “{{group}}” has {{count}} valid observations; variance and standard deviation need at least two."
+    }
+  }
+}

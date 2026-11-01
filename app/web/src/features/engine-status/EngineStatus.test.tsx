@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { createI18n } from "../../i18n";
 import { type EngineResponse, PROTOCOL_VERSION } from "../../services/engine";
 import { createEngineClient } from "../../services/engine/EngineClient";
+import { EngineProvider } from "../../services/engine/EngineContext";
 import { EngineStatus } from "./EngineStatus";
 
 function clientReplying(build: (taskId: string) => EngineResponse) {
@@ -24,18 +25,29 @@ const info = (taskId: string): EngineResponse => ({
       engineVersion: "0.1.0",
       protocolVersion: PROTOCOL_VERSION,
       projectSchemaVersion: 1,
-      capabilities: { methods: [] },
+      capabilities: {
+        methods: [
+          {
+            id: "descriptive_summary",
+            version: 1,
+            implementation: "implemented",
+            validation: "numericallyValidated",
+          },
+        ],
+      },
     },
   },
 });
 
 function renderIn(
   language: "pt-BR" | "en",
-  createClient: Parameters<typeof EngineStatus>[0]["createClient"],
+  createClient: () => ReturnType<typeof createEngineClient>,
 ) {
   return render(
     <I18nextProvider i18n={createI18n(language)}>
-      <EngineStatus createClient={createClient} />
+      <EngineProvider createClient={createClient}>
+        <EngineStatus />
+      </EngineProvider>
     </I18nextProvider>,
   );
 }
@@ -44,13 +56,13 @@ describe("EngineStatus", () => {
   it("shows the engine info in Portuguese", async () => {
     renderIn("pt-BR", clientReplying(info));
     expect(await screen.findByTestId("engine-version")).toHaveTextContent("0.1.0");
-    expect(screen.getByTestId("engine-methods")).toHaveTextContent("Nenhum método científico");
+    expect(screen.getByTestId("engine-methods")).toHaveTextContent("descriptive_summary v1");
     expect(screen.getByTestId("engine-environment")).toHaveTextContent("Navegador");
   });
 
   it("shows the engine info in English", async () => {
     renderIn("en", clientReplying(info));
-    expect(await screen.findByTestId("engine-methods")).toHaveTextContent("No scientific method");
+    expect(await screen.findByTestId("engine-environment")).toHaveTextContent("Browser");
   });
 
   it("presents a coded engine error with its parameters", async () => {
@@ -61,7 +73,11 @@ describe("EngineStatus", () => {
         taskId,
         outcome: {
           status: "error",
-          error: { code: "unsupportedProtocolVersion", params: { expected: "1", received: "9" } },
+          error: {
+            code: "unsupportedProtocolVersion",
+            params: { expected: "1", received: "9" },
+            issues: [],
+          },
         },
       })),
     );

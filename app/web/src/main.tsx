@@ -5,6 +5,8 @@ import { App } from "./app/App";
 import "./app/app.css";
 import { createI18n } from "./i18n";
 import { createDefaultEngineClient } from "./services/engine";
+import { EngineProvider } from "./services/engine/EngineContext";
+import { ProjectProvider } from "./state/ProjectContext";
 import { applyPreferences, loadPreferences, usePreferences } from "./state/preferences";
 import "./themes/fonts.css";
 import "./themes/tokens.css";
@@ -23,13 +25,16 @@ function Root() {
   }, [preferences.language]);
   return (
     <I18nextProvider i18n={i18n}>
-      <App
-        language={preferences.language}
-        theme={preferences.theme}
-        onLanguageChange={setLanguage}
-        onThemeChange={setTheme}
-        createClient={createDefaultEngineClient}
-      />
+      <EngineProvider createClient={createDefaultEngineClient}>
+        <ProjectProvider>
+          <App
+            language={preferences.language}
+            theme={preferences.theme}
+            onLanguageChange={setLanguage}
+            onThemeChange={setTheme}
+          />
+        </ProjectProvider>
+      </EngineProvider>
     </I18nextProvider>
   );
 }

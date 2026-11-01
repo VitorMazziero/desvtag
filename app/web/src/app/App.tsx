@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { EngineStatus } from "../features/engine-status";
 import { LanguageSelector, ThemeSelector } from "../features/settings";
+import { Workflow } from "../features/workflow";
 import type { Language } from "../i18n";
-import type { EngineClient } from "../services/engine";
 import type { Theme } from "../state/preferences";
 
 interface Props {
@@ -10,10 +10,9 @@ interface Props {
   theme: Theme;
   onLanguageChange: (language: Language) => void;
   onThemeChange: (theme: Theme) => void;
-  createClient: () => EngineClient;
 }
 
-export function App({ language, theme, onLanguageChange, onThemeChange, createClient }: Props) {
+export function App({ language, theme, onLanguageChange, onThemeChange }: Props) {
   const { t } = useTranslation();
   return (
     <>
@@ -31,8 +30,11 @@ export function App({ language, theme, onLanguageChange, onThemeChange, createCl
         </div>
       </header>
       <main id="main" className="app-main">
-        <EngineStatus createClient={createClient} />
+        <Workflow language={language} />
       </main>
+      <footer className="app-footer">
+        <EngineStatus />
+      </footer>
     </>
   );
 }

@@ -19,7 +19,6 @@
   },
   "engine": {
     "title": "Motor científico",
-    "provisional": "Tela provisória da fundação técnica (ET01). Ainda não há método estatístico implementado.",
     "loading": "Consultando o motor…",
     "environment": "Ambiente",
     "environmentValue": {
@@ -31,13 +30,107 @@
     "schemaVersion": "Versão do esquema do projeto",
     "methods": "Métodos disponíveis",
     "methodsNone": "Nenhum método científico nesta versão",
-    "methodsCount_one": "{{count}} método",
-    "methodsCount_other": "{{count}} métodos"
+    "unavailable": "Não foi possível comunicar com o motor de cálculo."
   },
-  "errors": {
-    "engineUnavailable": "Não foi possível comunicar com o motor de cálculo.",
-    "invalidRequest": "A solicitação ao motor é inválida.",
-    "unsupportedProtocolVersion": "Versão de protocolo incompatível: o motor espera {{expected}}, a interface enviou {{received}}.",
-    "unknown": "Erro desconhecido do motor."
+  "home": {
+    "title": "O que você quer fazer?",
+    "plan": {
+      "title": "Planejar experimento",
+      "text": "Definir fatores e respostas e gerar a matriz de ensaios."
+    },
+    "analyze": {
+      "title": "Analisar dados existentes",
+      "text": "Digitar ou colar resultados já medidos e resumi-los."
+    },
+    "compare": {
+      "title": "Comparar tratamentos",
+      "text": "Comparar médias de condições ou tratamentos."
+    },
+    "availability": {
+      "available": "Disponível nesta versão",
+      "limited": "Parcial: nesta versão só é possível cadastrar dados e obter o resumo descritivo. A parte {{missing}} ainda não foi entregue.",
+      "missing": {
+        "plan": "de planejamento (geração de matrizes)",
+        "compare": "de comparação (ANOVA e Tukey)"
+      }
+    },
+    "recentTitle": "Projetos recentes",
+    "recentEmpty": "Nenhum projeto recente. A abertura e o salvamento de projetos chegam na etapa seguinte; por ora, os dados ficam apenas nesta sessão.",
+    "open": "Abrir projeto",
+    "openUnavailable": "Disponível quando o salvamento de projetos for entregue."
+  },
+  "workflow": {
+    "navLabel": "Etapas do fluxo",
+    "step": {
+      "objective": "Objetivo",
+      "variables": "Fatores e respostas",
+      "data": "Planejamento e dados",
+      "analysis": "Análise",
+      "results": "Resultados"
+    },
+    "status": {
+      "done": "concluída",
+      "current": "etapa atual",
+      "locked": "bloqueada"
+    },
+    "back": "Voltar",
+    "next": "Avançar",
+    "restart": "Recomeçar",
+    "restartConfirm": "Isso descarta os dados desta sessão. Continuar?",
+    "home": "Início",
+    "blocked": {
+      "objective": "Escolha um objetivo para continuar.",
+      "variables": "Cadastre ao menos uma resposta com nome.",
+      "data": "Digite ao menos uma observação com algum valor e corrija as células com erro.",
+      "analysis": "Escolha a resposta a resumir."
+    }
+  },
+  "variables": {
+    "title": "Fatores e respostas",
+    "intro": "Fatores são as condições que você varia ou compara (por exemplo, temperatura ou tipo de enzima). Respostas são o que você mede. Você define os nomes e as unidades.",
+    "factors": "Fatores",
+    "responses": "Respostas",
+    "addFactor": "Adicionar fator",
+    "addResponse": "Adicionar resposta",
+    "remove": "Remover",
+    "name": "Nome",
+    "unit": "Unidade (opcional)",
+    "kind": "Tipo",
+    "kindNumeric": "Quantitativo (números)",
+    "kindCategorical": "Categórico (rótulos)",
+    "levels": "Níveis (opcional)",
+    "levelsHelp": "Separe por ponto e vírgula, na ordem desejada. Vazio: usa os rótulos presentes nos dados, em ordem alfabética.",
+    "noFactors": "Nenhum fator. É possível resumir uma resposta sem fatores.",
+    "noResponses": "Nenhuma resposta. Cadastre ao menos uma.",
+    "factorHeading": "Fator {{n}}",
+    "responseHeading": "Resposta {{n}}"
+  },
+  "data": {
+    "title": "Dados",
+    "intro": "Digite ou cole as observações (do Excel, por exemplo). Células vazias são dados ausentes; números aceitam ponto ou vírgula decimal.",
+    "caption": "Tabela de observações",
+    "rowLabel": "Obs.",
+    "addRow": "Adicionar linha",
+    "removeRow": "Remover linha {{n}}",
+    "unitColumn": "Unidade experimental",
+    "advanced": "Opções avançadas",
+    "showUnit": "Mostrar a coluna de unidade experimental",
+    "showUnitHelp": "Informe a unidade experimental apenas se souber qual medida pertence a qual unidade. O aplicativo não presume que linhas sejam réplicas independentes.",
+    "empty": "Ainda não há observações. Adicione uma linha ou cole os dados.",
+    "pasteNote": "Dica: clique em uma célula e cole (Ctrl+V). Vários valores copiados do Excel preenchem as células seguintes.",
+    "pasteIgnored": "{{count}} coluna(s) coladas além da última coluna da tabela foram ignoradas.",
+    "cellError": "Célula com erro",
+    "errorsSummary": "{{count}} célula(s) com erro. Corrija antes de analisar.",
+    "needColumns": "Cadastre fatores e respostas na etapa anterior para criar as colunas."
+  },
+  "analysis": {
+    "title": "Análise: resumo descritivo",
+    "intro": "Resume a resposta escolhida com contagem, ausentes, média, variância, desvio-padrão, mínimo e máximo. Isto descreve os dados; não é um teste de comparação.",
+    "response": "Resposta",
+    "groupBy": "Agrupar por (opcional)",
+    "groupByHelp": "Marque fatores para resumir cada combinação de níveis separadamente.",
+    "run": "Calcular resumo",
+    "running": "Calculando…",
+    "noResponse": "Cadastre uma resposta para analisar."
   }
 }

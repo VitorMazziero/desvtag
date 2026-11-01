@@ -1,0 +1,31 @@
+{
+  "issues": {
+    "dataset": {
+      "duplicate_factor_id": "Two factors have the same identifier.",
+      "duplicate_response_id": "Two responses have the same identifier.",
+      "duplicate_observation_id": "Two observations have the same identifier.",
+      "empty_name": "Every factor and response needs a name.",
+      "row_length_mismatch": "Observation {{observation}} does not have the number of columns of the factors and responses.",
+      "factor_value_type": "The value of factor {{factor}} in observation {{observation}} does not match the factor type (number or label).",
+      "undeclared_level": "Level “{{level}}” (observation {{observation}}) is not among the factor's declared levels.",
+      "non_finite_value": "Non-finite value in observation {{observation}}."
+    },
+    "request": {
+      "unknown_response": "The chosen response does not exist.",
+      "unknown_group_factor": "A chosen grouping factor does not exist.",
+      "duplicate_group_factor": "A grouping factor was chosen more than once."
+    }
+  },
+  "cellErrors": {
+    "notANumber": "Not a number. Use a dot or comma as the decimal separator, with no thousands separator.",
+    "notFinite": "Number too large to be represented.",
+    "invalidUnitId": "Use only letters, digits and the symbols _ . : - (up to 64 characters)."
+  },
+  "engine": {
+    "unavailable": "Could not communicate with the calculation engine.",
+    "invalidRequest": "The request sent to the engine is invalid.",
+    "unsupportedProtocolVersion": "Incompatible protocol version: the engine expects {{expected}}, the interface sent {{received}}.",
+    "invalidInput": "The data or options do not allow the calculation:",
+    "unknown": "Unknown engine error."
+  }
+}

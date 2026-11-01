@@ -70,6 +70,16 @@ E2E_BROWSERS=chromium,firefox npm run test:e2e
 
 `E2E_BROWSERS=msedge` usa o Microsoft Edge instalado (não coberto no Linux).
 
+## Validação numérica (referências independentes)
+
+Os casos em `validation/cases/` são executados pelos testes: nativo em `cargo test -p optima-core` (`descriptive_validation`) e WebAssembly em `npm test` em `app/web` (`descriptive.parity.test.ts`, que exige `npm run build:wasm` antes). Para regenerar os casos descritivos (Python 3.13):
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r validation/tools/requirements.txt
+.venv/bin/python validation/tools/make_descriptive_cases.py <pasta-com-os-.dat-do-NIST>
+```
+
 ## Aplicativo desktop (Tauri)
 
 Em `app/desktop/src-tauri/`, depois de `npm run build` em `app/web/`:
@@ -82,7 +92,7 @@ cargo clippy -- -D warnings
 cargo build --features tauri/custom-protocol
 ```
 
-Verificação nativa (WebDriver), em `app/desktop/`; em Linux usa Xvfb:
+Verificação nativa (WebDriver; abre o aplicativo, confere `engine.info` e a estatística descritiva pelo IPC), em `app/desktop/`; em Linux usa Xvfb:
 
 ```bash
 xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop

@@ -1,0 +1,31 @@
+{
+  "issues": {
+    "dataset": {
+      "duplicate_factor_id": "Há dois fatores com o mesmo identificador.",
+      "duplicate_response_id": "Há duas respostas com o mesmo identificador.",
+      "duplicate_observation_id": "Há duas observações com o mesmo identificador.",
+      "empty_name": "Todo fator e toda resposta precisa de um nome.",
+      "row_length_mismatch": "A observação {{observation}} não tem o número de colunas dos fatores e respostas.",
+      "factor_value_type": "O valor do fator {{factor}} na observação {{observation}} não corresponde ao tipo do fator (número ou rótulo).",
+      "undeclared_level": "O nível «{{level}}» (observação {{observation}}) não está entre os níveis declarados do fator.",
+      "non_finite_value": "Valor não finito na observação {{observation}}."
+    },
+    "request": {
+      "unknown_response": "A resposta escolhida não existe.",
+      "unknown_group_factor": "Um fator de agrupamento escolhido não existe.",
+      "duplicate_group_factor": "Um fator de agrupamento foi escolhido mais de uma vez."
+    }
+  },
+  "cellErrors": {
+    "notANumber": "Não é um número. Use ponto ou vírgula decimal, sem separador de milhar.",
+    "notFinite": "Número grande demais para ser representado.",
+    "invalidUnitId": "Use apenas letras, números e os símbolos _ . : - (até 64 caracteres)."
+  },
+  "engine": {
+    "unavailable": "Não foi possível comunicar com o motor de cálculo.",
+    "invalidRequest": "A solicitação ao motor é inválida.",
+    "unsupportedProtocolVersion": "Versão de protocolo incompatível: o motor espera {{expected}}, a interface enviou {{received}}.",
+    "invalidInput": "Os dados ou as opções não permitem o cálculo:",
+    "unknown": "Erro desconhecido do motor."
+  }
+}

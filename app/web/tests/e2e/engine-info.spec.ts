@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 // Executa o build de produção com o motor Rust real compilado para WebAssembly,
 // rodando em um Worker (sem transporte simulado).
 
-test.describe("engine.info via WebAssembly Worker", () => {
+test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () => {
   test.use({ locale: "pt-BR" });
 
   test("shows the real engine versions in Portuguese by default for a pt-BR system", async ({
@@ -14,7 +14,7 @@ test.describe("engine.info via WebAssembly Worker", () => {
     await expect(page.getByTestId("engine-protocol")).toHaveText("1");
     await expect(page.getByTestId("engine-schema")).toHaveText("1");
     await expect(page.getByTestId("engine-environment")).toContainText("Navegador");
-    await expect(page.getByTestId("engine-methods")).toContainText("Nenhum método científico");
+    await expect(page.getByTestId("engine-methods")).toContainText("descriptive_summary v1");
     await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "soft-light");
   });
@@ -26,7 +26,7 @@ test.describe("engine.info via WebAssembly Worker", () => {
     await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
 
     await page.getByLabel("Idioma").selectOption("en");
-    await expect(page.getByTestId("engine-methods")).toContainText("No scientific method");
+    await expect(page.getByTestId("engine-environment")).toContainText("Browser");
     await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
 
     await page.getByLabel("Theme").selectOption("modern-dark");
@@ -40,7 +40,7 @@ test.describe("engine.info via WebAssembly Worker", () => {
 
   test("is operable by keyboard: skip link first, visible focus", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toBeVisible();
+    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
     await page.keyboard.press("Tab");
     const skip = page.getByRole("link", { name: "Ir para o conteúdo" });
     await expect(skip).toBeFocused();
@@ -59,7 +59,7 @@ test.describe("first access in English", () => {
   test("detects the system language", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.getByTestId("engine-methods")).toContainText("No scientific method");
+    await expect(page.getByTestId("engine-environment")).toContainText("Browser");
   });
 });
 

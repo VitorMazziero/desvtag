@@ -37,7 +37,7 @@ Todos os caminhos da tabela abaixo começam em **`app/crates/optima-core/src/`**
 | C02 | `validation/{dataset,design,model,issues}.rs` | Dados/configuração → erros e avisos codificados; usa C01; sem textos de interface |
 | C03 | `numeric/{matrix,qr,cholesky,svd,summation,root_finding,integration,special_functions,random}.rs` | Operações numéricas estáveis, rank, convergência, tolerâncias e RNG com semente explícita; base matemática |
 | C04 | `distributions/{normal,student_t,f,chi_square,studentized_range,noncentral,multivariate_t}.rs` | CDF, caudas e quantis necessários; usa C03; implementações progressivas conforme métodos consumidores |
-| C05 | `descriptive/{summary,grouped,quantiles}.rs` | Dados elegíveis → n, média, dispersão e quantis; usa C01–C03 |
+| C05 | `descriptive/{mod,summary,grouped}.rs` (ET02); `quantiles.rs` quando houver consumidor | Dados elegíveis → n, média, dispersão e quantis; usa C01–C03 |
 | C06 | `models/{terms,design_matrix,linear,prediction,covariance,estimability,marginal_means}.rs` | Dados + especificação → coeficientes, rank, resíduos, covariância, predições e funções estimáveis; usa C01–C04 |
 | C07 | `inference/{one_way_anova,factorial_anova,regression_anova,welch,intervals,effect_sizes,lack_of_fit}.rs` | Modelos/dados + hipóteses → tabelas, testes, intervalos; usa C04–C06; especifica tipo de soma de quadrados |
 | C08 | `diagnostics/{residuals,influence,assumptions,adequacy}.rs` | Modelo + estrutura experimental → diagnósticos calculados e limitações; usa C06–C07 |
@@ -50,7 +50,7 @@ Todos os caminhos da tabela abaixo começam em **`app/crates/optima-core/src/`**
 | C15 | `power/{anova,regression,contrasts,simulation}.rs` | Efeito de interesse + estrutura + erro/precisão → potência/tamanho necessário; usa C03–C07 e C14 quando pertinente |
 | C16 | `visualization/{effects,interactions,pareto,observed_predicted,residuals,means,surface,contour}.rs` | Resultado + domínio → séries e malhas científicas sem estilo; usa modelos, diagnósticos e comparações |
 | C17 | `optimization/{objective,constraints,desirability,search,candidates,confirmation}.rs` | Modelos + alvos + domínio → candidatos, restrições, compromisso, previsão e plano de confirmação; usa C03 e C06 |
-| C18 | `interpretation/{facts,rules,recommendations}.rs` | Dados/resultados/diagnósticos → mensagens por chave, parâmetros e evidência; não gera traduções nem recalcula testes |
+| C18 | `interpretation/{mod,facts,rules}.rs` (ET02); `recommendations.rs` com as recomendações de método | Dados/resultados/diagnósticos → mensagens por chave, parâmetros e evidência; não gera traduções nem recalcula testes |
 | C19 | `registry/{methods,capabilities,status}.rs`, `errors.rs`, `provenance.rs`, `trace.rs` | Registro de métodos disponíveis, requisitos, versão, evidências e passos opcionais; declara dependências e situação |
 
 Os arquivos com múltiplos métodos, como `adjustments.rs`, podem ser subdivididos se crescerem; o arquivo de entrada continua identificável. Não expor matriz/algoritmo interno de um ajuste como contrato público se uma estrutura estável de resultado for suficiente.
@@ -73,25 +73,25 @@ Todos os caminhos abaixo começam em **`app/web/src/`**, salvo indicação contr
 
 | ID | Arquivos de entrada e suporte | Responsabilidade |
 |---|---|---|
-| U01 | `app/{App,AppShell,Router}.tsx`, `features/home/index.ts`, `features/home/{RecentProjects,StartActions}.tsx` | Estrutura principal, projetos recentes e três entradas |
+| U01 | `app/App.tsx` (`AppShell` e `Router` não criados: [DT-0007](../decisoes-tecnicas/dt-0007-decisoes-et02-interface.md)), `features/home/{index.ts,availability.ts,RecentProjects,StartActions}` | Estrutura principal, projetos recentes e três entradas |
 | U02 | `features/workflow/{index.ts,Workflow.tsx,steps.ts,guards.ts}` | Cinco etapas, navegação contextual e etapas satisfeitas/invalidadas |
-| U03 | `features/experiment/{index.ts,FactorEditor.tsx,ResponseEditor.tsx,StructureEditor.tsx}` | Fatores, respostas, unidades experimentais, blocos, tempos e réplicas |
+| U03 | `features/experiment/{index.ts,FactorEditor.tsx,ResponseEditor.tsx}` (ET02); `StructureEditor.tsx` na ET03 | Fatores, respostas, unidades experimentais, blocos, tempos e réplicas |
 | U04 | `features/data/{index.ts,DataGrid.tsx,columnRoles.ts,editing.ts}` | Tabela, edição e erros por célula; alterações geram revisão e invalidam resultados dependentes |
 | U05 | `features/import/{index.ts,ImportWizard.tsx,preview.ts,mapping.ts}`; `services/import/{csv,xlsx,clipboard,normalize}.ts` | Leitura e normalização, prévia e confirmação de papéis; não calcula estatística |
 | U06 | `features/design/{index.ts,DesignSelector.tsx,DesignOptions.tsx,RunMatrix.tsx}` | Escolha, condições, contagem de ensaios e matriz; recebe capacidades do motor |
-| U07 | `features/analysis/{index.ts,AnalysisSetup.tsx,ModelTerms.tsx,ComparisonSetup.tsx}` | Hipóteses, modelos alternativos, comparações e configurações avançadas |
-| U08 | `features/results/{index.ts,ResultsView.tsx,AnovaTable.tsx,ComparisonTable.tsx,DiagnosticPanel.tsx,Interpretation.tsx}` | Tabelas e explicações curtas localizadas a partir de resultados do motor |
+| U07 | `features/analysis/{index.ts,AnalysisSetup.tsx,buildRequest.ts}` (ET02); `ModelTerms.tsx` e `ComparisonSetup.tsx` nas etapas dos modelos e das comparações | Hipóteses, modelos alternativos, comparações e configurações avançadas |
+| U08 | `features/results/{index.ts,ResultsView.tsx,DescriptiveTable.tsx,Interpretation.tsx}` (ET02); `AnovaTable`, `ComparisonTable` e `DiagnosticPanel` nas etapas seguintes | Tabelas e explicações curtas localizadas a partir de resultados do motor |
 | U09 | `features/charts/{index.ts,ChartView.tsx,ChartEditor.tsx,SurfaceView.tsx,LetterLayer.tsx}`; `services/charts/{spec,renderer,export}.ts` | Aparência e renderização, rótulos e letras, projeções 2D/3D; sem inferência em JavaScript |
 | U10 | `features/optimization/{index.ts,ObjectivesEditor.tsx,ConstraintsEditor.tsx,CandidateTable.tsx}` | Objetivos, restrições, desejabilidade e candidatos retornados pelo motor |
-| U11 | `features/project/{index.ts,ProjectTree.tsx,HistoryView.tsx,SaveStatus.tsx}`; `state/{project,preferences,jobs}.ts` | Experimentos, revisões, seleção e preferências; não replica resultados em estados independentes |
-| U12 | `services/engine/{index,EngineClient,contracts.generated,wasmClient,tauriClient}.ts`; `workers/engine.worker.ts` | Contrato único e escolha de adaptador; Worker navegador, comandos no desktop |
+| U11 | `features/project/{index.ts,ProjectTree.tsx,HistoryView.tsx,SaveStatus.tsx}` (ET03); `state/{project,preferences}.ts` e `state/ProjectContext.tsx` (ET02), `state/jobs.ts` (ET08) | Experimentos, revisões, seleção e preferências; não replica resultados em estados independentes |
+| U12 | `services/engine/{index,EngineClient,contracts.generated,wasmClient,tauriClient}.ts`, `services/engine/EngineContext.tsx`; `workers/engine.worker.ts` | Contrato único e escolha de adaptador; Worker navegador, comandos no desktop |
 | U13 | `services/storage/{StorageProvider,browserRecovery,localFile,desktopFile,autosave,revisionStore}.ts` | Abrir/salvar bytes e recuperar sessões; serialização do projeto pertence a P02 |
 | U14 | `services/drive/{auth.web,auth.desktop,client,folder,sync,conflicts}.ts`; `features/drive/{DrivePicker,ConnectionStatus,ConflictDialog}.tsx` | Login opcional, seleção por arquivo, reconexão, sincronização e conflitos |
 | U15 | `features/sharing/{index.ts,OpenShared.tsx,CommentsPanel.tsx}` | Compartilhar/abrir/cópia e comentários em revisão identificada; sem presumir edição simultânea |
 | U16 | `services/export/{figure,table,report,provenance}.ts`; `features/export/ExportDialog.tsx` | Figuras SVG/PDF/PNG, tabelas CSV/XLSX, relatórios HTML/PDF e, depois, DOCX |
-| U17 | `i18n/{index,format}.ts`, `i18n/locales/{pt-BR,en}/{common,methods,diagnostics,results}.json` | Textos, formatação e idioma da exportação; preserva dados internos |
+| U17 | `i18n/{index,format}.ts`, `i18n/locales/{pt-BR,en}/{common,results,diagnostics}.json` (`methods.json` quando houver textos de métodos) | Textos, formatação e idioma da exportação; preserva dados internos |
 | U18 | `themes/{tokens,fonts,soft-light,modern-dark,professional}.css`; `features/settings/{index.ts,ThemeSelector,LanguageSelector,UpdateSettings}.tsx`; `state/preferences.ts` | Três temas, acessibilidade, preferências e atualização |
-| U19 | `services/errors/{codes,presentation}.ts`, `services/logging/local.ts` | Erros compreensíveis e registro local sem dados experimentais/credenciais por padrão |
+| U19 | `services/errors/{codes,presentation}.ts` (ET02); `services/logging/local.ts` ainda não criado | Erros compreensíveis e registro local sem dados experimentais/credenciais por padrão |
 | U20 | `features/engine-status/{index.ts,EngineStatus.tsx}` | Tela provisória da ET01 que exibe `engine.info`; substituída pelo fluxo guiado na ET02 |
 
 Convenção das funcionalidades: lógica e contratos em `.ts`, componentes em `.tsx`; `index.ts` exporta a API pública.

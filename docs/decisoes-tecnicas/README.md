@@ -14,6 +14,7 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0004](dt-0004-pacote-tauri-workspace-proprio.md) | Pacote Tauri em workspace próprio e transporte nativo | Aceita | 2026-11-01 |
 | [DT-0005](dt-0005-contrato-serializacao-tipos.md) | Contrato, serialização e geração de tipos TypeScript | Aceita | 2026-11-01 |
 | [DT-0006](dt-0006-idiomas-temas-fontes.md) | Idiomas, temas, fontes e preferências | Aceita | 2026-11-01 |
+| [DT-0007](dt-0007-decisoes-et02-interface.md) | Decisões da ET02: grade de dados, navegação, estado, soma e verificação nativa | Aceita | 2026-11-01 |
 
 ## Regras
 

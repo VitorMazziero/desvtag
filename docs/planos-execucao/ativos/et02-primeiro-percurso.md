@@ -52,22 +52,22 @@ Entregar o primeiro caminho executável completo: cadastrar fatores e respostas,
 
 ## 5. Tarefas
 
-- [ ] **T01** — `app/{App,AppShell,Router}.tsx` e tela inicial (`features/home`) com as três entradas; Abrir projeto aparece desabilitado até a ET03.
-- [ ] **T02** — `features/workflow`: cinco etapas (Objetivo → Fatores e respostas → Planejamento/dados → Análise → Resultados), regras de acesso (`guards.ts`) e indicação de etapas satisfeitas.
-- [ ] **T03** — Tipos C01 de fator, resposta, observação e conjunto de dados; validação C02 com códigos (coluna vazia, valor não numérico, n insuficiente).
-- [ ] **T04** — `features/experiment`: editores de fatores e respostas; `features/data`: grade, edição, papéis de coluna básicos e erros por célula.
-- [ ] **T05** — C03 `numeric/summation.rs` e C05 `descriptive/{summary,grouped}.rs` com estado indefinido explícito.
-- [ ] **T06** — Operação `descriptive.summarize` no engine; despacho nos dois adaptadores; descarte de respostas de tarefas antigas.
-- [ ] **T07** — C18 inicial: fatos interpretáveis por chave (por exemplo, amostra insuficiente, ausentes excluídos) com parâmetros; textos em U17.
-- [ ] **T08** — `features/results`: tabela descritiva e explicação curta.
-- [ ] **T09** — Temas aplicados a botões, campos, tabelas, navegação e estados; contraste verificado; laranja EnziTAG fora de texto normal.
-- [ ] **T10** — Idiomas em toda a interface; troca de idioma e tema preserva dados; formatação de números e datas por idioma.
-- [ ] **T11** — U19: códigos de erro → mensagens PT/EN; registro local sem dados experimentais.
-- [ ] **T12** — Caso de validação `validation/cases/descriptive_summary/` com referência Python e conjuntos de precisão numérica do NIST StRD (estatística univariada).
-- [ ] **T13** — Teste de paridade nativo × WASM com os mesmos dados.
-- [ ] **T14** — E2E no navegador (cadastro → dados → resultado em PT e EN) e verificação do aplicativo Windows conforme DT.
-- [ ] **T15** — Acessibilidade: navegação por teclado no fluxo, foco visível, rótulos de campos e verificação automatizada de contraste.
-- [ ] **T16** — Documentação: [`docs/metodos/estatistica-descritiva.md`](../../metodos/README.md), fichas C05, U01–U04, U17–U19; matriz de cobertura.
+- [x] **T01** — `app/{App,AppShell,Router}.tsx` e tela inicial (`features/home`) com as três entradas; Abrir projeto aparece desabilitado até a ET03.
+- [x] **T02** — `features/workflow`: cinco etapas (Objetivo → Fatores e respostas → Planejamento/dados → Análise → Resultados), regras de acesso (`guards.ts`) e indicação de etapas satisfeitas.
+- [x] **T03** — Tipos C01 de fator, resposta, observação e conjunto de dados; validação C02 com códigos (coluna vazia, valor não numérico, n insuficiente).
+- [x] **T04** — `features/experiment`: editores de fatores e respostas; `features/data`: grade, edição, papéis de coluna básicos e erros por célula.
+- [x] **T05** — C03 `numeric/summation.rs` e C05 `descriptive/{summary,grouped}.rs` com estado indefinido explícito.
+- [x] **T06** — Operação `descriptive.summarize` no engine; despacho nos dois adaptadores; descarte de respostas de tarefas antigas.
+- [x] **T07** — C18 inicial: fatos interpretáveis por chave (por exemplo, amostra insuficiente, ausentes excluídos) com parâmetros; textos em U17.
+- [x] **T08** — `features/results`: tabela descritiva e explicação curta.
+- [x] **T09** — Temas aplicados a botões, campos, tabelas, navegação e estados; contraste verificado; laranja EnziTAG fora de texto normal.
+- [x] **T10** — Idiomas em toda a interface; troca de idioma e tema preserva dados; formatação de números e datas por idioma.
+- [x] **T11** *(mensagens feitas; `logging/local.ts` não criado por falta de uso, ver seção 12)* — U19: códigos de erro → mensagens PT/EN; registro local sem dados experimentais.
+- [x] **T12** — Caso de validação `validation/cases/descriptive_summary/` com referência Python e conjuntos de precisão numérica do NIST StRD (estatística univariada).
+- [x] **T13** — Teste de paridade nativo × WASM com os mesmos dados.
+- [ ] **T14** *(navegador concluído; Windows pendente, ver seção 11)* — E2E no navegador (cadastro → dados → resultado em PT e EN) e verificação do aplicativo Windows conforme DT.
+- [x] **T15** *(automatizada; leitor de tela manual pendente)* — Acessibilidade: navegação por teclado no fluxo, foco visível, rótulos de campos e verificação automatizada de contraste.
+- [x] **T16** — Documentação: [`docs/metodos/estatistica-descritiva.md`](../../metodos/README.md), fichas C05, U01–U04, U17–U19; matriz de cobertura.
 
 ## 6. Entregas
 
@@ -99,10 +99,53 @@ DTs da seção 4; fichas de módulo; especificação do método descritivo; [mat
 
 ## 11. Registro de progresso
 
-| Data | Registro |
+### Estado atual (retomada)
+
+| Item | Valor |
 |---|---|
-| — | Etapa não iniciada. |
+| Branch | `claude/epic-keller-3ad7jc` (PR [#1](https://github.com/VitorMazziero/enzitag-optima/pull/1) para `main`, rascunho) |
+| Etapa e tarefa | ET02: T01–T13 e T15–T16 concluídas; **T14 aberta** só pela verificação no Windows |
+| Código entregue | Rust: dados, validação, soma compensada, descritiva, fatos, operação `descriptiveSummarize`. Web: início, fluxo de cinco etapas, editores, grade, análise, resultados e interpretação em PT/EN nos três temas |
+| Pendente para concluir | Evidência no **Windows** (critério 1 e T14), a mesma pendência da [ET01](et01-fundacao-tecnica.md): job `desktop-windows` da CI e/ou máquina Windows 11. Verificação manual com leitor de tela |
+| Próxima ação | Resolver a verificação nativa no Windows; depois mover ET01 e ET02 para `concluidos/` e ativar a ET03 |
+
+### Evidências (2026-11-01)
+
+Ambiente: Linux (Ubuntu 24.04), Rust 1.97.0, Node 22.23.4, Python 3.13.18 (numpy 2.5.4, scipy 1.18.1, mpmath 1.4.1), Chromium 1248 e Firefox 157.0 (Playwright 1.64.1), WebKitGTK 2.52.6.
+
+| Verificação | Comando | Resultado |
+|---|---|---|
+| Rust: formato, lint, testes | `cargo fmt --check`; `cargo clippy --workspace --all-targets -- -D warnings`; `cargo test --workspace` | sem diferenças; sem avisos; 69 testes passam (inclui 2 de validação NIST nativos) |
+| Validação nativa | `cargo test -p optima-core --test descriptive_validation` | 9 de 9 conjuntos NIST dentro de erro relativo 1e-12 do exato; o caso `NumAcc4` derrota a fórmula ingênua (erro > 1e-3) |
+| Validação WebAssembly | `npm test` (`descriptive.parity.test.ts`) | 9 de 9 conjuntos, mesmas tolerâncias, mais estado indefinido preservado na fronteira WASM |
+| Testes web | `npm test` | 83 testes (cliente, i18n com plural, componentes, contraste, guardas do fluxo, colagem, montagem do conjunto de dados, interpretação) |
+| E2E (motor WASM real) | `E2E_BROWSERS=chromium,firefox npm run test:e2e` | 28 de 28: fluxo completo em PT e EN, colagem do Excel, erro de célula, troca de idioma e tema preservando o resultado, resultado obsoleto bloqueado, teclado, três temas, axe sem violações em cada etapa e tema |
+| Acessibilidade | `tests/e2e/accessibility.spec.ts` | axe WCAG 2.0/2.1 A e AA sem violações; controle negativo detecta `image-alt`, `label`, `button-name` |
+| Nativo (Tauri, Linux) | `xvfb-run -a node tests/native-smoke.mjs …` | `engine.info` e a descritiva (média 5, variância 32/7) calculadas pelo motor nativo via IPC |
+| Inspeção visual | capturas das etapas nos três temas | conferidas; tabela, interpretação, erro de célula e passos legíveis |
+| Sem estatística no TypeScript | `grep` por `Math.sqrt/pow/log/exp`, `reduce`, `variance` em `src` | nenhuma ocorrência fora de testes, tipos gerados e textos (só `parseNumberCell` e `formatNumber`) |
+
+### Registro por tarefa
+
+| Tarefa | Registro |
+|---|---|
+| ET02-T01, T02 | `app/App.tsx`, `features/home`, `features/workflow`. Sem `AppShell`/`Router` ([DT-0007](../../decisoes-tecnicas/dt-0007-decisoes-et02-interface.md)); caminhos "Planejar" e "Comparar" mostram "Parcial" derivado do registro de métodos |
+| ET02-T03, T05, T06 | Commit `feat(et02): add descriptive statistics in Rust…`; ver [C05](../../modulos/c05-estatistica-descritiva.md) |
+| ET02-T04 | `features/experiment`, `features/data` (grade própria, colagem, erros por célula) |
+| ET02-T07, T08 | Fatos em `interpretation/`; `features/results` |
+| ET02-T09, T10, T11 | Temas aplicados e testados; idiomas com plural; `services/errors` |
+| ET02-T12 | `validation/cases/descriptive_summary/` (9 casos) e `validation/tools/` |
+| ET02-T13 | Paridade: os mesmos casos de referência validam o motor nativo e o WASM; a equivalência entre as duas plataformas é por transitividade (ambas dentro de 1e-12 do exato), não por comparação direta dos bits |
+| ET02-T14 | Navegador concluído. **Windows pendente**: ver [ET01](et01-fundacao-tecnica.md#11-registro-de-progresso) |
+| ET02-T15 | Contraste, axe e teclado automatizados; leitor de tela **não** testado |
+| ET02-T16 | Especificação do método, fichas C05, U01–U04, U17–U19, DT-0007, matriz e mapa atualizados |
 
 ## 12. Desvios e descobertas
 
-Nenhum até o momento.
+- **Defeito de `NaN.max(0.0)`** (teste unitário): um estouro viraria variância 0; corrigido antes do truncamento e coberto por teste.
+- **Plural**: a primeira versão tinha "observação(ões)". O teste de plural revelou ainda que, em pt-BR, contagens ≥ 1.000.000 caíam no inglês por faltar a categoria `many`; corrigido, e a paridade de chaves agora compara formas de plural por idioma.
+- **Parâmetros dos fatos são texto**: o plural não funcionava no navegador real porque `count` chegava como `"1"`; o teste E2E mostrou a chave crua na tela; `factParams` converte e há teste de componente.
+- **Servidor de preview antigo** reaproveitado pelo Playwright mascarou o resultado de uma execução; encerrado e rerodado (28 de 28 com build novo).
+- **Firefox**: `ClipboardEvent` ignora `clipboardData` no construtor; o teste usa `Event` com `clipboardData` definido. A colagem com o clipboard real do sistema não foi exercitada de forma automatizada.
+- **`services/logging/local.ts`** não foi criado: não há o que registrar ainda.
+- **Resultado numérico da `NumAcc4`**: o desvio-padrão sobre os binários (0,100000000559) difere do certificado (0,1) por 5,6e-10, dentro do limite 5,9e-10 derivado da conversão decimal→binário; isso é propriedade dos dados, não erro do algoritmo.

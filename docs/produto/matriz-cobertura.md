@@ -37,7 +37,7 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 
 | Item | Fase | Versão | Etapa | Situação | Evidência |
 |---|---|---|---|---|---|
-| Estatística descritiva (contagem, ausentes, média, variância, desvio-padrão, por grupo) | F01 | v0.1 | ET02 | não iniciado | — |
+| Estatística descritiva (contagem, ausentes, média, variância, desvio-padrão, mínimo, máximo, por grupo) | F01 | v0.1 | ET02 | implementado; validado numericamente (nativo e WebAssembly, 9 casos NIST); Windows pendente | [método](../metodos/estatistica-descritiva.md#10-validação), [casos NIST](../../validation/cases/descriptive_summary/001-nist-numacc1/README.md) |
 | Distribuições Normal, t, F e qui-quadrado | F03 | v0.1 | ET04 | não iniciado | — |
 | Regressão linear: termos, interações, quadráticos, estimabilidade, predição | F03/F06 | v0.1 | ET04, ET07 | não iniciado | — |
 | ANOVA da regressão e intervalos | F03 | v0.1 | ET04 | não iniciado | — |
@@ -95,11 +95,11 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 |---|---|---|---|---|---|
 | Windows 11 de 64 bits (Tauri) | F00–F01 | v0.1 | ET01, ET02 | em andamento: build Tauri e IPC nativo verificados em Linux; execução no Windows pendente | [ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md#11-registro-de-progresso) |
 | Chrome, Edge e Firefox atuais (WASM) | F00–F01 | v0.1 | ET01, ET02 | em andamento: E2E em Chromium e Firefox; Edge e Chrome estável pendentes | [ET01](../planos-execucao/ativos/et01-fundacao-tecnica.md#11-registro-de-progresso) |
-| Português e inglês | F01 | v0.1 | ET01, ET02 | em andamento: esqueleto e paridade de chaves (ET01); interface completa na ET02 | — |
-| Temas Soft Light, Modern Dark e Professional | F01 | v0.1 | ET01, ET02 | em andamento: tokens, três temas e contraste testados (ET01); componentes na ET02 | — |
-| Tela inicial, três entradas e fluxo guiado | F01 | v0.1 | ET02 | não iniciado | — |
-| Explicações curtas (conclusão, evidência, próximo passo) | F01–F07 | v0.1 | ET02–ET08 | não iniciado | — |
-| Digitação e colagem do Excel | F01/F02 | v0.1 | ET02, ET03 | não iniciado | — |
+| Português e inglês | F01 | v0.1 | ET01, ET02 | implementado para as funcionalidades da ET02 (paridade de chaves e de plural testada); cada etapa seguinte estende | [U17](../modulos/u17-idiomas.md) |
+| Temas Soft Light, Modern Dark e Professional | F01 | v0.1 | ET01, ET02 | implementado para os componentes da ET02 (contraste e axe nos três temas); cada etapa seguinte estende | [U18](../modulos/u18-temas-e-acessibilidade.md) |
+| Tela inicial, três entradas e fluxo guiado | F01 | v0.1 | ET02 | implementado (E2E em Chromium e Firefox; sem projetos recentes até a ET03); Windows pendente | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
+| Explicações curtas (conclusão, evidência, próximo passo) | F01–F07 | v0.1 | ET02–ET08 | em andamento: descritiva (ET02) | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
+| Digitação e colagem do Excel | F01/F02 | v0.1 | ET02, ET03 | implementado (grade e colagem com vírgula decimal e erros por célula); importação de arquivos na ET03 | [ET02](../planos-execucao/ativos/et02-primeiro-percurso.md#11-registro-de-progresso) |
 | Importação CSV e XLSX com prévia | F02 | v0.1 | ET03 | não iniciado | — |
 | Importação de matrizes externas | F02 | v0.1 | ET03 | não iniciado | — |
 | Projeto `.enzitag`, vários experimentos, revisões | F02 | v0.1 | ET03 | não iniciado | — |

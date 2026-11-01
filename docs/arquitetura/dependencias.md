@@ -33,6 +33,7 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 | `jsdom` | 30.1.3 | DOM nos testes | MIT |
 | `@testing-library/react` 16.3.3, `dom` 10.4.2, `user-event` 14.6.8, `jest-dom` 6.9.1 | — | Testes de componentes | MIT |
 | `@playwright/test` | 1.64.1 | Testes E2E em navegadores reais | Apache-2.0 |
+| `@axe-core/playwright` | 4.14.0 | Varredura automática de acessibilidade nos E2E (somente desenvolvimento) | MPL-2.0 |
 | `@biomejs/biome` | 2.6.4 | Lint e formatação | MIT OR Apache-2.0 |
 | `@tauri-apps/cli` | 2.12.4 | Build e ícones do aplicativo Windows | Apache-2.0 OR MIT |
 | `@types/node` 22.20.5, `@types/react` 19.3.0, `@types/react-dom` 19.3.0 | — | Tipos | MIT |
