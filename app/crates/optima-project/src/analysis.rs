@@ -31,7 +31,7 @@ pub struct AnalysisOptions {
 #[ts(export)]
 pub enum AnalysisResult {
     /// Resumo descritivo.
-    Descriptive(DescriptiveResult),
+    Descriptive(Box<DescriptiveResult>),
     /// Comparação de tratamentos de um fator (ANOVA, Tukey, letras, diagnósticos).
     OneWayComparison(Box<OneWayResult>),
 }
