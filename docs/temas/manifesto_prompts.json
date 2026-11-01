@@ -1,0 +1,20 @@
+[
+  {
+    "arquivo": "prompts/modern-dark.txt",
+    "titulo_original": "Modern Dark",
+    "tamanho_bytes": 5897,
+    "sha256": "294B389093F9DC25F39ED220C9AEEB55F0B0DD12A049AEB9BA8E9DCA90D0A115"
+  },
+  {
+    "arquivo": "prompts/professional.txt",
+    "titulo_original": "Professional",
+    "tamanho_bytes": 5354,
+    "sha256": "A263AEC1427E9B5D2321B0395377219DC01237DDE31714FCBD42ECEA6DA2D52F"
+  },
+  {
+    "arquivo": "prompts/software.txt",
+    "titulo_original": "Software",
+    "tamanho_bytes": 5916,
+    "sha256": "B331C647B7710EC80B31BD2D61CDCDA9B8D369E9A8EDE93579301309354A73FB"
+  }
+]

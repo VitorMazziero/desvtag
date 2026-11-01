@@ -2,6 +2,7 @@
 
 - [Aprendizagem](aprendizado/README.md): explicações de Rust, matemática e integração de cada módulo.
 - [Métodos](metodos/README.md): fundamentação, pressupostos e procedimentos implementados.
+- [Temas visuais](temas/README.md): prompts originais e adaptação do Soft Light para a paleta EnziTAG.
 - [Preparação do GitHub](GITHUB.md): conta, nome do repositório e estado da publicação.
 - [Concepção](../plans/CONCEPCAO_APP.md): requisitos confirmados e propostas.
 - [Catálogo funcional](../plans/CATALOGO_FUNCIONAL.md): planejamentos, métodos e resultados incluídos no escopo.

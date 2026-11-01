@@ -6,6 +6,8 @@ Responsabilidades previstas: navegação guiada, cadastro de fatores e respostas
 
 Português e inglês são requisitos desde o início, no navegador e no Windows. Os textos de navegação, validação, explicação e apresentação de resultados devem ser organizados separadamente da lógica, com cobertura equivalente nos dois idiomas. Preservar os nomes e observações digitados pelo usuário.
 
+Os temas iniciais serão Modern Dark, Professional e Soft Light. Seus [prompts e orientações](../../docs/temas/README.md) ficam na documentação. Soft Light utiliza a base Software, com cores adaptadas ao logo EnziTAG. O seletor de tema deve preservar a análise, os dados e o idioma escolhidos.
+
 A interface chama o núcleo científico pela integração correspondente ao ambiente. Os cálculos estatísticos permanecem em Rust.
 
 O uso local deve funcionar sem login. Google Drive é uma integração opcional em avaliação. A estrutura das telas, formatos de importação e bibliotecas de gráficos ainda serão definidos.

@@ -12,6 +12,7 @@ EnziTAG Optima is a planned application for researchers and students, with a gui
 
 - An intuitive interface for beginners, with user-defined factors and responses.
 - Portuguese and English from the start, on Windows and in the browser.
+- Initial Modern Dark, Professional and Soft Light themes, with the EnziTAG palette for Soft Light.
 - The full Protimiza method catalogue, extended with the methods discussed for EnziTAG Optima.
 - Experimental design and analysis of previously collected data.
 - Treatment comparisons, including Tukey and compact letter displays in charts.
@@ -53,6 +54,7 @@ Code areas currently contain responsibility descriptions only. Build configurati
 - [Approved functional catalogue](plans/CATALOGO_FUNCIONAL.md).
 - [Architecture and learning sequence](plans/ARQUITETURA_E_APRENDIZADO.md).
 - [Pending decisions](plans/DECISOES_PENDENTES.md).
+- [Visual themes and original prompts](docs/temas/README.md).
 - [Contributing](CONTRIBUTING.md).
 - [GitHub preparation](docs/GITHUB.md).
 

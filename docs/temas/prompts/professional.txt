@@ -1,0 +1,78 @@
+<prompt>
+<task>
+Apply this visual style to the user's existing project. Inspect and preserve its stack, copy, routes, and behavior. Follow existing component and styling conventions. Treat framework, library, and page examples in these design instructions as illustrations; they do not require a stack change or new sections. Scope changes to the user's requested work.
+
+Keep controls keyboard accessible, focus visible, and text legible. Preserve reading order, responsive behavior, and reduced-motion preferences. Verify actual states at the rendered width. The user's stack and content take precedence over illustrative implementation details.
+</task>
+
+<design-system>
+# Professional
+
+## Identity
+
+Use long serif statements, narrow explanatory copy, ivory grounds, and fine gold rules. The page is spacious and precise, with most emphasis coming from type scale and the relationship between broad headings and smaller text.
+
+## Layout
+
+Open with a large text-led statement across most of the page. An italic line can begin farther inward, creating a second alignment. Put supporting prose and the main actions beneath it in separate columns. The opening does not need an image.
+
+For longer sections, place a heading in the left portion and entries in the wider right portion. Alternate open ivory areas with quiet pale bands. Feature and benefit lists can share these bands; editorial images, numbered steps, quotations, and comparisons stay within the same broad measure. Use a centered closing statement that continues into a light footer.
+
+Let the brief determine which sections and content types appear. Maintain the broad-to-narrow relationship without requiring a business landing page, prices, or endorsements.
+
+## Typography
+
+Use EB Garamond regular and italic for headings, numbers, and quotations, bound to "Professional Garamond". Use Instrument Sans for paragraphs, navigation, metadata, and controls, bound to "Professional Instrument". The large opening scales from 68px to 128px with close leading and tight tracking. Keep the serif's regular weight; extra boldness would change its character. Sans labels can be small, uppercase, and widely tracked. Reading copy has generous leading and a controlled line length.
+
+## Color and surfaces
+
+Use ivory as ground and a slightly lighter tone for the few panel areas. Dark warm ink carries headings and reading; muted ink supports secondary information. Gold marks rules and small accents, with a darker gold role for readable emphasis.
+
+Keep corners barely rounded and edges thin. Most content rests directly on the page. A featured comparison may use a pale raised surface and a restrained shadow, but this should remain a local emphasis.
+
+## Components
+
+Actions are compact rectangles with a dark primary fill and an outlined secondary treatment. Keep labels in the reading face and leave room for a small directional mark. Hover changes color without moving the layout; keyboard focus remains explicit.
+
+Use fine dividers for feature lists, numbered steps, and disclosures. If the content calls for comparisons, use equal columns and one modestly raised featured option. Keep the featured label separate from the selected state. Quotes can use larger serif text with plain sans attribution.
+
+## Images
+
+Use natural-color editorial photography with quiet backgrounds and visible materials or architecture. Keep frames simple and crops deliberate. Isolated objects can use containment, while scenes can fill their frame with the important structure kept in view. Images support the reading sequence rather than dominating every section. Reserve their dimensions and describe meaningful subjects in alternative text.
+
+## Motion
+
+Use brief linear color and border transitions. Keep statements, images, and section boundaries still. Remove transitions when reduced motion is requested.
+
+## Responsive behavior
+
+At 1050px, narrow gaps and simplify the larger splits. At 760px, stack hero prose and actions, section headings and entries, editorial items, steps, quotes, and comparison columns. Facts and footer links can remain in two columns. At 480px, place feature and benefit entries in a single column. Reduce the headline scale and indentation while keeping the italic line distinct and the reading measure comfortable.
+
+## Design limits
+
+Avoid oversized gold ornament, marble textures, dark luxury fields, pill-shaped controls, and a card around every paragraph. Keep the palette warm and the page light. Authority should come from the customer's actual content and the clarity of its presentation.
+
+## Authoritative tokens
+
+| CSS variable | Value |
+| --- | --- |
+| --dp-color-ground | #f7f4ec |
+| --dp-color-surface | #fcfaf5 |
+| --dp-color-ink | #29271f |
+| --dp-color-ink-muted | #514d44 |
+| --dp-color-accent | #8b713a |
+| --dp-color-accent-ink | #68501f |
+| --dp-color-line | #d4ccbd |
+| --dp-color-band-edge | #e7e0d3 |
+| --dp-color-action-hover | #454034 |
+| --dp-typography-display | "Professional Garamond", Georgia, serif |
+| --dp-typography-reading | "Professional Instrument", Arial, sans-serif |
+| --dp-typography-supporting | 15px |
+| --dp-typography-metadata | 12px |
+| --dp-typography-body-leading | 1.65 |
+| --dp-spacing-control-gap | 24px |
+| --dp-radius-corner | 3px |
+| --dp-border-hairline | 1px |
+| --dp-motion-interaction | 160ms linear |
+</design-system>
+</prompt>

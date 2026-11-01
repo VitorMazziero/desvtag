@@ -10,6 +10,7 @@ Documento de trabalho iniciado em 1º de novembro de 2026. Reúne decisões do u
 - **Casos típicos:** planejamento Plackett–Burman (PB) e otimização de parâmetros de cultivos ou reações enzimáticas.
 - **Plataformas:** aplicativo desktop e versão no navegador desde o início.
 - **Idiomas:** português e inglês desde o início, nas versões Windows e navegador.
+- **Temas iniciais:** Modern Dark, Professional e Soft Light, nas versões Windows e navegador. O usuário confirmou que o prompt Software será a base do Soft Light, com substituição do azul elétrico pela paleta do logo EnziTAG. As referências estão em [docs/temas](../docs/temas/README.md).
 - **Catálogo aprovado:** todos os métodos existentes no Protimiza e as famílias de planejamentos, análises, comparações, modelos, gráficos e otimização discutidas no projeto. O inventário consolidado está em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md); o detalhamento e a implementação serão progressivos.
 - **Referência de fluxo:** preservar o pipeline do Protimiza, acrescentando interpretação dos resultados e mais recursos gráficos.
 - **Além de DoE:** incluir Tukey e outros testes de comparação utilizados fora de um planejamento experimental.
@@ -67,6 +68,7 @@ As instruções e recomendações nas telas pertencem ao produto de referência.
 ### Orientação e apresentação
 
 - Como apresentar recomendações, escolhas manuais e explicações para iniciantes?
+- Qual será o tema inicial e como a preferência visual será persistida? Os três temas disponíveis já estão definidos.
 - Quais formatos de exportação serão necessários?
 - Como permitir a edição e exportação dos gráficos, incluindo letras, eixos, cores e medidas de incerteza?
 

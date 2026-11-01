@@ -6,3 +6,6 @@
 *.pdf binary
 *.zip binary
 *.wasm binary
+
+# Preservar os bytes e as quebras de linha dos prompts originais.
+docs/temas/prompts/*.txt -text

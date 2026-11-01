@@ -12,6 +12,7 @@ EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com 
 
 - Interface intuitiva para usuários iniciantes, com fatores e respostas definidos pelo usuário.
 - Português e inglês desde o início, no Windows e no navegador.
+- Temas iniciais Modern Dark, Professional e Soft Light, com paleta EnziTAG neste último.
 - Catálogo completo do Protimiza, acrescido dos métodos discutidos para o EnziTAG Optima.
 - Planejamento de experimentos e análise de dados já coletados.
 - Comparações de tratamentos, incluindo Tukey e letras nos gráficos.
@@ -62,6 +63,7 @@ As áreas de código contêm, nesta etapa, apenas a descrição de suas responsa
 - [Decisões pendentes](plans/DECISOES_PENDENTES.md).
 - [Organização da implementação](app/README.md).
 - [Guia da documentação](docs/README.md).
+- [Temas visuais e prompts originais](docs/temas/README.md).
 - [Validação dos cálculos](validation/README.md).
 - [Como contribuir](CONTRIBUTING.md).
 - [Preparação do GitHub](docs/GITHUB.md).
