@@ -20,7 +20,7 @@ EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com 
 - Otimização de uma ou várias respostas.
 - Explicações curtas junto aos resultados.
 - Uso local com abertura e salvamento de projetos sem login.
-- Google Drive como integração opcional em avaliação.
+- Google Drive opcional, com projetos na conta de cada usuário.
 
 Esses itens descrevem o produto pretendido. A cobertura de métodos será implementada e validada progressivamente.
 
@@ -34,7 +34,7 @@ Esses itens descrevem o produto pretendido. A cobertura de métodos será implem
 | Navegador | Interface web com o mesmo motor compilado para WebAssembly |
 | Referências de validação | Python e softwares especializados, fora do motor distribuído |
 
-Os procedimentos serão desenvolvidos em módulos compreensíveis, com fórmulas, exemplos, resultados intermediários e comparação com implementações independentes.
+O aplicativo será organizado em módulos com arquivos, responsabilidades e interfaces definidos para facilitar manutenção. Procedimentos científicos terão fórmulas e validação independente documentadas.
 
 ## Estrutura
 
@@ -57,9 +57,12 @@ As áreas de código contêm, nesta etapa, apenas a descrição de suas responsa
 
 ## Documentação
 
+- [Plano detalhado de implementação](plans/PLANO_IMPLEMENTACAO.md).
+- [Decisões aprovadas](plans/DECISOES_APROVADAS.md).
+- [Mapa de módulos e arquivos](docs/MAPA_MODULOS.md).
 - [Concepção e requisitos](plans/CONCEPCAO_APP.md).
 - [Catálogo funcional aprovado](plans/CATALOGO_FUNCIONAL.md).
-- [Arquitetura e sequência de aprendizagem](plans/ARQUITETURA_E_APRENDIZADO.md).
+- [Arquitetura e organização modular](plans/ARQUITETURA_E_APRENDIZADO.md).
 - [Decisões pendentes](plans/DECISOES_PENDENTES.md).
 - [Organização da implementação](app/README.md).
 - [Guia da documentação](docs/README.md).
@@ -70,8 +73,8 @@ As áreas de código contêm, nesta etapa, apenas a descrição de suas responsa
 
 ## Distribuição pretendida
 
-O nome escolhido para o repositório é `enzitag-optima`, na conta `VitorMazziero`. A proposta é usar GitHub Pages para a versão web e GitHub Releases para os pacotes Windows. A publicação remota ainda não foi realizada.
+O nome escolhido para o repositório é `enzitag-optima`, na conta `VitorMazziero`. Foi aprovado usar GitHub Pages para a versão web e GitHub Releases para os pacotes Windows. A publicação remota ainda não foi realizada.
 
 ## Licença
 
-A licença ainda será escolhida. Nenhuma licença de software foi aplicada nesta etapa.
+Código e documentação própria sob a [licença MIT](LICENSE). Materiais de terceiros preservam suas licenças; referências locais não integram o repositório público.

@@ -1,6 +1,9 @@
 # Documentação do EnziTAG Optima
 
-- [Aprendizagem](aprendizado/README.md): explicações de Rust, matemática e integração de cada módulo.
+- [Plano de implementação](../plans/PLANO_IMPLEMENTACAO.md): fases, dependências, entregas e critérios de conclusão.
+- [Decisões aprovadas](../plans/DECISOES_APROVADAS.md): requisitos e políticas confirmados.
+- [Mapa de módulos e arquivos](MAPA_MODULOS.md): índice de responsabilidades e contratos para manutenção.
+- [Organização para compreensão](aprendizado/README.md): documentação de cada módulo e suas interações.
 - [Métodos](metodos/README.md): fundamentação, pressupostos e procedimentos implementados.
 - [Temas visuais](temas/README.md): prompts originais e adaptação do Soft Light para a paleta EnziTAG.
 - [Preparação do GitHub](GITHUB.md): conta, nome do repositório e estado da publicação.

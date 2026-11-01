@@ -4,6 +4,6 @@
 
 Responsabilidades previstas: disponibilizar a interface compartilhada, chamar o núcleo Rust compilado para Windows e integrar abertura e salvamento de arquivos locais.
 
-Se a integração opcional com Google Drive for adotada, a autorização seguirá o fluxo apropriado para aplicativo instalado.
+A integração opcional com Google Drive foi aprovada; sua autorização seguirá o fluxo apropriado para aplicativo instalado. O uso local permanece disponível sem login.
 
 Ainda não há projeto Tauri inicializado, instalador ou pacote executável nesta pasta.

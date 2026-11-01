@@ -24,6 +24,6 @@ O usuário confirmou que o prompt **Software** será a base do tema chamado **So
 
 Os prompts descrevem estilos de referência. A aplicação deve seguir o fluxo funcional do EnziTAG Optima, utilizando as mesmas análises, dados e ações nos três temas. Os exemplos de páginas e seções dos anexos serão adaptados às necessidades do aplicativo.
 
-Os temas devem atender português e inglês, controles por teclado, foco visível, legibilidade e preferência por movimento reduzido. A escolha do tema inicial e a política de persistência da preferência ainda serão definidas.
+Os temas devem atender português e inglês, controles por teclado, foco visível, legibilidade e preferência por movimento reduzido. Soft Light foi aprovado como tema inicial; a preferência será persistida por dispositivo. Exportações terão estilo próprio, com fundo branco como padrão para artigos, independente do tema da interface.
 
 **Situação:** referências preservadas e requisitos registrados. Ainda não há interface implementada ou verificação visual de telas do aplicativo.

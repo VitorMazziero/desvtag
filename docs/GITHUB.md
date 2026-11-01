@@ -26,9 +26,9 @@ Os documentos públicos resumem as decisões necessárias para continuar o desen
 ## Próximas etapas
 
 1. Criar o repositório `enzitag-optima` na conta indicada e enviar a estrutura revisada.
-2. Definir a licença do projeto conforme a forma de reutilização desejada.
+2. Preservar a licença MIT aprovada e verificar avisos de dependências e materiais de terceiros.
 3. Acrescentar os projetos Rust, web e Tauri com o primeiro percurso de implementação.
 4. Configurar verificações automatizadas quando existirem comandos de compilação e validação.
 5. Publicar a versão web e os pacotes Windows quando houver uma versão executável verificada.
 
-A licença e o conteúdo efetivamente implementado devem ser descritos de forma correspondente ao estado do projeto.
+A licença MIT foi aprovada e adicionada à raiz. O conteúdo efetivamente implementado deve ser descrito de forma correspondente ao estado do projeto. Pages e Releases foram aprovados como destinos, mas ainda não estão publicados.

@@ -1,6 +1,6 @@
 # EnziTAG Optima — concepção do aplicativo
 
-Documento de trabalho iniciado em 1º de novembro de 2026. Reúne decisões do usuário e propostas ainda em discussão; não constitui especificação final nem solicitação de publicação.
+Documento iniciado e atualizado em 1º de novembro de 2026. As decisões de produto estão consolidadas em [DECISOES_APROVADAS.md](DECISOES_APROVADAS.md), após aprovação explícita dos 14 pontos. A execução segue o [plano detalhado](PLANO_IMPLEMENTACAO.md); ainda não há aplicativo publicado.
 
 ## Direção confirmada pelo usuário
 
@@ -10,7 +10,7 @@ Documento de trabalho iniciado em 1º de novembro de 2026. Reúne decisões do u
 - **Casos típicos:** planejamento Plackett–Burman (PB) e otimização de parâmetros de cultivos ou reações enzimáticas.
 - **Plataformas:** aplicativo desktop e versão no navegador desde o início.
 - **Idiomas:** português e inglês desde o início, nas versões Windows e navegador.
-- **Temas iniciais:** Modern Dark, Professional e Soft Light, nas versões Windows e navegador. O usuário confirmou que o prompt Software será a base do Soft Light, com substituição do azul elétrico pela paleta do logo EnziTAG. As referências estão em [docs/temas](../docs/temas/README.md).
+- **Temas iniciais:** Modern Dark, Professional e Soft Light, nas versões Windows e navegador. O usuário confirmou que o prompt Software será a base do Soft Light, com substituição do azul elétrico pela paleta do logo EnziTAG. Soft Light é o padrão e a preferência será salva por dispositivo. As referências estão em [docs/temas](../docs/temas/README.md).
 - **Catálogo aprovado:** todos os métodos existentes no Protimiza e as famílias de planejamentos, análises, comparações, modelos, gráficos e otimização discutidas no projeto. O inventário consolidado está em [CATALOGO_FUNCIONAL.md](CATALOGO_FUNCIONAL.md); o detalhamento e a implementação serão progressivos.
 - **Referência de fluxo:** preservar o pipeline do Protimiza, acrescentando interpretação dos resultados e mais recursos gráficos.
 - **Além de DoE:** incluir Tukey e outros testes de comparação utilizados fora de um planejamento experimental.
@@ -20,9 +20,9 @@ Documento de trabalho iniciado em 1º de novembro de 2026. Reúne decisões do u
 - **Gráficos desejados:** superfícies 3D, contornos, efeitos e interações, diagnóstico de resíduos, comparação de médias com letras e otimização simultânea de respostas.
 - **Tukey:** gerar as letras de comparação e incorporá-las ao gráfico.
 - **Interpretações:** explicações curtas junto aos resultados.
-- **Distribuição pretendida:** código disponível publicamente no GitHub e acesso à versão web por um endereço. A hospedagem específica e a licença ainda estão em discussão; não houve solicitação de publicação nesta etapa.
+- **Distribuição pretendida:** código disponível publicamente no GitHub e acesso à versão web por um endereço. GitHub Pages, Releases e licença MIT foram aprovados; publicação ainda não realizada.
 - **Arquitetura aceita:** motor de cálculo em Rust, interface web compartilhada em TypeScript/React, aplicativo Windows com Tauri e compilação do motor para WebAssembly no navegador.
-- **Aprendizagem e transparência:** desenvolver e estudar módulo por módulo, explicitando a matemática, os cálculos intermediários e as interações com o restante do aplicativo. A complexidade de desenvolvimento não é um impedimento para o usuário.
+- **Organização modular e transparência:** cada módulo deve ter arquivos e interfaces definidos para facilitar compreensão e manutenção. Fórmulas, cálculos intermediários e exemplos são documentação de apoio. A complexidade de desenvolvimento não é um impedimento para o usuário.
 - **Procedimentos próprios:** implementar os métodos estatísticos de forma compreensível em módulos do projeto, preservando o controle sobre o raciocínio e a sequência dos cálculos. Bibliotecas auxiliares não devem ocultar decisões estatísticas.
 - **Validação independente:** comparar os cálculos com Python e softwares especializados. A recomendação é fazer essa comparação ao concluir cada módulo, além das verificações do fluxo completo.
 - **Uso local sem login:** criar, abrir, analisar e salvar projetos locais deve ser possível sem conectar uma conta. A integração com nuvem será opcional.
@@ -44,46 +44,19 @@ O fluxo visível nessas capturas é:
 
 As instruções e recomendações nas telas pertencem ao produto de referência. Não se tornam requisitos nem regras estatísticas do novo aplicativo automaticamente.
 
-## Propostas para discussão — ainda não confirmadas
+## Fluxo, arquivos e políticas aprovados
 
-- Oferecer duas entradas claras: **planejar/analisar um experimento** e **comparar tratamentos com dados já coletados**.
-- Preservar a navegação em etapas e adaptar os campos ao objetivo escolhido.
-- Apresentar resultados com explicações curtas, gráficos e tabelas; oferecer detalhes técnicos consultáveis sem alongar a interpretação principal.
-- Explicar as sugestões do aplicativo e permitir que o usuário revise suas escolhas.
-- Distinguir resultados calculados, limitações da análise e próximos passos sugeridos.
-- Usar situações de cultivos e reações enzimáticas nos exemplos e na ajuda contextual.
-- Organizar a base por estrutura dos dados, modelos estatísticos, comparações e apresentação dos resultados, permitindo acrescentar métodos sem redesenhar todo o fluxo. Algumas extensões também exigirão modelos novos.
-- Oferecer Google Drive como armazenamento opcional na conta de cada usuário, com uma pasta visível de projetos. O usuário solicitou a avaliação dessa possibilidade; os detalhes de sincronização permanecem propostas.
+- Tela inicial com projetos recentes, abrir e três caminhos: planejar experimento, analisar dados existentes e comparar tratamentos.
+- Fluxo guiado de objetivo, fatores/respostas, planejamento/dados, análise e resultados, com opções avançadas e explicações curtas.
+- Digitação, colagem, CSV, XLSX e matrizes externas; papéis das colunas, réplicas, unidades experimentais, blocos e tempos explícitos.
+- Vários experimentos no mesmo `.enzitag`, com dados originais, revisões, análises, modelos, gráficos e observações preservados.
+- Recuperação após dois segundos de pausa e versões em operações relevantes; estados distintos de recuperação, arquivo e Drive.
+- Google Drive opcional, pasta visível e preservação de versões em conflitos; uso local sem login permanece completo.
+- Compartilhamento inicial por arquivo/Drive, leitura e cópia; comentários posteriores, edição simultânea a especificar.
+- Exportações SVG/PDF/PNG, CSV/XLSX e HTML/PDF; DOCX posterior. Idioma e estilo de exportação independentes da interface.
+- Otimização com alvos, faixas, restrições, desejabilidade, pesos e vários candidatos, seguida de confirmação experimental.
 
-## Perguntas em aberto
-
-### Planejamento e análises
-
-- Em que sequência os métodos do catálogo aprovado serão especificados, implementados e validados?
-- Como completar a conferência das funcionalidades do Protimiza que não aparecem nas capturas disponíveis?
-- Quais tamanhos de projeto serão usados para avaliar desempenho, sem transformar um exemplo em limite arbitrário para o cadastro de fatores?
-- Quais variantes, estimadores e configurações de cada família de comparação e modelo serão implementados em cada etapa?
-- O aplicativo também precisará analisar matrizes experimentais criadas em outros programas?
-
-### Orientação e apresentação
-
-- Como apresentar recomendações, escolhas manuais e explicações para iniciantes?
-- Qual será o tema inicial e como a preferência visual será persistida? Os três temas disponíveis já estão definidos.
-- Quais formatos de exportação serão necessários?
-- Como permitir a edição e exportação dos gráficos, incluindo letras, eixos, cores e medidas de incerteza?
-
-### Dados e uso em duas plataformas
-
-- Como os usuários receberão ou digitarão os dados: planilhas, colagem, arquivos ou tabela no aplicativo?
-- Quais políticas de salvamento automático e resolução de conflitos serão adotadas para a integração opcional com Google Drive?
-- Será necessário compartilhar projetos entre alunos e orientadores ou apenas transferir arquivos entre desktop e navegador?
-- Qual licença será utilizada para o código público?
-
-### Escopo e aprendizagem
-
-- Qual caso real será usado como primeiro exemplo completo e critério de utilidade?
-- Como organizar a implementação e a validação progressivas para alcançar o aplicativo completo desejado?
-- Quais rotinas numéricas auxiliares também terão implementação própria, e quais dependências de apoio terão algoritmo, papel e limitações documentados?
+Detalhes e prioridades estão no [registro aprovado](DECISOES_APROVADAS.md). As perguntas anteriores de produto foram resolvidas por essa aprovação; os detalhes técnicos remanescentes estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).
 
 ## Português e inglês desde o início
 
@@ -91,7 +64,7 @@ A interface deve oferecer os dois idiomas nas mesmas funcionalidades, tanto no W
 
 Como organização inicial, serão usados português do Brasil (`pt-BR`) e inglês (`en`). Os textos da interface devem ser separados da lógica de cálculo e identificados por chaves estáveis. O idioma de apresentação não altera o método, as opções numéricas ou o resultado científico.
 
-Nomes de fatores, respostas, projetos e observações digitados pelo usuário devem ser preservados. A apresentação de números e os rótulos gerados pelo aplicativo acompanharão o idioma selecionado; as regras de importação e os formatos de exportação serão definidos em seus módulos.
+Nomes de fatores, respostas, projetos e observações digitados pelo usuário devem ser preservados. A apresentação de números e os rótulos gerados pelo aplicativo acompanharão o idioma selecionado; o suporte aos formatos aprovados e os detalhes de interpretação dos arquivos serão implementados em seus módulos.
 
 O README público também possui uma apresentação inicial em inglês. A tradução da documentação detalhada de desenvolvimento poderá ser ampliada progressivamente; a exigência de dois idiomas desde o início se aplica ao produto.
 
@@ -118,9 +91,9 @@ Fontes primárias consultadas:
 - [Pacotes disponíveis no Pyodide](https://pyodide.org/en/stable/usage/packages-in-pyodide.html).
 - [Letras de comparação: emmeans](https://rvlenth.github.io/emmeans/reference/CLD.emmGrid.html). A legenda tradicional deve explicar que compartilhar uma letra indica ausência de diferença detectada pelo procedimento, sem afirmar equivalência.
 
-## Hospedagem e distribuição — proposta em discussão
+## Hospedagem e distribuição — direção aprovada
 
-O GitHub pode reunir três entregas complementares:
+A distribuição aprovada reúne três entregas complementares:
 
 1. **Repositório público:** código-fonte, documentação dos métodos, exemplos e testes de referência.
 2. **GitHub Pages:** endereço público para abrir a interface web e carregar o motor Rust compilado para WebAssembly. Nesse desenho, os cálculos acontecem no navegador; os dados experimentais podem ser processados localmente.
@@ -128,7 +101,7 @@ O GitHub pode reunir três entregas complementares:
 
 GitHub Pages hospeda arquivos estáticos; não executa um servidor Rust ou Python nem fornece um banco de dados de usuários. A integração direta com o Google Drive pode fornecer armazenamento de arquivos por usuário, mantendo a hospedagem no Pages e os cálculos locais. Autorização de acesso, sincronização e eventual colaboração precisam ser implementadas no app; edição simultânea com mesclagem não é fornecida automaticamente pelo armazenamento de um arquivo no Drive.
 
-A hospedagem no Pages está disponível gratuitamente para repositórios públicos no GitHub Free, dentro dos limites do serviço. É possível usar o endereço padrão do GitHub Pages ou configurar domínio próprio. A definição de uma licença de software acompanha a intenção de permitir que outras pessoas utilizem, modifiquem ou distribuam o código.
+A hospedagem no Pages está disponível gratuitamente para repositórios públicos no GitHub Free, dentro dos limites do serviço. É possível usar o endereço padrão do GitHub Pages ou configurar domínio próprio. A licença MIT foi aprovada e está em `LICENSE` na raiz do repositório.
 
 Fontes oficiais consultadas em 1º de novembro de 2026:
 
@@ -143,31 +116,31 @@ Fontes oficiais consultadas em 1º de novembro de 2026:
 
 O aplicativo deve oferecer uso local sem login, com abertura e salvamento de projetos. Conectar ao Google Drive será uma opção de armazenamento; não deve controlar o acesso às análises ou aos gráficos.
 
-### Proposta de experiência
+### Experiência aprovada
 
 - Acesso inicial com **Novo projeto**, **Abrir do computador** e **Abrir do Google Drive**. A autorização Google é solicitada quando o usuário escolhe utilizar o Drive.
-- Um mesmo formato de projeto para arquivos locais, navegador, Windows e Drive, contendo dados, configurações de análise e opções de apresentação.
-- Pasta visível com o nome do aplicativo no Drive de cada usuário, criada no primeiro salvamento autorizado na nuvem. Um arquivo por projeto é a proposta inicial.
+- Formato `.enzitag` para arquivos locais, navegador, Windows e Drive, com vários experimentos, dados, revisões, configurações, resultados e opções de apresentação.
+- Pasta visível com o nome do aplicativo no Drive de cada usuário, criada no primeiro salvamento autorizado na nuvem. Um arquivo representa um projeto, podendo reunir vários experimentos.
 - Ações explícitas **Salvar no computador**, **Salvar no Drive** e **Salvar uma cópia**. No navegador, o salvamento em arquivo pode ser oferecido como download.
 - Salvamento automático no Drive como opção para projetos vinculados, com indicação de alterações locais, sincronização pendente e salvamento concluído.
 - Preservar o trabalho local quando faltar conexão ou autorização. Se houver alterações concorrentes, preservar as versões e oferecer uma escolha; a estratégia de detecção e resolução ainda será definida.
 
 ### Integração com o Google
 
-O acesso a arquivos exige autorização específica, além da identificação da conta. A proposta utiliza `drive.file`, permitindo trabalhar com arquivos criados pelo app ou escolhidos explicitamente pelo usuário. Esse escopo é por arquivo; escolher uma pasta não deve ser tratado como concessão irrestrita a todos os seus descendentes. A integração deve ter configuração e consentimento próprios no projeto Google Cloud. [Escopos da API](https://developers.google.com/workspace/drive/api/guides/api-specific-auth).
+O acesso a arquivos exige autorização específica, além da identificação da conta. A integração aprovada utiliza `drive.file`, permitindo trabalhar com arquivos criados pelo app ou escolhidos explicitamente pelo usuário. Esse escopo é por arquivo; escolher uma pasta não deve ser tratado como concessão irrestrita a todos os seus descendentes. A integração deve ter configuração e consentimento próprios no projeto Google Cloud. [Escopos da API](https://developers.google.com/workspace/drive/api/guides/api-specific-auth).
 
-A API permite [criar pastas visíveis](https://developers.google.com/workspace/drive/api/guides/folder). A área especial `appDataFolder` fica oculta e não permite compartilhar seu conteúdo, portanto não é a proposta para os projetos que o usuário quer enxergar e organizar. [Pasta de dados da aplicação](https://developers.google.com/workspace/drive/api/guides/appdata).
+A API permite [criar pastas visíveis](https://developers.google.com/workspace/drive/api/guides/folder). A área especial `appDataFolder` fica oculta e não permite compartilhar seu conteúdo, portanto não é o destino escolhido para os projetos que o usuário quer enxergar e organizar. [Pasta de dados da aplicação](https://developers.google.com/workspace/drive/api/guides/appdata).
 
 Na versão web, o modelo de autorização com token permite chamadas diretas do navegador ao Drive, sem servidor próprio para essa operação. O acesso expira e uma ação do usuário pode ser necessária para renová-lo; o salvamento deve apresentar esse estado e preservar as alterações locais. [Modelo com token](https://developers.google.com/identity/oauth2/web/guides/use-token-model).
 
-O modelo web com troca de código e armazenamento de tokens de renovação no servidor é uma alternativa para requisitos de acesso prolongado. Não faz parte da proposta inicial de hospedagem exclusivamente estática. [Modelo com código](https://developers.google.com/identity/oauth2/web/guides/use-code-model).
+O modelo web com troca de código e armazenamento de tokens de renovação no servidor é uma alternativa para requisitos de acesso prolongado. Não faz parte da arquitetura inicial de hospedagem exclusivamente estática. [Modelo com código](https://developers.google.com/identity/oauth2/web/guides/use-code-model).
 
 No Windows, a autorização deve seguir o fluxo para aplicativo instalado, abrindo o navegador do sistema e utilizando PKCE; a integração Tauri é separada da usada na página web. Dados de autorização não fazem parte do arquivo de projeto. [Autorização de aplicativos desktop](https://developers.google.com/identity/protocols/oauth2/native-app).
 
-Arquivos e pastas podem ser compartilhados segundo as [permissões do Drive](https://developers.google.com/workspace/drive/api/guides/manage-sharing). Colaboração simultânea no conteúdo do projeto continua sendo uma funcionalidade própria a projetar.
+Arquivos e pastas podem ser compartilhados segundo as [permissões do Drive](https://developers.google.com/workspace/drive/api/guides/manage-sharing). Compartilhamento inicial contempla leitura e cópia; comentários vêm depois. Colaboração simultânea no conteúdo do projeto é uma funcionalidade posterior a especificar.
 
 A integração fica sujeita ao espaço disponível na conta e às [cotas e condições da API](https://developers.google.com/workspace/drive/api/guides/limits); não foi assumido uso ilimitado. Nenhuma conta foi conectada nem arquivo enviado ao Google nesta etapa.
 
 ## Situação atual
 
-Nome, idiomas, catálogo abrangente, arquitetura e abordagem de aprendizagem aceitos. A pasta foi organizada para o repositório `enzitag-optima`, com apresentação, documentação e áreas reservadas ao código. O detalhamento funcional continua em andamento e ainda não há implementação executável. O mapa de responsabilidades está em [ARQUITETURA_E_APRENDIZADO.md](ARQUITETURA_E_APRENDIZADO.md), e as escolhas em aberto estão em [DECISOES_PENDENTES.md](DECISOES_PENDENTES.md).
+Os 14 pontos de produto foram aprovados, a organização modular foi esclarecida e o plano detalhado foi criado. Ainda não há implementação executável. Consulte o [plano](PLANO_IMPLEMENTACAO.md), o [mapa de arquivos](../docs/MAPA_MODULOS.md) e os [detalhes técnicos pendentes](DECISOES_PENDENTES.md).

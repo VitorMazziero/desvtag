@@ -2,7 +2,7 @@
 
 Escopo aprovado em 1º de novembro de 2026: **todos os métodos existentes no Protimiza e os métodos e recursos já discutidos para o EnziTAG Optima**. Português e inglês são requisitos do produto desde o início.
 
-**Situação:** catálogo de requisitos. Nenhum método listado está implementado ou validado nesta etapa. A sequência de aprendizagem e desenvolvimento está em [ARQUITETURA_E_APRENDIZADO.md](ARQUITETURA_E_APRENDIZADO.md).
+**Situação:** catálogo de requisitos. Nenhum método listado está implementado ou validado nesta etapa. A sequência de implementação está em [PLANO_IMPLEMENTACAO.md](PLANO_IMPLEMENTACAO.md); a organização dos arquivos está no [mapa de módulos](../docs/MAPA_MODULOS.md).
 
 ## Referência Protimiza
 
@@ -75,14 +75,14 @@ A estrutura inclui grupos independentes, tratamentos contra controle, combinaç�
 - Superfícies de resposta 3D e contornos.
 - Visualização das soluções de otimização de uma ou várias respostas.
 
-Cada resultado deve ter explicações curtas em português e inglês. Personalização gráfica, barras de incerteza, formatos de exportação e organização das telas continuam sujeitos ao detalhamento funcional.
+Cada resultado deve ter explicações curtas em português e inglês. Personalização gráfica, opções de incerteza, formatos de exportação e fluxo guiado foram aprovados em [DECISOES_APROVADAS.md](DECISOES_APROVADAS.md); a implementação está detalhada por fase.
 
 ## Otimização
 
-Estão incluídas otimização de condições de cultivo e reações, predição a partir dos modelos, otimização de uma ou várias respostas e abordagem por desejabilidade, já discutida como opção para combinar respostas. Objetivos, restrições, pesos, critérios de busca e apresentação das soluções serão especificados no módulo correspondente.
+Estão incluídas otimização de condições de cultivo e reações, predição a partir dos modelos, otimização de uma ou várias respostas e abordagem por desejabilidade, já discutida como opção para combinar respostas. Objetivos de maximizar, minimizar, alvo e faixa, restrições separadas de preferências, pesos avançados e apresentação de vários candidatos foram aprovados. O algoritmo e os critérios numéricos serão especificados no módulo correspondente.
 
 ## O que a aprovação do catálogo resolve
 
-A abrangência desejada está definida. Permanecem o detalhamento de cada procedimento, variantes, algoritmos, configurações, sequência de implementação e casos de validação. Integrações de importação, exportação, armazenamento e colaboração continuam nas decisões de produto correspondentes.
+A abrangência desejada está definida. Permanecem o detalhamento de cada procedimento, variantes, algoritmos, configurações, sequência de implementação e casos de validação. Importação, exportação, armazenamento local, Drive e compartilhamento inicial foram aprovados; detalhes técnicos seguem o plano. Colaboração simultânea será especificada posteriormente.
 
 As etapas históricas não limitam o escopo ao primeiro exemplo implementado. Cada método deverá ter sua situação de implementação e validação identificada antes de ser apresentado como disponível.

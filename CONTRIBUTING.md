@@ -1,6 +1,6 @@
 # Contribuindo com EnziTAG Optima
 
-O projeto está na etapa de organização e concepção. O escopo está em [plans/CONCEPCAO_APP.md](plans/CONCEPCAO_APP.md), e as escolhas em aberto estão em [plans/DECISOES_PENDENTES.md](plans/DECISOES_PENDENTES.md).
+O projeto está na etapa de planejamento. Consulte as [decisões aprovadas](plans/DECISOES_APROVADAS.md), o [plano de implementação](plans/PLANO_IMPLEMENTACAO.md), o [mapa de módulos e arquivos](docs/MAPA_MODULOS.md) e os [detalhes pendentes](plans/DECISOES_PENDENTES.md).
 
 ## Desenvolvimento dos módulos
 
@@ -22,4 +22,4 @@ Utilizar exemplos sintéticos ou dados cuja distribuição esteja autorizada. O 
 
 ## Licença e publicação
 
-A licença do projeto ainda está em definição. Os comandos de desenvolvimento, verificações automatizadas e fluxo de publicação serão documentados à medida que a implementação correspondente existir.
+O código e a documentação própria adotam a [licença MIT](LICENSE). Os comandos de desenvolvimento, verificações automatizadas e fluxo de publicação serão documentados à medida que a implementação correspondente existir.
