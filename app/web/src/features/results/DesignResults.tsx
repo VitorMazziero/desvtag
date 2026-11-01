@@ -8,12 +8,13 @@ import { formatP, formatSignificant } from "../../i18n/format";
 import { effectsChart, paretoChart, scatterChart } from "../../services/charts";
 import type { AnalysisRecord, DesignAnalysisResult, Stat } from "../../services/engine";
 import { issueMessage } from "../../services/errors/presentation";
-import { exportMetadata, flat, toCsv, utf8 } from "../../services/export";
+import { exportMetadata, flat } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
 import { formatFactParams } from "./ComparisonInterpretation";
-import { ExportButton } from "./ExportButton";
+import { TableExportButtons } from "./TableExportButtons";
+import { useFigureFormat } from "./useFigureFormat";
 
 const val = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
 
@@ -57,7 +58,7 @@ export function DesignResults({ result, signature, language }: Props) {
   const { t: tc } = useTranslation();
   const state = useProject();
   const workspace = useWorkspace();
-  const storage = useStorage();
+  const _storage = useStorage();
   const [notice, setNotice] = useState<string | null>(null);
 
   const response = state.responses.find((r) => r.id === result.responseId);
@@ -81,7 +82,7 @@ export function DesignResults({ result, signature, language }: Props) {
     [record, revision, workspace.name, state.name],
   );
   const metadataText = metadata ? JSON.stringify(metadata) : "";
-  const fmt = (v: number) => formatSignificant(v, language, 4);
+  const fmt = useFigureFormat(language);
   const level = formatSignificant((1 - result.alpha) * 100, language, 4);
   const alpha = formatSignificant(result.alpha, language, 4);
   const base = `${slug(state.name)}-${slug(responseName)}`;
@@ -192,7 +193,7 @@ export function DesignResults({ result, signature, language }: Props) {
     metadata: withMetadata ? metadataText : undefined,
   });
 
-  const csvEffects = () => {
+  const effectsTable = () => {
     const header = [
       "term",
       "order",
@@ -234,21 +235,8 @@ export function DesignResults({ result, signature, language }: Props) {
         e.aliasedWith.join(" "),
       ]),
     ];
-    return utf8(toCsv(header, rows, metadata ? flat(metadata) : {}));
+    return { header, rows };
   };
-  const exportEffects = async () => {
-    try {
-      const saved = await storage.exportFile(csvEffects(), `${base}-efeitos.csv`);
-      setNotice(
-        saved
-          ? t("comparison.export.done", { name: saved.name })
-          : t("comparison.export.cancelled"),
-      );
-    } catch {
-      setNotice(t("comparison.export.failed"));
-    }
-  };
-
   const anova = result.anova;
   const hasAliases = result.effects.some((e) => e.aliasedWith.length > 0);
 
@@ -496,13 +484,18 @@ export function DesignResults({ result, signature, language }: Props) {
         />
       )}
 
-      <section aria-labelledby="export-title">
+      <section aria-labelledby="export-title" data-report-skip>
         <h3 id="export-title">{t("comparison.export.title")}</h3>
         <div className="row">
-          <ExportButton
+          <TableExportButtons
             label={t("design.export.effectsCsv")}
-            onExport={exportEffects}
-            onError={() => setNotice(t("comparison.export.failed"))}
+            suffix="efeitos"
+            sheet={t("design.effects.term")}
+            header={effectsTable().header}
+            rows={effectsTable().rows}
+            metadata={metadata ? flat(metadata) : null}
+            fileBase={base}
+            onDone={setNotice}
           />
         </div>
         {notice && (

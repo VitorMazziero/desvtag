@@ -9,6 +9,7 @@ use optima_core::models::LinearModelRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
+use optima_project::xlsx_writer::ExportWorkbook;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -37,6 +38,8 @@ pub enum Operation {
     SurfaceAnalyze(Box<SurfaceRequest>),
     /// Malha de predições e curvas de nível da superfície (`surface.grid`).
     SurfaceGrid(Box<GridRequest>),
+    /// Escreve tabelas como arquivo XLSX (`export.xlsx`).
+    ExportXlsx(ExportWorkbook),
     /// Otimização por desejabilidade de uma ou várias respostas (`optimization.run`).
     OptimizationRun(Box<OptimizationRequest>),
     /// Previsões e desejabilidade em condições dadas (`optimization.evaluate`).

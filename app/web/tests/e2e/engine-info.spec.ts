@@ -25,7 +25,7 @@ test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () =
     await page.goto("/");
     await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
 
-    await page.getByLabel("Idioma").selectOption("en");
+    await page.locator("header.app-header").getByLabel("Idioma").selectOption("en");
     await expect(page.getByTestId("engine-environment")).toContainText("Browser");
     await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
 
@@ -47,7 +47,7 @@ test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () =
     const outline = await skip.evaluate((el) => getComputedStyle(el).outlineStyle);
     expect(outline).toBe("solid");
     await page.keyboard.press("Tab");
-    await expect(page.getByLabel("Idioma")).toBeFocused();
+    await expect(page.locator("header.app-header").getByLabel("Idioma")).toBeFocused();
     await page.keyboard.press("Tab");
     await expect(page.getByLabel("Tema")).toBeFocused();
   });

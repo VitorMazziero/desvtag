@@ -434,7 +434,8 @@
       "notes": "Notes",
       "extrapolated": "Outside the experimental region (extrapolation)",
       "atBounds": "At the domain limit: {{factors}}",
-      "starts": "{{count}} start(s) reached this solution"
+      "starts": "{{count}} start(s) reached this solution",
+      "exportCsv": "Candidates (CSV)"
     },
     "tradeoffs": {
       "title": "Trade-offs between responses",

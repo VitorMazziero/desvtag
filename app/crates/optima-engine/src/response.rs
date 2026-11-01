@@ -84,6 +84,8 @@ pub enum OperationResult {
     SurfaceAnalyze(Box<SurfaceResult>),
     /// Malha da superfície.
     SurfaceGrid(Box<SurfaceGrid>),
+    /// Arquivo XLSX escrito (`export.xlsx`).
+    ExportXlsx(ProjectEncodeResult),
     /// Resultado da otimização.
     OptimizationRun(Box<OptimizationResult>),
     /// Previsões em condições dadas.

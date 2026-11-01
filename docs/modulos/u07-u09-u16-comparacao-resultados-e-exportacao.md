@@ -1,6 +1,6 @@
 # U07, U08, U09 e U16 — Configuração da comparação, resultados, gráficos e exportação
 
-**Estado:** implementado; Windows pendente · **Atualizado em:** 2026-11-01
+**Estado:** implementado (exportação completa da v0.1 na ET09); Windows pendente · **Atualizado em:** 2026-11-01
 
 | Campo | Valor |
 |---|---|
@@ -11,7 +11,7 @@
 
 ## 1. Responsabilidade
 
-U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: explicação curta (conclusão, evidência, próximo passo, fatos e avisos), tabelas de grupos (com letras), ANOVA e pares. U09: gráficos de médias com incerteza nomeada e letras, boxplot, resíduos × ajustados e QQ, desenhados a partir das séries do motor. U16: CSV, SVG e PNG com proveniência. Nenhum cálculo estatístico no TypeScript.
+U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: explicação curta (conclusão, evidência, próximo passo, fatos e avisos), tabelas de grupos (com letras), ANOVA e pares. U09: gráficos de médias com incerteza nomeada e letras, boxplot, resíduos × ajustados e QQ, desenhados a partir das séries do motor. U16: tabelas em CSV e XLSX, figuras em SVG e PNG e relatório HTML, todos com proveniência (ET09, [DT-0014](../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md), [guia](../guias/exportacao.md)). Nenhum cálculo estatístico no TypeScript.
 
 ## 2. Arquivos
 
@@ -24,7 +24,12 @@ U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: exp
 | `features/results/ComparisonTables.tsx`, `comparisonRows.ts` | Tabelas na tela e linhas do CSV |
 | `features/results/ChartFigure.tsx`, `ExportButton.tsx` | Figura acessível e botões de SVG/PNG |
 | `services/charts/{svg,means,boxplot,scatter}.ts` | Renderizador SVG (tela e exportação, mesma fonte) |
-| `services/export/{csv,png,metadata}.ts` | CSV, rasterização, chunk `tEXt` e proveniência |
+| `services/export/{csv,png,metadata}.ts` | CSV (formatos técnico e Excel, proteção contra fórmulas), rasterização, chunk `tEXt` e proveniência |
+| `services/export/{xlsx,report,settings}.ts` | Pasta de trabalho (escrita pelo motor), documento e limpeza do relatório HTML, preferências de exportação |
+| `services/charts/style.ts` | Paleta (padrão/daltonismo) e escala de fonte sobre o SVG |
+| `features/export/{ExportSettingsPanel,ReportButton}.tsx` | Preferências de exportação e relatório (renderização oculta no idioma da exportação) |
+| `features/results/{TableExportButtons,useTableExport,useFigureFormat}.ts(x)` | Par CSV/XLSX por tabela e algarismos das figuras |
+| `optima-project/src/xlsx_writer.rs`; operação `ExportXlsx` do motor | Escrita de XLSX (números, textos embutidos, `quotePrefix`, planilha de proveniência) |
 | `services/storage/*` (`exportFile`) e `src-tauri/src/commands.rs` (`export_file`) | Download no navegador; diálogo nativo e gravação segura no Windows |
 
 ## 3. Comportamento
@@ -36,7 +41,7 @@ U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: exp
 
 ## 4. Erros e limitações
 
-Falha ou cancelamento de exportação é informado em linha (`role="status"`). O PNG depende de `canvas` (navegadores e WebView2); relatório HTML e XLSX entram na ET09. Gráficos 3D não existem ainda (ET07).
+Falha ou cancelamento de exportação é informado em linha (`role="status"`). O PNG depende de `canvas` (navegadores e WebView2). Sem edição por figura (título, eixos, letras), sem PDF/DOCX e sem preferências de exportação no projeto (ver plano da ET09, desvios).
 
 ## 5. Manutenção
 
@@ -44,4 +49,4 @@ Novo gráfico: função em `services/charts/` com `id` único, teste de SVG bem 
 
 ## 6. Testes e validação
 
-22 testes unitários (gráficos, CSV, PNG, formatação, assinatura), E2E do percurso e do exemplo 01 em PT e EN (Chromium e Firefox) com download de CSV, SVG e PNG verificados byte a byte, axe em três temas, verificação do IPC nativo em Linux.
+Testes unitários (gráficos, CSV, proteção contra fórmulas, pasta de trabalho, estilo das figuras), ida e volta do XLSX contra o importador do motor, verificação com openpyxl, E2E de exportação (XLSX, CSV Excel, relatório em inglês com interface em português, paleta) e E2E do percurso e do exemplo 01 em PT e EN (Chromium e Firefox) com download de CSV, SVG e PNG verificados byte a byte, axe em três temas, verificação do IPC nativo em Linux.

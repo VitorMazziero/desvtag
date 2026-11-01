@@ -7,6 +7,44 @@ import type { OptimizationResult, Stat } from "../../services/engine";
 
 const val = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
 
+/** Tabela dos candidatos para exportação (valores numéricos completos; indefinidos ficam vazios). */
+export function candidatesTable(result: OptimizationResult): {
+  header: string[];
+  rows: (string | number | null)[][];
+} {
+  const names = result.factorNames;
+  const responses = result.candidates[0]?.predictions ?? [];
+  const header = [
+    "rank",
+    ...names,
+    ...names.map((n) => `${n} (coded)`),
+    "global_desirability",
+    ...responses.flatMap((p) => [
+      `${p.name} predicted`,
+      `${p.name} prediction interval lower`,
+      `${p.name} prediction interval upper`,
+      `${p.name} desirability`,
+    ]),
+    "extrapolated",
+    "starts",
+  ];
+  const rows = result.candidates.map((c) => [
+    c.rank,
+    ...c.real,
+    ...c.coded,
+    c.globalDesirability,
+    ...c.predictions.flatMap((p) => [
+      val(p.prediction.fitted),
+      val(p.prediction.predictionLower),
+      val(p.prediction.predictionUpper),
+      p.desirability,
+    ]),
+    c.extrapolated ? "yes" : "no",
+    c.starts,
+  ]);
+  return { header, rows };
+}
+
 export function CandidateTable({
   result,
   language,

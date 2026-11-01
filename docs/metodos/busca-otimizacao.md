@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `desirability_optimization` |
 | Módulos | C17 `optimization/{search,candidates,optimize,grid,evaluate}`, E01/E02 (cancelamento), P01 (`origin`, `confirmation`) |
-| Etapa | [ET08](../planos-execucao/ativos/et08-otimizacao.md) |
+| Etapa | [ET08](../planos-execucao/concluidos/et08-otimizacao.md) |
 | Casos de validação | [`validation/cases/desirability_optimization/`](../../validation/cases/desirability_optimization/001-um-resposta-maximizar/README.md) |
 | Decisão | [DT-0013](../decisoes-tecnicas/dt-0013-otimizacao-por-desejabilidade.md) |
 

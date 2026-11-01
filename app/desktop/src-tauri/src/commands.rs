@@ -209,8 +209,9 @@ async fn pick_save_path_with(
 }
 
 /// Extensões de exportação permitidas e o nome do filtro do diálogo.
-pub const EXPORT_FORMATS: [(&str, &str); 4] = [
+pub const EXPORT_FORMATS: [(&str, &str); 5] = [
     ("csv", "CSV"),
+    ("xlsx", "XLSX"),
     ("svg", "SVG"),
     ("png", "PNG"),
     ("html", "HTML"),
@@ -270,6 +271,7 @@ mod export_tests {
         assert_eq!(export_format("grafico.SVG"), Ok(("svg", "SVG")));
         assert_eq!(export_format("tabela.csv"), Ok(("csv", "CSV")));
         assert_eq!(export_format("figura.png"), Ok(("png", "PNG")));
+        assert_eq!(export_format("tabela.xlsx"), Ok(("xlsx", "XLSX")));
         assert!(export_format("programa.exe").is_err());
         assert!(export_format("semextensao").is_err());
         assert!(export_format("projeto.enzitag").is_err());

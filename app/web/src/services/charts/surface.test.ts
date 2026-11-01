@@ -83,3 +83,19 @@ describe("surface charts", () => {
     expect(svg).toContain("Círculos: ensaios");
   });
 });
+
+describe("chart style", () => {
+  it("scales fonts and swaps the action and alert colours for the colour-blind palette", async () => {
+    const { applyChartStyle } = await import("./style");
+    const svg = `<svg><text font-size="12" fill="var(--color-action, #005a99)">x</text><rect fill="#9a3412"/><text font-size="14">y</text></svg>`;
+    const scaled = applyChartStyle(svg, { palette: "default", fontScale: 1.2 });
+    expect(scaled).toContain('font-size="14.4"');
+    expect(scaled).toContain('font-size="16.8"');
+    expect(scaled).toContain("#005a99");
+    const safe = applyChartStyle(svg, { palette: "colorblind", fontScale: 1 });
+    expect(safe).toContain('fill="#0072B2"');
+    expect(safe).toContain('fill="#D55E00"');
+    expect(safe).not.toContain("#005a99");
+    expect(applyChartStyle(svg, { palette: "default", fontScale: 1 })).toBe(svg);
+  });
+});

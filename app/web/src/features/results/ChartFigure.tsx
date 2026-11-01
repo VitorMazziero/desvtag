@@ -1,8 +1,10 @@
 // Figura SVG com legenda acessível e exportação em SVG e PNG com proveniência (U09/U16).
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { applyChartStyle } from "../../services/charts";
 import { addPngText, svgToPng, utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
+import { useExportSettings } from "../../state/ExportSettingsContext";
 import { ExportButton } from "./ExportButton";
 
 interface Props {
@@ -18,8 +20,8 @@ interface Props {
 }
 
 export function ChartFigure({
-  screenSvg,
-  exportSvg,
+  screenSvg: rawScreenSvg,
+  exportSvg: rawExportSvg,
   pngMetadata,
   fileBase,
   children,
@@ -27,6 +29,10 @@ export function ChartFigure({
 }: Props) {
   const { t } = useTranslation("results");
   const storage = useStorage();
+  const { settings } = useExportSettings();
+  const style = { palette: settings.palette, fontScale: settings.fontScale };
+  const screenSvg = applyChartStyle(rawScreenSvg, style);
+  const exportSvg = applyChartStyle(rawExportSvg, style);
   const [message, setMessage] = useState<string | null>(null);
 
   const finish = (name: string | null) =>
@@ -36,8 +42,12 @@ export function ChartFigure({
 
   return (
     <figure className="chart" data-testid={testId}>
-      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: SVG gerado localmente com todo texto escapado (services/charts/svg.ts) */}
-      <div className="chart-canvas" dangerouslySetInnerHTML={{ __html: screenSvg }} />
+      <div
+        className="chart-canvas"
+        data-export-svg={exportSvg}
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: SVG gerado localmente com todo texto escapado (services/charts/svg.ts)
+        dangerouslySetInnerHTML={{ __html: screenSvg }}
+      />
       {children}
       <figcaption className="row">
         <ExportButton

@@ -104,7 +104,7 @@ docs/
 ├── modelos/                          # Modelos de plano, DT, ficha, método e caso
 ├── modulos/                          # Fichas por módulo: <id>-<slug>.md
 ├── metodos/                          # Especificações científicas: <slug>.md
-├── guias/                            # existe (ET01: ambiente); ET09: exportação; uso
+├── guias/                            # existe (ET01: ambiente; ET09: exportação); uso
 ├── distribuicao/                     # Repositório, publicação e atualizações
 ├── temas/                            # Prompts originais e adaptação do Soft Light
 │   ├── prompts/                      # Arquivos originais preservados byte a byte

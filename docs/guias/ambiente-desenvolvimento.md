@@ -94,7 +94,7 @@ cargo clippy -- -D warnings
 cargo build --features tauri/custom-protocol
 ```
 
-Verificação nativa, em `app/desktop/`. Confere `engine.info`, a estatística descritiva, a leitura do `.enzitag` escrito em Python, a recusa de arquivo adulterado e a leitura de XLSX pelo IPC. No Linux usa WebDriver sob Xvfb:
+Verificação nativa, em `app/desktop/`. Confere `engine.info`, a estatística descritiva, a leitura do `.enzitag` escrito em Python, a recusa de arquivo adulterado e a leitura de XLSX pelo IPC, além do cálculo dos métodos e da exportação de XLSX pelo motor. No Linux (compilar antes com `cargo build --features tauri/custom-protocol` em `src-tauri/`, para embutir a interface) usa WebDriver sob Xvfb:
 
 ```bash
 xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop

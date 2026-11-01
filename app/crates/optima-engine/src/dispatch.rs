@@ -94,6 +94,16 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::ExportXlsx(book) => match optima_project::xlsx_writer::write_xlsx(book) {
+            Ok(bytes) => Outcome::Ok {
+                result: OperationResult::ExportXlsx(ProjectEncodeResult {
+                    size: bytes.len() as u64,
+                    sha256: optima_project::integrity::sha256_hex(&bytes),
+                    bytes_base64: STANDARD.encode(&bytes),
+                }),
+            },
+            Err(issues) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::OptimizationRun(req) => {
             match optima_core::optimization::optimize(req.as_ref()) {
                 Ok(result) => Outcome::Ok {

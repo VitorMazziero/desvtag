@@ -6,17 +6,17 @@ import type { Language } from "../../i18n";
 import { formatSignificant } from "../../i18n/format";
 import type { DesignSpec, GeneratedDesign } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
-import { utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useWorkspace } from "../../state/ProjectContext";
-import { matrixCsv } from "./matrixCsv";
+import { TableExportButtons } from "../results/TableExportButtons";
+import { matrixTable } from "./matrixCsv";
 
 const VISIBLE_ROWS = 200;
 
 export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Language }) {
   const { t } = useTranslation();
   const { client } = useEngine();
-  const storage = useStorage();
+  const _storage = useStorage();
   const workspace = useWorkspace();
   const [design, setDesign] = useState<GeneratedDesign | null>(null);
   const [view, setView] = useState<"real" | "coded">("real");
@@ -47,17 +47,7 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
   if (!design) return null;
   const fmt = (v: number) => formatSignificant(v, language, 8);
   const properties = design.spec.kind.type !== "fullFactorial";
-  const exportCsv = async () => {
-    try {
-      const bytes = utf8(matrixCsv(design, { app: "EnziTAG Optima", project: workspace.name }));
-      const saved = await storage.exportFile(bytes, "matriz-de-ensaios.csv");
-      setNotice(
-        saved ? t("design.matrix.exported", { name: saved.name }) : t("design.matrix.cancelled"),
-      );
-    } catch {
-      setNotice(t("design.matrix.failed"));
-    }
-  };
+  const table = matrixTable(design, { app: "EnziTAG Optima", project: workspace.name });
 
   return (
     <section aria-labelledby="matrix-title" data-testid="run-matrix">
@@ -70,9 +60,16 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
             <option value="coded">{t("design.matrix.coded")}</option>
           </select>
         </label>
-        <button type="button" className="button secondary small" onClick={exportCsv}>
-          {t("design.matrix.exportCsv")}
-        </button>
+        <TableExportButtons
+          label={t("design.matrix.exportCsv")}
+          suffix="de-ensaios"
+          sheet={t("design.matrix.title")}
+          header={table.header}
+          rows={table.rows}
+          metadata={table.meta}
+          fileBase="matriz"
+          onDone={setNotice}
+        />
       </div>
       {notice && (
         <p role="status" className="muted small">

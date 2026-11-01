@@ -1,13 +1,13 @@
 // U10 / U09 — desejabilidade global sobre dois fatores (malha do motor), com os candidatos marcados.
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { formatSignificant } from "../../i18n/format";
 import { contourChart } from "../../services/charts";
 import type { OptimizationRequest, OptimizationResult, SurfaceGrid } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { ChartFigure } from "../results/ChartFigure";
+import { useFigureFormat } from "../results/useFigureFormat";
 
 export function DesirabilityView({
   request,
@@ -20,6 +20,8 @@ export function DesirabilityView({
 }) {
   const { t } = useTranslation();
   const { client } = useEngine();
+  const instance = useId();
+  const fmt = useFigureFormat(language);
   const factors = request.factors;
   const best = result.candidates[0];
   const [xIndex, setXIndex] = useState(0);
@@ -47,7 +49,7 @@ export function DesirabilityView({
           ),
           steps: 41,
         },
-        { channel: "optimization-grid" },
+        { channel: `optimization-grid-${instance}` },
       )
       .then((response) => {
         if (!live) return;
@@ -69,7 +71,6 @@ export function DesirabilityView({
   }, [client, key]);
 
   if (!best || factors.length < 2) return null;
-  const fmt = (v: number) => formatSignificant(v, language, 4);
   const spec = (id: string) =>
     grid
       ? {

@@ -6,6 +6,7 @@ import { AnalysisSetup, buildDataset } from "../analysis";
 import { DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
+import { ExportSettingsPanel } from "../export";
 import { RecentProjects, StartActions } from "../home";
 import { ImportButton } from "../import";
 import { ConfirmationCheck } from "../optimization";
@@ -116,7 +117,12 @@ export function Workflow({ language }: { language: Language }) {
           </section>
         )}
         {step === "analysis" && <AnalysisSetup onDone={() => setStep("results")} />}
-        {step === "results" && <ResultsView language={language} />}
+        {step === "results" && (
+          <>
+            <ResultsView language={language} />
+            {state.result && <ExportSettingsPanel />}
+          </>
+        )}
       </div>
 
       <div className="step-actions">

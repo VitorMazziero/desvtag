@@ -72,3 +72,65 @@ describe("addPngText", () => {
     expect(() => addPngText(Uint8Array.from([1, 2, 3, 4, 5, 6, 7, 8, 9]), "k", "v")).toThrow();
   });
 });
+
+describe("CSV dialects and formula protection", () => {
+  it("quotes text that could be read as a formula, but never numbers", async () => {
+    const { toCsv, looksLikeFormula } = await import("./csv");
+    const csv = toCsv(
+      ["a", "b"],
+      [
+        ['=HYPERLINK("http://x")', -5],
+        ["+1", 2],
+        ["@SUM(A1)", null],
+        ["-texto", 0.5],
+        ["\tTAB", 1],
+        ["normal", -0.25],
+      ],
+      {},
+    );
+    const lines = csv.split("\r\n");
+    expect(lines).toContain('"\'=HYPERLINK(""http://x"")",-5');
+    expect(lines).toContain("'+1,2");
+    expect(lines).toContain("'@SUM(A1),");
+    expect(lines).toContain("'-texto,0.5");
+    expect(lines).toContain("normal,-0.25"); // número negativo continua número
+    expect(looksLikeFormula("=1")).toBe(true);
+    expect(looksLikeFormula("texto")).toBe(false);
+  });
+
+  it("writes the Excel-PT dialect with semicolons and decimal commas", async () => {
+    const { toCsv, EXCEL_PT } = await import("./csv");
+    const csv = toCsv(
+      ["termo", "valor"],
+      [
+        ["a;b", 1.5],
+        ["x", 1000.25],
+      ],
+      { método: "m" },
+      EXCEL_PT,
+    );
+    const lines = csv.split("\r\n");
+    expect(lines[0]).toBe("﻿# método: m");
+    expect(lines).toContain("termo;valor");
+    expect(lines).toContain('"a;b";1,5');
+    expect(lines).toContain("x;1000,25");
+  });
+
+  it("builds a workbook with the table and a provenance sheet and valid Excel sheet names", async () => {
+    const { buildWorkbook, sheetName } = await import("./xlsx");
+    const book = buildWorkbook(
+      "ANOVA: [a]/b",
+      ["x"],
+      [[1], [null], ["t"]],
+      { k: "v" },
+      "Proveniência",
+    );
+    expect(book.sheets.map((s) => s.name)).toEqual(["ANOVA   a  b", "Proveniência"]);
+    expect(book.sheets[0]?.rows).toEqual([["x"], [1], [null], ["t"]]);
+    expect(book.sheets[1]?.rows).toEqual([["k", "v"]]);
+    expect(sheetName("x".repeat(40))).toHaveLength(31);
+    expect(sheetName("")).toBe("Tabela");
+    const same = buildWorkbook("Proveniência", ["x"], [], { k: "v" }, "Proveniência");
+    expect(new Set(same.sheets.map((s) => s.name.toLowerCase())).size).toBe(2);
+  });
+});

@@ -434,7 +434,8 @@
       "notes": "Observações",
       "extrapolated": "Fora da região experimental (extrapolação)",
       "atBounds": "No limite do domínio: {{factors}}",
-      "starts": "{{count}} início(s) chegaram a esta solução"
+      "starts": "{{count}} início(s) chegaram a esta solução",
+      "exportCsv": "Candidatos (CSV)"
     },
     "tradeoffs": {
       "title": "Compromissos entre respostas",

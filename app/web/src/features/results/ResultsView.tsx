@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { useProject } from "../../state/ProjectContext";
-import { OptimizationPanel } from "../optimization";
+import { OptimizationPanel, OptimizationReport } from "../optimization";
 import { resultIsCurrent } from "../workflow/guards";
 import { ComparisonResults } from "./ComparisonResults";
 import { DescriptiveTable } from "./DescriptiveTable";
@@ -9,7 +9,14 @@ import { DesignResults } from "./DesignResults";
 import { Interpretation } from "./Interpretation";
 import { SurfaceResults } from "./SurfaceResults";
 
-export function ResultsView({ language }: { language: Language }) {
+/** `report`: versão para o relatório HTML (sem editores de otimização). */
+export function ResultsView({
+  language,
+  report = false,
+}: {
+  language: Language;
+  report?: boolean;
+}) {
   const { t } = useTranslation("results");
   const state = useProject();
   const stored = state.result;
@@ -52,7 +59,11 @@ export function ResultsView({ language }: { language: Language }) {
           </p>
         )}
         <SurfaceResults result={stored.result} signature={stored.signature} language={language} />
-        <OptimizationPanel language={language} />
+        {report ? (
+          <OptimizationReport language={language} />
+        ) : (
+          <OptimizationPanel language={language} />
+        )}
       </section>
     );
   const response = state.responses.find((r) => r.id === stored.result.responseId);

@@ -386,4 +386,29 @@ export async function runChecks({ text, invoke }) {
     }
     console.log("OK: otimização por desejabilidade (busca com semente) calculada pelo motor nativo via IPC do Tauri. D =", best.toFixed(6));
   }
+
+  // Exportação XLSX pelo IPC nativo: o arquivo é um zip, os números permanecem números e o texto que
+  // parece fórmula permanece texto (ida e volta pelo leitor do próprio motor).
+  {
+    const workbook = {
+      sheets: [
+        { name: "Dados", rows: [["grupo", "valor"], ["=cmd|' /C calc'!A0", 1.5], ["Água", null]] },
+        { name: "Proveniência", rows: [["chave", "valor"], ["app", "EnziTAG Optima"]] },
+      ],
+    };
+    const exported = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-export-xlsx", operation: { type: "exportXlsx", ...workbook } })),
+    );
+    const base64 = exported.outcome?.result?.bytesBase64;
+    if (typeof base64 !== "string") throw new Error("exportXlsx nativo sem arquivo");
+    const bytes = Buffer.from(base64, "base64");
+    if (bytes.subarray(0, 2).toString("latin1") !== "PK") throw new Error("XLSX nativo não é um zip");
+    const back = JSON.parse(
+      await invoke(JSON.stringify({ protocolVersion: 1, taskId: "native-export-xlsx-back", operation: { type: "importXlsx", bytesBase64: base64, sheet: "Dados" } })),
+    );
+    const got = back.outcome?.result?.rows;
+    if (got?.[1]?.[0] !== "=cmd|' /C calc'!A0" || got?.[1]?.[1] !== "1.5" || got?.[2]?.[0] !== "Água")
+      throw new Error(`XLSX nativo: ida e volta incorreta ${JSON.stringify(got)}`);
+    console.log("OK: XLSX exportado pelo motor nativo via IPC do Tauri e relido (texto de fórmula preservado como texto).");
+  }
 }

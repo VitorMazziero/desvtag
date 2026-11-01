@@ -21,6 +21,7 @@ Coletar objetivos (maximizar, minimizar, alvo, faixa), importâncias, limites ob
 | `OptimizationPanel.tsx` | Painel (nos resultados da superfície): configuração, execução, cancelamento, resultados |
 | `GoalsEditor.tsx` | Objetivos, importâncias e limites por resposta |
 | `CandidateTable.tsx` | Candidatos, previsões, intervalos e observações |
+| `TradeOffs.tsx`, `OptimizationReport.tsx` | Compromissos entre respostas; versão somente leitura da otimização para o relatório HTML (ET09) |
 | `DesirabilityView.tsx` | Eixos e gráfico de desejabilidade (malha do motor) |
 | `ConfirmationPanel.tsx` | Escolha de candidatos e repetições; cria o experimento vinculado |
 | `ConfirmationCheck.tsx` | Observado × intervalo de predição gravado (etapa de dados do experimento de confirmação) |

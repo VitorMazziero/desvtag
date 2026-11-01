@@ -8,6 +8,7 @@ import { createDefaultEngineClient } from "./services/engine";
 import { EngineProvider } from "./services/engine/EngineContext";
 import { createDefaultStorageProvider } from "./services/storage";
 import { StorageProviderContext } from "./services/storage/context";
+import { ExportSettingsProvider } from "./state/ExportSettingsContext";
 import { ProjectProvider } from "./state/ProjectContext";
 import { applyPreferences, loadPreferences, usePreferences } from "./state/preferences";
 import "./themes/fonts.css";
@@ -31,12 +32,14 @@ function Root() {
       <EngineProvider createClient={createDefaultEngineClient}>
         <StorageProviderContext provider={storage}>
           <ProjectProvider>
-            <App
-              language={preferences.language}
-              theme={preferences.theme}
-              onLanguageChange={setLanguage}
-              onThemeChange={setTheme}
-            />
+            <ExportSettingsProvider>
+              <App
+                language={preferences.language}
+                theme={preferences.theme}
+                onLanguageChange={setLanguage}
+                onThemeChange={setTheme}
+              />
+            </ExportSettingsProvider>
           </ProjectProvider>
         </StorageProviderContext>
       </EngineProvider>

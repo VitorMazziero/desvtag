@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F07 |
 | Marco | **M3 — DoE e otimização** |
 | Depende de | ET07 |
 | Módulos | C17, C06 (`prediction`), C16 (visualização da desejabilidade), E02 (cancelamento inicial), P01 (vínculo da confirmação), U10 |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-01 |
 
 ## 1. Objetivo
 
@@ -71,7 +71,7 @@ Otimização de uma ou várias respostas, com candidatos, previsões e confirma�
 
 1. [x] Casos com solução conhecida, ótimo na fronteira, conflito de objetivos e região inviável apresentam comportamento correto. *Evidência:* `tests/optimization_validation.rs`, casos 001 (interior), 004 (fronteira), 002 (conflito com limite e pesos), 005 (inviável: sem candidatos), 006 (desejabilidade zero), contra busca exaustiva independente; paridade WebAssembly.
 2. [x] Nenhum candidato listado como viável viola restrição além da tolerância registrada (1e-9 na amplitude observada). *Evidência:* verificação em todos os candidatos de todos os casos e no teste nativo do CI.
-3. [ ] A mesma semente produz os mesmos candidatos nas duas plataformas, dentro da tolerância registrada. *Evidência obtida:* mesma semente → candidatos idênticos no motor nativo (Linux) e no WebAssembly (testes), e melhor `D` dentro do intervalo da referência independente em ambos. **Windows:** pendente da execução do job `desktop-windows` com a nova verificação nativa de otimização. A igualdade bit a bit entre plataformas **não** é afirmada (ver [método](../../metodos/busca-otimizacao.md#5-algoritmo-numérico)).
+3. [x] A mesma semente produz os mesmos candidatos nas duas plataformas, dentro da tolerância registrada. *Evidência obtida:* mesma semente → candidatos idênticos no motor nativo (Linux) e no WebAssembly (testes), e melhor `D` dentro do intervalo da referência independente em ambos. **Windows:** job `Tauri (build no Windows)` aprovado em `windows-latest` (Windows Server 2025, não Windows 11) com a verificação nativa de otimização, execução [41339828071](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41339828071) no commit `5e5a375`. A igualdade bit a bit entre plataformas **não** é afirmada (ver [método](../../metodos/busca-otimizacao.md#5-algoritmo-numérico)).
 4. [x] Cancelar uma busca não altera os resultados atuais nem deixa a interface inconsistente. *Evidência:* testes do cliente (`cancel`) e E2E (busca de 5000 inícios cancelada; resultado anterior mantido; nova busca funciona).
 
 **Marco M3** (ET06–ET08 concluídas): o critério do marco só se completa com a ET08; a **declaração formal** do marco aguarda M1 e M2, que dependem da evidência em Windows 11 das etapas anteriores.
@@ -102,8 +102,9 @@ Especificações, fichas, DTs, [mapa de módulos](../../arquitetura/mapa-modulos
 | 2026-11-01 | **Exemplo 04** (DCCR de duas respostas, otimização e confirmação): `D = 0,9255` (malha: 0,9254); confirmação dentro dos intervalos. |
 | 2026-11-01 | **Nativo:** `native-checks.mjs` ampliado (otimização com semente) e executado sob Xvfb no Linux: aprovado. |
 | 2026-11-01 | **Documentação:** DT-0013, duas especificações, fichas C17 e U10, matriz, mapa de módulos, formato `.enzitag`, validação e exemplos. |
+| 2026-11-01 | **Windows:** execução 41339828071 (commit `5e5a375`) aprovada em todos os jobs, inclusive `Tauri (build no Windows)` com a verificação nativa de otimização (`windows-latest` = Windows Server 2025; não é Windows 11). Critério 3 atendido; etapa movida para `concluidos/`. |
 
-**Retomada.** Ramo `claude/epic-keller-3ad7jc`; T01–T12 concluídas; pendente o critério 3 (Windows, execução da CI). Próxima etapa em código: ET09 (gráficos e exportação).
+**Retomada.** Etapa concluída. Próxima etapa em código: ET09 (gráficos e exportação).
 
 ## 12. Desvios e descobertas
 

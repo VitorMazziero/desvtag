@@ -1,19 +1,18 @@
 // U09 — superfície 3D e contorno da resposta predita. A malha, a região e a extrapolação vêm do
 // motor (`surfaceGrid`); aqui só há a escolha dos eixos, dos valores fixados e o desenho.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { formatSignificant } from "../../i18n/format";
 import { contourChart, surface3dChart, type View3d } from "../../services/charts";
 import type { SurfaceGrid, SurfaceResult } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
-import { toCsv, utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useProject } from "../../state/ProjectContext";
 import { buildDataset, buildSurfaceRequest } from "../analysis";
 import { ChartFigure } from "./ChartFigure";
-import { ExportButton } from "./ExportButton";
+import { TableExportButtons } from "./TableExportButtons";
+import { useFigureFormat } from "./useFigureFormat";
 
 interface Props {
   result: SurfaceResult;
@@ -41,7 +40,9 @@ export function SurfaceView({
   const { t: tc } = useTranslation();
   const state = useProject();
   const { client } = useEngine();
-  const storage = useStorage();
+  const instance = useId();
+  const fmt = useFigureFormat(language);
+  const _storage = useStorage();
   const ranges = result.ranges;
   const [xIndex, setXIndex] = useState(0);
   const [yIndex, setYIndex] = useState(Math.min(1, ranges.length - 1));
@@ -98,7 +99,7 @@ export function SurfaceView({
             stepsY: steps,
             contourLevels: 8,
           },
-          { channel: "surface-grid" },
+          { channel: `surface-grid-${instance}` },
         )
         .then((response) => {
           if (!live) return;
@@ -124,7 +125,6 @@ export function SurfaceView({
   }, [client, key, result]);
 
   if (ranges.length < 2) return <p className="muted">{t("surface.view.needTwo")}</p>;
-  const fmt = (v: number) => formatSignificant(v, language, 4);
   const label = responseUnit ? `${responseName} [${responseUnit}]` : responseName;
   const spec = (id: string, withMetadata: boolean, kind: "contour" | "surface") =>
     grid
@@ -152,34 +152,27 @@ export function SurfaceView({
         }
       : null;
 
-  const exportGrid = async () => {
-    if (!grid) return;
-    try {
-      const header = [grid.xName, grid.yName, responseName, "extrapolation"];
-      const rows = grid.y.flatMap((yv, iy) =>
-        grid.x.map((xv, ix) => {
-          const cell = grid.z[iy]?.[ix];
-          return [
-            xv,
-            yv,
-            cell && cell.status === "defined" ? cell.value : null,
-            grid.extrapolated[iy]?.[ix] ? "yes" : "no",
-          ];
-        }),
-      );
-      const fixed = Object.fromEntries(grid.fixed.map((f) => [`fixed_${f.name}`, String(f.value)]));
-      const saved = await storage.exportFile(
-        utf8(toCsv(header, rows, { ...csvMetadata, ...fixed })),
-        `${fileBase}-malha.csv`,
-      );
-      setNotice(
-        saved
-          ? t("comparison.export.done", { name: saved.name })
-          : t("comparison.export.cancelled"),
-      );
-    } catch {
-      setNotice(t("comparison.export.failed"));
-    }
+  const gridTable = () => {
+    if (!grid)
+      return {
+        header: [] as string[],
+        rows: [] as (string | number | null)[][],
+        meta: csvMetadata,
+      };
+    const header = [grid.xName, grid.yName, responseName, "extrapolation"];
+    const rows = grid.y.flatMap((yv, iy) =>
+      grid.x.map((xv, ix) => {
+        const cell = grid.z[iy]?.[ix];
+        return [
+          xv,
+          yv,
+          cell && cell.status === "defined" ? cell.value : null,
+          grid.extrapolated[iy]?.[ix] ? "yes" : "no",
+        ];
+      }),
+    );
+    const fixed = Object.fromEntries(grid.fixed.map((f) => [`fixed_${f.name}`, String(f.value)]));
+    return { header, rows, meta: { ...csvMetadata, ...fixed } };
   };
 
   const contourSpec = spec("surface-contour", false, "contour");
@@ -188,7 +181,11 @@ export function SurfaceView({
   const surfaceExport = spec("surface-3d", true, "surface");
 
   return (
-    <section aria-labelledby="surface-view-title" data-testid="surface-view">
+    <section
+      aria-labelledby="surface-view-title"
+      data-testid="surface-view"
+      data-loading={loading || undefined}
+    >
       <h3 id="surface-view-title">{t("surface.view.title")}</h3>
       <p className="muted">{t("surface.view.intro")}</p>
       <div className="row">
@@ -300,13 +297,20 @@ export function SurfaceView({
           />
         </>
       )}
-      <div className="row">
-        <ExportButton
-          label={t("surface.view.gridCsv")}
-          onExport={exportGrid}
-          onError={() => setNotice(t("comparison.export.failed"))}
-        />
-      </div>
+      {grid && (
+        <div className="row">
+          <TableExportButtons
+            label={t("surface.view.gridCsv")}
+            suffix="malha"
+            sheet={t("surface.view.title")}
+            header={gridTable().header}
+            rows={gridTable().rows}
+            metadata={gridTable().meta}
+            fileBase={fileBase}
+            onDone={setNotice}
+          />
+        </div>
+      )}
       {notice && (
         <p role="status" className="muted small">
           {notice}

@@ -39,6 +39,7 @@ export function downloadBytes(
 
 const MIME: Record<string, string> = {
   csv: "text/csv;charset=utf-8",
+  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   svg: "image/svg+xml",
   png: "image/png",
   html: "text/html;charset=utf-8",

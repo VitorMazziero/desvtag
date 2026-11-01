@@ -83,7 +83,7 @@ test.describe("fluxo guiado em português", () => {
     await expect(interpretation).toContainText("O grupo «B» tem 1 observação");
 
     // Trocar o idioma preserva o resultado e muda rótulos e separador decimal.
-    await page.getByLabel("Idioma").selectOption("en");
+    await page.locator("header.app-header").getByLabel("Idioma").selectOption("en");
     await expect(page.getByRole("heading", { name: "Results" })).toBeVisible();
     await expect(rowA).toContainText("0.7071067812");
     await expect(page.getByTestId("interpretation")).toContainText("5 of 6 observations");

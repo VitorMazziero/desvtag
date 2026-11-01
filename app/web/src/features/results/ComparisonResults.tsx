@@ -6,8 +6,7 @@ import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
 import { boxChart, meansChart, scatterChart } from "../../services/charts";
 import type { AnalysisRecord, OneWayResult, Stat } from "../../services/engine";
-import { type ExportMetadata, exportMetadata, flat, toCsv, utf8 } from "../../services/export";
-import { useStorage } from "../../services/storage/context";
+import { type ExportMetadata, exportMetadata, flat } from "../../services/export";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
 import { ComparisonInterpretation } from "./ComparisonInterpretation";
@@ -20,7 +19,8 @@ import {
   PAIR_HEADER,
   pairRows,
 } from "./comparisonRows";
-import { ExportButton } from "./ExportButton";
+import { TableExportButtons } from "./TableExportButtons";
+import { useFigureFormat } from "./useFigureFormat";
 
 type Uncertainty = "ci" | "sd" | "se";
 
@@ -47,7 +47,6 @@ export function ComparisonResults({ result, signature, language }: Props) {
   const { t } = useTranslation("results");
   const state = useProject();
   const workspace = useWorkspace();
-  const storage = useStorage();
   const [uncertainty, setUncertainty] = useState<Uncertainty>("ci");
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -76,7 +75,7 @@ export function ComparisonResults({ result, signature, language }: Props) {
     [record, revision, workspace.name, state.name],
   );
   const metadataText = metadata ? JSON.stringify(metadata) : "";
-  const fmt = (v: number) => formatSignificant(v, language, 4);
+  const fmt = useFigureFormat(language);
   const levelPercent = formatSignificant((1 - result.alpha) * 100, language, 4);
 
   const meansSpec = (withMetadata: boolean) => ({
@@ -143,19 +142,7 @@ export function ComparisonResults({ result, signature, language }: Props) {
   });
 
   const base = `${slug(state.name)}-${slug(responseName)}`;
-  const csv = (header: string[], rows: (string | number | null)[][]) =>
-    utf8(toCsv(header, rows, metadata ? flat(metadata) : {}));
-  const exportCsv = async (
-    suffix: string,
-    header: string[],
-    rows: (string | number | null)[][],
-  ) => {
-    const saved = await storage.exportFile(csv(header, rows), `${base}-${suffix}.csv`);
-    setNotice(
-      saved ? t("comparison.export.done", { name: saved.name }) : t("comparison.export.cancelled"),
-    );
-  };
-
+  const exportMeta = metadata ? flat(metadata) : null;
   const bf = result.diagnostics.brownForsythe;
   const farPoints = result.groups.reduce(
     (total, g) => total + (g.boxplot?.outliers.length ?? 0),
@@ -256,24 +243,39 @@ export function ComparisonResults({ result, signature, language }: Props) {
         )}
       </section>
 
-      <section aria-labelledby="export-title">
+      <section aria-labelledby="export-title" data-report-skip>
         <h3 id="export-title">{t("comparison.export.title")}</h3>
         <div className="row">
-          <ExportButton
+          <TableExportButtons
             label={t("comparison.export.csvAnova")}
-            onExport={() => exportCsv("anova", ANOVA_HEADER, anovaRows(result))}
-            onError={() => setNotice(t("comparison.export.failed"))}
+            suffix="anova"
+            sheet="ANOVA"
+            header={ANOVA_HEADER}
+            rows={anovaRows(result)}
+            metadata={exportMeta}
+            fileBase={base}
+            onDone={setNotice}
           />
-          <ExportButton
+          <TableExportButtons
             label={t("comparison.export.csvGroups")}
-            onExport={() => exportCsv("grupos", GROUP_HEADER, groupRows(result))}
-            onError={() => setNotice(t("comparison.export.failed"))}
+            suffix="grupos"
+            sheet={t("comparison.export.sheetGroups")}
+            header={GROUP_HEADER}
+            rows={groupRows(result)}
+            metadata={exportMeta}
+            fileBase={base}
+            onDone={setNotice}
           />
           {result.tukey && (
-            <ExportButton
+            <TableExportButtons
               label={t("comparison.export.csvPairs")}
-              onExport={() => exportCsv("pares", PAIR_HEADER, pairRows(result))}
-              onError={() => setNotice(t("comparison.export.failed"))}
+              suffix="pares"
+              sheet={t("comparison.export.sheetPairs")}
+              header={PAIR_HEADER}
+              rows={pairRows(result)}
+              metadata={exportMeta}
+              fileBase={base}
+              onDone={setNotice}
             />
           )}
         </div>

@@ -10,12 +10,14 @@ import { engineErrorMessages, issueMessage } from "../../services/errors/present
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { buildDataset } from "../analysis";
 import { formatFactParams } from "../results/ComparisonInterpretation";
-import { CandidateTable } from "./CandidateTable";
+import { TableExportButtons } from "../results/TableExportButtons";
+import { CandidateTable, candidatesTable } from "./CandidateTable";
 import { ConfirmationPanel } from "./ConfirmationPanel";
 import { DesirabilityView } from "./DesirabilityView";
 import { GoalsEditor } from "./GoalsEditor";
 import { NumberField } from "./NumberField";
 import { buildOptimizationRequest, defaultSetup, optimizationSignature } from "./optimizationSetup";
+import { TradeOffs } from "./TradeOffs";
 
 const RUN_CHANNEL = "optimization-run";
 
@@ -274,6 +276,18 @@ export function OptimizationPanel({ language }: { language: Language }) {
           {result.candidates.length > 0 && (
             <>
               <CandidateTable result={result} language={language} />
+              <div className="row">
+                <TableExportButtons
+                  label={t("optimization.candidates.exportCsv")}
+                  suffix="candidatos"
+                  sheet={t("optimization.candidates.rank")}
+                  header={candidatesTable(result).header}
+                  rows={candidatesTable(result).rows}
+                  metadata={optimizationMeta(state, result)}
+                  fileBase="otimizacao"
+                  onDone={setNotice}
+                />
+              </div>
               <TradeOffs result={result} language={language} />
               {current && (
                 <DesirabilityView request={request} result={result} language={language} />
@@ -289,45 +303,24 @@ export function OptimizationPanel({ language }: { language: Language }) {
   );
 }
 
-function TradeOffs({
-  result,
-  language,
-}: {
-  result: import("../../services/engine").OptimizationResult;
-  language: Language;
-}) {
-  const { t } = useTranslation();
-  if (result.tradeOffs.length === 0) return null;
-  const fmt = (v: number | null) =>
-    v === null ? "—" : new Intl.NumberFormat(language, { maximumSignificantDigits: 4 }).format(v);
-  return (
-    <section aria-labelledby="tradeoffs-title">
-      <h3 id="tradeoffs-title">{t("optimization.tradeoffs.title")}</h3>
-      <p className="muted small">{t("optimization.tradeoffs.help")}</p>
-      <div className="grid-scroll">
-        <table className="results-table" data-testid="tradeoff-table">
-          <thead>
-            <tr>
-              <th scope="col">{t("optimization.tradeoffs.response")}</th>
-              <th scope="col">{t("optimization.tradeoffs.bestAlone")}</th>
-              <th scope="col">{t("optimization.tradeoffs.atBest")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {result.tradeOffs.map((x) => (
-              <tr key={x.responseId}>
-                <th scope="row">{x.name}</th>
-                <td className="num">{fmt(x.bestAlone)}</td>
-                <td className="num">
-                  {x.real.length === 0
-                    ? "—"
-                    : x.real.map((v, j) => `${result.factorNames[j] ?? j} = ${fmt(v)}`).join("; ")}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
+/** Metadados dos arquivos exportados: método, versões, semente e configuração da otimização. */
+function optimizationMeta(
+  state: import("../../state/project").ProjectState,
+  result: import("../../services/engine").OptimizationResult,
+): Record<string, string> {
+  const record = [...state.analyses]
+    .reverse()
+    .find((a) => a.methodId === result.provenance.methodId);
+  return {
+    app: "EnziTAG Optima",
+    experiment: state.name,
+    methodId: `${result.provenance.methodId} v${result.provenance.methodVersion}`,
+    engine: result.provenance.engineVersion,
+    analysis: record?.id ?? "",
+    revision: record?.revisionId ?? "",
+    seed: String(result.convergence.seed),
+    starts: String(result.convergence.starts),
+    algorithm: result.convergence.algorithm,
+    setup: JSON.stringify(state.optimization.setup ?? {}),
+  };
 }

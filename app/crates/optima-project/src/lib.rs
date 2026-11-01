@@ -19,6 +19,7 @@ pub mod manifest;
 pub mod migrations;
 pub mod revision;
 pub mod xlsx;
+pub mod xlsx_writer;
 
 pub use analysis::{AnalysisOptions, AnalysisRecord, AnalysisResult};
 pub use confirmation::{ConfirmationPlan, ConfirmationPrediction, ExperimentOrigin};

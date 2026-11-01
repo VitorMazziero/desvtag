@@ -220,7 +220,9 @@
       "png": "PNG",
       "done": "Arquivo preparado: {{name}}",
       "failed": "Não foi possível exportar o arquivo.",
-      "cancelled": "Exportação cancelada."
+      "cancelled": "Exportação cancelada.",
+      "sheetGroups": "Grupos",
+      "sheetPairs": "Pares"
     },
     "warnings": "Avisos"
   },
@@ -375,6 +377,34 @@
     },
     "export": {
       "coefficientsCsv": "Coeficientes (CSV)"
+    }
+  },
+  "export": {
+    "provenanceSheet": "Proveniência",
+    "xlsx": "XLSX",
+    "title": "Exportação e aparência das figuras",
+    "intro": "Escolha o idioma dos arquivos, o formato das tabelas CSV e o estilo das figuras. As tabelas e figuras também podem ser baixadas nos botões ao lado de cada uma.",
+    "language": "Idioma dos arquivos exportados",
+    "languageUi": "Mesmo da interface",
+    "csv": "Formato do CSV",
+    "csvTechnical": "Técnico (vírgula e ponto decimal)",
+    "csvExcel": "Para Excel (idioma da exportação)",
+    "palette": "Paleta das figuras",
+    "paletteDefault": "Padrão",
+    "paletteColorblind": "Acessível a daltonismo",
+    "fontScale": "Tamanho do texto das figuras",
+    "fontSmall": "Menor",
+    "fontNormal": "Normal",
+    "fontLarge": "Maior",
+    "digits": "Algarismos significativos nas figuras",
+    "deviceNote": "Estas preferências valem para este dispositivo e são registradas nos metadados dos arquivos exportados; não são salvas no projeto.",
+    "report": {
+      "button": "Exportar relatório (HTML)",
+      "building": "Montando relatório…",
+      "title": "Relatório",
+      "subtitle": "Relatório gerado pelo EnziTAG Optima: método, configuração, tabelas, figuras e interpretação.",
+      "provenance": "Proveniência",
+      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente."
     }
   }
 }

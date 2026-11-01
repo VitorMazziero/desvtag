@@ -77,6 +77,7 @@ A árvore completa, com o que já existe e a etapa que cria cada parte, está em
 - [Estrutura do repositório](docs/arquitetura/estrutura-repositorio.md).
 - [Convenções de nomes, documentação e fluxo de trabalho](docs/convencoes/README.md).
 - [Guia do ambiente de desenvolvimento](docs/guias/ambiente-desenvolvimento.md).
+- [Guia de exportação](docs/guias/exportacao.md).
 - [Dependências](docs/arquitetura/dependencias.md) e [decisões técnicas](docs/decisoes-tecnicas/README.md).
 - [Organização da implementação](app/README.md).
 - [Temas visuais e prompts originais](docs/temas/README.md).

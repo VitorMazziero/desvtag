@@ -2,7 +2,10 @@
 import type { GeneratedDesign } from "../../services/engine";
 import { type Cell, toCsv } from "../../services/export";
 
-export function matrixCsv(design: GeneratedDesign, metadata: Record<string, string>): string {
+export function matrixTable(
+  design: GeneratedDesign,
+  metadata: Record<string, string>,
+): { header: string[]; rows: Cell[][]; meta: Record<string, string> } {
   const names = design.spec.factors.map((f) => f.name);
   const header = [
     "run",
@@ -30,7 +33,7 @@ export function matrixCsv(design: GeneratedDesign, metadata: Record<string, stri
           : design.spec.kind.type === "boxBehnken"
             ? "box-behnken"
             : "full factorial";
-  return toCsv(header, rows, {
+  const meta = {
     ...metadata,
     method: `${design.provenance.methodId} v${design.provenance.methodVersion}`,
     engine: design.provenance.engineVersion,
@@ -41,5 +44,11 @@ export function matrixCsv(design: GeneratedDesign, metadata: Record<string, stri
     randomized: String(design.spec.randomize),
     seed: String(design.spec.seed),
     randomization: design.randomizationAlgorithm,
-  });
+  };
+  return { header, rows, meta };
+}
+
+export function matrixCsv(design: GeneratedDesign, metadata: Record<string, string>): string {
+  const { header, rows, meta } = matrixTable(design, metadata);
+  return toCsv(header, rows, meta);
 }

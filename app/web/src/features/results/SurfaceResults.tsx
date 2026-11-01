@@ -8,14 +8,15 @@ import { formatP, formatSignificant } from "../../i18n/format";
 import { scatterChart } from "../../services/charts";
 import type { AnalysisRecord, Stat, SurfaceResult } from "../../services/engine";
 import { issueMessage } from "../../services/errors/presentation";
-import { exportMetadata, flat, toCsv, utf8 } from "../../services/export";
+import { exportMetadata, flat } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
 import { formatFactParams } from "./ComparisonInterpretation";
-import { ExportButton } from "./ExportButton";
 import { SurfaceView } from "./SurfaceView";
 import { formatEquation } from "./surfaceEquation";
+import { TableExportButtons } from "./TableExportButtons";
+import { useFigureFormat } from "./useFigureFormat";
 
 const val = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
 
@@ -59,7 +60,7 @@ export function SurfaceResults({ result, signature, language }: Props) {
   const { t: tc } = useTranslation();
   const state = useProject();
   const workspace = useWorkspace();
-  const storage = useStorage();
+  const _storage = useStorage();
   const [notice, setNotice] = useState<string | null>(null);
 
   const response = state.responses.find((r) => r.id === result.responseId);
@@ -83,7 +84,7 @@ export function SurfaceResults({ result, signature, language }: Props) {
     [record, revision, workspace.name, state.name],
   );
   const metadataText = metadata ? JSON.stringify(metadata) : "";
-  const fmt = (v: number) => formatSignificant(v, language, 4);
+  const fmt = useFigureFormat(language);
   const level = formatSignificant((1 - result.alpha) * 100, language, 4);
   const base = `${slug(state.name)}-${slug(responseName)}`;
   const anova = result.anova;
@@ -92,13 +93,13 @@ export function SurfaceResults({ result, signature, language }: Props) {
 
   const evidence =
     val(anova.f) !== null && val(anova.pValue) !== null
-      ? t("summary.evidence", {
+      ? t("surface.summary.evidence", {
           f: formatSignificant(val(anova.f) ?? 0, language, 5),
           p: formatP(val(anova.pValue) ?? 0, language),
           r2: formatSignificant(val(anova.rSquared) ?? 0, language, 5),
           adjusted: formatSignificant(val(anova.adjustedRSquared) ?? 0, language, 5),
         })
-      : t("summary.evidenceUnavailable");
+      : t("surface.summary.evidenceUnavailable");
 
   const opSpec = (withMetadata: boolean) => ({
     id: "surface-observed-predicted",
@@ -112,7 +113,7 @@ export function SurfaceResults({ result, signature, language }: Props) {
     metadata: withMetadata ? metadataText : undefined,
   });
 
-  const csvCoefficients = () => {
+  const coefficientsTable = () => {
     const header = ["term", "estimate", "std_error", "t", "p_value", "ci_lower", "ci_upper"];
     const rows = [result.intercept, ...result.terms].map((row) => [
       row.label,
@@ -123,19 +124,7 @@ export function SurfaceResults({ result, signature, language }: Props) {
       val(row.ciLower),
       val(row.ciUpper),
     ]);
-    return utf8(toCsv(header, rows, metadata ? flat(metadata) : {}));
-  };
-  const exportCoefficients = async () => {
-    try {
-      const saved = await storage.exportFile(csvCoefficients(), `${base}-coeficientes.csv`);
-      setNotice(
-        saved
-          ? t("comparison.export.done", { name: saved.name })
-          : t("comparison.export.cancelled"),
-      );
-    } catch {
-      setNotice(t("comparison.export.failed"));
-    }
+    return { header, rows };
   };
   const lof = result.lackOfFit;
 
@@ -353,13 +342,18 @@ export function SurfaceResults({ result, signature, language }: Props) {
         />
       )}
 
-      <section aria-labelledby="export-title">
+      <section aria-labelledby="export-title" data-report-skip>
         <h3 id="export-title">{t("comparison.export.title")}</h3>
         <div className="row">
-          <ExportButton
+          <TableExportButtons
             label={t("surface.export.coefficientsCsv")}
-            onExport={exportCoefficients}
-            onError={() => setNotice(t("comparison.export.failed"))}
+            suffix="coeficientes"
+            sheet={t("surface.terms.term")}
+            header={coefficientsTable().header}
+            rows={coefficientsTable().rows}
+            metadata={metadata ? flat(metadata) : null}
+            fileBase={base}
+            onDone={setNotice}
           />
         </div>
         {notice && (
