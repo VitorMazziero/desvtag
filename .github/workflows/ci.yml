@@ -147,6 +147,8 @@ jobs:
     name: Tauri (build no Windows)
     # Repositório público: minutos gratuitos, então roda em todo push e pull request.
     runs-on: windows-latest
+    env:
+      SIGNING_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: Swatinem/rust-cache@v2
@@ -163,13 +165,19 @@ jobs:
           cache-dependency-path: app/web/package-lock.json
       - run: npm ci
         working-directory: app/web
-      - name: Build do aplicativo Windows (instalador NSIS, sem artefatos do atualizador)
-        # A assinatura do atualizador só existe no fluxo de release (segredos do GitHub); aqui a
-        # configuração desliga os artefatos assinados para que pull requests de forks também compilem.
+      - name: Build do aplicativo Windows (instalador NSIS assinado para o atualizador)
+        # A chave de assinatura do atualizador está em segredos do GitHub: disponível em pushes do
+        # próprio repositório, ausente em pull requests de forks (próximo passo).
+        if: env.SIGNING_KEY != ''
         run: npm --prefix ../web exec -- tauri build
         working-directory: app/desktop
         env:
-          TAURI_CONFIG: '{"bundle":{"createUpdaterArtifacts":false}}'
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+      - name: Build do aplicativo Windows sem empacotar (sem a chave do atualizador)
+        if: env.SIGNING_KEY == ''
+        run: npm --prefix ../web exec -- tauri build --no-bundle
+        working-directory: app/desktop
       - uses: actions/upload-artifact@v4
         with:
           name: enzitag-optima-windows-nsis
