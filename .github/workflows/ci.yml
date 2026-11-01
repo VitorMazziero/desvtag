@@ -167,22 +167,25 @@ jobs:
         with:
           name: enzitag-optima-windows-nsis
           path: app/desktop/src-tauri/target/release/bundle/nsis/*.exe
-      - name: Diagnóstico — iniciar o executável diretamente por 10 s
+      - name: Diagnóstico — o executável permanece em execução por 10 s?
+        # Falha (visível no status do passo) se o aplicativo encerrar sozinho ao iniciar.
         shell: pwsh
-        continue-on-error: true
         run: |
           $p = Start-Process -FilePath "src-tauri/target/release/optima-desktop.exe" -PassThru
           Start-Sleep -Seconds 10
-          if ($p.HasExited) { "ENCERROU com código $($p.ExitCode)" } else { "EM EXECUÇÃO após 10 s (janela: '$($p.MainWindowTitle)')"; Stop-Process -Id $p.Id }
-          Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' -ErrorAction SilentlyContinue | Select-Object pv
+          if ($p.HasExited) { Write-Error "ENCERROU com código $($p.ExitCode)"; exit 1 }
+          "EM EXECUÇÃO após 10 s"
+          Stop-Process -Id $p.Id
         working-directory: app/desktop
       - name: Instalar tauri-driver e msedgedriver
+        if: always()
         run: |
           cargo install tauri-driver --locked
           cargo install --git https://github.com/chippers/msedgedriver-tool
           & "$HOME/.cargo/bin/msedgedriver-tool.exe"
         working-directory: app/desktop
       - name: Verificação nativa no Windows (WebDriver, WebView2)
+        if: always()
         # Ainda em diagnóstico (ET01-T22): msedgedriver não consegue abrir o WebView2 na CI.
         # Enquanto isso não deixa o job vermelho; o resultado fica registrado no plano.
         continue-on-error: true
