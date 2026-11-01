@@ -12,7 +12,9 @@ if (!app) {
   process.exit(2);
 }
 const base = "http://127.0.0.1:4444";
-const driver = spawn("tauri-driver", [], { stdio: ["ignore", "inherit", "inherit"] });
+// NATIVE_DRIVER: caminho do WebDriver nativo (msedgedriver no Windows); no Linux é o WebKitWebDriver do PATH.
+const driverArgs = process.env.NATIVE_DRIVER ? ["--native-driver", process.env.NATIVE_DRIVER] : [];
+const driver = spawn("tauri-driver", driverArgs, { stdio: ["ignore", "inherit", "inherit"] });
 let sessionId;
 
 async function call(method, path, body) {

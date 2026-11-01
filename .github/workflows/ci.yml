@@ -21,7 +21,7 @@ env:
 jobs:
   docs:
     name: Documentação e versões
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,7 +32,7 @@ jobs:
 
   rust:
     name: Rust (fmt, clippy, testes, WASM)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: app
@@ -52,7 +52,7 @@ jobs:
 
   web:
     name: Web (contratos, lint, tipos, testes, build, E2E)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: app/web
@@ -94,7 +94,7 @@ jobs:
 
   desktop-linux:
     name: Tauri (compilação e verificação nativa em Linux)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Dependências do sistema
@@ -163,6 +163,17 @@ jobs:
       - name: Build do aplicativo Windows (instalador NSIS)
         run: npm --prefix ../web exec -- tauri build
         working-directory: app/desktop
+      - name: Instalar tauri-driver e msedgedriver
+        run: |
+          cargo install tauri-driver --locked
+          cargo install --git https://github.com/chippers/msedgedriver-tool
+          & "$HOME/.cargo/bin/msedgedriver-tool.exe"
+        working-directory: app/desktop
+      - name: Verificação nativa no Windows (WebDriver, WebView2)
+        run: node tests/native-smoke.mjs src-tauri/target/release/optima-desktop.exe
+        working-directory: app/desktop
+        env:
+          NATIVE_DRIVER: ${{ github.workspace }}/app/desktop/msedgedriver.exe
       - uses: actions/upload-artifact@v4
         with:
           name: enzitag-optima-windows-nsis
