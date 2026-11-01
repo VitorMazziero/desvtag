@@ -2,12 +2,18 @@
 
 use std::collections::BTreeMap;
 
+use base64::Engine as _;
+use base64::engine::general_purpose::STANDARD;
 use optima_core::errors::CoreError;
+use optima_core::validation::{Issue, Severity};
 use serde_json::Value;
 
 use crate::capabilities::engine_info;
 use crate::request::{EngineRequest, Operation, PROTOCOL_VERSION};
-use crate::response::{EngineError, EngineResponse, ErrorCode, OperationResult, Outcome};
+use crate::response::{
+    EngineError, EngineResponse, ErrorCode, OperationResult, Outcome, ProjectDecodeResult,
+    ProjectEncodeResult,
+};
 
 fn error_response(
     task_id: Option<String>,
@@ -44,20 +50,66 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::DescriptiveSummarize(result),
             },
-            Err(CoreError::InvalidInput(issues)) => Outcome::Error {
-                error: EngineError {
-                    code: ErrorCode::InvalidInput,
-                    params: BTreeMap::new(),
-                    issues,
-                },
-            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::ProjectEncode(req) => match optima_project::archive::encode(&req.document) {
+            Ok(bytes) => Outcome::Ok {
+                result: OperationResult::ProjectEncode(ProjectEncodeResult {
+                    size: bytes.len() as u64,
+                    sha256: optima_project::integrity::sha256_hex(&bytes),
+                    bytes_base64: STANDARD.encode(&bytes),
+                }),
+            },
+            Err(issues) => failure(ErrorCode::InvalidProject, issues),
+        },
+        Operation::ProjectDecode(req) => {
+            match decode_base64(&req.bytes_base64, "project.invalid_base64") {
+                Err(issues) => failure(ErrorCode::InvalidProject, issues),
+                Ok(bytes) => match optima_project::archive::decode(&bytes) {
+                    Ok(decoded) => Outcome::Ok {
+                        result: OperationResult::ProjectDecode(ProjectDecodeResult {
+                            document: decoded.document,
+                            migrated_from: decoded.migrated_from,
+                            warnings: decoded.warnings,
+                        }),
+                    },
+                    Err(issues) => failure(ErrorCode::InvalidProject, issues),
+                },
+            }
+        }
+        Operation::ImportXlsx(req) => {
+            match decode_base64(&req.bytes_base64, "import.invalid_base64") {
+                Err(issues) => failure(ErrorCode::InvalidImport, issues),
+                Ok(bytes) => match optima_project::xlsx::read_xlsx(&bytes, req.sheet.as_deref()) {
+                    Ok(sheet) => Outcome::Ok {
+                        result: OperationResult::ImportXlsx(sheet),
+                    },
+                    Err(issues) => failure(ErrorCode::InvalidImport, issues),
+                },
+            }
+        }
     };
     EngineResponse {
         protocol_version: PROTOCOL_VERSION,
         task_id: Some(request.task_id.clone()),
         outcome,
     }
+}
+
+fn failure(code: ErrorCode, issues: Vec<Issue>) -> Outcome {
+    Outcome::Error {
+        error: EngineError {
+            code,
+            params: BTreeMap::new(),
+            issues,
+        },
+    }
+}
+
+fn decode_base64(text: &str, code: &str) -> Result<Vec<u8>, Vec<Issue>> {
+    STANDARD
+        .decode(text)
+        .map_err(|_| vec![Issue::new(code, Severity::Error)])
 }
 
 fn unsupported_version(task_id: Option<String>, received: &str) -> EngineResponse {

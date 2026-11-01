@@ -1,6 +1,7 @@
 //! Solicitações da interface ao motor.
 
 use optima_core::descriptive::DescriptiveRequest;
+use optima_project::ProjectDocument;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -17,6 +18,41 @@ pub enum Operation {
     EngineInfo,
     /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
     DescriptiveSummarize(DescriptiveRequest),
+    /// Codifica um documento de projeto em bytes `.enzitag` (`project.encode`).
+    ProjectEncode(ProjectEncodeRequest),
+    /// Lê bytes `.enzitag` e devolve o documento no esquema atual (`project.decode`).
+    ProjectDecode(BytesRequest),
+    /// Lê os valores armazenados de uma planilha XLSX como texto (`import.xlsx`).
+    ImportXlsx(ImportXlsxRequest),
+}
+
+/// Pedido de codificação de projeto.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct ProjectEncodeRequest {
+    /// Documento a codificar.
+    pub document: ProjectDocument,
+}
+
+/// Pedido que carrega bytes (em base64, para trafegar em JSON).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct BytesRequest {
+    /// Conteúdo do arquivo em base64.
+    pub bytes_base64: String,
+}
+
+/// Pedido de leitura de planilha.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct ImportXlsxRequest {
+    /// Conteúdo do arquivo em base64.
+    pub bytes_base64: String,
+    /// Planilha a ler; ausente: a primeira.
+    pub sheet: Option<String>,
 }
 
 /// Solicitação com identificador de tarefa. A interface descarta respostas

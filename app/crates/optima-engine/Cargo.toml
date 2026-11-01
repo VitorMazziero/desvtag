@@ -9,6 +9,7 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+base64 = "0.23"
 optima-core = { workspace = true }
 optima-project = { workspace = true }
 serde = { workspace = true }

@@ -193,3 +193,117 @@ fn nan_or_infinity_cannot_reach_the_engine_as_numbers() {
         matches!(response.outcome, Outcome::Error { error } if error.code == ErrorCode::InvalidRequest)
     );
 }
+
+fn sample_document() -> Value {
+    json!({
+        "schemaVersion": 1, "projectId": "p1", "name": "Projeto — açúcar",
+        "createdAt": "2026-11-01T12:00:00Z", "modifiedAt": "2026-11-01T12:00:00Z", "appVersion": "0.1.0",
+        "experiments": [{
+            "id": "e1", "name": "Experimento 1", "entryPath": "analyze", "showUnitColumn": false,
+            "analysisSelection": { "responseId": null, "groupBy": [] },
+            "revisions": [{
+                "id": "v1", "parent": null, "createdAt": "2026-11-01T12:00:00Z", "reason": "created",
+                "data": { "factors": [], "responses": [], "rows": [] },
+                "contentHash": "85195020d52211eadbe7771b9cc8d8afe00bf870e82737106e519599bc66af6b"
+            }],
+            "analyses": [], "notes": ""
+        }]
+    })
+}
+
+fn op(task: &str, operation: Value) -> Value {
+    json!({ "protocolVersion": PROTOCOL_VERSION, "taskId": task, "operation": operation })
+}
+
+#[test]
+fn project_encode_then_decode_returns_the_same_document() {
+    let doc = sample_document();
+    let encoded = call(&op(
+        "enc",
+        json!({ "type": "projectEncode", "document": doc }),
+    ));
+    let Outcome::Ok {
+        result: OperationResult::ProjectEncode(file),
+    } = encoded.outcome
+    else {
+        panic!("esperava bytes");
+    };
+    assert_eq!(file.sha256.len(), 64);
+    assert!(file.size > 0);
+    let decoded = call(&op(
+        "dec",
+        json!({ "type": "projectDecode", "bytesBase64": file.bytes_base64 }),
+    ));
+    let Outcome::Ok {
+        result: OperationResult::ProjectDecode(back),
+    } = decoded.outcome
+    else {
+        panic!("esperava documento");
+    };
+    assert_eq!(serde_json::to_value(&back.document).expect("json"), doc);
+    assert_eq!(back.migrated_from, None);
+}
+
+#[test]
+fn project_decode_reports_invalid_files_as_invalid_project() {
+    for (payload, expected) in [
+        ("bm90IGEgemlw", "project.not_a_zip"),
+        ("%%%", "project.invalid_base64"),
+    ] {
+        let r = call(&op(
+            "dec",
+            json!({ "type": "projectDecode", "bytesBase64": payload }),
+        ));
+        let Outcome::Error { error } = r.outcome else {
+            panic!("esperava erro")
+        };
+        assert_eq!(error.code, ErrorCode::InvalidProject);
+        assert_eq!(error.issues[0].code, expected);
+    }
+}
+
+#[test]
+fn project_encode_refuses_an_inconsistent_document() {
+    let mut doc = sample_document();
+    doc["experiments"][0]["revisions"] = json!([]);
+    let r = call(&op(
+        "enc",
+        json!({ "type": "projectEncode", "document": doc }),
+    ));
+    let Outcome::Error { error } = r.outcome else {
+        panic!("esperava erro")
+    };
+    assert_eq!(error.code, ErrorCode::InvalidProject);
+    assert_eq!(error.issues[0].code, "project.experiment_without_revision");
+}
+
+#[test]
+fn import_xlsx_returns_a_text_grid() {
+    use base64::Engine as _;
+    let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(
+        "../../../validation/cases/import_xlsx/001-acentos-virgula-ausentes-formula/input.xlsx",
+    );
+    let bytes = std::fs::read(path).expect("input.xlsx");
+    let b64 = base64::engine::general_purpose::STANDARD.encode(bytes);
+    let r = call(&op(
+        "imp",
+        json!({ "type": "importXlsx", "bytesBase64": b64, "sheet": null }),
+    ));
+    let Outcome::Ok {
+        result: OperationResult::ImportXlsx(sheet),
+    } = r.outcome
+    else {
+        panic!("esperava planilha")
+    };
+    assert_eq!(sheet.selected, "Dados");
+    assert_eq!(sheet.rows[1][..3], ["Água", "10,5", "U1"]);
+
+    let bad = call(&op(
+        "imp2",
+        json!({ "type": "importXlsx", "bytesBase64": "aGVsbG8=", "sheet": null }),
+    ));
+    let Outcome::Error { error } = bad.outcome else {
+        panic!("esperava erro")
+    };
+    assert_eq!(error.code, ErrorCode::InvalidImport);
+}

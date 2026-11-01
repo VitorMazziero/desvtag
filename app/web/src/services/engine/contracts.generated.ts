@@ -8,6 +8,74 @@ export const PROTOCOL_VERSION = 1;
 export const PROJECT_SCHEMA_VERSION = 1;
 
 /**
+ * Opções da análise.
+ */
+export type AnalysisOptions = { 
+/**
+ * Resposta analisada (vazio se ainda não escolhida na seleção do experimento).
+ */
+responseId: StableId | null, 
+/**
+ * Fatores de agrupamento.
+ */
+groupBy: Array<StableId>, };
+
+/**
+ * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
+ */
+export type AnalysisRecord = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Instante (RFC 3339) informado pela interface.
+ */
+createdAt: string, 
+/**
+ * Revisão de dados usada.
+ */
+revisionId: StableId, 
+/**
+ * Assinatura opaca dos dados e opções (para detectar resultado obsoleto).
+ */
+signature: string, 
+/**
+ * Método (`snake_case`).
+ */
+methodId: string, 
+/**
+ * Versão do método.
+ */
+methodVersion: number, 
+/**
+ * Versão do motor que calculou.
+ */
+engineVersion: string, 
+/**
+ * Opções usadas.
+ */
+options: AnalysisOptions, 
+/**
+ * Resultado.
+ */
+result: AnalysisResult, };
+
+/**
+ * Resultado guardado, por método.
+ */
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult;
+
+/**
+ * Pedido que carrega bytes (em base64, para trafegar em JSON).
+ */
+export type BytesRequest = { 
+/**
+ * Conteúdo do arquivo em base64.
+ */
+bytesBase64: string, };
+
+/**
  * Capacidades do motor: hoje, apenas a lista de métodos.
  */
 export type Capabilities = { 
@@ -153,9 +221,68 @@ taskId: string | null,
 outcome: Outcome, };
 
 /**
+ * Caminho de entrada escolhido no início do experimento.
+ */
+export type EntryPath = "plan" | "analyze" | "compare";
+
+/**
  * Código de erro do protocolo (a interface localiza a mensagem).
  */
-export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion" | "invalidInput";
+export type ErrorCode = "invalidRequest" | "unsupportedProtocolVersion" | "invalidInput" | "invalidProject" | "invalidImport";
+
+/**
+ * Experimento: dados com histórico de revisões, seleção de análise e análises salvas.
+ */
+export type Experiment = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome dado pelo usuário.
+ */
+name: string, 
+/**
+ * Caminho de entrada, se já escolhido.
+ */
+entryPath: EntryPath | null, 
+/**
+ * A coluna de unidade experimental está visível na grade.
+ */
+showUnitColumn: boolean, 
+/**
+ * Seleção atual de resposta e agrupamento.
+ */
+analysisSelection: AnalysisOptions, 
+/**
+ * Revisões, da mais antiga para a mais recente; a última é o estado atual dos dados.
+ */
+revisions: Array<Revision>, 
+/**
+ * Análises guardadas.
+ */
+analyses: Array<AnalysisRecord>, 
+/**
+ * Observações livres do usuário.
+ */
+notes: string, };
+
+/**
+ * Tabela completa de um experimento.
+ */
+export type ExperimentData = { 
+/**
+ * Fatores.
+ */
+factors: Array<FactorSpec>, 
+/**
+ * Respostas.
+ */
+responses: Array<ResponseSpec>, 
+/**
+ * Observações.
+ */
+rows: Array<RowRecord>, };
 
 /**
  * Fato que a interface explica ao usuário.
@@ -205,6 +332,31 @@ levels: Array<string>, };
 export type FactorKind = "numeric" | "categorical";
 
 /**
+ * Fator definido pelo usuário (versão textual).
+ */
+export type FactorSpec = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome digitado.
+ */
+name: string, 
+/**
+ * Quantitativo ou categórico.
+ */
+kind: FactorKind, 
+/**
+ * Unidade livre (vazio: sem unidade).
+ */
+unit: string, 
+/**
+ * Níveis categóricos declarados, separados por ponto e vírgula; vazio: os presentes nos dados.
+ */
+levelsText: string, };
+
+/**
  * Valor de um fator em uma observação: número (fator quantitativo) ou
  * texto (fator categórico).
  */
@@ -240,6 +392,19 @@ summary: Summary, };
  * Situação da implementação.
  */
 export type Implementation = "implemented";
+
+/**
+ * Pedido de leitura de planilha.
+ */
+export type ImportXlsxRequest = { 
+/**
+ * Conteúdo do arquivo em base64.
+ */
+bytesBase64: string, 
+/**
+ * Planilha a ler; ausente: a primeira.
+ */
+sheet: string | null, };
 
 /**
  * Diagnóstico: o idioma é resolvido pela interface a partir de `code`.
@@ -303,12 +468,12 @@ responses: Array<number | null>, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Sucesso ou falha.
@@ -324,7 +489,24 @@ result: OperationResult, } | { "status": "error",
 error: EngineError, };
 
 /**
- * Projeto: contêiner de experimentos. Sem credenciais de qualquer serviço.
+ * Projeto lido.
+ */
+export type ProjectDecodeResult = { 
+/**
+ * Documento no esquema atual.
+ */
+document: ProjectDocument, 
+/**
+ * Versão de esquema de origem, se houve migração.
+ */
+migratedFrom: number | null, 
+/**
+ * Avisos que não impediram a abertura.
+ */
+warnings: Array<Issue>, };
+
+/**
+ * Projeto: vários experimentos em um arquivo `.enzitag`.
  */
 export type ProjectDocument = { 
 /**
@@ -338,7 +520,49 @@ projectId: StableId,
 /**
  * Nome dado pelo usuário (preservado como digitado).
  */
-name: string, };
+name: string, 
+/**
+ * Criação (RFC 3339).
+ */
+createdAt: string, 
+/**
+ * Última modificação (RFC 3339).
+ */
+modifiedAt: string, 
+/**
+ * Versão do aplicativo que escreveu o arquivo.
+ */
+appVersion: string, 
+/**
+ * Experimentos.
+ */
+experiments: Array<Experiment>, };
+
+/**
+ * Pedido de codificação de projeto.
+ */
+export type ProjectEncodeRequest = { 
+/**
+ * Documento a codificar.
+ */
+document: ProjectDocument, };
+
+/**
+ * Bytes `.enzitag` produzidos.
+ */
+export type ProjectEncodeResult = { 
+/**
+ * Conteúdo do arquivo em base64.
+ */
+bytesBase64: string, 
+/**
+ * Tamanho em bytes.
+ */
+size: bigint, 
+/**
+ * SHA-256 hexadecimal do arquivo inteiro.
+ */
+sha256: string, };
 
 /**
  * Origem de um resultado. Resultados guardam método, versões e (a partir da
@@ -376,9 +600,102 @@ name: string,
 unit: string | null, };
 
 /**
+ * Resposta medida (versão textual).
+ */
+export type ResponseSpec = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome digitado.
+ */
+name: string, 
+/**
+ * Unidade livre.
+ */
+unit: string, };
+
+/**
+ * Instantâneo imutável dos dados.
+ */
+export type Revision = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Revisão da qual esta partiu.
+ */
+parent: StableId | null, 
+/**
+ * Instante (RFC 3339), informado pela interface: o núcleo não lê o relógio.
+ */
+createdAt: string, 
+/**
+ * Motivo.
+ */
+reason: RevisionReason, 
+/**
+ * Dados.
+ */
+data: ExperimentData, 
+/**
+ * Resumo SHA-256 dos dados.
+ */
+contentHash: string, };
+
+/**
+ * Motivo da revisão.
+ */
+export type RevisionReason = "created" | "import" | "analysis" | "manualSave" | "restore";
+
+/**
+ * Uma linha de observação, com o texto de cada célula.
+ */
+export type RowRecord = { 
+/**
+ * Identificador estável da observação.
+ */
+id: StableId, 
+/**
+ * Unidade experimental informada (vazio: não informada).
+ */
+unitId: string, 
+/**
+ * Texto dos fatores, na ordem de `ExperimentData::factors`.
+ */
+factors: Array<string>, 
+/**
+ * Texto das respostas, na ordem de `ExperimentData::responses`.
+ */
+responses: Array<string>, };
+
+/**
  * Gravidade de um diagnóstico.
  */
 export type Severity = "error" | "warning" | "info";
+
+/**
+ * Conteúdo lido de uma planilha.
+ */
+export type SheetData = { 
+/**
+ * Nomes de todas as planilhas do arquivo, na ordem do arquivo.
+ */
+sheets: Array<string>, 
+/**
+ * Planilha lida.
+ */
+selected: string, 
+/**
+ * Linhas × colunas, em texto; células vazias são `""`.
+ */
+rows: Array<Array<string>>, 
+/**
+ * Avisos (`import.*`) com contagens.
+ */
+warnings: Array<Issue>, };
 
 /**
  * Identificador estável: texto não vazio, ASCII, sem espaços.

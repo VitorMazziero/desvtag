@@ -9,9 +9,14 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+base64 = "0.23"
+calamine = { version = "0.37", default-features = false }
 optima-core = { workspace = true }
 serde = { workspace = true }
+serde_json.workspace = true
+sha2 = "0.11"
 ts-rs = { workspace = true }
+zip = { version = "9", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]
 serde_json = { workspace = true }

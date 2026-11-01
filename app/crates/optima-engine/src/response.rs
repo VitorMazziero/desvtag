@@ -5,6 +5,8 @@ use std::collections::BTreeMap;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::registry::Capabilities;
 use optima_core::validation::Issue;
+use optima_project::ProjectDocument;
+use optima_project::xlsx::SheetData;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -19,6 +21,10 @@ pub enum ErrorCode {
     UnsupportedProtocolVersion,
     /// Os dados ou a configuração não permitem o cálculo; veja `issues`.
     InvalidInput,
+    /// O arquivo de projeto não pôde ser lido ou escrito; veja `issues`.
+    InvalidProject,
+    /// O arquivo importado não pôde ser lido; veja `issues`.
+    InvalidImport,
 }
 
 /// Erro codificado, com parâmetros para a mensagem localizada.
@@ -58,6 +64,38 @@ pub enum OperationResult {
     EngineInfo(EngineInfo),
     /// Resultado de `descriptive.summarize`.
     DescriptiveSummarize(DescriptiveResult),
+    /// Resultado de `project.encode`.
+    ProjectEncode(ProjectEncodeResult),
+    /// Resultado de `project.decode`.
+    ProjectDecode(ProjectDecodeResult),
+    /// Resultado de `import.xlsx`.
+    ImportXlsx(SheetData),
+}
+
+/// Bytes `.enzitag` produzidos.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct ProjectEncodeResult {
+    /// Conteúdo do arquivo em base64.
+    pub bytes_base64: String,
+    /// Tamanho em bytes.
+    pub size: u64,
+    /// SHA-256 hexadecimal do arquivo inteiro.
+    pub sha256: String,
+}
+
+/// Projeto lido.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct ProjectDecodeResult {
+    /// Documento no esquema atual.
+    pub document: ProjectDocument,
+    /// Versão de esquema de origem, se houve migração.
+    pub migrated_from: Option<u32>,
+    /// Avisos que não impediram a abertura.
+    pub warnings: Vec<Issue>,
 }
 
 /// Sucesso ou falha.

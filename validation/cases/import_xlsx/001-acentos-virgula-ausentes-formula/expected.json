@@ -1,0 +1,68 @@
+{
+  "sheets": [
+    "Dados",
+    "Notas"
+  ],
+  "selected": "Dados",
+  "rows": [
+    [
+      "Condição",
+      "Atividade (U/mL)",
+      "Unidade",
+      "Observação",
+      ""
+    ],
+    [
+      "Água",
+      "10,5",
+      "U1",
+      "46327",
+      ""
+    ],
+    [
+      "Água",
+      "11.5",
+      "U1",
+      "mesma unidade experimental (medida repetida)",
+      ""
+    ],
+    [
+      "Ácido",
+      "20",
+      "U2",
+      "",
+      ""
+    ],
+    [
+      "Ácido",
+      "",
+      "U3",
+      "valor ausente",
+      ""
+    ],
+    [
+      "Base",
+      "7",
+      "U4",
+      "ç ã é ü ñ 日本",
+      ""
+    ],
+    [
+      "",
+      "",
+      "total",
+      "",
+      ""
+    ]
+  ],
+  "warningCounts": {
+    "import.formula_without_value": 1,
+    "import.dates_as_serial": 1,
+    "import.error_cells": 1
+  },
+  "reference": {
+    "software": "openpyxl 3.1.5",
+    "python": "3.13.18"
+  },
+  "note": "A data 2026-11-01 tem número de série 46327 no calendário de 1900 do Excel (conferido: (date - 1899-12-30).days)."
+}
