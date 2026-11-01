@@ -2,7 +2,7 @@
 // ativada por variável de ambiente e o controla por CDP com Playwright (sem msedgedriver).
 // Uso: node tests/native-cdp.mjs <caminho-do-executável>
 // Requer `npm ci` em app/web (traz o módulo `playwright`; não é preciso baixar navegadores).
-import { spawn } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -31,7 +31,20 @@ try {
       await sleep(200);
     }
   }
-  if (!ready) throw new Error("A depuração remota do WebView2 não ficou disponível em 60 s");
+  if (!ready) {
+    // Diagnóstico: processos do WebView2 (com a linha de comando) e portas em escuta.
+    for (const command of [
+      `powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'webview2|optima' } | Select-Object Name,ProcessId,CommandLine | Format-List | Out-String -Width 4000"`,
+      `netstat -ano -p TCP`,
+    ]) {
+      try {
+        console.error(`> ${command}\n${execSync(command, { encoding: "utf8" })}`);
+      } catch (error) {
+        console.error(`diagnóstico falhou: ${error}`);
+      }
+    }
+    throw new Error("A depuração remota do WebView2 não ficou disponível em 60 s");
+  }
   browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);
   let page;
   for (let i = 0; i < 100 && !page; i++) {
