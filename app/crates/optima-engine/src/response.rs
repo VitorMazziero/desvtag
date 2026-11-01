@@ -3,6 +3,7 @@
 use std::collections::BTreeMap;
 
 use optima_core::comparisons::OneWayResult;
+use optima_core::comparisons::procedures::ProcedureResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::designs::completely_randomized::GeneratedCrd;
@@ -97,6 +98,8 @@ pub enum OperationResult {
     OptimizationGrid(Box<SurfaceGrid>),
     /// Resultado da comparação de tratamentos de um fator.
     ComparisonOneWay(Box<OneWayResult>),
+    /// Resultado de um procedimento de comparação múltipla.
+    ComparisonProcedure(Box<ProcedureResult>),
     /// Valores de uma função de distribuição.
     DistributionEvaluate(DistributionResult),
     /// Ajuste de modelo linear.

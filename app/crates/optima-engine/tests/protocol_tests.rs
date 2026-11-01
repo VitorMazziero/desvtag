@@ -38,6 +38,7 @@ fn engine_info_returns_versions_and_registered_methods() {
                 vec![
                     "descriptive_summary",
                     "one_way_comparison",
+                    "multiple_comparison_procedures",
                     "two_level_design",
                     "completely_randomized_design",
                     "two_level_design_analysis",

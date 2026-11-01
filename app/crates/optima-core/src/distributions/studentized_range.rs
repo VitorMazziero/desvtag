@@ -19,8 +19,8 @@
 
 use super::chi_square;
 use super::normal;
-use super::range_table::RangeTable;
 use super::quantile::{QuantileError, invert_upper_tail};
+use super::range_table::RangeTable;
 use crate::numeric::integration::gauss_legendre;
 
 /// Limite da integral interna em `z` (|z| ≤ 8,5: `φ(8,5) ≈ 1,6e-16`).
@@ -113,6 +113,15 @@ impl StudentizedRange {
         let mut base = Self::new(k, df)?;
         base.table = Some(RangeTable::build(|w| base.range_cdf_exact(w)));
         Ok(base)
+    }
+
+    /// Nós `(s, peso)` da integral sobre `s = χ_ν/√ν` (soma dos pesos ≈ 1), compartilhados com o
+    /// kernel de Dunnett.
+    ///
+    /// # Errors
+    /// [`QuantileError`] para `df` fora do domínio.
+    pub(crate) fn scale_nodes(df: f64) -> Result<Vec<(f64, f64)>, QuantileError> {
+        Self::outer_nodes(df)
     }
 
     fn outer_nodes(df: f64) -> Result<Vec<(f64, f64)>, QuantileError> {

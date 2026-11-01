@@ -142,6 +142,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::ComparisonProcedure(req) => {
+            match optima_core::comparisons::procedures::compare(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::ComparisonProcedure(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::DistributionEvaluate(req) => match optima_core::distributions::evaluate(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::DistributionEvaluate(result),

@@ -1,6 +1,7 @@
 //! Solicitações da interface ao motor.
 
 use optima_core::comparisons::OneWayRequest;
+use optima_core::comparisons::procedures::ProcedureRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::completely_randomized::CrdSpec;
@@ -51,6 +52,8 @@ pub enum Operation {
     OptimizationGrid(Box<OptimizationGridRequest>),
     /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
     ComparisonOneWay(OneWayRequest),
+    /// Procedimentos de comparação múltipla: Games–Howell, Dunnett, Bonferroni, Holm e Kruskal–Wallis/Dunn (`comparison.procedure`).
+    ComparisonProcedure(ProcedureRequest),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
     DistributionEvaluate(DistributionRequest),
     /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).
