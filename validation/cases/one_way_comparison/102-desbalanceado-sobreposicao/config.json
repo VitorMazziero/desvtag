@@ -1,0 +1,14 @@
+{
+  "method": "one_way_comparison",
+  "title": "Cinco grupos de tamanhos diferentes com letras sobrepostas",
+  "responseColumn": "y",
+  "factor": "treatment",
+  "levels": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "alpha": 0.05
+}

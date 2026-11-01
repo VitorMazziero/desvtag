@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F04 |
 | Marco | **M2 — Comparação completa** |
 | Depende de | ET04 |
 | Módulos | C04 (`studentized_range`), C06–C09, C16 (`means`, `residuals`), C18, U07–U09, U16 inicial |
-| Ativado em | — |
+| Ativado em | 2026-11-01 |
 | Concluído em | — |
 
 ## 1. Objetivo

@@ -32,6 +32,9 @@ mod tests {
     fn lists_the_implemented_methods_with_their_real_status() {
         let methods = Capabilities::current().methods;
         let ids: Vec<&str> = methods.iter().map(|m| m.id.as_str()).collect();
-        assert_eq!(ids, ["descriptive_summary", "linear_model"]);
+        assert_eq!(
+            ids,
+            ["descriptive_summary", "one_way_comparison", "linear_model"]
+        );
     }
 }

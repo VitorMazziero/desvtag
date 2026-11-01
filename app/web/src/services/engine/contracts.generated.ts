@@ -84,6 +84,64 @@ sumSquares: Stat,
 meanSquare: Stat, };
 
 /**
+ * Estatísticas do boxplot de um grupo.
+ */
+export type BoxStats = { 
+/**
+ * Mínimo.
+ */
+min: number, 
+/**
+ * Primeiro quartil.
+ */
+q1: number, 
+/**
+ * Mediana.
+ */
+median: number, 
+/**
+ * Terceiro quartil.
+ */
+q3: number, 
+/**
+ * Máximo.
+ */
+max: number, 
+/**
+ * Extremo inferior do bigode.
+ */
+whiskerLow: number, 
+/**
+ * Extremo superior do bigode.
+ */
+whiskerHigh: number, 
+/**
+ * Pontos fora das cercas.
+ */
+outliers: Array<Outlier>, };
+
+/**
+ * Resultado do teste de Brown–Forsythe.
+ */
+export type BrownForsythe = { 
+/**
+ * Estatística F.
+ */
+f: Stat, 
+/**
+ * Graus de liberdade do numerador (`k − 1`).
+ */
+dfBetween: number, 
+/**
+ * Graus de liberdade do denominador (`N − k`).
+ */
+dfWithin: number, 
+/**
+ * Valor-p.
+ */
+pValue: Stat, };
+
+/**
  * Pedido que carrega bytes (em base64, para trafegar em JSON).
  */
 export type BytesRequest = { 
@@ -213,6 +271,14 @@ df: number, } | { "type": "chiSquare",
 /**
  * Graus de liberdade (> 0).
  */
+df: number, } | { "type": "studentizedRange", 
+/**
+ * Número de grupos (≥ 2).
+ */
+groups: number, 
+/**
+ * Graus de liberdade do erro (> 0).
+ */
 df: number, } | { "type": "f", 
 /**
  * Graus de liberdade do numerador (> 0).
@@ -253,6 +319,23 @@ export type DistributionResult = {
  * Valores.
  */
 values: Array<Stat>, };
+
+/**
+ * Tamanhos de efeito e coeficiente de variação.
+ */
+export type EffectSizes = { 
+/**
+ * `η² = SQ_entre/SQ_total`.
+ */
+etaSquared: Stat, 
+/**
+ * `ω²`, estimativa menos viesada (pode ser negativa; não é truncada).
+ */
+omegaSquared: Stat, 
+/**
+ * Coeficiente de variação em % (`100·√QME/|média geral|`).
+ */
+cvPercent: Stat, };
 
 /**
  * Erro codificado, com parâmetros para a mensagem localizada.
@@ -501,6 +584,43 @@ factorId: StableId,
 label: string, };
 
 /**
+ * Estatísticas de um grupo.
+ */
+export type GroupStats = { 
+/**
+ * Nível.
+ */
+label: string, 
+/**
+ * Observações usadas.
+ */
+n: number, 
+/**
+ * Média.
+ */
+mean: Stat, 
+/**
+ * Desvio-padrão amostral.
+ */
+sd: Stat, 
+/**
+ * Erro-padrão da média do grupo, `sd/√n`.
+ */
+stdError: Stat, 
+/**
+ * Limite inferior do IC da média (variância comum, `t` com os gl do erro).
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do IC da média.
+ */
+ciUpper: Stat, 
+/**
+ * Boxplot do grupo.
+ */
+boxplot: BoxStats | null, };
+
+/**
  * Resumo de um grupo.
  */
 export type GroupSummary = { 
@@ -547,6 +667,27 @@ severity: Severity,
  * Parâmetros usados na mensagem localizada.
  */
 params: { [key in string]: string }, };
+
+/**
+ * Letras por grupo.
+ */
+export type Letters = { 
+/**
+ * Letras de cada grupo (na ordem de entrada), por exemplo `"ab"`.
+ */
+letters: Array<string>, 
+/**
+ * Índices (0-based) das letras de cada grupo; evita ambiguidade ao separar nomes como `aa`.
+ */
+memberships: Array<Array<number>>, 
+/**
+ * Número de letras distintas usadas.
+ */
+nLetters: number, 
+/**
+ * Havia pares sem resultado, tratados como diferentes.
+ */
+hasUnknownPairs: boolean, };
 
 /**
  * Resultado do ajuste.
@@ -735,14 +876,142 @@ studentizedResidual: Stat,
 cooksDistance: Stat, };
 
 /**
+ * Linha F do teste global.
+ */
+export type OneWayAnova = { 
+/**
+ * Entre grupos.
+ */
+between: AnovaRow, 
+/**
+ * Dentro dos grupos (erro).
+ */
+within: AnovaRow, 
+/**
+ * Total.
+ */
+total: AnovaRow, 
+/**
+ * Estatística F.
+ */
+f: Stat, 
+/**
+ * Valor-p (cauda superior de F).
+ */
+pValue: Stat, };
+
+/**
+ * Diagnósticos da análise.
+ */
+export type OneWayDiagnostics = { 
+/**
+ * Resíduos por observação.
+ */
+residuals: Array<ResidualPoint>, 
+/**
+ * Gráfico quantil–quantil dos resíduos padronizados.
+ */
+qq: Array<QqPoint>, 
+/**
+ * Homogeneidade das variâncias.
+ */
+brownForsythe: BrownForsythe, 
+/**
+ * Razão entre o maior e o menor desvio-padrão dos grupos (quando definida).
+ */
+sdRatio: Stat, };
+
+/**
+ * Solicitação.
+ */
+export type OneWayRequest = { 
+/**
+ * Dados.
+ */
+dataset: Dataset, 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Fator que define os grupos (categórico ou quantitativo tratado como níveis).
+ */
+factorId: StableId, 
+/**
+ * Nível de significância da família (padrão 0,05).
+ */
+alpha: number, };
+
+/**
+ * Resultado completo.
+ */
+export type OneWayResult = { 
+/**
+ * Resposta analisada.
+ */
+responseId: StableId, 
+/**
+ * Fator.
+ */
+factorId: StableId, 
+/**
+ * Nível de significância.
+ */
+alpha: number, 
+/**
+ * Grupos, na ordem dos níveis.
+ */
+groups: Array<GroupStats>, 
+/**
+ * Média geral.
+ */
+grandMean: Stat, 
+/**
+ * ANOVA.
+ */
+anova: OneWayAnova, 
+/**
+ * Tamanhos de efeito e CV.
+ */
+effectSizes: EffectSizes, 
+/**
+ * Tukey/Tukey–Kramer; ausente se não houve estimativa de erro.
+ */
+tukey: TukeyResult | null, 
+/**
+ * Letras de comparação (a letra `a` é do grupo de maior média).
+ */
+letters: Letters | null, 
+/**
+ * Diagnósticos.
+ */
+diagnostics: OneWayDiagnostics, 
+/**
+ * Observações fora da análise.
+ */
+excluded: Array<ExcludedObservation>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Fatos para a interpretação.
+ */
+facts: Array<Fact>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Sucesso ou falha.
@@ -756,6 +1025,60 @@ result: OperationResult, } | { "status": "error",
  * Erro codificado.
  */
 error: EngineError, };
+
+/**
+ * Ponto fora das cercas.
+ */
+export type Outlier = { 
+/**
+ * Observação.
+ */
+observationId: StableId, 
+/**
+ * Valor.
+ */
+value: number, };
+
+/**
+ * Comparação de um par.
+ */
+export type PairComparison = { 
+/**
+ * Índice do primeiro grupo.
+ */
+groupA: number, 
+/**
+ * Índice do segundo grupo.
+ */
+groupB: number, 
+/**
+ * Diferença `ȳ_a − ȳ_b`.
+ */
+difference: Stat, 
+/**
+ * Erro-padrão da diferença.
+ */
+stdError: Stat, 
+/**
+ * Estatística `q` (valor absoluto).
+ */
+qStatistic: Stat, 
+/**
+ * Valor-p ajustado pela família.
+ */
+pAdjusted: Stat, 
+/**
+ * Limite inferior do intervalo simultâneo.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo simultâneo.
+ */
+ciUpper: Stat, 
+/**
+ * Diferença detectada (`p_ajustado < α`); `None` quando o par não pôde ser testado.
+ */
+significant: boolean | null, };
 
 /**
  * Predição para uma linha.
@@ -881,6 +1204,19 @@ methodVersion: number,
 engineVersion: string, };
 
 /**
+ * Ponto do gráfico quantil–quantil.
+ */
+export type QqPoint = { 
+/**
+ * Quantil teórico da normal padrão.
+ */
+theoretical: number, 
+/**
+ * Resíduo padronizado ordenado.
+ */
+sample: number, };
+
+/**
  * Tabela da ANOVA da regressão e medidas de ajuste.
  */
 export type RegressionAnova = { 
@@ -916,6 +1252,31 @@ rSquared: Stat,
  * Coeficiente de determinação ajustado.
  */
 adjustedRSquared: Stat, };
+
+/**
+ * Resíduo de uma observação.
+ */
+export type ResidualPoint = { 
+/**
+ * Observação.
+ */
+observationId: StableId, 
+/**
+ * Índice do grupo.
+ */
+group: number, 
+/**
+ * Valor ajustado (média do grupo).
+ */
+fitted: number, 
+/**
+ * Resíduo.
+ */
+residual: number, 
+/**
+ * Resíduo padronizado.
+ */
+standardized: Stat, };
 
 /**
  * Resposta medida.
@@ -1109,9 +1470,47 @@ factorId: StableId,
 degree: number, };
 
 /**
+ * Resultado das comparações.
+ */
+export type TukeyResult = { 
+/**
+ * Variante.
+ */
+variant: TukeyVariant, 
+/**
+ * Nível de significância da família.
+ */
+alpha: number, 
+/**
+ * Número de grupos (tamanho da família de médias).
+ */
+groups: number, 
+/**
+ * Número de comparações.
+ */
+comparisonsCount: number, 
+/**
+ * Graus de liberdade do erro.
+ */
+dfError: number, 
+/**
+ * Quantil crítico `q_crit`.
+ */
+criticalValue: Stat, 
+/**
+ * Pares, em ordem `(0,1), (0,2), …, (k−2,k−1)`.
+ */
+comparisons: Array<PairComparison>, };
+
+/**
+ * Variante aplicada.
+ */
+export type TukeyVariant = "tukey" | "tukeyKramer";
+
+/**
  * Motivo pelo qual uma estatística não está definida.
  */
-export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations" | "nonFiniteResult" | "notEstimable" | "noResidualDegreesOfFreedom" | "constantResponse" | "outOfDomain" | "noModelTerms";
+export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations" | "nonFiniteResult" | "notEstimable" | "noResidualDegreesOfFreedom" | "constantResponse" | "zeroMean" | "outOfDomain" | "noModelTerms";
 
 /**
  * Situação da validação numérica.

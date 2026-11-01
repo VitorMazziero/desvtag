@@ -1,0 +1,13 @@
+{
+  "method": "one_way_comparison",
+  "title": "Quatro condições enzimáticas, cinco réplicas independentes",
+  "responseColumn": "y",
+  "factor": "treatment",
+  "levels": [
+    "controle",
+    "pH 5",
+    "pH 7",
+    "pH 9"
+  ],
+  "alpha": 0.05
+}

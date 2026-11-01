@@ -70,7 +70,7 @@ Os destinos são indicativos e serão confirmados ao planejar cada versão. A [m
 | [ET02](ativos/et02-primeiro-percurso.md) | Primeiro percurso ponta a ponta | F01 | ET01 | Interface básica, temas, idiomas, estatística descritiva nas duas plataformas | — |
 | [ET03](ativos/et03-projeto-local-importacao.md) | Projeto local, importação e recuperação | F02 | ET02 | `.enzitag`, revisões, importação, salvamento e recuperação | **M1** |
 | [ET04](ativos/et04-fundamentos-numericos-modelos.md) | Fundamentos numéricos e modelos lineares | F03 | ET03 | Álgebra, distribuições, regressão e diagnósticos validados | — |
-| [ET05](planejados/et05-anova-tukey-letras.md) | ANOVA, Tukey e letras | F04 | ET04 | Percurso de comparação completo e exportação inicial | **M2** |
+| [ET05](ativos/et05-anova-tukey-letras.md) | ANOVA, Tukey e letras | F04 | ET04 | Percurso de comparação completo e exportação inicial | **M2** |
 | [ET06](planejados/et06-fatoriais-plackett-burman.md) | Fatoriais, fracionários e Plackett–Burman | F05 | ET04, ET05 | Geração e análise de planejamentos de triagem | — |
 | [ET07](planejados/et07-superficies-resposta.md) | Superfícies de resposta e planejamento personalizado | F06 | ET06 | Compostos centrais, Box–Behnken, modelo de 2ª ordem, superfícies | — |
 | [ET08](planejados/et08-otimizacao.md) | Otimização de uma ou várias respostas | F07 | ET07 | Desejabilidade, candidatos e confirmação | **M3** |

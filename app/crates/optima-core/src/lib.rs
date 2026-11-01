@@ -9,6 +9,7 @@
 //! (`registry`, `errors`, `provenance`). O único método científico é
 //! `descriptive_summary`.
 
+pub mod comparisons;
 pub mod descriptive;
 pub mod diagnostics;
 pub mod distributions;
@@ -21,6 +22,7 @@ pub mod numeric;
 pub mod provenance;
 pub mod registry;
 pub mod validation;
+pub mod visualization;
 
 /// Versão do núcleo científico (igual à versão do aplicativo, DT-0002).
 pub const CORE_VERSION: &str = env!("CARGO_PKG_VERSION");

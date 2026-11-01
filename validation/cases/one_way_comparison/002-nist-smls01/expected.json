@@ -1,0 +1,49 @@
+{
+ "n": 189,
+ "groups": 9,
+ "exactOnBinary64Inputs": {
+  "n": 189,
+  "k": 9,
+  "dfBetween": 8,
+  "dfWithin": 180,
+  "ssBetween": "1.680000000000001030286966852145469733541",
+  "ssWithin": "1.800000000000000976996261670138494660334",
+  "ssTotal": "3.480000000000002007283228522283964393875",
+  "f": "21.00000000000000148029736616686846382925",
+  "rSquared": "0.4827586206896551900154264704740596130201",
+  "residualSd": "0.1000000000000000271387850463927322802188",
+  "grandMean": "1.399999999999999974623473722853564790317"
+ },
+ "certifiedNist": {
+  "dfBetween": 8,
+  "ssBetween": "1.68000000000000E+00",
+  "f": "2.10000000000000E+01",
+  "dfWithin": 180,
+  "ssWithin": "1.80000000000000E+00",
+  "rSquared": "4.82758620689655E-01",
+  "residualSd": "1.00000000000000E-01"
+ },
+ "referenceVsCertifiedLre": {
+  "ssBetween": 15.0,
+  "ssWithin": 15.0,
+  "f": 15.0,
+  "rSquared": 15.0,
+  "residualSd": 15.0
+ },
+ "tolerances": {
+  "minLre": {
+   "ssBetween": 13,
+   "ssWithin": 13,
+   "f": 13,
+   "rSquared": 13,
+   "residualSd": 13
+  },
+  "note": "LRE = -log10(erro relativo) contra a refer\u00eancia exata sobre os bin\u00e1rios de 64 bits"
+ },
+ "reference": {
+  "software": "Python fractions (exato) + mpmath",
+  "python": "3.13.18",
+  "mpmath": "1.4.1",
+  "source": "https://www.itl.nist.gov/div898/strd/anova/SmLs01.dat"
+ }
+}

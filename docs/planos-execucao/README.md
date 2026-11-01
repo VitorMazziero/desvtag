@@ -22,7 +22,11 @@ Diretório exclusivo dos planos de execução do EnziTAG Optima. Requisitos de p
 >
 > Versão-alvo: v0.1.0 · Fase do roteiro: F03 · Ativado em 2026-11-01 · Tarefas T01–T12 concluídas; aberta apenas pela evidência no Windows (critério 6)
 
-**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a única pendência das ET01–ET03 é a execução no Windows 11 (e a reabertura de projetos entre Windows e navegador), que depende de equipamento ou de ajuste da CI e não do código das etapas seguintes. As etapas seguintes avançam em paralelo **como código**; ET01, ET02 e ET03 só são movidas para `concluidos/` quando essa evidência existir, e **nenhum marco (M1, M2…) é declarado** antes disso. A exceção estende-se somente até a ET04; a ET05 não começa sem decisão registrada.
+> **ET05 — ANOVA, Tukey e letras** · [ativos/et05-anova-tukey-letras.md](ativos/et05-anova-tukey-letras.md)
+>
+> Versão-alvo: v0.1.0 · Fase do roteiro: F04 · Ativado em 2026-11-01 · Marco M2 (só declarado com evidência completa)
+
+**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a única pendência das ET01–ET03 é a execução no Windows 11 (e a reabertura de projetos entre Windows e navegador), que depende de equipamento ou de ajuste da CI e não do código das etapas seguintes. As etapas seguintes avançam em paralelo **como código**; ET01, ET02 e ET03 só são movidas para `concluidos/` quando essa evidência existir, e **nenhum marco (M1, M2…) é declarado** antes disso. **Decisão de 2026-11-01 (extensão):** a exceção passa a valer até a ET10. Motivo: a instrução de implementação da v0.1 pede a execução sequencial ET01→ET10 sem bloquear em equipamento indisponível, e a única pendência de ET01–ET04 é a evidência no Windows 11, que não depende do código das etapas seguintes. Condições mantidas: nenhuma etapa é movida para `concluidos/` sem evidência de todos os critérios; nenhum marco é declarado antes; a ET10 não publica nada sem a decisão do usuário sobre a PD-15.
 
 O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se este quadro e o diretório divergirem, o diretório prevalece e este índice deve ser corrigido.
 
@@ -44,7 +48,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET02 | Primeiro percurso ponta a ponta | v0.1 | **Ativo** | [ativos/et02-primeiro-percurso.md](ativos/et02-primeiro-percurso.md) |
 | ET03 | Projeto local, importação e recuperação | v0.1 | **Ativo** (só evidência Windows e reabertura cruzada pendentes) | [ativos/et03-projeto-local-importacao.md](ativos/et03-projeto-local-importacao.md) |
 | ET04 | Fundamentos numéricos e modelos lineares | v0.1 | **Ativo** (só evidência Windows pendente) | [ativos/et04-fundamentos-numericos-modelos.md](ativos/et04-fundamentos-numericos-modelos.md) |
-| ET05 | ANOVA, Tukey e letras | v0.1 | Planejado | [planejados/et05-anova-tukey-letras.md](planejados/et05-anova-tukey-letras.md) |
+| ET05 | ANOVA, Tukey e letras | v0.1 | **Ativo** | [ativos/et05-anova-tukey-letras.md](ativos/et05-anova-tukey-letras.md) |
 | ET06 | Fatoriais, fracionários e Plackett–Burman | v0.1 | Planejado | [planejados/et06-fatoriais-plackett-burman.md](planejados/et06-fatoriais-plackett-burman.md) |
 | ET07 | Superfícies de resposta e planejamento personalizado | v0.1 | Planejado | [planejados/et07-superficies-resposta.md](planejados/et07-superficies-resposta.md) |
 | ET08 | Otimização de uma ou várias respostas | v0.1 | Planejado | [planejados/et08-otimizacao.md](planejados/et08-otimizacao.md) |

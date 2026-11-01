@@ -4,6 +4,7 @@
 //! funções especiais e busca de raízes. Integração numérica entra com a distribuição da
 //! amplitude studentizada (ET05); decomposição de Cholesky, quando um método a consumir.
 
+pub mod integration;
 pub mod matrix;
 pub mod qr;
 pub mod root_finding;

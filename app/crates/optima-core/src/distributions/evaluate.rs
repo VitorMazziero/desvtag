@@ -7,6 +7,7 @@
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
+use super::studentized_range::StudentizedRange;
 use super::{chi_square, f, normal, student_t};
 use crate::descriptive::{Stat, UndefinedReason};
 use crate::errors::CoreError;
@@ -29,6 +30,14 @@ pub enum Distribution {
     #[serde(rename_all = "camelCase")]
     ChiSquare {
         /// Graus de liberdade (> 0).
+        df: f64,
+    },
+    /// Amplitude studentizada (base do Tukey); só `cdf`, `sf` e `quantileUpper`.
+    #[serde(rename_all = "camelCase")]
+    StudentizedRange {
+        /// Número de grupos (≥ 2).
+        groups: u32,
+        /// Graus de liberdade do erro (> 0).
         df: f64,
     },
     /// F de Snedecor.
@@ -139,6 +148,23 @@ pub fn evaluate(request: &DistributionRequest) -> Result<DistributionResult, Cor
                     Sf => stat(chi_square::sf(v, *df)),
                     QuantileUpper => quantile(chi_square::quantile_upper(v, *df)),
                     QuantileLower => quantile(chi_square::quantile(v, *df)),
+                })
+                .collect()
+        }
+        (Distribution::StudentizedRange { groups, df }, function) => {
+            let kernel = StudentizedRange::new(*groups as usize, *df)
+                .map_err(|_| invalid("distribution.invalid_parameter"))?;
+            if function == QuantileLower {
+                return Err(invalid("distribution.unsupported_function"));
+            }
+            request
+                .values
+                .iter()
+                .map(|&v| match function {
+                    Cdf => stat(kernel.cdf(v)),
+                    Sf => stat(kernel.sf(v)),
+                    QuantileUpper => quantile(kernel.quantile_upper(v)),
+                    QuantileLower => Stat::undefined(UndefinedReason::OutOfDomain),
                 })
                 .collect()
         }

@@ -11,6 +11,7 @@ pub mod f;
 pub mod normal;
 pub mod quantile;
 pub mod student_t;
+pub mod studentized_range;
 
 pub use evaluate::{
     Distribution, DistributionFunction, DistributionRequest, DistributionResult, evaluate,

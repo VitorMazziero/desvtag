@@ -2,6 +2,7 @@
 
 use std::collections::BTreeMap;
 
+use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
@@ -66,6 +67,8 @@ pub enum OperationResult {
     EngineInfo(EngineInfo),
     /// Resultado de `descriptive.summarize`.
     DescriptiveSummarize(DescriptiveResult),
+    /// Resultado da comparação de tratamentos de um fator.
+    ComparisonOneWay(Box<OneWayResult>),
     /// Valores de uma função de distribuição.
     DistributionEvaluate(DistributionResult),
     /// Ajuste de modelo linear.

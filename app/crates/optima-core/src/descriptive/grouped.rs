@@ -39,14 +39,14 @@ pub struct GroupSummary {
 }
 
 #[derive(Debug, Clone, PartialEq)]
-enum Rank {
+pub(crate) enum Rank {
     Declared(usize),
     Number(f64),
     Text(String),
 }
 
 impl Rank {
-    fn cmp(&self, other: &Self) -> Ordering {
+    pub(crate) fn cmp(&self, other: &Self) -> Ordering {
         match (self, other) {
             (Self::Declared(a), Self::Declared(b)) => a.cmp(b),
             (Self::Number(a), Self::Number(b)) => a.total_cmp(b),
@@ -65,7 +65,7 @@ impl Rank {
     }
 }
 
-fn label_and_rank(factor: &Factor, value: &FactorValue) -> (String, Rank) {
+pub(crate) fn label_and_rank(factor: &Factor, value: &FactorValue) -> (String, Rank) {
     match value {
         FactorValue::Number(x) => (x.to_string(), Rank::Number(*x)),
         FactorValue::Text(text) => {

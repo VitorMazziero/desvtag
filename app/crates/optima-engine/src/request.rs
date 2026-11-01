@@ -1,5 +1,6 @@
 //! Solicitações da interface ao motor.
 
+use optima_core::comparisons::OneWayRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
@@ -20,6 +21,8 @@ pub enum Operation {
     EngineInfo,
     /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
     DescriptiveSummarize(DescriptiveRequest),
+    /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
+    ComparisonOneWay(OneWayRequest),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
     DistributionEvaluate(DistributionRequest),
     /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).

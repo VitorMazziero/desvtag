@@ -33,7 +33,10 @@ fn engine_info_returns_versions_and_registered_methods() {
                 .iter()
                 .map(|m| m.id.as_str())
                 .collect();
-            assert_eq!(ids, vec!["descriptive_summary", "linear_model"]);
+            assert_eq!(
+                ids,
+                vec!["descriptive_summary", "one_way_comparison", "linear_model"]
+            );
         }
         other => panic!("resultado inesperado: {other:?}"),
     }

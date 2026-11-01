@@ -1,0 +1,16 @@
+{
+  "method": "one_way_comparison",
+  "title": "Sete grupos com variâncias distintas e um ponto distante",
+  "responseColumn": "y",
+  "factor": "treatment",
+  "levels": [
+    "g1",
+    "g2",
+    "g3",
+    "g4",
+    "g5",
+    "g6",
+    "g7"
+  ],
+  "alpha": 0.05
+}

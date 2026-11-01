@@ -35,6 +35,8 @@ pub enum UndefinedReason {
     NoResidualDegreesOfFreedom,
     /// A resposta é constante: a soma de quadrados total é nula.
     ConstantResponse,
+    /// A média é zero: o coeficiente de variação não está definido.
+    ZeroMean,
     /// O argumento está fora do domínio da função (por exemplo, probabilidade fora de `(0, 1)`).
     OutOfDomain,
     /// O modelo não tem termos além do intercepto: não há graus de liberdade do modelo.

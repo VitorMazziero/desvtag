@@ -1,0 +1,6 @@
+{
+  "method": "one_way_comparison",
+  "responseColumn": "y",
+  "factor": "treatment",
+  "alpha": 0.05
+}
