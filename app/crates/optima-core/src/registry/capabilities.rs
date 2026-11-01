@@ -34,7 +34,13 @@ mod tests {
         let ids: Vec<&str> = methods.iter().map(|m| m.id.as_str()).collect();
         assert_eq!(
             ids,
-            ["descriptive_summary", "one_way_comparison", "linear_model"]
+            [
+                "descriptive_summary",
+                "one_way_comparison",
+                "two_level_design",
+                "two_level_design_analysis",
+                "linear_model"
+            ]
         );
     }
 }

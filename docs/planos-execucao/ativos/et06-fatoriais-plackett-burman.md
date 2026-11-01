@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F05 |
 | Marco | Prepara M3 |
 | Depende de | ET04; reutiliza a apresentação da ET05 |
 | Módulos | C11, C06–C08, C07 (`lack_of_fit` para curvatura), C16 (`effects`, `interactions`, `pareto`, `observed_predicted`), C18, U06–U09 |
-| Ativado em | — |
+| Ativado em | 2026-11-01 |
 | Concluído em | — |
 
 ## 1. Objetivo

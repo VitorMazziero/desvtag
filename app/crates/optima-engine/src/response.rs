@@ -4,6 +4,8 @@ use std::collections::BTreeMap;
 
 use optima_core::comparisons::OneWayResult;
 use optima_core::descriptive::DescriptiveResult;
+use optima_core::designs::analysis::DesignAnalysisResult;
+use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
 use optima_core::registry::Capabilities;
@@ -67,6 +69,12 @@ pub enum OperationResult {
     EngineInfo(EngineInfo),
     /// Resultado de `descriptive.summarize`.
     DescriptiveSummarize(DescriptiveResult),
+    /// Contagem de ensaios.
+    DesignCount(RunCount),
+    /// Planejamento gerado.
+    DesignGenerate(Box<GeneratedDesign>),
+    /// Análise do planejamento.
+    DesignAnalyze(Box<DesignAnalysisResult>),
     /// Resultado da comparação de tratamentos de um fator.
     ComparisonOneWay(Box<OneWayResult>),
     /// Valores de uma função de distribuição.

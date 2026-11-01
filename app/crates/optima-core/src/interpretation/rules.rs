@@ -135,3 +135,121 @@ pub fn one_way_facts(
     }
     facts
 }
+
+/// Entradas das regras de interpretação de planejamentos de dois níveis.
+pub struct DesignFactsInput<'a> {
+    /// Termos estimados.
+    pub effects: &'a [crate::designs::analysis::EffectRow],
+    /// Curvatura, se testada.
+    pub curvature: Option<&'a crate::designs::analysis::CurvatureTest>,
+    /// Falta de ajuste, se calculável.
+    pub lack_of_fit: Option<&'a crate::inference::lack_of_fit::LackOfFit>,
+    /// Graus de liberdade residuais.
+    pub df_residual: u32,
+    /// O método de Lenth foi a única referência de inferência.
+    pub lenth_used: bool,
+    /// Tipo de planejamento.
+    pub kind: &'a crate::designs::spec::DesignKind,
+    /// Nível de significância.
+    pub alpha: f64,
+    /// Ensaios com níveis diferentes de −1, 0 e +1.
+    pub unexpected_levels: usize,
+    /// Termos não estimáveis.
+    pub not_estimable: usize,
+}
+
+/// Fatos da análise de planejamentos de dois níveis.
+///
+/// - `design.active_effects` (`terms`, `count`, `basis` = `p` ou `lenth`) quando há termos ativos;
+///   `design.no_active_effects` quando nenhum;
+/// - `design.saturated` e `design.lenth_only` sem graus de liberdade do erro (valores-p não existem);
+/// - `design.curvature_detected` / `design.curvature_not_detected` (p) e `design.curvature_unavailable`;
+/// - `design.lack_of_fit_significant` / `design.lack_of_fit_not_significant` (p);
+/// - `design.aliased_active` (termos ativos com confundimento), `design.screening_pb` (Plackett–Burman:
+///   triagem, aliasing parcial), `design.not_estimable`, `design.unexpected_levels`;
+/// - `design.independence_not_assessed` sempre.
+#[must_use]
+pub fn design_facts(input: &DesignFactsInput<'_>) -> Vec<Fact> {
+    use crate::designs::spec::DesignKind;
+    let mut facts = Vec::new();
+    let active: Vec<&crate::designs::analysis::EffectRow> = input
+        .effects
+        .iter()
+        .filter(|e| {
+            if input.df_residual > 0 {
+                e.p_value.value().is_some_and(|p| p < input.alpha)
+            } else {
+                e.lenth_active == Some(true)
+            }
+        })
+        .collect();
+    if input.df_residual == 0 {
+        facts.push(Fact::new("design.saturated"));
+        if !input.lenth_used {
+            facts.push(Fact::new("design.no_inference"));
+        }
+    }
+    if input.lenth_used {
+        facts.push(Fact::new("design.lenth_only"));
+    }
+    if input.df_residual > 0 || input.lenth_used {
+        if active.is_empty() {
+            facts.push(Fact::new("design.no_active_effects").with_param("alpha", &input.alpha));
+        } else {
+            facts.push(
+                Fact::new("design.active_effects")
+                    .with_param(
+                        "terms",
+                        &active
+                            .iter()
+                            .map(|e| e.label.as_str())
+                            .collect::<Vec<_>>()
+                            .join("; "),
+                    )
+                    .with_param("count", &active.len())
+                    .with_param("basis", &if input.df_residual > 0 { "p" } else { "lenth" })
+                    .with_param("alpha", &input.alpha),
+            );
+        }
+    }
+    let aliased: Vec<&str> = active
+        .iter()
+        .filter(|e| !e.aliased_with.is_empty())
+        .map(|e| e.label.as_str())
+        .collect();
+    if !aliased.is_empty() {
+        facts.push(Fact::new("design.aliased_active").with_param("terms", &aliased.join("; ")));
+    }
+    if let Some(c) = input.curvature {
+        match c.p_value.value() {
+            Some(p) if p < input.alpha => {
+                facts.push(Fact::new("design.curvature_detected").with_param("p", &p));
+            }
+            Some(p) => facts.push(Fact::new("design.curvature_not_detected").with_param("p", &p)),
+            None => facts.push(Fact::new("design.curvature_unavailable")),
+        }
+    }
+    if let Some(l) = input.lack_of_fit
+        && let Some(p) = l.p_value.value()
+    {
+        let key = if p < input.alpha {
+            "design.lack_of_fit_significant"
+        } else {
+            "design.lack_of_fit_not_significant"
+        };
+        facts.push(Fact::new(key).with_param("p", &p));
+    }
+    if matches!(input.kind, DesignKind::PlackettBurman { .. }) {
+        facts.push(Fact::new("design.screening_pb"));
+    }
+    if input.not_estimable > 0 {
+        facts.push(Fact::new("design.not_estimable").with_param("count", &input.not_estimable));
+    }
+    if input.unexpected_levels > 0 {
+        facts.push(
+            Fact::new("design.unexpected_levels").with_param("count", &input.unexpected_levels),
+        );
+    }
+    facts.push(Fact::new("design.independence_not_assessed"));
+    facts
+}

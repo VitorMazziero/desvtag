@@ -2,6 +2,8 @@
 
 use optima_core::comparisons::OneWayRequest;
 use optima_core::descriptive::DescriptiveRequest;
+use optima_core::designs::analysis::DesignAnalysisRequest;
+use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
 use optima_project::ProjectDocument;
@@ -21,6 +23,12 @@ pub enum Operation {
     EngineInfo,
     /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
     DescriptiveSummarize(DescriptiveRequest),
+    /// Conta os ensaios de um planejamento de dois níveis sem gerá-lo (`design.count`).
+    DesignCount(DesignSpec),
+    /// Gera um planejamento de dois níveis (`design.generate`).
+    DesignGenerate(DesignSpec),
+    /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
+    DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
     ComparisonOneWay(OneWayRequest),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).

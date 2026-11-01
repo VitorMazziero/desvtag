@@ -1,0 +1,2926 @@
+{
+ "id": "designs",
+ "cases": [
+  {
+   "kind": "full",
+   "k": 2,
+   "gens": [],
+   "runs": 0,
+   "replicates": 1,
+   "centers": 0,
+   "randomize": false,
+   "seed": 1,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "full",
+   "k": 3,
+   "gens": [],
+   "runs": 0,
+   "replicates": 2,
+   "centers": 3,
+   "randomize": true,
+   "seed": 20261101,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 17,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 19,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 18,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 16,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 13,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 14,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 15,
+     "standardOrder": 13,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 16,
+     "standardOrder": 15,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 17,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 18,
+     "standardOrder": 14,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 19,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "full",
+   "k": 5,
+   "gens": [],
+   "runs": 0,
+   "replicates": 1,
+   "centers": 0,
+   "randomize": true,
+   "seed": 7,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 18,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 16,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 32,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 22,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 23,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 24,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 13,
+     "standardOrder": 28,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 14,
+     "standardOrder": 17,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 15,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 16,
+     "standardOrder": 27,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 17,
+     "standardOrder": 29,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 18,
+     "standardOrder": 19,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 19,
+     "standardOrder": 20,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 20,
+     "standardOrder": 15,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 21,
+     "standardOrder": 31,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 22,
+     "standardOrder": 21,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 23,
+     "standardOrder": 25,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 24,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 25,
+     "standardOrder": 30,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 26,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 27,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 28,
+     "standardOrder": 13,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 29,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 30,
+     "standardOrder": 14,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 31,
+     "standardOrder": 26,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 32,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "fractional",
+   "k": 4,
+   "gens": [
+    "D=ABC"
+   ],
+   "runs": 0,
+   "replicates": 2,
+   "centers": 2,
+   "randomize": true,
+   "seed": 99,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 14,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 16,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 15,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 13,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 13,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 14,
+     "standardOrder": 18,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 15,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 16,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 17,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 18,
+     "standardOrder": 17,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "fractional",
+   "k": 5,
+   "gens": [
+    "D=AB",
+    "E=-AC"
+   ],
+   "runs": 0,
+   "replicates": 1,
+   "centers": 0,
+   "randomize": false,
+   "seed": 1,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "fractional",
+   "k": 7,
+   "gens": [
+    "E=ABC",
+    "F=BCD",
+    "G=ACD"
+   ],
+   "runs": 0,
+   "replicates": 1,
+   "centers": 1,
+   "randomize": true,
+   "seed": 3,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 17,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 15,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 13,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 16,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 13,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 14,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 15,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 16,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 17,
+     "standardOrder": 14,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "pb",
+   "k": 8,
+   "gens": [],
+   "runs": 12,
+   "replicates": 1,
+   "centers": 4,
+   "randomize": true,
+   "seed": 2026,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 13,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 16,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 14,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 15,
+     "point": "center",
+     "replicate": 0,
+     "coded": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 13,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 14,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 15,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 16,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "pb",
+   "k": 11,
+   "gens": [],
+   "runs": 12,
+   "replicates": 1,
+   "centers": 0,
+   "randomize": false,
+   "seed": 1,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "pb",
+   "k": 19,
+   "gens": [],
+   "runs": 20,
+   "replicates": 2,
+   "centers": 0,
+   "randomize": true,
+   "seed": 5,
+   "runsList": [
+    {
+     "run": 1,
+     "standardOrder": 30,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 2,
+     "standardOrder": 5,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 3,
+     "standardOrder": 24,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 4,
+     "standardOrder": 16,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 5,
+     "standardOrder": 38,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 6,
+     "standardOrder": 1,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 7,
+     "standardOrder": 26,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 8,
+     "standardOrder": 13,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 9,
+     "standardOrder": 14,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 10,
+     "standardOrder": 37,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 11,
+     "standardOrder": 7,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 12,
+     "standardOrder": 9,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 13,
+     "standardOrder": 39,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 14,
+     "standardOrder": 6,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 15,
+     "standardOrder": 12,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 16,
+     "standardOrder": 40,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 17,
+     "standardOrder": 18,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 18,
+     "standardOrder": 20,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 19,
+     "standardOrder": 35,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 20,
+     "standardOrder": 15,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 21,
+     "standardOrder": 29,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 22,
+     "standardOrder": 28,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 23,
+     "standardOrder": 31,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 24,
+     "standardOrder": 33,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 25,
+     "standardOrder": 22,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 26,
+     "standardOrder": 3,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 27,
+     "standardOrder": 32,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 28,
+     "standardOrder": 17,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 29,
+     "standardOrder": 11,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 30,
+     "standardOrder": 36,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 31,
+     "standardOrder": 8,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 32,
+     "standardOrder": 19,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 33,
+     "standardOrder": 21,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 34,
+     "standardOrder": 23,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 35,
+     "standardOrder": 27,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 36,
+     "standardOrder": 25,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 37,
+     "standardOrder": 4,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0
+     ]
+    },
+    {
+     "run": 38,
+     "standardOrder": 2,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 39,
+     "standardOrder": 10,
+     "point": "factorial",
+     "replicate": 1,
+     "coded": [
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0
+     ]
+    },
+    {
+     "run": 40,
+     "standardOrder": 34,
+     "point": "factorial",
+     "replicate": 2,
+     "coded": [
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ]
+  }
+ ]
+}

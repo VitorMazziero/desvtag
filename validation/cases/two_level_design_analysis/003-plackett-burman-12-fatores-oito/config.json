@@ -1,0 +1,85 @@
+{
+  "method": "two_level_design_analysis",
+  "title": "Plackett–Burman de 12 ensaios com 8 fatores e 4 pontos centrais (triagem, efeitos principais e curvatura)",
+  "responseColumn": "y",
+  "spec": {
+    "kind": {
+      "type": "plackettBurman",
+      "runs": 12
+    },
+    "factors": [
+      {
+        "id": "f1",
+        "name": "F1",
+        "low": 10.0,
+        "high": 18.0,
+        "unit": null
+      },
+      {
+        "id": "f2",
+        "name": "F2",
+        "low": 20.0,
+        "high": 28.0,
+        "unit": null
+      },
+      {
+        "id": "f3",
+        "name": "F3",
+        "low": 30.0,
+        "high": 38.0,
+        "unit": null
+      },
+      {
+        "id": "f4",
+        "name": "F4",
+        "low": 40.0,
+        "high": 48.0,
+        "unit": null
+      },
+      {
+        "id": "f5",
+        "name": "F5",
+        "low": 50.0,
+        "high": 58.0,
+        "unit": null
+      },
+      {
+        "id": "f6",
+        "name": "F6",
+        "low": 60.0,
+        "high": 68.0,
+        "unit": null
+      },
+      {
+        "id": "f7",
+        "name": "F7",
+        "low": 70.0,
+        "high": 78.0,
+        "unit": null
+      },
+      {
+        "id": "f8",
+        "name": "F8",
+        "low": 80.0,
+        "high": 88.0,
+        "unit": null
+      }
+    ],
+    "replicates": 1,
+    "centerPoints": 4,
+    "randomize": true,
+    "seed": 13
+  },
+  "terms": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H"
+  ],
+  "alpha": 0.05,
+  "includeCurvature": true
+}

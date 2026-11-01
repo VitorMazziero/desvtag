@@ -1,0 +1,37 @@
+{
+ "id": "plackett-burman",
+ "cases": [
+  {
+   "runs": 8,
+   "orthogonal": true
+  },
+  {
+   "runs": 12,
+   "orthogonal": true
+  },
+  {
+   "runs": 16,
+   "orthogonal": true
+  },
+  {
+   "runs": 20,
+   "orthogonal": true
+  },
+  {
+   "runs": 24,
+   "orthogonal": true
+  },
+  {
+   "runs": 32,
+   "orthogonal": true
+  },
+  {
+   "runs": 44,
+   "orthogonal": true
+  },
+  {
+   "runs": 48,
+   "orthogonal": true
+  }
+ ]
+}

@@ -4,4 +4,5 @@
 //! desenha. Nada aqui define cores, fontes ou geometria.
 
 pub mod boxplot;
+pub mod effects;
 pub mod residuals;

@@ -52,6 +52,26 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::DesignCount(req) => match optima_core::designs::count_runs(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::DesignCount(result),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::DesignGenerate(req) => match optima_core::designs::generate(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::DesignGenerate(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::DesignAnalyze(req) => {
+            match optima_core::designs::analysis::analyze(req.as_ref()) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignAnalyze(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::ComparisonOneWay(req) => match optima_core::comparisons::compare_one_way(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::ComparisonOneWay(Box::new(result)),

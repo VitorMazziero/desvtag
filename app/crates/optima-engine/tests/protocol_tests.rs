@@ -35,7 +35,13 @@ fn engine_info_returns_versions_and_registered_methods() {
                 .collect();
             assert_eq!(
                 ids,
-                vec!["descriptive_summary", "one_way_comparison", "linear_model"]
+                vec![
+                    "descriptive_summary",
+                    "one_way_comparison",
+                    "two_level_design",
+                    "two_level_design_analysis",
+                    "linear_model"
+                ]
             );
         }
         other => panic!("resultado inesperado: {other:?}"),

@@ -11,6 +11,7 @@
 
 pub mod comparisons;
 pub mod descriptive;
+pub mod designs;
 pub mod diagnostics;
 pub mod distributions;
 pub mod domain;

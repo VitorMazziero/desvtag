@@ -8,6 +8,19 @@ export const PROTOCOL_VERSION = 1;
 export const PROJECT_SCHEMA_VERSION = 1;
 
 /**
+ * Efeito e seus confundidos (fracionários).
+ */
+export type AliasRow = { 
+/**
+ * Efeito (`A`, `AB`, …).
+ */
+effect: string, 
+/**
+ * Efeitos confundidos com ele, com sinal (`+BCD`, `−CD`).
+ */
+aliases: Array<string>, };
+
+/**
  * Opções da análise.
  */
 export type AnalysisOptions = { 
@@ -206,6 +219,31 @@ ciLower: Stat,
 ciUpper: Stat, };
 
 /**
+ * Teste de curvatura (pontos centrais × pontos fatoriais).
+ */
+export type CurvatureTest = { 
+/**
+ * Média dos centrais menos o previsto pelo modelo linear nos fatoriais.
+ */
+difference: Stat, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p.
+ */
+pValue: Stat, 
+/**
+ * Pontos centrais usados.
+ */
+centerPoints: number, };
+
+/**
  * Conjunto de dados.
  */
 export type Dataset = { 
@@ -269,6 +307,208 @@ facts: Array<Fact>,
 provenance: Provenance, };
 
 /**
+ * Solicitação de análise.
+ */
+export type DesignAnalysisRequest = { 
+/**
+ * Dados com os valores **reais** dos fatores numéricos do planejamento.
+ */
+dataset: Dataset, 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Planejamento (níveis dos fatores e tipo).
+ */
+spec: DesignSpec, 
+/**
+ * Termos do modelo: efeitos principais e interações dos fatores do planejamento.
+ */
+terms: Array<TermSpec>, 
+/**
+ * Nível de significância (0 < α < 1).
+ */
+alpha: number, 
+/**
+ * Incluir o termo de curvatura quando houver pontos centrais.
+ */
+includeCurvature: boolean, };
+
+/**
+ * Resultado da análise.
+ */
+export type DesignAnalysisResult = { 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Nível de significância.
+ */
+alpha: number, 
+/**
+ * Nomes dos fatores na ordem do planejamento.
+ */
+factorNames: Array<string>, 
+/**
+ * Intercepto (média na escala codificada).
+ */
+intercept: Stat, 
+/**
+ * Erro-padrão do intercepto.
+ */
+interceptStdError: Stat, 
+/**
+ * Termos.
+ */
+effects: Array<EffectRow>, 
+/**
+ * Curvatura.
+ */
+curvature: CurvatureTest | null, 
+/**
+ * ANOVA da regressão.
+ */
+anova: RegressionAnova, 
+/**
+ * Falta de ajuste e erro puro.
+ */
+lackOfFit: LackOfFit | null, 
+/**
+ * Lenth.
+ */
+lenth: LenthResult | null, 
+/**
+ * Pareto.
+ */
+pareto: Pareto, 
+/**
+ * Efeitos principais por fator.
+ */
+mainEffects: Array<MainEffectSeries>, 
+/**
+ * Interações de dois fatores do modelo.
+ */
+interactions: Array<InteractionSeries>, 
+/**
+ * Observado × predito.
+ */
+observedVsPredicted: Array<ObservedPredicted>, 
+/**
+ * Ajuste completo (coeficientes, diagnósticos por observação, avisos do ajuste).
+ */
+fit: LinearFit, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Fatos para a interpretação.
+ */
+facts: Array<Fact>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Fator de dois níveis.
+ */
+export type DesignFactor = { 
+/**
+ * Identificador do fator no experimento.
+ */
+id: StableId, 
+/**
+ * Nome digitado.
+ */
+name: string, 
+/**
+ * Nível baixo (real).
+ */
+low: number, 
+/**
+ * Nível alto (real).
+ */
+high: number, 
+/**
+ * Unidade livre.
+ */
+unit: string | null, };
+
+/**
+ * Tipo de planejamento.
+ */
+export type DesignKind = { "type": "fullFactorial" } | { "type": "fractional", 
+/**
+ * Geradores, na ordem dos fatores gerados.
+ */
+generators: Array<string>, } | { "type": "plackettBurman", 
+/**
+ * Número de ensaios do planejamento básico.
+ */
+runs: number, };
+
+/**
+ * Um ensaio.
+ */
+export type DesignRun = { 
+/**
+ * Posição de execução (1-based). Sem aleatorização, igual à ordem padrão.
+ */
+run: number, 
+/**
+ * Posição na ordem padrão (1-based).
+ */
+standardOrder: number, 
+/**
+ * Tipo de ponto.
+ */
+point: PointType, 
+/**
+ * Repetição (1-based; 0 nos pontos centrais).
+ */
+replicate: number, 
+/**
+ * Valores codificados (−1, 0, +1) por fator.
+ */
+coded: Array<number>, 
+/**
+ * Valores reais por fator.
+ */
+real: Array<number>, };
+
+/**
+ * Especificação do planejamento.
+ */
+export type DesignSpec = { 
+/**
+ * Tipo.
+ */
+kind: DesignKind, 
+/**
+ * Fatores, na ordem das colunas (`A`, `B`, …).
+ */
+factors: Array<DesignFactor>, 
+/**
+ * Repetições do planejamento básico (≥ 1); cada repetição é uma réplica experimental.
+ */
+replicates: number, 
+/**
+ * Pontos centrais (codificação 0), acrescentados ao final do planejamento básico.
+ */
+centerPoints: number, 
+/**
+ * Aleatorizar a ordem de execução.
+ */
+randomize: boolean, 
+/**
+ * Semente da aleatorização (registrada no resultado).
+ */
+seed: bigint, };
+
+/**
  * Distribuição e seus parâmetros.
  */
 export type Distribution = { "type": "normal" } | { "type": "studentT", 
@@ -327,6 +567,59 @@ export type DistributionResult = {
  * Valores.
  */
 values: Array<Stat>, };
+
+/**
+ * Termo estimado.
+ */
+export type EffectRow = { 
+/**
+ * Rótulo (`Temperatura`, `Temperatura:pH`).
+ */
+label: string, 
+/**
+ * Ordem do termo (1 = principal, 2 = interação de dois fatores…).
+ */
+order: number, 
+/**
+ * Coeficiente na escala codificada.
+ */
+coefficient: Stat, 
+/**
+ * Efeito = 2 × coeficiente (nível alto − nível baixo).
+ */
+effect: Stat, 
+/**
+ * Erro-padrão do efeito.
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do IC do efeito.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do IC do efeito.
+ */
+ciUpper: Stat, 
+/**
+ * Ativo pelo método de Lenth (`|efeito| > ME`); `None` sem Lenth.
+ */
+lenthActive: boolean | null, 
+/**
+ * Ativo com controle simultâneo (`|efeito| > SME`).
+ */
+lenthSimultaneous: boolean | null, 
+/**
+ * Efeitos confundidos com este termo (fracionários regulares), com sinal.
+ */
+aliasedWith: Array<string>, };
 
 /**
  * Tamanhos de efeito e coeficiente de variação.
@@ -579,6 +872,56 @@ levelsText: string, };
 export type FactorValue = number | string;
 
 /**
+ * Planejamento gerado.
+ */
+export type GeneratedDesign = { 
+/**
+ * Especificação usada.
+ */
+spec: DesignSpec, 
+/**
+ * Contagem de ensaios.
+ */
+count: RunCount, 
+/**
+ * Ensaios na ordem de execução.
+ */
+runs: Array<DesignRun>, 
+/**
+ * Relação definidora (`I = ABCD`), vazia nos fatoriais completos e em PB.
+ */
+definingRelation: Array<string>, 
+/**
+ * Resolução (fracionários e PB: III).
+ */
+resolution: number | null, 
+/**
+ * Confundimento de efeitos principais e de interações de dois fatores (fracionários).
+ */
+aliases: Array<AliasRow>, 
+/**
+ * Colunas fictícias do Plackett–Burman.
+ */
+dummyColumns: number, 
+/**
+ * Maior correlação absoluta entre um efeito principal e uma interação de dois fatores
+ * (Plackett–Burman; 0 nos fatoriais e 0 nos fracionários regulares sem confundimento parcial).
+ */
+maxMainVsTwoFactorCorrelation: number, 
+/**
+ * Algoritmo de aleatorização.
+ */
+randomizationAlgorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * Rótulo de um fator em um grupo.
  */
 export type GroupLabel = { 
@@ -676,6 +1019,23 @@ bytesBase64: string,
 sheet: string | null, };
 
 /**
+ * Médias das quatro combinações de dois fatores.
+ */
+export type InteractionSeries = { 
+/**
+ * Primeiro fator.
+ */
+factorA: number, 
+/**
+ * Segundo fator.
+ */
+factorB: number, 
+/**
+ * Médias `[(−,−), (+,−), (−,+), (+,+)]` em (A, B).
+ */
+cellMeans: Array<Stat>, };
+
+/**
  * Diagnóstico: o idioma é resolvido pela interface a partir de `code`.
  */
 export type Issue = { 
@@ -691,6 +1051,56 @@ severity: Severity,
  * Parâmetros usados na mensagem localizada.
  */
 params: { [key in string]: string }, };
+
+/**
+ * Falta de ajuste e erro puro.
+ */
+export type LackOfFit = { 
+/**
+ * Soma de quadrados do erro puro.
+ */
+ssPureError: number, 
+/**
+ * Graus de liberdade do erro puro.
+ */
+dfPureError: number, 
+/**
+ * Soma de quadrados da falta de ajuste.
+ */
+ssLackOfFit: Stat, 
+/**
+ * Graus de liberdade da falta de ajuste.
+ */
+dfLackOfFit: number, 
+/**
+ * Estatística F.
+ */
+f: Stat, 
+/**
+ * Valor-p.
+ */
+pValue: Stat, };
+
+/**
+ * Método de Lenth.
+ */
+export type LenthResult = { 
+/**
+ * Erro-padrão pseudo.
+ */
+pse: number, 
+/**
+ * Graus de liberdade.
+ */
+df: number, 
+/**
+ * Margem de erro.
+ */
+marginOfError: number, 
+/**
+ * Margem simultânea.
+ */
+simultaneousMargin: number, };
 
 /**
  * Letras por grupo.
@@ -790,6 +1200,27 @@ dataset: Dataset,
  * Modelo.
  */
 spec: ModelSpec, };
+
+/**
+ * Médias de um fator nos níveis baixo e alto (e no centro, se houver).
+ */
+export type MainEffectSeries = { 
+/**
+ * Índice do fator (ordem do planejamento).
+ */
+factor: number, 
+/**
+ * Média da resposta no nível baixo.
+ */
+lowMean: Stat, 
+/**
+ * Média no nível alto.
+ */
+highMean: Stat, 
+/**
+ * Média nos pontos centrais, se houver.
+ */
+centerMean: number | null, };
 
 /**
  * Descrição de um método disponível.
@@ -898,6 +1329,23 @@ studentizedResidual: Stat,
  * Distância de Cook.
  */
 cooksDistance: Stat, };
+
+/**
+ * Observado × predito de um ensaio.
+ */
+export type ObservedPredicted = { 
+/**
+ * Observação.
+ */
+observationId: StableId, 
+/**
+ * Observado.
+ */
+observed: number, 
+/**
+ * Predito pelo modelo.
+ */
+predicted: number, };
 
 /**
  * Linha F do teste global.
@@ -1030,12 +1478,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Sucesso ou falha.
@@ -1103,6 +1551,50 @@ ciUpper: Stat,
  * Diferença detectada (`p_ajustado < α`); `None` quando o par não pôde ser testado.
  */
 significant: boolean | null, };
+
+/**
+ * Pareto de efeitos.
+ */
+export type Pareto = { 
+/**
+ * Base das barras.
+ */
+basis: ParetoBasis, 
+/**
+ * Linha de referência.
+ */
+reference: number | null, 
+/**
+ * Barras em ordem decrescente.
+ */
+bars: Array<ParetoBar>, };
+
+/**
+ * Barra do Pareto.
+ */
+export type ParetoBar = { 
+/**
+ * Termo.
+ */
+label: string, 
+/**
+ * Valor (conforme a base).
+ */
+value: number, 
+/**
+ * Acima da referência.
+ */
+significant: boolean | null, };
+
+/**
+ * Referência da barra do Pareto.
+ */
+export type ParetoBasis = "tStatistic" | "lenthEffect" | "effectOnly";
+
+/**
+ * Tipo de ponto.
+ */
+export type PointType = "factorial" | "center";
 
 /**
  * Predição para uma linha.
@@ -1390,6 +1882,27 @@ factors: Array<string>,
  * Texto das respostas, na ordem de `ExperimentData::responses`.
  */
 responses: Array<string>, };
+
+/**
+ * Contagem de ensaios, antes de gerar.
+ */
+export type RunCount = { 
+/**
+ * Ensaios do planejamento básico (uma repetição).
+ */
+baseRuns: number, 
+/**
+ * Ensaios fatoriais, com as repetições.
+ */
+factorialRuns: number, 
+/**
+ * Pontos centrais.
+ */
+centerRuns: number, 
+/**
+ * Total.
+ */
+total: number, };
 
 /**
  * Gravidade de um diagnóstico.

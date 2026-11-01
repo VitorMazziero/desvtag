@@ -8,4 +8,4 @@ pub mod facts;
 pub mod rules;
 
 pub use facts::Fact;
-pub use rules::{descriptive_facts, one_way_facts};
+pub use rules::{DesignFactsInput, descriptive_facts, design_facts, one_way_facts};

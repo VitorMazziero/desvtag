@@ -1,0 +1,2956 @@
+{
+ "id": "fractional",
+ "cases": [
+  {
+   "k": 3,
+   "generators": [
+    "C=AB"
+   ],
+   "resolution": 3,
+   "definingRelation": [
+    "I = ABC"
+   ],
+   "aliases": {
+    "A": [
+     "+BC"
+    ],
+    "B": [
+     "+AC"
+    ],
+    "C": [
+     "+AB"
+    ],
+    "AB": [
+     "+C"
+    ],
+    "AC": [
+     "+B"
+    ],
+    "BC": [
+     "+A"
+    ]
+   }
+  },
+  {
+   "k": 4,
+   "generators": [
+    "D=ABC"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = ABCD"
+   ],
+   "aliases": {
+    "A": [
+     "+BCD"
+    ],
+    "B": [
+     "+ACD"
+    ],
+    "C": [
+     "+ABD"
+    ],
+    "D": [
+     "+ABC"
+    ],
+    "AB": [
+     "+CD"
+    ],
+    "AC": [
+     "+BD"
+    ],
+    "AD": [
+     "+BC"
+    ],
+    "BC": [
+     "+AD"
+    ],
+    "BD": [
+     "+AC"
+    ],
+    "CD": [
+     "+AB"
+    ]
+   }
+  },
+  {
+   "k": 5,
+   "generators": [
+    "E=ABCD"
+   ],
+   "resolution": 5,
+   "definingRelation": [
+    "I = ABCDE"
+   ],
+   "aliases": {
+    "A": [
+     "+BCDE"
+    ],
+    "B": [
+     "+ACDE"
+    ],
+    "C": [
+     "+ABDE"
+    ],
+    "D": [
+     "+ABCE"
+    ],
+    "E": [
+     "+ABCD"
+    ],
+    "AB": [
+     "+CDE"
+    ],
+    "AC": [
+     "+BDE"
+    ],
+    "AD": [
+     "+BCE"
+    ],
+    "AE": [
+     "+BCD"
+    ],
+    "BC": [
+     "+ADE"
+    ],
+    "BD": [
+     "+ACE"
+    ],
+    "BE": [
+     "+ACD"
+    ],
+    "CD": [
+     "+ABE"
+    ],
+    "CE": [
+     "+ABD"
+    ],
+    "DE": [
+     "+ABC"
+    ]
+   }
+  },
+  {
+   "k": 5,
+   "generators": [
+    "D=AB",
+    "E=AC"
+   ],
+   "resolution": 3,
+   "definingRelation": [
+    "I = ABD",
+    "I = ACE",
+    "I = BCDE"
+   ],
+   "aliases": {
+    "A": [
+     "+BD",
+     "+CE",
+     "+ABCDE"
+    ],
+    "B": [
+     "+AD",
+     "+CDE",
+     "+ABCE"
+    ],
+    "C": [
+     "+AE",
+     "+BDE",
+     "+ABCD"
+    ],
+    "D": [
+     "+AB",
+     "+BCE",
+     "+ACDE"
+    ],
+    "E": [
+     "+AC",
+     "+BCD",
+     "+ABDE"
+    ],
+    "AB": [
+     "+D",
+     "+BCE",
+     "+ACDE"
+    ],
+    "AC": [
+     "+E",
+     "+BCD",
+     "+ABDE"
+    ],
+    "AD": [
+     "+B",
+     "+CDE",
+     "+ABCE"
+    ],
+    "AE": [
+     "+C",
+     "+BDE",
+     "+ABCD"
+    ],
+    "BC": [
+     "+DE",
+     "+ABE",
+     "+ACD"
+    ],
+    "BD": [
+     "+A",
+     "+CE",
+     "+ABCDE"
+    ],
+    "BE": [
+     "+CD",
+     "+ABC",
+     "+ADE"
+    ],
+    "CD": [
+     "+BE",
+     "+ABC",
+     "+ADE"
+    ],
+    "CE": [
+     "+A",
+     "+BD",
+     "+ABCDE"
+    ],
+    "DE": [
+     "+BC",
+     "+ABE",
+     "+ACD"
+    ]
+   }
+  },
+  {
+   "k": 6,
+   "generators": [
+    "F=ABCDE"
+   ],
+   "resolution": 6,
+   "definingRelation": [
+    "I = ABCDEF"
+   ],
+   "aliases": {
+    "A": [
+     "+BCDEF"
+    ],
+    "B": [
+     "+ACDEF"
+    ],
+    "C": [
+     "+ABDEF"
+    ],
+    "D": [
+     "+ABCEF"
+    ],
+    "E": [
+     "+ABCDF"
+    ],
+    "F": [
+     "+ABCDE"
+    ],
+    "AB": [
+     "+CDEF"
+    ],
+    "AC": [
+     "+BDEF"
+    ],
+    "AD": [
+     "+BCEF"
+    ],
+    "AE": [
+     "+BCDF"
+    ],
+    "AF": [
+     "+BCDE"
+    ],
+    "BC": [
+     "+ADEF"
+    ],
+    "BD": [
+     "+ACEF"
+    ],
+    "BE": [
+     "+ACDF"
+    ],
+    "BF": [
+     "+ACDE"
+    ],
+    "CD": [
+     "+ABEF"
+    ],
+    "CE": [
+     "+ABDF"
+    ],
+    "CF": [
+     "+ABDE"
+    ],
+    "DE": [
+     "+ABCF"
+    ],
+    "DF": [
+     "+ABCE"
+    ],
+    "EF": [
+     "+ABCD"
+    ]
+   }
+  },
+  {
+   "k": 6,
+   "generators": [
+    "E=ABC",
+    "F=BCD"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = ABCE",
+    "I = BCDF",
+    "I = ADEF"
+   ],
+   "aliases": {
+    "A": [
+     "+BCE",
+     "+DEF",
+     "+ABCDF"
+    ],
+    "B": [
+     "+ACE",
+     "+CDF",
+     "+ABDEF"
+    ],
+    "C": [
+     "+ABE",
+     "+BDF",
+     "+ACDEF"
+    ],
+    "D": [
+     "+AEF",
+     "+BCF",
+     "+ABCDE"
+    ],
+    "E": [
+     "+ABC",
+     "+ADF",
+     "+BCDEF"
+    ],
+    "F": [
+     "+ADE",
+     "+BCD",
+     "+ABCEF"
+    ],
+    "AB": [
+     "+CE",
+     "+ACDF",
+     "+BDEF"
+    ],
+    "AC": [
+     "+BE",
+     "+ABDF",
+     "+CDEF"
+    ],
+    "AD": [
+     "+EF",
+     "+ABCF",
+     "+BCDE"
+    ],
+    "AE": [
+     "+BC",
+     "+DF",
+     "+ABCDEF"
+    ],
+    "AF": [
+     "+DE",
+     "+ABCD",
+     "+BCEF"
+    ],
+    "BC": [
+     "+AE",
+     "+DF",
+     "+ABCDEF"
+    ],
+    "BD": [
+     "+CF",
+     "+ABEF",
+     "+ACDE"
+    ],
+    "BE": [
+     "+AC",
+     "+ABDF",
+     "+CDEF"
+    ],
+    "BF": [
+     "+CD",
+     "+ABDE",
+     "+ACEF"
+    ],
+    "CD": [
+     "+BF",
+     "+ABDE",
+     "+ACEF"
+    ],
+    "CE": [
+     "+AB",
+     "+ACDF",
+     "+BDEF"
+    ],
+    "CF": [
+     "+BD",
+     "+ABEF",
+     "+ACDE"
+    ],
+    "DE": [
+     "+AF",
+     "+ABCD",
+     "+BCEF"
+    ],
+    "DF": [
+     "+AE",
+     "+BC",
+     "+ABCDEF"
+    ],
+    "EF": [
+     "+AD",
+     "+ABCF",
+     "+BCDE"
+    ]
+   }
+  },
+  {
+   "k": 6,
+   "generators": [
+    "D=AB",
+    "E=AC",
+    "F=BC"
+   ],
+   "resolution": 3,
+   "definingRelation": [
+    "I = ABD",
+    "I = ACE",
+    "I = BCF",
+    "I = DEF",
+    "I = BCDE",
+    "I = ACDF",
+    "I = ABEF"
+   ],
+   "aliases": {
+    "A": [
+     "+BD",
+     "+CE",
+     "+BEF",
+     "+CDF",
+     "+ABCF",
+     "+ADEF",
+     "+ABCDE"
+    ],
+    "B": [
+     "+AD",
+     "+CF",
+     "+AEF",
+     "+CDE",
+     "+ABCE",
+     "+BDEF",
+     "+ABCDF"
+    ],
+    "C": [
+     "+AE",
+     "+BF",
+     "+ADF",
+     "+BDE",
+     "+ABCD",
+     "+CDEF",
+     "+ABCEF"
+    ],
+    "D": [
+     "+AB",
+     "+EF",
+     "+ACF",
+     "+BCE",
+     "+ACDE",
+     "+BCDF",
+     "+ABDEF"
+    ],
+    "E": [
+     "+AC",
+     "+DF",
+     "+ABF",
+     "+BCD",
+     "+ABDE",
+     "+BCEF",
+     "+ACDEF"
+    ],
+    "F": [
+     "+BC",
+     "+DE",
+     "+ABE",
+     "+ACD",
+     "+ABDF",
+     "+ACEF",
+     "+BCDEF"
+    ],
+    "AB": [
+     "+D",
+     "+EF",
+     "+ACF",
+     "+BCE",
+     "+ACDE",
+     "+BCDF",
+     "+ABDEF"
+    ],
+    "AC": [
+     "+E",
+     "+DF",
+     "+ABF",
+     "+BCD",
+     "+ABDE",
+     "+BCEF",
+     "+ACDEF"
+    ],
+    "AD": [
+     "+B",
+     "+CF",
+     "+AEF",
+     "+CDE",
+     "+ABCE",
+     "+BDEF",
+     "+ABCDF"
+    ],
+    "AE": [
+     "+C",
+     "+BF",
+     "+ADF",
+     "+BDE",
+     "+ABCD",
+     "+CDEF",
+     "+ABCEF"
+    ],
+    "AF": [
+     "+BE",
+     "+CD",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABCDEF"
+    ],
+    "BC": [
+     "+F",
+     "+DE",
+     "+ABE",
+     "+ACD",
+     "+ABDF",
+     "+ACEF",
+     "+BCDEF"
+    ],
+    "BD": [
+     "+A",
+     "+CE",
+     "+BEF",
+     "+CDF",
+     "+ABCF",
+     "+ADEF",
+     "+ABCDE"
+    ],
+    "BE": [
+     "+AF",
+     "+CD",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABCDEF"
+    ],
+    "BF": [
+     "+C",
+     "+AE",
+     "+ADF",
+     "+BDE",
+     "+ABCD",
+     "+CDEF",
+     "+ABCEF"
+    ],
+    "CD": [
+     "+AF",
+     "+BE",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABCDEF"
+    ],
+    "CE": [
+     "+A",
+     "+BD",
+     "+BEF",
+     "+CDF",
+     "+ABCF",
+     "+ADEF",
+     "+ABCDE"
+    ],
+    "CF": [
+     "+B",
+     "+AD",
+     "+AEF",
+     "+CDE",
+     "+ABCE",
+     "+BDEF",
+     "+ABCDF"
+    ],
+    "DE": [
+     "+F",
+     "+BC",
+     "+ABE",
+     "+ACD",
+     "+ABDF",
+     "+ACEF",
+     "+BCDEF"
+    ],
+    "DF": [
+     "+E",
+     "+AC",
+     "+ABF",
+     "+BCD",
+     "+ABDE",
+     "+BCEF",
+     "+ACDEF"
+    ],
+    "EF": [
+     "+D",
+     "+AB",
+     "+ACF",
+     "+BCE",
+     "+ACDE",
+     "+BCDF",
+     "+ABDEF"
+    ]
+   }
+  },
+  {
+   "k": 7,
+   "generators": [
+    "G=ABCDEF"
+   ],
+   "resolution": 7,
+   "definingRelation": [
+    "I = ABCDEFG"
+   ],
+   "aliases": {
+    "A": [
+     "+BCDEFG"
+    ],
+    "B": [
+     "+ACDEFG"
+    ],
+    "C": [
+     "+ABDEFG"
+    ],
+    "D": [
+     "+ABCEFG"
+    ],
+    "E": [
+     "+ABCDFG"
+    ],
+    "F": [
+     "+ABCDEG"
+    ],
+    "G": [
+     "+ABCDEF"
+    ],
+    "AB": [
+     "+CDEFG"
+    ],
+    "AC": [
+     "+BDEFG"
+    ],
+    "AD": [
+     "+BCEFG"
+    ],
+    "AE": [
+     "+BCDFG"
+    ],
+    "AF": [
+     "+BCDEG"
+    ],
+    "AG": [
+     "+BCDEF"
+    ],
+    "BC": [
+     "+ADEFG"
+    ],
+    "BD": [
+     "+ACEFG"
+    ],
+    "BE": [
+     "+ACDFG"
+    ],
+    "BF": [
+     "+ACDEG"
+    ],
+    "BG": [
+     "+ACDEF"
+    ],
+    "CD": [
+     "+ABEFG"
+    ],
+    "CE": [
+     "+ABDFG"
+    ],
+    "CF": [
+     "+ABDEG"
+    ],
+    "CG": [
+     "+ABDEF"
+    ],
+    "DE": [
+     "+ABCFG"
+    ],
+    "DF": [
+     "+ABCEG"
+    ],
+    "DG": [
+     "+ABCEF"
+    ],
+    "EF": [
+     "+ABCDG"
+    ],
+    "EG": [
+     "+ABCDF"
+    ],
+    "FG": [
+     "+ABCDE"
+    ]
+   }
+  },
+  {
+   "k": 7,
+   "generators": [
+    "F=ABCD",
+    "G=ABDE"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = CEFG",
+    "I = ABCDF",
+    "I = ABDEG"
+   ],
+   "aliases": {
+    "A": [
+     "+BCDF",
+     "+BDEG",
+     "+ACEFG"
+    ],
+    "B": [
+     "+ACDF",
+     "+ADEG",
+     "+BCEFG"
+    ],
+    "C": [
+     "+EFG",
+     "+ABDF",
+     "+ABCDEG"
+    ],
+    "D": [
+     "+ABCF",
+     "+ABEG",
+     "+CDEFG"
+    ],
+    "E": [
+     "+CFG",
+     "+ABDG",
+     "+ABCDEF"
+    ],
+    "F": [
+     "+CEG",
+     "+ABCD",
+     "+ABDEFG"
+    ],
+    "G": [
+     "+CEF",
+     "+ABDE",
+     "+ABCDFG"
+    ],
+    "AB": [
+     "+CDF",
+     "+DEG",
+     "+ABCEFG"
+    ],
+    "AC": [
+     "+BDF",
+     "+AEFG",
+     "+BCDEG"
+    ],
+    "AD": [
+     "+BCF",
+     "+BEG",
+     "+ACDEFG"
+    ],
+    "AE": [
+     "+BDG",
+     "+ACFG",
+     "+BCDEF"
+    ],
+    "AF": [
+     "+BCD",
+     "+ACEG",
+     "+BDEFG"
+    ],
+    "AG": [
+     "+BDE",
+     "+ACEF",
+     "+BCDFG"
+    ],
+    "BC": [
+     "+ADF",
+     "+BEFG",
+     "+ACDEG"
+    ],
+    "BD": [
+     "+ACF",
+     "+AEG",
+     "+BCDEFG"
+    ],
+    "BE": [
+     "+ADG",
+     "+BCFG",
+     "+ACDEF"
+    ],
+    "BF": [
+     "+ACD",
+     "+BCEG",
+     "+ADEFG"
+    ],
+    "BG": [
+     "+ADE",
+     "+BCEF",
+     "+ACDFG"
+    ],
+    "CD": [
+     "+ABF",
+     "+DEFG",
+     "+ABCEG"
+    ],
+    "CE": [
+     "+FG",
+     "+ABCDG",
+     "+ABDEF"
+    ],
+    "CF": [
+     "+EG",
+     "+ABD",
+     "+ABCDEFG"
+    ],
+    "CG": [
+     "+EF",
+     "+ABCDE",
+     "+ABDFG"
+    ],
+    "DE": [
+     "+ABG",
+     "+CDFG",
+     "+ABCEF"
+    ],
+    "DF": [
+     "+ABC",
+     "+CDEG",
+     "+ABEFG"
+    ],
+    "DG": [
+     "+ABE",
+     "+CDEF",
+     "+ABCFG"
+    ],
+    "EF": [
+     "+CG",
+     "+ABCDE",
+     "+ABDFG"
+    ],
+    "EG": [
+     "+CF",
+     "+ABD",
+     "+ABCDEFG"
+    ],
+    "FG": [
+     "+CE",
+     "+ABCDG",
+     "+ABDEF"
+    ]
+   }
+  },
+  {
+   "k": 7,
+   "generators": [
+    "E=ABC",
+    "F=BCD",
+    "G=ACD"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = ABCE",
+    "I = BCDF",
+    "I = ADEF",
+    "I = ACDG",
+    "I = BDEG",
+    "I = ABFG",
+    "I = CEFG"
+   ],
+   "aliases": {
+    "A": [
+     "+BCE",
+     "+BFG",
+     "+CDG",
+     "+DEF",
+     "+ABCDF",
+     "+ABDEG",
+     "+ACEFG"
+    ],
+    "B": [
+     "+ACE",
+     "+AFG",
+     "+CDF",
+     "+DEG",
+     "+ABCDG",
+     "+ABDEF",
+     "+BCEFG"
+    ],
+    "C": [
+     "+ABE",
+     "+ADG",
+     "+BDF",
+     "+EFG",
+     "+ABCFG",
+     "+ACDEF",
+     "+BCDEG"
+    ],
+    "D": [
+     "+ACG",
+     "+AEF",
+     "+BCF",
+     "+BEG",
+     "+ABCDE",
+     "+ABDFG",
+     "+CDEFG"
+    ],
+    "E": [
+     "+ABC",
+     "+ADF",
+     "+BDG",
+     "+CFG",
+     "+ABEFG",
+     "+ACDEG",
+     "+BCDEF"
+    ],
+    "F": [
+     "+ABG",
+     "+ADE",
+     "+BCD",
+     "+CEG",
+     "+ABCEF",
+     "+ACDFG",
+     "+BDEFG"
+    ],
+    "G": [
+     "+ABF",
+     "+ACD",
+     "+BDE",
+     "+CEF",
+     "+ABCEG",
+     "+ADEFG",
+     "+BCDFG"
+    ],
+    "AB": [
+     "+CE",
+     "+FG",
+     "+ACDF",
+     "+ADEG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCEFG"
+    ],
+    "AC": [
+     "+BE",
+     "+DG",
+     "+ABDF",
+     "+AEFG",
+     "+BCFG",
+     "+CDEF",
+     "+ABCDEG"
+    ],
+    "AD": [
+     "+CG",
+     "+EF",
+     "+ABCF",
+     "+ABEG",
+     "+BCDE",
+     "+BDFG",
+     "+ACDEFG"
+    ],
+    "AE": [
+     "+BC",
+     "+DF",
+     "+ABDG",
+     "+ACFG",
+     "+BEFG",
+     "+CDEG",
+     "+ABCDEF"
+    ],
+    "AF": [
+     "+BG",
+     "+DE",
+     "+ABCD",
+     "+ACEG",
+     "+BCEF",
+     "+CDFG",
+     "+ABDEFG"
+    ],
+    "AG": [
+     "+BF",
+     "+CD",
+     "+ABDE",
+     "+ACEF",
+     "+BCEG",
+     "+DEFG",
+     "+ABCDFG"
+    ],
+    "BC": [
+     "+AE",
+     "+DF",
+     "+ABDG",
+     "+ACFG",
+     "+BEFG",
+     "+CDEG",
+     "+ABCDEF"
+    ],
+    "BD": [
+     "+CF",
+     "+EG",
+     "+ABCG",
+     "+ABEF",
+     "+ACDE",
+     "+ADFG",
+     "+BCDEFG"
+    ],
+    "BE": [
+     "+AC",
+     "+DG",
+     "+ABDF",
+     "+AEFG",
+     "+BCFG",
+     "+CDEF",
+     "+ABCDEG"
+    ],
+    "BF": [
+     "+AG",
+     "+CD",
+     "+ABDE",
+     "+ACEF",
+     "+BCEG",
+     "+DEFG",
+     "+ABCDFG"
+    ],
+    "BG": [
+     "+AF",
+     "+DE",
+     "+ABCD",
+     "+ACEG",
+     "+BCEF",
+     "+CDFG",
+     "+ABDEFG"
+    ],
+    "CD": [
+     "+AG",
+     "+BF",
+     "+ABDE",
+     "+ACEF",
+     "+BCEG",
+     "+DEFG",
+     "+ABCDFG"
+    ],
+    "CE": [
+     "+AB",
+     "+FG",
+     "+ACDF",
+     "+ADEG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCEFG"
+    ],
+    "CF": [
+     "+BD",
+     "+EG",
+     "+ABCG",
+     "+ABEF",
+     "+ACDE",
+     "+ADFG",
+     "+BCDEFG"
+    ],
+    "CG": [
+     "+AD",
+     "+EF",
+     "+ABCF",
+     "+ABEG",
+     "+BCDE",
+     "+BDFG",
+     "+ACDEFG"
+    ],
+    "DE": [
+     "+AF",
+     "+BG",
+     "+ABCD",
+     "+ACEG",
+     "+BCEF",
+     "+CDFG",
+     "+ABDEFG"
+    ],
+    "DF": [
+     "+AE",
+     "+BC",
+     "+ABDG",
+     "+ACFG",
+     "+BEFG",
+     "+CDEG",
+     "+ABCDEF"
+    ],
+    "DG": [
+     "+AC",
+     "+BE",
+     "+ABDF",
+     "+AEFG",
+     "+BCFG",
+     "+CDEF",
+     "+ABCDEG"
+    ],
+    "EF": [
+     "+AD",
+     "+CG",
+     "+ABCF",
+     "+ABEG",
+     "+BCDE",
+     "+BDFG",
+     "+ACDEFG"
+    ],
+    "EG": [
+     "+BD",
+     "+CF",
+     "+ABCG",
+     "+ABEF",
+     "+ACDE",
+     "+ADFG",
+     "+BCDEFG"
+    ],
+    "FG": [
+     "+AB",
+     "+CE",
+     "+ACDF",
+     "+ADEG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCEFG"
+    ]
+   }
+  },
+  {
+   "k": 7,
+   "generators": [
+    "D=AB",
+    "E=AC",
+    "F=BC",
+    "G=ABC"
+   ],
+   "resolution": 3,
+   "definingRelation": [
+    "I = ABD",
+    "I = ACE",
+    "I = BCF",
+    "I = DEF",
+    "I = CDG",
+    "I = BEG",
+    "I = AFG",
+    "I = BCDE",
+    "I = ACDF",
+    "I = ABEF",
+    "I = ABCG",
+    "I = ADEG",
+    "I = BDFG",
+    "I = CEFG",
+    "I = ABCDEFG"
+   ],
+   "aliases": {
+    "A": [
+     "+BD",
+     "+CE",
+     "+FG",
+     "+BCG",
+     "+BEF",
+     "+CDF",
+     "+DEG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+ABCDE",
+     "+ABDFG",
+     "+ACEFG",
+     "+BCDEFG"
+    ],
+    "B": [
+     "+AD",
+     "+CF",
+     "+EG",
+     "+ACG",
+     "+AEF",
+     "+CDE",
+     "+DFG",
+     "+ABCE",
+     "+ABFG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCDF",
+     "+ABDEG",
+     "+BCEFG",
+     "+ACDEFG"
+    ],
+    "C": [
+     "+AE",
+     "+BF",
+     "+DG",
+     "+ABG",
+     "+ADF",
+     "+BDE",
+     "+EFG",
+     "+ABCD",
+     "+ACFG",
+     "+BCEG",
+     "+CDEF",
+     "+ABCEF",
+     "+ACDEG",
+     "+BCDFG",
+     "+ABDEFG"
+    ],
+    "D": [
+     "+AB",
+     "+CG",
+     "+EF",
+     "+ACF",
+     "+AEG",
+     "+BCE",
+     "+BFG",
+     "+ACDE",
+     "+ADFG",
+     "+BCDF",
+     "+BDEG",
+     "+ABCDG",
+     "+ABDEF",
+     "+CDEFG",
+     "+ABCEFG"
+    ],
+    "E": [
+     "+AC",
+     "+BG",
+     "+DF",
+     "+ABF",
+     "+ADG",
+     "+BCD",
+     "+CFG",
+     "+ABDE",
+     "+AEFG",
+     "+BCEF",
+     "+CDEG",
+     "+ABCEG",
+     "+ACDEF",
+     "+BDEFG",
+     "+ABCDFG"
+    ],
+    "F": [
+     "+AG",
+     "+BC",
+     "+DE",
+     "+ABE",
+     "+ACD",
+     "+BDG",
+     "+CEG",
+     "+ABDF",
+     "+ACEF",
+     "+BEFG",
+     "+CDFG",
+     "+ABCFG",
+     "+ADEFG",
+     "+BCDEF",
+     "+ABCDEG"
+    ],
+    "G": [
+     "+AF",
+     "+BE",
+     "+CD",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABDG",
+     "+ACEG",
+     "+BCFG",
+     "+DEFG",
+     "+ABEFG",
+     "+ACDFG",
+     "+BCDEG",
+     "+ABCDEF"
+    ],
+    "AB": [
+     "+D",
+     "+CG",
+     "+EF",
+     "+ACF",
+     "+AEG",
+     "+BCE",
+     "+BFG",
+     "+ACDE",
+     "+ADFG",
+     "+BCDF",
+     "+BDEG",
+     "+ABCDG",
+     "+ABDEF",
+     "+CDEFG",
+     "+ABCEFG"
+    ],
+    "AC": [
+     "+E",
+     "+BG",
+     "+DF",
+     "+ABF",
+     "+ADG",
+     "+BCD",
+     "+CFG",
+     "+ABDE",
+     "+AEFG",
+     "+BCEF",
+     "+CDEG",
+     "+ABCEG",
+     "+ACDEF",
+     "+BDEFG",
+     "+ABCDFG"
+    ],
+    "AD": [
+     "+B",
+     "+CF",
+     "+EG",
+     "+ACG",
+     "+AEF",
+     "+CDE",
+     "+DFG",
+     "+ABCE",
+     "+ABFG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCDF",
+     "+ABDEG",
+     "+BCEFG",
+     "+ACDEFG"
+    ],
+    "AE": [
+     "+C",
+     "+BF",
+     "+DG",
+     "+ABG",
+     "+ADF",
+     "+BDE",
+     "+EFG",
+     "+ABCD",
+     "+ACFG",
+     "+BCEG",
+     "+CDEF",
+     "+ABCEF",
+     "+ACDEG",
+     "+BCDFG",
+     "+ABDEFG"
+    ],
+    "AF": [
+     "+G",
+     "+BE",
+     "+CD",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABDG",
+     "+ACEG",
+     "+BCFG",
+     "+DEFG",
+     "+ABEFG",
+     "+ACDFG",
+     "+BCDEG",
+     "+ABCDEF"
+    ],
+    "AG": [
+     "+F",
+     "+BC",
+     "+DE",
+     "+ABE",
+     "+ACD",
+     "+BDG",
+     "+CEG",
+     "+ABDF",
+     "+ACEF",
+     "+BEFG",
+     "+CDFG",
+     "+ABCFG",
+     "+ADEFG",
+     "+BCDEF",
+     "+ABCDEG"
+    ],
+    "BC": [
+     "+F",
+     "+AG",
+     "+DE",
+     "+ABE",
+     "+ACD",
+     "+BDG",
+     "+CEG",
+     "+ABDF",
+     "+ACEF",
+     "+BEFG",
+     "+CDFG",
+     "+ABCFG",
+     "+ADEFG",
+     "+BCDEF",
+     "+ABCDEG"
+    ],
+    "BD": [
+     "+A",
+     "+CE",
+     "+FG",
+     "+BCG",
+     "+BEF",
+     "+CDF",
+     "+DEG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+ABCDE",
+     "+ABDFG",
+     "+ACEFG",
+     "+BCDEFG"
+    ],
+    "BE": [
+     "+G",
+     "+AF",
+     "+CD",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABDG",
+     "+ACEG",
+     "+BCFG",
+     "+DEFG",
+     "+ABEFG",
+     "+ACDFG",
+     "+BCDEG",
+     "+ABCDEF"
+    ],
+    "BF": [
+     "+C",
+     "+AE",
+     "+DG",
+     "+ABG",
+     "+ADF",
+     "+BDE",
+     "+EFG",
+     "+ABCD",
+     "+ACFG",
+     "+BCEG",
+     "+CDEF",
+     "+ABCEF",
+     "+ACDEG",
+     "+BCDFG",
+     "+ABDEFG"
+    ],
+    "BG": [
+     "+E",
+     "+AC",
+     "+DF",
+     "+ABF",
+     "+ADG",
+     "+BCD",
+     "+CFG",
+     "+ABDE",
+     "+AEFG",
+     "+BCEF",
+     "+CDEG",
+     "+ABCEG",
+     "+ACDEF",
+     "+BDEFG",
+     "+ABCDFG"
+    ],
+    "CD": [
+     "+G",
+     "+AF",
+     "+BE",
+     "+ABC",
+     "+ADE",
+     "+BDF",
+     "+CEF",
+     "+ABDG",
+     "+ACEG",
+     "+BCFG",
+     "+DEFG",
+     "+ABEFG",
+     "+ACDFG",
+     "+BCDEG",
+     "+ABCDEF"
+    ],
+    "CE": [
+     "+A",
+     "+BD",
+     "+FG",
+     "+BCG",
+     "+BEF",
+     "+CDF",
+     "+DEG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+ABCDE",
+     "+ABDFG",
+     "+ACEFG",
+     "+BCDEFG"
+    ],
+    "CF": [
+     "+B",
+     "+AD",
+     "+EG",
+     "+ACG",
+     "+AEF",
+     "+CDE",
+     "+DFG",
+     "+ABCE",
+     "+ABFG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCDF",
+     "+ABDEG",
+     "+BCEFG",
+     "+ACDEFG"
+    ],
+    "CG": [
+     "+D",
+     "+AB",
+     "+EF",
+     "+ACF",
+     "+AEG",
+     "+BCE",
+     "+BFG",
+     "+ACDE",
+     "+ADFG",
+     "+BCDF",
+     "+BDEG",
+     "+ABCDG",
+     "+ABDEF",
+     "+CDEFG",
+     "+ABCEFG"
+    ],
+    "DE": [
+     "+F",
+     "+AG",
+     "+BC",
+     "+ABE",
+     "+ACD",
+     "+BDG",
+     "+CEG",
+     "+ABDF",
+     "+ACEF",
+     "+BEFG",
+     "+CDFG",
+     "+ABCFG",
+     "+ADEFG",
+     "+BCDEF",
+     "+ABCDEG"
+    ],
+    "DF": [
+     "+E",
+     "+AC",
+     "+BG",
+     "+ABF",
+     "+ADG",
+     "+BCD",
+     "+CFG",
+     "+ABDE",
+     "+AEFG",
+     "+BCEF",
+     "+CDEG",
+     "+ABCEG",
+     "+ACDEF",
+     "+BDEFG",
+     "+ABCDFG"
+    ],
+    "DG": [
+     "+C",
+     "+AE",
+     "+BF",
+     "+ABG",
+     "+ADF",
+     "+BDE",
+     "+EFG",
+     "+ABCD",
+     "+ACFG",
+     "+BCEG",
+     "+CDEF",
+     "+ABCEF",
+     "+ACDEG",
+     "+BCDFG",
+     "+ABDEFG"
+    ],
+    "EF": [
+     "+D",
+     "+AB",
+     "+CG",
+     "+ACF",
+     "+AEG",
+     "+BCE",
+     "+BFG",
+     "+ACDE",
+     "+ADFG",
+     "+BCDF",
+     "+BDEG",
+     "+ABCDG",
+     "+ABDEF",
+     "+CDEFG",
+     "+ABCEFG"
+    ],
+    "EG": [
+     "+B",
+     "+AD",
+     "+CF",
+     "+ACG",
+     "+AEF",
+     "+CDE",
+     "+DFG",
+     "+ABCE",
+     "+ABFG",
+     "+BCDG",
+     "+BDEF",
+     "+ABCDF",
+     "+ABDEG",
+     "+BCEFG",
+     "+ACDEFG"
+    ],
+    "FG": [
+     "+A",
+     "+BD",
+     "+CE",
+     "+BCG",
+     "+BEF",
+     "+CDF",
+     "+DEG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+ABCDE",
+     "+ABDFG",
+     "+ACEFG",
+     "+BCDEFG"
+    ]
+   }
+  },
+  {
+   "k": 8,
+   "generators": [
+    "G=ABCD",
+    "H=ABEF"
+   ],
+   "resolution": 5,
+   "definingRelation": [
+    "I = ABCDG",
+    "I = ABEFH",
+    "I = CDEFGH"
+   ],
+   "aliases": {
+    "A": [
+     "+BCDG",
+     "+BEFH",
+     "+ACDEFGH"
+    ],
+    "B": [
+     "+ACDG",
+     "+AEFH",
+     "+BCDEFGH"
+    ],
+    "C": [
+     "+ABDG",
+     "+DEFGH",
+     "+ABCEFH"
+    ],
+    "D": [
+     "+ABCG",
+     "+CEFGH",
+     "+ABDEFH"
+    ],
+    "E": [
+     "+ABFH",
+     "+CDFGH",
+     "+ABCDEG"
+    ],
+    "F": [
+     "+ABEH",
+     "+CDEGH",
+     "+ABCDFG"
+    ],
+    "G": [
+     "+ABCD",
+     "+CDEFH",
+     "+ABEFGH"
+    ],
+    "H": [
+     "+ABEF",
+     "+CDEFG",
+     "+ABCDGH"
+    ],
+    "AB": [
+     "+CDG",
+     "+EFH",
+     "+ABCDEFGH"
+    ],
+    "AC": [
+     "+BDG",
+     "+BCEFH",
+     "+ADEFGH"
+    ],
+    "AD": [
+     "+BCG",
+     "+BDEFH",
+     "+ACEFGH"
+    ],
+    "AE": [
+     "+BFH",
+     "+BCDEG",
+     "+ACDFGH"
+    ],
+    "AF": [
+     "+BEH",
+     "+BCDFG",
+     "+ACDEGH"
+    ],
+    "AG": [
+     "+BCD",
+     "+BEFGH",
+     "+ACDEFH"
+    ],
+    "AH": [
+     "+BEF",
+     "+BCDGH",
+     "+ACDEFG"
+    ],
+    "BC": [
+     "+ADG",
+     "+ACEFH",
+     "+BDEFGH"
+    ],
+    "BD": [
+     "+ACG",
+     "+ADEFH",
+     "+BCEFGH"
+    ],
+    "BE": [
+     "+AFH",
+     "+ACDEG",
+     "+BCDFGH"
+    ],
+    "BF": [
+     "+AEH",
+     "+ACDFG",
+     "+BCDEGH"
+    ],
+    "BG": [
+     "+ACD",
+     "+AEFGH",
+     "+BCDEFH"
+    ],
+    "BH": [
+     "+AEF",
+     "+ACDGH",
+     "+BCDEFG"
+    ],
+    "CD": [
+     "+ABG",
+     "+EFGH",
+     "+ABCDEFH"
+    ],
+    "CE": [
+     "+DFGH",
+     "+ABCFH",
+     "+ABDEG"
+    ],
+    "CF": [
+     "+DEGH",
+     "+ABCEH",
+     "+ABDFG"
+    ],
+    "CG": [
+     "+ABD",
+     "+DEFH",
+     "+ABCEFGH"
+    ],
+    "CH": [
+     "+DEFG",
+     "+ABCEF",
+     "+ABDGH"
+    ],
+    "DE": [
+     "+CFGH",
+     "+ABCEG",
+     "+ABDFH"
+    ],
+    "DF": [
+     "+CEGH",
+     "+ABCFG",
+     "+ABDEH"
+    ],
+    "DG": [
+     "+ABC",
+     "+CEFH",
+     "+ABDEFGH"
+    ],
+    "DH": [
+     "+CEFG",
+     "+ABCGH",
+     "+ABDEF"
+    ],
+    "EF": [
+     "+ABH",
+     "+CDGH",
+     "+ABCDEFG"
+    ],
+    "EG": [
+     "+CDFH",
+     "+ABCDE",
+     "+ABFGH"
+    ],
+    "EH": [
+     "+ABF",
+     "+CDFG",
+     "+ABCDEGH"
+    ],
+    "FG": [
+     "+CDEH",
+     "+ABCDF",
+     "+ABEGH"
+    ],
+    "FH": [
+     "+ABE",
+     "+CDEG",
+     "+ABCDFGH"
+    ],
+    "GH": [
+     "+CDEF",
+     "+ABCDH",
+     "+ABEFG"
+    ]
+   }
+  },
+  {
+   "k": 8,
+   "generators": [
+    "F=ABC",
+    "G=ABD",
+    "H=BCDE"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = ABCF",
+    "I = ABDG",
+    "I = CDFG",
+    "I = BCDEH",
+    "I = ADEFH",
+    "I = ACEGH",
+    "I = BEFGH"
+   ],
+   "aliases": {
+    "A": [
+     "+BCF",
+     "+BDG",
+     "+CEGH",
+     "+DEFH",
+     "+ACDFG",
+     "+ABCDEH",
+     "+ABEFGH"
+    ],
+    "B": [
+     "+ACF",
+     "+ADG",
+     "+CDEH",
+     "+EFGH",
+     "+BCDFG",
+     "+ABCEGH",
+     "+ABDEFH"
+    ],
+    "C": [
+     "+ABF",
+     "+DFG",
+     "+AEGH",
+     "+BDEH",
+     "+ABCDG",
+     "+ACDEFH",
+     "+BCEFGH"
+    ],
+    "D": [
+     "+ABG",
+     "+CFG",
+     "+AEFH",
+     "+BCEH",
+     "+ABCDF",
+     "+ACDEGH",
+     "+BDEFGH"
+    ],
+    "E": [
+     "+ACGH",
+     "+ADFH",
+     "+BCDH",
+     "+BFGH",
+     "+ABCEF",
+     "+ABDEG",
+     "+CDEFG"
+    ],
+    "F": [
+     "+ABC",
+     "+CDG",
+     "+ADEH",
+     "+BEGH",
+     "+ABDFG",
+     "+ACEFGH",
+     "+BCDEFH"
+    ],
+    "G": [
+     "+ABD",
+     "+CDF",
+     "+ACEH",
+     "+BEFH",
+     "+ABCFG",
+     "+ADEFGH",
+     "+BCDEGH"
+    ],
+    "H": [
+     "+ACEG",
+     "+ADEF",
+     "+BCDE",
+     "+BEFG",
+     "+ABCFH",
+     "+ABDGH",
+     "+CDFGH"
+    ],
+    "AB": [
+     "+CF",
+     "+DG",
+     "+ACDEH",
+     "+AEFGH",
+     "+BCEGH",
+     "+BDEFH",
+     "+ABCDFG"
+    ],
+    "AC": [
+     "+BF",
+     "+EGH",
+     "+ADFG",
+     "+BCDG",
+     "+ABDEH",
+     "+CDEFH",
+     "+ABCEFGH"
+    ],
+    "AD": [
+     "+BG",
+     "+EFH",
+     "+ACFG",
+     "+BCDF",
+     "+ABCEH",
+     "+CDEGH",
+     "+ABDEFGH"
+    ],
+    "AE": [
+     "+CGH",
+     "+DFH",
+     "+BCEF",
+     "+BDEG",
+     "+ABCDH",
+     "+ABFGH",
+     "+ACDEFG"
+    ],
+    "AF": [
+     "+BC",
+     "+DEH",
+     "+ACDG",
+     "+BDFG",
+     "+ABEGH",
+     "+CEFGH",
+     "+ABCDEFH"
+    ],
+    "AG": [
+     "+BD",
+     "+CEH",
+     "+ACDF",
+     "+BCFG",
+     "+ABEFH",
+     "+DEFGH",
+     "+ABCDEGH"
+    ],
+    "AH": [
+     "+CEG",
+     "+DEF",
+     "+BCFH",
+     "+BDGH",
+     "+ABCDE",
+     "+ABEFG",
+     "+ACDFGH"
+    ],
+    "BC": [
+     "+AF",
+     "+DEH",
+     "+ACDG",
+     "+BDFG",
+     "+ABEGH",
+     "+CEFGH",
+     "+ABCDEFH"
+    ],
+    "BD": [
+     "+AG",
+     "+CEH",
+     "+ACDF",
+     "+BCFG",
+     "+ABEFH",
+     "+DEFGH",
+     "+ABCDEGH"
+    ],
+    "BE": [
+     "+CDH",
+     "+FGH",
+     "+ACEF",
+     "+ADEG",
+     "+ABCGH",
+     "+ABDFH",
+     "+BCDEFG"
+    ],
+    "BF": [
+     "+AC",
+     "+EGH",
+     "+ADFG",
+     "+BCDG",
+     "+ABDEH",
+     "+CDEFH",
+     "+ABCEFGH"
+    ],
+    "BG": [
+     "+AD",
+     "+EFH",
+     "+ACFG",
+     "+BCDF",
+     "+ABCEH",
+     "+CDEGH",
+     "+ABDEFGH"
+    ],
+    "BH": [
+     "+CDE",
+     "+EFG",
+     "+ACFH",
+     "+ADGH",
+     "+ABCEG",
+     "+ABDEF",
+     "+BCDFGH"
+    ],
+    "CD": [
+     "+FG",
+     "+BEH",
+     "+ABCG",
+     "+ABDF",
+     "+ACEFH",
+     "+ADEGH",
+     "+BCDEFGH"
+    ],
+    "CE": [
+     "+AGH",
+     "+BDH",
+     "+ABEF",
+     "+DEFG",
+     "+ACDFH",
+     "+BCFGH",
+     "+ABCDEG"
+    ],
+    "CF": [
+     "+AB",
+     "+DG",
+     "+ACDEH",
+     "+AEFGH",
+     "+BCEGH",
+     "+BDEFH",
+     "+ABCDFG"
+    ],
+    "CG": [
+     "+DF",
+     "+AEH",
+     "+ABCD",
+     "+ABFG",
+     "+BCEFH",
+     "+BDEGH",
+     "+ACDEFGH"
+    ],
+    "CH": [
+     "+AEG",
+     "+BDE",
+     "+ABFH",
+     "+DFGH",
+     "+ACDEF",
+     "+BCEFG",
+     "+ABCDGH"
+    ],
+    "DE": [
+     "+AFH",
+     "+BCH",
+     "+ABEG",
+     "+CEFG",
+     "+ACDGH",
+     "+BDFGH",
+     "+ABCDEF"
+    ],
+    "DF": [
+     "+CG",
+     "+AEH",
+     "+ABCD",
+     "+ABFG",
+     "+BCEFH",
+     "+BDEGH",
+     "+ACDEFGH"
+    ],
+    "DG": [
+     "+AB",
+     "+CF",
+     "+ACDEH",
+     "+AEFGH",
+     "+BCEGH",
+     "+BDEFH",
+     "+ABCDFG"
+    ],
+    "DH": [
+     "+AEF",
+     "+BCE",
+     "+ABGH",
+     "+CFGH",
+     "+ACDEG",
+     "+BDEFG",
+     "+ABCDFH"
+    ],
+    "EF": [
+     "+ADH",
+     "+BGH",
+     "+ABCE",
+     "+CDEG",
+     "+ACFGH",
+     "+BCDFH",
+     "+ABDEFG"
+    ],
+    "EG": [
+     "+ACH",
+     "+BFH",
+     "+ABDE",
+     "+CDEF",
+     "+ADFGH",
+     "+BCDGH",
+     "+ABCEFG"
+    ],
+    "EH": [
+     "+ACG",
+     "+ADF",
+     "+BCD",
+     "+BFG",
+     "+ABCEFH",
+     "+ABDEGH",
+     "+CDEFGH"
+    ],
+    "FG": [
+     "+CD",
+     "+BEH",
+     "+ABCG",
+     "+ABDF",
+     "+ACEFH",
+     "+ADEGH",
+     "+BCDEFGH"
+    ],
+    "FH": [
+     "+ADE",
+     "+BEG",
+     "+ABCH",
+     "+CDGH",
+     "+ACEFG",
+     "+BCDEF",
+     "+ABDFGH"
+    ],
+    "GH": [
+     "+ACE",
+     "+BEF",
+     "+ABDH",
+     "+CDFH",
+     "+ADEFG",
+     "+BCDEG",
+     "+ABCFGH"
+    ]
+   }
+  },
+  {
+   "k": 8,
+   "generators": [
+    "E=BCD",
+    "F=ACD",
+    "G=ABC",
+    "H=ABD"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = BCDE",
+    "I = ACDF",
+    "I = ABEF",
+    "I = ABCG",
+    "I = ADEG",
+    "I = BDFG",
+    "I = CEFG",
+    "I = ABDH",
+    "I = ACEH",
+    "I = BCFH",
+    "I = DEFH",
+    "I = CDGH",
+    "I = BEGH",
+    "I = AFGH",
+    "I = ABCDEFGH"
+   ],
+   "aliases": {
+    "A": [
+     "+BCG",
+     "+BDH",
+     "+BEF",
+     "+CDF",
+     "+CEH",
+     "+DEG",
+     "+FGH",
+     "+ABCDE",
+     "+ABCFH",
+     "+ABDFG",
+     "+ABEGH",
+     "+ACDGH",
+     "+ACEFG",
+     "+ADEFH",
+     "+BCDEFGH"
+    ],
+    "B": [
+     "+ACG",
+     "+ADH",
+     "+AEF",
+     "+CDE",
+     "+CFH",
+     "+DFG",
+     "+EGH",
+     "+ABCDF",
+     "+ABCEH",
+     "+ABDEG",
+     "+ABFGH",
+     "+BCDGH",
+     "+BCEFG",
+     "+BDEFH",
+     "+ACDEFGH"
+    ],
+    "C": [
+     "+ABG",
+     "+ADF",
+     "+AEH",
+     "+BDE",
+     "+BFH",
+     "+DGH",
+     "+EFG",
+     "+ABCDH",
+     "+ABCEF",
+     "+ACDEG",
+     "+ACFGH",
+     "+BCDFG",
+     "+BCEGH",
+     "+CDEFH",
+     "+ABDEFGH"
+    ],
+    "D": [
+     "+ABH",
+     "+ACF",
+     "+AEG",
+     "+BCE",
+     "+BFG",
+     "+CGH",
+     "+EFH",
+     "+ABCDG",
+     "+ABDEF",
+     "+ACDEH",
+     "+ADFGH",
+     "+BCDFH",
+     "+BDEGH",
+     "+CDEFG",
+     "+ABCEFGH"
+    ],
+    "E": [
+     "+ABF",
+     "+ACH",
+     "+ADG",
+     "+BCD",
+     "+BGH",
+     "+CFG",
+     "+DFH",
+     "+ABCEG",
+     "+ABDEH",
+     "+ACDEF",
+     "+AEFGH",
+     "+BCEFH",
+     "+BDEFG",
+     "+CDEGH",
+     "+ABCDFGH"
+    ],
+    "F": [
+     "+ABE",
+     "+ACD",
+     "+AGH",
+     "+BCH",
+     "+BDG",
+     "+CEG",
+     "+DEH",
+     "+ABCFG",
+     "+ABDFH",
+     "+ACEFH",
+     "+ADEFG",
+     "+BCDEF",
+     "+BEFGH",
+     "+CDFGH",
+     "+ABCDEGH"
+    ],
+    "G": [
+     "+ABC",
+     "+ADE",
+     "+AFH",
+     "+BDF",
+     "+BEH",
+     "+CDH",
+     "+CEF",
+     "+ABDGH",
+     "+ABEFG",
+     "+ACDFG",
+     "+ACEGH",
+     "+BCDEG",
+     "+BCFGH",
+     "+DEFGH",
+     "+ABCDEFH"
+    ],
+    "H": [
+     "+ABD",
+     "+ACE",
+     "+AFG",
+     "+BCF",
+     "+BEG",
+     "+CDG",
+     "+DEF",
+     "+ABCGH",
+     "+ABEFH",
+     "+ACDFH",
+     "+ADEGH",
+     "+BCDEH",
+     "+BDFGH",
+     "+CEFGH",
+     "+ABCDEFG"
+    ],
+    "AB": [
+     "+CG",
+     "+DH",
+     "+EF",
+     "+ACDE",
+     "+ACFH",
+     "+ADFG",
+     "+AEGH",
+     "+BCDF",
+     "+BCEH",
+     "+BDEG",
+     "+BFGH",
+     "+ABCDGH",
+     "+ABCEFG",
+     "+ABDEFH",
+     "+CDEFGH"
+    ],
+    "AC": [
+     "+BG",
+     "+DF",
+     "+EH",
+     "+ABDE",
+     "+ABFH",
+     "+ADGH",
+     "+AEFG",
+     "+BCDH",
+     "+BCEF",
+     "+CDEG",
+     "+CFGH",
+     "+ABCDFG",
+     "+ABCEGH",
+     "+ACDEFH",
+     "+BDEFGH"
+    ],
+    "AD": [
+     "+BH",
+     "+CF",
+     "+EG",
+     "+ABCE",
+     "+ABFG",
+     "+ACGH",
+     "+AEFH",
+     "+BCDG",
+     "+BDEF",
+     "+CDEH",
+     "+DFGH",
+     "+ABCDFH",
+     "+ABDEGH",
+     "+ACDEFG",
+     "+BCEFGH"
+    ],
+    "AE": [
+     "+BF",
+     "+CH",
+     "+DG",
+     "+ABCD",
+     "+ABGH",
+     "+ACFG",
+     "+ADFH",
+     "+BCEG",
+     "+BDEH",
+     "+CDEF",
+     "+EFGH",
+     "+ABCEFH",
+     "+ABDEFG",
+     "+ACDEGH",
+     "+BCDFGH"
+    ],
+    "AF": [
+     "+BE",
+     "+CD",
+     "+GH",
+     "+ABCH",
+     "+ABDG",
+     "+ACEG",
+     "+ADEH",
+     "+BCFG",
+     "+BDFH",
+     "+CEFH",
+     "+DEFG",
+     "+ABCDEF",
+     "+ABEFGH",
+     "+ACDFGH",
+     "+BCDEGH"
+    ],
+    "AG": [
+     "+BC",
+     "+DE",
+     "+FH",
+     "+ABDF",
+     "+ABEH",
+     "+ACDH",
+     "+ACEF",
+     "+BDGH",
+     "+BEFG",
+     "+CDFG",
+     "+CEGH",
+     "+ABCDEG",
+     "+ABCFGH",
+     "+ADEFGH",
+     "+BCDEFH"
+    ],
+    "AH": [
+     "+BD",
+     "+CE",
+     "+FG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+BCGH",
+     "+BEFH",
+     "+CDFH",
+     "+DEGH",
+     "+ABCDEH",
+     "+ABDFGH",
+     "+ACEFGH",
+     "+BCDEFG"
+    ],
+    "BC": [
+     "+AG",
+     "+DE",
+     "+FH",
+     "+ABDF",
+     "+ABEH",
+     "+ACDH",
+     "+ACEF",
+     "+BDGH",
+     "+BEFG",
+     "+CDFG",
+     "+CEGH",
+     "+ABCDEG",
+     "+ABCFGH",
+     "+ADEFGH",
+     "+BCDEFH"
+    ],
+    "BD": [
+     "+AH",
+     "+CE",
+     "+FG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+BCGH",
+     "+BEFH",
+     "+CDFH",
+     "+DEGH",
+     "+ABCDEH",
+     "+ABDFGH",
+     "+ACEFGH",
+     "+BCDEFG"
+    ],
+    "BE": [
+     "+AF",
+     "+CD",
+     "+GH",
+     "+ABCH",
+     "+ABDG",
+     "+ACEG",
+     "+ADEH",
+     "+BCFG",
+     "+BDFH",
+     "+CEFH",
+     "+DEFG",
+     "+ABCDEF",
+     "+ABEFGH",
+     "+ACDFGH",
+     "+BCDEGH"
+    ],
+    "BF": [
+     "+AE",
+     "+CH",
+     "+DG",
+     "+ABCD",
+     "+ABGH",
+     "+ACFG",
+     "+ADFH",
+     "+BCEG",
+     "+BDEH",
+     "+CDEF",
+     "+EFGH",
+     "+ABCEFH",
+     "+ABDEFG",
+     "+ACDEGH",
+     "+BCDFGH"
+    ],
+    "BG": [
+     "+AC",
+     "+DF",
+     "+EH",
+     "+ABDE",
+     "+ABFH",
+     "+ADGH",
+     "+AEFG",
+     "+BCDH",
+     "+BCEF",
+     "+CDEG",
+     "+CFGH",
+     "+ABCDFG",
+     "+ABCEGH",
+     "+ACDEFH",
+     "+BDEFGH"
+    ],
+    "BH": [
+     "+AD",
+     "+CF",
+     "+EG",
+     "+ABCE",
+     "+ABFG",
+     "+ACGH",
+     "+AEFH",
+     "+BCDG",
+     "+BDEF",
+     "+CDEH",
+     "+DFGH",
+     "+ABCDFH",
+     "+ABDEGH",
+     "+ACDEFG",
+     "+BCEFGH"
+    ],
+    "CD": [
+     "+AF",
+     "+BE",
+     "+GH",
+     "+ABCH",
+     "+ABDG",
+     "+ACEG",
+     "+ADEH",
+     "+BCFG",
+     "+BDFH",
+     "+CEFH",
+     "+DEFG",
+     "+ABCDEF",
+     "+ABEFGH",
+     "+ACDFGH",
+     "+BCDEGH"
+    ],
+    "CE": [
+     "+AH",
+     "+BD",
+     "+FG",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+BCGH",
+     "+BEFH",
+     "+CDFH",
+     "+DEGH",
+     "+ABCDEH",
+     "+ABDFGH",
+     "+ACEFGH",
+     "+BCDEFG"
+    ],
+    "CF": [
+     "+AD",
+     "+BH",
+     "+EG",
+     "+ABCE",
+     "+ABFG",
+     "+ACGH",
+     "+AEFH",
+     "+BCDG",
+     "+BDEF",
+     "+CDEH",
+     "+DFGH",
+     "+ABCDFH",
+     "+ABDEGH",
+     "+ACDEFG",
+     "+BCEFGH"
+    ],
+    "CG": [
+     "+AB",
+     "+DH",
+     "+EF",
+     "+ACDE",
+     "+ACFH",
+     "+ADFG",
+     "+AEGH",
+     "+BCDF",
+     "+BCEH",
+     "+BDEG",
+     "+BFGH",
+     "+ABCDGH",
+     "+ABCEFG",
+     "+ABDEFH",
+     "+CDEFGH"
+    ],
+    "CH": [
+     "+AE",
+     "+BF",
+     "+DG",
+     "+ABCD",
+     "+ABGH",
+     "+ACFG",
+     "+ADFH",
+     "+BCEG",
+     "+BDEH",
+     "+CDEF",
+     "+EFGH",
+     "+ABCEFH",
+     "+ABDEFG",
+     "+ACDEGH",
+     "+BCDFGH"
+    ],
+    "DE": [
+     "+AG",
+     "+BC",
+     "+FH",
+     "+ABDF",
+     "+ABEH",
+     "+ACDH",
+     "+ACEF",
+     "+BDGH",
+     "+BEFG",
+     "+CDFG",
+     "+CEGH",
+     "+ABCDEG",
+     "+ABCFGH",
+     "+ADEFGH",
+     "+BCDEFH"
+    ],
+    "DF": [
+     "+AC",
+     "+BG",
+     "+EH",
+     "+ABDE",
+     "+ABFH",
+     "+ADGH",
+     "+AEFG",
+     "+BCDH",
+     "+BCEF",
+     "+CDEG",
+     "+CFGH",
+     "+ABCDFG",
+     "+ABCEGH",
+     "+ACDEFH",
+     "+BDEFGH"
+    ],
+    "DG": [
+     "+AE",
+     "+BF",
+     "+CH",
+     "+ABCD",
+     "+ABGH",
+     "+ACFG",
+     "+ADFH",
+     "+BCEG",
+     "+BDEH",
+     "+CDEF",
+     "+EFGH",
+     "+ABCEFH",
+     "+ABDEFG",
+     "+ACDEGH",
+     "+BCDFGH"
+    ],
+    "DH": [
+     "+AB",
+     "+CG",
+     "+EF",
+     "+ACDE",
+     "+ACFH",
+     "+ADFG",
+     "+AEGH",
+     "+BCDF",
+     "+BCEH",
+     "+BDEG",
+     "+BFGH",
+     "+ABCDGH",
+     "+ABCEFG",
+     "+ABDEFH",
+     "+CDEFGH"
+    ],
+    "EF": [
+     "+AB",
+     "+CG",
+     "+DH",
+     "+ACDE",
+     "+ACFH",
+     "+ADFG",
+     "+AEGH",
+     "+BCDF",
+     "+BCEH",
+     "+BDEG",
+     "+BFGH",
+     "+ABCDGH",
+     "+ABCEFG",
+     "+ABDEFH",
+     "+CDEFGH"
+    ],
+    "EG": [
+     "+AD",
+     "+BH",
+     "+CF",
+     "+ABCE",
+     "+ABFG",
+     "+ACGH",
+     "+AEFH",
+     "+BCDG",
+     "+BDEF",
+     "+CDEH",
+     "+DFGH",
+     "+ABCDFH",
+     "+ABDEGH",
+     "+ACDEFG",
+     "+BCEFGH"
+    ],
+    "EH": [
+     "+AC",
+     "+BG",
+     "+DF",
+     "+ABDE",
+     "+ABFH",
+     "+ADGH",
+     "+AEFG",
+     "+BCDH",
+     "+BCEF",
+     "+CDEG",
+     "+CFGH",
+     "+ABCDFG",
+     "+ABCEGH",
+     "+ACDEFH",
+     "+BDEFGH"
+    ],
+    "FG": [
+     "+AH",
+     "+BD",
+     "+CE",
+     "+ABCF",
+     "+ABEG",
+     "+ACDG",
+     "+ADEF",
+     "+BCGH",
+     "+BEFH",
+     "+CDFH",
+     "+DEGH",
+     "+ABCDEH",
+     "+ABDFGH",
+     "+ACEFGH",
+     "+BCDEFG"
+    ],
+    "FH": [
+     "+AG",
+     "+BC",
+     "+DE",
+     "+ABDF",
+     "+ABEH",
+     "+ACDH",
+     "+ACEF",
+     "+BDGH",
+     "+BEFG",
+     "+CDFG",
+     "+CEGH",
+     "+ABCDEG",
+     "+ABCFGH",
+     "+ADEFGH",
+     "+BCDEFH"
+    ],
+    "GH": [
+     "+AF",
+     "+BE",
+     "+CD",
+     "+ABCH",
+     "+ABDG",
+     "+ACEG",
+     "+ADEH",
+     "+BCFG",
+     "+BDFH",
+     "+CEFH",
+     "+DEFG",
+     "+ABCDEF",
+     "+ABEFGH",
+     "+ACDFGH",
+     "+BCDEGH"
+    ]
+   }
+  },
+  {
+   "k": 6,
+   "generators": [
+    "E=-ABC",
+    "F=BCD"
+   ],
+   "resolution": 4,
+   "definingRelation": [
+    "I = −ABCE",
+    "I = BCDF",
+    "I = −ADEF"
+   ],
+   "aliases": {
+    "A": [
+     "−BCE",
+     "−DEF",
+     "+ABCDF"
+    ],
+    "B": [
+     "−ACE",
+     "+CDF",
+     "−ABDEF"
+    ],
+    "C": [
+     "−ABE",
+     "+BDF",
+     "−ACDEF"
+    ],
+    "D": [
+     "−AEF",
+     "+BCF",
+     "−ABCDE"
+    ],
+    "E": [
+     "−ABC",
+     "−ADF",
+     "+BCDEF"
+    ],
+    "F": [
+     "−ADE",
+     "+BCD",
+     "−ABCEF"
+    ],
+    "AB": [
+     "−CE",
+     "+ACDF",
+     "−BDEF"
+    ],
+    "AC": [
+     "−BE",
+     "+ABDF",
+     "−CDEF"
+    ],
+    "AD": [
+     "−EF",
+     "+ABCF",
+     "−BCDE"
+    ],
+    "AE": [
+     "−BC",
+     "−DF",
+     "+ABCDEF"
+    ],
+    "AF": [
+     "−DE",
+     "+ABCD",
+     "−BCEF"
+    ],
+    "BC": [
+     "−AE",
+     "+DF",
+     "−ABCDEF"
+    ],
+    "BD": [
+     "+CF",
+     "−ABEF",
+     "−ACDE"
+    ],
+    "BE": [
+     "−AC",
+     "−ABDF",
+     "+CDEF"
+    ],
+    "BF": [
+     "+CD",
+     "−ABDE",
+     "−ACEF"
+    ],
+    "CD": [
+     "+BF",
+     "−ABDE",
+     "−ACEF"
+    ],
+    "CE": [
+     "−AB",
+     "−ACDF",
+     "+BDEF"
+    ],
+    "CF": [
+     "+BD",
+     "−ABEF",
+     "−ACDE"
+    ],
+    "DE": [
+     "−AF",
+     "−ABCD",
+     "+BCEF"
+    ],
+    "DF": [
+     "−AE",
+     "+BC",
+     "−ABCDEF"
+    ],
+    "EF": [
+     "−AD",
+     "−ABCF",
+     "+BCDE"
+    ]
+   }
+  }
+ ]
+}

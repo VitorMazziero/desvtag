@@ -1,0 +1,48 @@
+{
+  "method": "two_level_design_analysis",
+  "title": "Fatorial 2³ sem réplicas e modelo saturado (7 efeitos): só o método de Lenth indica efeitos",
+  "responseColumn": "y",
+  "spec": {
+    "kind": {
+      "type": "fullFactorial"
+    },
+    "factors": [
+      {
+        "id": "f1",
+        "name": "F1",
+        "low": 10.0,
+        "high": 18.0,
+        "unit": null
+      },
+      {
+        "id": "f2",
+        "name": "F2",
+        "low": 20.0,
+        "high": 28.0,
+        "unit": null
+      },
+      {
+        "id": "f3",
+        "name": "F3",
+        "low": 30.0,
+        "high": 38.0,
+        "unit": null
+      }
+    ],
+    "replicates": 1,
+    "centerPoints": 0,
+    "randomize": true,
+    "seed": 14
+  },
+  "terms": [
+    "A",
+    "B",
+    "C",
+    "AB",
+    "AC",
+    "BC",
+    "ABC"
+  ],
+  "alpha": 0.05,
+  "includeCurvature": false
+}
