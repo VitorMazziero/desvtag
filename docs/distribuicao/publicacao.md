@@ -1,14 +1,14 @@
 # Publicação
 
-**Estado:** **v0.3.0 publicada (versão web e release do instalador; atualização no aplicativo ainda não verificada)**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
+**Estado:** **v0.3.0 publicada (versão web e release do instalador) e atualização 0.2.0 → 0.3.0 verificada pelo usuário**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
 
-> **v0.3.0 (2026-11-02):** PR 6 fundido, etiqueta `v0.3.0`, Pages publicado e **release publicado** pelo usuário; o canal experimental foi criado automaticamente. Registro em [Publicação da v0.3.0](#registro-da-publicação-da-v030-2026-11-02).
+> **v0.3.0 (2026-11-02):** PR 6 fundido, etiqueta `v0.3.0`, Pages publicado e **release publicado** pelo usuário; o canal experimental foi criado automaticamente e a **atualização a partir da 0.2.0 foi verificada** pelo usuário. Registro em [Publicação da v0.3.0](#registro-da-publicação-da-v030-2026-11-02).
 >
 > **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
 
 ## Publicação da v0.3.0
 
-**Estado:** **publicada em 2026-11-02** (versão web, etiqueta `v0.3.0` e release do instalador); **atualização no aplicativo ainda não verificada**. O procedimento seguido está na tabela de passos abaixo; o registro, na seção seguinte.
+**Estado:** **publicada em 2026-11-02** (versão web, etiqueta `v0.3.0` e release do instalador); **atualização 0.2.0 → 0.3.0 verificada pelo usuário**. O procedimento seguido está na tabela de passos abaixo; o registro, na seção seguinte.
 
 | Passo | Quem | Observação |
 |---|---|---|
@@ -36,7 +36,8 @@
 | 22:01:24 | **Usuário publicou o release** como release normal: **Latest**, `isPrerelease = false` | `gh release view v0.3.0` |
 | 22:01:27–22:01:40 | Fluxo **Canais de atualização** rodou sozinho (evento `release`) e criou o release fixo `channel-experimental` (pré-lançamento, só com o `latest.json`) | [execução 41533596696](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41533596696) |
 | depois | **Manifestos conferidos**: `releases/download/channel-experimental/latest.json` (aplicativos 0.3) e `releases/latest/download/latest.json` (aplicativos 0.1 e 0.2) respondem **0.3.0**, com assinatura de 444 bytes e endereço do instalador que responde **200** (8 930 219 bytes); `channel-stable/latest.json` responde **404**, como esperado até a 1.0.0 | `curl` |
-| pendente | **Atualização no aplicativo 0.2.0 → 0.3.0** (instalar a 0.2.0 e usar *Verificar atualizações*) e verificação do canal experimental num aplicativo 0.3.0 instalado | **ainda não relatada pelo usuário**; registrar aqui quando feita |
+| depois da publicação | **Atualização no aplicativo 0.2.0 → 0.3.0 verificada pelo usuário** (*Verificar atualizações* no aplicativo 0.2.0 instalado encontrou e instalou a 0.3.0) | relato do usuário em 2026-11-02 («a atualização 0.2.0 → 0.3.0 no aplicativo foi verificada») |
+| opcional | No aplicativo **0.3.0** instalado, *Verificar atualizações* no canal **experimental** deve responder «você já usa a versão mais recente» (o manifesto do canal responde 0.3.0); no **estável**, «não foi possível verificar» (sem versões até a 1.0.0) | não relatado; não bloqueia |
 
 ## Canais de atualização (v0.3)
 

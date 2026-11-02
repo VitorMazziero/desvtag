@@ -33,7 +33,7 @@ Ao final da v0.4:
 
 ## 2.1 Defeitos encontrados na v0.3.0 publicada (2026-11-02)
 
-Relatados pelo usuário ao usar a v0.3.0 com um projeto real (`examples/14-meios`, não versionado). **São defeitos, não melhorias:** candidatos a uma versão de correção **v0.3.1** antes da v0.4, se o usuário decidir.
+Relatados pelo usuário ao usar a v0.3.0 com o projeto do [exemplo 14](../../examples/14-meios/README.md) (dados fictícios). **Decisão do usuário (2026-11-02): não haverá v0.3.1**; os dois defeitos são corrigidos **na v0.4, como primeiros itens da ET29** (tarefas T01 e T02), antes da reorganização da interface.
 
 | Defeito | Causa (diagnosticada) | Correção prevista |
 |---|---|---|
@@ -48,7 +48,10 @@ Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa 
 
 Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». **É a primeira etapa a executar**, antes da ET22.
 
-- **Escopo:**
+- **Primeiro, os defeitos da v0.3.0 ([§2.1](#21-defeitos-encontrados-na-v030-publicada-2026-11-02)):**
+  - **T01 — Relatório completo com a barra de seções ativa** (PDF, Word e HTML com resumo, modelo, ANOVA, figuras e otimização), com teste E2E que gera os três formatos **sem** «Mostrar todas as seções» e com o exemplo 14.
+  - **T02 — Item ativo legível no modo escuro** (token `--color-on-action`), com axe da barra de seções nos seis temas.
+- **Depois, a reorganização (T03 em diante):**
   1. **Menus em vez de blocos soltos na página.** «Histórico de versões», «Motor científico» e a área de atualização (canal e *Verificar atualizações*) saem do fluxo e vão para um menu próprio no cabeçalho (por exemplo «Sobre e atualizações»). Um menu **«Extras»** reúne as ferramentas que não fazem parte do percurso de um planejamento: a **calculadora de potência e tamanho de amostra** e o **ajuste de curvas de saturação** (Monod, Haldane, Hill), que hoje aparece na etapa de análise de um DoE e tem outro objetivo.
   2. **Percurso guiado por blocos.** Em vez de uma página longa que se desce até achar a opção, cada etapa mostra **um bloco por vez** (por exemplo: tipo de planejamento → níveis → objetivo → opções → geração), com **Voltar** e **Seguir** por bloco e um indicador lateral da etapa e do bloco atual. **Opções que dependem de uma escolha anterior só aparecem depois dela.** Quem quiser ver tudo de uma vez mantém a opção «Mostrar tudo», como na barra de seções dos resultados.
   3. **Uso do espaço lateral no computador** (web e Windows, a maioria do uso): barra lateral fixa com o percurso (etapas e blocos) à esquerda e o conteúdo ao centro, em vez de uma coluna estreita com margens vazias; em telas estreitas a barra vira um seletor no topo.

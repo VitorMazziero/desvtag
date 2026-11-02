@@ -1,6 +1,6 @@
 # Relatório de validação — v0.3.0
 
-**Estado:** **publicada em 2026-11-02** (PR 6 fundido, etiqueta `v0.3.0`, Pages e release do instalador publicados; [registro](../../../docs/distribuicao/publicacao.md#registro-da-publicação-da-v030-2026-11-02)); escopo **fechado por decisão do usuário** (o que não foi entregue vai para a [v0.4](../../../docs/planos-execucao/plano-v0.4.md)). **A atualização no aplicativo 0.2.0 → 0.3.0 ainda não foi verificada.** · **Data:** 2026-11-02
+**Estado:** **publicada em 2026-11-02** (PR 6 fundido, etiqueta `v0.3.0`, Pages e release do instalador publicados; [registro](../../../docs/distribuicao/publicacao.md#registro-da-publicação-da-v030-2026-11-02)); escopo **fechado por decisão do usuário** (o que não foi entregue vai para a [v0.4](../../../docs/planos-execucao/plano-v0.4.md)). **A atualização no aplicativo 0.2.0 → 0.3.0 foi verificada pelo usuário.** · **Data:** 2026-11-02
 
 Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente ou foi desviado do plano**. Complementa os relatórios da [v0.1.0](../v0.1.0/README.md) e da [v0.2.0](../v0.2.0/README.md), que continuam valendo para o que a v0.3 não alterou. Não declara verificação no Windows 11 (a validação foi dispensada pelo usuário), nem no Safari real, nem com conta real do Google, nem nenhum dos marcos M1–M6. A versão do código é **0.3.0** (`check-versions`); a etiqueta, o release e o Pages dependem do «go» expresso do usuário.
 
@@ -103,12 +103,13 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 | 22:01:24 | **Usuário publicou o release** como release normal: **Latest**, `isPrerelease = false` | `gh release view v0.3.0` |
 | 22:01:27–22:01:40 | Fluxo **Canais de atualização** rodou sozinho (evento `release`) e criou o release fixo `channel-experimental` (pré-lançamento, só com o `latest.json`) | [execução 41533596696](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41533596696) |
 | depois | **Manifestos conferidos**: `releases/download/channel-experimental/latest.json` (aplicativos 0.3) e `releases/latest/download/latest.json` (aplicativos 0.1 e 0.2) respondem **0.3.0**, com assinatura de 444 bytes e endereço do instalador que responde **200** (8 930 219 bytes); `channel-stable/latest.json` responde **404**, como esperado até a 1.0.0 | `curl` |
-| pendente | **Atualização no aplicativo 0.2.0 → 0.3.0** (instalar a 0.2.0 e usar *Verificar atualizações*) e verificação do canal experimental num aplicativo 0.3.0 instalado | **ainda não relatada pelo usuário**; registrar aqui quando feita |
+| depois da publicação | **Atualização no aplicativo 0.2.0 → 0.3.0 verificada pelo usuário** (*Verificar atualizações* no aplicativo 0.2.0 instalado encontrou e instalou a 0.3.0) | relato do usuário em 2026-11-02 («a atualização 0.2.0 → 0.3.0 no aplicativo foi verificada») |
+| opcional | No aplicativo **0.3.0** instalado, *Verificar atualizações* no canal **experimental** deve responder «você já usa a versão mais recente» (o manifesto do canal responde 0.3.0); no **estável**, «não foi possível verificar» (sem versões até a 1.0.0) | não relatado; não bloqueia |
 
 
 ## Pendências do usuário
 
 1. ~~Autorizar a fusão do PR 6, a etiqueta, o Pages e publicar o release~~ — **feito em 2026-11-02**.
-2. **Verificar a atualização no aplicativo 0.2.0 → 0.3.0** e, num 0.3.0 instalado, *Verificar atualizações* no canal experimental (os manifestos já respondem 0.3.0). Continuar publicando a série 0.x como releases normais.
+2. ~~Verificar a atualização 0.2.0 → 0.3.0~~ — **feito pelo usuário**. Continuar publicando a série 0.x como releases normais.
 3. Decidir sobre **domínio próprio** (PD-13), sobre o **caminho da edição simultânea** (§9 da especificação) e se há um **Mac** para verificar o Safari.
 4. Verificar o Drive com uma **conta real do Google** e abrir um relatório `.docx` no **Word**.
