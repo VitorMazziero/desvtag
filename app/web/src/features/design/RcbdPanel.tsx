@@ -1,9 +1,11 @@
 // Delineamento em blocos completos casualizados (DBC): cada bloco recebe todos os tratamentos uma
 // vez, em ordem sorteada dentro do bloco com semente registrada. A ordem vem do motor; aqui só há
 // entrada de dados. Os níveis ficam gravados nos fatores (`levelsText`).
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { nowIso } from "../../lib/ids";
+import { clampSeed, MAX_SEED, randomSeed } from "../../lib/seed";
 import type { GeneratedRcbd, RcbdSpec } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
@@ -12,12 +14,6 @@ import { freshId } from "../../state/project";
 import { splitLevels } from "../analysis/buildRequest";
 import { TableExportButtons } from "../results/TableExportButtons";
 import { collectionColumns } from "./collectionColumns";
-
-function randomSeed(): number {
-  const values = new Uint32Array(1);
-  crypto.getRandomValues(values);
-  return values[0] ?? 1;
-}
 
 export function RcbdPanel() {
   const { t } = useTranslation();
@@ -211,8 +207,9 @@ export function RcbdPanel() {
                 <input
                   type="number"
                   min={0}
+                  max={MAX_SEED}
                   value={seed}
-                  onChange={(e) => setSeed(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
+                  onChange={(e) => setSeed(clampSeed(e.target.value))}
                 />
               </label>
               <button

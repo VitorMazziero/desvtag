@@ -12,6 +12,12 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Atualização e verificação (ET14)
+
+- O aviso de atualização mostra as **notas de versão formatadas** (títulos, listas, tabelas e links https, sem HTML); o manifesto e o release trazem só a seção da versão no CHANGELOG, cortada em limite de bloco.
+- Sementes de aleatorização limitadas a 0–2⁵³ − 1 na interface ([DT-0024](docs/decisoes-tecnicas/dt-0024-sementes-no-navegador-e-pdf-sem-novas-fontes.md)).
+- Novos: [guia dos resultados](docs/guias/resultados.md), capturas PT/EN dos seis temas e verificação da versão web publicada em quatro navegadores (`app/web/tests/public`).
+
 ### Interface (ET21)
 
 - Botões com mais espaço: 16 px entre botões vizinhos e 8 px entre linhas (eram 8 px e 4 px na barra de seções); altura mínima de 40 px (36 px no botão pequeno, que era 32 px). Um teste mede as distâncias nos seis temas e em 1200 e 375 px ([DT-0023](docs/decisoes-tecnicas/dt-0023-espacamento-dos-controles-logo-unico-e-rolagem-entre-etapas.md)).

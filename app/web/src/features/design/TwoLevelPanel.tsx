@@ -1,10 +1,12 @@
 // U06 — escolha, opções e geração do planejamento de dois níveis (caminho "Planejar experimento",
 // fatores quantitativos).
 // Contagem, opções recomendadas, matriz e propriedades vêm do motor; aqui só há entrada de dados.
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { nowIso } from "../../lib/ids";
+import { clampSeed, MAX_SEED, randomSeed } from "../../lib/seed";
 import type {
   Candidate,
   DesignKind,
@@ -17,12 +19,6 @@ import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { rowsFromDesign } from "./designRows";
 import { RunMatrix } from "./RunMatrix";
-
-function randomSeed(): number {
-  const values = new Uint32Array(1);
-  crypto.getRandomValues(values);
-  return values[0] ?? 1;
-}
 
 const sameKind = (a: DesignKind, b: DesignKind) => JSON.stringify(a) === JSON.stringify(b);
 
@@ -458,8 +454,9 @@ export function TwoLevelPanel({ language }: { language: Language }) {
                 <input
                   type="number"
                   min={0}
+                  max={MAX_SEED}
                   value={seed}
-                  onChange={(e) => setSeed(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
+                  onChange={(e) => setSeed(clampSeed(e.target.value))}
                 />
               </label>
               <button

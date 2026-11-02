@@ -31,6 +31,7 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0021](dt-0021-temas-adicionais-fontes-e-logo.md) | Temas Industrial, Organic e Clay, fontes novas e logo do grupo (ET12) | Aceita | 2026-11-01 |
 | [DT-0022](dt-0022-planilha-de-coleta-e-correspondencia-de-ensaios.md) | Planilha de coleta e correspondência de ensaios (ET13) | Aceita | 2026-11-02 |
 | [DT-0023](dt-0023-espacamento-dos-controles-logo-unico-e-rolagem-entre-etapas.md) | Espaçamento dos controles, logotipo único e rolagem entre etapas (ET21) | Aceita | 2026-11-02 |
+| [DT-0024](dt-0024-sementes-no-navegador-e-pdf-sem-novas-fontes.md) | Sementes no navegador e limitações do PDF mantidas (ET14) | Aceita | 2026-11-02 |
 
 ## Regras
 

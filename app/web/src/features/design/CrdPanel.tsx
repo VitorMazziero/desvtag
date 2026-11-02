@@ -1,9 +1,11 @@
 // U06 — delineamento inteiramente casualizado (DIC) de um fator categórico (caminho "Planejar
 // experimento"). Níveis, contagem, ordem de execução e identificadores vêm do motor; aqui só há
 // entrada de dados. Os níveis ficam gravados no próprio fator (`levelsText`).
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { nowIso } from "../../lib/ids";
+import { clampSeed, MAX_SEED, randomSeed } from "../../lib/seed";
 import type { CrdSpec, GeneratedCrd } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages, issueMessage } from "../../services/errors/presentation";
@@ -11,12 +13,6 @@ import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { splitLevels } from "../analysis/buildRequest";
 import { CrdMatrix } from "./CrdMatrix";
 import { rowsFromCrd } from "./crdRows";
-
-function randomSeed(): number {
-  const values = new Uint32Array(1);
-  crypto.getRandomValues(values);
-  return values[0] ?? 1;
-}
 
 export function CrdPanel() {
   const { t } = useTranslation();
@@ -179,8 +175,9 @@ export function CrdPanel() {
                 <input
                   type="number"
                   min={0}
+                  max={MAX_SEED}
                   value={seed}
-                  onChange={(e) => setSeed(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
+                  onChange={(e) => setSeed(clampSeed(e.target.value))}
                 />
               </label>
               <button
