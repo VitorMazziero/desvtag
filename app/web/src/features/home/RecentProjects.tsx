@@ -27,8 +27,9 @@ export function RecentProjects() {
   }, [storage]);
 
   return (
-    <section className="panel" aria-labelledby="recent-title">
+    <section className="panel home-recent" aria-labelledby="recent-title">
       <h2 id="recent-title">{t("home.recentTitle")}</h2>
+      <p className="muted small">{t("home.recentHint")}</p>
       {recents.length === 0 ? (
         <p className="muted">{t("home.recentEmpty")}</p>
       ) : (

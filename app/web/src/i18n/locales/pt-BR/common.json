@@ -60,7 +60,10 @@
     },
     "recentTitle": "Projetos recentes",
     "recentEmpty": "Nenhum projeto recente. Os projetos abertos ou salvos no aplicativo para Windows aparecem aqui; no navegador, use Abrir e escolha o arquivo .enzitag.",
-    "open": "Abrir projeto"
+    "open": "Abrir projeto",
+    "startTitle": "Começar um experimento",
+    "readyHint": "Pronto: use «Avançar» para seguir com a opção escolhida.",
+    "recentHint": "Ou continue um projeto que você já salvou."
   },
   "workflow": {
     "navLabel": "Etapas do fluxo",
@@ -104,7 +107,11 @@
     "noFactors": "Nenhum fator. É possível resumir uma resposta sem fatores.",
     "noResponses": "Nenhuma resposta. Cadastre ao menos uma.",
     "factorHeading": "Fator {{n}}",
-    "responseHeading": "Resposta {{n}}"
+    "responseHeading": "Resposta {{n}}",
+    "blocks": {
+      "factors": "Fatores",
+      "responses": "Respostas"
+    }
   },
   "data": {
     "title": "Dados",
@@ -122,7 +129,11 @@
     "pasteIgnored": "{{count}} coluna(s) coladas além da última coluna da tabela foram ignoradas.",
     "cellError": "Célula com erro",
     "errorsSummary": "{{count}} célula(s) com erro. Corrija antes de analisar.",
-    "needColumns": "Cadastre fatores e respostas na etapa anterior para criar as colunas."
+    "needColumns": "Cadastre fatores e respostas na etapa anterior para criar as colunas.",
+    "blocks": {
+      "design": "Planejamento",
+      "grid": "Dados e respostas"
+    }
   },
   "analysis": {
     "title": "Análise: resumo descritivo",
@@ -562,6 +573,13 @@
       "new": "novo",
       "apply": "Usar este planejamento nos dados",
       "applied": "{{count}} ensaios novos foram para a grade de dados; a análise será de superfície de resposta (escolha os termos do modelo no resultado)."
+    },
+    "blocks": {
+      "levels": "Níveis dos fatores",
+      "goal": "Objetivo e opções",
+      "generate": "Repetições e geração",
+      "matrix": "Matriz de ensaios",
+      "nav": "Etapas do planejamento"
     }
   },
   "optimization": {
@@ -898,5 +916,12 @@
     "saturation": "Curvas de saturação (Monod, Haldane, Hill)",
     "about": "Sobre e atualizações",
     "close": "Fechar"
+  },
+  "blocks": {
+    "label": "Blocos da etapa",
+    "showAll": "Mostrar tudo",
+    "previous": "‹ Anterior",
+    "next": "Seguir ›",
+    "position": "Bloco {{n}} de {{total}}"
   }
 }

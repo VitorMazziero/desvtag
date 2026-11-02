@@ -10,7 +10,10 @@
   --gap-controls-row: var(--space-2);
   --control-height: 40px;
   --control-height-small: 36px;
-  --content-max: 1100px;
+  --content-max: 1480px;
+  /* Espaço entre blocos e seções (ET29): maior que o espaço entre controles. */
+  --space-block: 40px;
+  --sidebar-width: 15rem;
   --focus-width: 2px;
   --focus-offset: 2px;
   --text-body: 1rem;

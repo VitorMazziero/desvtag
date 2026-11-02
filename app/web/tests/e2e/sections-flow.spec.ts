@@ -23,7 +23,13 @@ const parameters = (page: Page, column: number) =>
     .nth(column)
     .textContent();
 
-test.use({ locale: "pt-BR", acceptDownloads: true });
+// Estes testes verificam o comportamento PADRÃO da barra de seções (uma seção por vez): partem do
+// armazenamento vazio, sem a preferência «mostrar tudo» que os demais testes recebem da configuração.
+test.use({
+  locale: "pt-BR",
+  acceptDownloads: true,
+  storageState: { cookies: [], origins: [] },
+});
 
 test.describe("resultados em seções", () => {
   test("barra lateral: uma seção por vez, exportação por último, teclado e mostrar tudo", async ({
@@ -114,6 +120,11 @@ test("comparação de um fator em seções: resumo primeiro, gráficos à parte 
   await page.getByRole("button", { name: "Avançar" }).click();
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Condição");
+  // Percurso guiado: as respostas ficam no bloco seguinte («Seguir»).
+  await expect(page.getByTestId("variables-blocks")).toHaveAttribute("data-mode", "guided");
+  await expect(page.getByRole("button", { name: "Adicionar resposta" })).toBeHidden();
+  await page.getByTestId("variables-blocks-next").click();
+  await expect(page.getByRole("button", { name: "Adicionar fator" })).toBeHidden();
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
   await page.getByRole("button", { name: "Avançar" }).click();

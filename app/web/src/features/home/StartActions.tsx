@@ -17,7 +17,7 @@ export function StartActions({ selected, onChoose }: Props) {
   const capabilities = info.phase === "ready" ? info.info.capabilities : null;
   return (
     <fieldset className="choice-group">
-      <legend>{t("home.title")}</legend>
+      <legend className="sr-only">{t("home.title")}</legend>
       <div className="choice-grid">
         {PATHS.map((path) => {
           const missing = missingMethods(path, capabilities);

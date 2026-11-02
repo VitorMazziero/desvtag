@@ -17,6 +17,7 @@ import type {
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
+import { GuidedBlocks } from "../blocks";
 import { rowsFromDesign } from "./designRows";
 import { RunMatrix } from "./RunMatrix";
 
@@ -245,265 +246,306 @@ export function TwoLevelPanel({ language }: { language: Language }) {
       )}
 
       {k >= 2 && (
-        <>
-          <fieldset className="editor-card">
-            <legend>{t("design.levelsTitle")}</legend>
-            {factors.map((f) => (
-              <div className="row" key={f.id}>
-                <strong>{f.name}</strong>
-                <label className="field">
-                  <span>{`${f.name} — ${t("design.low")}`}</span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    value={levels[f.id]?.low ?? ""}
-                    onChange={(e) =>
-                      setLevels({
-                        ...levels,
-                        [f.id]: { low: e.target.value, high: levels[f.id]?.high ?? "" },
-                      })
-                    }
-                  />
-                </label>
-                <label className="field">
-                  <span>{`${f.name} — ${t("design.high")}`}</span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    value={levels[f.id]?.high ?? ""}
-                    onChange={(e) =>
-                      setLevels({
-                        ...levels,
-                        [f.id]: { low: levels[f.id]?.low ?? "", high: e.target.value },
-                      })
-                    }
-                  />
-                </label>
-                {f.unit && <span className="muted small">{f.unit}</span>}
-              </div>
-            ))}
-            {!levelsValid && parsed.some((p) => p.filled) && (
-              <p role="alert" className="error">
-                {t("design.levelsInvalid")}
-              </p>
-            )}
-          </fieldset>
-
-          <fieldset className="editor-card">
-            <legend>{t("design.goal")}</legend>
-            <label className="check">
-              <input
-                type="radio"
-                name="design-goal"
-                checked={goal === "screening"}
-                onChange={() => setGoal("screening")}
-              />
-              <span>{t("design.goalScreening")}</span>
-            </label>
-            <label className="check">
-              <input
-                type="radio"
-                name="design-goal"
-                checked={goal === "surface"}
-                onChange={() => {
-                  setGoal("surface");
-                  if (centerPoints === 0) {
-                    setCenterPoints(5);
-                    setMessage(t("design.surface.centerSuggested"));
-                  }
-                }}
-              />
-              <span>{t("design.goalSurface")}</span>
-            </label>
-          </fieldset>
-
-          {goal === "screening" && (
-            <>
-              <label className="field">
-                <span>{t("design.budget")}</span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={budget}
-                  onChange={(e) => setBudget(e.target.value.replace(/[^\d]/g, ""))}
-                />
-              </label>
-              <p className="muted small">{t("design.budgetHelp")}</p>
-            </>
-          )}
-
-          {goal === "surface" && (
-            <fieldset className="editor-card" data-testid="surface-options">
-              <legend>{t("design.surface.legend", { count: k })}</legend>
-              <p className="muted small">{t("design.surface.intro")}</p>
-              {(["rotatable", "face", "custom", "boxBehnken"] as const).map((c) => (
-                <label className="check" key={c}>
-                  <input
-                    type="radio"
-                    name="surface-kind"
-                    checked={choice === c}
-                    disabled={c === "boxBehnken" && (k < 3 || k > 5)}
-                    onChange={() => setChoice(c)}
-                  />
-                  <span>{t(`design.surface.${c}`)}</span>
-                </label>
-              ))}
-              {(k < 3 || k > 5) && (
-                <p className="muted small">{t("design.surface.boxBehnkenUnavailable")}</p>
-              )}
-              {choice === "custom" && (
-                <label className="field">
-                  <span>{t("design.surface.alpha")}</span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    value={alphaText}
-                    onChange={(e) => setAlphaText(e.target.value)}
-                  />
-                </label>
-              )}
-              {choice !== "boxBehnken" && (
+        <GuidedBlocks
+          testId="twolevel-blocks"
+          label={t("design.blocks.nav")}
+          primary={false}
+          focusId={state.design ? "matrix" : undefined}
+          blocks={[
+            {
+              id: "levels",
+              title: t("design.blocks.levels"),
+              ready: levelsValid,
+              content: (
                 <>
+                  <fieldset className="editor-card">
+                    <legend>{t("design.levelsTitle")}</legend>
+                    {factors.map((f) => (
+                      <div className="row" key={f.id}>
+                        <strong>{f.name}</strong>
+                        <label className="field">
+                          <span>{`${f.name} — ${t("design.low")}`}</span>
+                          <input
+                            type="text"
+                            inputMode="decimal"
+                            value={levels[f.id]?.low ?? ""}
+                            onChange={(e) =>
+                              setLevels({
+                                ...levels,
+                                [f.id]: { low: e.target.value, high: levels[f.id]?.high ?? "" },
+                              })
+                            }
+                          />
+                        </label>
+                        <label className="field">
+                          <span>{`${f.name} — ${t("design.high")}`}</span>
+                          <input
+                            type="text"
+                            inputMode="decimal"
+                            value={levels[f.id]?.high ?? ""}
+                            onChange={(e) =>
+                              setLevels({
+                                ...levels,
+                                [f.id]: { low: levels[f.id]?.low ?? "", high: e.target.value },
+                              })
+                            }
+                          />
+                        </label>
+                        {f.unit && <span className="muted small">{f.unit}</span>}
+                      </div>
+                    ))}
+                    {!levelsValid && parsed.some((p) => p.filled) && (
+                      <p role="alert" className="error">
+                        {t("design.levelsInvalid")}
+                      </p>
+                    )}
+                  </fieldset>
+                </>
+              ),
+            },
+            {
+              id: "goal",
+              title: t("design.blocks.goal"),
+              ready: spec !== null,
+              content: (
+                <>
+                  <fieldset className="editor-card">
+                    <legend>{t("design.goal")}</legend>
+                    <label className="check">
+                      <input
+                        type="radio"
+                        name="design-goal"
+                        checked={goal === "screening"}
+                        onChange={() => setGoal("screening")}
+                      />
+                      <span>{t("design.goalScreening")}</span>
+                    </label>
+                    <label className="check">
+                      <input
+                        type="radio"
+                        name="design-goal"
+                        checked={goal === "surface"}
+                        onChange={() => {
+                          setGoal("surface");
+                          if (centerPoints === 0) {
+                            setCenterPoints(5);
+                            setMessage(t("design.surface.centerSuggested"));
+                          }
+                        }}
+                      />
+                      <span>{t("design.goalSurface")}</span>
+                    </label>
+                  </fieldset>
+
+                  {goal === "screening" && (
+                    <>
+                      <label className="field">
+                        <span>{t("design.budget")}</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          value={budget}
+                          onChange={(e) => setBudget(e.target.value.replace(/[^\d]/g, ""))}
+                        />
+                      </label>
+                      <p className="muted small">{t("design.budgetHelp")}</p>
+                    </>
+                  )}
+
+                  {goal === "surface" && (
+                    <fieldset className="editor-card" data-testid="surface-options">
+                      <legend>{t("design.surface.legend", { count: k })}</legend>
+                      <p className="muted small">{t("design.surface.intro")}</p>
+                      {(["rotatable", "face", "custom", "boxBehnken"] as const).map((c) => (
+                        <label className="check" key={c}>
+                          <input
+                            type="radio"
+                            name="surface-kind"
+                            checked={choice === c}
+                            disabled={c === "boxBehnken" && (k < 3 || k > 5)}
+                            onChange={() => setChoice(c)}
+                          />
+                          <span>{t(`design.surface.${c}`)}</span>
+                        </label>
+                      ))}
+                      {(k < 3 || k > 5) && (
+                        <p className="muted small">{t("design.surface.boxBehnkenUnavailable")}</p>
+                      )}
+                      {choice === "custom" && (
+                        <label className="field">
+                          <span>{t("design.surface.alpha")}</span>
+                          <input
+                            type="text"
+                            inputMode="decimal"
+                            value={alphaText}
+                            onChange={(e) => setAlphaText(e.target.value)}
+                          />
+                        </label>
+                      )}
+                      {choice !== "boxBehnken" && (
+                        <>
+                          <label className="check">
+                            <input
+                              type="checkbox"
+                              checked={inscribed}
+                              onChange={(e) => setInscribed(e.target.checked)}
+                            />
+                            <span>{t("design.surface.inscribed")}</span>
+                          </label>
+                          <p className="muted small">{t("design.surface.inscribedHelp")}</p>
+                          <label className="field">
+                            <span>{t("design.surface.cubeGenerators")}</span>
+                            <input
+                              type="text"
+                              value={cubeGenerators}
+                              onChange={(e) => setCubeGenerators(e.target.value)}
+                            />
+                            <small className="muted">
+                              {t("design.surface.cubeGeneratorsHelp")}
+                            </small>
+                          </label>
+                        </>
+                      )}
+                    </fieldset>
+                  )}
+
+                  {goal === "screening" && (
+                    <fieldset className="editor-card">
+                      <legend>{t("design.optionsTitle", { count: k })}</legend>
+                      {candidates.map((c) => (
+                        <label className="check" key={JSON.stringify(c.kind)}>
+                          <input
+                            type="radio"
+                            name="design-kind"
+                            checked={sameKind(kind, c.kind)}
+                            onChange={() => setKind(c.kind)}
+                          />
+                          <span>
+                            {kindLabel(c)} — {t("design.candidate", { runs: c.baseRuns })},{" "}
+                            {c.resolution === null
+                              ? t("design.noResolution")
+                              : t("design.resolution", { resolution: c.resolution })}
+                            {c.recommended && <strong> · {t("design.recommended")}</strong>}
+                            {!c.withinBudget && <em> · {t("design.overBudget")}</em>}
+                          </span>
+                        </label>
+                      ))}
+                    </fieldset>
+                  )}
+                </>
+              ),
+            },
+            {
+              id: "generate",
+              title: t("design.blocks.generate"),
+              ready: state.design !== null,
+              content: (
+                <>
+                  <div className="row">
+                    <label className="field">
+                      <span>{t("design.replicates")}</span>
+                      <input
+                        type="number"
+                        min={1}
+                        max={50}
+                        value={replicates}
+                        onChange={(e) =>
+                          setReplicates(Math.max(1, Math.floor(Number(e.target.value) || 1)))
+                        }
+                      />
+                    </label>
+                    <label className="field">
+                      <span>{t("design.centerPoints")}</span>
+                      <input
+                        type="number"
+                        min={0}
+                        max={50}
+                        value={centerPoints}
+                        onChange={(e) =>
+                          setCenterPoints(Math.max(0, Math.floor(Number(e.target.value) || 0)))
+                        }
+                      />
+                    </label>
+                  </div>
+                  <p className="muted small">{t("design.replicatesHelp")}</p>
+                  <p className="muted small">{t("design.centerHelp")}</p>
                   <label className="check">
                     <input
                       type="checkbox"
-                      checked={inscribed}
-                      onChange={(e) => setInscribed(e.target.checked)}
+                      checked={randomize}
+                      onChange={(e) => setRandomize(e.target.checked)}
                     />
-                    <span>{t("design.surface.inscribed")}</span>
+                    <span>{t("design.randomize")}</span>
                   </label>
-                  <p className="muted small">{t("design.surface.inscribedHelp")}</p>
-                  <label className="field">
-                    <span>{t("design.surface.cubeGenerators")}</span>
-                    <input
-                      type="text"
-                      value={cubeGenerators}
-                      onChange={(e) => setCubeGenerators(e.target.value)}
-                    />
-                    <small className="muted">{t("design.surface.cubeGeneratorsHelp")}</small>
-                  </label>
+                  {randomize && (
+                    <div className="row">
+                      <label className="field">
+                        <span>{t("design.seed")}</span>
+                        <input
+                          type="number"
+                          min={0}
+                          max={MAX_SEED}
+                          value={seed}
+                          onChange={(e) => setSeed(clampSeed(e.target.value))}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        className="button secondary small"
+                        onClick={() => setSeed(randomSeed())}
+                      >
+                        {t("design.newSeed")}
+                      </button>
+                    </div>
+                  )}
+                  {randomize && <p className="muted small">{t("design.seedHelp")}</p>}
+
+                  {count && (
+                    <p data-testid="run-count" role="status">
+                      {t("design.count", {
+                        total: count.total,
+                        base: count.baseRuns,
+                        replicates,
+                        centers: count.centerRuns,
+                      })}
+                    </p>
+                  )}
+                  {problems.length > 0 && (
+                    <div role="alert" className="error">
+                      {problems.map((p) => (
+                        <p key={p}>{p}</p>
+                      ))}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    className="button"
+                    disabled={!spec || count === null || busy}
+                    onClick={generate}
+                  >
+                    {state.design ? t("design.regenerate") : t("design.generate")}
+                  </button>
+                  {message && (
+                    <p role="status" className="muted" data-testid="design-generated">
+                      {message}
+                    </p>
+                  )}
                 </>
-              )}
-            </fieldset>
-          )}
-
-          {goal === "screening" && (
-            <fieldset className="editor-card">
-              <legend>{t("design.optionsTitle", { count: k })}</legend>
-              {candidates.map((c) => (
-                <label className="check" key={JSON.stringify(c.kind)}>
-                  <input
-                    type="radio"
-                    name="design-kind"
-                    checked={sameKind(kind, c.kind)}
-                    onChange={() => setKind(c.kind)}
-                  />
-                  <span>
-                    {kindLabel(c)} — {t("design.candidate", { runs: c.baseRuns })},{" "}
-                    {c.resolution === null
-                      ? t("design.noResolution")
-                      : t("design.resolution", { resolution: c.resolution })}
-                    {c.recommended && <strong> · {t("design.recommended")}</strong>}
-                    {!c.withinBudget && <em> · {t("design.overBudget")}</em>}
-                  </span>
-                </label>
-              ))}
-            </fieldset>
-          )}
-
-          <div className="row">
-            <label className="field">
-              <span>{t("design.replicates")}</span>
-              <input
-                type="number"
-                min={1}
-                max={50}
-                value={replicates}
-                onChange={(e) =>
-                  setReplicates(Math.max(1, Math.floor(Number(e.target.value) || 1)))
-                }
-              />
-            </label>
-            <label className="field">
-              <span>{t("design.centerPoints")}</span>
-              <input
-                type="number"
-                min={0}
-                max={50}
-                value={centerPoints}
-                onChange={(e) =>
-                  setCenterPoints(Math.max(0, Math.floor(Number(e.target.value) || 0)))
-                }
-              />
-            </label>
-          </div>
-          <p className="muted small">{t("design.replicatesHelp")}</p>
-          <p className="muted small">{t("design.centerHelp")}</p>
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={randomize}
-              onChange={(e) => setRandomize(e.target.checked)}
-            />
-            <span>{t("design.randomize")}</span>
-          </label>
-          {randomize && (
-            <div className="row">
-              <label className="field">
-                <span>{t("design.seed")}</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={MAX_SEED}
-                  value={seed}
-                  onChange={(e) => setSeed(clampSeed(e.target.value))}
-                />
-              </label>
-              <button
-                type="button"
-                className="button secondary small"
-                onClick={() => setSeed(randomSeed())}
-              >
-                {t("design.newSeed")}
-              </button>
-            </div>
-          )}
-          {randomize && <p className="muted small">{t("design.seedHelp")}</p>}
-
-          {count && (
-            <p data-testid="run-count" role="status">
-              {t("design.count", {
-                total: count.total,
-                base: count.baseRuns,
-                replicates,
-                centers: count.centerRuns,
-              })}
-            </p>
-          )}
-          {problems.length > 0 && (
-            <div role="alert" className="error">
-              {problems.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          )}
-          <button
-            type="button"
-            className="button"
-            disabled={!spec || count === null || busy}
-            onClick={generate}
-          >
-            {state.design ? t("design.regenerate") : t("design.generate")}
-          </button>
-          {message && (
-            <p role="status" className="muted" data-testid="design-generated">
-              {message}
-            </p>
-          )}
-        </>
+              ),
+            },
+            ...(state.design
+              ? [
+                  {
+                    id: "matrix",
+                    title: t("design.blocks.matrix"),
+                    content: <RunMatrix spec={state.design} language={language} />,
+                  },
+                ]
+              : []),
+          ]}
+        />
       )}
-
-      {state.design && <RunMatrix spec={state.design} language={language} />}
+      {k < 2 && state.design && <RunMatrix spec={state.design} language={language} />}
     </section>
   );
 }

@@ -127,7 +127,7 @@ export function DrivePanel({ actions }: { actions: Actions }) {
 
   return (
     <section className="drive-section" data-testid="drive-panel" aria-label={t("drive.title")}>
-      <h3 className="menu-heading">{t("drive.title")}</h3>
+      <p className="menu-heading">{t("drive.title")}</p>
       <p className="muted small" role="status">
         {connected ? t("drive.connected") : t("drive.notConnected")}{" "}
         {link ? t("drive.linked", { name: link.name }) : t("drive.unlinked")}

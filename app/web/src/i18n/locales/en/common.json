@@ -60,7 +60,10 @@
     },
     "recentTitle": "Recent projects",
     "recentEmpty": "No recent projects. Projects opened or saved in the Windows app appear here; in the browser, use Open and choose the .enzitag file.",
-    "open": "Open project"
+    "open": "Open project",
+    "startTitle": "Start an experiment",
+    "readyHint": "Ready: use “Next” to continue with the chosen option.",
+    "recentHint": "Or continue a project you already saved."
   },
   "workflow": {
     "navLabel": "Workflow steps",
@@ -104,7 +107,11 @@
     "noFactors": "No factors. You can summarize a response without factors.",
     "noResponses": "No responses. Add at least one.",
     "factorHeading": "Factor {{n}}",
-    "responseHeading": "Response {{n}}"
+    "responseHeading": "Response {{n}}",
+    "blocks": {
+      "factors": "Factors",
+      "responses": "Responses"
+    }
   },
   "data": {
     "title": "Data",
@@ -122,7 +129,11 @@
     "pasteIgnored": "{{count}} pasted column(s) beyond the last table column were ignored.",
     "cellError": "Cell with an error",
     "errorsSummary": "{{count}} cell(s) with errors. Fix them before analyzing.",
-    "needColumns": "Add factors and responses in the previous step to create the columns."
+    "needColumns": "Add factors and responses in the previous step to create the columns.",
+    "blocks": {
+      "design": "Design",
+      "grid": "Data and responses"
+    }
   },
   "analysis": {
     "title": "Analysis: descriptive summary",
@@ -562,6 +573,13 @@
       "new": "new",
       "apply": "Use this design in the data",
       "applied": "{{count}} new runs went to the data grid; the analysis will be a response surface (choose the model terms in the result)."
+    },
+    "blocks": {
+      "levels": "Factor levels",
+      "goal": "Goal and options",
+      "generate": "Repeats and generation",
+      "matrix": "Run matrix",
+      "nav": "Design steps"
     }
   },
   "optimization": {
@@ -898,5 +916,12 @@
     "saturation": "Saturation curves (Monod, Haldane, Hill)",
     "about": "About and updates",
     "close": "Close"
+  },
+  "blocks": {
+    "label": "Step blocks",
+    "showAll": "Show everything",
+    "previous": "‹ Previous",
+    "next": "Next ›",
+    "position": "Block {{n}} of {{total}}"
   }
 }

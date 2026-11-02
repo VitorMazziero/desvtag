@@ -121,6 +121,7 @@
 .menu-heading {
   margin: 0 0 var(--space-1);
   font-size: 1rem;
+  font-weight: 700;
 }
 .drive-section {
   margin-top: var(--space-3);
@@ -275,17 +276,169 @@
 .small {
   font-size: var(--text-small);
 }
+[hidden] {
+  display: none !important;
+}
+/* Percurso no computador (ET29): barra lateral das etapas à esquerda e o conteúdo ao lado, em vez
+   de uma coluna estreita com margens vazias. Em telas estreitas a barra volta ao topo. */
 .workflow {
   display: grid;
-  gap: var(--space-4);
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  grid-template-areas:
+    "nav body"
+    "nav actions"
+    "nav note";
+  gap: var(--space-4) var(--space-5);
+  align-items: start;
+}
+.workflow > nav {
+  grid-area: nav;
+  position: sticky;
+  top: var(--space-3);
+}
+.workflow > .step-body {
+  grid-area: body;
+}
+.workflow > .step-actions {
+  grid-area: actions;
+}
+.workflow > p[role="status"] {
+  grid-area: note;
 }
 .steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-controls-row) var(--gap-controls);
+  display: grid;
+  gap: var(--gap-controls-row);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.steps .step {
+  width: 100%;
+  justify-content: flex-start;
+}
+@media (max-width: 1000px) {
+  .workflow {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "nav"
+      "body"
+      "actions"
+      "note";
+  }
+  .workflow > nav {
+    position: static;
+  }
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-controls-row) var(--gap-controls);
+  }
+  .steps .step {
+    width: auto;
+  }
+}
+/* Percurso guiado por blocos (ET29). */
+.guided {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr);
+  gap: var(--space-4) var(--space-5);
+  align-items: start;
+}
+.guided[data-mode="single"] {
+  display: block;
+}
+.guided-nav {
+  position: sticky;
+  top: var(--space-3);
+  display: grid;
+  gap: var(--space-3);
+}
+.guided-nav ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--gap-controls-row);
+}
+.guided-step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  font: inherit;
+  font-size: var(--text-small);
+  text-align: left;
+  color: var(--color-ink);
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+.guided-step:disabled {
+  color: var(--color-ink-secondary);
+  background: transparent;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+.guided-step[aria-current="step"] {
+  border: 2px solid var(--color-action);
+  font-weight: 600;
+}
+.guided-body {
+  display: grid;
+  gap: var(--space-block);
+  min-width: 0;
+}
+.guided-block {
+  display: grid;
+  gap: var(--space-block);
+}
+.guided-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.guided-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap-controls);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+}
+.guided.inner {
+  grid-template-columns: minmax(0, 1fr);
+}
+.guided.inner .guided-nav {
+  position: static;
+}
+.guided.inner .guided-nav ol {
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: var(--gap-controls-row) var(--gap-controls);
+  overflow-x: auto;
+}
+.guided.inner .guided-step {
+  width: auto;
+}
+@media (max-width: 900px) {
+  .guided {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .guided-nav {
+    position: static;
+  }
+  .guided-nav ol {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: var(--gap-controls-row) var(--gap-controls);
+    overflow-x: auto;
+  }
+  .guided-step {
+    width: auto;
+  }
 }
 .step {
   display: inline-flex;
@@ -322,7 +475,7 @@
 }
 .step-body {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-block);
 }
 .step-body h2 {
   font-size: 1.5rem;
@@ -388,6 +541,35 @@
   font-family: var(--font-display);
   font-size: 1.5rem;
   margin-bottom: var(--space-3);
+}
+/* Tela inicial (ET29): começar um experimento à esquerda; abrir um projeto existente à direita. */
+.home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(16rem, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+.home-start h2,
+.home-recent h2 {
+  margin-bottom: var(--space-2);
+}
+.home-next {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+}
+.home-recent {
+  background: var(--color-panel);
+}
+@media (max-width: 900px) {
+  .home-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .choice-grid {
   display: grid;
