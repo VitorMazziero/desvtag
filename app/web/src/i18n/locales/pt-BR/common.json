@@ -722,5 +722,46 @@
       "min": "mínimo",
       "max": "máximo"
     }
+  },
+  "repeated": {
+    "title": "Medidas repetidas, pareados e modelos mistos",
+    "intro": "Para dados que não são independentes: a mesma unidade medida em duas condições (pareados) ou várias vezes (medidas repetidas, lotes, dias). As duas ferramentas usam a coluna «Unidade» da grade de dados. Os resultados são calculados ao pedir e não são guardados no projeto.",
+    "needUnits": "Nenhuma linha tem unidade experimental informada. Mostre a coluna «Unidade» e preencha-a (por exemplo, o identificador do indivíduo ou do lote).",
+    "showUnitColumn": "Mostrar a coluna «Unidade» na grade",
+    "response": "Resposta",
+    "paired": {
+      "title": "Comparação pareada (duas condições)",
+      "needTwoLevels": "Precisa de um fator categórico com exatamente dois níveis nos dados.",
+      "factor": "Fator com as duas condições",
+      "run": "Comparar pares",
+      "noPairs": "Nenhuma unidade tem as duas condições com resposta. Informe a unidade experimental de cada linha.",
+      "incomplete": "Unidades fora do teste por terem só uma das condições: {{units}}.",
+      "duplicated": "Unidades fora do teste por terem mais de uma observação no mesmo nível: {{units}}.",
+      "withoutUnit": "{{count}} linha(s) sem unidade foram ignoradas.",
+      "result": "{{n}} pares",
+      "meanDiff": "Diferença média (1.ª − 2.ª condição)",
+      "sd": "Desvio-padrão das diferenças",
+      "ci": "Intervalo de confiança da diferença",
+      "wilcoxon": "Wilcoxon (postos sinalizados)",
+      "method": {
+        "exact": "valor-p exato",
+        "normalApproximation": "aproximação normal"
+      },
+      "note": "O t pareado supõe diferenças aproximadamente normais; o Wilcoxon descarta diferenças nulas e usa postos médios nos empates."
+    },
+    "mixed": {
+      "title": "Modelo misto (intercepto aleatório por unidade)",
+      "fixed": "Efeitos fixos",
+      "run": "Ajustar modelo misto",
+      "result": "{{n}} observações em {{g}} unidades",
+      "term": "Termo",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "df": "GL (Satterthwaite)",
+      "varianceUnit": "Variância entre unidades",
+      "varianceResidual": "variância residual",
+      "boundary": "A variância entre unidades é zero (fronteira): o modelo é equivalente ao sem efeito aleatório e os graus de liberdade são os do resíduo.",
+      "note": "Estimação por REML com simetria composta (todas as medidas da mesma unidade com a mesma correlação). Estruturas AR(1) e não estruturada ainda não estão disponíveis."
+    }
   }
 }

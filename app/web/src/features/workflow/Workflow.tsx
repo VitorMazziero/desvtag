@@ -4,6 +4,7 @@ import type { Language } from "../../i18n";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { AnalysisSetup, buildDataset } from "../analysis";
 import { MixtureAnalysis } from "../analysis/MixtureAnalysis";
+import { RepeatedMeasures } from "../analysis/RepeatedMeasures";
 import { DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
@@ -131,7 +132,10 @@ export function Workflow({ language }: { language: Language }) {
         )}
         {step === "analysis" && state.mixture !== null && <MixtureAnalysis language={language} />}
         {step === "analysis" && state.mixture === null && (
-          <AnalysisSetup onDone={() => setStep("results")} />
+          <>
+            <AnalysisSetup onDone={() => setStep("results")} />
+            <RepeatedMeasures language={language} />
+          </>
         )}
         {step === "results" && state.mixture !== null && <MixtureAnalysis language={language} />}
         {step === "results" && state.mixture === null && (

@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** (pareados e modelo misto de simetria composta entregues; AR(1) e não estruturada pendentes) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F08 (comparações pareadas), F09d (mistos), F09e (medidas repetidas) |
 | Marco | Prepara M4 |
 | Depende de | ET14 |
 | Módulos | C14 (`models/{mixed,repeated_measures}.rs`), C03 (otimização numérica, Cholesky), C04 (t e F aproximados), C07, C09 (comparações), C01 (unidade experimental e tempo), U03, U07, U08, U09 |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -47,14 +47,14 @@ Analisar dados em que as observações **não são independentes**: amostras par
 
 ## 5. Tarefas
 
-- [ ] **T01** — Especificações (`docs/metodos/comparacoes-pareadas.md`, `modelos-mistos.md`, `medidas-repetidas.md`) e DTs.
-- [ ] **T02** — Núcleo: t pareado e Wilcoxon (com empates e zeros documentados); casos SciPy.
-- [ ] **T03** — Núcleo: REML/ML, componentes de variância, fronteira, não convergência explícita; casos statsmodels/R.
-- [ ] **T04** — Núcleo: graus de liberdade aprovados, testes de efeitos fixos, médias marginais e comparações.
-- [ ] **T05** — Núcleo: estruturas de covariância das medidas repetidas e faltantes.
-- [ ] **T06** — Operações do motor, contratos e paridade.
-- [ ] **T07** — Projeto e interface: papéis «unidade» e «tempo», configuração da análise, resultados em seções (componentes de variância, testes, médias, perfis ao longo do tempo), figuras e exportação; PT/EN, temas, axe.
-- [ ] **T08** — Exemplos sintéticos (lotes, cinética de atividade enzimática ao longo do tempo), E2E, verificação nativa e documentação.
+- [x] **T01** — Especificações [`comparacoes-pareadas.md`](../../metodos/comparacoes-pareadas.md) e [`modelos-mistos.md`](../../metodos/modelos-mistos.md) (a de medidas repetidas está no modelo misto de simetria composta). *DTs separadas não escritas: Satterthwaite e REML por grade + seção áurea estão registrados nas especificações.*
+- [x] **T02** — `comparisons/paired.rs`: t pareado, intervalo, `d_z`, Wilcoxon exato e aproximado (zeros e empates); 4 casos SciPy.
+- [x] **T03** — `models/mixed.rs`: REML do intercepto aleatório com busca em grade e seção áurea, componentes de variância, fronteira explícita, BLUPs; 4 casos (statsmodels, ANOVA de medidas repetidas, OLS na fronteira). *Não convergência não ocorre: o perfil é unidimensional e a fronteira é tratada.*
+- [~] **T04** — Satterthwaite por coeficiente (validado) entregue; **testes F de vários graus de liberdade, médias marginais e comparações a partir do modelo misto pendentes**.
+- [ ] **T05** — **Pendente:** AR(1) e covariância não estruturada nas medidas repetidas (só simetria composta foi entregue).
+- [x] **T06** — Operações `comparisonPaired` e `modelMixed`, contratos gerados e paridade WebAssembly (pareados).
+- [~] **T07** — Interface `RepeatedMeasures` (pareamento por unidade, modelo misto com coluna «Unidade» da grade; PT/EN) entregue; **papéis de coluna «unidade» e «tempo» como tipos próprios, resultados em seções, figuras de perfis e guarda no projeto pendentes** (o resultado é calculado ao pedir).
+- [~] **T08** — E2E (`methods-flow.spec.ts`: 6 indivíduos × 2 condições, t pareado, Wilcoxon exato e modelo misto com gl 5) feito; exemplos sintéticos em `examples/` e verificação nativa pendentes.
 
 ## 6. Entregas
 
@@ -88,6 +88,7 @@ Especificações, DTs, mapa de módulos (C14), fichas U03/U07/U08, matriz de cob
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Etapa não iniciada. |
+| 2026-11-02 | **Ativada.** Entregues: comparações pareadas e modelo misto com intercepto aleatório (REML, Satterthwaite), validados contra SciPy, statsmodels, ANOVA de medidas repetidas e OLS; interface e E2E. **Pendentes:** AR(1) e não estruturada, testes F multi-gl, resultados guardados no projeto, exemplos e verificação nativa. |
 
 ## 12. Desvios e descobertas
 

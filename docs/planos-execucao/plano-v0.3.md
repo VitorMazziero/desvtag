@@ -35,7 +35,7 @@ Ao final da v0.3:
 | Níveis mistos | F09a | [ET15](ativos/et15-niveis-mistos-e-misturas.md) |
 | Misturas | F09b | ET15 |
 | Ótimos e sujeitos a restrições, ampliação sequencial | F09c | [ET16](ativos/et16-planejamentos-otimos-e-restritos.md) |
-| Modelos mistos | F09d | [ET17](planejados/et17-modelos-mistos-e-medidas-repetidas.md) |
+| Modelos mistos | F09d | [ET17](ativos/et17-modelos-mistos-e-medidas-repetidas.md) |
 | Comparações pareadas (amostras dependentes) e medidas repetidas | F08/F09e | ET17 |
 | Ajuste não linear (Monod) | F09f | [ET18](planejados/et18-nao-linear-e-potencia.md) |
 | Potência e planejamento da precisão | F09g | ET18 |
@@ -62,7 +62,7 @@ Ao final da v0.3:
 | [ET14](ativos/et14-itens-adiados-v01-v02.md) | Itens adiados da v0.1 e da v0.2 | F05, F10, F12, F13 | ET13 (ordem); publicação da v0.2 (T01) | Atualização verificada, seleção em dois níveis, capturas EN, guia de resultados |
 | [ET15](ativos/et15-niveis-mistos-e-misturas.md) | Níveis mistos e misturas | F09a, F09b | ET14 | Geração e análise com referência independente |
 | [ET16](ativos/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |
-| [ET17](planejados/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
+| [ET17](ativos/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
 | [ET18](planejados/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
@@ -79,7 +79,7 @@ Ao final da v0.3:
 | ET14 Itens adiados | **Em andamento** (T01, T04–T07 e T09 feitas) | T02 (depende do usuário: capturas do Protimiza) e T03 (seleção de modelos para efeitos de dois níveis) |
 | ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos e misturas feitos e validados) | Limites superiores, otimização no simplex, guarda da análise de misturas no projeto, exemplos; estimabilidade em fracionários de níveis mistos |
 | ET16 Planejamentos ótimos | **Em andamento** (D e I-ótimos, restrições e ampliação entregues e validados) | Exemplo, verificação nativa, blocos na ampliação, gráfico de variância de predição |
-| ET17 Modelos mistos e medidas repetidas | Planejada | tudo |
+| ET17 Modelos mistos e medidas repetidas | **Em andamento** (pareados e modelo misto de simetria composta entregues e validados) | AR(1) e não estruturada, testes F multi-gl, resultados guardados no projeto, exemplos |
 | ET18 Monod e potência | Planejada | tudo |
 | ET19 Google Drive | Planejada | credenciais OAuth do usuário (PD-09) e tudo |
 | ET20 DOCX, comentários, Safari, domínio, canais | Planejada | tudo |

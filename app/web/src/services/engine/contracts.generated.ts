@@ -2461,6 +2461,43 @@ implementation: Implementation,
 validation: Validation, };
 
 /**
+ * Coeficiente dos efeitos fixos.
+ */
+export type MixedCoefficient = { 
+/**
+ * Rótulo da coluna.
+ */
+label: string, 
+/**
+ * Estimativa.
+ */
+estimate: number, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Graus de liberdade (Satterthwaite).
+ */
+df: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, };
+
+/**
  * Um fator do planejamento, com seus níveis nomeados.
  */
 export type MixedFactor = { 
@@ -2476,6 +2513,72 @@ name: string,
  * Níveis, na ordem em que foram digitados.
  */
 levels: Array<string>, };
+
+/**
+ * Solicitação: dados (com a unidade experimental de cada observação) e efeitos fixos.
+ */
+export type MixedModelRequest = { 
+/**
+ * Dados; toda observação usada precisa ter `unit_id`.
+ */
+dataset: Dataset, 
+/**
+ * Resposta, termos dos efeitos fixos, codificação e nível de confiança.
+ */
+spec: ModelSpec, };
+
+/**
+ * Resultado do ajuste.
+ */
+export type MixedModelResult = { 
+/**
+ * Observações usadas.
+ */
+nObservations: number, 
+/**
+ * Unidades (grupos).
+ */
+nGroups: number, 
+/**
+ * Efeitos fixos.
+ */
+coefficients: Array<MixedCoefficient>, 
+/**
+ * Variância entre unidades `σᵤ²`.
+ */
+varianceUnit: Stat, 
+/**
+ * Variância residual `σₑ²`.
+ */
+varianceResidual: Stat, 
+/**
+ * Correlação intraclasse `σᵤ²/(σᵤ² + σₑ²)`.
+ */
+icc: Stat, 
+/**
+ * `σᵤ²` na fronteira (zero): o modelo se reduz ao sem efeito aleatório.
+ */
+boundary: boolean, 
+/**
+ * Valor do REML perfilado (sem constantes) no ótimo.
+ */
+remlProfile: number, 
+/**
+ * Efeitos aleatórios previstos.
+ */
+randomEffects: Array<RandomEffect>, 
+/**
+ * Observações fora do ajuste.
+ */
+excluded: Array<ExcludedObservation>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
 
 /**
  * Um ensaio do planejamento.
@@ -2983,12 +3086,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designOptimalGenerate" } & OptimalSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designOptimalGenerate" } & OptimalSpec | { "type": "comparisonPaired" } & PairedRequest | { "type": "modelMixed" } & MixedModelRequest | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designOptimalGenerate" } & GeneratedOptimal | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designOptimalGenerate" } & GeneratedOptimal | { "type": "comparisonPaired" } & PairedResult | { "type": "modelMixed" } & MixedModelResult | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Critério de otimalidade.
@@ -3346,6 +3449,97 @@ ciUpper: Stat,
 significant: boolean | null, };
 
 /**
+ * Pares de observações.
+ */
+export type PairedRequest = { 
+/**
+ * Primeira condição (uma observação por par).
+ */
+first: Array<number>, 
+/**
+ * Segunda condição (mesma ordem de pares).
+ */
+second: Array<number>, 
+/**
+ * Nível de significância (`1 − α` de confiança).
+ */
+alpha: number, };
+
+/**
+ * Resultado da comparação pareada.
+ */
+export type PairedResult = { 
+/**
+ * Pares.
+ */
+n: number, 
+/**
+ * Média da primeira condição.
+ */
+meanFirst: number, 
+/**
+ * Média da segunda condição.
+ */
+meanSecond: number, 
+/**
+ * Teste t pareado.
+ */
+tTest: PairedT, 
+/**
+ * Teste de Wilcoxon (indefinido se todas as diferenças forem nulas).
+ */
+wilcoxon: Wilcoxon | null, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Teste t pareado.
+ */
+export type PairedT = { 
+/**
+ * Média das diferenças `primeiro − segundo`.
+ */
+meanDifference: Stat, 
+/**
+ * Desvio-padrão das diferenças.
+ */
+sdDifference: Stat, 
+/**
+ * Erro-padrão da média das diferenças.
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+t: Stat, 
+/**
+ * Graus de liberdade (`n − 1`).
+ */
+df: number, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, 
+/**
+ * Tamanho de efeito `d_z = d̄/s_d`.
+ */
+effectSize: Stat, };
+
+/**
  * Ajuste das comparações entre médias marginais.
  */
 export type PairwiseAdjustment = "tukey" | "none" | "bonferroni" | "holm";
@@ -3686,6 +3880,23 @@ theoretical: number,
  * Resíduo padronizado ordenado.
  */
 sample: number, };
+
+/**
+ * Efeito aleatório previsto (BLUP) de uma unidade.
+ */
+export type RandomEffect = { 
+/**
+ * Unidade experimental.
+ */
+unit: string, 
+/**
+ * Observações da unidade usadas no ajuste.
+ */
+observations: number, 
+/**
+ * Efeito previsto.
+ */
+blup: number, };
 
 /**
  * Um ensaio.
@@ -4465,3 +4676,40 @@ export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations"
  * Situação da validação numérica.
  */
 export type Validation = "notValidated" | "numericallyValidated" | "validated";
+
+/**
+ * Teste dos postos sinalizados de Wilcoxon.
+ */
+export type Wilcoxon = { 
+/**
+ * Pares com diferença não nula (usados no teste).
+ */
+nUsed: number, 
+/**
+ * Pares com diferença nula (descartados).
+ */
+nZero: number, 
+/**
+ * Soma dos postos das diferenças positivas.
+ */
+wPlus: number, 
+/**
+ * Soma dos postos das diferenças negativas.
+ */
+wMinus: number, 
+/**
+ * Estatística `mín(W₊, W₋)`.
+ */
+statistic: number, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * `exact` ou `normalApproximation`.
+ */
+method: string, 
+/**
+ * Há empates entre os valores absolutos das diferenças.
+ */
+hasTies: boolean, };

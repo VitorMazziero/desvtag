@@ -325,6 +325,43 @@ test("planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados
   await expect(page.getByLabel("pH — Obs. 1")).not.toHaveValue("");
 });
 
+test("medidas repetidas: unidades, t pareado, Wilcoxon e modelo misto com intercepto aleatório", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await startCompare(page, ["Condição"]);
+  // «Unidade experimental» é uma coluna opcional da grade (opções avançadas da etapa de dados).
+  await page.getByText("Opções avançadas").click();
+  await page.getByLabel("Mostrar a coluna de unidade experimental").check();
+  const before = [10.1, 11.2, 9.8, 12.5, 10.9, 11.7];
+  const delta = [1.2, 0.8, 1.5, 1.1, 0.9, 1.4];
+  const lines = before.flatMap((b, i) => [
+    `S${i + 1}	Antes	${String(b).replace(".", ",")}`,
+    `S${i + 1}	Depois	${String(Math.round((b + (delta[i] ?? 0)) * 10) / 10).replace(".", ",")}`,
+  ]);
+  await paste(page, "Unidade experimental — Obs. 1", lines.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  const panel = page.getByTestId("repeated-measures");
+  await panel.getByText("Medidas repetidas, pareados e modelos mistos").click();
+  await expect(panel.getByTestId("repeated-need-units")).toHaveCount(0);
+  await panel.getByRole("button", { name: "Comparar pares" }).click();
+  const paired = page.getByTestId("paired-result");
+  await expect(paired).toContainText("6 pares");
+  await expect(paired).toContainText("-1,15");
+  await expect(page.getByTestId("paired-p")).not.toHaveText("—");
+  await expect(page.getByTestId("wilcoxon-p")).toContainText("0,03125"); // 2/64, exato
+
+  await panel.getByRole("button", { name: "Ajustar modelo misto" }).click();
+  const coefficients = page.getByTestId("mixed-coefficients");
+  await expect(coefficients.locator("tbody tr")).toHaveCount(2); // intercepto e Depois
+  await expect(coefficients).toContainText("Depois");
+  await expect(page.getByTestId("variance-components")).toContainText("ICC");
+  // Dados balanceados: os graus de liberdade do efeito de condição são (2−1)(6−1) = 5.
+  const df = await coefficients.locator("tbody tr").nth(1).locator("td").nth(2).textContent();
+  expect(Number((df ?? "").replace(",", "."))).toBeCloseTo(5, 1);
+});
+
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
   page,
 }) => {

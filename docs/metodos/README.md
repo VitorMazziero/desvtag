@@ -40,6 +40,8 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Fatorial completo de níveis mistos](niveis-mistos.md) | implementado; validado contra implementação independente (nativo e WebAssembly) |
 | [Misturas e modelos de Scheffé](misturas.md) | implementado; validado contra implementação independente e statsmodels (nativo e WebAssembly) |
 | [Planejamentos D e I-ótimos](planejamentos-otimos.md) | implementado; validado contra NumPy e busca exaustiva (nativo e WebAssembly) |
+| [Comparação pareada (t e Wilcoxon)](comparacoes-pareadas.md) | implementado; validado contra o SciPy (nativo e WebAssembly) |
+| [Modelo misto (intercepto aleatório)](modelos-mistos.md) | implementado; validado contra statsmodels e ANOVA de medidas repetidas (nativo e WebAssembly) |
 | [Seleção e comparação de modelos de superfície](selecao-de-modelos.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Composto central](composto-central.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Box–Behnken](box-behnken.md) | implementado (3 a 5 fatores); validado numericamente |

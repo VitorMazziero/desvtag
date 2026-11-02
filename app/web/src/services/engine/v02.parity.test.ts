@@ -228,4 +228,22 @@ describe("v0.2 operations in WebAssembly", () => {
       );
     }
   });
+  it("paired comparison (WebAssembly) equals SciPy", () => {
+    const cases = read("paired_comparison/paired.json").cases as Json[];
+    for (const c of cases) {
+      const got = call({
+        type: "comparisonPaired",
+        first: c.first,
+        second: c.second,
+        alpha: 0.05,
+      });
+      const val = (s: Json) => (s.status === "defined" ? s.value : Number.NaN);
+      expect(Math.abs(val(got.tTest.t) - c.expected.t)).toBeLessThan(
+        1e-9 * (1 + Math.abs(c.expected.t)),
+      );
+      expect(Math.abs(val(got.tTest.pValue) - c.expected.p)).toBeLessThan(1e-9);
+      expect(got.wilcoxon.method).toBe(c.expected.wilcoxon.method);
+      expect(Math.abs(val(got.wilcoxon.pValue) - c.expected.wilcoxon.p)).toBeLessThan(1e-9);
+    }
+  });
 });

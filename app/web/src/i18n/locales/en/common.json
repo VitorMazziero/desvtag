@@ -722,5 +722,46 @@
       "min": "minimum",
       "max": "maximum"
     }
+  },
+  "repeated": {
+    "title": "Repeated measures, paired data and mixed models",
+    "intro": "For data that are not independent: the same unit measured under two conditions (paired) or several times (repeated measures, lots, days). Both tools use the «Unit» column of the data grid. Results are computed on request and are not stored in the project.",
+    "needUnits": "No row has an experimental unit. Show the «Unit» column and fill it in (for example, the subject or lot identifier).",
+    "showUnitColumn": "Show the «Unit» column in the grid",
+    "response": "Response",
+    "paired": {
+      "title": "Paired comparison (two conditions)",
+      "needTwoLevels": "Needs a categorical factor with exactly two levels in the data.",
+      "factor": "Factor with the two conditions",
+      "run": "Compare pairs",
+      "noPairs": "No unit has both conditions with a response. Enter the experimental unit of each row.",
+      "incomplete": "Units left out because they have only one of the conditions: {{units}}.",
+      "duplicated": "Units left out because they have more than one observation at the same level: {{units}}.",
+      "withoutUnit": "{{count}} row(s) without a unit were ignored.",
+      "result": "{{n}} pairs",
+      "meanDiff": "Mean difference (1st − 2nd condition)",
+      "sd": "Standard deviation of the differences",
+      "ci": "Confidence interval of the difference",
+      "wilcoxon": "Wilcoxon (signed ranks)",
+      "method": {
+        "exact": "exact p-value",
+        "normalApproximation": "normal approximation"
+      },
+      "note": "The paired t assumes roughly normal differences; Wilcoxon drops zero differences and uses mid-ranks for ties."
+    },
+    "mixed": {
+      "title": "Mixed model (random intercept per unit)",
+      "fixed": "Fixed effects",
+      "run": "Fit mixed model",
+      "result": "{{n}} observations in {{g}} units",
+      "term": "Term",
+      "estimate": "Estimate",
+      "se": "Std. error",
+      "df": "DF (Satterthwaite)",
+      "varianceUnit": "Between-unit variance",
+      "varianceResidual": "residual variance",
+      "boundary": "The between-unit variance is zero (boundary): the model is equivalent to one without the random effect and the degrees of freedom are the residual ones.",
+      "note": "REML estimation with compound symmetry (all measures of a unit share the same correlation). AR(1) and unstructured covariances are not available yet."
+    }
   }
 }

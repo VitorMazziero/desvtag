@@ -12,6 +12,11 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Medidas repetidas e modelos mistos (ET17)
+
+- **Comparação pareada**: t pareado (intervalo e `d_z`) e **Wilcoxon** (exato ou aproximação normal com correção de empates), validados contra o SciPy. Os pares vêm da unidade experimental; unidades incompletas são listadas, nunca imputadas. [Método](docs/metodos/comparacoes-pareadas.md).
+- **Modelo linear misto** com intercepto aleatório por unidade (simetria composta), por **REML**, com componentes de variância, ICC, BLUPs e graus de liberdade de **Satterthwaite**; validado contra `statsmodels`, contra uma implementação independente do Satterthwaite e contra a ANOVA de medidas repetidas (graus de liberdade exatos nos balanceados). [Método](docs/metodos/modelos-mistos.md). **Sem** AR(1), covariância não estruturada nem testes F multi-gl; os resultados são calculados ao pedir e **não são guardados no projeto**.
+
 ### Planejamentos ótimos (ET16)
 
 - **Planejamento D e I-ótimo** por troca de Fedorov sobre uma malha de candidatos, com **restrições lineares** entre os fatores e **ampliação** que mantém os ensaios já realizados; relata eficiências D, A e G e a variância média de predição, e informa em quantos inícios o melhor valor foi alcançado. Validado contra NumPy e contra a busca exaustiva em 6 problemas pequenos. [Método](docs/metodos/planejamentos-otimos.md). **Sem garantia de ótimo global**; a análise posterior é a de superfície de resposta.

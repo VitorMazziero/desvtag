@@ -114,6 +114,18 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::ComparisonPaired(req) => match optima_core::comparisons::paired::compare(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ComparisonPaired(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::ModelMixed(req) => match optima_core::models::mixed::fit(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ModelMixed(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::MixtureAnalyze(req) => match optima_core::models::mixture::analyze(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::MixtureAnalyze(Box::new(result)),

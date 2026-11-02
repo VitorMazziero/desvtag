@@ -1,6 +1,7 @@
 //! Solicitações da interface ao motor.
 
 use optima_core::comparisons::OneWayRequest;
+use optima_core::comparisons::paired::PairedRequest;
 use optima_core::comparisons::procedures::ProcedureRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
@@ -13,6 +14,7 @@ use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
 use optima_core::models::factorial_anova::FactorialRequest;
+use optima_core::models::mixed::MixedModelRequest;
 use optima_core::models::mixture::MixtureAnalysisRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
 use optima_core::surface::{GridRequest, SurfaceRequest};
@@ -52,6 +54,10 @@ pub enum Operation {
     MixtureAnalyze(Box<MixtureAnalysisRequest>),
     /// Gera um planejamento D ou I-ótimo (`design.optimalGenerate`).
     DesignOptimalGenerate(OptimalSpec),
+    /// Compara duas condições pareadas: t pareado e Wilcoxon (`comparison.paired`).
+    ComparisonPaired(PairedRequest),
+    /// Ajusta um modelo linear misto com intercepto aleatório por unidade (`model.mixed`).
+    ModelMixed(Box<MixedModelRequest>),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).

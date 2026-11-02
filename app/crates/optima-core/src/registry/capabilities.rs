@@ -47,6 +47,8 @@ mod tests {
                 "mixture_design",
                 "mixture_model",
                 "optimal_design",
+                "paired_comparison",
+                "linear_mixed_model",
                 "two_level_design_analysis",
                 "response_surface_design",
                 "response_surface",

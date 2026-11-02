@@ -3,6 +3,7 @@
 use std::collections::BTreeMap;
 
 use optima_core::comparisons::OneWayResult;
+use optima_core::comparisons::paired::PairedResult;
 use optima_core::comparisons::procedures::ProcedureResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
@@ -16,6 +17,7 @@ use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
 use optima_core::models::factorial_anova::FactorialResult;
+use optima_core::models::mixed::MixedModelResult;
 use optima_core::models::mixture::MixtureAnalysis;
 use optima_core::optimization::{Evaluation, OptimizationResult};
 use optima_core::registry::Capabilities;
@@ -99,6 +101,10 @@ pub enum OperationResult {
     MixtureAnalyze(Box<MixtureAnalysis>),
     /// Planejamento ótimo gerado.
     DesignOptimalGenerate(Box<GeneratedOptimal>),
+    /// Comparação pareada.
+    ComparisonPaired(Box<PairedResult>),
+    /// Modelo misto ajustado.
+    ModelMixed(Box<MixedModelResult>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.

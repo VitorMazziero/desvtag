@@ -48,6 +48,8 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "mixture_design",
                     "mixture_model",
                     "optimal_design",
+                    "paired_comparison",
+                    "linear_mixed_model",
                     "two_level_design_analysis",
                     "response_surface_design",
                     "response_surface",
