@@ -38,6 +38,7 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Médias marginais e contrastes](medias-marginais-contrastes.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Delineamento em blocos completos casualizados (DBC)](delineamento-em-blocos.md) | implementado; validado contra implementação independente (nativo e WebAssembly) |
 | [Fatorial completo de níveis mistos](niveis-mistos.md) | implementado; validado contra implementação independente (nativo e WebAssembly) |
+| [Misturas e modelos de Scheffé](misturas.md) | implementado; validado contra implementação independente e statsmodels (nativo e WebAssembly) |
 | [Seleção e comparação de modelos de superfície](selecao-de-modelos.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Composto central](composto-central.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Box–Behnken](box-behnken.md) | implementado (3 a 5 fatores); validado numericamente |

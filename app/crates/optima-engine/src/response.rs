@@ -8,12 +8,14 @@ use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::designs::completely_randomized::GeneratedCrd;
 use optima_core::designs::mixed_levels::GeneratedMixed;
+use optima_core::designs::mixture::GeneratedMixture;
 use optima_core::designs::randomized_block::GeneratedRcbd;
 use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
 use optima_core::models::factorial_anova::FactorialResult;
+use optima_core::models::mixture::MixtureAnalysis;
 use optima_core::optimization::{Evaluation, OptimizationResult};
 use optima_core::registry::Capabilities;
 use optima_core::surface::selection::SelectionResult;
@@ -90,6 +92,10 @@ pub enum OperationResult {
     DesignRcbdGenerate(Box<GeneratedRcbd>),
     /// Fatorial de níveis mistos gerado.
     DesignMixedGenerate(Box<GeneratedMixed>),
+    /// Planejamento de misturas gerado.
+    DesignMixtureGenerate(Box<GeneratedMixture>),
+    /// Modelo de Scheffé ajustado.
+    MixtureAnalyze(Box<MixtureAnalysis>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.

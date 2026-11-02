@@ -10,6 +10,7 @@ use ts_rs::TS;
 
 use optima_core::designs::completely_randomized::CrdSpec;
 use optima_core::designs::mixed_levels::MixedSpec;
+use optima_core::designs::mixture::MixtureSpec;
 use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use std::collections::BTreeMap;
@@ -68,6 +69,14 @@ pub struct Experiment {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub mixed: Option<MixedSpec>,
+    /// Planejamento de misturas gerado para este experimento (v0.3).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub mixture: Option<MixtureSpec>,
+    /// Modelo de Scheffé escolhido na análise de misturas (v0.3).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub mixture_model: Option<optima_core::models::mixture::MixtureModel>,
     /// Personalização gráfica por figura (chave estável da figura → ajustes).
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     #[ts(type = "Record<string, FigureStyle> | undefined", optional)]
@@ -110,6 +119,8 @@ impl Experiment {
             crd: None,
             rcbd: None,
             mixed: None,
+            mixture: None,
+            mixture_model: None,
             figure_styles: BTreeMap::new(),
             origin: None,
             confirmation: None,

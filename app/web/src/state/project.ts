@@ -17,6 +17,8 @@ import type {
   FactorSpec,
   FigureStyle,
   MixedSpec,
+  MixtureModel,
+  MixtureSpec,
   OneWayResult,
   OptimizationResult,
   OptimizationSetup,
@@ -93,6 +95,10 @@ export interface ProjectState {
   /** Delineamento em blocos completos casualizados gerado para o experimento. */
   rcbd: RcbdSpec | null;
   mixed: MixedSpec | null;
+  /** Planejamento de misturas gerado (v0.3). */
+  mixture: MixtureSpec | null;
+  /** Modelo de Scheffé escolhido na análise de misturas. */
+  mixtureModel: MixtureModel;
   /** Personalização gráfica por figura (chave estável da figura → ajustes). */
   figureStyles: Record<string, FigureStyle>;
   factors: FactorDraft[];
@@ -151,6 +157,8 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     crd: null,
     rcbd: null,
     mixed: null,
+    mixture: null,
+    mixtureModel: "quadratic",
     figureStyles: {},
     factors: [],
     responses: [],
@@ -259,6 +267,14 @@ export type ProjectAction =
       counters: ProjectState["counters"];
       now: string;
     }
+  | {
+      type: "applyMixture";
+      mixture: MixtureSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      now: string;
+    }
+  | { type: "setMixtureModel"; model: MixtureModel }
   | {
       type: "applyMixed";
       mixed: MixedSpec;
@@ -403,6 +419,11 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
       state.mixed && state.mixed.factors.every((f) => data.factors.some((d) => d.id === f.id))
         ? state.mixed
         : null,
+    mixture:
+      state.mixture &&
+      state.mixture.components.every((c) => data.factors.some((d) => d.id === c.id))
+        ? state.mixture
+        : null,
   };
 }
 
@@ -438,6 +459,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: state.crd?.factorId === action.id ? null : state.crd,
         rcbd: state.rcbd?.factorId === action.id ? null : state.rcbd,
         mixed: state.mixed?.factors.some((f) => f.id === action.id) ? null : state.mixed,
+        mixture: state.mixture?.components.some((c) => c.id === action.id) ? null : state.mixture,
         rows: state.rows.map((r) => ({ ...r, factors: r.factors.filter((_, i) => i !== index) })),
         analysis: {
           ...state.analysis,
@@ -518,6 +540,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: null,
         rcbd: null,
         mixed: null,
+        mixture: null,
         // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
         analysis: { ...before.analysis, designTerms: null, responseModels: {} },
         result: null,
@@ -535,6 +558,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: action.crd,
         rcbd: null,
         mixed: null,
+        mixture: null,
         // O fator do DIC define os grupos da comparação de tratamentos.
         analysis: {
           ...before.analysis,
@@ -556,6 +580,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: null,
         rcbd: action.rcbd,
         mixed: null,
+        mixture: null,
         analysis: {
           ...before.analysis,
           designTerms: null,
@@ -568,6 +593,31 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       };
       return commitRevision(next, "design", action.now);
     }
+    case "applyMixture": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: null,
+        mixed: null,
+        mixture: action.mixture,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: null,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "setMixtureModel":
+      return { ...state, mixtureModel: action.model };
     case "applyMixed": {
       const before = commitRevision(state, "edit", action.now);
       const next: ProjectState = {
@@ -578,6 +628,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: null,
         rcbd: null,
         mixed: action.mixed,
+        mixture: null,
         analysis: {
           ...before.analysis,
           designTerms: null,

@@ -433,7 +433,8 @@
       "factorial": "Quantitative factors (factorial, screening, surface)",
       "crd": "One categorical factor (randomized CRD)",
       "rcbd": "One categorical factor in blocks (randomized RCBD)",
-      "mixed": "Mixed levels (several factors)"
+      "mixed": "Mixed levels (several factors)",
+      "mixture": "Mixtures (components summing to 1)"
     },
     "crd": {
       "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
@@ -484,6 +485,29 @@
       "count": "{{total}} runs: {{combinations}} combinations × {{replicates}} replicates.",
       "matrix": "Run order of the mixed-levels factorial",
       "exportCsv": "Mixed-levels matrix (CSV)"
+    },
+    "mixture": {
+      "title": "Mixture design",
+      "intro": "Components are proportions that sum to 1. The simplex-lattice {q, m} uses the combinations of proportions that are multiples of 1/m; the simplex-centroid uses every subset of components in equal parts. Lower bounds shrink the region (pseudo-components). Upper bounds are not handled yet.",
+      "needFactors": "In the previous step, add at least two named numeric factors: each is the proportion of one mixture component.",
+      "components": "Mixture components",
+      "lower": "Lower bound of {{name}} (0 to 1)",
+      "lowerHelp": "The lower bounds must sum to less than 1. Leave 0 when there is no bound.",
+      "kind": "Design type",
+      "lattice": "Simplex-lattice {q, m}",
+      "centroid": "Simplex-centroid",
+      "degree": "Lattice degree m",
+      "replicates": "Replicates of the points",
+      "centers": "Extra center points",
+      "randomize": "Randomize the run order",
+      "count": "{{total}} runs: {{points}} points × {{replicates}} replicates + {{centers}} extra centers.",
+      "warn": {
+        "no_pure_error": "Without replicates or extra center points there is no pure error to test lack of fit."
+      },
+      "matrix": "Run order of the mixture",
+      "exportCsv": "Mixture matrix (CSV)",
+      "support": "Components present",
+      "extraCenter": "extra center"
     }
   },
   "optimization": {
@@ -615,5 +639,35 @@
     "failed": "Could not check right now (no internet or service unavailable).",
     "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed.",
     "notes": "What is new in this version"
+  },
+  "mixture": {
+    "analysis": {
+      "title": "Mixture analysis (Scheffé models)",
+      "intro": "Fits the chosen model without an intercept on the pseudo-components. The ANOVA uses the mean-centered total sum of squares. The result is computed on request and is not stored in the project.",
+      "response": "Response",
+      "model": "Model",
+      "models": {
+        "linear": "Linear",
+        "quadratic": "Quadratic",
+        "specialCubic": "Special cubic"
+      },
+      "fit": "Fit model",
+      "note": "No intercept: the linear terms already carry the average level. Coefficients are in pseudo-components; predictions are valid only inside the design region.",
+      "coefficients": "Coefficients",
+      "term": "Term",
+      "estimate": "Estimate",
+      "se": "Std. error",
+      "anova": "ANOVA (mean-centered total sum of squares)",
+      "source": "Source",
+      "model_": "Model",
+      "residual": "Residual",
+      "total": "Total",
+      "adjusted": "adjusted",
+      "exportCsv": "Coefficients (CSV)",
+      "badCells": "Some responses are not numbers in rows {{rows}}.",
+      "ternaryLabel": "Predicted {{response}} over the component triangle",
+      "min": "minimum",
+      "max": "maximum"
+    }
   }
 }

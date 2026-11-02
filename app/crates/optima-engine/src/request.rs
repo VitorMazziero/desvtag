@@ -6,11 +6,13 @@ use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::completely_randomized::CrdSpec;
 use optima_core::designs::mixed_levels::MixedSpec;
+use optima_core::designs::mixture::MixtureSpec;
 use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
 use optima_core::models::factorial_anova::FactorialRequest;
+use optima_core::models::mixture::MixtureAnalysisRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
@@ -43,6 +45,10 @@ pub enum Operation {
     DesignRcbdGenerate(RcbdSpec),
     /// Gera um fatorial completo de níveis mistos (`design.mixedGenerate`).
     DesignMixedGenerate(MixedSpec),
+    /// Gera um planejamento de misturas (`design.mixtureGenerate`).
+    DesignMixtureGenerate(MixtureSpec),
+    /// Ajusta um modelo de Scheffé (`mixture.analyze`).
+    MixtureAnalyze(Box<MixtureAnalysisRequest>),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).

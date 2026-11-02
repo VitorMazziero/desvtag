@@ -14,7 +14,8 @@ Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
 ### Níveis mistos (ET15)
 
-- **Fatorial completo de níveis mistos**: dois a oito fatores com números de níveis diferentes, repetições, aleatorização com semente e planilha de coleta; análise pela ANOVA multifatorial. Geração validada contra a implementação independente em Python (6 casos; Rust e WebAssembly). [Método](docs/metodos/niveis-mistos.md). *Misturas ainda não entregues.*
+- **Misturas**: simplex-lattice `{q, m}` e simplex-centroide com limites inferiores (pseudocomponentes), repetições e pontos centrais extras; modelos de **Scheffé** (linear, quadrático e cúbico especial) sem intercepto com ANOVA centrada, e **gráfico ternário** para três componentes. Validados contra `itertools` e `statsmodels` (11 casos). [Método](docs/metodos/misturas.md). Sem limites superiores, sem otimização no simplex e **a análise de misturas não é guardada no projeto** nem entra nos relatórios.
+- **Fatorial completo de níveis mistos**: dois a oito fatores com números de níveis diferentes, repetições, aleatorização com semente e planilha de coleta; análise pela ANOVA multifatorial. Geração validada contra a implementação independente em Python (6 casos; Rust e WebAssembly). [Método](docs/metodos/niveis-mistos.md). 
 
 ### Atualização e verificação (ET14)
 

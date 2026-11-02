@@ -44,6 +44,8 @@ mod tests {
                 "completely_randomized_design",
                 "randomized_block_design",
                 "mixed_levels_design",
+                "mixture_design",
+                "mixture_model",
                 "two_level_design_analysis",
                 "response_surface_design",
                 "response_surface",

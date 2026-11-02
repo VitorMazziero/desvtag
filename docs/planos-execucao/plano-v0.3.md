@@ -77,7 +77,7 @@ Ao final da v0.3:
 | ET13 Planilha de coleta | **Concluída** | — |
 | ET21 Espaçamento, logotipo único e rolagem | **Quase concluída** (T01 parcial, T04 e T06 pendentes: revisão tela a tela fora das telas medidas e inspeção no WebView2) | Capturas antes/depois e conferência no aplicativo instalado |
 | ET14 Itens adiados | **Em andamento** (T01, T04–T07 e T09 feitas) | T02 (depende do usuário: capturas do Protimiza) e T03 (seleção de modelos para efeitos de dois níveis) |
-| ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos feitos e validados) | Misturas: simplex, modelos de Scheffé, gráfico ternário, otimização no simplex; estimabilidade em fracionários de níveis mistos |
+| ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos e misturas feitos e validados) | Limites superiores, otimização no simplex, guarda da análise de misturas no projeto, exemplos; estimabilidade em fracionários de níveis mistos |
 | ET16 Planejamentos ótimos | Planejada | tudo |
 | ET17 Modelos mistos e medidas repetidas | Planejada | tudo |
 | ET18 Monod e potência | Planejada | tudo |

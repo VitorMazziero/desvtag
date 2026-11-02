@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { AnalysisSetup, buildDataset } from "../analysis";
+import { MixtureAnalysis } from "../analysis/MixtureAnalysis";
 import { DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
@@ -128,8 +129,12 @@ export function Workflow({ language }: { language: Language }) {
             <ConfirmationCheck language={language} />
           </section>
         )}
-        {step === "analysis" && <AnalysisSetup onDone={() => setStep("results")} />}
-        {step === "results" && (
+        {step === "analysis" && state.mixture !== null && <MixtureAnalysis language={language} />}
+        {step === "analysis" && state.mixture === null && (
+          <AnalysisSetup onDone={() => setStep("results")} />
+        )}
+        {step === "results" && state.mixture !== null && <MixtureAnalysis language={language} />}
+        {step === "results" && state.mixture === null && (
           <>
             <ResultsView language={language} />
             {state.result &&

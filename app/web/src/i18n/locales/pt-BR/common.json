@@ -433,7 +433,8 @@
       "factorial": "Fatores quantitativos (fatorial, triagem, superfície)",
       "crd": "Um fator categórico (DIC aleatorizado)",
       "rcbd": "Um fator categórico em blocos (DBC aleatorizado)",
-      "mixed": "Níveis mistos (vários fatores)"
+      "mixed": "Níveis mistos (vários fatores)",
+      "mixture": "Misturas (componentes que somam 1)"
     },
     "crd": {
       "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
@@ -484,6 +485,29 @@
       "count": "{{total}} ensaios: {{combinations}} combinações × {{replicates}} repetições.",
       "matrix": "Ordem de execução do fatorial de níveis mistos",
       "exportCsv": "Matriz de níveis mistos (CSV)"
+    },
+    "mixture": {
+      "title": "Planejamento de misturas",
+      "intro": "Os componentes são proporções que somam 1. O simplex-lattice {q, m} usa as combinações de proporções múltiplas de 1/m; o simplex-centroide usa todos os subconjuntos de componentes em partes iguais. Limites inferiores reduzem a região (pseudocomponentes). Limites superiores ainda não são tratados.",
+      "needFactors": "Cadastre na etapa anterior pelo menos dois fatores numéricos com nome: cada um é a proporção de um componente da mistura.",
+      "components": "Componentes da mistura",
+      "lower": "Limite inferior de {{name}} (0 a 1)",
+      "lowerHelp": "A soma dos limites inferiores precisa ser menor que 1. Deixe 0 se não houver limite.",
+      "kind": "Tipo de planejamento",
+      "lattice": "Simplex-lattice {q, m}",
+      "centroid": "Simplex-centroide",
+      "degree": "Grau m do lattice",
+      "replicates": "Repetições dos pontos",
+      "centers": "Pontos centrais extras",
+      "randomize": "Aleatorizar a ordem de execução",
+      "count": "{{total}} ensaios: {{points}} pontos × {{replicates}} repetições + {{centers}} centrais extras.",
+      "warn": {
+        "no_pure_error": "Sem repetições nem pontos centrais extras não há erro puro para testar a falta de ajuste."
+      },
+      "matrix": "Ordem de execução da mistura",
+      "exportCsv": "Matriz de misturas (CSV)",
+      "support": "Componentes presentes",
+      "extraCenter": "central extra"
     }
   },
   "optimization": {
@@ -615,5 +639,35 @@
     "failed": "Não foi possível verificar agora (sem internet ou serviço indisponível).",
     "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados.",
     "notes": "Novidades desta versão"
+  },
+  "mixture": {
+    "analysis": {
+      "title": "Análise de misturas (modelos de Scheffé)",
+      "intro": "Ajusta o modelo escolhido sem intercepto nos pseudocomponentes. A ANOVA usa a soma total centrada na média. O resultado é calculado ao pedir e não é guardado no projeto.",
+      "response": "Resposta",
+      "model": "Modelo",
+      "models": {
+        "linear": "Linear",
+        "quadratic": "Quadrático",
+        "specialCubic": "Cúbico especial"
+      },
+      "fit": "Ajustar modelo",
+      "note": "Sem intercepto: os termos lineares já contêm o nível médio. Os coeficientes são em pseudocomponentes; a previsão só vale dentro da região do planejamento.",
+      "coefficients": "Coeficientes",
+      "term": "Termo",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "anova": "ANOVA (soma total centrada na média)",
+      "source": "Fonte",
+      "model_": "Modelo",
+      "residual": "Resíduo",
+      "total": "Total",
+      "adjusted": "ajustado",
+      "exportCsv": "Coeficientes (CSV)",
+      "badCells": "Há respostas que não são números nas linhas {{rows}}.",
+      "ternaryLabel": "Previsão de {{response}} sobre o triângulo dos componentes",
+      "min": "mínimo",
+      "max": "máximo"
+    }
   }
 }

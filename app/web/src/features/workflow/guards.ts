@@ -12,6 +12,8 @@ export interface GuardContext {
 }
 
 export function resultIsCurrent(state: ProjectState): boolean {
+  // Misturas: a análise é calculada na própria etapa e não é guardada (ver MixtureAnalysis).
+  if (state.mixture !== null) return true;
   return (
     state.result !== null &&
     state.result.kind === analysisKind(state) &&

@@ -1193,6 +1193,14 @@ rcbd?: RcbdSpec,
  */
 mixed?: MixedSpec, 
 /**
+ * Planejamento de misturas gerado para este experimento (v0.3).
+ */
+mixture?: MixtureSpec, 
+/**
+ * Modelo de Scheffé escolhido na análise de misturas (v0.3).
+ */
+mixtureModel?: MixtureModel, 
+/**
  * Personalização gráfica por figura (chave estável da figura → ajustes).
  */
 figureStyles?: Record<string, FigureStyle> | undefined, 
@@ -1777,6 +1785,39 @@ total: number,
 runs: Array<MixedRun>, 
 /**
  * Algoritmo de aleatorização (ou a ordem padrão, quando não aleatorizado).
+ */
+randomizationAlgorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Planejamento gerado.
+ */
+export type GeneratedMixture = { 
+/**
+ * Especificação usada.
+ */
+spec: MixtureSpec, 
+/**
+ * Pontos distintos do planejamento (sem repetições nem centrais extras).
+ */
+basePoints: number, 
+/**
+ * Total de ensaios.
+ */
+total: number, 
+/**
+ * Ensaios na ordem de execução.
+ */
+runs: Array<MixtureRun>, 
+/**
+ * Algoritmo de aleatorização (ou a ordem padrão).
  */
 randomizationAlgorithm: string, 
 /**
@@ -2429,6 +2470,170 @@ randomize: boolean,
 seed: number, };
 
 /**
+ * Resultado da análise.
+ */
+export type MixtureAnalysis = { 
+/**
+ * Modelo ajustado.
+ */
+model: MixtureModel, 
+/**
+ * Ajuste: coeficientes, ANOVA centrada, resíduos e diagnósticos.
+ */
+fit: LinearFit, 
+/**
+ * Previsões sobre o triângulo (só com três componentes; vazio nos demais casos).
+ */
+grid: Array<MixtureGridPoint>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Solicitação de análise de uma mistura.
+ */
+export type MixtureAnalysisRequest = { 
+/**
+ * Nomes dos componentes (2 a 8).
+ */
+componentNames: Array<string>, 
+/**
+ * Limites inferiores (mesma ordem; 0 se não houver).
+ */
+lowerBounds: Array<number>, 
+/**
+ * Proporções reais de cada ensaio (uma linha por ensaio, somando 1).
+ */
+proportions: Array<Array<number>>, 
+/**
+ * Resposta de cada ensaio.
+ */
+response: Array<number>, 
+/**
+ * Modelo.
+ */
+model: MixtureModel, 
+/**
+ * Nível de significância dos intervalos (`1 − α` de confiança).
+ */
+alpha: number, };
+
+/**
+ * Componente da mistura.
+ */
+export type MixtureComponent = { 
+/**
+ * Identificador do fator no experimento.
+ */
+id: StableId, 
+/**
+ * Nome do componente.
+ */
+name: string, 
+/**
+ * Limite inferior da proporção (0 ≤ L < 1).
+ */
+lower: number, };
+
+/**
+ * Ponto da malha ternária.
+ */
+export type MixtureGridPoint = { 
+/**
+ * Pseudocomponentes (somam 1).
+ */
+pseudo: Array<number>, 
+/**
+ * Proporções reais.
+ */
+proportions: Array<number>, 
+/**
+ * Resposta prevista.
+ */
+value: number, };
+
+/**
+ * Tipo de planejamento de misturas.
+ */
+export type MixtureKind = { "type": "lattice", 
+/**
+ * Grau `m` (1 a 6).
+ */
+degree: number, } | { "type": "centroid" };
+
+/**
+ * Modelo de Scheffé.
+ */
+export type MixtureModel = "linear" | "quadratic" | "specialCubic";
+
+/**
+ * Um ensaio.
+ */
+export type MixtureRun = { 
+/**
+ * Posição de execução (1-based).
+ */
+run: number, 
+/**
+ * Posição na ordem padrão (1-based).
+ */
+standardOrder: number, 
+/**
+ * Quantidade de componentes presentes (> 0) no ponto: 1 = vértice, 2 = aresta…
+ */
+support: number, 
+/**
+ * Ponto central extra.
+ */
+extraCenter: boolean, 
+/**
+ * Pseudocomponentes (somam 1).
+ */
+pseudo: Array<number>, 
+/**
+ * Proporções reais (somam 1).
+ */
+proportions: Array<number>, 
+/**
+ * Repetição (1-based; nos centrais extras, o número do ponto).
+ */
+replicate: number, };
+
+/**
+ * Especificação do planejamento de misturas.
+ */
+export type MixtureSpec = { 
+/**
+ * Componentes (2 a 8).
+ */
+components: Array<MixtureComponent>, 
+/**
+ * Tipo de planejamento.
+ */
+kind: MixtureKind, 
+/**
+ * Repetições de todos os pontos (≥ 1).
+ */
+replicates: number, 
+/**
+ * Pontos centrais extras (centroide geral), além dos do planejamento.
+ */
+centerPoints: number, 
+/**
+ * Aleatorizar a ordem de execução.
+ */
+randomize: boolean, 
+/**
+ * Semente da aleatorização; inteiro de até 2⁵³ − 1 na interface.
+ */
+seed: number, };
+
+/**
  * Métricas de um modelo.
  */
 export type ModelMetrics = { 
@@ -2724,12 +2929,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Pedido da malha de desejabilidade.

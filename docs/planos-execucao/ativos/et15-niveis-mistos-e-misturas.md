@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (níveis mistos entregues; misturas pendentes) |
+| Estado | **Ativo** (níveis mistos e misturas entregues; restam itens listados na seção 12) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F09a (níveis mistos), F09b (misturas) |
 | Marco | Prepara M4 |
@@ -46,15 +46,15 @@ Gerar e analisar **fatoriais com níveis mistos** (fatores com 2, 3 ou mais nív
 
 ## 5. Tarefas
 
-- [ ] **T01** — Especificações de método (`docs/metodos/niveis-mistos.md`, `docs/metodos/misturas.md`) e DTs (§4).
+- [x] **T01** — Especificações [`niveis-mistos.md`](../../metodos/niveis-mistos.md) e [`misturas.md`](../../metodos/misturas.md). *As DTs separadas não foram escritas: as decisões estão nas especificações (contrastes e ANOVA pela ANOVA multifatorial já existente; Scheffé sem intercepto com ANOVA centrada; apenas limites inferiores).*
 - [x] **T02** — (`designs/mixed_levels.rs`, `mixed_levels_validation.rs`, `make_mixed_cases.py`; 6 casos.) Núcleo: geração de níveis mistos com aleatorização e estimabilidade; testes e casos independentes.
-- [ ] **T03** — Núcleo: redes simplex, centroide, axiais, pseudocomponentes e vértices extremos; modelos de Scheffé; casos independentes.
-- [ ] **T04** — Núcleo: traço de Cox, malha ternária e otimização restrita ao simplex.
-- [~] **T05** — *Níveis mistos feitos* (`designMixedGenerate`, contratos, paridade WebAssembly); misturas pendentes. Operações do motor, contratos gerados e paridade WebAssembly × nativo × Tauri.
-- [~] **T06** — *Níveis mistos:* campo opcional `mixed` no experimento (esquema 1), reabertura de projetos antigos sem migração. Projeto: tipos de fator novos (campos opcionais) e abertura dos exemplos antigos.
-- [~] **T07** — *Níveis mistos:* `MixedPanel` (contagem, matriz, CSV/XLSX, planilha de coleta, ANOVA multifatorial). Interface: painéis de planejamento, resultados em seções, gráfico ternário (tela e exportação SVG/PNG/PDF), otimização; PT/EN, temas e axe.
-- [~] **T08** — Planilha de coleta (ET13): feita para níveis mistos (`unit_id` `C<níveis>-R<repetição>`); misturas pendentes.
-- [~] **T09** — E2E de níveis mistos (`methods-flow.spec.ts`) feito; exemplos sintéticos e misturas pendentes. Exemplos sintéticos, E2E, verificação nativa e documentação.
+- [x] **T03** — Núcleo (`designs/mixture.rs`, `models/mixture.rs`): lattice, centroide, pseudocomponentes com limites inferiores, repetições, centrais extras, modelos de Scheffé e malha ternária; 6 + 5 casos independentes (itertools e statsmodels). *Vértices extremos (limites superiores) não entregues.*
+- [~] **T04** — Malha ternária entregue; *traço de Cox e otimização restrita ao simplex pendentes.*
+- [x] **T05** — Operações do motor `designMixedGenerate`, `designMixtureGenerate` e `mixtureAnalyze`, contratos gerados e paridade WebAssembly (níveis mistos).
+- [x] **T06** — Projeto: campos opcionais `mixed`, `mixture` e `mixtureModel` no experimento (esquema 1; projetos antigos abrem sem migração).
+- [x] **T07** — Interface: `MixedPanel`, `MixturePanel`, `MixtureAnalysis` e `TernaryPlot` (escala viridis, tabela equivalente); PT/EN. *Misturas: a análise não é guardada no projeto e não entra nos relatórios.*
+- [x] **T08** — Planilha de coleta (ET13) para os dois tipos: níveis mistos por `unit_id` e misturas por níveis (proporções).
+- [~] **T09** — E2E dos dois tipos (`methods-flow.spec.ts`) feitos; exemplos sintéticos em `examples/` e verificação nativa pendentes.
 
 ## 6. Entregas
 
@@ -89,6 +89,7 @@ Especificações e DTs; mapa de módulos (C13); fichas U06/U08/U09; matriz de co
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Etapa não iniciada. |
+| 2026-11-02 | **Misturas entregues:** simplex-lattice/centroide com limites inferiores e modelos de Scheffé validados (itertools e statsmodels), gráfico ternário e E2E. Pendentes: limites superiores, otimização no simplex, guarda da análise no projeto, exemplos e verificação nativa. |
 | 2026-11-02 | **Ativada.** Níveis mistos implementados e validados (geração idêntica à referência Python; E2E com ANOVA multifatorial). **Misturas (simplex, Scheffé, gráfico ternário) e a variante de estimabilidade em fracionários de níveis mistos continuam pendentes.** |
 
 ## 12. Desvios e descobertas

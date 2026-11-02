@@ -211,6 +211,71 @@ test("níveis mistos: 3 cepas × 2 pH × 2 repetições, ANOVA multifatorial e p
   await expect(anova.locator("tbody tr")).toHaveCount(5); // Cepa, pH, Cepa × pH, Resíduo, Total
 });
 
+test("misturas: simplex-lattice {3,2}, resposta, modelo quadrático de Scheffé e gráfico ternário", async ({
+  page,
+}, testInfo) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  for (const [i, name] of ["Água", "Etanol", "Glicerol"].entries()) {
+    await page.getByRole("button", { name: "Adicionar fator" }).click();
+    await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
+    await page.getByLabel("Tipo").nth(i).selectOption("numeric");
+  }
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(3).fill("Rendimento");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /Misturas/ })
+    .check();
+  await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
+  await page.getByLabel("Pontos centrais extras").fill("1");
+  await expect(page.getByTestId("mixture-count")).toContainText(
+    "13 ensaios: 6 pontos × 2 repetições + 1 centrais extras.",
+  );
+  await page.getByRole("button", { name: "Gerar planejamento" }).click();
+  await expect(page.getByTestId("mixture-generated")).toContainText("13 ensaios");
+  const table = page.getByTestId("mixture-table");
+  await expect(table.locator("tbody tr")).toHaveCount(13);
+  // Ordem padrão: lexicográfica crescente; o primeiro ensaio é o vértice do 3.º componente.
+  await expect(table.locator("tbody tr").nth(0)).toContainText("0");
+  await expect(table.locator("tbody tr").nth(0).locator("td").nth(4)).toHaveText("1");
+
+  // Resposta verdadeira: 10·x1 + 20·x2 + 30·x3 + 25·x1·x2 (+ ruído pequeno e fixo).
+  const base = [
+    [0, 0, 2],
+    [0, 1, 1],
+    [0, 2, 0],
+    [1, 0, 1],
+    [1, 1, 0],
+    [2, 0, 0],
+  ];
+  const points = [...base, ...base].map((a) => a.map((v) => v / 2));
+  points.push([1 / 3, 1 / 3, 1 / 3]);
+  const noise = [0.02, -0.03, 0.01, 0.04, -0.02, 0.03, -0.01, 0.02, -0.04, 0.01, 0.03, -0.02, 0.0];
+  const values = points.map(([x1 = 0, x2 = 0, x3 = 0], i) =>
+    String(10 * x1 + 20 * x2 + 30 * x3 + 25 * x1 * x2 + (noise[i] ?? 0)).replace(".", ","),
+  );
+  await paste(page, "Rendimento — Obs. 1", values.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page.getByTestId("mixture-model").selectOption("quadratic");
+  await page.getByRole("button", { name: "Ajustar modelo" }).click();
+  const coefficients = page.getByTestId("scheffe-coefficients");
+  await expect(coefficients.locator("tbody tr")).toHaveCount(6);
+  await expect(coefficients).toContainText("Água·Etanol");
+  const cell = await coefficients.locator("tbody tr").nth(3).locator("td").first().textContent();
+  expect(Number((cell ?? "").replace(",", "."))).toBeGreaterThan(24);
+  expect(Number((cell ?? "").replace(",", "."))).toBeLessThan(26);
+  await expect(page.getByTestId("scheffe-anova")).toContainText("Resíduo");
+  await expect(page.getByTestId("scheffe-fit-stats")).toContainText("R²");
+  await expect(page.getByTestId("ternary-plot")).toBeVisible();
+  await page.getByTestId("ternary-plot").screenshot({ path: testInfo.outputPath("ternario.png") });
+});
+
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
   page,
 }) => {
