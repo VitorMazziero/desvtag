@@ -62,7 +62,7 @@ Nada abaixo sai do escopo final aprovado; apenas não integra a primeira versão
 | Canal estável e cobertura completa do catálogo | F12–F13 completos | v1.0.0 |
 | Comentários, DOCX, Windows 10, Safari, domínio próprio, colaboração simultânea | F14 | após v1.0.0 |
 
-Os destinos são indicativos e serão confirmados ao planejar cada versão. A [matriz de cobertura](../produto/matriz-cobertura.md) é a fonte por método.
+Os destinos são indicativos e serão confirmados ao planejar cada versão. **Nota de 2026-11-02:** por decisão do usuário ([decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)), todos os itens ainda não entregues desta tabela passaram para o [plano da v0.3](plano-v0.3.md), exceto o canal estável (infraestrutura na v0.3; primeira versão estável na v1.0.0), a implementação da edição simultânea (só a especificação na v0.3) e o Windows 11 (validação não será realizada). A [matriz de cobertura](../produto/matriz-cobertura.md) é a fonte por método.
 
 ## 4. Etapas
 

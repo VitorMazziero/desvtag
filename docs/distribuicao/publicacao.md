@@ -1,8 +1,42 @@
+# Publicação
+
+**Estado:** **v0.2.0 na versão web publicada; instaladores da v0.1.0 e da v0.2.0 em rascunho de release (não publicados)** · **Atualizado em:** 2026-11-02
+
+> **v0.2.0 (2026-11-02):** versão web **publicada** e etiqueta `v0.2.0` criada; o instalador está em **rascunho de release** (não publicado), como o da v0.1.0. Registro na seção [Publicação da v0.2.0](#publicação-da-v020).
+
+## Publicação da v0.2.0
+
+Datas de 2026-11-02, horário de Brasília (UTC−3), extraídas do GitHub. Endereços consultados na data do registro.
+
+| Hora | Ação | Resultado e endereço |
+|---|---|---|
+| 09:29–09:42 | CI do commit final do PR 3 (`071e3dc`): 5 jobs aprovados, inclusive o Windows com verificação nativa dos PDFs da figura (17 501 bytes) e do relatório (52 054 bytes) | [execução 41445123635](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41445123635) |
+| 09:43 | **PR 3 fundido** em `main` (commit `2459311`), por autorização do usuário («Sim, publicar») | https://github.com/VitorMazziero/enzitag-optima/pull/3 |
+| 09:43 | **Etiqueta `v0.2.0`** (anotada) criada em `2459311` e enviada | https://github.com/VitorMazziero/enzitag-optima/releases/tag/v0.2.0 |
+| 09:43–09:46 | Fluxo **Pages** (disparo manual em `main`): aprovado; versão web publicada | [execução 41447048838](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41447048838) |
+| 09:43–10:01 | Fluxo **Release** (disparado pela etiqueta): aprovado; criou o **rascunho** de release com os três arquivos abaixo | [execução 41447050262](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41447050262) |
+| 09:43–09:59 | CI da etiqueta e da `main`: aprovados | [etiqueta 41447050334](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41447050334), [main 41447027405](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41447027405) |
+
+**Conferido por HTTP (sem abrir o aplicativo em navegador):** a página inicial do Pages responde 200 e o pacote JavaScript contém a versão `0.2.0`; o Worker do motor responde 200; o módulo do motor (`optima_wasm_bg-CcB_bf0M.wasm`, 4 296 618 bytes) é servido como `application/wasm`; `THIRD_PARTY_NOTICES.txt` responde 200.
+
+**Arquivos do rascunho do release `v0.2.0`:**
+
+| Arquivo | Tamanho |
+|---|---:|
+| `EnziTAG-Optima_0.2.0_x64-setup.exe` (soma SHA-256 nas notas do release: `c3c9d8c7a605e0f123b637d2d25df867e8688e326d2fa331bb965991066a5332`) | 8 199 713 bytes |
+| `EnziTAG-Optima_0.2.0_x64-setup.exe.sig` (assinatura do atualizador) | 444 bytes |
+| `latest.json` (manifesto do atualizador) | 4 874 bytes |
+
+**O que não foi feito:**
+
+- O release **continua rascunho** (`isDraft = true`): publicá-lo é ato do mantenedor, depois de instalar o arquivo do rascunho. Enquanto os releases da v0.1.0 e da v0.2.0 forem rascunhos, o `latest.json` não é servido e **a atualização v0.1 → v0.2 não pode ser verificada** (tarefa [ET14-T01](../planos-execucao/planejados/et14-itens-adiados-v01-v02.md)).
+- O instalador do rascunho não foi instalado por quem o gerou; o testado (instalar, executar por 10 s, desinstalar) foi o construído localmente no Windows 10 com o mesmo código, assinado com a mesma chave.
+- O aplicativo web publicado não foi aberto e usado em navegador a partir da URL pública.
+- Windows 11: validação **não será realizada** (decisão do usuário, [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+
+---
+
 # Publicação da v0.1.0
-
-**Estado:** **versão web publicada; instalador em rascunho de release (não publicado)** · **Atualizado em:** 2026-11-01
-
-> **v0.2.0:** está em preparação no ramo `feat/v0.2` e **não foi publicada** (nenhuma etiqueta, release ou publicação no Pages foi feita para ela). Quando o usuário decidir publicar, o registro correspondente entra aqui.
 
 Este documento registra o procedimento de publicação da v0.1.0 e **o que foi de fato executado**, com datas e endereços. O repositório é **público** desde 2026-11-01 (PD-15).
 
@@ -53,7 +87,7 @@ Todas as datas são de 2026-11-01 (horário de Brasília; horas extraídas do Gi
 
 1. **PD-15:** repositório público; hospedagem da versão web no GitHub Pages.
 2. **PD-11:** instalador sem certificado de assinatura de código (o Windows pode avisar na primeira execução; as notas explicam). O **atualizador** tem chave própria.
-3. **Chaves do atualizador:** geração autorizada e feita; a privada e a senha estão apenas em segredos do GitHub (`TAURI_SIGNING_PRIVATE_KEY`, `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`) e em cópia local fora do repositório (`%USERPROFILE%\.tauri\`). **Guarde essa cópia em local seguro**: sem ela não é possível assinar atualizações.
+3. **Chaves do atualizador:** geração autorizada e feita; a privada e a senha estão apenas em segredos do GitHub (`TAURI_SIGNING_PRIVATE_KEY`, `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`) e em cópia local fora do repositório (`%USERPROFILE%\.tauri\` na época; desde 2026-11-02 em `D:\Arquivos_de_Programas\Rust\tauri`). **Guarde essa cópia em local seguro**: sem ela não é possível assinar atualizações.
 4. Escopo: DIC aleatorizado e personalização por figura implementados; verificação no Windows 10 em vez do 11.
 
 ## Procedimento (ato do mantenedor)
