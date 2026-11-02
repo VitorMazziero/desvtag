@@ -432,7 +432,8 @@
       "legend": "Tipo de planejamento",
       "factorial": "Fatores quantitativos (fatorial, triagem, superfície)",
       "crd": "Um fator categórico (DIC aleatorizado)",
-      "rcbd": "Um fator categórico em blocos (DBC aleatorizado)"
+      "rcbd": "Um fator categórico em blocos (DBC aleatorizado)",
+      "mixed": "Níveis mistos (vários fatores)"
     },
     "crd": {
       "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
@@ -470,7 +471,20 @@
       "position": "Posição no bloco",
       "unitNote": "Cada ensaio recebe um identificador de unidade (por exemplo B2-T3: bloco 2, tratamento 3). A análise usa o bloco como efeito aditivo."
     },
-    "collectionNote": "Planilha de coleta: o arquivo exportado traz uma coluna vazia para cada resposta. Preencha no laboratório e importe o mesmo arquivo em «Importar arquivo»: só as respostas são gravadas, nos ensaios correspondentes."
+    "collectionNote": "Planilha de coleta: o arquivo exportado traz uma coluna vazia para cada resposta. Preencha no laboratório e importe o mesmo arquivo em «Importar arquivo»: só as respostas são gravadas, nos ensaios correspondentes.",
+    "mixed": {
+      "title": "Fatorial de níveis mistos",
+      "intro": "Combina todos os níveis de dois ou mais fatores com números de níveis diferentes (por exemplo, 3 cepas × 2 valores de pH × 4 agitações), com repetições e ordem de execução sorteada com semente registrada. A análise é a ANOVA multifatorial, com médias marginais e contrastes.",
+      "needFactors": "Cadastre na etapa anterior pelo menos dois fatores com nome e com dois ou mais níveis digitados (campo «Níveis»).",
+      "factors": "Fatores que entram no planejamento",
+      "levelCount": "{{count}} níveis",
+      "levelsHelp": "Os níveis de cada fator ficam gravados no próprio fator, separados por ponto e vírgula ou quebra de linha. Fatores numéricos entram como níveis nomeados.",
+      "replicates": "Repetições da combinação completa",
+      "randomize": "Aleatorizar a ordem de execução",
+      "count": "{{total}} ensaios: {{combinations}} combinações × {{replicates}} repetições.",
+      "matrix": "Ordem de execução do fatorial de níveis mistos",
+      "exportCsv": "Matriz de níveis mistos (CSV)"
+    }
   },
   "optimization": {
     "title": "Otimização por desejabilidade",

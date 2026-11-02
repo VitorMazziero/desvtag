@@ -164,6 +164,53 @@ test("DBC aleatorizado: gerar blocos, preencher respostas e analisar com bloco",
   await expect(anova.locator("tbody tr")).toHaveCount(4); // Tratamento, Dia, Resíduo, Total
 });
 
+test("níveis mistos: 3 cepas × 2 pH × 2 repetições, ANOVA multifatorial e planilha de coleta", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(0).fill("Cepa");
+  await page.getByLabel("Níveis (opcional)").nth(0).fill("A; B; C");
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(1).fill("pH");
+  await page.getByLabel("Níveis (opcional)").nth(1).fill("5; 7");
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /Níveis mistos/ })
+    .check();
+  await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
+  await expect(page.getByTestId("mixed-count")).toContainText(
+    "12 ensaios: 6 combinações × 2 repetições.",
+  );
+  await page.getByRole("button", { name: "Gerar planejamento" }).click();
+  await expect(page.getByTestId("mixed-generated")).toContainText("12 ensaios");
+  const table = page.getByTestId("mixed-table");
+  await expect(table.locator("tbody tr")).toHaveCount(12);
+  // Ordem padrão (sem aleatorizar): a cepa varia mais depressa que o pH.
+  await expect(table.locator("tbody tr").nth(0)).toContainText("C1.1-R1");
+  await expect(table.locator("tbody tr").nth(1)).toContainText("C2.1-R1");
+  await expect(table.locator("tbody tr").nth(3)).toContainText("C1.2-R1");
+
+  const values = Array.from({ length: 12 }, (_, i) =>
+    String(10 + (i % 3) * 2 + Math.floor((i % 6) / 3) * 1.5 + (i % 5) * 0.2).replace(".", ","),
+  );
+  await paste(page, "Atividade — Obs. 1", values.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: /Analisar planejamento|Comparar tratamentos/ }).click();
+  await page.getByTestId("section-tables").click();
+  const anova = page.getByTestId("factorial-anova");
+  await expect(anova).toContainText("Cepa × pH");
+  await expect(anova).toContainText("Resíduo");
+  await expect(anova.locator("tbody tr")).toHaveCount(5); // Cepa, pH, Cepa × pH, Resíduo, Total
+});
+
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
   page,
 }) => {

@@ -44,6 +44,7 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "two_level_design",
                     "completely_randomized_design",
                     "randomized_block_design",
+                    "mixed_levels_design",
                     "two_level_design_analysis",
                     "response_surface_design",
                     "response_surface",

@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { useProject } from "../../state/ProjectContext";
 import { CrdPanel } from "./CrdPanel";
+import { MixedPanel } from "./MixedPanel";
 import { RcbdPanel } from "./RcbdPanel";
 import { TwoLevelPanel } from "./TwoLevelPanel";
 
-type Mode = "factorial" | "crd" | "rcbd";
+type Mode = "factorial" | "crd" | "rcbd" | "mixed";
 
 export function DesignPanel({ language }: { language: Language }) {
   const { t } = useTranslation();
@@ -19,21 +20,23 @@ export function DesignPanel({ language }: { language: Language }) {
   );
   // Ponto de partida: o que já foi gerado; senão, DIC quando só há fator categórico.
   const [mode, setMode] = useState<Mode>(
-    state.rcbd
-      ? "rcbd"
-      : state.crd
-        ? "crd"
-        : state.design
-          ? "factorial"
-          : hasCategorical && !hasNumeric
-            ? "crd"
-            : "factorial",
+    state.mixed
+      ? "mixed"
+      : state.rcbd
+        ? "rcbd"
+        : state.crd
+          ? "crd"
+          : state.design
+            ? "factorial"
+            : hasCategorical && !hasNumeric
+              ? "crd"
+              : "factorial",
   );
   return (
     <>
       <fieldset className="editor-card" data-testid="design-mode">
         <legend>{t("design.mode.legend")}</legend>
-        {(["factorial", "crd", "rcbd"] as const).map((m) => (
+        {(["factorial", "crd", "rcbd", "mixed"] as const).map((m) => (
           <label className="check" key={m}>
             <input
               type="radio"
@@ -49,6 +52,8 @@ export function DesignPanel({ language }: { language: Language }) {
         <CrdPanel />
       ) : mode === "rcbd" ? (
         <RcbdPanel />
+      ) : mode === "mixed" ? (
+        <MixedPanel />
       ) : (
         <TwoLevelPanel language={language} />
       )}

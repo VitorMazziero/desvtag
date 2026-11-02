@@ -432,7 +432,8 @@
       "legend": "Design type",
       "factorial": "Quantitative factors (factorial, screening, surface)",
       "crd": "One categorical factor (randomized CRD)",
-      "rcbd": "One categorical factor in blocks (randomized RCBD)"
+      "rcbd": "One categorical factor in blocks (randomized RCBD)",
+      "mixed": "Mixed levels (several factors)"
     },
     "crd": {
       "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
@@ -470,7 +471,20 @@
       "position": "Position in block",
       "unitNote": "Each run gets a unit identifier (for example B2-T3: block 2, treatment 3). The analysis uses the block as an additive effect."
     },
-    "collectionNote": "Collection sheet: the exported file has an empty column for each response. Fill it in at the lab and import the same file with “Import file”: only the responses are written, into the matching runs."
+    "collectionNote": "Collection sheet: the exported file has an empty column for each response. Fill it in at the lab and import the same file with “Import file”: only the responses are written, into the matching runs.",
+    "mixed": {
+      "title": "Mixed-levels factorial",
+      "intro": "Combines every level of two or more factors with different numbers of levels (for example 3 strains × 2 pH values × 4 agitation speeds), with replicates and a run order drawn with a recorded seed. The analysis is the multi-factor ANOVA, with marginal means and contrasts.",
+      "needFactors": "In the previous step, add at least two named factors with two or more levels typed in the «Levels» field.",
+      "factors": "Factors in the design",
+      "levelCount": "{{count}} levels",
+      "levelsHelp": "Each factor's levels are stored on the factor itself, separated by semicolons or line breaks. Numeric factors enter as named levels.",
+      "replicates": "Replicates of the full combination",
+      "randomize": "Randomize the run order",
+      "count": "{{total}} runs: {{combinations}} combinations × {{replicates}} replicates.",
+      "matrix": "Run order of the mixed-levels factorial",
+      "exportCsv": "Mixed-levels matrix (CSV)"
+    }
   },
   "optimization": {
     "title": "Desirability optimization",

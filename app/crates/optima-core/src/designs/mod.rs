@@ -9,6 +9,7 @@
 //! - [`central_composite`] e [`box_behnken`]: planejamentos de superfície de resposta (ET07);
 //! - [`plackett_burman`]: matrizes de Hadamard (Paley e Sylvester) e colunas fictícias;
 //! - [`completely_randomized`]: delineamento inteiramente casualizado (DIC) de um fator categórico;
+//! - [`mixed_levels`]: fatorial completo de níveis mistos (v0.3);
 //! - [`randomization`]: PCG32 e Fisher–Yates com semente registrada;
 //! - [`generate`]: monta o planejamento (réplicas, pontos centrais, ordem de execução).
 //!
@@ -24,6 +25,7 @@ pub mod completely_randomized;
 pub mod factorial;
 pub mod fractional;
 pub mod generate;
+pub mod mixed_levels;
 pub mod plackett_burman;
 pub mod randomization;
 pub mod randomized_block;

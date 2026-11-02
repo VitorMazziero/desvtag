@@ -90,6 +90,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::DesignMixedGenerate(req) => {
+            match optima_core::designs::mixed_levels::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignMixedGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::DesignAnalyze(req) => {
             match optima_core::designs::analysis::analyze(req.as_ref()) {
                 Ok(result) => Outcome::Ok {

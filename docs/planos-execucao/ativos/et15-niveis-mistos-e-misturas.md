@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** (níveis mistos entregues; misturas pendentes) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F09a (níveis mistos), F09b (misturas) |
 | Marco | Prepara M4 |
 | Depende de | ET14 |
 | Módulos | C13 (`designs/{mixed_levels,mixture}.rs`), C06 (modelos de Scheffé), C16 (gráfico ternário), C17 (otimização em misturas), U06, U08, U09 |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -47,14 +47,14 @@ Gerar e analisar **fatoriais com níveis mistos** (fatores com 2, 3 ou mais nív
 ## 5. Tarefas
 
 - [ ] **T01** — Especificações de método (`docs/metodos/niveis-mistos.md`, `docs/metodos/misturas.md`) e DTs (§4).
-- [ ] **T02** — Núcleo: geração de níveis mistos com aleatorização e estimabilidade; testes e casos independentes.
+- [x] **T02** — (`designs/mixed_levels.rs`, `mixed_levels_validation.rs`, `make_mixed_cases.py`; 6 casos.) Núcleo: geração de níveis mistos com aleatorização e estimabilidade; testes e casos independentes.
 - [ ] **T03** — Núcleo: redes simplex, centroide, axiais, pseudocomponentes e vértices extremos; modelos de Scheffé; casos independentes.
 - [ ] **T04** — Núcleo: traço de Cox, malha ternária e otimização restrita ao simplex.
-- [ ] **T05** — Operações do motor, contratos gerados e paridade WebAssembly × nativo × Tauri.
-- [ ] **T06** — Projeto: tipos de fator novos (campos opcionais) e abertura dos exemplos antigos.
-- [ ] **T07** — Interface: painéis de planejamento, resultados em seções, gráfico ternário (tela e exportação SVG/PNG/PDF), otimização; PT/EN, temas e axe.
-- [ ] **T08** — Planilha de coleta (ET13) para os dois tipos.
-- [ ] **T09** — Exemplos sintéticos, E2E, verificação nativa e documentação.
+- [~] **T05** — *Níveis mistos feitos* (`designMixedGenerate`, contratos, paridade WebAssembly); misturas pendentes. Operações do motor, contratos gerados e paridade WebAssembly × nativo × Tauri.
+- [~] **T06** — *Níveis mistos:* campo opcional `mixed` no experimento (esquema 1), reabertura de projetos antigos sem migração. Projeto: tipos de fator novos (campos opcionais) e abertura dos exemplos antigos.
+- [~] **T07** — *Níveis mistos:* `MixedPanel` (contagem, matriz, CSV/XLSX, planilha de coleta, ANOVA multifatorial). Interface: painéis de planejamento, resultados em seções, gráfico ternário (tela e exportação SVG/PNG/PDF), otimização; PT/EN, temas e axe.
+- [~] **T08** — Planilha de coleta (ET13): feita para níveis mistos (`unit_id` `C<níveis>-R<repetição>`); misturas pendentes.
+- [~] **T09** — E2E de níveis mistos (`methods-flow.spec.ts`) feito; exemplos sintéticos e misturas pendentes. Exemplos sintéticos, E2E, verificação nativa e documentação.
 
 ## 6. Entregas
 
@@ -89,6 +89,7 @@ Especificações e DTs; mapa de módulos (C13); fichas U06/U08/U09; matriz de co
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Etapa não iniciada. |
+| 2026-11-02 | **Ativada.** Níveis mistos implementados e validados (geração idêntica à referência Python; E2E com ANOVA multifatorial). **Misturas (simplex, Scheffé, gráfico ternário) e a variante de estimabilidade em fracionários de níveis mistos continuam pendentes.** |
 
 ## 12. Desvios e descobertas
 

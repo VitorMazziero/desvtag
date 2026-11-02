@@ -7,6 +7,7 @@ use optima_core::comparisons::procedures::ProcedureResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::designs::completely_randomized::GeneratedCrd;
+use optima_core::designs::mixed_levels::GeneratedMixed;
 use optima_core::designs::randomized_block::GeneratedRcbd;
 use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
@@ -87,6 +88,8 @@ pub enum OperationResult {
     DesignCrdGenerate(Box<GeneratedCrd>),
     /// DBC gerado.
     DesignRcbdGenerate(Box<GeneratedRcbd>),
+    /// Fatorial de níveis mistos gerado.
+    DesignMixedGenerate(Box<GeneratedMixed>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.

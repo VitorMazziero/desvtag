@@ -16,6 +16,7 @@ import type {
   FactorKind,
   FactorSpec,
   FigureStyle,
+  MixedSpec,
   OneWayResult,
   OptimizationResult,
   OptimizationSetup,
@@ -91,6 +92,7 @@ export interface ProjectState {
   crd: CrdSpec | null;
   /** Delineamento em blocos completos casualizados gerado para o experimento. */
   rcbd: RcbdSpec | null;
+  mixed: MixedSpec | null;
   /** Personalização gráfica por figura (chave estável da figura → ajustes). */
   figureStyles: Record<string, FigureStyle>;
   factors: FactorDraft[];
@@ -148,6 +150,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     design: null,
     crd: null,
     rcbd: null,
+    mixed: null,
     figureStyles: {},
     factors: [],
     responses: [],
@@ -254,6 +257,14 @@ export type ProjectAction =
       crd: CrdSpec;
       rows: RowDraft[];
       counters: ProjectState["counters"];
+      now: string;
+    }
+  | {
+      type: "applyMixed";
+      mixed: MixedSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      factorial: FactorialSetup;
       now: string;
     }
   | {
@@ -388,6 +399,10 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
       ? state.design
       : null,
     crd: state.crd && data.factors.some((d) => d.id === state.crd?.factorId) ? state.crd : null,
+    mixed:
+      state.mixed && state.mixed.factors.every((f) => data.factors.some((d) => d.id === f.id))
+        ? state.mixed
+        : null,
   };
 }
 
@@ -422,6 +437,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         factors: state.factors.filter((f) => f.id !== action.id),
         crd: state.crd?.factorId === action.id ? null : state.crd,
         rcbd: state.rcbd?.factorId === action.id ? null : state.rcbd,
+        mixed: state.mixed?.factors.some((f) => f.id === action.id) ? null : state.mixed,
         rows: state.rows.map((r) => ({ ...r, factors: r.factors.filter((_, i) => i !== index) })),
         analysis: {
           ...state.analysis,
@@ -501,6 +517,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         design: action.design,
         crd: null,
         rcbd: null,
+        mixed: null,
         // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
         analysis: { ...before.analysis, designTerms: null, responseModels: {} },
         result: null,
@@ -517,6 +534,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         design: null,
         crd: action.crd,
         rcbd: null,
+        mixed: null,
         // O fator do DIC define os grupos da comparação de tratamentos.
         analysis: {
           ...before.analysis,
@@ -537,6 +555,29 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         design: null,
         crd: null,
         rcbd: action.rcbd,
+        mixed: null,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: action.factorial,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "applyMixed": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: null,
+        mixed: action.mixed,
         analysis: {
           ...before.analysis,
           designTerms: null,

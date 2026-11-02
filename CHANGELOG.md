@@ -12,6 +12,10 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Níveis mistos (ET15)
+
+- **Fatorial completo de níveis mistos**: dois a oito fatores com números de níveis diferentes, repetições, aleatorização com semente e planilha de coleta; análise pela ANOVA multifatorial. Geração validada contra a implementação independente em Python (6 casos; Rust e WebAssembly). [Método](docs/metodos/niveis-mistos.md). *Misturas ainda não entregues.*
+
 ### Atualização e verificação (ET14)
 
 - O aviso de atualização mostra as **notas de versão formatadas** (títulos, listas, tabelas e links https, sem HTML); o manifesto e o release trazem só a seção da versão no CHANGELOG, cortada em limite de bloco.

@@ -1,0 +1,1974 @@
+{
+ "id": "mixed_levels_design",
+ "description": "Fatorial de níveis mistos: ordem padrão com o 1.º fator mais rápido; execução = Fisher–Yates/PCG32 sobre a ordem padrão",
+ "cases": [
+  {
+   "factors": [
+    {
+     "name": "Cepa",
+     "levels": [
+      "A",
+      "B",
+      "C"
+     ]
+    },
+    {
+     "name": "pH",
+     "levels": [
+      "5",
+      "7"
+     ]
+    }
+   ],
+   "replicates": 3,
+   "randomize": true,
+   "seed": 42,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 2,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "B",
+      "5"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 9,
+     "levelIndices": [
+      2,
+      0
+     ],
+     "levels": [
+      "C",
+      "5"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 3,
+     "standardOrder": 18,
+     "levelIndices": [
+      2,
+      1
+     ],
+     "levels": [
+      "C",
+      "7"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 4,
+     "standardOrder": 13,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "A",
+      "5"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 5,
+     "standardOrder": 3,
+     "levelIndices": [
+      2,
+      0
+     ],
+     "levels": [
+      "C",
+      "5"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 10,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "A",
+      "7"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 7,
+     "standardOrder": 8,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "B",
+      "5"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 8,
+     "standardOrder": 15,
+     "levelIndices": [
+      2,
+      0
+     ],
+     "levels": [
+      "C",
+      "5"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 9,
+     "standardOrder": 12,
+     "levelIndices": [
+      2,
+      1
+     ],
+     "levels": [
+      "C",
+      "7"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 10,
+     "standardOrder": 5,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "B",
+      "7"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 7,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "A",
+      "5"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 12,
+     "standardOrder": 17,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "B",
+      "7"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 13,
+     "standardOrder": 14,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "B",
+      "5"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 14,
+     "standardOrder": 4,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "A",
+      "7"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 15,
+     "standardOrder": 11,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "B",
+      "7"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 16,
+     "standardOrder": 1,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "A",
+      "5"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 17,
+     "standardOrder": 6,
+     "levelIndices": [
+      2,
+      1
+     ],
+     "levels": [
+      "C",
+      "7"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 18,
+     "standardOrder": 16,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "A",
+      "7"
+     ],
+     "replicate": 3
+    }
+   ]
+  },
+  {
+   "factors": [
+    {
+     "name": "Cepa",
+     "levels": [
+      "A",
+      "B",
+      "C"
+     ]
+    },
+    {
+     "name": "pH",
+     "levels": [
+      "5",
+      "7"
+     ]
+    }
+   ],
+   "replicates": 1,
+   "randomize": false,
+   "seed": 0,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "A",
+      "5"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "B",
+      "5"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "levelIndices": [
+      2,
+      0
+     ],
+     "levels": [
+      "C",
+      "5"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "A",
+      "7"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "B",
+      "7"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "levelIndices": [
+      2,
+      1
+     ],
+     "levels": [
+      "C",
+      "7"
+     ],
+     "replicate": 1
+    }
+   ]
+  },
+  {
+   "factors": [
+    {
+     "name": "Meio",
+     "levels": [
+      "M1",
+      "M2"
+     ]
+    },
+    {
+     "name": "Temperatura",
+     "levels": [
+      "25",
+      "30",
+      "37"
+     ]
+    },
+    {
+     "name": "Agitação",
+     "levels": [
+      "100",
+      "150",
+      "200",
+      "250"
+     ]
+    }
+   ],
+   "replicates": 2,
+   "randomize": true,
+   "seed": 12345,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 25,
+     "levelIndices": [
+      0,
+      0,
+      0
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "100"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 2,
+     "standardOrder": 15,
+     "levelIndices": [
+      0,
+      1,
+      2
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "200"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 3,
+     "standardOrder": 42,
+     "levelIndices": [
+      1,
+      2,
+      2
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "200"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 4,
+     "standardOrder": 6,
+     "levelIndices": [
+      1,
+      2,
+      0
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "100"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 17,
+     "levelIndices": [
+      0,
+      2,
+      2
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "200"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 38,
+     "levelIndices": [
+      1,
+      0,
+      2
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "200"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 7,
+     "standardOrder": 39,
+     "levelIndices": [
+      0,
+      1,
+      2
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "200"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 8,
+     "standardOrder": 23,
+     "levelIndices": [
+      0,
+      2,
+      3
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "250"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 9,
+     "standardOrder": 18,
+     "levelIndices": [
+      1,
+      2,
+      2
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "200"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 7,
+     "levelIndices": [
+      0,
+      0,
+      1
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "150"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 43,
+     "levelIndices": [
+      0,
+      0,
+      3
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "250"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 12,
+     "standardOrder": 19,
+     "levelIndices": [
+      0,
+      0,
+      3
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "250"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 47,
+     "levelIndices": [
+      0,
+      2,
+      3
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "250"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 14,
+     "standardOrder": 41,
+     "levelIndices": [
+      0,
+      2,
+      2
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "200"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 15,
+     "standardOrder": 45,
+     "levelIndices": [
+      0,
+      1,
+      3
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "250"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 16,
+     "standardOrder": 11,
+     "levelIndices": [
+      0,
+      2,
+      1
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "150"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 17,
+     "standardOrder": 28,
+     "levelIndices": [
+      1,
+      1,
+      0
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "100"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 18,
+     "standardOrder": 31,
+     "levelIndices": [
+      0,
+      0,
+      1
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "150"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 19,
+     "standardOrder": 48,
+     "levelIndices": [
+      1,
+      2,
+      3
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "250"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 20,
+     "standardOrder": 36,
+     "levelIndices": [
+      1,
+      2,
+      1
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "150"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 21,
+     "standardOrder": 20,
+     "levelIndices": [
+      1,
+      0,
+      3
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "250"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 22,
+     "standardOrder": 24,
+     "levelIndices": [
+      1,
+      2,
+      3
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "250"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 23,
+     "standardOrder": 10,
+     "levelIndices": [
+      1,
+      1,
+      1
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "150"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 24,
+     "standardOrder": 9,
+     "levelIndices": [
+      0,
+      1,
+      1
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "150"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 25,
+     "standardOrder": 16,
+     "levelIndices": [
+      1,
+      1,
+      2
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "200"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 26,
+     "standardOrder": 21,
+     "levelIndices": [
+      0,
+      1,
+      3
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "250"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 27,
+     "standardOrder": 1,
+     "levelIndices": [
+      0,
+      0,
+      0
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "100"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 28,
+     "standardOrder": 40,
+     "levelIndices": [
+      1,
+      1,
+      2
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "200"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 29,
+     "standardOrder": 13,
+     "levelIndices": [
+      0,
+      0,
+      2
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "200"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 30,
+     "standardOrder": 27,
+     "levelIndices": [
+      0,
+      1,
+      0
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "100"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 31,
+     "standardOrder": 35,
+     "levelIndices": [
+      0,
+      2,
+      1
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "150"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 32,
+     "standardOrder": 34,
+     "levelIndices": [
+      1,
+      1,
+      1
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "150"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 33,
+     "standardOrder": 5,
+     "levelIndices": [
+      0,
+      2,
+      0
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "100"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 34,
+     "standardOrder": 33,
+     "levelIndices": [
+      0,
+      1,
+      1
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "150"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 35,
+     "standardOrder": 4,
+     "levelIndices": [
+      1,
+      1,
+      0
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "100"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 36,
+     "standardOrder": 12,
+     "levelIndices": [
+      1,
+      2,
+      1
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "150"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 37,
+     "standardOrder": 22,
+     "levelIndices": [
+      1,
+      1,
+      3
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "250"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 38,
+     "standardOrder": 3,
+     "levelIndices": [
+      0,
+      1,
+      0
+     ],
+     "levels": [
+      "M1",
+      "30",
+      "100"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 39,
+     "standardOrder": 32,
+     "levelIndices": [
+      1,
+      0,
+      1
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "150"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 40,
+     "standardOrder": 46,
+     "levelIndices": [
+      1,
+      1,
+      3
+     ],
+     "levels": [
+      "M2",
+      "30",
+      "250"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 41,
+     "standardOrder": 29,
+     "levelIndices": [
+      0,
+      2,
+      0
+     ],
+     "levels": [
+      "M1",
+      "37",
+      "100"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 42,
+     "standardOrder": 44,
+     "levelIndices": [
+      1,
+      0,
+      3
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "250"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 43,
+     "standardOrder": 37,
+     "levelIndices": [
+      0,
+      0,
+      2
+     ],
+     "levels": [
+      "M1",
+      "25",
+      "200"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 44,
+     "standardOrder": 2,
+     "levelIndices": [
+      1,
+      0,
+      0
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "100"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 45,
+     "standardOrder": 8,
+     "levelIndices": [
+      1,
+      0,
+      1
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "150"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 46,
+     "standardOrder": 14,
+     "levelIndices": [
+      1,
+      0,
+      2
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "200"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 47,
+     "standardOrder": 30,
+     "levelIndices": [
+      1,
+      2,
+      0
+     ],
+     "levels": [
+      "M2",
+      "37",
+      "100"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 48,
+     "standardOrder": 26,
+     "levelIndices": [
+      1,
+      0,
+      0
+     ],
+     "levels": [
+      "M2",
+      "25",
+      "100"
+     ],
+     "replicate": 2
+    }
+   ]
+  },
+  {
+   "factors": [
+    {
+     "name": "A",
+     "levels": [
+      "a1",
+      "a2"
+     ]
+    },
+    {
+     "name": "B",
+     "levels": [
+      "b1",
+      "b2",
+      "b3"
+     ]
+    },
+    {
+     "name": "C",
+     "levels": [
+      "c1",
+      "c2"
+     ]
+    }
+   ],
+   "replicates": 2,
+   "randomize": false,
+   "seed": 7,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "levelIndices": [
+      0,
+      0,
+      0
+     ],
+     "levels": [
+      "a1",
+      "b1",
+      "c1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "levelIndices": [
+      1,
+      0,
+      0
+     ],
+     "levels": [
+      "a2",
+      "b1",
+      "c1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "levelIndices": [
+      0,
+      1,
+      0
+     ],
+     "levels": [
+      "a1",
+      "b2",
+      "c1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "levelIndices": [
+      1,
+      1,
+      0
+     ],
+     "levels": [
+      "a2",
+      "b2",
+      "c1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "levelIndices": [
+      0,
+      2,
+      0
+     ],
+     "levels": [
+      "a1",
+      "b3",
+      "c1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "levelIndices": [
+      1,
+      2,
+      0
+     ],
+     "levels": [
+      "a2",
+      "b3",
+      "c1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 7,
+     "levelIndices": [
+      0,
+      0,
+      1
+     ],
+     "levels": [
+      "a1",
+      "b1",
+      "c2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 8,
+     "standardOrder": 8,
+     "levelIndices": [
+      1,
+      0,
+      1
+     ],
+     "levels": [
+      "a2",
+      "b1",
+      "c2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 9,
+     "standardOrder": 9,
+     "levelIndices": [
+      0,
+      1,
+      1
+     ],
+     "levels": [
+      "a1",
+      "b2",
+      "c2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 10,
+     "levelIndices": [
+      1,
+      1,
+      1
+     ],
+     "levels": [
+      "a2",
+      "b2",
+      "c2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 11,
+     "levelIndices": [
+      0,
+      2,
+      1
+     ],
+     "levels": [
+      "a1",
+      "b3",
+      "c2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 12,
+     "standardOrder": 12,
+     "levelIndices": [
+      1,
+      2,
+      1
+     ],
+     "levels": [
+      "a2",
+      "b3",
+      "c2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 13,
+     "levelIndices": [
+      0,
+      0,
+      0
+     ],
+     "levels": [
+      "a1",
+      "b1",
+      "c1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 14,
+     "standardOrder": 14,
+     "levelIndices": [
+      1,
+      0,
+      0
+     ],
+     "levels": [
+      "a2",
+      "b1",
+      "c1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 15,
+     "standardOrder": 15,
+     "levelIndices": [
+      0,
+      1,
+      0
+     ],
+     "levels": [
+      "a1",
+      "b2",
+      "c1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 16,
+     "standardOrder": 16,
+     "levelIndices": [
+      1,
+      1,
+      0
+     ],
+     "levels": [
+      "a2",
+      "b2",
+      "c1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 17,
+     "standardOrder": 17,
+     "levelIndices": [
+      0,
+      2,
+      0
+     ],
+     "levels": [
+      "a1",
+      "b3",
+      "c1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 18,
+     "standardOrder": 18,
+     "levelIndices": [
+      1,
+      2,
+      0
+     ],
+     "levels": [
+      "a2",
+      "b3",
+      "c1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 19,
+     "standardOrder": 19,
+     "levelIndices": [
+      0,
+      0,
+      1
+     ],
+     "levels": [
+      "a1",
+      "b1",
+      "c2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 20,
+     "standardOrder": 20,
+     "levelIndices": [
+      1,
+      0,
+      1
+     ],
+     "levels": [
+      "a2",
+      "b1",
+      "c2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 21,
+     "standardOrder": 21,
+     "levelIndices": [
+      0,
+      1,
+      1
+     ],
+     "levels": [
+      "a1",
+      "b2",
+      "c2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 22,
+     "standardOrder": 22,
+     "levelIndices": [
+      1,
+      1,
+      1
+     ],
+     "levels": [
+      "a2",
+      "b2",
+      "c2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 23,
+     "standardOrder": 23,
+     "levelIndices": [
+      0,
+      2,
+      1
+     ],
+     "levels": [
+      "a1",
+      "b3",
+      "c2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 24,
+     "standardOrder": 24,
+     "levelIndices": [
+      1,
+      2,
+      1
+     ],
+     "levels": [
+      "a2",
+      "b3",
+      "c2"
+     ],
+     "replicate": 2
+    }
+   ]
+  },
+  {
+   "factors": [
+    {
+     "name": "X",
+     "levels": [
+      "x1",
+      "x2",
+      "x3",
+      "x4"
+     ]
+    },
+    {
+     "name": "Y",
+     "levels": [
+      "y1",
+      "y2"
+     ]
+    }
+   ],
+   "replicates": 2,
+   "randomize": true,
+   "seed": 9007199254740991,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 4,
+     "levelIndices": [
+      3,
+      0
+     ],
+     "levels": [
+      "x4",
+      "y1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 12,
+     "levelIndices": [
+      3,
+      0
+     ],
+     "levels": [
+      "x4",
+      "y1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 3,
+     "standardOrder": 11,
+     "levelIndices": [
+      2,
+      0
+     ],
+     "levels": [
+      "x3",
+      "y1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 4,
+     "standardOrder": 9,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "x1",
+      "y1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 5,
+     "standardOrder": 6,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "x2",
+      "y2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 3,
+     "levelIndices": [
+      2,
+      0
+     ],
+     "levels": [
+      "x3",
+      "y1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 16,
+     "levelIndices": [
+      3,
+      1
+     ],
+     "levels": [
+      "x4",
+      "y2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 8,
+     "standardOrder": 8,
+     "levelIndices": [
+      3,
+      1
+     ],
+     "levels": [
+      "x4",
+      "y2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 9,
+     "standardOrder": 2,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "x2",
+      "y1"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 13,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "x1",
+      "y2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 11,
+     "standardOrder": 10,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "x2",
+      "y1"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 12,
+     "standardOrder": 5,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "x1",
+      "y2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 14,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "x2",
+      "y2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 14,
+     "standardOrder": 7,
+     "levelIndices": [
+      2,
+      1
+     ],
+     "levels": [
+      "x3",
+      "y2"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 15,
+     "standardOrder": 15,
+     "levelIndices": [
+      2,
+      1
+     ],
+     "levels": [
+      "x3",
+      "y2"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 16,
+     "standardOrder": 1,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "x1",
+      "y1"
+     ],
+     "replicate": 1
+    }
+   ]
+  },
+  {
+   "factors": [
+    {
+     "name": "F1",
+     "levels": [
+      "a",
+      "b"
+     ]
+    },
+    {
+     "name": "F2",
+     "levels": [
+      "c",
+      "d"
+     ]
+    }
+   ],
+   "replicates": 4,
+   "randomize": true,
+   "seed": 9223372036854775813,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 13,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "a",
+      "c"
+     ],
+     "replicate": 4
+    },
+    {
+     "run": 2,
+     "standardOrder": 5,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "a",
+      "c"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 3,
+     "standardOrder": 10,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "b",
+      "c"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 4,
+     "standardOrder": 16,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "b",
+      "d"
+     ],
+     "replicate": 4
+    },
+    {
+     "run": 5,
+     "standardOrder": 6,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "b",
+      "c"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 6,
+     "standardOrder": 3,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "a",
+      "d"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 7,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "a",
+      "d"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 8,
+     "standardOrder": 14,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "b",
+      "c"
+     ],
+     "replicate": 4
+    },
+    {
+     "run": 9,
+     "standardOrder": 1,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "a",
+      "c"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 2,
+     "levelIndices": [
+      1,
+      0
+     ],
+     "levels": [
+      "b",
+      "c"
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 11,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "a",
+      "d"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 12,
+     "standardOrder": 8,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "b",
+      "d"
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 13,
+     "standardOrder": 15,
+     "levelIndices": [
+      0,
+      1
+     ],
+     "levels": [
+      "a",
+      "d"
+     ],
+     "replicate": 4
+    },
+    {
+     "run": 14,
+     "standardOrder": 12,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "b",
+      "d"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 15,
+     "standardOrder": 9,
+     "levelIndices": [
+      0,
+      0
+     ],
+     "levels": [
+      "a",
+      "c"
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 16,
+     "standardOrder": 4,
+     "levelIndices": [
+      1,
+      1
+     ],
+     "levels": [
+      "b",
+      "d"
+     ],
+     "replicate": 1
+    }
+   ]
+  }
+ ]
+}

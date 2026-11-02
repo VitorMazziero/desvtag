@@ -57,7 +57,7 @@ Este relatório distingue o que **foi executado e tem evidência** do que **perm
 
 ### CI
 
-O fluxo `CI` roda Rust, Web (E2E), Tauri em Linux, Tauri em `windows-latest` (agora em todo push, com o repositório público) e documentação. A [execução 41341992701](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41341992701) (commit `bfab182`, ET09) foi aprovada em todos os jobs, inclusive o do Windows com a verificação nativa de `exportXlsx`. O resultado da execução do commit de fechamento é registrado no [plano da ET10](../../../docs/planos-execucao/ativos/et10-integracao-publicacao.md) quando concluir.
+O fluxo `CI` roda Rust, Web (E2E), Tauri em Linux, Tauri em `windows-latest` (agora em todo push, com o repositório público) e documentação. A [execução 41341992701](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41341992701) (commit `bfab182`, ET09) foi aprovada em todos os jobs, inclusive o do Windows com a verificação nativa de `exportXlsx`. O resultado da execução do commit de fechamento é registrado no [plano da ET10](../../../docs/planos-execucao/concluidos/et10-integracao-publicacao.md) quando concluir.
 
 ## Validação numérica (referências independentes)
 

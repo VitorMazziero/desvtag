@@ -5,6 +5,7 @@ use optima_core::comparisons::procedures::ProcedureRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::completely_randomized::CrdSpec;
+use optima_core::designs::mixed_levels::MixedSpec;
 use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
@@ -40,6 +41,8 @@ pub enum Operation {
     DesignCrdGenerate(CrdSpec),
     /// Gera um delineamento em blocos completos casualizados (`design.rcbdGenerate`).
     DesignRcbdGenerate(RcbdSpec),
+    /// Gera um fatorial completo de níveis mistos (`design.mixedGenerate`).
+    DesignMixedGenerate(MixedSpec),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).

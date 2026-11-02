@@ -175,4 +175,26 @@ describe("v0.2 operations in WebAssembly", () => {
       );
     }
   });
+  it("mixed-levels design (WebAssembly) equals the independent implementation", () => {
+    const cases = (read("mixed_levels_design/mixed.json").cases as Json[]).filter((c) =>
+      Number.isSafeInteger(c.seed),
+    );
+    expect(cases.length).toBeGreaterThanOrEqual(4);
+    for (const c of cases) {
+      const result = call({
+        type: "designMixedGenerate",
+        factors: (c.factors as Json[]).map((f, i) => ({
+          id: `f${i + 1}`,
+          name: f.name,
+          levels: f.levels,
+        })),
+        replicates: c.replicates,
+        randomize: c.randomize,
+        seed: c.seed,
+      });
+      expect(result.runs.map((r: Json) => [r.standardOrder, r.levelIndices, r.replicate])).toEqual(
+        (c.runs as Json[]).map((r) => [r.standardOrder, r.levelIndices, r.replicate]),
+      );
+    }
+  });
 });
