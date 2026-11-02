@@ -2,7 +2,7 @@
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { applyChartStyle, applyFigureStyle } from "../../services/charts";
-import { addPngText, svgToPng, utf8 } from "../../services/export";
+import { addPngText, figurePdf, svgToPng, utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
@@ -87,6 +87,18 @@ export function ChartFigure({
                 )
               )?.name ?? null,
             );
+          }}
+          onError={() => setMessage(t("comparison.export.failed"))}
+        />
+        <ExportButton
+          label={`${t("comparison.export.figure")} — ${t("comparison.export.pdf")}`}
+          onExport={async () => {
+            const bytes = await figurePdf(exportSvg, {
+              title: fileBase,
+              subject: pngMetadata.slice(0, 900),
+              creator: "EnziTAG Optima",
+            });
+            finish((await storage.exportFile(bytes, `${fileBase}.pdf`))?.name ?? null);
           }}
           onError={() => setMessage(t("comparison.export.failed"))}
         />

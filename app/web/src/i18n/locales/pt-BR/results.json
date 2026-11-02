@@ -222,7 +222,8 @@
       "failed": "Não foi possível exportar o arquivo.",
       "cancelled": "Exportação cancelada.",
       "sheetGroups": "Grupos",
-      "sheetPairs": "Pares"
+      "sheetPairs": "Pares",
+      "pdf": "PDF"
     },
     "warnings": "Avisos"
   },
@@ -404,7 +405,10 @@
       "title": "Relatório",
       "subtitle": "Relatório gerado pelo EnziTAG Optima: método, configuração, tabelas, figuras e interpretação.",
       "provenance": "Proveniência",
-      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente."
+      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente.",
+      "buttonPdf": "Exportar relatório (PDF)",
+      "footerPdf": "EnziTAG Optima {{version}} — PDF gerado localmente; as figuras são vetoriais.",
+      "page": "Página {{page}} de {{total}}"
     }
   },
   "figure": {

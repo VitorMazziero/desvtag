@@ -6,7 +6,7 @@
 import { esc } from "../charts/svg";
 
 /** Remove controles e troca cada figura pela versão de exportação (cores fixas, fundo branco). */
-export function cleanReportDom(root: HTMLElement): string {
+export function cleanReportRoot(root: HTMLElement): HTMLElement {
   const clone = root.cloneNode(true) as HTMLElement;
   for (const canvas of clone.querySelectorAll<HTMLElement>("[data-export-svg]")) {
     canvas.innerHTML = canvas.getAttribute("data-export-svg") ?? "";
@@ -21,7 +21,12 @@ export function cleanReportDom(root: HTMLElement): string {
     // Ids dos títulos de seção (referenciados por aria-labelledby) são mantidos; os demais saem.
     if (!el.id.endsWith("-title")) el.removeAttribute("id");
   }
-  return clone.innerHTML;
+  return clone;
+}
+
+/** Mesmo conteúdo, como HTML, para o relatório autocontido. */
+export function cleanReportDom(root: HTMLElement): string {
+  return cleanReportRoot(root).innerHTML;
 }
 
 export interface ReportInput {

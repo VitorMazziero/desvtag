@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
@@ -88,6 +88,36 @@ test.describe("exportação", () => {
       page.getByRole("heading", { name: "Otimização", exact: false }).first(),
     ).toBeVisible();
     await expect(page.locator("[data-report-root]")).toHaveCount(0);
+  });
+
+  test("PDF do relatório e da figura: arquivo válido, fontes embutidas e figuras vetoriais", async ({
+    page,
+  }) => {
+    test.setTimeout(120_000);
+    await openExample(page);
+    await page.getByLabel("Idioma dos arquivos exportados").selectOption("en");
+    const report = page.waitForEvent("download");
+    await page.getByTestId("report-pdf-button").click();
+    const reportFile = await report;
+    expect(reportFile.suggestedFilename()).toMatch(/-relatorio\.pdf$/);
+    const bytes = readFileSync((await reportFile.path()) as string);
+    expect(bytes.subarray(0, 5).toString("latin1")).toBe("%PDF-");
+    expect(bytes.length).toBeGreaterThan(30_000);
+    expect(bytes.toString("latin1")).toContain("%%EOF");
+    expect(bytes.toString("latin1")).toContain("Roboto");
+    const keep = process.env.ENZITAG_KEEP_DIR;
+    if (keep) writeFileSync(`${keep}/relatorio.pdf`, bytes);
+
+    const figure = page.getByTestId("surface-contour").first();
+    const target = (await figure.count()) > 0 ? figure : page.locator("figure.chart").first();
+    const figureDownload = page.waitForEvent("download");
+    await target.getByRole("button", { name: /Figura — PDF/ }).click();
+    const figureFile = await figureDownload;
+    expect(figureFile.suggestedFilename()).toMatch(/\.pdf$/);
+    const figureBytes = readFileSync((await figureFile.path()) as string);
+    expect(figureBytes.subarray(0, 5).toString("latin1")).toBe("%PDF-");
+    expect(figureBytes.toString("latin1")).toContain("%%EOF");
+    if (keep) writeFileSync(`${keep}/figura.pdf`, figureBytes);
   });
 
   test("interface em inglês com relatório em português", async ({ page }) => {

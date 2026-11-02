@@ -74,6 +74,7 @@ export function ExportSettingsPanel() {
       <p className="muted small">{t("export.deviceNote")}</p>
       <div className="row">
         <ReportButton onDone={setNotice} />
+        <ReportButton onDone={setNotice} format="pdf" />
       </div>
       {notice && (
         <p role="status" className="muted" data-testid="export-notice">

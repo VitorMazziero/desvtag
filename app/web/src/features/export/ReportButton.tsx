@@ -4,7 +4,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { nowIso } from "../../lib/ids";
-import { buildReportHtml, cleanReportDom, exportLanguage, utf8 } from "../../services/export";
+import {
+  buildReportHtml,
+  cleanReportDom,
+  cleanReportRoot,
+  exportLanguage,
+  reportPdf,
+  utf8,
+} from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
@@ -33,7 +40,13 @@ async function settled(root: HTMLElement): Promise<void> {
   }
 }
 
-export function ReportButton({ onDone }: { onDone: (message: string) => void }) {
+export function ReportButton({
+  onDone,
+  format = "html",
+}: {
+  onDone: (message: string) => void;
+  format?: "html" | "pdf";
+}) {
   const { t, i18n } = useTranslation("results");
   const state = useProject();
   const workspace = useWorkspace();
@@ -71,16 +84,41 @@ export function ReportButton({ onDone }: { onDone: (message: string) => void }) 
           ["exportLanguage", language],
           ["exportedAt", nowIso()],
         ];
-        const html = buildReportHtml({
-          language,
-          title: `${state.name} — ${tt("export.report.title")}`,
-          subtitle: tt("export.report.subtitle"),
-          provenanceTitle: tt("export.report.provenance"),
-          provenance: provenance.filter(([, v]) => v !== ""),
-          bodyHtml: cleanReportDom(el),
-          footer: tt("export.report.footer", { version: APP_VERSION }),
-        });
-        const saved = await storage.exportFile(utf8(html), `${slug(state.name)}-relatorio.html`);
+        const pairs = provenance.filter(([, v]) => v !== "");
+        const title = `${state.name} — ${tt("export.report.title")}`;
+        let saved: { name: string } | null;
+        if (format === "pdf") {
+          const bytes = await reportPdf({
+            info: {
+              title,
+              subject: tt("export.report.subtitle"),
+              keywords: pairs
+                .map(([k, v]) => `${k}=${v}`)
+                .join("; ")
+                .slice(0, 900),
+              creator: `EnziTAG Optima ${APP_VERSION}`,
+            },
+            title,
+            subtitle: tt("export.report.subtitle"),
+            provenanceTitle: tt("export.report.provenance"),
+            provenance: pairs,
+            body: cleanReportRoot(el),
+            footer: tt("export.report.footerPdf", { version: APP_VERSION }),
+            pageLabel: (page, total) => tt("export.report.page", { page, total }),
+          });
+          saved = await storage.exportFile(bytes, `${slug(state.name)}-relatorio.pdf`);
+        } else {
+          const html = buildReportHtml({
+            language,
+            title,
+            subtitle: tt("export.report.subtitle"),
+            provenanceTitle: tt("export.report.provenance"),
+            provenance: pairs,
+            bodyHtml: cleanReportDom(el),
+            footer: tt("export.report.footer", { version: APP_VERSION }),
+          });
+          saved = await storage.exportFile(utf8(html), `${slug(state.name)}-relatorio.html`);
+        }
         onDone(
           saved === null
             ? t("comparison.export.cancelled")
@@ -104,9 +142,11 @@ export function ReportButton({ onDone }: { onDone: (message: string) => void }) 
         className="button secondary small"
         disabled={building || !stored}
         onClick={() => setBuilding(true)}
-        data-testid="report-button"
+        data-testid={format === "pdf" ? "report-pdf-button" : "report-button"}
       >
-        {building ? t("export.report.building") : t("export.report.button")}
+        {building
+          ? t("export.report.building")
+          : t(format === "pdf" ? "export.report.buttonPdf" : "export.report.button")}
       </button>
       {building && (
         <div ref={root} hidden aria-hidden="true" data-report-root>
