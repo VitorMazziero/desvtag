@@ -32,6 +32,7 @@
     "@fontsource/source-serif-4": "5.3.1",
     "@tauri-apps/api": "2.12.4",
     "@tauri-apps/plugin-updater": "2.14.1",
+    "docx": "9.15.1",
     "i18next": "26.6.0",
     "pdfmake": "0.3.13",
     "react": "19.3.1",

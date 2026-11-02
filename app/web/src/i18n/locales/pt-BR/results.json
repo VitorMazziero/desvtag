@@ -408,7 +408,8 @@
       "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente.",
       "buttonPdf": "Exportar relatório (PDF)",
       "footerPdf": "EnziTAG Optima {{version}} — PDF gerado localmente; as figuras são vetoriais.",
-      "page": "Página {{page}} de {{total}}"
+      "page": "Página {{page}} de {{total}}",
+      "buttonDocx": "Exportar relatório (Word)"
     },
     "logo": "Incluir o logotipo do grupo nos relatórios"
   },

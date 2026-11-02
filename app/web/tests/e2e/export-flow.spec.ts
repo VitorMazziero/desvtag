@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
+import { strFromU8, unzipSync } from "fflate";
 import { showAllSections } from "./showAll";
 
 // Exportação essencial (ET09) com o motor Rust real: tabelas em CSV (dois formatos) e XLSX,
@@ -121,6 +122,67 @@ test.describe("exportação", () => {
     expect(figureBytes.subarray(0, 5).toString("latin1")).toBe("%PDF-");
     expect(figureBytes.toString("latin1")).toContain("%%EOF");
     if (keep) writeFileSync(`${keep}/figura.pdf`, figureBytes);
+  });
+
+  test("Word do relatório: pacote válido com o mesmo conteúdo do relatório HTML", async ({
+    page,
+  }) => {
+    test.setTimeout(120_000);
+    await openExample(page);
+    await page.getByLabel("Idioma dos arquivos exportados").selectOption("en");
+    const htmlDownload = page.waitForEvent("download");
+    await page.getByTestId("report-button").click();
+    const html = readFileSync((await (await htmlDownload).path()) as string, "utf8");
+
+    const wordDownload = page.waitForEvent("download");
+    await page.getByTestId("report-docx-button").click();
+    const wordFile = await wordDownload;
+    expect(wordFile.suggestedFilename()).toMatch(/-relatorio\.docx$/);
+    const bytes = readFileSync((await wordFile.path()) as string);
+    // Um .docx é um zip (assinatura «PK») com o documento principal e as figuras em PNG.
+    expect(bytes.subarray(0, 2).toString("latin1")).toBe("PK");
+    const files = unzipSync(new Uint8Array(bytes));
+    expect(Object.keys(files)).toEqual(
+      expect.arrayContaining(["[Content_Types].xml", "word/document.xml", "word/footer1.xml"]),
+    );
+    const media = Object.keys(files).filter((f) => f.startsWith("word/media/"));
+    expect(media.length).toBeGreaterThan(0);
+    for (const name of media) {
+      const png = files[name] as Uint8Array;
+      expect(Buffer.from(png.subarray(1, 4)).toString("latin1")).toBe("PNG");
+      expect(png.length).toBeGreaterThan(1_000);
+    }
+    const document = strFromU8(files["word/document.xml"] as Uint8Array);
+    const decoded = document
+      .replace(/<[^>]+>/g, "")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'");
+    // Todo título do relatório HTML aparece no Word, na mesma ordem.
+    const headings = [...html.matchAll(/<h[1-3][^>]*>([\s\S]*?)<\/h[1-3]>/g)]
+      .map((m) =>
+        (m[1] ?? "")
+          .replace(/<[^>]+>/g, "")
+          .replace(/&amp;/g, "&")
+          .replace(/&lt;/g, "<")
+          .replace(/&gt;/g, ">")
+          .replace(/\s+/g, " ")
+          .trim(),
+      )
+      .filter((h) => h !== "");
+    expect(headings.length).toBeGreaterThan(3);
+    let from = 0;
+    for (const heading of headings) {
+      const at = decoded.indexOf(heading, from);
+      expect(at, `título «${heading}» ausente ou fora de ordem no Word`).toBeGreaterThanOrEqual(0);
+      from = at + heading.length;
+    }
+    expect(decoded).toContain("Desirability optimization");
+    expect(document).not.toContain("{{");
+    const keep = process.env.ENZITAG_KEEP_DIR;
+    if (keep) writeFileSync(`${keep}/relatorio.docx`, bytes);
   });
 
   test("interface em inglês com relatório em português", async ({ page }) => {

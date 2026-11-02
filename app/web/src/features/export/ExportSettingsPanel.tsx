@@ -83,6 +83,7 @@ export function ExportSettingsPanel() {
       <div className="row">
         <ReportButton onDone={setNotice} />
         <ReportButton onDone={setNotice} format="pdf" />
+        <ReportButton onDone={setNotice} format="docx" />
       </div>
       {notice && (
         <p role="status" className="muted" data-testid="export-notice">
