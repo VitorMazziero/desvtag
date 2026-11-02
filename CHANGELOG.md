@@ -2,13 +2,61 @@
 
 Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). O produto segue versionamento semântico; a `0.x` é o **canal experimental**.
 
-## Planejado para 0.2
+## Planejado (ainda não implementado)
 
-- Migração do Node.js 22 para o 26 como primeira tarefa da ET11, antes de novas funcionalidades ([DT-0015](docs/decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)). Ainda não executada; a 0.1 permanece no Node 22.
+- Seleção de modelos para os efeitos de planejamentos de dois níveis (T09 da ET11).
+- Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
+- Candidatos fora da v0.2: DOCX, Google Drive, Windows 11 e Safari verificados.
 
-## [0.1.0] — candidata pronta, aguardando publicação
+## [0.2.0] — candidata local (ramo `feat/v0.2`; não publicada)
 
-> Esta versão está **pronta localmente e ainda não foi publicada** (sem etiqueta, release nem Pages). O texto abaixo descreve o que ela contém e a situação de validação; ver o [relatório de validação](validation/reports/v0.1.0/README.md).
+> Nenhuma etiqueta, release ou publicação no Pages existe para a 0.2.0. A 0.1.0 continua sendo a única versão com etiqueta (web publicada; instalador em rascunho). Evidências em [validation/reports/v0.2.0](validation/reports/v0.2.0/README.md).
+
+### Mudanças de ferramenta e desempenho
+
+- **Node.js 22 → 26** (primeira tarefa da etapa, antes das funcionalidades; [DT-0015](docs/decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)).
+- **Valor-p de Tukey mais rápido** (tabela de Chebyshev de `W(w; k)`, [DT-0019](docs/decisoes-tecnicas/dt-0019-procedimentos-de-comparacao-anova-multifatorial-e-dbc.md)): 40 grupos × 30 repetições de ≈ 5,0 s para ≈ 61 ms e 100 grupos × 30 de ≈ 30 s para ≈ 126 ms, medidos com o código da 0.1 e o da 0.2 na mesma máquina ([limites operacionais](docs/arquitetura/limites-operacionais.md)).
+
+### Métodos novos (todos validados contra referências independentes)
+
+| Método | Referência independente |
+|---|---|
+| Games–Howell (ANOVA de Welch), Bonferroni, Holm | statsmodels, SciPy, scikit-posthocs |
+| Dunnett exato (tamanhos desiguais) | integração dupla própria; `scipy.stats.dunnett` |
+| Kruskal–Wallis com comparações de Dunn (empates, Bonferroni ou Holm) | SciPy, scikit-posthocs |
+| ANOVA multifatorial com blocos (tipos I, II e III), médias marginais, comparações e contrastes | statsmodels |
+| Delineamento em blocos completos casualizados (DBC), aleatorizado e reprodutível | PCG32 e Fisher–Yates em Python |
+| Seleção e comparação de modelos de superfície (PRESS, `R²` predito, AICc, BIC, eliminação regressiva com hierarquia) | statsmodels |
+
+### Aplicativo
+
+- **Resultados em seções com barra lateral** (resumo, tabelas, efeitos, modelo, diagnósticos, figuras, otimização, confirmação) e **exportação por último**; a opção «mostrar todas as seções» preserva a página longa ([DT-0018](docs/decisoes-tecnicas/dt-0018-selecao-de-modelos-e-resultados-em-secoes.md)).
+- **Modelo: termos e comparação:** ligue e desligue termos, compare o modelo completo, o atual e o recomendado e siga a sequência de remoções sugerida (com avisos de falta de ajuste, poucos graus de liberdade e sobreajuste).
+- **Comparação de tratamentos:** escolha do procedimento (Tukey, Games–Howell, Dunnett com controle, Bonferroni, Holm, Kruskal–Wallis/Dunn) ou **vários fatores** com bloco, tipo de soma de quadrados, médias marginais e contrastes.
+- **Planejar:** além do DIC, o **DBC aleatorizado** (blocos e tratamentos nomeados, semente registrada, matriz em CSV/XLSX e análise já preparada com o bloco).
+- **Figuras:** letras manuais (identificadas como manuais na legenda), anotações livres, cor, fundo transparente, fonte, grade, legenda e resolução do PNG, salvas no projeto ([DT-0020](docs/decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)).
+- **PDF** de figuras (vetorial) e de relatórios (A4, mesmo conteúdo do relatório HTML), com fonte embutida, gerado localmente; verificado no navegador e no aplicativo Windows.
+- **Seis temas:** Industrial, Organic e Clay (ET12) além de Soft Light, Modern Dark e Professional, com tokens de relevo e rebaixo, fontes IBM Plex Mono e Source Serif 4, contraste e axe verificados; o **logotipo do grupo** no cabeçalho, na tela inicial e como crédito nos relatórios HTML e PDF (desligável); o logo não é coberto pela licença MIT ([DT-0021](docs/decisoes-tecnicas/dt-0021-temas-adicionais-fontes-e-logo.md)).
+- **Um modelo por resposta** (gravado no projeto e usado pela otimização), **seção ativa lembrada** e resultados em seções também na comparação de um fator e nos planejamentos de dois níveis; exemplo sintético [06 — kLa](examples/06-kla-sintetico/README.md).
+- **Plataforma Windows 10** (decisão do usuário, [§16](docs/produto/decisoes-aprovadas.md#16-escopo-e-plataforma-da-v02-2026-11-01)): aplicativo verificado no Windows 10 Pro 22H2 e em `windows-latest`.
+
+### Compatibilidade
+
+Projetos da 0.1 abrem sem migração (`schemaVersion` permanece 1; campos novos são opcionais). Uma versão anterior ignora os campos novos de um projeto da 0.2.
+
+### Limitações conhecidas
+
+- **Windows 11 não verificado.**
+- O instalador **não tem assinatura de código** (o Windows pode avisar na primeira execução); a atualização ponta a ponta continua não verificada.
+- Os dados reais do exemplo kLa não foram distribuídos (PD-16); o exemplo do repositório é sintético.
+- PDF: a família de fonte da figura e o hachurado da extrapolação não são reproduzidos (usa Roboto normal; sombreado no lugar do hachurado).
+- Operações novas (procedimentos adicionais, ANOVA multifatorial, DBC, seleção) **não foram medidas no limite**; o Dunnett exato pode ser lento com muitos tratamentos (não caracterizado).
+- A otimização continua sendo uma busca local com vários inícios: **não prova ótimo global**.
+- Sem DOCX nem Google Drive. Marcos M1–M3 não declarados.
+
+## [0.1.0] — versão web publicada; instalador em rascunho
+
+> A **versão web foi publicada em 2026-11-01** (https://vitormazziero.github.io/enzitag-optima/) e a etiqueta `v0.1.0` existe. O **instalador do Windows ainda é um rascunho de release** (não publicado) e a atualização não foi verificada; ver o [registro de publicação](docs/distribuicao/publicacao.md#registro-do-que-foi-executado) e o [relatório de validação](validation/reports/v0.1.0/README.md).
 
 ### Métodos e variantes disponíveis
 

@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
 
 // Superfície de resposta com o motor Rust real (WebAssembly): planejar (CCD e Box–Behnken) →
 // preencher → ajustar → equação, falta de ajuste, malha, extrapolação e exportação; e matriz
@@ -22,6 +23,10 @@ async function addNumericFactor(page: Page, index: number, name: string) {
 }
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
+
+test.beforeEach(async ({ page }) => {
+  await showAllSections(page);
+});
 
 test.describe("planejamento de superfície de resposta", () => {
   test("DCCR e Box–Behnken: contagem antes de gerar, α, axiais e restrições", async ({ page }) => {

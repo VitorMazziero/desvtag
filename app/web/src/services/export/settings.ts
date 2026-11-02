@@ -14,6 +14,8 @@ export interface ExportSettings {
   fontScale: number;
   /** Algarismos significativos nos rótulos das figuras (3 a 6). */
   digits: number;
+  /** Incluir o logotipo do grupo nos relatórios (crédito; pode ser desligado). */
+  reportLogo: boolean;
 }
 
 export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
@@ -22,6 +24,7 @@ export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
   palette: "default",
   fontScale: 1,
   digits: 4,
+  reportLogo: true,
 };
 
 const KEY = "optima.exportSettings";
@@ -37,6 +40,7 @@ export function loadExportSettings(): ExportSettings {
       palette: v.palette === "colorblind" ? "colorblind" : "default",
       fontScale: [0.85, 1, 1.2].includes(v.fontScale as number) ? (v.fontScale as number) : 1,
       digits: Math.min(6, Math.max(3, Math.floor(Number(v.digits) || 4))),
+      reportLogo: v.reportLogo !== false,
     };
   } catch {
     return DEFAULT_EXPORT_SETTINGS;

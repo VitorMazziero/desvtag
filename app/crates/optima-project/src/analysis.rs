@@ -1,9 +1,11 @@
 //! Análises salvas, vinculadas à revisão dos dados que as geraram.
 
 use optima_core::comparisons::OneWayResult;
+use optima_core::comparisons::procedures::{Procedure, ProcedureResult};
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::domain::StableId;
+use optima_core::models::factorial_anova::{FactorialResult, FactorialSetup};
 use optima_core::optimization::{OptimizationResult, OptimizationSetup};
 use optima_core::surface::SurfaceResult;
 use serde::{Deserialize, Serialize};
@@ -45,6 +47,19 @@ pub struct AnalysisOptions {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub optimization: Option<OptimizationSetup>,
+    /// Procedimento de comparação múltipla escolhido (ausente = Tukey).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub procedure: Option<Procedure>,
+    /// Configuração da ANOVA multifatorial.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub factorial: Option<FactorialSetup>,
+    /// Modelo escolhido para cada resposta (id da resposta → termos, no formato de `terms`).
+    /// `terms` continua sendo o modelo da resposta analisada; a otimização usa o de cada resposta.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub response_models: Option<std::collections::BTreeMap<String, Vec<Vec<StableId>>>>,
 }
 
 /// Resultado guardado, por método.
@@ -62,6 +77,10 @@ pub enum AnalysisResult {
     ResponseSurface(Box<SurfaceResult>),
     /// Otimização por desejabilidade: candidatos, previsões, compromissos e convergência.
     Optimization(Box<OptimizationResult>),
+    /// Procedimento de comparação múltipla (Games–Howell, Dunnett, Bonferroni, Holm, Kruskal–Wallis/Dunn).
+    MultipleComparison(Box<ProcedureResult>),
+    /// ANOVA multifatorial com blocos, médias marginais e contrastes.
+    FactorialAnova(Box<FactorialResult>),
 }
 
 /// Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.

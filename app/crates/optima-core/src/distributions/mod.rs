@@ -6,10 +6,12 @@
 //! amplitude studentizada (Tukey) entra na ET05, com seu consumidor.
 
 pub mod chi_square;
+pub mod dunnett;
 pub mod evaluate;
 pub mod f;
 pub mod normal;
 pub mod quantile;
+mod range_table;
 pub mod student_t;
 pub mod studentized_range;
 

@@ -1,0 +1,85 @@
+<prompt>
+<task>
+Apply this visual style to the user's existing project. Inspect and preserve its stack, copy, routes, and behavior. Follow existing component and styling conventions. Treat framework, library, and page examples in these design instructions as illustrations; they do not require a stack change or new sections. Scope changes to the user's requested work.
+
+Keep controls keyboard accessible, focus visible, and text legible. Preserve reading order, responsive behavior, and reduced-motion preferences. Verify actual states at the rendered width. The user's stack and content take precedence over illustrative implementation details.
+</task>
+
+<design-system>
+# Claymorphism
+
+## Identity
+
+Use soft, inflated forms with broad light from the upper left. Dark plum-grey text sits on pink cushions, cream reading trays, and pastel mint, lavender, butter-yellow, and pale-blue objects. Rounded edges and inset shading should make the forms feel molded, while the text remains crisp and flat.
+
+## Layout
+
+Open with a large pink cushion carrying the headline and actions on the left and a cluster of rounded objects on the right. Shapes can overlap within their reserved area. Keep the opening copy unobstructed. Small supporting facts can occupy individual pastel cushions beneath it.
+
+Group related content inside a shared cream tray with generous internal space. Within it, use an unequal feature arrangement: one larger item beside smaller explanations, then an editorial shelf with a lead story and compact supporting rows. A lavender decision tray can hold broad horizontal comparison shelves and disclosures. Return to pink for the closing, then cream for the footer.
+
+Use these arrangements according to the brief. Keep the larger containers distinct from the smaller objects inside them; do not isolate every paragraph in its own cushion. Sculptures, factual rows, and comparisons are available patterns rather than content obligations.
+
+## Typography
+
+Use Instrument Sans throughout, bound to "Claymorphism Instrument". Set the main title in bold with tight tracking and a compact line-height; the wide title scales from 54px to 94px. Keep section headings bold but smaller. Reading text uses the body size and reading-leading tokens. Small labels and captions should remain dark enough to read against their pastel background. Avoid rounded novelty fonts competing with the shapes.
+
+## Color and surfaces
+
+Ground supplies the pale surrounding page. Accent supplies the pink lead and emphasized comparison shelf. Surface is cream; the support, compare, warm, and cool roles supply mint, lavender, yellow, and blue. Use ink and ink-secondary for text.
+
+Combine a broad outer shadow with a light inset along the upper-left edge and a darker inset on the lower-right edge. Keep this light direction consistent across trays, buttons, and objects. Use the larger tray radius for shared containers, the surface radius for cushions, and the control radius for pill buttons. Text should not inherit blurred shadows.
+
+## Components
+
+Buttons are thick pills with inset highlights and a soft grounding shadow. Hover raises them slightly; pressing lowers and compresses them. Ghost actions can remain plain text beside the primary button. Keep visible focus separate from the shading.
+
+Use broad horizontal shelves for comparisons, with identity and price, feature details, and an action. A pink featured shelf stays pink independently of the selected control. Selection can use a recessed dot plus pressed semantics. Disclosures are smaller cream cushions with a recessed circular plus/minus. Use real labels and content for every control.
+
+## Images
+
+Place editorial images in rounded inset wells inside cream cards. Keep natural image color and crop for the subject. A lead story can have a larger image above its text, with supporting stories using image-and-text rows. Round portraits may identify named authors or speakers, reusing the same portrait for the same person. Abstract molded shapes are decorative and need no invented product meaning.
+
+## Motion
+
+Use the interaction token for short hover and press responses. The sculpture is static. Remove movement and transitions for reduced motion. Avoid floating loops, bouncing ornaments, or staggered page entrances.
+
+## Responsive behavior
+
+At 1100px, tighten gaps, scale the sculpture, and let comparison actions move beneath the identity column. At 760px, place the sculpture below the headline, use two-column fact cushions, stack prose and stories, and turn steps into a vertical sequence. Keep the shared trays visible. At 460px, reduce decorative forms further, use single-column feature details and comparison lists, and retain two-column footer groups where they fit. Required text and actions must never be hidden by the sculpture.
+
+## Design limits
+
+Keep forms soft but opaque and readable. Avoid glass, sharp metallic edges, flat unshaded pastel rectangles, and shadows that muddy small text. Do not invent plans, social proof, or metrics to populate the available shelves.
+
+## Authoritative tokens
+
+| CSS variable | Value |
+| --- | --- |
+| --dp-color-ground | #f1f2fa |
+| --dp-color-ink | #383139 |
+| --dp-color-ink-secondary | #48404b |
+| --dp-color-accent | #f6a3ca |
+| --dp-color-surface-support | #c0efdc |
+| --dp-color-surface-compare | #ded0f9 |
+| --dp-color-surface-warm | #f9e7a8 |
+| --dp-color-surface-cool | #c5e5fb |
+| --dp-color-surface | #fffdf7 |
+| --dp-typography-face | "Claymorphism Instrument", sans-serif |
+| --dp-typography-body | 16px |
+| --dp-typography-small | 15px |
+| --dp-typography-metadata | 13px |
+| --dp-typography-caption | 12px |
+| --dp-typography-reading-leading | 1.55 |
+| --dp-typography-emphasis | 700 |
+| --dp-spacing-gap | 24px |
+| --dp-spacing-gap-compact | 20px |
+| --dp-spacing-paragraph-gap | 18px |
+| --dp-radius-surface | 38px |
+| --dp-radius-tray | 70px |
+| --dp-radius-control | 999px |
+| --dp-radius-disclosure | 25px |
+| --dp-border-focus-width | 3px |
+| --dp-motion-interaction | 180ms |
+</design-system>
+</prompt>

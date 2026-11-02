@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
 
 // Percurso de planejamento com o motor Rust real (WebAssembly): escolher → contar → gerar →
 // preencher respostas → analisar (efeitos, curvatura, Pareto) → exportar → salvar → reabrir.
@@ -38,6 +39,10 @@ async function setLevels(page: Page, name: string, low: string, high: string) {
 }
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
+
+test.beforeEach(async ({ page }) => {
+  await showAllSections(page);
+});
 
 test.describe("planejamento fatorial 2³ com pontos centrais", () => {
   test("contar, gerar, preencher, analisar, exportar e reabrir", async ({ page }) => {

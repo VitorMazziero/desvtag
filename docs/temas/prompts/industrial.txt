@@ -1,0 +1,84 @@
+<prompt>
+<task>
+Apply this visual style to the user's existing project. Inspect and preserve its stack, copy, routes, and behavior. Follow existing component and styling conventions. Treat framework, library, and page examples in these design instructions as illustrations; they do not require a stack change or new sections. Scope changes to the user's requested work.
+
+Keep controls keyboard accessible, focus visible, and text legible. Preserve reading order, responsive behavior, and reduced-motion preferences. Verify actual states at the rendered width. The user's stack and content take precedence over illustrative implementation details.
+</task>
+
+<design-system>
+# Industrial
+
+## Identity
+
+Build one continuous instrument chassis in cool grey, with recessed dark screens, raised keys, engraved-style labels, and small orange indicators. The physical depth comes from consistent highlights and shadows, while the content remains ordinary readable text and recognizable controls.
+
+## Layout
+
+Contain the page in a broad rounded housing with a narrow vertical seam and numbered bays. Open with a large heading beside a compact control assembly: vent slots, a circular dial-shaped action, and a secondary key. A recessed facts display can sit below the opening.
+
+Give related content shared hardware-like panels. Features can occupy an inset matrix within a raised deck; editorial images sit in recessed wells. Numbered steps can connect across the chassis. Benefits and quotations can share a dark output deck, while optional comparisons use removable-looking horizontal modules inside a recessed tray. A pale closing bay and the footer remain part of the same housing.
+
+Choose the content groups the brief needs. The treatment does not require fabricated live readings, machine specifications, prices, or operational status.
+
+## Typography
+
+Use Host Grotesk for headings and reading, bound to "Industrial Host". Use IBM Plex Mono for small labels and technical-looking metadata, bound to "Industrial Plex". Headings are bold with tight tracking; the opening scales from 54px to 106px on wider layouts and uses compact leading. Reading text stays much smaller with clear spacing. Keep small monospaced labels brief and readable.
+
+## Color and surfaces
+
+Chassis is the main cool-grey ground. Raised is the lighter key and panel material; well is the darker recessed material. Use dark ink and slate labels on these areas. Field is the deep screen color, with distinct light roles for primary and secondary text. Orange identifies a few indicators and action details.
+
+Light falls from the upper left. Raised parts have a pale top edge and a darker lower edge; recesses reverse that depth. Mild grey gradients can describe the housing and dial. Use small key corners within the larger rounded case. Screws, vents, and grooves should explain its construction without covering reading.
+
+## Components
+
+Navigation uses a bank of raised keys. Main actions can be rectangular keys or one circular dial-shaped button with a clear label and symbol. Hover lifts slightly; press sinks into the housing and changes the shadow. Keep focus visible outside the physical edge. A dial shape remains a button unless the project actually needs a rotary input.
+
+Optional comparison modules use an inset pressed key and orange selection lamp, alongside a textual selected state. Featured emphasis is separate. Disclosures have raised plus/minus keys; open content stays in the reading bay. Decorative indicators must not imply a real system state.
+
+## Images
+
+Use grayscale photographs placed inside recessed rectangular wells with a small inset rim. Preserve complete subjects with containment where needed, including visible margins around objects or artwork. Reserve image dimensions and describe meaningful subjects in alternative text. Vents and screws are decorative.
+
+## Motion
+
+Use short key and dial transitions with a slight settling ease. Keep the chassis, meters, vents, and indicators still. Respect reduced motion by removing movement from hover and press while retaining clear depth and color changes.
+
+## Responsive behavior
+
+At 1100px, narrow the opening's control column and simplify comparison modules. At 760px, stack the large content areas and turn the control assembly into a horizontal unit beneath the heading. Facts remain in two columns; features, stories, steps, benefits, quotes, and comparisons become vertical. Keep the housing edge and bay numbering at a smaller scale, with two-column footer groups. At 370px, reduce the dial assembly and stack comparison details further.
+
+## Design limits
+
+Keep physical decoration subordinate to content and interaction. Avoid glossy chrome, rust, hazard stripes everywhere, animated fake telemetry, and unlabeled switches. Recessed reading areas need strong contrast; texture and shadows must not muddy the text.
+
+## Authoritative tokens
+
+| CSS variable | Value |
+| --- | --- |
+| --dp-color-chassis | #cbd0d2 |
+| --dp-color-raised | #e7eaeb |
+| --dp-color-well | #b6bec2 |
+| --dp-color-ink | #181e22 |
+| --dp-color-label | #414b52 |
+| --dp-color-field | #20272b |
+| --dp-color-on-field | #f2f4f4 |
+| --dp-color-on-field-muted | #d8dee1 |
+| --dp-color-accent | #f15b22 |
+| --dp-typography-sans | "Industrial Host", sans-serif |
+| --dp-typography-mono | "Industrial Plex", monospace |
+| --dp-typography-body | 17px |
+| --dp-typography-reading | 16px |
+| --dp-typography-metadata | 13px |
+| --dp-typography-label | 11px |
+| --dp-spacing-column-gap | 25px |
+| --dp-spacing-compact-gap | 12px |
+| --dp-radius-key | 4px |
+| --dp-radius-circular | 50% |
+| --dp-border-hairline | 1px |
+| --dp-motion-navigation | 130ms |
+| --dp-motion-key | 140ms |
+| --dp-motion-dial | 150ms |
+| --dp-motion-settle | cubic-bezier(0.3, 0.7, 0.4, 1.25) |
+</design-system>
+</prompt>

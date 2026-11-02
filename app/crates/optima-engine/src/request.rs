@@ -1,12 +1,15 @@
 //! Solicitações da interface ao motor.
 
 use optima_core::comparisons::OneWayRequest;
+use optima_core::comparisons::procedures::ProcedureRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::completely_randomized::CrdSpec;
+use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
+use optima_core::models::factorial_anova::FactorialRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
@@ -35,6 +38,8 @@ pub enum Operation {
     DesignGenerate(DesignSpec),
     /// Gera um delineamento inteiramente casualizado de um fator categórico (`design.crdGenerate`).
     DesignCrdGenerate(CrdSpec),
+    /// Gera um delineamento em blocos completos casualizados (`design.rcbdGenerate`).
+    DesignRcbdGenerate(RcbdSpec),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).
@@ -51,6 +56,12 @@ pub enum Operation {
     OptimizationGrid(Box<OptimizationGridRequest>),
     /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
     ComparisonOneWay(OneWayRequest),
+    /// Procedimentos de comparação múltipla: Games–Howell, Dunnett, Bonferroni, Holm e Kruskal–Wallis/Dunn (`comparison.procedure`).
+    ComparisonProcedure(ProcedureRequest),
+    /// ANOVA multifatorial com blocos, médias marginais e contrastes (`anova.factorial`).
+    AnovaFactorial(Box<FactorialRequest>),
+    /// Métricas de comparação e sequência de eliminação regressiva de termos (`surface.selectModel`).
+    SurfaceSelectModel(Box<SurfaceRequest>),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
     DistributionEvaluate(DistributionRequest),
     /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).

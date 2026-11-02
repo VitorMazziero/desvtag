@@ -1,0 +1,45 @@
+/* Clay (prompt Claymorphism): tokens de docs/temas/prompts/claymorphism.txt mapeados para os
+   tokens semânticos (DT-0021). Almofadas infladas, botões em pílula, luz no canto superior
+   esquerdo. O rosa #f6a3ca é FUNDO (tinta sobre ele: 6,6:1), nunca cor de texto nem de foco; o
+   anel de foco de 3 px usa a tinta. */
+:root[data-theme="clay"] {
+  color-scheme: light;
+  --color-ground: #f1f2fa;
+  --color-ground-muted: #e6e0f7;
+  --color-panel: #fffdf7;
+  --color-ink: #383139;
+  --color-ink-secondary: #48404b;
+  --color-rule: #cbbfe3;
+  --color-action: #f6a3ca;
+  --color-on-action: #383139;
+  --color-action-hover: #f08fbd;
+  --color-accent-text: #6b3a58;
+  --color-ok: #2a6b4a;
+  --color-focus: #383139;
+  --color-indicator: #f6a3ca;
+  --font-display: "Instrument Sans", Arial, sans-serif;
+  --font-body: "Instrument Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-tracking: -0.01em;
+  --focus-width: 3px;
+  --focus-offset: 3px;
+  --radius-panel: 32px;
+  --radius-control: 18px;
+  --radius-button: 999px;
+  --shadow-panel:
+    10px 12px 22px rgb(120 90 140 / 22%), inset -6px -8px 12px rgb(150 110 170 / 16%),
+    inset 6px 8px 12px rgb(255 255 255 / 90%);
+  --shadow-control:
+    5px 6px 12px rgb(120 90 140 / 25%), inset -3px -4px 6px rgb(150 110 170 / 20%),
+    inset 3px 4px 6px rgb(255 255 255 / 70%);
+  --shadow-control-pressed: inset 4px 5px 9px rgb(120 90 140 / 35%);
+  --shadow-inset:
+    inset 3px 4px 8px rgb(120 90 140 / 25%), inset -3px -3px 6px rgb(255 255 255 / 90%);
+  --motion-duration: 180ms;
+  --motion-ease: ease-out;
+}
+:root[data-theme="clay"] h1,
+:root[data-theme="clay"] h2,
+:root[data-theme="clay"] h3 {
+  font-weight: 700;
+}

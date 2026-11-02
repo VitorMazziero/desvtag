@@ -39,6 +39,19 @@ if (installed !== locked) {
 }
 
 const profile = release ? "release" : "debug";
+
+// O diretório de compilação pode estar fora do repositório (`build.target-dir` ou CARGO_TARGET_DIR);
+// o Cargo informa o caminho real.
+const meta = spawnSync("cargo", ["metadata", "--no-deps", "--format-version", "1"], {
+  cwd: appDir,
+  encoding: "utf8",
+  maxBuffer: 1 << 26,
+});
+if (meta.status !== 0) {
+  console.error("Falha: cargo metadata");
+  process.exit(meta.status ?? 1);
+}
+const targetDir = JSON.parse(meta.stdout).target_directory;
 run(
   "cargo",
   [
@@ -54,7 +67,7 @@ run(
 rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 run("wasm-bindgen", [
-  join(appDir, "target/wasm32-unknown-unknown", profile, "optima_wasm.wasm"),
+  join(targetDir, "wasm32-unknown-unknown", profile, "optima_wasm.wasm"),
   "--target",
   "web",
   "--out-dir",

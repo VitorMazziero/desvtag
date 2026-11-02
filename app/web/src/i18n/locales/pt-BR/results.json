@@ -222,7 +222,8 @@
       "failed": "Não foi possível exportar o arquivo.",
       "cancelled": "Exportação cancelada.",
       "sheetGroups": "Grupos",
-      "sheetPairs": "Pares"
+      "sheetPairs": "Pares",
+      "pdf": "PDF"
     },
     "warnings": "Avisos"
   },
@@ -404,8 +405,12 @@
       "title": "Relatório",
       "subtitle": "Relatório gerado pelo EnziTAG Optima: método, configuração, tabelas, figuras e interpretação.",
       "provenance": "Proveniência",
-      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente."
-    }
+      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente.",
+      "buttonPdf": "Exportar relatório (PDF)",
+      "footerPdf": "EnziTAG Optima {{version}} — PDF gerado localmente; as figuras são vetoriais.",
+      "page": "Página {{page}} de {{total}}"
+    },
+    "logo": "Incluir o logotipo do grupo nos relatórios"
   },
   "figure": {
     "customize": "Personalizar figura",
@@ -420,6 +425,188 @@
     "fontLarge": "Maior (1,2)",
     "reset": "Restaurar padrão",
     "help": "Só muda a aparência. A configuração fica salva no projeto, vale para a tela e para os arquivos exportados e não altera nenhum resultado.",
-    "tooLong": "Use no máximo 200 caracteres."
+    "tooLong": "Use no máximo 200 caracteres.",
+    "texts": "Textos",
+    "lettersGroup": "Letras de comparação",
+    "annotationsGroup": "Anotações livres",
+    "appearance": "Aparência",
+    "manualLetters": "Letras manuais",
+    "manualLettersHelp": "Uma por grupo, na ordem do gráfico, separadas por espaço; use - para deixar um grupo sem letra. Quando preenchidas, substituem as calculadas só na figura (a tabela não muda).",
+    "manualLettersLegend": "Letras digitadas manualmente (não calculadas pelo aplicativo).",
+    "manualLettersPlaceholder": "calculadas: {{letters}}",
+    "annotationAdd": "Adicionar anotação",
+    "annotationText": "Texto da anotação {{n}}",
+    "annotationX": "Posição horizontal da anotação {{n}}",
+    "annotationY": "Posição vertical da anotação {{n}}",
+    "annotationRemove": "Remover anotação {{n}}",
+    "annotationHelp": "Posição em porcentagem da figura (0 = esquerda/topo, 100 = direita/base).",
+    "color": "Cor principal",
+    "colorDefault": "Cor do tema",
+    "background": "Fundo da imagem exportada",
+    "backgroundWhite": "Branco",
+    "backgroundTransparent": "Transparente",
+    "fontFamily": "Fonte",
+    "familyDefault": "Padrão",
+    "familySans": "Sem serifa",
+    "familySerif": "Com serifa",
+    "familyMono": "Monoespaçada",
+    "exportScale": "Resolução do PNG",
+    "scaleValue": "{{n}}×",
+    "showGrid": "Mostrar linhas de grade",
+    "showLegend": "Mostrar legenda"
+  },
+  "sections": {
+    "label": "Seções dos resultados",
+    "summary": "Resumo",
+    "tables": "Tabelas",
+    "effects": "Efeitos",
+    "model": "Modelo",
+    "diagnostics": "Diagnóstico",
+    "charts": "Gráficos",
+    "optimization": "Otimização por desejabilidade",
+    "confirmation": "Confirmação",
+    "export": "Exportar",
+    "showAll": "Mostrar todas as seções"
+  },
+  "model": {
+    "title": "Modelo: termos e comparação",
+    "intro": "Desmarque um termo para retirá-lo do modelo (por exemplo, o efeito quadrático de um fator); o aplicativo recalcula e compara os modelos.",
+    "terms": "Termos do modelo",
+    "notSignificant": "não significativo",
+    "useFull": "Voltar ao modelo completo",
+    "applyRecommended": "Aplicar a recomendação",
+    "confirmHierarchy": "Retirar este termo deixa no modelo uma interação ou um termo quadrático do mesmo fator, o que quebra a hierarquia do modelo. Continuar?",
+    "compareCaption": "Comparação dos modelos",
+    "metric": "Métrica",
+    "full": "Completo",
+    "current": "Atual",
+    "recommended": "Recomendado",
+    "metrics": {
+      "parameters": "Parâmetros (com intercepto)",
+      "dfError": "Graus de liberdade do resíduo",
+      "r2": "R²",
+      "adjR2": "R² ajustado",
+      "predR2": "R² predito (PRESS)",
+      "rmse": "Erro-padrão do modelo (RMSE)",
+      "modelP": "Valor-p do modelo (F)",
+      "lofP": "Valor-p da falta de ajuste",
+      "aicc": "AICc",
+      "bic": "BIC"
+    },
+    "metricsHelp": "R² ajustado e R² predito penalizam termos desnecessários; AICc e BIC menores indicam melhor equilíbrio entre ajuste e simplicidade. Nenhuma métrica decide sozinha: a escolha é sua.",
+    "sequence": "Sequência sugerida de remoções",
+    "stepStart": "Modelo atual",
+    "stepRemove": "Retirar {{term}} (p = {{p}})",
+    "useStep": "Usar este modelo",
+    "stopped": {
+      "no_candidate": "A sequência para aqui: nenhum termo restante tem valor-p acima de α.",
+      "hierarchy": "A sequência para aqui: os termos restantes com valor-p alto são necessários para manter a hierarquia.",
+      "no_degrees_of_freedom": "A sequência para aqui: restariam poucos graus de liberdade no resíduo."
+    },
+    "warnLackOfFit": "Falta de ajuste significativa: o modelo atual pode ser simples demais para estes dados.",
+    "warnFewDf": "Restam só {{df}} graus de liberdade no resíduo: as estimativas de erro são pouco confiáveis.",
+    "warnOverfit": "O R² predito está bem abaixo do R² ajustado: sinal de sobreajuste. Prefira um modelo mais simples.",
+    "optimism": "Valores-p calculados depois de escolher termos pelos próprios dados são otimistas. Confirme o modelo final com ensaios novos.",
+    "response": "Resposta analisada",
+    "responseHelp": "Cada resposta guarda o seu modelo; a otimização usa o modelo escolhido de cada uma."
+  },
+  "procedure": {
+    "title": "Comparação de tratamentos",
+    "groups": "Grupos",
+    "pairs": "Comparações",
+    "different": "diferença detectada",
+    "notDetected": "diferença não detectada",
+    "pairsHelp": "O valor-p ajustado já considera a família de comparações. Compartilhar uma letra não prova equivalência: apenas indica que a diferença não foi detectada.",
+    "controlNote": "As comparações são de cada tratamento com o controle ({{control}}); não há letras.",
+    "names": {
+      "gamesHowell": "Games–Howell (variâncias desiguais)",
+      "dunnett": "Dunnett (contra um controle)",
+      "bonferroni": "Testes t com ajuste de Bonferroni",
+      "holm": "Testes t com ajuste de Holm",
+      "kruskalDunn": "Kruskal–Wallis com comparações de Dunn"
+    },
+    "explain": {
+      "gamesHowell": "Não supõe variâncias iguais: usa a ANOVA de Welch e, em cada par, graus de liberdade de Welch–Satterthwaite com a amplitude studentizada.",
+      "dunnett": "Compara cada tratamento só com o controle, controlando o erro da família com a distribuição exata do máximo das estatísticas t.",
+      "bonferroni": "Testes t entre todos os pares com a variância combinada; os valores-p são multiplicados pelo número de comparações.",
+      "holm": "Testes t entre todos os pares com a variância combinada; ajuste de Holm, sempre pelo menos tão poderoso quanto o de Bonferroni.",
+      "kruskalDunn": "Método por postos, sem supor distribuição normal; empates recebem o posto médio e entram na correção."
+    },
+    "global": {
+      "welch_anova": "ANOVA de Welch: F = {{stat}} ({{df1}} e {{df2}} g.l.), p = {{p}}.",
+      "anova": "ANOVA de um fator: F = {{stat}} ({{df1}} e {{df2}} g.l.), p = {{p}}.",
+      "kruskal_wallis": "Kruskal–Wallis: H = {{stat}} ({{df1}} g.l.), p = {{p}}."
+    },
+    "cols": {
+      "group": "Grupo",
+      "mean": "Média",
+      "sd": "Desvio-padrão",
+      "median": "Mediana",
+      "meanRank": "Posto médio",
+      "letters": "Letras",
+      "comparison": "Comparação",
+      "difference": "Diferença de médias",
+      "rankDifference": "Diferença de postos médios",
+      "stdError": "Erro-padrão",
+      "statistic": "Estatística",
+      "p": "Valor-p",
+      "pAdjusted": "Valor-p ajustado",
+      "result": "Resultado"
+    },
+    "chart": {
+      "title": "Médias de {{response}}",
+      "description": "Médias dos grupos com barras de um desvio-padrão e letras de comparação.",
+      "sd": "Barras: média ± desvio-padrão do grupo",
+      "letters": "Letras em comum = diferença não detectada (α = {{alpha}})"
+    },
+    "export": {
+      "groupsCsv": "Grupos (CSV)",
+      "pairsCsv": "Comparações (CSV)"
+    }
+  },
+  "factorial": {
+    "title": "ANOVA multifatorial",
+    "summary": "Modelo com soma de quadrados {{type}}, {{n}} observações, R² = {{r2}} e R² ajustado = {{adj}}.",
+    "significant": "Termos significativos: {{terms}}.",
+    "noneSignificant": "Nenhum termo foi significativo ao nível escolhido.",
+    "anova": "Tabela de ANOVA",
+    "block": "bloco",
+    "ssType": {
+      "typeI": "do tipo I (sequencial)",
+      "typeII": "do tipo II",
+      "typeIII": "do tipo III"
+    },
+    "cols": {
+      "term": "Termo",
+      "df": "g.l.",
+      "ss": "Soma de quadrados",
+      "ms": "Quadrado médio",
+      "p": "Valor-p",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "ci": "Intervalo de confiança",
+      "letters": "Letras",
+      "contrast": "Contraste"
+    },
+    "marginal": "Médias marginais: {{factors}}",
+    "marginalCaption": "Médias de mínimos quadrados; comparações com ajuste {{adjustment}}",
+    "adjustment": {
+      "tukey": "de Tukey",
+      "none": "nenhum",
+      "bonferroni": "de Bonferroni",
+      "holm": "de Holm"
+    },
+    "contrasts": "Contrastes",
+    "chart": {
+      "title": "Médias marginais de {{response}} ({{factors}})",
+      "description": "Médias de mínimos quadrados com intervalos de confiança e letras.",
+      "ci": "Barras: IC de {{level}}% da média marginal",
+      "letters": "Letras em comum = diferença não detectada (α = {{alpha}})"
+    },
+    "export": {
+      "anovaCsv": "ANOVA (CSV)",
+      "marginalCsv": "Médias marginais de {{factors}} (CSV)",
+      "pairsCsv": "Comparações de {{factors}} (CSV)"
+    }
   }
 }

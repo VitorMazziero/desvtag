@@ -29,7 +29,13 @@ for (const p of prod) {
           .find((l) => /copyright|\(c\)/i.test(l)) ?? ""
       ).trim()
     : "";
-  add(`${p.name} ${p.version} — ${p.license}${copyright ? ` — ${copyright}` : ""}`);
+  // Pacotes sem o campo `license` no `package.json` (ex.: png-js) declaram a licença no arquivo.
+  const license =
+    p.license ??
+    (file && /^MIT License/i.test(readFileSync(file, "utf8"))
+      ? "MIT (arquivo LICENSE)"
+      : "ver LICENSE");
+  add(`${p.name} ${p.version} — ${license}${copyright ? ` — ${copyright}` : ""}`);
 }
 add("");
 
@@ -41,6 +47,15 @@ for (const f of fonts) {
 }
 const ofl = readFileSync(resolve("node_modules/@fontsource/geist-sans/LICENSE"), "utf8");
 add("Texto da licença (comum a todas as fontes acima):", "", ofl.trim(), "");
+
+// A Roboto vai dentro dos PDFs (pacote `pdfmake/build/vfs_fonts`); a licença está gravada na fonte.
+add("== Fonte embutida nos PDFs (SIL Open Font License 1.1) ==", "");
+add(
+  "-- Roboto 3.014 (via pdfmake)",
+  "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)",
+  "Roboto é marca registrada da Google. Licença: SIL Open Font License 1.1 (texto acima).",
+  "",
+);
 
 function crates(manifest) {
   const out = JSON.parse(

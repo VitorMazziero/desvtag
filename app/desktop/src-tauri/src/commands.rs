@@ -209,12 +209,13 @@ async fn pick_save_path_with(
 }
 
 /// Extensões de exportação permitidas e o nome do filtro do diálogo.
-pub const EXPORT_FORMATS: [(&str, &str); 5] = [
+pub const EXPORT_FORMATS: [(&str, &str); 6] = [
     ("csv", "CSV"),
     ("xlsx", "XLSX"),
     ("svg", "SVG"),
     ("png", "PNG"),
     ("html", "HTML"),
+    ("pdf", "PDF"),
 ];
 /// Tamanho máximo de um arquivo exportado.
 pub const MAX_EXPORT_BYTES: usize = 64 * 1024 * 1024;
@@ -249,6 +250,22 @@ pub async fn export_file(
     if bytes.len() > MAX_EXPORT_BYTES {
         return Err("export.too_large".to_string());
     }
+    #[cfg(feature = "automation")]
+    if let Some(dir) = std::env::var_os("ENZITAG_EXPORT_DIR") {
+        // Verificação automatizada: sem diálogo; só o nome do arquivo sugerido é usado.
+        let name = Path::new(&suggested_name)
+            .file_name()
+            .map(std::path::PathBuf::from)
+            .ok_or_else(|| "export.unsupported_format".to_string())?;
+        let path = Path::new(&dir).join(name);
+        let target = path.clone();
+        jobs::run_blocking(move || write_atomic(&target, &bytes))
+            .await?
+            .map_err(|e| e.to_string())?;
+        return Ok(Some(SavedFile {
+            name: file_name(&path),
+        }));
+    }
     let Some(path) = pick_save_path_with(&app, suggested_name, filter_name, extension).await?
     else {
         return Ok(None);
@@ -272,6 +289,7 @@ mod export_tests {
         assert_eq!(export_format("tabela.csv"), Ok(("csv", "CSV")));
         assert_eq!(export_format("figura.png"), Ok(("png", "PNG")));
         assert_eq!(export_format("tabela.xlsx"), Ok(("xlsx", "XLSX")));
+        assert_eq!(export_format("relatorio.pdf"), Ok(("pdf", "PDF")));
         assert!(export_format("programa.exe").is_err());
         assert!(export_format("semextensao").is_err());
         assert!(export_format("projeto.enzitag").is_err());

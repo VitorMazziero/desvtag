@@ -8,6 +8,11 @@ export const PROTOCOL_VERSION = 1;
 export const PROJECT_SCHEMA_VERSION = 1;
 
 /**
+ * Ajuste dos valores-p de comparações pareadas.
+ */
+export type Adjustment = "bonferroni" | "holm";
+
+/**
  * Efeito e seus confundidos (fracionários).
  */
 export type AliasRow = { 
@@ -58,7 +63,20 @@ surface?: boolean,
 /**
  * Configuração da otimização (objetivos, limites, domínio e busca), para restaurar a tela.
  */
-optimization?: OptimizationSetup, };
+optimization?: OptimizationSetup, 
+/**
+ * Procedimento de comparação múltipla escolhido (ausente = Tukey).
+ */
+procedure?: Procedure, 
+/**
+ * Configuração da ANOVA multifatorial.
+ */
+factorial?: FactorialSetup, 
+/**
+ * Modelo escolhido para cada resposta (id da resposta → termos, no formato de `terms`).
+ * `terms` continua sendo o modelo da resposta analisada; a otimização usa o de cada resposta.
+ */
+responseModels?: { [key in string]: Array<Array<StableId>> }, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.
@@ -104,7 +122,7 @@ result: AnalysisResult, };
 /**
  * Resultado guardado, por método.
  */
-export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult | { "type": "optimization" } & OptimizationResult;
+export type AnalysisResult = { "type": "descriptive" } & DescriptiveResult | { "type": "oneWayComparison" } & OneWayResult | { "type": "twoLevelDesign" } & DesignAnalysisResult | { "type": "responseSurface" } & SurfaceResult | { "type": "optimization" } & OptimizationResult | { "type": "multipleComparison" } & ProcedureResult | { "type": "factorialAnova" } & FactorialResult;
 
 /**
  * Linha da tabela.
@@ -322,6 +340,64 @@ level: number,
  * Segmentos da curva.
  */
 segments: Array<Segment>, };
+
+/**
+ * Contraste definido pelo usuário sobre as células de um subconjunto de fatores.
+ */
+export type ContrastRequest = { 
+/**
+ * Nome apresentado.
+ */
+name: string, 
+/**
+ * Fatores que definem as células.
+ */
+factors: Array<StableId>, 
+/**
+ * Coeficientes, um por célula, na ordem das células (o primeiro fator varia mais devagar).
+ */
+coefficients: Array<number>, };
+
+/**
+ * Resultado de um contraste.
+ */
+export type ContrastResult = { 
+/**
+ * Nome.
+ */
+name: string, 
+/**
+ * Estimativa `Σ cᵢ·média_i`.
+ */
+estimate: Stat, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Estatística `t`.
+ */
+tValue: Stat, 
+/**
+ * Graus de liberdade.
+ */
+df: number, 
+/**
+ * Valor-p sem ajuste.
+ */
+pValue: Stat, 
+/**
+ * Valor-p ajustado por Bonferroni entre os contrastes pedidos.
+ */
+pAdjusted: Stat, 
+/**
+ * Limite inferior do IC.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do IC.
+ */
+ciUpper: Stat, };
 
 /**
  * Relatório de convergência da busca.
@@ -1109,6 +1185,10 @@ design?: DesignSpec,
  */
 crd?: CrdSpec, 
 /**
+ * Delineamento em blocos completos casualizados gerado para este experimento.
+ */
+rcbd?: RcbdSpec, 
+/**
  * Personalização gráfica por figura (chave estável da figura → ajustes).
  */
 figureStyles?: Record<string, FigureStyle> | undefined, 
@@ -1319,6 +1399,183 @@ levelsText: string, };
 export type FactorValue = number | string;
 
 /**
+ * Linha da tabela de ANOVA.
+ */
+export type FactorialAnovaRow = { 
+/**
+ * Termo (`A`, `A × B`, `Resíduo`, `Total`).
+ */
+term: string, 
+/**
+ * Fatores do termo (vazio no resíduo e no total).
+ */
+factors: Array<StableId>, 
+/**
+ * É o efeito do bloco.
+ */
+isBlock: boolean, 
+/**
+ * Graus de liberdade.
+ */
+df: number, 
+/**
+ * Soma de quadrados.
+ */
+sumSquares: Stat, 
+/**
+ * Quadrado médio.
+ */
+meanSquare: Stat, 
+/**
+ * Estatística `F`.
+ */
+fValue: Stat, 
+/**
+ * Valor-p.
+ */
+pValue: Stat, };
+
+/**
+ * Solicitação.
+ */
+export type FactorialRequest = { 
+/**
+ * Dados.
+ */
+dataset: Dataset, 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Fatores de tratamento.
+ */
+factorIds: Array<StableId>, 
+/**
+ * Fator de bloco (efeito principal aditivo), se houver.
+ */
+blockId: StableId | null, 
+/**
+ * Maior ordem das interações (1 = só efeitos principais).
+ */
+interactionOrder: number, 
+/**
+ * Tipo de soma de quadrados.
+ */
+ssType: SumOfSquaresType, 
+/**
+ * Nível de significância.
+ */
+alpha: number, 
+/**
+ * Médias marginais pedidas.
+ */
+marginals: Array<MarginalRequest>, 
+/**
+ * Contrastes pedidos.
+ */
+contrasts: Array<ContrastRequest>, };
+
+/**
+ * Resultado da análise.
+ */
+export type FactorialResult = { 
+/**
+ * Tipo de soma de quadrados usado.
+ */
+ssType: SumOfSquaresType, 
+/**
+ * Nível de significância.
+ */
+alpha: number, 
+/**
+ * Termos do modelo.
+ */
+terms: Array<FactorialAnovaRow>, 
+/**
+ * Resíduo.
+ */
+residual: FactorialAnovaRow, 
+/**
+ * Total corrigido.
+ */
+total: FactorialAnovaRow, 
+/**
+ * `R²`.
+ */
+rSquared: Stat, 
+/**
+ * `R²` ajustado.
+ */
+adjustedRSquared: Stat, 
+/**
+ * Observações usadas.
+ */
+n: number, 
+/**
+ * Médias marginais.
+ */
+marginals: Array<MarginalResult>, 
+/**
+ * Contrastes.
+ */
+contrasts: Array<ContrastResult>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Configuração da ANOVA multifatorial (tudo o que não são os dados).
+ */
+export type FactorialSetup = { 
+/**
+ * Fatores de tratamento.
+ */
+factorIds: Array<StableId>, 
+/**
+ * Fator de bloco (efeito principal aditivo), se houver.
+ */
+blockId: StableId | null, 
+/**
+ * Maior ordem das interações (1 = só efeitos principais).
+ */
+interactionOrder: number, 
+/**
+ * Tipo de soma de quadrados.
+ */
+ssType: SumOfSquaresType, 
+/**
+ * Médias marginais pedidas.
+ */
+marginals: Array<MarginalRequest>, 
+/**
+ * Contrastes pedidos.
+ */
+contrasts: Array<ContrastRequest>, };
+
+/**
+ * Anotação livre: texto e posição relativa (`0` = esquerda/topo, `1` = direita/base).
+ */
+export type FigureAnnotation = { 
+/**
+ * Texto.
+ */
+text: string, 
+/**
+ * Posição horizontal relativa, de 0 a 1.
+ */
+x: number, 
+/**
+ * Posição vertical relativa, de 0 a 1.
+ */
+y: number, };
+
+/**
  * Ajustes de uma figura. Campos ausentes mantêm o texto ou o comportamento padrão.
  */
 export type FigureStyle = { 
@@ -1342,7 +1599,40 @@ showLetters?: boolean,
 /**
  * Escala de fonte desta figura (0,85, 1 ou 1,2); ausente: a preferência do dispositivo.
  */
-fontScale?: number, };
+fontScale?: number, 
+/**
+ * Letras digitadas pelo usuário, uma por grupo na ordem de exibição; substituem as calculadas
+ * na figura e são identificadas como manuais na legenda.
+ */
+manualLetters?: Array<string>, 
+/**
+ * Anotações livres (texto em posição relativa da figura).
+ */
+annotations?: Array<FigureAnnotation>, 
+/**
+ * Cor principal das séries (`#RRGGBB`).
+ */
+primaryColor?: string, 
+/**
+ * Fundo da figura exportada: `white` ou `transparent`.
+ */
+background?: string, 
+/**
+ * Família da fonte: `sans`, `serif` ou `mono`.
+ */
+fontFamily?: string, 
+/**
+ * Escala do PNG exportado (1, 2 ou 3).
+ */
+exportScale?: number, 
+/**
+ * Exibir as linhas de grade (padrão: sim).
+ */
+showGrid?: boolean, 
+/**
+ * Exibir a legenda (padrão: sim).
+ */
+showLegend?: boolean, };
 
 /**
  * Condição fixada, ecoada no resultado.
@@ -1460,6 +1750,60 @@ issues: Array<Issue>,
  * Proveniência.
  */
 provenance: Provenance, };
+
+/**
+ * DBC gerado.
+ */
+export type GeneratedRcbd = { 
+/**
+ * Especificação.
+ */
+spec: RcbdSpec, 
+/**
+ * Total de ensaios (`tratamentos × blocos`).
+ */
+total: number, 
+/**
+ * Ensaios.
+ */
+runs: Array<RcbdRun>, 
+/**
+ * Algoritmo.
+ */
+randomizationAlgorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Teste global que acompanha o procedimento.
+ */
+export type GlobalTest = { 
+/**
+ * `welch_anova`, `anova` ou `kruskal_wallis`.
+ */
+name: string, 
+/**
+ * Estatística (`F` ou `H`).
+ */
+statistic: Stat, 
+/**
+ * Graus de liberdade do numerador (ou do qui-quadrado).
+ */
+df1: Stat, 
+/**
+ * Graus de liberdade do denominador (indefinido no Kruskal–Wallis).
+ */
+df2: Stat, 
+/**
+ * Valor-p.
+ */
+pValue: Stat, };
 
 /**
  * Objetivo de uma resposta (Derringer e Suich, 1980).
@@ -1856,6 +2200,114 @@ highMean: Stat,
 centerMean: number | null, };
 
 /**
+ * Média marginal de uma célula.
+ */
+export type MarginalMean = { 
+/**
+ * Níveis da célula, na ordem dos fatores pedidos.
+ */
+levels: Array<string>, 
+/**
+ * Estimativa.
+ */
+estimate: Stat, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Limite inferior do IC (nível `1 − α`, sem ajuste).
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do IC.
+ */
+ciUpper: Stat, };
+
+/**
+ * Comparação entre duas células.
+ */
+export type MarginalPair = { 
+/**
+ * Índice da primeira célula.
+ */
+cellA: number, 
+/**
+ * Índice da segunda célula.
+ */
+cellB: number, 
+/**
+ * Diferença `a − b`.
+ */
+difference: Stat, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Estatística `t`.
+ */
+tValue: Stat, 
+/**
+ * Graus de liberdade (do resíduo).
+ */
+df: number, 
+/**
+ * Valor-p sem ajuste.
+ */
+pValue: Stat, 
+/**
+ * Valor-p ajustado.
+ */
+pAdjusted: Stat, 
+/**
+ * `p_adjusted < α`.
+ */
+significant: boolean | null, };
+
+/**
+ * Médias marginais de um subconjunto de fatores.
+ */
+export type MarginalRequest = { 
+/**
+ * Fatores que definem as células (do modelo).
+ */
+factors: Array<StableId>, 
+/**
+ * Ajuste das comparações pareadas.
+ */
+adjustment: PairwiseAdjustment, };
+
+/**
+ * Resultado das médias marginais de um subconjunto de fatores.
+ */
+export type MarginalResult = { 
+/**
+ * Fatores.
+ */
+factors: Array<StableId>, 
+/**
+ * Nomes dos fatores.
+ */
+factorNames: Array<string>, 
+/**
+ * Ajuste usado nas comparações.
+ */
+adjustment: PairwiseAdjustment, 
+/**
+ * Células.
+ */
+cells: Array<MarginalMean>, 
+/**
+ * Comparações pareadas.
+ */
+pairs: Array<MarginalPair>, 
+/**
+ * Letras (células ordenadas por média decrescente), quando calculáveis.
+ */
+letters: Letters | null, };
+
+/**
  * Descrição de um método disponível.
  */
 export type MethodInfo = { 
@@ -1875,6 +2327,67 @@ implementation: Implementation,
  * Situação de validação.
  */
 validation: Validation, };
+
+/**
+ * Métricas de um modelo.
+ */
+export type ModelMetrics = { 
+/**
+ * Termos do modelo.
+ */
+terms: Array<TermSpec>, 
+/**
+ * Rótulos dos termos (mesma ordem).
+ */
+labels: Array<string>, 
+/**
+ * Parâmetros estimados, com o intercepto.
+ */
+parameters: number, 
+/**
+ * Graus de liberdade do resíduo.
+ */
+dfError: number, 
+/**
+ * `R²`.
+ */
+rSquared: Stat, 
+/**
+ * `R²` ajustado.
+ */
+adjustedRSquared: Stat, 
+/**
+ * `R²` predito (`1 − PRESS/SQT`).
+ */
+predictedRSquared: Stat, 
+/**
+ * Soma de quadrados dos resíduos de predição.
+ */
+press: Stat, 
+/**
+ * Raiz do quadrado médio do resíduo.
+ */
+rmse: Stat, 
+/**
+ * Valor-p do teste `F` do modelo.
+ */
+modelPValue: Stat, 
+/**
+ * Valor-p da falta de ajuste (indefinido sem erro puro).
+ */
+lackOfFitPValue: Stat, 
+/**
+ * AIC.
+ */
+aic: Stat, 
+/**
+ * AIC corrigido para amostras pequenas.
+ */
+aicc: Stat, 
+/**
+ * BIC.
+ */
+bic: Stat, };
 
 /**
  * Modelo: resposta, intercepto e termos.
@@ -2111,12 +2624,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Pedido da malha de desejabilidade.
@@ -2348,6 +2861,11 @@ ciUpper: Stat,
 significant: boolean | null, };
 
 /**
+ * Ajuste das comparações entre médias marginais.
+ */
+export type PairwiseAdjustment = "tukey" | "none" | "bonferroni" | "holm";
+
+/**
  * Pareto de efeitos.
  */
 export type Pareto = { 
@@ -2419,6 +2937,163 @@ predictionLower: Stat,
  * Limite superior do intervalo de predição de uma nova observação.
  */
 predictionUpper: Stat, };
+
+/**
+ * Procedimento solicitado.
+ */
+export type Procedure = { "type": "gamesHowell" } | { "type": "dunnett", 
+/**
+ * Rótulo do nível de controle.
+ */
+control: string, } | { "type": "bonferroni" } | { "type": "holm" } | { "type": "kruskalDunn", 
+/**
+ * Ajuste dos valores-p de Dunn.
+ */
+adjustment: Adjustment, };
+
+/**
+ * Resumo de um grupo.
+ */
+export type ProcedureGroup = { 
+/**
+ * Nível.
+ */
+label: string, 
+/**
+ * Observações.
+ */
+n: number, 
+/**
+ * Média.
+ */
+mean: Stat, 
+/**
+ * Desvio-padrão.
+ */
+sd: Stat, 
+/**
+ * Mediana.
+ */
+median: Stat, 
+/**
+ * Posto médio (só Kruskal–Wallis).
+ */
+meanRank: Stat, };
+
+/**
+ * Uma comparação.
+ */
+export type ProcedurePair = { 
+/**
+ * Índice do primeiro grupo em `groups`.
+ */
+groupA: number, 
+/**
+ * Índice do segundo grupo (o controle, no Dunnett).
+ */
+groupB: number, 
+/**
+ * Diferença de médias (de postos médios no Kruskal–Wallis), `a − b`.
+ */
+difference: Stat, 
+/**
+ * Erro-padrão da diferença (indefinido quando não se aplica).
+ */
+stdError: Stat, 
+/**
+ * Estatística do teste (`t`, `q/√2` ou `z`).
+ */
+statistic: Stat, 
+/**
+ * Graus de liberdade da estatística.
+ */
+df: Stat, 
+/**
+ * Valor-p sem ajuste.
+ */
+pValue: Stat, 
+/**
+ * Valor-p ajustado pela família.
+ */
+pAdjusted: Stat, 
+/**
+ * Limite inferior do intervalo simultâneo (quando existe).
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo simultâneo (quando existe).
+ */
+ciUpper: Stat, 
+/**
+ * `p_adjusted < alpha`; `None` se o valor-p não é definido.
+ */
+significant: boolean | null, };
+
+/**
+ * Solicitação.
+ */
+export type ProcedureRequest = { 
+/**
+ * Dados.
+ */
+dataset: Dataset, 
+/**
+ * Resposta.
+ */
+responseId: StableId, 
+/**
+ * Fator que define os grupos.
+ */
+factorId: StableId, 
+/**
+ * Nível de significância da família.
+ */
+alpha: number, 
+/**
+ * Procedimento.
+ */
+procedure: Procedure, };
+
+/**
+ * Resultado.
+ */
+export type ProcedureResult = { 
+/**
+ * Procedimento executado.
+ */
+procedure: Procedure, 
+/**
+ * Nível de significância.
+ */
+alpha: number, 
+/**
+ * Teste global.
+ */
+globalTest: GlobalTest, 
+/**
+ * Grupos, na ordem de aparição dos níveis.
+ */
+groups: Array<ProcedureGroup>, 
+/**
+ * Comparações.
+ */
+pairs: Array<ProcedurePair>, 
+/**
+ * Letras (não há no Dunnett: as comparações são com o controle).
+ */
+letters: Letters | null, 
+/**
+ * Índice do controle (Dunnett).
+ */
+control: number | null, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
 
 /**
  * Projeto lido.
@@ -2526,6 +3201,68 @@ theoretical: number,
  * Resíduo padronizado ordenado.
  */
 sample: number, };
+
+/**
+ * Um ensaio.
+ */
+export type RcbdRun = { 
+/**
+ * Posição global de execução (blocos em ordem, ordem sorteada dentro de cada um).
+ */
+run: number, 
+/**
+ * Índice do bloco.
+ */
+blockIndex: number, 
+/**
+ * Bloco.
+ */
+block: string, 
+/**
+ * Posição dentro do bloco (1-based).
+ */
+position: number, 
+/**
+ * Índice do tratamento.
+ */
+levelIndex: number, 
+/**
+ * Tratamento.
+ */
+level: string, };
+
+/**
+ * Especificação do DBC.
+ */
+export type RcbdSpec = { 
+/**
+ * Fator de tratamento.
+ */
+factorId: StableId, 
+/**
+ * Nome do fator de tratamento.
+ */
+factorName: string, 
+/**
+ * Tratamentos.
+ */
+levels: Array<string>, 
+/**
+ * Nome do fator de bloco.
+ */
+blockName: string, 
+/**
+ * Blocos (por exemplo, dia, lote ou operador).
+ */
+blocks: Array<string>, 
+/**
+ * Aleatorizar a ordem dentro de cada bloco.
+ */
+randomize: boolean, 
+/**
+ * Semente da aleatorização.
+ */
+seed: number, };
 
 /**
  * Tabela da ANOVA da regressão e medidas de ajuste.
@@ -2831,6 +3568,52 @@ x2: number,
 y2: number, };
 
 /**
+ * Resultado.
+ */
+export type SelectionResult = { 
+/**
+ * Nível de significância usado na eliminação.
+ */
+alpha: number, 
+/**
+ * Modelo completo de segunda ordem.
+ */
+full: ModelMetrics, 
+/**
+ * Sequência: o primeiro passo é o modelo atual; o último é o recomendado.
+ */
+steps: Array<SelectionStep>, 
+/**
+ * Por que a eliminação parou (`no_candidate`, `hierarchy`, `no_degrees_of_freedom`).
+ */
+stoppedBecause: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Passo da sequência de eliminação.
+ */
+export type SelectionStep = { 
+/**
+ * Termo removido neste passo (`None` no passo inicial, o modelo atual).
+ */
+removed: string | null, 
+/**
+ * Valor-p do termo removido no modelo anterior.
+ */
+removedPValue: Stat, 
+/**
+ * Métricas do modelo resultante.
+ */
+metrics: ModelMetrics, };
+
+/**
  * Gravidade de um diagnóstico.
  */
 export type Severity = "error" | "warning" | "info";
@@ -2873,6 +3656,11 @@ value: number, } | { "status": "undefined",
  * Motivo.
  */
 reason: UndefinedReason, };
+
+/**
+ * Tipo de soma de quadrados.
+ */
+export type SumOfSquaresType = "typeI" | "typeII" | "typeIII";
 
 /**
  * Resumo de uma coluna.

@@ -12,7 +12,7 @@ Para iniciar ou retomar a implementação, use o [prompt de execução passo a p
 >
 > Versão-alvo: v0.1.0 · Fase do roteiro: F12–F13 · Candidata pronta localmente; **publicação (etiqueta, release e Pages) e verificação da atualização dependem do mantenedor** · Marcos M1–M3 não declarados
 
-**Exceção ao "uma etapa ativa por vez" (2026-11-01):** durante a implementação, as etapas ET01–ET05 ficaram abertas apenas pela evidência no Windows 11 e as seguintes avançaram em paralelo. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); com essa evidência, ET01–ET09 foram concluídas. O Windows 11 permanece **não verificado** e consta das notas de versão.
+**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a ET11 e a ET12 (v0.2) foram executadas e concluídas em 2026-11-02 com a ET10 ainda aberta (a publicação da v0.1.0 depende do mantenedor), por pedido do usuário. Além disso, durante a implementação, as etapas ET01–ET05 ficaram abertas apenas pela evidência no Windows 11 e as seguintes avançaram em paralelo. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); com essa evidência, ET01–ET09 foram concluídas. O Windows 11 permanece **não verificado** e consta das notas de versão.
 
 O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se este quadro e o diretório divergirem, o diretório prevalece e este índice deve ser corrigido.
 
@@ -24,7 +24,7 @@ O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se es
 | Versão | [Plano da v0.1](plano-v0.1.md) | O que entra na primeira versão, em que ordem e com quais critérios de lançamento? |
 | Etapa | `ativos/`, `planejados/`, `concluidos/` | Quais tarefas executar agora, como verificar e o que foi feito? |
 
-Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etapas é global e nunca reutilizada: a v0.2 continuará em ET11, que começa pela migração do Node.js 22 para o 26 ([DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)).
+Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etapas é global e nunca reutilizada: a v0.2 continuará em ET11 e ET12, e a ET11 começa pela migração do Node.js 22 para o 26 ([DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)).
 
 ## Situação das etapas
 
@@ -40,6 +40,8 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET08 | Otimização de uma ou várias respostas | v0.1 | **Concluído** (2026-11-01) | [concluidos/et08-otimizacao.md](concluidos/et08-otimizacao.md) |
 | ET09 | Gráficos e exportação essenciais | v0.1 | **Concluído** (2026-11-01) | [concluidos/et09-graficos-exportacao.md](concluidos/et09-graficos-exportacao.md) |
 | ET10 | Integração, verificação e publicação | v0.1 | **Ativo** (publicação pendente) | [ativos/et10-integracao-publicacao.md](ativos/et10-integracao-publicacao.md) |
+| ET11 | Seleção e comparação de modelos, navegação por seções e métodos da v0.2 (começa pela migração do Node.js, DT-0015) | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et11-selecao-de-modelos-e-navegacao.md](concluidos/et11-selecao-de-modelos-e-navegacao.md) |
+| ET12 | Temas adicionais (Industrial, Organic e Clay) e logo do grupo de pesquisa | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et12-temas-adicionais-e-identidade-do-grupo.md](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.
 

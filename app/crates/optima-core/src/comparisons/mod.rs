@@ -6,6 +6,7 @@
 
 pub mod groups;
 pub mod letters;
+pub mod procedures;
 pub mod tukey;
 
 use serde::{Deserialize, Serialize};

@@ -1,9 +1,11 @@
 // Resultados da comparação de tratamentos de um fator (U08/U09/U16): explicação curta, tabelas,
 // gráficos com incerteza nomeada e letras, diagnósticos e exportação com proveniência.
+
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
+import { APP_VERSION } from "../../lib/version";
 import { boxChart, meansChart, scatterChart } from "../../services/charts";
 import type { AnalysisRecord, OneWayResult, Stat } from "../../services/engine";
 import { type ExportMetadata, exportMetadata, flat } from "../../services/export";
@@ -68,7 +70,7 @@ export function ComparisonResults({ result, signature, language }: Props) {
             revisionHash: revision?.contentHash ?? "",
             project: workspace.name,
             experiment: state.name,
-            appVersion: "0.1.0",
+            appVersion: APP_VERSION,
             now: new Date().toISOString(),
           })
         : null,
@@ -152,139 +154,152 @@ export function ComparisonResults({ result, signature, language }: Props) {
 
   return (
     <>
-      <ComparisonInterpretation
-        result={result}
-        responseName={responseName}
-        factorName={factorName}
-        language={language}
-      />
-
-      <label className="field">
-        <span>{t("comparison.charts.uncertainty")}</span>
-        <select value={uncertainty} onChange={(e) => setUncertainty(e.target.value as Uncertainty)}>
-          <option value="ci">{t("comparison.charts.ci")}</option>
-          <option value="sd">{t("comparison.charts.sd")}</option>
-          <option value="se">{t("comparison.charts.se")}</option>
-        </select>
-      </label>
-
-      <ChartFigure
-        testId="means-chart"
-        screenSvg={meansChart(meansSpec(false), "css", fmt)}
-        exportSvg={meansChart(meansSpec(true), "static", fmt)}
-        pngMetadata={metadataText}
-        fileBase={`${base}-medias`}
-      >
-        <p className="muted small">{t("comparison.charts.tableHint")}</p>
-      </ChartFigure>
-
-      <GroupTable result={result} factorName={factorName} language={language} />
-      <AnovaTable result={result} responseName={responseName} language={language} />
-      <p className="muted small">
-        {[
-          result.effectSizes.etaSquared,
-          result.effectSizes.omegaSquared,
-          result.effectSizes.cvPercent,
-        ].every((s) => s.status === "defined") &&
-          `${t("comparison.effects.eta")}: ${formatSignificant(val(result.effectSizes.etaSquared) ?? 0, language, 4)} · ${t("comparison.effects.omega")}: ${formatSignificant(val(result.effectSizes.omegaSquared) ?? 0, language, 4)} · ${t("comparison.effects.cv")}: ${formatSignificant(val(result.effectSizes.cvPercent) ?? 0, language, 4)}%`}
-      </p>
-
-      {result.tukey && (
-        <details open>
-          <summary>{t("comparison.pairs.show")}</summary>
-          <PairTable result={result} language={language} />
-        </details>
-      )}
-
-      <section aria-labelledby="diagnostics-title">
-        <h3 id="diagnostics-title">{t("comparison.diagnostics.title")}</h3>
-        <p data-testid="brown-forsythe">
-          {bf.f.status === "defined" && bf.pValue.status === "defined"
-            ? t("comparison.diagnostics.bf", {
-                df1: bf.dfBetween,
-                df2: bf.dfWithin,
-                f: formatSignificant(bf.f.value, language, 5),
-                p: formatP(bf.pValue.value, language),
-              })
-            : t("comparison.diagnostics.bfUndefined")}
-        </p>
-        {result.diagnostics.sdRatio.status === "defined" && (
-          <p>
-            {t("comparison.diagnostics.ratio", {
-              ratio: formatSignificant(result.diagnostics.sdRatio.value, language, 4),
-            })}
-          </p>
-        )}
-        {farPoints > 0 && <p>{t("comparison.diagnostics.outliers", { count: farPoints })}</p>}
-        <ChartFigure
-          testId="box-chart"
-          screenSvg={boxChart(boxSpec(false), "css", fmt)}
-          exportSvg={boxChart(boxSpec(true), "static", fmt)}
-          pngMetadata={metadataText}
-          fileBase={`${base}-boxplot`}
+      <div data-section="summary">
+        <ComparisonInterpretation
+          result={result}
+          responseName={responseName}
+          factorName={factorName}
+          language={language}
         />
-        {hasResiduals && (
-          <>
-            <ChartFigure
-              testId="residuals-chart"
-              screenSvg={scatterChart(residualSpec(false), "css", fmt)}
-              exportSvg={scatterChart(residualSpec(true), "static", fmt)}
-              pngMetadata={metadataText}
-              fileBase={`${base}-residuos`}
-            />
-            <ChartFigure
-              testId="qq-chart"
-              screenSvg={scatterChart(qqSpec(false), "css", fmt)}
-              exportSvg={scatterChart(qqSpec(true), "static", fmt)}
-              pngMetadata={metadataText}
-              fileBase={`${base}-qq`}
-            />
-          </>
-        )}
-      </section>
+      </div>
 
-      <section aria-labelledby="export-title" data-report-skip>
-        <h3 id="export-title">{t("comparison.export.title")}</h3>
-        <div className="row">
-          <TableExportButtons
-            label={t("comparison.export.csvAnova")}
-            suffix="anova"
-            sheet="ANOVA"
-            header={ANOVA_HEADER}
-            rows={anovaRows(result)}
-            metadata={exportMeta}
-            fileBase={base}
-            onDone={setNotice}
+      <div data-section="charts">
+        <label className="field">
+          <span>{t("comparison.charts.uncertainty")}</span>
+          <select
+            value={uncertainty}
+            onChange={(e) => setUncertainty(e.target.value as Uncertainty)}
+          >
+            <option value="ci">{t("comparison.charts.ci")}</option>
+            <option value="sd">{t("comparison.charts.sd")}</option>
+            <option value="se">{t("comparison.charts.se")}</option>
+          </select>
+        </label>
+
+        <ChartFigure
+          testId="means-chart"
+          screenSvg={meansChart(meansSpec(false), "css", fmt)}
+          exportSvg={meansChart(meansSpec(true), "static", fmt)}
+          pngMetadata={metadataText}
+          fileBase={`${base}-medias`}
+        >
+          <p className="muted small">{t("comparison.charts.tableHint")}</p>
+        </ChartFigure>
+      </div>
+
+      <div data-section="tables">
+        <GroupTable result={result} factorName={factorName} language={language} />
+        <AnovaTable result={result} responseName={responseName} language={language} />
+        <p className="muted small">
+          {[
+            result.effectSizes.etaSquared,
+            result.effectSizes.omegaSquared,
+            result.effectSizes.cvPercent,
+          ].every((s) => s.status === "defined") &&
+            `${t("comparison.effects.eta")}: ${formatSignificant(val(result.effectSizes.etaSquared) ?? 0, language, 4)} · ${t("comparison.effects.omega")}: ${formatSignificant(val(result.effectSizes.omegaSquared) ?? 0, language, 4)} · ${t("comparison.effects.cv")}: ${formatSignificant(val(result.effectSizes.cvPercent) ?? 0, language, 4)}%`}
+        </p>
+
+        {result.tukey && (
+          <details open>
+            <summary>{t("comparison.pairs.show")}</summary>
+            <PairTable result={result} language={language} />
+          </details>
+        )}
+      </div>
+
+      <div data-section="diagnostics">
+        <section aria-labelledby="diagnostics-title">
+          <h3 id="diagnostics-title">{t("comparison.diagnostics.title")}</h3>
+          <p data-testid="brown-forsythe">
+            {bf.f.status === "defined" && bf.pValue.status === "defined"
+              ? t("comparison.diagnostics.bf", {
+                  df1: bf.dfBetween,
+                  df2: bf.dfWithin,
+                  f: formatSignificant(bf.f.value, language, 5),
+                  p: formatP(bf.pValue.value, language),
+                })
+              : t("comparison.diagnostics.bfUndefined")}
+          </p>
+          {result.diagnostics.sdRatio.status === "defined" && (
+            <p>
+              {t("comparison.diagnostics.ratio", {
+                ratio: formatSignificant(result.diagnostics.sdRatio.value, language, 4),
+              })}
+            </p>
+          )}
+          {farPoints > 0 && <p>{t("comparison.diagnostics.outliers", { count: farPoints })}</p>}
+          <ChartFigure
+            testId="box-chart"
+            screenSvg={boxChart(boxSpec(false), "css", fmt)}
+            exportSvg={boxChart(boxSpec(true), "static", fmt)}
+            pngMetadata={metadataText}
+            fileBase={`${base}-boxplot`}
           />
-          <TableExportButtons
-            label={t("comparison.export.csvGroups")}
-            suffix="grupos"
-            sheet={t("comparison.export.sheetGroups")}
-            header={GROUP_HEADER}
-            rows={groupRows(result)}
-            metadata={exportMeta}
-            fileBase={base}
-            onDone={setNotice}
-          />
-          {result.tukey && (
+          {hasResiduals && (
+            <>
+              <ChartFigure
+                testId="residuals-chart"
+                screenSvg={scatterChart(residualSpec(false), "css", fmt)}
+                exportSvg={scatterChart(residualSpec(true), "static", fmt)}
+                pngMetadata={metadataText}
+                fileBase={`${base}-residuos`}
+              />
+              <ChartFigure
+                testId="qq-chart"
+                screenSvg={scatterChart(qqSpec(false), "css", fmt)}
+                exportSvg={scatterChart(qqSpec(true), "static", fmt)}
+                pngMetadata={metadataText}
+                fileBase={`${base}-qq`}
+              />
+            </>
+          )}
+        </section>
+      </div>
+
+      <div data-section="tables">
+        <section aria-labelledby="export-title" data-report-skip>
+          <h3 id="export-title">{t("comparison.export.title")}</h3>
+          <div className="row">
             <TableExportButtons
-              label={t("comparison.export.csvPairs")}
-              suffix="pares"
-              sheet={t("comparison.export.sheetPairs")}
-              header={PAIR_HEADER}
-              rows={pairRows(result)}
+              label={t("comparison.export.csvAnova")}
+              suffix="anova"
+              sheet="ANOVA"
+              header={ANOVA_HEADER}
+              rows={anovaRows(result)}
               metadata={exportMeta}
               fileBase={base}
               onDone={setNotice}
             />
+            <TableExportButtons
+              label={t("comparison.export.csvGroups")}
+              suffix="grupos"
+              sheet={t("comparison.export.sheetGroups")}
+              header={GROUP_HEADER}
+              rows={groupRows(result)}
+              metadata={exportMeta}
+              fileBase={base}
+              onDone={setNotice}
+            />
+            {result.tukey && (
+              <TableExportButtons
+                label={t("comparison.export.csvPairs")}
+                suffix="pares"
+                sheet={t("comparison.export.sheetPairs")}
+                header={PAIR_HEADER}
+                rows={pairRows(result)}
+                metadata={exportMeta}
+                fileBase={base}
+                onDone={setNotice}
+              />
+            )}
+          </div>
+          {notice && (
+            <p role="status" className="muted small" data-testid="export-notice">
+              {notice}
+            </p>
           )}
-        </div>
-        {notice && (
-          <p role="status" className="muted small" data-testid="export-notice">
-            {notice}
-          </p>
-        )}
-      </section>
+        </section>
+      </div>
     </>
   );
 }

@@ -1,6 +1,12 @@
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
+import { THEME_LIST } from "./themes";
+
+test.beforeEach(async ({ page }) => {
+  await showAllSections(page);
+});
 
 // Varredura automática de acessibilidade (axe-core, regras WCAG 2.x A/AA) em cada etapa do fluxo
 // e em cada tema. Não substitui a verificação manual com leitor de tela.
@@ -15,11 +21,11 @@ async function scan(page: Page, where: string) {
   expect(summary, `violações de acessibilidade em ${where}`).toEqual([]);
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: fluxo completo sem violações no tema ${theme}`, async ({ page }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     await scan(page, `${theme}/objetivo`);
 
     await page
@@ -60,7 +66,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
 
 test("axe: controle negativo — o verificador detecta violações conhecidas", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+  await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
   await page.evaluate(() => {
     const bad = document.createElement("div");
     bad.innerHTML = '<img src="x.png"><input type="text"><button></button>';
@@ -73,7 +79,7 @@ test("axe: controle negativo — o verificador detecta violações conhecidas", 
 
 test("axe: assistente de importação e aviso de recuperação sem violações", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+  await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
   await page
     .getByRole("radio", { name: /Analyze existing data|Analisar dados existentes/ })
     .check();
@@ -101,13 +107,13 @@ test("axe: assistente de importação e aviso de recuperação sem violações",
   await scan(page, "aviso de recuperação");
 });
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: comparação de tratamentos (configuração, tabelas e gráficos) no tema ${theme}`, async ({
     page,
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     await page.getByRole("radio", { name: /Compare treatments|Comparar tratamentos/ }).check();
     await page.getByRole("button", { name: /Next|Avançar/ }).click();
     await page.getByRole("button", { name: /Add factor|Adicionar fator/ }).click();
@@ -146,13 +152,13 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   });
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: planejamento, matriz e resultados de triagem sem violações no tema ${theme}`, async ({
     page,
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -168,13 +174,13 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   });
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: superfície de resposta (resultados, gráficos e planejamento de superfície) sem violações no tema ${theme}`, async ({
     page,
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -192,13 +198,13 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   });
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: otimização, candidatos e conferência da confirmação sem violações no tema ${theme}`, async ({
     page,
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(

@@ -11,12 +11,17 @@ import type {
   EntryPath as EntryPathContract,
   ExperimentData,
   ExperimentOrigin,
+  FactorialResult,
+  FactorialSetup,
   FactorKind,
   FactorSpec,
   FigureStyle,
   OneWayResult,
   OptimizationResult,
   OptimizationSetup,
+  Procedure,
+  ProcedureResult,
+  RcbdSpec,
   ResponseSpec,
   Revision,
   RevisionReason,
@@ -41,10 +46,16 @@ export interface AnalysisDraft {
   alpha: number;
   /** Termos do modelo do planejamento (cada termo = ids dos fatores); `null` = só efeitos principais. */
   designTerms: string[][] | null;
+  /** Modelo escolhido de cada resposta (id → termos); `designTerms` é o da resposta analisada. */
+  responseModels: Record<string, string[][]>;
   /** Incluir o termo de curvatura quando houver pontos centrais. */
   includeCurvature: boolean;
   /** Analisar como superfície de resposta (caminho "Analisar dados existentes"). */
   surface: boolean;
+  /** Procedimento de comparação múltipla (`null` = Tukey, a comparação padrão). */
+  procedure: Procedure | null;
+  /** ANOVA multifatorial (com blocos); quando definida, substitui a comparação de um fator. */
+  factorial: FactorialSetup | null;
 }
 
 export const DEFAULT_ALPHA = 0.05;
@@ -64,6 +75,8 @@ export const EMPTY_OPTIMIZATION: OptimizationState = { setup: null, result: null
 export type StoredResult =
   | { signature: string; kind: "descriptive"; result: DescriptiveResult }
   | { signature: string; kind: "oneWay"; result: OneWayResult }
+  | { signature: string; kind: "procedure"; result: ProcedureResult }
+  | { signature: string; kind: "factorial"; result: FactorialResult }
   | { signature: string; kind: "design"; result: DesignAnalysisResult }
   | { signature: string; kind: "surface"; result: SurfaceResult };
 
@@ -76,6 +89,8 @@ export interface ProjectState {
   design: DesignSpec | null;
   /** Delineamento inteiramente casualizado (um fator categórico) gerado para o experimento. */
   crd: CrdSpec | null;
+  /** Delineamento em blocos completos casualizados gerado para o experimento. */
+  rcbd: RcbdSpec | null;
   /** Personalização gráfica por figura (chave estável da figura → ajustes). */
   figureStyles: Record<string, FigureStyle>;
   factors: FactorDraft[];
@@ -132,6 +147,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     path: null,
     design: null,
     crd: null,
+    rcbd: null,
     figureStyles: {},
     factors: [],
     responses: [],
@@ -142,8 +158,11 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
       factorId: null,
       alpha: DEFAULT_ALPHA,
       designTerms: null,
+      responseModels: {},
       includeCurvature: true,
       surface: false,
+      procedure: null,
+      factorial: null,
     },
     result: null,
     optimization: EMPTY_OPTIMIZATION,
@@ -235,6 +254,14 @@ export type ProjectAction =
       crd: CrdSpec;
       rows: RowDraft[];
       counters: ProjectState["counters"];
+      now: string;
+    }
+  | {
+      type: "applyRcbd";
+      rcbd: RcbdSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      factorial: FactorialSetup;
       now: string;
     }
   | { type: "setFigureStyle"; key: string; style: FigureStyle | null }
@@ -344,8 +371,11 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
         : null,
       alpha: state.analysis.alpha,
       designTerms: state.analysis.designTerms,
+      responseModels: state.analysis.responseModels,
       includeCurvature: state.analysis.includeCurvature,
       surface: state.analysis.surface,
+      procedure: state.analysis.procedure,
+      factorial: state.analysis.factorial,
     },
     // O planejamento só vale enquanto todos os seus fatores existem.
     design: state.design?.factors.every((f) => data.factors.some((d) => d.id === f.id))
@@ -385,6 +415,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         ...state,
         factors: state.factors.filter((f) => f.id !== action.id),
         crd: state.crd?.factorId === action.id ? null : state.crd,
+        rcbd: state.rcbd?.factorId === action.id ? null : state.rcbd,
         rows: state.rows.map((r) => ({ ...r, factors: r.factors.filter((_, i) => i !== index) })),
         analysis: {
           ...state.analysis,
@@ -393,6 +424,12 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           designTerms: state.analysis.designTerms
             ? state.analysis.designTerms.filter((term) => !term.includes(action.id))
             : null,
+          responseModels: Object.fromEntries(
+            Object.entries(state.analysis.responseModels).map(([id, terms]) => [
+              id,
+              terms.filter((term) => !term.includes(action.id)),
+            ]),
+          ),
         },
       };
     }
@@ -457,8 +494,9 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         counters: { ...before.counters, row: action.counters.row },
         design: action.design,
         crd: null,
+        rcbd: null,
         // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
-        analysis: { ...before.analysis, designTerms: null },
+        analysis: { ...before.analysis, designTerms: null, responseModels: {} },
         result: null,
       };
       return commitRevision(next, "design", action.now);
@@ -472,8 +510,35 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         counters: { ...before.counters, row: action.counters.row },
         design: null,
         crd: action.crd,
+        rcbd: null,
         // O fator do DIC define os grupos da comparação de tratamentos.
-        analysis: { ...before.analysis, designTerms: null, factorId: action.crd.factorId },
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: action.crd.factorId,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "applyRcbd": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: action.rcbd,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: action.factorial,
+        },
         result: null,
       };
       return commitRevision(next, "design", action.now);
@@ -495,8 +560,24 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       return { ...state, rows: state.rows.filter((_, i) => i !== action.row) };
     case "setUnitColumn":
       return { ...state, showUnitColumn: action.visible };
-    case "setAnalysis":
-      return { ...state, analysis: { ...state.analysis, ...action.patch } };
+    case "setAnalysis": {
+      const next = { ...state.analysis, ...action.patch };
+      const changedResponse =
+        action.patch.responseId !== undefined &&
+        action.patch.responseId !== state.analysis.responseId;
+      if (action.patch.designTerms !== undefined) {
+        // O modelo escolhido pertence à resposta analisada.
+        const { [next.responseId ?? ""]: _old, ...rest } = next.responseModels;
+        next.responseModels =
+          next.designTerms && next.responseId
+            ? { ...rest, [next.responseId]: next.designTerms }
+            : rest;
+      } else if (changedResponse) {
+        // Trocar de resposta traz o modelo que ela já tinha (ou o completo).
+        next.designTerms = next.responseId ? (next.responseModels[next.responseId] ?? null) : null;
+      }
+      return { ...state, analysis: next };
+    }
     case "setNotes":
       return { ...state, notes: action.notes };
     case "rename":
@@ -516,41 +597,57 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         methodVersion: action.result.result.provenance.methodVersion,
         engineVersion: action.result.result.provenance.engineVersion,
         options:
-          action.result.kind === "oneWay"
+          action.result.kind === "oneWay" || action.result.kind === "procedure"
             ? {
                 responseId: committed.analysis.responseId,
                 groupBy: [],
                 factorId: committed.analysis.factorId ?? undefined,
                 alpha: committed.analysis.alpha,
+                ...(action.result.kind === "procedure" && committed.analysis.procedure
+                  ? { procedure: committed.analysis.procedure }
+                  : {}),
               }
-            : action.result.kind === "design"
+            : action.result.kind === "factorial"
               ? {
                   responseId: committed.analysis.responseId,
                   groupBy: [],
                   alpha: committed.analysis.alpha,
-                  terms: committed.analysis.designTerms ?? undefined,
-                  includeCurvature: committed.analysis.includeCurvature,
+                  ...(committed.analysis.factorial
+                    ? { factorial: committed.analysis.factorial }
+                    : {}),
                 }
-              : action.result.kind === "surface"
+              : action.result.kind === "design"
                 ? {
                     responseId: committed.analysis.responseId,
                     groupBy: [],
                     alpha: committed.analysis.alpha,
                     terms: committed.analysis.designTerms ?? undefined,
-                    surface: committed.analysis.surface || undefined,
+                    includeCurvature: committed.analysis.includeCurvature,
                   }
-                : {
-                    responseId: committed.analysis.responseId,
-                    groupBy: committed.analysis.groupBy,
-                  },
+                : action.result.kind === "surface"
+                  ? {
+                      responseId: committed.analysis.responseId,
+                      groupBy: [],
+                      alpha: committed.analysis.alpha,
+                      terms: committed.analysis.designTerms ?? undefined,
+                      surface: committed.analysis.surface || undefined,
+                    }
+                  : {
+                      responseId: committed.analysis.responseId,
+                      groupBy: committed.analysis.groupBy,
+                    },
         result:
           action.result.kind === "oneWay"
             ? { type: "oneWayComparison", ...action.result.result }
-            : action.result.kind === "design"
-              ? { type: "twoLevelDesign", ...action.result.result }
-              : action.result.kind === "surface"
-                ? { type: "responseSurface", ...action.result.result }
-                : { type: "descriptive", ...action.result.result },
+            : action.result.kind === "procedure"
+              ? { type: "multipleComparison", ...action.result.result }
+              : action.result.kind === "factorial"
+                ? { type: "factorialAnova", ...action.result.result }
+                : action.result.kind === "design"
+                  ? { type: "twoLevelDesign", ...action.result.result }
+                  : action.result.kind === "surface"
+                    ? { type: "responseSurface", ...action.result.result }
+                    : { type: "descriptive", ...action.result.result },
       };
       return {
         ...committed,

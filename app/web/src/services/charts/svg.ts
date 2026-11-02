@@ -5,7 +5,7 @@ export type Paint = "ink" | "inkSecondary" | "rule" | "action" | "panel" | "aler
 export type PaintMode = "css" | "static";
 
 /** Textos que a personalização por figura pode trocar ou ocultar. */
-export type FigureText = "title" | "xLabel" | "yLabel" | "letters" | "lettersLegend";
+export type FigureText = "title" | "xLabel" | "yLabel" | "letters" | "lettersLegend" | "legend";
 
 const STATIC: Record<Paint, string> = {
   ink: "#16191f",
@@ -97,7 +97,7 @@ export function open(
 ): string {
   const background =
     mode === "static"
-      ? `<rect width="${frame.width}" height="${frame.height}" fill="${paint("panel", mode)}"/>`
+      ? `<rect width="${frame.width}" height="${frame.height}" fill="${paint("panel", mode)}" data-figure="background"/>`
       : "";
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${frame.width} ${frame.height}" ` +
@@ -153,12 +153,12 @@ export function line(
   x2: number,
   y2: number,
   mode: PaintMode,
-  options: { role?: Paint; width?: number; dash?: string } = {},
+  options: { role?: Paint; width?: number; dash?: string; grid?: boolean } = {},
 ): string {
-  const { role = "rule", width = 1, dash } = options;
+  const { role = "rule", width = 1, dash, grid } = options;
   return (
     `<line x1="${n(x1)}" y1="${n(y1)}" x2="${n(x2)}" y2="${n(y2)}" stroke="${paint(role, mode)}" ` +
-    `stroke-width="${width}"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`
+    `stroke-width="${width}"${dash ? ` stroke-dasharray="${dash}"` : ""}${grid ? ' data-figure="grid"' : ""}/>`
   );
 }
 
@@ -177,7 +177,7 @@ export function yAxis(
   const parts: string[] = [];
   for (const tick of ticks) {
     const y = scale(tick);
-    parts.push(line(frame.left, y, frame.width - frame.right, y, mode));
+    parts.push(line(frame.left, y, frame.width - frame.right, y, mode, { grid: true }));
     parts.push(
       text(frame.left - 8, y + 4, format(tick), mode, { anchor: "end", role: "inkSecondary" }),
     );
@@ -217,7 +217,7 @@ export function legend(
   const lines = contents.flatMap(
     (c): Array<{ content: string; figure?: FigureText }> =>
       typeof c === "string"
-        ? wrapText(c).map((content) => ({ content }))
+        ? wrapText(c).map((content) => ({ content, figure: "legend" as const }))
         : wrapText(c.text).map((content) => ({ content, figure: c.figure })),
   );
   return lines

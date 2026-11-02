@@ -6,7 +6,7 @@
 import { esc } from "../charts/svg";
 
 /** Remove controles e troca cada figura pela versão de exportação (cores fixas, fundo branco). */
-export function cleanReportDom(root: HTMLElement): string {
+export function cleanReportRoot(root: HTMLElement): HTMLElement {
   const clone = root.cloneNode(true) as HTMLElement;
   for (const canvas of clone.querySelectorAll<HTMLElement>("[data-export-svg]")) {
     canvas.innerHTML = canvas.getAttribute("data-export-svg") ?? "";
@@ -21,7 +21,12 @@ export function cleanReportDom(root: HTMLElement): string {
     // Ids dos títulos de seção (referenciados por aria-labelledby) são mantidos; os demais saem.
     if (!el.id.endsWith("-title")) el.removeAttribute("id");
   }
-  return clone.innerHTML;
+  return clone;
+}
+
+/** Mesmo conteúdo, como HTML, para o relatório autocontido. */
+export function cleanReportDom(root: HTMLElement): string {
+  return cleanReportRoot(root).innerHTML;
 }
 
 export interface ReportInput {
@@ -32,6 +37,8 @@ export interface ReportInput {
   provenance: Array<[string, string]>;
   bodyHtml: string;
   footer: string;
+  /** Logotipo do grupo como crédito (PNG em `data:`); ausente = sem logotipo. */
+  logo?: { dataUri: string; alt: string };
 }
 
 const STYLE = `
@@ -39,7 +46,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#161
 h1{font-size:1.6rem;margin:0 0 4px}h2{font-size:1.25rem;margin-top:28px;border-bottom:1px solid #dde0e6;padding-bottom:4px}h3{font-size:1.05rem;margin-top:20px}
 table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}th,td{border:1px solid #dde0e6;padding:4px 8px;text-align:left;vertical-align:top}
 td.num{text-align:right;font-variant-numeric:tabular-nums}caption{text-align:left;font-weight:600;padding:4px 0}thead th{background:#f3f4f7}
-figure{margin:16px 0;break-inside:avoid}svg{max-width:100%;height:auto}.muted,.small{color:#454c58}.small{font-size:.85rem}
+.credit{margin:0 0 8px}figure{margin:16px 0;break-inside:avoid}svg{max-width:100%;height:auto}.muted,.small{color:#454c58}.small{font-size:.85rem}
 dl.interpretation dt{font-weight:600;margin-top:8px}dl.interpretation dd{margin:0 0 4px}.sr-only{position:absolute;left:-9999px}
 ul.facts-list{padding-left:20px}.provenance td:first-child{width:28%;font-family:ui-monospace,monospace;font-size:.82rem}
 .provenance td{word-break:break-word}footer{margin-top:32px;color:#454c58;font-size:.82rem;border-top:1px solid #dde0e6;padding-top:8px}
@@ -55,6 +62,9 @@ export function buildReportHtml(input: ReportInput): string {
     `<!doctype html>\n<html lang="${input.language === "en" ? "en" : "pt-BR"}"><head><meta charset="utf-8">` +
     `<meta name="viewport" content="width=device-width, initial-scale=1">` +
     `<title>${esc(input.title)}</title><style>${STYLE}</style></head><body>` +
+    (input.logo
+      ? `<p class="credit"><img src="${esc(input.logo.dataUri)}" alt="${esc(input.logo.alt)}" width="140" height="39"></p>`
+      : "") +
     `<h1>${esc(input.title)}</h1><p class="muted">${esc(input.subtitle)}</p>` +
     `<section><h2>${esc(input.provenanceTitle)}</h2><table class="provenance"><tbody>${rows}</tbody></table></section>` +
     input.bodyHtml +

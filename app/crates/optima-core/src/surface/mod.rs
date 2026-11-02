@@ -13,6 +13,7 @@ pub mod contour;
 pub mod equation;
 pub mod grid;
 pub mod model;
+pub mod selection;
 pub mod terms;
 
 pub use grid::{GridRequest, SurfaceGrid, compute_grid};

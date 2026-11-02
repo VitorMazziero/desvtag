@@ -16,6 +16,9 @@ import "./themes/tokens.css";
 import "./themes/soft-light.css";
 import "./themes/modern-dark.css";
 import "./themes/professional.css";
+import "./themes/industrial.css";
+import "./themes/organic.css";
+import "./themes/clay.css";
 
 const initial = loadPreferences();
 applyPreferences(initial); // antes da primeira pintura: evita piscar o tema errado

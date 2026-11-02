@@ -1,15 +1,15 @@
 # Relatório de validação — candidata à v0.1.0
 
-**Estado:** candidata **pronta localmente**, não publicada · **Data:** 2026-11-01 · **Ramo:** `claude/epic-keller-3ad7jc` (PR 1 aberto contra `main`)
+**Estado:** versão web **publicada** (Pages); instalador em **rascunho** de release (não publicado) · **Data:** 2026-11-01 · **Ramo:** `claude/epic-keller-3ad7jc` (PR 1 aberto contra `main`)
 
-Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente**. Não declara a versão como publicada, não declara verificação em Windows 11 e nenhum dos marcos M1, M2 ou M3 foi declarado.
+Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente**. Declara como publicada apenas a versão web; não declara o instalador como publicado, não declara verificação em Windows 11 e nenhum dos marcos M1, M2 ou M3 foi declarado.
 
 ## Resumo
 
 | Pergunta | Resposta |
 |---|---|
 | A candidata está pronta localmente? | **Sim**: compila, passa nos testes e roda no navegador (Chromium, Firefox, Chrome e Edge) e no Windows 10 e em `windows-latest` |
-| A v0.1.0 está publicada e verificada? | **Não.** Nada foi publicado (sem etiqueta, release nem Pages); o repositório é público desde 2026-11-01 |
+| A v0.1.0 está publicada e verificada? | **Em parte.** A versão web está publicada no Pages e a etiqueta `v0.1.0` existe ([registro](../../../docs/distribuicao/publicacao.md#registro-do-que-foi-executado)); o instalador está em **rascunho** (não publicado) e a atualização não foi verificada |
 | Os critérios de lançamento estão atendidos? | **Todos, exceto o 8** (publicação e verificação da atualização, ato do mantenedor) — ver a tabela abaixo |
 | Windows 11 de 64 bits verificado? | **Não** (decisão do usuário). Verificado no **Windows 10 Pro 22H2** (build 19045) da máquina de desenvolvimento e em `windows-latest` (Windows Server 2025, build 26100) |
 

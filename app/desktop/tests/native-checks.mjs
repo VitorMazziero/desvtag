@@ -20,7 +20,7 @@ export async function runChecks({ text, invoke }) {
   const environment = await text("engine-environment");
   const protocol = await text("engine-protocol");
   console.log({ version, protocol, environment });
-  if (version !== "0.1.0" || protocol !== "1") throw new Error("Versões inesperadas do motor");
+  if (version !== "0.2.0" || protocol !== "1") throw new Error("Versões inesperadas do motor");
   if (!/Tauri|nativo|native/i.test(environment)) throw new Error("Ambiente não é o nativo Tauri");
   console.log("OK: interface obteve engine.info do motor nativo via comando Tauri.");
 
@@ -457,6 +457,88 @@ export async function runChecks({ text, invoke }) {
     if (encoded.outcome.result.sha256 !== "c9bcb6ac08ec7e35606072e16996d985a3df4f16d29e1e5cce00ba1d3ff57113")
       throw new Error(`SHA-256 do projeto nativo (${encoded.outcome.result.sha256}) difere do codificado no WebAssembly`);
     console.log("OK: projeto com DIC e personalização por figura codificado e relido pelo motor nativo; bytes idênticos aos do WebAssembly.");
+  }
+
+  // v0.2 pelo IPC nativo: procedimentos de comparação múltipla, ANOVA multifatorial com blocos e DBC,
+  // contra as mesmas referências independentes dos testes em Rust e do WebAssembly.
+  {
+    const near = (got, want, rel, abs, what) => {
+      if (!(Math.abs(got - want) <= abs + rel * Math.abs(want))) throw new Error(`${what}: ${got} ≠ ${want}`);
+    };
+    const call = async (taskId, operation) => {
+      const reply = JSON.parse(await invoke(JSON.stringify({ protocolVersion: 1, taskId, operation })));
+      if (reply.outcome?.status !== "ok") throw new Error(`${taskId}: ${JSON.stringify(reply.outcome).slice(0, 300)}`);
+      return reply.outcome.result;
+    };
+    const procedures = JSON.parse(readFileSync(root("validation/cases/multiple_comparison_procedures/procedures.json"), "utf8")).cases;
+    for (const c of procedures) {
+      const observations = [];
+      for (const level of c.levels) for (const y of c.groups[level] ?? []) observations.push({ id: `o${observations.length + 1}`, unitId: null, factors: [level], responses: [y] });
+      const result = await call(`native-procedure-${c.id}`, {
+        type: "comparisonProcedure",
+        dataset: { factors: [{ id: "g", name: "g", kind: "categorical", unit: null, levels: c.levels }], responses: [{ id: "y", name: "y", unit: null }], observations },
+        responseId: "y",
+        factorId: "g",
+        alpha: c.alpha,
+        procedure: c.procedure,
+      });
+      near(result.globalTest.statistic.value, c.expected.global.statistic, 1e-9, 0, `${c.id} estatística global`);
+      if (result.pairs.length !== c.expected.pairs.length) throw new Error(`${c.id}: número de pares`);
+      result.pairs.forEach((p, i) => {
+        const w = c.expected.pairs[i];
+        near(p.pAdjusted.value, w.p_adjusted ?? w.p, 1e-6, c.id.startsWith("dunnett") ? 2e-7 : 1e-8, `${c.id} p ajustado do par ${i}`);
+      });
+    }
+    console.log(`OK: ${procedures.length} procedimentos de comparação múltipla (Games–Howell, Bonferroni, Holm, Dunnett, Kruskal–Wallis/Dunn) iguais às referências independentes no motor nativo.`);
+
+    const factorial = JSON.parse(readFileSync(root("validation/cases/factorial_anova/factorial.json"), "utf8")).cases;
+    for (const c of factorial) {
+      const names = ["A", "B", "Bloco"];
+      const result = await call(`native-factorial-${c.id}`, {
+        type: "anovaFactorial",
+        dataset: {
+          factors: names.map((n) => ({ id: n, name: n, kind: "categorical", unit: null, levels: c.levels[n] })),
+          responses: [{ id: "y", name: "y", unit: null }],
+          observations: c.rows.map((r, i) => ({ id: `o${i + 1}`, unitId: null, factors: names.map((n) => r[n]), responses: [r.y] })),
+        },
+        responseId: "y",
+        factorIds: ["A", "B"],
+        blockId: c.with_block ? "Bloco" : null,
+        interactionOrder: 2,
+        ssType: c.ss_type,
+        alpha: c.alpha,
+        marginals: [],
+        contrasts: [],
+      });
+      result.terms.forEach((t, i) => {
+        const w = c.expected.terms[i];
+        if (t.term !== w.term) throw new Error(`${c.id}: termo ${t.term} ≠ ${w.term}`);
+        near(t.sumSquares.value, w.ss, 1e-9, 1e-10, `${c.id} SQ de ${w.term}`);
+        near(t.pValue.value, w.p, 1e-6, 1e-12, `${c.id} p de ${w.term}`);
+      });
+    }
+    console.log(`OK: ANOVA multifatorial com blocos (${factorial.length} casos, tipos I, II e III) igual ao statsmodels no motor nativo.`);
+
+    // A semente do contrato JSON é um inteiro seguro (≤ 2^53 − 1): o caso com semente maior só vale no Rust.
+    const rcbd = JSON.parse(readFileSync(root("validation/cases/randomized_block_design/rcbd.json"), "utf8")).cases.filter((c) =>
+      Number.isSafeInteger(c.seed),
+    );
+    for (const [index, c] of rcbd.entries()) {
+      const result = await call(`native-rcbd-${index}`, {
+        type: "designRcbdGenerate",
+        factorId: "f1",
+        factorName: "Tratamento",
+        levels: c.levels,
+        blockName: "Bloco",
+        blocks: c.blocks,
+        randomize: c.randomize,
+        seed: c.seed,
+      });
+      const got = result.runs.map((r) => [r.blockIndex, r.levelIndex]);
+      const want = c.runs.map((r) => [r.blockIndex, r.levelIndex]);
+      if (JSON.stringify(got) !== JSON.stringify(want)) throw new Error(`DBC nativo ${index}: ordem difere da referência independente`);
+    }
+    console.log(`OK: DBC aleatorizado (${rcbd.length} casos com semente representável em JavaScript) idêntico à implementação independente no motor nativo.`);
   }
 
   // Reabertura cruzada: os projetos de exemplo foram escritos pelo motor WebAssembly (navegador) e

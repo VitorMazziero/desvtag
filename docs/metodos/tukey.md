@@ -27,7 +27,7 @@ Para o par `(i, j)`: `d = ȳᵢ − ȳⱼ`; `EP = √(QME/2 · (1/nᵢ + 1/nⱼ)
 
 ## 5. Algoritmo numérico
 
-Núcleo da [amplitude studentizada](amplitude-studentizada.md) criado uma vez por análise; `q_crít` por Brent no logaritmo da cauda; um `sf` por par.
+Núcleo da [amplitude studentizada](amplitude-studentizada.md) criado uma vez por análise; `q_crít` por Brent no logaritmo da cauda; um `sf` por par. **Desde a v0.2** a função `W(w; k)` (distribuição da amplitude de `k` normais), que depende só de `k`, é **tabulada uma vez por `k`** por interpolação de Chebyshev em trechos, e cada valor-p passa a custar ~400 avaliações polinomiais em vez de ~400 quadraturas ([DT-0019](../decisoes-tecnicas/dt-0019-procedimentos-de-comparacao-anova-multifatorial-e-dbc.md)); 100 grupos × 30 repetições caíram de ≈ 30 s para ≈ 126 ms ([limites](../arquitetura/limites-operacionais.md)).
 
 ## 6. Saídas
 

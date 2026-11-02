@@ -1,10 +1,12 @@
 // Resultados da análise de um planejamento de dois níveis (U08/U09/U16): explicação curta,
 // efeitos e coeficientes (separados), ANOVA, curvatura, falta de ajuste, Lenth, gráficos de
 // triagem e exportação com proveniência.
+
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
+import { APP_VERSION } from "../../lib/version";
 import { effectsChart, paretoChart, scatterChart } from "../../services/charts";
 import type { AnalysisRecord, DesignAnalysisResult, Stat } from "../../services/engine";
 import { issueMessage } from "../../services/errors/presentation";
@@ -75,7 +77,7 @@ export function DesignResults({ result, signature, language }: Props) {
             revisionHash: revision?.contentHash ?? "",
             project: workspace.name,
             experiment: state.name,
-            appVersion: "0.1.0",
+            appVersion: APP_VERSION,
             now: new Date().toISOString(),
           })
         : null,
@@ -242,268 +244,276 @@ export function DesignResults({ result, signature, language }: Props) {
 
   return (
     <>
-      <section
-        className="panel"
-        aria-labelledby="interpretation-title"
-        data-testid="interpretation"
-      >
-        <h3 id="interpretation-title" className="sr-only">
-          {t("labels.conclusion")}
-        </h3>
-        <dl className="interpretation">
-          <dt>{t("labels.conclusion")}</dt>
-          <dd>
-            {t("design.summary.conclusion", {
-              n: result.fit.nObservations,
-              response: responseName,
-              factors: names.length,
-              terms: result.effects.length,
-            })}
-          </dd>
-          <dt>{t("labels.evidence")}</dt>
-          <dd>{evidence}</dd>
-          <dt>{t("labels.nextStep")}</dt>
-          <dd>{t("design.summary.nextStep")}</dd>
-        </dl>
-        <ul className="facts-list">
-          {result.facts.map((fact) => (
-            <li key={fact.key + JSON.stringify(fact.params)}>
-              {t(`facts.${fact.key}`, formatFactParams(fact, language))}
-            </li>
-          ))}
-        </ul>
-        {result.issues.filter((i) => i.severity !== "info").length > 0 && (
-          <div role="note">
-            <h4>{t("comparison.warnings")}</h4>
-            <ul className="facts-list">
-              {result.issues.map((issue) => (
-                <li key={issue.code + JSON.stringify(issue.params)}>{issueMessage(tc, issue)}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+      <div data-section="summary">
+        <section
+          className="panel"
+          aria-labelledby="interpretation-title"
+          data-testid="interpretation"
+        >
+          <h3 id="interpretation-title" className="sr-only">
+            {t("labels.conclusion")}
+          </h3>
+          <dl className="interpretation">
+            <dt>{t("labels.conclusion")}</dt>
+            <dd>
+              {t("design.summary.conclusion", {
+                n: result.fit.nObservations,
+                response: responseName,
+                factors: names.length,
+                terms: result.effects.length,
+              })}
+            </dd>
+            <dt>{t("labels.evidence")}</dt>
+            <dd>{evidence}</dd>
+            <dt>{t("labels.nextStep")}</dt>
+            <dd>{t("design.summary.nextStep")}</dd>
+          </dl>
+          <ul className="facts-list">
+            {result.facts.map((fact) => (
+              <li key={fact.key + JSON.stringify(fact.params)}>
+                {t(`facts.${fact.key}`, formatFactParams(fact, language))}
+              </li>
+            ))}
+          </ul>
+          {result.issues.filter((i) => i.severity !== "info").length > 0 && (
+            <div role="note">
+              <h4>{t("comparison.warnings")}</h4>
+              <ul className="facts-list">
+                {result.issues.map((issue) => (
+                  <li key={issue.code + JSON.stringify(issue.params)}>{issueMessage(tc, issue)}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      </div>
 
-      <div className="grid-scroll">
-        <table className="results-table" data-testid="effects-table">
-          <caption>{t("design.effects.caption", { response: responseName })}</caption>
-          <thead>
-            <tr>
-              <th scope="col">{t("design.effects.term")}</th>
-              <th scope="col">{t("design.effects.coefficient")}</th>
-              <th scope="col">{t("design.effects.effect")}</th>
-              <th scope="col">{t("design.effects.se")}</th>
-              <th scope="col">{t("design.effects.t")}</th>
-              <th scope="col">{t("design.effects.p")}</th>
-              <th scope="col">{t("design.effects.ci", { level })}</th>
-              {result.lenth && <th scope="col">{t("design.effects.lenth")}</th>}
-              {hasAliases && <th scope="col">{t("design.effects.aliases")}</th>}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">{t("design.effects.intercept")}</th>
-              <StatCell stat={result.intercept} language={language} />
-              <td />
-              <StatCell stat={result.interceptStdError} language={language} />
-              <td />
-              <td />
-              <td />
-              {result.lenth && <td />}
-              {hasAliases && <td />}
-            </tr>
-            {result.effects.map((e) => (
-              <tr key={e.label}>
-                <th scope="row">{e.label}</th>
-                <StatCell stat={e.coefficient} language={language} />
-                <StatCell stat={e.effect} language={language} />
-                <StatCell stat={e.stdError} language={language} />
-                <StatCell stat={e.tValue} language={language} />
-                <StatCell stat={e.pValue} language={language} p />
-                <td className="num">
-                  {e.ciLower.status === "defined" && e.ciUpper.status === "defined"
-                    ? `${formatSignificant(e.ciLower.value, language, 4)} – ${formatSignificant(e.ciUpper.value, language, 4)}`
-                    : "—"}
-                </td>
-                {result.lenth && (
-                  <td>
-                    {e.lenthSimultaneous
-                      ? t("design.effects.simultaneous")
-                      : e.lenthActive
-                        ? t("design.effects.active")
-                        : t("design.effects.inactive")}
+      <div data-section="tables">
+        <div className="grid-scroll">
+          <table className="results-table" data-testid="effects-table">
+            <caption>{t("design.effects.caption", { response: responseName })}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{t("design.effects.term")}</th>
+                <th scope="col">{t("design.effects.coefficient")}</th>
+                <th scope="col">{t("design.effects.effect")}</th>
+                <th scope="col">{t("design.effects.se")}</th>
+                <th scope="col">{t("design.effects.t")}</th>
+                <th scope="col">{t("design.effects.p")}</th>
+                <th scope="col">{t("design.effects.ci", { level })}</th>
+                {result.lenth && <th scope="col">{t("design.effects.lenth")}</th>}
+                {hasAliases && <th scope="col">{t("design.effects.aliases")}</th>}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">{t("design.effects.intercept")}</th>
+                <StatCell stat={result.intercept} language={language} />
+                <td />
+                <StatCell stat={result.interceptStdError} language={language} />
+                <td />
+                <td />
+                <td />
+                {result.lenth && <td />}
+                {hasAliases && <td />}
+              </tr>
+              {result.effects.map((e) => (
+                <tr key={e.label}>
+                  <th scope="row">{e.label}</th>
+                  <StatCell stat={e.coefficient} language={language} />
+                  <StatCell stat={e.effect} language={language} />
+                  <StatCell stat={e.stdError} language={language} />
+                  <StatCell stat={e.tValue} language={language} />
+                  <StatCell stat={e.pValue} language={language} p />
+                  <td className="num">
+                    {e.ciLower.status === "defined" && e.ciUpper.status === "defined"
+                      ? `${formatSignificant(e.ciLower.value, language, 4)} – ${formatSignificant(e.ciUpper.value, language, 4)}`
+                      : "—"}
                   </td>
-                )}
-                {hasAliases && <td>{e.aliasedWith.join(" ")}</td>}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="muted small">{t("design.effects.help")}</p>
-
-      <div className="grid-scroll">
-        <table className="results-table" data-testid="design-anova">
-          <caption>{t("design.anova.caption")}</caption>
-          <thead>
-            <tr>
-              <th scope="col">{t("design.anova.source")}</th>
-              <th scope="col">{t("design.anova.df")}</th>
-              <th scope="col">{t("design.anova.ss")}</th>
-              <th scope="col">{t("design.anova.ms")}</th>
-              <th scope="col">{t("design.anova.f")}</th>
-              <th scope="col">{t("design.anova.p")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(
-              [
-                ["model", anova.model],
-                ["residual", anova.residual],
-                ["total", anova.total],
-              ] as const
-            ).map(([key, row]) => (
-              <tr key={key}>
-                <th scope="row">{t(`design.anova.${key}`)}</th>
-                <td className="num">{row.df}</td>
-                <StatCell stat={row.sumSquares} language={language} />
-                <StatCell stat={row.meanSquare} language={language} />
-                {key === "model" ? (
-                  <>
-                    <StatCell stat={anova.f} language={language} />
-                    <StatCell stat={anova.pValue} language={language} p />
-                  </>
-                ) : (
-                  <>
-                    <td />
-                    <td />
-                  </>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="muted small">
-        {t("design.anova.r2")}:{" "}
-        {val(anova.rSquared) === null
-          ? "—"
-          : formatSignificant(val(anova.rSquared) ?? 0, language, 5)}{" "}
-        · {t("design.anova.r2adj")}:{" "}
-        {val(anova.adjustedRSquared) === null
-          ? "—"
-          : formatSignificant(val(anova.adjustedRSquared) ?? 0, language, 5)}{" "}
-        · {t("design.anova.sigma")}:{" "}
-        {val(result.fit.residualSd) === null
-          ? "—"
-          : formatSignificant(val(result.fit.residualSd) ?? 0, language, 5)}
-      </p>
-
-      <section aria-labelledby="curv-title">
-        <h3 id="curv-title">{t("design.curvature.title")}</h3>
-        <p data-testid="curvature">
-          {result.curvature && val(result.curvature.difference) !== null
-            ? t("design.curvature.text", {
-                difference: formatSignificant(val(result.curvature.difference) ?? 0, language, 5),
-                t:
-                  val(result.curvature.tValue) === null
-                    ? "—"
-                    : formatSignificant(val(result.curvature.tValue) ?? 0, language, 4),
-                p:
-                  val(result.curvature.pValue) === null
-                    ? "—"
-                    : formatP(val(result.curvature.pValue) ?? 0, language),
-                points: result.curvature.centerPoints,
-              })
-            : t("design.curvature.unavailable")}
-        </p>
-        {result.lackOfFit && (
-          <p data-testid="lack-of-fit">
-            <strong>{t("design.lackOfFit.title")}: </strong>
-            {val(result.lackOfFit.f) !== null
-              ? t("design.lackOfFit.text", {
-                  ssPure: formatSignificant(result.lackOfFit.ssPureError, language, 5),
-                  dfPure: result.lackOfFit.dfPureError,
-                  ssLof: formatSignificant(val(result.lackOfFit.ssLackOfFit) ?? 0, language, 5),
-                  dfLof: result.lackOfFit.dfLackOfFit,
-                  f: formatSignificant(val(result.lackOfFit.f) ?? 0, language, 5),
-                  p: formatP(val(result.lackOfFit.pValue) ?? 0, language),
-                })
-              : t("design.lackOfFit.noTest", {
-                  ssLof: formatSignificant(val(result.lackOfFit.ssLackOfFit) ?? 0, language, 5),
-                  dfLof: result.lackOfFit.dfLackOfFit,
-                })}
-          </p>
-        )}
-        {result.lenth && (
-          <p data-testid="lenth">
-            <strong>{t("design.lenth.title")}: </strong>
-            {t("design.lenth.text", {
-              pse: formatSignificant(result.lenth.pse, language, 5),
-              df: formatSignificant(result.lenth.df, language, 4),
-              me: formatSignificant(result.lenth.marginOfError, language, 5),
-              sme: formatSignificant(result.lenth.simultaneousMargin, language, 5),
-            })}{" "}
-            <span className="muted small">{t("design.lenth.help")}</span>
-          </p>
-        )}
-      </section>
-
-      {result.pareto.bars.length > 0 && (
-        <ChartFigure
-          testId="pareto-chart"
-          screenSvg={paretoChart(paretoSpec(false), "css", fmt)}
-          exportSvg={paretoChart(paretoSpec(true), "static", fmt)}
-          pngMetadata={metadataText}
-          fileBase={`${base}-pareto`}
-        />
-      )}
-      <ChartFigure
-        testId="main-effects-chart"
-        screenSvg={effectsChart(mainSpec(false), "css", fmt)}
-        exportSvg={effectsChart(mainSpec(true), "static", fmt)}
-        pngMetadata={metadataText}
-        fileBase={`${base}-efeitos-principais`}
-      />
-      {result.interactions.length > 0 && (
-        <ChartFigure
-          testId="interaction-chart"
-          screenSvg={effectsChart(interactionSpec(false), "css", fmt)}
-          exportSvg={effectsChart(interactionSpec(true), "static", fmt)}
-          pngMetadata={metadataText}
-          fileBase={`${base}-interacoes`}
-        />
-      )}
-      {result.observedVsPredicted.length > 1 && (
-        <ChartFigure
-          testId="observed-predicted-chart"
-          screenSvg={scatterChart(opSpec(false), "css", fmt)}
-          exportSvg={scatterChart(opSpec(true), "static", fmt)}
-          pngMetadata={metadataText}
-          fileBase={`${base}-observado-predito`}
-        />
-      )}
-
-      <section aria-labelledby="export-title" data-report-skip>
-        <h3 id="export-title">{t("comparison.export.title")}</h3>
-        <div className="row">
-          <TableExportButtons
-            label={t("design.export.effectsCsv")}
-            suffix="efeitos"
-            sheet={t("design.effects.term")}
-            header={effectsTable().header}
-            rows={effectsTable().rows}
-            metadata={metadata ? flat(metadata) : null}
-            fileBase={base}
-            onDone={setNotice}
-          />
+                  {result.lenth && (
+                    <td>
+                      {e.lenthSimultaneous
+                        ? t("design.effects.simultaneous")
+                        : e.lenthActive
+                          ? t("design.effects.active")
+                          : t("design.effects.inactive")}
+                    </td>
+                  )}
+                  {hasAliases && <td>{e.aliasedWith.join(" ")}</td>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        {notice && (
-          <p role="status" className="muted small" data-testid="export-notice">
-            {notice}
+        <p className="muted small">{t("design.effects.help")}</p>
+
+        <div className="grid-scroll">
+          <table className="results-table" data-testid="design-anova">
+            <caption>{t("design.anova.caption")}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{t("design.anova.source")}</th>
+                <th scope="col">{t("design.anova.df")}</th>
+                <th scope="col">{t("design.anova.ss")}</th>
+                <th scope="col">{t("design.anova.ms")}</th>
+                <th scope="col">{t("design.anova.f")}</th>
+                <th scope="col">{t("design.anova.p")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(
+                [
+                  ["model", anova.model],
+                  ["residual", anova.residual],
+                  ["total", anova.total],
+                ] as const
+              ).map(([key, row]) => (
+                <tr key={key}>
+                  <th scope="row">{t(`design.anova.${key}`)}</th>
+                  <td className="num">{row.df}</td>
+                  <StatCell stat={row.sumSquares} language={language} />
+                  <StatCell stat={row.meanSquare} language={language} />
+                  {key === "model" ? (
+                    <>
+                      <StatCell stat={anova.f} language={language} />
+                      <StatCell stat={anova.pValue} language={language} p />
+                    </>
+                  ) : (
+                    <>
+                      <td />
+                      <td />
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="muted small">
+          {t("design.anova.r2")}:{" "}
+          {val(anova.rSquared) === null
+            ? "—"
+            : formatSignificant(val(anova.rSquared) ?? 0, language, 5)}{" "}
+          · {t("design.anova.r2adj")}:{" "}
+          {val(anova.adjustedRSquared) === null
+            ? "—"
+            : formatSignificant(val(anova.adjustedRSquared) ?? 0, language, 5)}{" "}
+          · {t("design.anova.sigma")}:{" "}
+          {val(result.fit.residualSd) === null
+            ? "—"
+            : formatSignificant(val(result.fit.residualSd) ?? 0, language, 5)}
+        </p>
+
+        <section aria-labelledby="curv-title">
+          <h3 id="curv-title">{t("design.curvature.title")}</h3>
+          <p data-testid="curvature">
+            {result.curvature && val(result.curvature.difference) !== null
+              ? t("design.curvature.text", {
+                  difference: formatSignificant(val(result.curvature.difference) ?? 0, language, 5),
+                  t:
+                    val(result.curvature.tValue) === null
+                      ? "—"
+                      : formatSignificant(val(result.curvature.tValue) ?? 0, language, 4),
+                  p:
+                    val(result.curvature.pValue) === null
+                      ? "—"
+                      : formatP(val(result.curvature.pValue) ?? 0, language),
+                  points: result.curvature.centerPoints,
+                })
+              : t("design.curvature.unavailable")}
           </p>
+          {result.lackOfFit && (
+            <p data-testid="lack-of-fit">
+              <strong>{t("design.lackOfFit.title")}: </strong>
+              {val(result.lackOfFit.f) !== null
+                ? t("design.lackOfFit.text", {
+                    ssPure: formatSignificant(result.lackOfFit.ssPureError, language, 5),
+                    dfPure: result.lackOfFit.dfPureError,
+                    ssLof: formatSignificant(val(result.lackOfFit.ssLackOfFit) ?? 0, language, 5),
+                    dfLof: result.lackOfFit.dfLackOfFit,
+                    f: formatSignificant(val(result.lackOfFit.f) ?? 0, language, 5),
+                    p: formatP(val(result.lackOfFit.pValue) ?? 0, language),
+                  })
+                : t("design.lackOfFit.noTest", {
+                    ssLof: formatSignificant(val(result.lackOfFit.ssLackOfFit) ?? 0, language, 5),
+                    dfLof: result.lackOfFit.dfLackOfFit,
+                  })}
+            </p>
+          )}
+          {result.lenth && (
+            <p data-testid="lenth">
+              <strong>{t("design.lenth.title")}: </strong>
+              {t("design.lenth.text", {
+                pse: formatSignificant(result.lenth.pse, language, 5),
+                df: formatSignificant(result.lenth.df, language, 4),
+                me: formatSignificant(result.lenth.marginOfError, language, 5),
+                sme: formatSignificant(result.lenth.simultaneousMargin, language, 5),
+              })}{" "}
+              <span className="muted small">{t("design.lenth.help")}</span>
+            </p>
+          )}
+        </section>
+      </div>
+
+      <div data-section="charts">
+        {result.pareto.bars.length > 0 && (
+          <ChartFigure
+            testId="pareto-chart"
+            screenSvg={paretoChart(paretoSpec(false), "css", fmt)}
+            exportSvg={paretoChart(paretoSpec(true), "static", fmt)}
+            pngMetadata={metadataText}
+            fileBase={`${base}-pareto`}
+          />
         )}
-      </section>
+        <ChartFigure
+          testId="main-effects-chart"
+          screenSvg={effectsChart(mainSpec(false), "css", fmt)}
+          exportSvg={effectsChart(mainSpec(true), "static", fmt)}
+          pngMetadata={metadataText}
+          fileBase={`${base}-efeitos-principais`}
+        />
+        {result.interactions.length > 0 && (
+          <ChartFigure
+            testId="interaction-chart"
+            screenSvg={effectsChart(interactionSpec(false), "css", fmt)}
+            exportSvg={effectsChart(interactionSpec(true), "static", fmt)}
+            pngMetadata={metadataText}
+            fileBase={`${base}-interacoes`}
+          />
+        )}
+        {result.observedVsPredicted.length > 1 && (
+          <ChartFigure
+            testId="observed-predicted-chart"
+            screenSvg={scatterChart(opSpec(false), "css", fmt)}
+            exportSvg={scatterChart(opSpec(true), "static", fmt)}
+            pngMetadata={metadataText}
+            fileBase={`${base}-observado-predito`}
+          />
+        )}
+      </div>
+
+      <div data-section="tables">
+        <section aria-labelledby="export-title" data-report-skip>
+          <h3 id="export-title">{t("comparison.export.title")}</h3>
+          <div className="row">
+            <TableExportButtons
+              label={t("design.export.effectsCsv")}
+              suffix="efeitos"
+              sheet={t("design.effects.term")}
+              header={effectsTable().header}
+              rows={effectsTable().rows}
+              metadata={metadata ? flat(metadata) : null}
+              fileBase={base}
+              onDone={setNotice}
+            />
+          </div>
+          {notice && (
+            <p role="status" className="muted small" data-testid="export-notice">
+              {notice}
+            </p>
+          )}
+        </section>
+      </div>
     </>
   );
 }

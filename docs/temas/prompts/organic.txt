@@ -1,0 +1,81 @@
+<prompt>
+<task>
+Apply this visual style to the user's existing project. Inspect and preserve its stack, copy, routes, and behavior. Follow existing component and styling conventions. Treat framework, library, and page examples in these design instructions as illustrations; they do not require a stack change or new sections. Scope changes to the user's requested work.
+
+Keep controls keyboard accessible, focus visible, and text legible. Preserve reading order, responsive behavior, and reduced-motion preferences. Verify actual states at the rendered width. The user's stack and content take precedence over illustrative implementation details.
+</task>
+
+<design-system>
+# Organic
+
+## Identity
+
+Build a shared worktable of sand-colored paper, irregular shapes, dark brown type, moss, and fired clay. The page feels assembled from broad sheets and gathered objects. Serif headings and subdued photography keep it readable beneath the uneven edges.
+
+## Layout
+
+Use a generous split opening: a compact serif statement and actions beside a loose arrangement of flat organic forms. A pale facts tray can overlap the opening's base. Give its corners different curves so it feels like a separate sheet laid across the composition.
+
+Let related reading and feature lists share one clay field. A process and its supporting benefits can occupy a continuous moss basin, with large light numbers and sparse dividing lines. Use uneven image proportions, slightly tilted paper quotations, and broad horizontal comparison rows where the content calls for them. Close with another quiet arrangement of shapes above a stone-colored footer.
+
+Keep these as useful composition patterns. The brief determines the sections, their order, and whether facts, quotes, or comparisons belong at all.
+
+## Typography
+
+Use Source Serif 4 for medium-weight statements and headings, bound to "Organic Source Serif". Use Instrument Sans for reading and controls, bound to "Organic Instrument Sans". Headings have tight tracking and compact line spacing, with an opening scale of 46px to 70px on wide layouts. Keep paragraphs comfortably spaced and narrower than the full colored field. Small sans labels and large serif numbers provide secondary hierarchy.
+
+## Color and surfaces
+
+Sand is the page ground; paper is the lighter raised sheet. Dark brown ink carries reading. Moss and fired clay form large fields, while terracotta, stone, and dried grass supply a few smaller shapes. Maintain light text on the darker fields.
+
+Keep a faint continuous paper grain beneath the content. Use irregular rounded silhouettes with modest rotations. Shapes should have broad, calm edges, and overlaps should leave text clear. Avoid making every object the same blob or applying an identical card treatment to each section.
+
+## Components
+
+Use softly rounded, solid moss actions with a quieter outlined or text alternative. Hover can change the fill; press can compress slightly. Keep visible focus outside the control edge.
+
+Features sit in open lists with small drawn symbols. Numbered steps use large figures and simple separators. Optional comparison rows divide identity, details, and action across a shared width. A featured row can stay moss while selection adds a distinct inset outline. Disclosures use clear ruled rows and visible open states.
+
+## Images
+
+Choose photographs of real materials, objects, or places. Apply a mild sepia cast and reduce saturation so they sit with the earth palette. Scene images can fill irregular crops; isolated objects need enough space to retain their silhouette. Slight image rotation is useful when the surrounding reading remains upright. Supply meaningful alternative text and keep decorative forms hidden from assistive technology.
+
+## Motion
+
+Use the brief interaction timing for color changes and a small pressed scale. Keep the page arrangement and organic forms still. Respect reduced motion by removing transitions and transforms from interactive feedback.
+
+## Responsive behavior
+
+At 1000px, tighten the major splits and spacing. At 700px, stack the opening, reading sections, images, steps, quotes, and comparison contents. Facts can remain in two columns. Remove quotation rotations to give small-screen reading a straight edge, while restrained image tilts can remain. Preserve the clay and moss groups as continuous fields, and keep footer links in two columns.
+
+## Design limits
+
+Avoid glossy gradients, glass, bright synthetic greens, excessive leaves, and deep floating shadows. Uneven edges must not compromise alignment or hit areas. Use the customer's real subject and claims; earth colors do not imply environmental credentials.
+
+## Authoritative tokens
+
+| CSS variable | Value |
+| --- | --- |
+| --dp-color-ground | #eee6d6 |
+| --dp-color-surface | #f5eddf |
+| --dp-color-ink | #29251d |
+| --dp-color-primary | #35422d |
+| --dp-color-field | #694737 |
+| --dp-color-art-accent | #ad7d62 |
+| --dp-color-surface-muted | #ddd5c3 |
+| --dp-color-highlight | #b9b28b |
+| --dp-color-ink-muted | #443b2f |
+| --dp-typography-display | "Organic Source Serif", Georgia, serif |
+| --dp-typography-reading | "Organic Instrument Sans", sans-serif |
+| --dp-typography-body | 16px |
+| --dp-typography-reading-small | 15px |
+| --dp-typography-control | 14px |
+| --dp-typography-caption | 13px |
+| --dp-typography-metadata | 12px |
+| --dp-typography-reading-leading | 1.8 |
+| --dp-spacing-content-gap | 24px |
+| --dp-radius-control | 27px 19px 29px 16px / 22px 26px 19px 29px |
+| --dp-border-hairline | 1px |
+| --dp-motion-interaction | 240ms ease |
+</design-system>
+</prompt>

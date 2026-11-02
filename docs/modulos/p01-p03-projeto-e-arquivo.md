@@ -19,8 +19,8 @@ Definir o **documento** (experimentos, revisões imutáveis, análises vinculada
 
 | ID | Arquivo | Responsabilidade |
 |---|---|---|
-| P01 | `document.rs` | `ProjectDocument`, `Experiment` (campos opcionais `design`, `crd`, `figure_styles`, `origin`, `confirmation`), `EntryPath`, validação de coerência (`validate`), `with_hashes` |
-| P01 | `figure_style.rs` | `FigureStyle`: título, rótulos dos eixos, exibição das letras e escala de fonte por figura (só apresentação; validado no `validate`) |
+| P01 | `document.rs` | `ProjectDocument`, `Experiment` (campos opcionais `design`, `crd`, `rcbd` (DBC, v0.2), `figure_styles`, `origin`, `confirmation`), `EntryPath`, validação de coerência (`validate`), `with_hashes` |
+| P01 | `figure_style.rs` | `FigureStyle`: título, rótulos dos eixos, exibição das letras e escala de fonte por figura e, desde a v0.2, letras manuais, anotações livres, cor, fundo, família da fonte, resolução do PNG, grade e legenda (só apresentação; validado no `validate`; [DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)) |
 | P01 | `experiment.rs` | `ExperimentData` (texto das células), `FactorSpec`, `ResponseSpec`, `RowRecord`, `content_hash` |
 | P01 | `revision.rs` | `Revision`, `RevisionReason` |
 | P01 | `analysis.rs` | `AnalysisRecord`, `AnalysisOptions`, `AnalysisResult` |

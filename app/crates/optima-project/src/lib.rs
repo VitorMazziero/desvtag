@@ -26,5 +26,5 @@ pub use analysis::{AnalysisOptions, AnalysisRecord, AnalysisResult};
 pub use confirmation::{ConfirmationPlan, ConfirmationPrediction, ExperimentOrigin};
 pub use document::{EntryPath, Experiment, ProjectDocument, SCHEMA_VERSION};
 pub use experiment::{ExperimentData, FactorSpec, ResponseSpec, RowRecord};
-pub use figure_style::FigureStyle;
+pub use figure_style::{FigureAnnotation, FigureStyle};
 pub use revision::{Revision, RevisionReason};

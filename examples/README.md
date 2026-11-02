@@ -13,5 +13,6 @@ Exemplos previstos no [plano da v0.1](../docs/planos-execucao/plano-v0.1.md):
 | [02 — Triagem Plackett–Burman de componentes de meio de cultivo](02-triagem-meio-cultivo/README.md), com pontos centrais | ET06 (existe) |
 | [03 — DCCR do meio de cultivo](03-superficie-meio-cultivo/README.md), com os fatores selecionados na triagem | ET07 (existe) |
 | [04 — Otimização de duas respostas e ensaios de confirmação](04-otimizacao-e-confirmacao/README.md) | ET08 (existe) |
+| [06 — kLa sintético: um modelo por resposta](06-kla-sintetico/README.md), composto central de face centrada com RPM e aeração | ET11 (existe) |
 
-Existem os exemplos 01, 02, 03 e 04; os demais entram nas etapas indicadas. Os exemplos são ligados às [fichas de módulos](../docs/modulos/README.md) e à [validação](../validation/README.md).
+Existem os exemplos 01, 02, 03, 04 e 06 (o 05 está reservado aos dados reais de kLa do grupo, ainda não distribuídos, PD-16); os demais entram nas etapas indicadas. Os exemplos são ligados às [fichas de módulos](../docs/modulos/README.md) e à [validação](../validation/README.md).

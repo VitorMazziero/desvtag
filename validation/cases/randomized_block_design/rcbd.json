@@ -1,0 +1,806 @@
+{
+ "id": "randomized_block_design",
+ "cases": [
+  {
+   "levels": [
+    "Controle",
+    "pH 5",
+    "pH 7",
+    "pH 9"
+   ],
+   "blocks": [
+    "Dia 1",
+    "Dia 2",
+    "Dia 3",
+    "Dia 4",
+    "Dia 5"
+   ],
+   "randomize": true,
+   "seed": 42,
+   "runs": [
+    {
+     "run": 1,
+     "blockIndex": 0,
+     "block": "Dia 1",
+     "position": 1,
+     "levelIndex": 1,
+     "level": "pH 5"
+    },
+    {
+     "run": 2,
+     "blockIndex": 0,
+     "block": "Dia 1",
+     "position": 2,
+     "levelIndex": 2,
+     "level": "pH 7"
+    },
+    {
+     "run": 3,
+     "blockIndex": 0,
+     "block": "Dia 1",
+     "position": 3,
+     "levelIndex": 0,
+     "level": "Controle"
+    },
+    {
+     "run": 4,
+     "blockIndex": 0,
+     "block": "Dia 1",
+     "position": 4,
+     "levelIndex": 3,
+     "level": "pH 9"
+    },
+    {
+     "run": 5,
+     "blockIndex": 1,
+     "block": "Dia 2",
+     "position": 1,
+     "levelIndex": 2,
+     "level": "pH 7"
+    },
+    {
+     "run": 6,
+     "blockIndex": 1,
+     "block": "Dia 2",
+     "position": 2,
+     "levelIndex": 0,
+     "level": "Controle"
+    },
+    {
+     "run": 7,
+     "blockIndex": 1,
+     "block": "Dia 2",
+     "position": 3,
+     "levelIndex": 1,
+     "level": "pH 5"
+    },
+    {
+     "run": 8,
+     "blockIndex": 1,
+     "block": "Dia 2",
+     "position": 4,
+     "levelIndex": 3,
+     "level": "pH 9"
+    },
+    {
+     "run": 9,
+     "blockIndex": 2,
+     "block": "Dia 3",
+     "position": 1,
+     "levelIndex": 3,
+     "level": "pH 9"
+    },
+    {
+     "run": 10,
+     "blockIndex": 2,
+     "block": "Dia 3",
+     "position": 2,
+     "levelIndex": 2,
+     "level": "pH 7"
+    },
+    {
+     "run": 11,
+     "blockIndex": 2,
+     "block": "Dia 3",
+     "position": 3,
+     "levelIndex": 0,
+     "level": "Controle"
+    },
+    {
+     "run": 12,
+     "blockIndex": 2,
+     "block": "Dia 3",
+     "position": 4,
+     "levelIndex": 1,
+     "level": "pH 5"
+    },
+    {
+     "run": 13,
+     "blockIndex": 3,
+     "block": "Dia 4",
+     "position": 1,
+     "levelIndex": 2,
+     "level": "pH 7"
+    },
+    {
+     "run": 14,
+     "blockIndex": 3,
+     "block": "Dia 4",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "pH 5"
+    },
+    {
+     "run": 15,
+     "blockIndex": 3,
+     "block": "Dia 4",
+     "position": 3,
+     "levelIndex": 3,
+     "level": "pH 9"
+    },
+    {
+     "run": 16,
+     "blockIndex": 3,
+     "block": "Dia 4",
+     "position": 4,
+     "levelIndex": 0,
+     "level": "Controle"
+    },
+    {
+     "run": 17,
+     "blockIndex": 4,
+     "block": "Dia 5",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "Controle"
+    },
+    {
+     "run": 18,
+     "blockIndex": 4,
+     "block": "Dia 5",
+     "position": 2,
+     "levelIndex": 3,
+     "level": "pH 9"
+    },
+    {
+     "run": 19,
+     "blockIndex": 4,
+     "block": "Dia 5",
+     "position": 3,
+     "levelIndex": 1,
+     "level": "pH 5"
+    },
+    {
+     "run": 20,
+     "blockIndex": 4,
+     "block": "Dia 5",
+     "position": 4,
+     "levelIndex": 2,
+     "level": "pH 7"
+    }
+   ]
+  },
+  {
+   "levels": [
+    "A",
+    "B",
+    "C"
+   ],
+   "blocks": [
+    "b1",
+    "b2"
+   ],
+   "randomize": true,
+   "seed": 0,
+   "runs": [
+    {
+     "run": 1,
+     "blockIndex": 0,
+     "block": "b1",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "A"
+    },
+    {
+     "run": 2,
+     "blockIndex": 0,
+     "block": "b1",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "B"
+    },
+    {
+     "run": 3,
+     "blockIndex": 0,
+     "block": "b1",
+     "position": 3,
+     "levelIndex": 2,
+     "level": "C"
+    },
+    {
+     "run": 4,
+     "blockIndex": 1,
+     "block": "b2",
+     "position": 1,
+     "levelIndex": 1,
+     "level": "B"
+    },
+    {
+     "run": 5,
+     "blockIndex": 1,
+     "block": "b2",
+     "position": 2,
+     "levelIndex": 0,
+     "level": "A"
+    },
+    {
+     "run": 6,
+     "blockIndex": 1,
+     "block": "b2",
+     "position": 3,
+     "levelIndex": 2,
+     "level": "C"
+    }
+   ]
+  },
+  {
+   "levels": [
+    "A",
+    "B",
+    "C"
+   ],
+   "blocks": [
+    "b1",
+    "b2",
+    "b3"
+   ],
+   "randomize": false,
+   "seed": 7,
+   "runs": [
+    {
+     "run": 1,
+     "blockIndex": 0,
+     "block": "b1",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "A"
+    },
+    {
+     "run": 2,
+     "blockIndex": 0,
+     "block": "b1",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "B"
+    },
+    {
+     "run": 3,
+     "blockIndex": 0,
+     "block": "b1",
+     "position": 3,
+     "levelIndex": 2,
+     "level": "C"
+    },
+    {
+     "run": 4,
+     "blockIndex": 1,
+     "block": "b2",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "A"
+    },
+    {
+     "run": 5,
+     "blockIndex": 1,
+     "block": "b2",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "B"
+    },
+    {
+     "run": 6,
+     "blockIndex": 1,
+     "block": "b2",
+     "position": 3,
+     "levelIndex": 2,
+     "level": "C"
+    },
+    {
+     "run": 7,
+     "blockIndex": 2,
+     "block": "b3",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "A"
+    },
+    {
+     "run": 8,
+     "blockIndex": 2,
+     "block": "b3",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "B"
+    },
+    {
+     "run": 9,
+     "blockIndex": 2,
+     "block": "b3",
+     "position": 3,
+     "levelIndex": 2,
+     "level": "C"
+    }
+   ]
+  },
+  {
+   "levels": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6",
+    "T7",
+    "T8"
+   ],
+   "blocks": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "L6"
+   ],
+   "randomize": true,
+   "seed": 12345,
+   "runs": [
+    {
+     "run": 1,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 1,
+     "levelIndex": 6,
+     "level": "T7"
+    },
+    {
+     "run": 2,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 2,
+     "levelIndex": 3,
+     "level": "T4"
+    },
+    {
+     "run": 3,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 3,
+     "levelIndex": 0,
+     "level": "T1"
+    },
+    {
+     "run": 4,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 4,
+     "levelIndex": 5,
+     "level": "T6"
+    },
+    {
+     "run": 5,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 5,
+     "levelIndex": 2,
+     "level": "T3"
+    },
+    {
+     "run": 6,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 6,
+     "levelIndex": 7,
+     "level": "T8"
+    },
+    {
+     "run": 7,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 7,
+     "levelIndex": 4,
+     "level": "T5"
+    },
+    {
+     "run": 8,
+     "blockIndex": 0,
+     "block": "L1",
+     "position": 8,
+     "levelIndex": 1,
+     "level": "T2"
+    },
+    {
+     "run": 9,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 1,
+     "levelIndex": 5,
+     "level": "T6"
+    },
+    {
+     "run": 10,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 2,
+     "levelIndex": 0,
+     "level": "T1"
+    },
+    {
+     "run": 11,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 3,
+     "levelIndex": 2,
+     "level": "T3"
+    },
+    {
+     "run": 12,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 4,
+     "levelIndex": 4,
+     "level": "T5"
+    },
+    {
+     "run": 13,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 5,
+     "levelIndex": 6,
+     "level": "T7"
+    },
+    {
+     "run": 14,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 6,
+     "levelIndex": 1,
+     "level": "T2"
+    },
+    {
+     "run": 15,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 7,
+     "levelIndex": 7,
+     "level": "T8"
+    },
+    {
+     "run": 16,
+     "blockIndex": 1,
+     "block": "L2",
+     "position": 8,
+     "levelIndex": 3,
+     "level": "T4"
+    },
+    {
+     "run": 17,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 1,
+     "levelIndex": 7,
+     "level": "T8"
+    },
+    {
+     "run": 18,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 2,
+     "levelIndex": 3,
+     "level": "T4"
+    },
+    {
+     "run": 19,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 3,
+     "levelIndex": 1,
+     "level": "T2"
+    },
+    {
+     "run": 20,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 4,
+     "levelIndex": 5,
+     "level": "T6"
+    },
+    {
+     "run": 21,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 5,
+     "levelIndex": 6,
+     "level": "T7"
+    },
+    {
+     "run": 22,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 6,
+     "levelIndex": 4,
+     "level": "T5"
+    },
+    {
+     "run": 23,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 7,
+     "levelIndex": 2,
+     "level": "T3"
+    },
+    {
+     "run": 24,
+     "blockIndex": 2,
+     "block": "L3",
+     "position": 8,
+     "levelIndex": 0,
+     "level": "T1"
+    },
+    {
+     "run": 25,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 1,
+     "levelIndex": 4,
+     "level": "T5"
+    },
+    {
+     "run": 26,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 2,
+     "levelIndex": 5,
+     "level": "T6"
+    },
+    {
+     "run": 27,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 3,
+     "levelIndex": 0,
+     "level": "T1"
+    },
+    {
+     "run": 28,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 4,
+     "levelIndex": 6,
+     "level": "T7"
+    },
+    {
+     "run": 29,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 5,
+     "levelIndex": 3,
+     "level": "T4"
+    },
+    {
+     "run": 30,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 6,
+     "levelIndex": 2,
+     "level": "T3"
+    },
+    {
+     "run": 31,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 7,
+     "levelIndex": 1,
+     "level": "T2"
+    },
+    {
+     "run": 32,
+     "blockIndex": 3,
+     "block": "L4",
+     "position": 8,
+     "levelIndex": 7,
+     "level": "T8"
+    },
+    {
+     "run": 33,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 1,
+     "levelIndex": 5,
+     "level": "T6"
+    },
+    {
+     "run": 34,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 2,
+     "levelIndex": 0,
+     "level": "T1"
+    },
+    {
+     "run": 35,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 3,
+     "levelIndex": 1,
+     "level": "T2"
+    },
+    {
+     "run": 36,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 4,
+     "levelIndex": 4,
+     "level": "T5"
+    },
+    {
+     "run": 37,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 5,
+     "levelIndex": 2,
+     "level": "T3"
+    },
+    {
+     "run": 38,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 6,
+     "levelIndex": 6,
+     "level": "T7"
+    },
+    {
+     "run": 39,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 7,
+     "levelIndex": 3,
+     "level": "T4"
+    },
+    {
+     "run": 40,
+     "blockIndex": 4,
+     "block": "L5",
+     "position": 8,
+     "levelIndex": 7,
+     "level": "T8"
+    },
+    {
+     "run": 41,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 1,
+     "levelIndex": 7,
+     "level": "T8"
+    },
+    {
+     "run": 42,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 2,
+     "levelIndex": 5,
+     "level": "T6"
+    },
+    {
+     "run": 43,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 3,
+     "levelIndex": 6,
+     "level": "T7"
+    },
+    {
+     "run": 44,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 4,
+     "levelIndex": 0,
+     "level": "T1"
+    },
+    {
+     "run": 45,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 5,
+     "levelIndex": 1,
+     "level": "T2"
+    },
+    {
+     "run": 46,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 6,
+     "levelIndex": 3,
+     "level": "T4"
+    },
+    {
+     "run": 47,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 7,
+     "levelIndex": 2,
+     "level": "T3"
+    },
+    {
+     "run": 48,
+     "blockIndex": 5,
+     "block": "L6",
+     "position": 8,
+     "levelIndex": 4,
+     "level": "T5"
+    }
+   ]
+  },
+  {
+   "levels": [
+    "x",
+    "y"
+   ],
+   "blocks": [
+    "u",
+    "v",
+    "w"
+   ],
+   "randomize": true,
+   "seed": 9223372036854775813,
+   "runs": [
+    {
+     "run": 1,
+     "blockIndex": 0,
+     "block": "u",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "x"
+    },
+    {
+     "run": 2,
+     "blockIndex": 0,
+     "block": "u",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "y"
+    },
+    {
+     "run": 3,
+     "blockIndex": 1,
+     "block": "v",
+     "position": 1,
+     "levelIndex": 1,
+     "level": "y"
+    },
+    {
+     "run": 4,
+     "blockIndex": 1,
+     "block": "v",
+     "position": 2,
+     "levelIndex": 0,
+     "level": "x"
+    },
+    {
+     "run": 5,
+     "blockIndex": 2,
+     "block": "w",
+     "position": 1,
+     "levelIndex": 0,
+     "level": "x"
+    },
+    {
+     "run": 6,
+     "blockIndex": 2,
+     "block": "w",
+     "position": 2,
+     "levelIndex": 1,
+     "level": "y"
+    }
+   ]
+  }
+ ]
+}

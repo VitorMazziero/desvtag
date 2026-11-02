@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { GroupLogo } from "../features/branding";
 import { EngineStatus } from "../features/engine-status";
 import { ExperimentBar, HistoryView, ProjectBar, RecoveryBanner } from "../features/project";
 import { LanguageSelector, ThemeSelector, UpdateCheck } from "../features/settings";
@@ -37,9 +38,12 @@ export function App({ language, theme, onLanguageChange, onThemeChange }: Props)
         {t("app.skipToContent")}
       </a>
       <header className="app-header">
-        <div>
-          <h1>{t("app.name")}</h1>
-          <p className="muted">{t("app.tagline")}</p>
+        <div className="brand">
+          <GroupLogo />
+          <div>
+            <h1>{t("app.name")}</h1>
+            <p className="muted">{t("app.tagline")}</p>
+          </div>
         </div>
         <div className="settings">
           <LanguageSelector value={language} onChange={onLanguageChange} />

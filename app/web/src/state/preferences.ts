@@ -3,7 +3,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { detectLanguage, isLanguage, type Language } from "../i18n";
 
-export const THEMES = ["soft-light", "modern-dark", "professional"] as const;
+export const THEMES = [
+  "soft-light",
+  "modern-dark",
+  "professional",
+  "industrial",
+  "organic",
+  "clay",
+] as const;
 export type Theme = (typeof THEMES)[number];
 export const DEFAULT_THEME: Theme = "soft-light";
 

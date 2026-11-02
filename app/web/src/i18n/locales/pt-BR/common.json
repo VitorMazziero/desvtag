@@ -2,7 +2,8 @@
   "app": {
     "name": "EnziTAG Optima",
     "tagline": "Planejamento experimental, estatística e otimização",
-    "skipToContent": "Ir para o conteúdo"
+    "skipToContent": "Ir para o conteúdo",
+    "logoAlt": "Logotipo EnziTAG"
   },
   "settings": {
     "language": "Idioma",
@@ -15,7 +16,10 @@
   "theme": {
     "soft-light": "Soft Light",
     "modern-dark": "Modern Dark",
-    "professional": "Professional"
+    "professional": "Professional",
+    "industrial": "Industrial",
+    "organic": "Organic",
+    "clay": "Clay"
   },
   "engine": {
     "title": "Motor científico",
@@ -168,6 +172,55 @@
       "asSurface": "Ajustar superfície de resposta (modelo de segunda ordem)",
       "asSurfaceHelp": "Use para matrizes personalizadas ou importadas com fatores quantitativos; a escala codificada usa o menor e o maior valor de cada fator.",
       "needDesign": "Gere o planejamento na etapa de dados."
+    },
+    "method": {
+      "legend": "Método de análise",
+      "oneWay": "Um fator (comparação de tratamentos)",
+      "factorial": "Vários fatores e/ou blocos (ANOVA multifatorial)",
+      "procedure": "Procedimento de comparação",
+      "procedures": {
+        "tukey": "Tukey (variâncias iguais)",
+        "gamesHowell": "Games–Howell (variâncias desiguais)",
+        "dunnett": "Dunnett (cada tratamento contra um controle)",
+        "bonferroni": "Bonferroni (testes t ajustados)",
+        "holm": "Holm (testes t ajustados)",
+        "kruskalDunn": "Kruskal–Wallis com Dunn (não paramétrico)"
+      },
+      "help": {
+        "tukey": "Padrão: todos os pares, supondo variâncias iguais.",
+        "gamesHowell": "Use quando os grupos têm variâncias ou tamanhos muito diferentes.",
+        "dunnett": "Use quando só importa comparar cada tratamento com o controle.",
+        "bonferroni": "Todos os pares com variância combinada; conservador.",
+        "holm": "Como Bonferroni, porém menos conservador.",
+        "kruskalDunn": "Use quando os dados não seguem distribuição normal ou são ordinais."
+      },
+      "control": "Nível de controle",
+      "adjustment": "Ajuste dos valores-p de Dunn",
+      "treatments": "Fatores de tratamento",
+      "block": "Fator de bloco (opcional)",
+      "noBlock": "Sem bloco",
+      "blockHelp": "O bloco entra como efeito aditivo (sem interação) e remove a variação entre blocos do erro.",
+      "order": "Interações",
+      "orders": {
+        "1": "Só efeitos principais",
+        "2": "Até interações de dois fatores",
+        "3": "Até interações de três fatores"
+      },
+      "ssType": "Soma de quadrados",
+      "ssTypes": {
+        "typeI": "Tipo I (sequencial)",
+        "typeII": "Tipo II",
+        "typeIII": "Tipo III"
+      },
+      "ssHelp": "Com dados balanceados os três tipos coincidem; com dados desbalanceados, o tipo III testa cada termo depois de todos os outros e o tipo II respeita a hierarquia do modelo.",
+      "contrasts": "Contrastes",
+      "contrastsHelp": "Defina uma combinação linear das médias de um fator (os coeficientes somam zero), por exemplo 1; −0,5; −0,5.",
+      "contrastName": "Nome do contraste",
+      "contrastFactor": "Fator",
+      "contrastCoefficients": "Coeficientes (um por nível)",
+      "addContrast": "Adicionar contraste",
+      "removeContrast": "Remover",
+      "contrastInvalid": "Informe um nome e {{count}} coeficientes numéricos (um por nível do fator)."
     }
   },
   "project": {
@@ -363,7 +416,8 @@
     "mode": {
       "legend": "Tipo de planejamento",
       "factorial": "Fatores quantitativos (fatorial, triagem, superfície)",
-      "crd": "Um fator categórico (DIC aleatorizado)"
+      "crd": "Um fator categórico (DIC aleatorizado)",
+      "rcbd": "Um fator categórico em blocos (DBC aleatorizado)"
     },
     "crd": {
       "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
@@ -386,6 +440,20 @@
         "suffix": "do-dic"
       },
       "algorithm": "Algoritmo: {{algorithm}}; semente {{seed}}."
+    },
+    "rcbd": {
+      "intro": "Delineamento em blocos completos casualizados: cada bloco (dia, lote, operador…) recebe todos os tratamentos uma vez, em ordem sorteada dentro do bloco. A variação entre blocos sai do erro.",
+      "needFactors": "Cadastre na etapa anterior dois fatores categóricos com nome: um para os tratamentos e outro para os blocos.",
+      "treatmentFactor": "Fator de tratamento",
+      "blockFactor": "Fator de bloco",
+      "treatments": "Tratamentos",
+      "blocks": "Blocos",
+      "randomize": "Aleatorizar a ordem dentro de cada bloco",
+      "count": "{{total}} ensaios: {{levels}} tratamentos × {{blocks}} blocos.",
+      "matrix": "Ordem de execução do DBC",
+      "exportCsv": "Matriz do DBC (CSV)",
+      "position": "Posição no bloco",
+      "unitNote": "Cada ensaio recebe um identificador de unidade (por exemplo B2-T3: bloco 2, tratamento 3). A análise usa o bloco como efeito aditivo."
     }
   },
   "optimization": {

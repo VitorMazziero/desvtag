@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Aceita (migração planejada; **não executada**) |
+| Estado | Aceita (migração **executada em 2026-11-01**; ver a seção «Execução») |
 | Data | 2026-11-01 |
 | Origem | Decisão do usuário em 2026-11-01: manter o Node 22 na v0.1 e ir para o Node 26 na v0.2 |
 | Pendências relacionadas | — |
@@ -60,3 +60,18 @@ Em 2026-11-01, ao preparar a máquina Windows 10 de desenvolvimento, o `winget` 
 - Até a ET11, qualquer registro de ambiente da v0.1 continua citando Node 22.23.4.
 - A ET11 ganha uma tarefa inicial de migração com os critérios acima; ela não depende de nenhuma funcionalidade e pode ser revertida isoladamente.
 - A DT-0003 aponta para esta DT. Nenhuma outra linha da DT-0003 (Rust, Vite, TypeScript, Vitest, Playwright, Biome, `wasm-bindgen`) é alterada por esta decisão.
+
+## Execução
+
+Executada em **2026-11-01**, como primeira tarefa da ET11, antes de qualquer funcionalidade (commit `ee976c4`):
+
+| Item | Resultado |
+|---|---|
+| `.nvmrc` | `26` |
+| `app/web/package.json` | `engines.node` `>=26`; `@types/node` 26.6.6 |
+| `app/web/package-lock.json` | regenerado no Node 26.13.0 |
+| `ci.yml`, `release.yml`, `pages.yml` | `node-version: 26` em todos os passos `setup-node` |
+| `app/web/scripts/build-wasm.mjs` | passou a perguntar ao Cargo o diretório de destino (`cargo metadata`), para que ele possa ficar fora do repositório (a máquina de desenvolvimento usa `D:\Arquivos_de_Programas\Rust\target`) |
+| Documentos | README, README.en, guia do ambiente, dependências e DT-0003 atualizados |
+
+Verificações repetidas no **Node 26.13.0** (Windows 10 Pro 22H2), sem piora em relação à linha de base da v0.1: `check:contracts`, `biome check`, `tsc --noEmit`, `vitest` (227 testes na linha de base; 260 agora, com os testes novos da v0.2), `npm run build`, E2E com o motor WebAssembly real, instalador NSIS e verificação nativa do aplicativo Tauri, `check-docs-links`, `check-case-collisions` e `check-versions` (resultados no [relatório de validação da v0.2](../../validation/reports/v0.2.0/README.md)). **Ainda não verificado:** a CI do GitHub com o Node 26 (nenhum envio foi feito). A linha 0.1.x permanece no Node 22.

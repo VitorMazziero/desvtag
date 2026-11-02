@@ -6,11 +6,11 @@
 
 EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com fluxo guiado de planejamento e análise de experimentos, comparações de tratamentos e otimização de processos. O desenvolvimento está ligado às atividades do grupo de pesquisa EnziTAG.
 
-**Estado atual:** candidata à primeira versão (v0.1.0, experimental), **pronta localmente e ainda não publicada**. Implementados e validados contra referências independentes: estatística descritiva, DIC aleatorizado, ANOVA de um fator com Tukey/Tukey–Kramer e letras, planejamentos de dois níveis (fatorial, fracionário, Plackett–Burman), compostos centrais e Box–Behnken, superfície de resposta com contornos e 3D, otimização por desejabilidade com ensaios de confirmação, projetos `.enzitag` e exportação (SVG/PNG, CSV/XLSX, relatório HTML) com personalização por figura. Verificada no navegador (Chromium, Firefox, Chrome e Edge) e no Windows 10 e em `windows-latest`; **Windows 11 não foi verificado**. Pendentes, por ato do mantenedor: etiqueta, release do instalador, Pages e verificação da atualização ([plano da v0.1](docs/planos-execucao/plano-v0.1.md), [matriz de cobertura](docs/produto/matriz-cobertura.md), [publicação](docs/distribuicao/publicacao.md)). Etapa ativa: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md).
+**Estado atual:** candidata local à **v0.2.0** (experimental, ramo `feat/v0.2`, **não publicada**). A **v0.1.0** tem a versão web publicada (https://vitormazziero.github.io/enzitag-optima/) e o instalador do Windows em rascunho de release, ainda não publicado. Implementados e validados contra referências independentes: estatística descritiva, DIC e DBC aleatorizados, ANOVA de um fator e multifatorial (com blocos, médias marginais e contrastes), comparações de tratamentos (Tukey/Tukey–Kramer, Games–Howell, Dunnett, Bonferroni, Holm, Kruskal–Wallis/Dunn) com letras, planejamentos de dois níveis (fatorial, fracionário, Plackett–Burman), compostos centrais e Box–Behnken, superfície de resposta com seleção e comparação de modelos, contornos e 3D, otimização por desejabilidade com ensaios de confirmação, projetos `.enzitag` e exportação (SVG/PNG/PDF, CSV/XLSX, relatórios HTML e PDF) com personalização completa por figura; resultados em seções com barra lateral, seis temas e o logotipo do grupo. Verificada no navegador (Chromium, Firefox, Chrome e Edge) e no **Windows 10** e em `windows-latest` (ver o [relatório de validação da v0.2](validation/reports/v0.2.0/README.md)); **Windows 11 não foi verificado**. Pendentes, por ato do mantenedor: publicar (ou não) a v0.2.0, publicar o release do instalador da v0.1.0 e verificar a atualização ([matriz de cobertura](docs/produto/matriz-cobertura.md), [publicação](docs/distribuicao/publicacao.md)). Etapas ativas: [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md) e [ET11](docs/planos-execucao/concluidos/et11-selecao-de-modelos-e-navegacao.md).
 
 ## Executar localmente (navegador)
 
-Requer Rust (via `rustup`), `wasm-bindgen-cli` e Node 22 ([guia do ambiente](docs/guias/ambiente-desenvolvimento.md)). Em `app/web`:
+Requer Rust (via `rustup`), `wasm-bindgen-cli` e Node 26 ([guia do ambiente](docs/guias/ambiente-desenvolvimento.md)). Em `app/web`:
 
 ```bash
 npm ci
@@ -30,7 +30,7 @@ Abra `http://localhost:4173`. Os exemplos reproduzíveis estão em [`examples/`]
 
 - Interface intuitiva para usuários iniciantes, com fatores e respostas definidos pelo usuário.
 - Português e inglês desde o início, no Windows e no navegador.
-- Temas iniciais Modern Dark, Professional e Soft Light, com paleta EnziTAG neste último.
+- Seis temas (Soft Light, Modern Dark, Professional, Industrial, Organic e Clay), com paleta EnziTAG no Soft Light.
 - Catálogo completo do Protimiza, acrescido dos métodos discutidos para o EnziTAG Optima.
 - Planejamento de experimentos e análise de dados já coletados.
 - Comparações de tratamentos, incluindo Tukey e letras nos gráficos.

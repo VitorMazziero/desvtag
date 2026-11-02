@@ -26,6 +26,7 @@ pub mod fractional;
 pub mod generate;
 pub mod plackett_burman;
 pub mod randomization;
+pub mod randomized_block;
 pub mod recommend;
 pub mod spec;
 

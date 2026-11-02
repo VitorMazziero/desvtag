@@ -71,9 +71,18 @@ export function ExportSettingsPanel() {
           </select>
         </label>
       </div>
+      <label className="check">
+        <input
+          type="checkbox"
+          checked={settings.reportLogo}
+          onChange={(e) => update({ reportLogo: e.target.checked })}
+        />
+        <span>{t("export.logo")}</span>
+      </label>
       <p className="muted small">{t("export.deviceNote")}</p>
       <div className="row">
         <ReportButton onDone={setNotice} />
+        <ReportButton onDone={setNotice} format="pdf" />
       </div>
       {notice && (
         <p role="status" className="muted" data-testid="export-notice">

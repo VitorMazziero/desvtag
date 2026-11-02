@@ -2,7 +2,7 @@
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { applyChartStyle, applyFigureStyle } from "../../services/charts";
-import { addPngText, svgToPng, utf8 } from "../../services/export";
+import { addPngText, figurePdf, svgToPng, utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
@@ -37,8 +37,9 @@ export function ChartFigure({
   // A chave da figura é o seu `testId`; o ajuste guardado no projeto vale para tela e exportação.
   const figure = project.figureStyles[testId];
   const style = { palette: settings.palette, fontScale: figure?.fontScale ?? settings.fontScale };
-  const screenSvg = applyChartStyle(applyFigureStyle(rawScreenSvg, figure), style);
-  const exportSvg = applyChartStyle(applyFigureStyle(rawExportSvg, figure), style);
+  const options = { manualLettersLegend: t("figure.manualLettersLegend") };
+  const screenSvg = applyChartStyle(applyFigureStyle(rawScreenSvg, figure, options), style);
+  const exportSvg = applyChartStyle(applyFigureStyle(rawExportSvg, figure, options), style);
   const [message, setMessage] = useState<string | null>(null);
 
   const finish = (name: string | null) =>
@@ -76,6 +77,7 @@ export function ChartFigure({
               exportSvg,
               Number(viewBox?.[1] ?? 640),
               Number(viewBox?.[2] ?? 380),
+              figure?.exportScale ?? 2,
             );
             finish(
               (
@@ -85,6 +87,18 @@ export function ChartFigure({
                 )
               )?.name ?? null,
             );
+          }}
+          onError={() => setMessage(t("comparison.export.failed"))}
+        />
+        <ExportButton
+          label={`${t("comparison.export.figure")} — ${t("comparison.export.pdf")}`}
+          onExport={async () => {
+            const bytes = await figurePdf(exportSvg, {
+              title: fileBase,
+              subject: pngMetadata.slice(0, 900),
+              creator: "EnziTAG Optima",
+            });
+            finish((await storage.exportFile(bytes, `${fileBase}.pdf`))?.name ?? null);
           }}
           onError={() => setMessage(t("comparison.export.failed"))}
         />

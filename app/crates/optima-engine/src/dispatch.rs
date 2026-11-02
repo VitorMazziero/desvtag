@@ -82,6 +82,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::DesignRcbdGenerate(req) => {
+            match optima_core::designs::randomized_block::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignRcbdGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::DesignAnalyze(req) => {
             match optima_core::designs::analysis::analyze(req.as_ref()) {
                 Ok(result) => Outcome::Ok {
@@ -139,6 +147,28 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
         Operation::ComparisonOneWay(req) => match optima_core::comparisons::compare_one_way(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::ComparisonOneWay(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::ComparisonProcedure(req) => {
+            match optima_core::comparisons::procedures::compare(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::ComparisonProcedure(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::AnovaFactorial(req) => {
+            match optima_core::models::factorial_anova::analyze(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::AnovaFactorial(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::SurfaceSelectModel(req) => match optima_core::surface::selection::select(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::SurfaceSelectModel(Box::new(result)),
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },

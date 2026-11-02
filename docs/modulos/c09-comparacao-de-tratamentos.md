@@ -27,14 +27,17 @@ Dado um conjunto de dados, uma resposta e um fator, devolver numa só análise r
 | `inference/one_way_anova.rs` | Partição deslocada, tabela F, η², ω², CV |
 | `diagnostics/assumptions.rs` | Brown–Forsythe |
 | `visualization/{boxplot,residuals}.rs` | Quartis, bigodes, pontos distantes e QQ |
-| `distributions/studentized_range.rs` | `Q(k, ν)` (`cdf`, `sf`, quantil) |
+| `distributions/studentized_range.rs`, `distributions/range_table.rs` | `Q(k, ν)` (`cdf`, `sf`, quantil); desde a v0.2 `W(w; k)` tabulada por Chebyshev (`tabulated`) |
+| `comparisons/procedures.rs` | **v0.2:** Games–Howell (Welch), Dunnett, Bonferroni, Holm e Kruskal–Wallis/Dunn (`compare`, `Procedure`, `adjust_p`) |
+| `distributions/dunnett.rs` | **v0.2:** distribuição exata do máximo de `|T|` do Dunnett |
+| `models/factorial_anova.rs` | **v0.2:** ANOVA multifatorial com blocos, médias marginais e contrastes ([ANOVA](../metodos/anova-multifatorial.md), [marginais](../metodos/medias-marginais-contrastes.md)) |
 | `numeric/integration.rs` | Gauss–Legendre |
 | `interpretation/rules.rs` | `one_way_facts` |
 | `tests/comparison_validation.rs`, `tests/studentized_range_validation.rs` | Validação contra referências independentes |
 
 ## 3. API pública
 
-`comparisons::compare_one_way(&OneWayRequest) -> Result<OneWayResult, CoreError>`; `StudentizedRange::new(k, ν)` com `cdf`/`sf`/`quantile_upper`; `letters::compute(grupos, ordem, relação)`. Protocolo: `comparisonOneWay` → `OperationResult::ComparisonOneWay` (caixa) ou `invalidInput` com `issues`. O método `one_way_comparison` está no registro como `implemented` + `numericallyValidated`.
+`comparisons::compare_one_way(&OneWayRequest) -> Result<OneWayResult, CoreError>`; `StudentizedRange::new(k, ν)` com `cdf`/`sf`/`quantile_upper`; `letters::compute(grupos, ordem, relação)`. Protocolo: `comparisonProcedure` (procedimentos da v0.2), `anovaFactorial` (multifatorial) e `comparisonOneWay` → `OperationResult::ComparisonOneWay` (caixa) ou `invalidInput` com `issues`. O método `one_way_comparison` está no registro como `implemented` + `numericallyValidated`.
 
 ## 4. Fluxo de dados
 
@@ -42,7 +45,7 @@ U07 (`AnalysisSetup`) → protocolo JSON → E01 → `compare_one_way` → `OneW
 
 ## 5. Erros e limitações
 
-Ver [seção 7 do método](../metodos/anova-um-fator.md#7-casos-sem-resultado-válido). Um fator por vez; sem blocos, fatores cruzados, Welch, Dunnett, Games–Howell ou testes não paramétricos (v0.2). Até 1000 grupos (a amplitude studentizada), 26+ letras suportadas. Custo do Tukey: ~1 s para 325 pares (26 grupos) em compilação otimizada.
+Ver [seção 7 do método](../metodos/anova-um-fator.md#7-casos-sem-resultado-válido). `compare_one_way` trata um fator por vez (ANOVA + Tukey); desde a v0.2, outros procedimentos (Games–Howell, Dunnett, Bonferroni, Holm, Kruskal–Wallis/Dunn) estão em `comparisons/procedures.rs` e fatores cruzados e blocos em `models/factorial_anova.rs` ([DT-0019](../decisoes-tecnicas/dt-0019-procedimentos-de-comparacao-anova-multifatorial-e-dbc.md)). Até 1000 grupos (a amplitude studentizada), 26+ letras suportadas. Custo do Tukey: ~1 s para 325 pares (26 grupos) em compilação otimizada.
 
 ## 6. Manutenção
 

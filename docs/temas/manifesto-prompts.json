@@ -16,5 +16,23 @@
     "titulo_original": "Software",
     "tamanho_bytes": 5916,
     "sha256": "B331C647B7710EC80B31BD2D61CDCDA9B8D369E9A8EDE93579301309354A73FB"
+  },
+  {
+    "arquivo": "prompts/industrial.txt",
+    "titulo_original": "Industrial",
+    "tamanho_bytes": 5810,
+    "sha256": "BFFC026B7B7B41B0A7C499E22A077329FF3A37642E2FA8481AA7A41574C5FAEE"
+  },
+  {
+    "arquivo": "prompts/organic.txt",
+    "titulo_original": "Organic",
+    "tamanho_bytes": 5578,
+    "sha256": "122F59C6D04B6A138545FCE508537727F6A9FB93C608AD328FC18F5DF9686065"
+  },
+  {
+    "arquivo": "prompts/claymorphism.txt",
+    "titulo_original": "Claymorphism",
+    "tamanho_bytes": 6038,
+    "sha256": "8C93F7031DD2C8124D176DF72A4F801798C79107E82D4F87684603A55DC698C1"
   }
 ]

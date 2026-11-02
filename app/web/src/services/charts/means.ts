@@ -75,10 +75,9 @@ export function meansChart(
       parts.push(line(cx - 6, y1, cx + 6, y1, mode, { role: "ink", width: 1.5 }));
       parts.push(line(cx - 6, y2, cx + 6, y2, mode, { role: "ink", width: 1.5 }));
     }
-    if (g.letters !== "") {
-      const y = (g.upper !== null ? axis.scale(g.upper) : top) - 8;
-      parts.push(text(cx, y, g.letters, mode, { size: 14, weight: 600, figure: "letters" }));
-    }
+    // Sempre há um espaço marcado para a letra: as letras manuais da personalização ocupam-no.
+    const lettersY = (g.upper !== null ? axis.scale(g.upper) : top) - 8;
+    parts.push(text(cx, lettersY, g.letters, mode, { size: 14, weight: 600, figure: "letters" }));
     parts.push(
       text(cx, frame.height - frame.bottom + 18, g.label, mode, {
         anchor: spec.groups.length > 6 ? "end" : "middle",

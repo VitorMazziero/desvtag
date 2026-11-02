@@ -5,7 +5,7 @@
 [package]
 name = "optima-desktop"
 description = "Aplicativo Windows do EnziTAG Optima (Tauri)"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.97"
 license = "MIT"
@@ -27,6 +27,11 @@ serde_json = { version = "1", features = ["float_roundtrip"] }
 tauri = { version = "2", features = [] }
 tauri-plugin-dialog = "2"
 tauri-plugin-updater = "2"
+
+[features]
+# Só para a verificação automatizada (nunca no instalador): `export_file` grava na pasta de
+# `ENZITAG_EXPORT_DIR` em vez de abrir o diálogo nativo, que não é automatizável.
+automation = []
 
 [lints.rust]
 unsafe_code = "forbid"

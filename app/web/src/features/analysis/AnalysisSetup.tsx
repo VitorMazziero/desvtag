@@ -13,6 +13,7 @@ import {
   inputSignature,
   surfaceFactors,
 } from "./buildRequest";
+import { MethodChoice } from "./MethodChoice";
 
 interface Props {
   /** Chamado quando um resultado novo foi calculado e guardado. */
@@ -83,6 +84,28 @@ export function AnalysisSetup({ onDone }: Props) {
           now: nowIso(),
         });
         onDone();
+      } else if (
+        response.outcome.status === "ok" &&
+        response.outcome.result.type === "comparisonProcedure"
+      ) {
+        const { type: _type, ...result } = response.outcome.result;
+        dispatch({
+          type: "storeResult",
+          result: { signature, kind: "procedure", result },
+          now: nowIso(),
+        });
+        onDone();
+      } else if (
+        response.outcome.status === "ok" &&
+        response.outcome.result.type === "anovaFactorial"
+      ) {
+        const { type: _type, ...result } = response.outcome.result;
+        dispatch({
+          type: "storeResult",
+          result: { signature, kind: "factorial", result },
+          now: nowIso(),
+        });
+        onDone();
       } else if (response.outcome.status === "error") {
         setMessages(engineErrorMessages(t, response.outcome.error));
       }
@@ -97,7 +120,7 @@ export function AnalysisSetup({ onDone }: Props) {
   return (
     <section aria-labelledby="analysis-title">
       <h2 id="analysis-title">
-        {kind === "oneWay"
+        {kind === "oneWay" || kind === "procedure" || kind === "factorial"
           ? t("analysis.compare.title")
           : kind === "design"
             ? t("analysis.design.title")
@@ -106,7 +129,7 @@ export function AnalysisSetup({ onDone }: Props) {
               : t("analysis.title")}
       </h2>
       <p className="muted">
-        {kind === "oneWay"
+        {kind === "oneWay" || kind === "procedure" || kind === "factorial"
           ? t("analysis.compare.intro")
           : kind === "design"
             ? t("analysis.design.intro")
@@ -148,9 +171,10 @@ export function AnalysisSetup({ onDone }: Props) {
           ))}
         </select>
       </label>
-      {kind === "oneWay" && (
+      {(kind === "oneWay" || kind === "procedure" || kind === "factorial") && (
         <>
-          {state.factors.length === 0 ? (
+          <MethodChoice />
+          {kind === "factorial" ? null : state.factors.length === 0 ? (
             <p className="muted" role="status">
               {t("analysis.compare.needFactor")}
             </p>
@@ -230,7 +254,8 @@ export function AnalysisSetup({ onDone }: Props) {
         disabled={
           running ||
           state.analysis.responseId === null ||
-          (kind === "oneWay" && state.analysis.factorId === null) ||
+          ((kind === "oneWay" || kind === "procedure") && state.analysis.factorId === null) ||
+          (kind === "factorial" && (state.analysis.factorial?.factorIds.length ?? 0) === 0) ||
           (kind === "design" && state.design === null) ||
           (kind === "surface" &&
             (surfaceFactors(state).length < 2 || state.analysis.designTerms?.length === 0))
@@ -238,7 +263,7 @@ export function AnalysisSetup({ onDone }: Props) {
       >
         {running
           ? t("analysis.running")
-          : kind === "oneWay"
+          : kind === "oneWay" || kind === "procedure" || kind === "factorial"
             ? t("analysis.compare.run")
             : kind === "design"
               ? t("analysis.design.run")

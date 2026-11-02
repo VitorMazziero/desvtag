@@ -23,7 +23,9 @@ U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: exp
 | `features/results/ComparisonInterpretation.tsx` | Explicação curta, fatos e avisos localizados |
 | `features/results/ComparisonTables.tsx`, `comparisonRows.ts` | Tabelas na tela e linhas do CSV |
 | `features/results/ChartFigure.tsx`, `ExportButton.tsx` | Figura acessível e botões de SVG/PNG; aplica a personalização da figura (chave = `testId`) à tela e à exportação |
-| `features/results/FigureCustomizer.tsx`, `services/charts/figureStyle.ts` | Edição por figura (título, rótulos, letras, fonte) gravada em `Experiment.figure_styles`; troca os textos marcados com `data-figure` no SVG ([DT-0016](../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md)) |
+| `features/results/{SectionedResults,ModelPanel,ProcedureResults,FactorialResults}.tsx`; `features/analysis/MethodChoice.tsx`; `features/design/RcbdPanel.tsx` | **v0.2 (ET11):** resultados em seções com barra lateral (exportação por último), seleção e comparação de modelos, resultado dos procedimentos e da ANOVA multifatorial, escolha do método e painel do DBC ([DT-0018](../decisoes-tecnicas/dt-0018-selecao-de-modelos-e-resultados-em-secoes.md)) |
+| `services/export/{pdf,pdfContent}.ts` | **v0.2:** PDF da figura (vetorial) e do relatório; carregamento sob demanda do pdfmake com Roboto ([DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)) |
+| `features/results/FigureCustomizer.tsx`, `services/charts/figureStyle.ts` | Edição por figura (textos, letras manuais, anotações, aparência) gravada em `Experiment.figure_styles`; troca os textos marcados com `data-figure` no SVG ([DT-0016](../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md)) |
 | `features/settings/UpdateCheck.tsx` | “Verificar atualizações” (só no aplicativo Windows; instalação somente com assinatura válida, [DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
 | `services/charts/{svg,means,boxplot,scatter}.ts` | Renderizador SVG (tela e exportação, mesma fonte) |
 | `services/export/{csv,png,metadata}.ts` | CSV (formatos técnico e Excel, proteção contra fórmulas), rasterização, chunk `tEXt` e proveniência |
@@ -43,7 +45,7 @@ U07: escolher resposta, fator e α do caminho **Comparar tratamentos**. U08: exp
 
 ## 4. Erros e limitações
 
-Falha ou cancelamento de exportação é informado em linha (`role="status"`). O PNG depende de `canvas` (navegadores e WebView2). Sem edição por figura (título, eixos, letras), sem PDF/DOCX e sem preferências de exportação no projeto (ver plano da ET09, desvios).
+Falha ou cancelamento de exportação é informado em linha (`role="status"`). O PNG depende de `canvas` (navegadores e WebView2). Sem DOCX e sem preferências de exportação no projeto; no PDF a família de fonte da figura e o hachurado não são reproduzidos ([DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)).
 
 ## 5. Manutenção
 

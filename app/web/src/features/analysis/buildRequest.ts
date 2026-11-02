@@ -73,7 +73,13 @@ export function buildDataset(state: ProjectState): { dataset: Dataset; cellError
   return { dataset, cellErrors };
 }
 
-export type AnalysisKind = "descriptive" | "oneWay" | "design" | "surface";
+export type AnalysisKind =
+  | "descriptive"
+  | "oneWay"
+  | "procedure"
+  | "factorial"
+  | "design"
+  | "surface";
 
 /** O planejamento gerado é de superfície de resposta (composto central ou Box–Behnken). */
 export function isSurfaceDesign(state: ProjectState): boolean {
@@ -87,7 +93,13 @@ export function isSurfaceDesign(state: ProjectState): boolean {
  */
 export function analysisKind(state: ProjectState): AnalysisKind {
   // Um DIC gerado no caminho "Planejar" é analisado como comparação de tratamentos.
-  if (state.path === "compare" || (state.path === "plan" && state.crd !== null)) return "oneWay";
+  if (
+    state.path === "compare" ||
+    (state.path === "plan" && (state.crd !== null || state.rcbd !== null))
+  ) {
+    if (state.analysis.factorial !== null) return "factorial";
+    return state.analysis.procedure !== null ? "procedure" : "oneWay";
+  }
   if (state.path === "plan") return isSurfaceDesign(state) ? "surface" : "design";
   return state.analysis.surface ? "surface" : "descriptive";
 }
@@ -112,15 +124,28 @@ export function surfaceFactors(state: ProjectState): DesignFactor[] {
   });
 }
 
-/** Termos da superfície: lista vazia = modelo completo de segunda ordem (padrão do motor). */
-export function surfaceTerms(state: ProjectState): TermSpec[] {
-  return (state.analysis.designTerms ?? []).map((ids) =>
+function termSpecs(termIds: string[][]): TermSpec[] {
+  return termIds.map((ids) =>
     ids.length === 1
       ? { type: "main", factorId: ids[0] as string }
       : ids.length === 2 && ids[0] === ids[1]
         ? { type: "power", factorId: ids[0] as string, degree: 2 }
         : { type: "interaction", factorIds: ids },
   );
+}
+
+/** Termos da superfície: lista vazia = modelo completo de segunda ordem (padrão do motor). */
+export function surfaceTerms(state: ProjectState): TermSpec[] {
+  return termSpecs(state.analysis.designTerms ?? []);
+}
+
+/** Modelo escolhido para uma resposta (vazio = completo); a otimização usa o de cada resposta. */
+export function responseTerms(state: ProjectState, responseId: string): TermSpec[] {
+  const terms =
+    responseId === state.analysis.responseId
+      ? state.analysis.designTerms
+      : state.analysis.responseModels[responseId];
+  return termSpecs(terms ?? []);
 }
 
 /** Termos do modelo do planejamento: os escolhidos ou, por padrão, os efeitos principais. */
@@ -169,6 +194,30 @@ export function buildOperation(state: ProjectState, dataset: Dataset): Operation
     if (factorId === null) return null;
     return { type: "comparisonOneWay", dataset, responseId, factorId, alpha: state.analysis.alpha };
   }
+  if (analysisKind(state) === "procedure") {
+    const factorId = state.analysis.factorId;
+    const procedure = state.analysis.procedure;
+    if (factorId === null || procedure === null) return null;
+    return {
+      type: "comparisonProcedure",
+      dataset,
+      responseId,
+      factorId,
+      alpha: state.analysis.alpha,
+      procedure,
+    };
+  }
+  if (analysisKind(state) === "factorial") {
+    const setup = state.analysis.factorial;
+    if (setup === null || setup.factorIds.length === 0) return null;
+    return {
+      type: "anovaFactorial",
+      dataset,
+      responseId,
+      ...setup,
+      alpha: state.analysis.alpha,
+    };
+  }
   return { type: "descriptiveSummarize", dataset, responseId, groupBy: state.analysis.groupBy };
 }
 
@@ -200,6 +249,23 @@ export function inputSignature(state: ProjectState): string {
       dataset,
       state.analysis.responseId,
       state.analysis.factorId,
+      state.analysis.alpha,
+    ]);
+  if (analysisKind(state) === "procedure")
+    return JSON.stringify([
+      "procedure",
+      dataset,
+      state.analysis.responseId,
+      state.analysis.factorId,
+      state.analysis.procedure,
+      state.analysis.alpha,
+    ]);
+  if (analysisKind(state) === "factorial")
+    return JSON.stringify([
+      "factorial",
+      dataset,
+      state.analysis.responseId,
+      state.analysis.factorial,
       state.analysis.alpha,
     ]);
   return JSON.stringify([dataset, state.analysis.responseId, state.analysis.groupBy]);

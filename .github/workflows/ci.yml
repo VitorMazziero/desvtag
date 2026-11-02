@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
       - run: node scripts/check-docs-links.mjs
       - run: node scripts/check-case-collisions.mjs
       - run: node scripts/check-versions.mjs
@@ -72,7 +72,7 @@ jobs:
         run: cargo install wasm-bindgen-cli --version "$WASM_BINDGEN_VERSION" --locked
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
           cache: npm
           cache-dependency-path: app/web/package-lock.json
       - run: npm ci
@@ -123,7 +123,7 @@ jobs:
           cargo install tauri-driver --locked
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
           cache: npm
           cache-dependency-path: app/web/package-lock.json
       - run: npm ci
@@ -160,7 +160,7 @@ jobs:
         run: cargo install wasm-bindgen-cli --version "$env:WASM_BINDGEN_VERSION" --locked
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
           cache: npm
           cache-dependency-path: app/web/package-lock.json
       - run: npm ci
@@ -196,11 +196,11 @@ jobs:
         # O WebView2 recebe os argumentos do navegador pela API do Tauri, que ignora
         # WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS (diagnóstico da execução 41324447874: o processo de
         # renderização só trazia os argumentos do framework). A porta é habilitada apenas neste
-        # binário de teste, via TAURI_CONFIG; o instalador publicado é o do passo anterior.
+        # binário de teste, via TAURI_CONFIG; a característica `automation` faz o comando de exportação gravar em ENZITAG_EXPORT_DIR (verificação dos PDFs). O instalador publicado é o do passo anterior.
         shell: pwsh
         env:
           TAURI_CONFIG: '{"app":{"windows":[{"title":"EnziTAG Optima","width":1200,"height":800,"minWidth":800,"minHeight":560,"additionalBrowserArgs":"--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --remote-debugging-port=9333"}]}}'
-        run: cargo build --release --features tauri/custom-protocol
+        run: cargo build --release --features "tauri/custom-protocol,automation"
         working-directory: app/desktop/src-tauri
       - name: Verificação nativa no Windows (WebView2 por CDP)
         shell: pwsh

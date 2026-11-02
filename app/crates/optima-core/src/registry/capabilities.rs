@@ -37,8 +37,12 @@ mod tests {
             [
                 "descriptive_summary",
                 "one_way_comparison",
+                "multiple_comparison_procedures",
+                "factorial_anova",
+                "surface_model_selection",
                 "two_level_design",
                 "completely_randomized_design",
+                "randomized_block_design",
                 "two_level_design_analysis",
                 "response_surface_design",
                 "response_surface",

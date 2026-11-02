@@ -53,3 +53,6 @@ Desktop.ini
 
 # Esquemas gerados pelo Tauri durante a compilação.
 /app/desktop/src-tauri/gen/
+
+# Dados reais do exemplo kLa: só na máquina do usuário até a autorização de distribuição (PD-16)
+examples/05-kLa/
