@@ -20,7 +20,7 @@ Ao final da v0.3:
 
 | Item pendente | Origem | Etapa |
 |---|---|---|
-| Matriz exportada com colunas de resposta; importação que preenche respostas do planejamento; importação ignora as linhas `# metadados` | Pedido do usuário (2026-11-02) | [ET13](ativos/et13-planilha-de-coleta.md) |
+| Matriz exportada com colunas de resposta; importação que preenche respostas do planejamento; importação ignora as linhas `# metadados` | Pedido do usuário (2026-11-02) | [ET13](concluidos/et13-planilha-de-coleta.md) |
 | Verificar a atualização ponta a ponta (v0.1 → v0.2) e fechar a ET10 | ET10 (T08, T09, critérios 2 e 3); relatório da v0.2 | [ET14](planejados/et14-itens-adiados-v01-v02.md) |
 | Seleção de modelos para os efeitos de planejamentos de dois níveis | ET11-T09 | ET14 |
 | Capturas em inglês e inspeção visual dos temas no WebView2 | ET12-T10 | ET14 |
@@ -58,7 +58,7 @@ Ao final da v0.3:
 
 | Etapa | Nome | Fases | Depende de | Entrega principal |
 |---|---|---|---|---|
-| [ET13](ativos/et13-planilha-de-coleta.md) | Planilha de coleta: matriz com respostas e importação das respostas | F02, F05–F06 (U05, U16) | v0.2.0 | Ida e volta da matriz com conferência de níveis |
+| [ET13](concluidos/et13-planilha-de-coleta.md) | Planilha de coleta: matriz com respostas e importação das respostas | F02, F05–F06 (U05, U16) | v0.2.0 | Ida e volta da matriz com conferência de níveis |
 | [ET14](planejados/et14-itens-adiados-v01-v02.md) | Itens adiados da v0.1 e da v0.2 | F05, F10, F12, F13 | ET13 (ordem); publicação da v0.2 (T01) | Atualização verificada, seleção em dois níveis, capturas EN, guia de resultados |
 | [ET15](planejados/et15-niveis-mistos-e-misturas.md) | Níveis mistos e misturas | F09a, F09b | ET14 | Geração e análise com referência independente |
 | [ET16](planejados/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |

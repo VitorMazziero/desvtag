@@ -107,7 +107,7 @@ Decisões do usuário ao pedir a Fase 2 («implemente a Fase 2 por completo — 
 
 Decisões do usuário em 2026-11-02:
 
-1. **Planilha de coleta.** A matriz de ensaios exportada passa a trazer as colunas de resposta a preencher, e o mesmo arquivo pode ser importado de volta para preencher as respostas («assim o usuário pode usar o mesmo arquivo que usou para exportar a matriz para importar os valores de respostas»). Etapa [ET13](../planos-execucao/ativos/et13-planilha-de-coleta.md).
+1. **Planilha de coleta.** A matriz de ensaios exportada passa a trazer as colunas de resposta a preencher, e o mesmo arquivo pode ser importado de volta para preencher as respostas («assim o usuário pode usar o mesmo arquivo que usou para exportar a matriz para importar os valores de respostas»). Etapa [ET13](../planos-execucao/concluidos/et13-planilha-de-coleta.md).
 2. **Escopo da v0.3: tudo o que ficou pendente** («escreva o plano v0.3 com tudo que ficou pendente»). O [plano da v0.3](../planos-execucao/plano-v0.3.md) reúne os itens adiados da v0.1 e da v0.2, as famílias F09a–F09g, o Google Drive (F11) e as extensões F14, antecipando os destinos indicativos do [plano da v0.1 §3](../planos-execucao/plano-v0.1.md#3-fora-da-v01). A v0.3 continua no canal experimental; a v1.0.0 mantém os critérios do roteiro.
 3. **Windows 11:** a validação **não será realizada**. A plataforma Windows verificada continua sendo o Windows 10 Pro (build 19045) e o `windows-latest` da CI; as notas de versão continuam informando que o Windows 11 não foi verificado.
 4. **Publicação da v0.2.0** autorizada pelo usuário («Sim, publicar»), condicionada à CI verde.

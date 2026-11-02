@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
 
 // Planilha de coleta (ET13), com o motor Rust real (WebAssembly): gerar o planejamento → baixar a
@@ -140,6 +140,38 @@ test.describe("planilha de coleta", () => {
       await expect(page.getByLabel(`Condição — Obs. ${run}`)).toHaveValue(l[3] as string);
     }
     expect(unitIndex).toBe(2);
+  });
+
+  test("a matriz em XLSX também é reconhecida como planilha de coleta", async ({
+    page,
+  }, testInfo) => {
+    test.setTimeout(120_000);
+    await page.goto("/");
+    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+    await page.getByRole("button", { name: "Avançar" }).click();
+    await page.getByRole("button", { name: "Adicionar fator" }).click();
+    await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
+    await page.getByLabel("Níveis (opcional)").fill("A; B");
+    await page.getByRole("button", { name: "Adicionar resposta" }).click();
+    await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
+    await page.getByRole("button", { name: "Avançar" }).click();
+    await page.getByLabel("Unidades experimentais por nível").fill("2");
+    await page.getByRole("button", { name: "Gerar planejamento" }).click();
+    await expect(page.getByTestId("crd-generated")).toContainText("4 ensaios");
+
+    const download = page.waitForEvent("download");
+    await page.getByRole("button", { name: "Matriz do DIC (XLSX)" }).click();
+    // O download do Playwright não tem extensão: o assistente escolhe o leitor pelo nome do arquivo.
+    const xlsx = testInfo.outputPath("matriz.xlsx");
+    copyFileSync((await (await download).path()) as string, xlsx);
+
+    // O arquivo exportado, ainda sem valores, já é lido pelo motor e reconhecido como planilha.
+    await importFile(page, xlsx);
+    await expect(page.getByTestId("fill-responses")).toBeVisible();
+    await expect(page.getByTestId("fill-summary")).toContainText("0 valor(es)");
+    await expect(page.getByTestId("fill-summary")).toContainText("4 célula(s) em branco");
+    await expect(page.getByRole("button", { name: "Preencher respostas" })).toBeDisabled();
+    await expect(page.getByTestId("fill-unmatched")).toHaveCount(0);
   });
 
   test("avisa quando o arquivo não corresponde aos ensaios e não grava nada", async ({

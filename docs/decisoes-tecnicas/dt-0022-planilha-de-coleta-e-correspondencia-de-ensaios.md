@@ -4,7 +4,7 @@
 |---|---|
 | Estado | Aceita |
 | Data | 2026-11-02 |
-| Origem | Pedido do usuário em 2026-11-02 (usar o mesmo arquivo da matriz para importar as respostas); [ET13](../planos-execucao/ativos/et13-planilha-de-coleta.md) |
+| Origem | Pedido do usuário em 2026-11-02 (usar o mesmo arquivo da matriz para importar as respostas); [ET13](../planos-execucao/concluidos/et13-planilha-de-coleta.md) |
 | Pendências relacionadas | — |
 | Substitui / substituída por | Estende o U05 ([DT-0008](dt-0008-formato-enzitag-versoes-recuperacao.md) não muda: o esquema do projeto é o mesmo) |
 

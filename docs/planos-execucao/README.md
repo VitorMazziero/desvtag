@@ -42,7 +42,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET10 | Integração, verificação e publicação | v0.1 | **Ativo** (publicação pendente) | [ativos/et10-integracao-publicacao.md](ativos/et10-integracao-publicacao.md) |
 | ET11 | Seleção e comparação de modelos, navegação por seções e métodos da v0.2 (começa pela migração do Node.js, DT-0015) | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et11-selecao-de-modelos-e-navegacao.md](concluidos/et11-selecao-de-modelos-e-navegacao.md) |
 | ET12 | Temas adicionais (Industrial, Organic e Clay) e logo do grupo de pesquisa | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et12-temas-adicionais-e-identidade-do-grupo.md](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) |
-| ET13 | Planilha de coleta: matriz com respostas e importação das respostas | v0.3 | **Ativo** (2026-11-02) | [ativos/et13-planilha-de-coleta.md](ativos/et13-planilha-de-coleta.md) |
+| ET13 | Planilha de coleta: matriz com respostas e importação das respostas | v0.3 | **Concluído** (2026-11-02) | [concluidos/et13-planilha-de-coleta.md](concluidos/et13-planilha-de-coleta.md) |
 | ET14 | Itens adiados da v0.1 e da v0.2 | v0.3 | Planejado | [planejados/et14-itens-adiados-v01-v02.md](planejados/et14-itens-adiados-v01-v02.md) |
 | ET15 | Níveis mistos e misturas | v0.3 | Planejado | [planejados/et15-niveis-mistos-e-misturas.md](planejados/et15-niveis-mistos-e-misturas.md) |
 | ET16 | Planejamentos ótimos, restritos e ampliação sequencial | v0.3 | Planejado | [planejados/et16-planejamentos-otimos-e-restritos.md](planejados/et16-planejamentos-otimos-e-restritos.md) |

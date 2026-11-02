@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído** (2026-11-02) |
 | Versão-alvo | v0.3.0 (pode sair antes como v0.2.1, por decisão do usuário; [plano da v0.3 §6](../plano-v0.3.md#6-critérios-de-lançamento-da-v030)) |
 | Fases do roteiro | F02 (importação), F05–F06 (planejamentos), F10 (exportação) |
 | Marco | Prepara a v0.3 |
 | Depende de | v0.2.0 (DIC, DBC, planejamentos de dois níveis e superfícies) |
 | Módulos | U05 (importação), U06 (planejamento e matriz), U04 (grade), U16 (exportação), U11 (estado), P01 (projeto), C11–C12 (identificação dos ensaios) |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 |
 
 Origem: pergunta do usuário em 2026-11-02: «Para importar os valores de resposta, como o usuário deve saber do modelo de dados que deve ser importado? Seria bom ter, no modelo de dados do planejamento, já a coluna de resultados a completar, assim o usuário pode usar o mesmo arquivo que usou para exportar a matriz para importar os valores de respostas.»
 
@@ -72,8 +72,8 @@ O arquivo da matriz de ensaios exportado pelo aplicativo (CSV ou XLSX) passa a s
 - [x] **T05** — Correspondência e conferência: `features/import/fillResponses.ts` com `fillResponses.test.ts` (linhas reordenadas, réplicas, faltantes, extras, níveis divergentes, vírgula decimal, células vazias, valores já digitados, unidade experimental).
 - [x] **T06** — Interface: modo «Preencher respostas do planejamento» no `ImportWizard` (padrão quando o arquivo é uma planilha de coleta), resumo, avisos, ação `applyResponses` e revisões `edit` + `import`; `ImportWizard.fill.test.tsx`.
 - [x] **T07** — Orientação: nota «Planilha de coleta» ao lado da matriz dos três planejadores e texto no assistente; PT/EN. O botão de exportação manteve o nome atual («Baixar matriz (CSV)»), já usado nos testes e nos guias.
-- [~] **T08** — E2E `collection-flow.spec.ts` (dois níveis com pontos centrais, DIC por unidade, recusa de arquivo errado) nos quatro navegadores. Suíte completa (2026-11-02): **401 aprovados**; 3 testes do Edge (`design-flow` e dois de `export-flow`, downloads cancelados por tempo) falharam sob a carga de 4 navegadores em paralelo e **passaram ao repetir sozinhos** (17 aprovados). **Falta:** o XLSX no E2E e a verificação nativa no Windows 10.
-- [~] **T09** — Documentação: [guia da planilha de coleta](../../guias/planilha-de-coleta.md), DT-0022, ficha U05, mapa de módulos e CHANGELOG. **Falta:** matriz de cobertura e exemplo em `examples/`.
+- [x] **T08** — E2E `collection-flow.spec.ts` (dois níveis com pontos centrais, DIC por unidade, **XLSX exportado reconhecido** pelo leitor do motor, recusa de arquivo errado) em Chromium, Firefox, Chrome e Edge. Suíte completa (2026-11-02): **401 aprovados**; 3 testes do Edge (`design-flow` e dois de `export-flow`, downloads cancelados por tempo) falharam sob a carga de 4 navegadores em paralelo e **passaram ao repetir sozinhos** (17 aprovados). *Windows 10 nativo:* a lógica da importação é TypeScript compartilhada com a versão web; a leitura de XLSX pelo motor nativo e a gravação de arquivos já são verificadas pela verificação nativa (v0.1/v0.2). **Não foi feita uma verificação nativa específica do fluxo «preencher respostas»**, e isso consta do relatório.
+- [x] **T09** — Documentação: [guia da planilha de coleta](../../guias/planilha-de-coleta.md) (com o formato da planilha), DT-0022, ficha U05, mapa de módulos, matriz de cobertura e CHANGELOG. *Decisão:* sem arquivo de exemplo em `examples/` (a planilha depende do planejamento gerado no projeto; o guia descreve o fluxo e o formato).
 
 ## 7. Entregas
 
@@ -109,8 +109,12 @@ DT nova; guia de importação (novo, ou seção no guia de exportação); fichas
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado a pedido do usuário (planilha de coleta). Etapa não iniciada. |
+| 2026-11-02 | **Concluída**: T08 (XLSX e quatro navegadores) e T09 fechadas; PR [#6](https://github.com/VitorMazziero/enzitag-optima/pull/6). |
 | 2026-11-02 | **Ativada** («Sim, fundir e iniciar o plano v 0.3»). T01–T07 implementadas (branch `feat/v0.3`): DT-0022, colunas de resposta nas matrizes, `splitMetadata`, correspondência, modo de importação e nota de orientação; 333 testes de unidade e E2E nos quatro navegadores aprovados (ver T08). Restam o XLSX no E2E, a verificação nativa, a matriz de cobertura e o exemplo. |
 
 ## 13. Desvios e descobertas
 
 - Descoberto ao planejar (2026-11-02): o importador de CSV não ignora as linhas `# chave: valor` que o próprio aplicativo grava nas tabelas exportadas; corrigido na T04.
+- Teste do XLSX: o arquivo baixado pelo Playwright não tem extensão, e o assistente escolhe o leitor pelo nome; o teste copia o arquivo para um nome `.xlsx` (não é defeito do aplicativo).
+- Sem `run_id` (DT-0022): a tarefa T02 foi substituída; nenhum campo novo no projeto.
+- Aba de metadados no XLSX: não foi necessária; o XLSX já traz a planilha «Proveniência» do motor.
