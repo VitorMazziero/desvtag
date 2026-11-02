@@ -51,8 +51,8 @@ Fechar o que ficou pendente nas versões anteriores, mais o defeito encontrado a
 ## 5. Tarefas
 
 - [x] **T01** — Atualização v0.1.0 → v0.2.0 verificada **pelo usuário** em 2026-11-02 (releases publicados; «Deu certo»); URL publicada verificada por mim em quatro navegadores (`tests/public`). Registrado em `docs/distribuicao/publicacao.md`; ET10 concluída.
-- [~] **T02** (*depende do usuário: as capturas do Protimiza não foram enviadas; pendência PD-05 mantida*) — PD-05: se o usuário enviar as capturas do Protimiza, comparar matriz e rótulo da opção CCD com o composto central do aplicativo e registrar o resultado na matriz de cobertura; sem capturas, manter a pendência registrada.
-- [ ] **T03** (*adiada nesta rodada: exige ampliar o núcleo para o modelo de efeitos; ver o registro de progresso*) — DT e implementação da seleção de modelos para efeitos de dois níveis (núcleo, operação, painel na seção «Efeitos»), com casos independentes (statsmodels) e E2E.
+- [x] **T02** — PD-05 conferida com as capturas do Protimiza (`referencias/protimiza/03`, `04`, `05` e `10`, já fornecidas pelo usuário): a opção «CCD» do serviço tem `r·2^k + cp` ensaios (19 para k = 4, r = 1, cp = 3) e a matriz mostrada é um **fatorial 2⁴ em ordem padrão com 3 centrais, sem pontos axiais**; CCRD e FCD têm `r·(2^k + 2k) + cp` (27). O aplicativo reproduz as três contagens e a matriz (`protimiza_counts.rs`); a opção «CCD» corresponde ao **fatorial completo de dois níveis com pontos centrais**.
+- [x] **T03** — Seleção de modelos para efeitos de dois níveis: núcleo (`designs::selection`), operação `design.selectModel`, painel na seção «Modelo» da análise do planejamento, 4 casos independentes (statsmodels), paridade no WebAssembly e E2E. Método em [selecao-de-modelos §10.1](../../metodos/selecao-de-modelos.md). Sem caso para fracionários.
 - [x] **T04** — Sementes: a interface produz e aceita só 0 a 2⁵³ − 1 (`lib/seed.ts`, `max` nos três painéis); o motor segue aceitando `u64` ([DT-0024](../../decisoes-tecnicas/dt-0024-sementes-no-navegador-e-pdf-sem-novas-fontes.md)). A semente 9223372036854775813 continua verificada no Rust; o contrato com texto foi descartado (explicado na DT).
 - [x] **T05** — Decisão registrada na DT-0024: **manter** as duas limitações do PDF (fonte e hachura), por custo e benefício; reavaliar só a pedido.
 - [x] **T06** — Capturas PT e EN dos seis temas (início e resultados do exemplo 01, 1200 px), geradas por `playwright.captures.config.ts` e arquivadas em [`docs/imagens/capturas/`](../../imagens/capturas/); inspecionadas por amostragem (organic em PT e clay em EN). *Não feita:* inspeção no WebView2 do aplicativo instalado (a interface é a mesma do navegador).
@@ -95,6 +95,7 @@ DTs novas; [seleção de modelos](../../metodos/selecao-de-modelos.md); guia de 
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3: «tudo que ficou pendente»). Windows 11 retirado por decisão do usuário. Etapa não iniciada. |
 | 2026-11-02 | T01, T04–T07 e T09 entregues; T02 aguarda as capturas do usuário e T03 ficou para depois das famílias novas. |
+| 2026-11-02 | **T02 e T03 entregues** (ver as tarefas). |
 | 2026-11-02 | O usuário publicou os releases v0.1.0 (pré-lançamento) e v0.2.0 (mais recente) e relatou que a atualização funcionou. Adicionada a **T09** (notas de versão formatadas) a pedido do usuário, «somente ao plano por enquanto». |
 
 ## 12. Desvios e descobertas

@@ -133,6 +133,8 @@ pub enum OperationResult {
     AnovaFactorial(Box<FactorialResult>),
     /// Comparação de modelos e recomendação de remoção de termos.
     SurfaceSelectModel(Box<SelectionResult>),
+    /// Comparação de modelos de efeitos e recomendação de remoção de termos (dois níveis).
+    DesignSelectModel(Box<SelectionResult>),
     /// Valores de uma função de distribuição.
     DistributionEvaluate(DistributionResult),
     /// Ajuste de modelo linear.

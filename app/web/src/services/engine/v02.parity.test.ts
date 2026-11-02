@@ -153,6 +153,56 @@ describe("v0.2 operations in WebAssembly", () => {
     }
   });
 
+  it("two-level model selection reproduces the statsmodels backward sequence", () => {
+    for (const c of read("two_level_model_selection/selection.json").cases as Json[]) {
+      const factors = Array.from({ length: c.k as number }, (_, i) => ({
+        id: `f${i + 1}`,
+        name: `x${i + 1}`,
+        low: c.low[i],
+        high: c.high[i],
+        unit: null,
+      }));
+      const dataset = {
+        factors: factors.map((f) => ({
+          id: f.id,
+          name: f.name,
+          kind: "numeric",
+          unit: null,
+          levels: [],
+        })),
+        responses: [{ id: "y", name: "y", unit: null }],
+        observations: (c.real as number[][]).map((row, i) => ({
+          id: `o${i + 1}`,
+          unitId: null,
+          factors: row,
+          responses: [c.y[i]],
+        })),
+      };
+      const result = call({
+        type: "designSelectModel",
+        dataset,
+        responseId: "y",
+        spec: {
+          kind: { type: "fullFactorial" },
+          factors,
+          replicates: 1,
+          centerPoints: 0,
+          randomize: false,
+          seed: 1,
+        },
+        terms: [],
+        alpha: c.alpha,
+        includeCurvature: c.curvature,
+      });
+      expect(result.steps.length).toBe(c.steps.length);
+      result.steps.forEach((s: Json, i: number) => {
+        close(val(s.metrics.aic), c.steps[i].metrics.aic, 1e-10, 1e-8);
+        close(val(s.metrics.press), c.steps[i].metrics.press, 1e-8, 1e-10);
+      });
+      expect(result.stoppedBecause).toBe(c.stopped);
+    }
+  });
+
   it("randomized block design uses the same order as the independent implementation", () => {
     // A semente do contrato JSON é um inteiro seguro (≤ 2^53 − 1); casos maiores só valem no nativo.
     const cases = (read("randomized_block_design/rcbd.json").cases as Json[]).filter((c) =>

@@ -15,6 +15,7 @@ import { useStorage } from "../../services/storage/context";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
 import { formatFactParams } from "./ComparisonInterpretation";
+import { DesignModelPanel } from "./DesignModelPanel";
 import { TableExportButtons } from "./TableExportButtons";
 import { useFigureFormat } from "./useFigureFormat";
 
@@ -453,6 +454,10 @@ export function DesignResults({ result, signature, language }: Props) {
             </p>
           )}
         </section>
+      </div>
+
+      <div data-section="model">
+        <DesignModelPanel result={result} language={language} />
       </div>
 
       <div data-section="charts">

@@ -86,6 +86,8 @@ pub enum Operation {
     AnovaFactorial(Box<FactorialRequest>),
     /// Métricas de comparação e sequência de eliminação regressiva de termos (`surface.selectModel`).
     SurfaceSelectModel(Box<SurfaceRequest>),
+    /// Métricas de comparação e eliminação regressiva de termos de planejamentos de dois níveis (`design.selectModel`).
+    DesignSelectModel(Box<DesignAnalysisRequest>),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
     DistributionEvaluate(DistributionRequest),
     /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).

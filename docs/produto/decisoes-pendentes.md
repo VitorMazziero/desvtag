@@ -14,7 +14,7 @@ O [roteiro do produto](../planos-execucao/roteiro-produto.md) define a sequênci
 | PD-02 | Contêiner interno, esquema e migrações | F02 | ET03 | Arquivo aberto `.enzitag`, vários experimentos, revisões e resultados preservados |
 | PD-03 | Retenção/compactação do histórico e limites de recuperação | F02 | ET03 | Recuperação após dois segundos e checkpoints; sem perda silenciosa |
 | PD-04 | Variantes, estimadores, algoritmos e tolerâncias | F03–F09 | ET04–ET08 (v0.1); demais posteriores | Catálogo completo e validação por método |
-| PD-05 | Inventário Protimiza não visível nas capturas e rótulo CCD | F05–F06 | ET06–ET07; conferência do CCD na ET14-T02 (depende das capturas do usuário) | Cobertura integral requerida; não copiar nomenclatura sem conferir a matriz |
+| PD-05 | Inventário Protimiza não visível nas capturas e rótulo CCD | F05–F06 | ET06–ET07; conferência do CCD na ET14-T02 | **Rótulo CCD conferido em 2026-11-02 com as capturas:** é o fatorial completo com pontos centrais (sem axiais); funções internas não visíveis nas capturas continuam sem inventário. Cobertura integral requerida; não copiar nomenclatura sem conferir a matriz |
 | PD-06 | Biblioteca de tabelas/gráficos e renderização 3D | F01/F04/F06/F10 | ET02, ET05, ET07, ET09 | Arquitetura de cálculo separada da apresentação; formatos aprovados |
 | PD-07 | Estratégia de busca e critérios de parada | F07 | ET08 | Desejabilidade, restrições e vários candidatos |
 | PD-08 | Escala dos casos reais e dados autorizados para distribuição | Durante cada fase | Todas | Exemplos sintéticos identificados e referências independentes |

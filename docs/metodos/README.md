@@ -44,7 +44,7 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Modelo misto (intercepto aleatório)](modelos-mistos.md) | implementado; validado contra statsmodels e ANOVA de medidas repetidas (nativo e WebAssembly) |
 | [Ajuste não linear (saturação)](ajuste-nao-linear.md) | implementado; validado contra SciPy (nativo e WebAssembly) |
 | [Potência e tamanho de amostra](potencia.md) | implementado; validado contra SciPy (nativo e WebAssembly) |
-| [Seleção e comparação de modelos de superfície](selecao-de-modelos.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Seleção e comparação de modelos de superfície](selecao-de-modelos.md) | implementado; validado numericamente (nativo e WebAssembly); **estendido a planejamentos de dois níveis (fatoriais completos) na v0.3** |
 | [Composto central](composto-central.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Box–Behnken](box-behnken.md) | implementado (3 a 5 fatores); validado numericamente |
 | [Superfície de resposta de segunda ordem](superficie-resposta.md) | implementado; validado numericamente (nativo e WebAssembly) |

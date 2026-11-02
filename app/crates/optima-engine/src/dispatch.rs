@@ -226,6 +226,12 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::DesignSelectModel(req) => match optima_core::designs::selection::select(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::DesignSelectModel(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::DistributionEvaluate(req) => match optima_core::distributions::evaluate(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::DistributionEvaluate(result),

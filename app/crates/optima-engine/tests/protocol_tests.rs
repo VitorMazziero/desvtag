@@ -41,6 +41,7 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "multiple_comparison_procedures",
                     "factorial_anova",
                     "surface_model_selection",
+                    "two_level_model_selection",
                     "two_level_design",
                     "completely_randomized_design",
                     "randomized_block_design",

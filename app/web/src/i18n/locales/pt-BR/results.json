@@ -312,6 +312,12 @@
     },
     "export": {
       "effectsCsv": "Efeitos (CSV)"
+    },
+    "model": {
+      "title": "Modelo: efeitos e comparação",
+      "intro": "Desmarque um efeito para retirá-lo do modelo (por exemplo, uma interação sem importância); o aplicativo recalcula e compara os modelos. O modelo completo tem os efeitos principais e todas as interações de dois fatores; em planejamentos fracionários, interações confundidas entre si não podem ser separadas.",
+      "terms": "Efeitos do modelo",
+      "confirmHierarchy": "Retirar este efeito principal deixa no modelo uma interação com o mesmo fator, o que quebra a hierarquia do modelo. Continuar?"
     }
   },
   "surface": {

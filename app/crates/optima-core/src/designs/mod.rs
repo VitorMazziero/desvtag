@@ -34,6 +34,7 @@ pub mod plackett_burman;
 pub mod randomization;
 pub mod randomized_block;
 pub mod recommend;
+pub mod selection;
 pub mod spec;
 
 pub use generate::{count_runs, generate};
