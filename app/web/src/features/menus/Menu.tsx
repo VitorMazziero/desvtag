@@ -4,14 +4,22 @@
 import { type ReactNode, useEffect, useRef } from "react";
 
 interface Props {
-  label: string;
+  label: ReactNode;
   testId: string;
   children: ReactNode;
   /** Painel alinhado à direita do botão (menus no canto direito do cabeçalho). */
   alignEnd?: boolean;
+  /** Classes do botão que abre o menu. */
+  buttonClassName?: string;
 }
 
-export function Menu({ label, testId, children, alignEnd = false }: Props) {
+export function Menu({
+  label,
+  testId,
+  children,
+  alignEnd = false,
+  buttonClassName = "button secondary menu-button",
+}: Props) {
   const root = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     const el = root.current;
@@ -37,7 +45,7 @@ export function Menu({ label, testId, children, alignEnd = false }: Props) {
   }, []);
   return (
     <details className="menu" data-testid={testId} ref={root}>
-      <summary className="button secondary menu-button">{label}</summary>
+      <summary className={buttonClassName}>{label}</summary>
       <div className={alignEnd ? "menu-panel align-end" : "menu-panel"}>{children}</div>
     </details>
   );

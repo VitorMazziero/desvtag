@@ -237,7 +237,8 @@
     "newExperimentName": "Experimento {{n}}",
     "failed": "Não foi possível concluir a operação. O projeto aberto não foi alterado.",
     "warningsTitle": "Avisos ao abrir o arquivo:",
-    "migrated": "Arquivo da versão {{from}} do formato, atualizado em memória; o arquivo original não foi alterado."
+    "migrated": "Arquivo da versão {{from}} do formato, atualizado em memória; o arquivo original não foi alterado.",
+    "more": "Mais"
   },
   "experiments": {
     "label": "Experimentos",
@@ -861,7 +862,9 @@
       "notFound": "O arquivo não foi encontrado no Drive (apagado ou fora do alcance do aplicativo).",
       "network": "Sem conexão com o Google. Seu trabalho continua no aplicativo; tente de novo quando houver rede.",
       "unknown": "O Drive devolveu um erro inesperado. Seu trabalho continua no aplicativo."
-    }
+    },
+    "notConnected": "Não conectado ao Google Drive.",
+    "learnMore": "Saiba mais"
   },
   "comments": {
     "summary": "Comentários ({{count}}; {{open}} em aberto)",

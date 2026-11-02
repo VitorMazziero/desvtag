@@ -1,5 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 import { FakeDrive } from "../../src/services/drive/fakeDrive";
+import { openFileMenu } from "./menus";
 
 // Google Drive (ET19) com um Google SIMULADO: os scripts do Google e a API do Drive são
 // interceptados. Isto prova a interface e a lógica de sincronização; **não** prova a autorização
@@ -74,7 +75,7 @@ test("Drive simulado: conectar, salvar, conflito sem sobrescrever e abrir pelo P
 
   // Nenhuma requisição ao Google antes de conectar.
   expect(hits).toEqual([]);
-  await page.getByTestId("drive-panel").getByText("Google Drive (opcional)").click();
+  await openFileMenu(page);
   await expect(page.getByRole("button", { name: "Salvar no Drive" })).toHaveCount(0);
   await page.getByRole("button", { name: "Conectar ao Google Drive" }).click();
   await expect(page.getByText("Conectado ao Google Drive.")).toBeVisible();
@@ -138,7 +139,7 @@ test("Drive: erro de rede ou de autorização não afeta o trabalho local", asyn
   await mockGoogle(page, drive);
   await page.goto("/");
   await page.getByLabel("Nome do projeto").fill("Local primeiro");
-  await page.getByTestId("drive-panel").getByText("Google Drive (opcional)").click();
+  await openFileMenu(page);
   await page.getByRole("button", { name: "Conectar ao Google Drive" }).click();
   drive.failures = [{ status: 401 }];
   await page.getByRole("button", { name: "Salvar no Drive" }).click();

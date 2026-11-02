@@ -27,3 +27,6 @@ export async function openSaturationTool(page: Page) {
   await expect(page.getByTestId("saturation-dialog")).toBeVisible();
   return page.getByTestId("saturation-dialog").getByTestId("saturation-fit");
 }
+
+/** Abre o menu «Mais» da barra do arquivo (Google Drive, salvar como…). */
+export const openFileMenu = (page: Page) => openMenu(page, "file-menu");

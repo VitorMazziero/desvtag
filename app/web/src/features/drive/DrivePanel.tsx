@@ -42,7 +42,6 @@ export function DrivePanel({ actions }: { actions: Actions }) {
   const [link, setLink] = useState<DriveLink | null>(() => readLink(workspace.projectId));
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [working, setWorking] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const fail = (error: unknown) => {
     const code = error instanceof DriveError ? error.code : "unknown";
@@ -127,66 +126,63 @@ export function DrivePanel({ actions }: { actions: Actions }) {
     });
 
   return (
-    <details
-      className="advanced"
-      data-testid="drive-panel"
-      open={open}
-      onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
-    >
-      <summary>{t("drive.title")}</summary>
-      {open && (
-        <>
-          <p className="muted small">{t("drive.intro")}</p>
-          <p className="muted small">{t("drive.localStillWorks")}</p>
-          <div className="row">
-            {!connected ? (
+    <section className="drive-section" data-testid="drive-panel" aria-label={t("drive.title")}>
+      <h3 className="menu-heading">{t("drive.title")}</h3>
+      <p className="muted small" role="status">
+        {connected ? t("drive.connected") : t("drive.notConnected")}{" "}
+        {link ? t("drive.linked", { name: link.name }) : t("drive.unlinked")}
+      </p>
+      <ul className="menu-list">
+        {!connected ? (
+          <li>
+            <button type="button" className="button secondary" disabled={working} onClick={connect}>
+              {t("drive.connect")}
+            </button>
+          </li>
+        ) : (
+          <>
+            <li>
               <button
                 type="button"
                 className="button secondary"
                 disabled={working}
-                onClick={connect}
+                onClick={openDrive}
               >
-                {t("drive.connect")}
+                {t("drive.open")}
               </button>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  className="button secondary"
-                  disabled={working}
-                  onClick={openDrive}
-                >
-                  {t("drive.open")}
-                </button>
-                <button type="button" className="button" disabled={working} onClick={saveDrive}>
-                  {t("drive.save")}
-                </button>
-                <button
-                  type="button"
-                  className="button secondary"
-                  disabled={working}
-                  onClick={disconnect}
-                >
-                  {t("drive.disconnect")}
-                </button>
-              </>
-            )}
-          </div>
-          <p className="muted small" role="status">
-            {connected ? t("drive.connected") : null}{" "}
-            {link ? t("drive.linked", { name: link.name }) : t("drive.unlinked")}
-          </p>
-          {message && (
-            <p
-              role={message.kind === "error" ? "alert" : "status"}
-              className={message.kind === "error" ? "error" : "muted"}
-              data-testid="drive-message"
-            >
-              {message.text}
-            </p>
-          )}
-        </>
+            </li>
+            <li>
+              <button type="button" className="button" disabled={working} onClick={saveDrive}>
+                {t("drive.save")}
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                className="button secondary"
+                disabled={working}
+                onClick={disconnect}
+              >
+                {t("drive.disconnect")}
+              </button>
+            </li>
+          </>
+        )}
+      </ul>
+      {message && (
+        <p
+          role={message.kind === "error" ? "alert" : "status"}
+          className={message.kind === "error" ? "error" : "muted"}
+          data-testid="drive-message"
+        >
+          {message.text}
+        </p>
       )}
-    </details>
+      <details className="advanced">
+        <summary>{t("drive.learnMore")}</summary>
+        <p className="muted small">{t("drive.intro")}</p>
+        <p className="muted small">{t("drive.localStillWorks")}</p>
+      </details>
+    </section>
   );
 }
