@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F12 (verificação de interface), F01 (interface básica) |
 | Marco | Prepara a v0.3 |
 | Depende de | v0.2.0 (seis temas e barra lateral de seções); pode correr junto da ET13 |
 | Módulos | U18 (temas e tokens), U01–U11 (telas), `app/app.css`, `themes/tokens.css` |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 Origem: pedido do usuário em 2026-11-02, ao verificar a v0.2.0 instalada: «Os botões da interface também estão próximos; faça uma checagem na interface na v0.3 quanto a distância, padding e tamanho». Na mesma verificação o usuário pediu: «Não são necessários 2 logos, apenas o superior» e «Ao clicar na próxima etapa, a interface deve voltar ao topo de forma orgânica». **Só planejamento por ora**: nenhuma alteração de interface foi feita.
@@ -68,15 +68,15 @@ Esses números são ponto de partida; a auditoria mede o que o usuário **vê** 
 
 ## 6. Tarefas
 
-- [ ] **T01** — Inventário: percorrer todas as telas nos seis temas e em 1200/800/375 px, listar os grupos de botões e medir distância, altura e preenchimento (planilha ou tabela em `docs/`), com capturas «antes».
-- [ ] **T02** — DT com as regras de §4 e os valores finais dos tokens.
-- [ ] **T03** — Correção em `app.css` e `tokens.css` (`.row`, `.button`, `.button.small`, barra lateral, grupos de ações de tabelas e figuras, painel de atualização), sem regras por tema.
+- [~] **T01** — *Parcial:* medição automática das telas principais (inicial, variáveis, resultados e dados do exemplo 01) em vez de um inventário manual de todas as telas. Inventário: percorrer todas as telas nos seis temas e em 1200/800/375 px, listar os grupos de botões e medir distância, altura e preenchimento (planilha ou tabela em `docs/`), com capturas «antes».
+- [x] **T02** — [DT-0023](../../decisoes-tecnicas/dt-0023-espacamento-dos-controles-logo-unico-e-rolagem-entre-etapas.md) com as regras e os valores finais dos tokens.
+- [x] **T03** — (`tokens.css`: `--gap-controls`, `--gap-controls-row`, `--control-height`, `--control-height-small`; `app.css` usa os tokens nos grupos de botões e na barra de seções.) Correção em `app.css` e `tokens.css` (`.row`, `.button`, `.button.small`, barra lateral, grupos de ações de tabelas e figuras, painel de atualização), sem regras por tema.
 - [ ] **T04** — Revisão tela a tela dos componentes que escapam das classes comuns (estilos locais, botões dentro de tabelas e da grade, `FigureCustomizer`, painéis de exportação).
-- [ ] **T05** — Teste automatizado de distância e tamanho nas telas principais (quatro navegadores) e atualização dos testes de contraste e axe, se mudarem valores.
+- [x] **T05** — (`layout-flow.spec.ts`.) Teste automatizado de distância e tamanho nas telas principais (quatro navegadores) e atualização dos testes de contraste e axe, se mudarem valores.
 - [ ] **T06** — Capturas «depois» (seis temas, PT/EN, 800 e 375 px) arquivadas e inspeção visual registrada; conferência no WebView2.
 - [ ] **T07** — Documentação: DT, ficha U18, guia de interface (se houver) e CHANGELOG.
-- [ ] **T08** — **Logo único.** Remover o `GroupLogo` grande da tela inicial (`features/home/StartActions.tsx`), mantendo o do cabeçalho e o crédito nos relatórios; liberar o espaço (a pergunta «O que você quer fazer?» sobe); ajustar `themes-flow.spec.ts` (que confere o logo na tela inicial nos seis temas) para conferir só o cabeçalho e o relatório; atualizar a [DT-0021](../../decisoes-tecnicas/dt-0021-temas-adicionais-fontes-e-logo.md) (decisão 5, que prevê cabeçalho e tela inicial) e o [plano da ET12](../concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) com nota datada; conferir a captura nos seis temas e a ausência de requisições externas.
-- [ ] **T09** — **Voltar ao topo de forma orgânica ao trocar de etapa** (`features/workflow/Workflow.tsx`). Comportamento: ao mudar a etapa, rolar suavemente até o topo do conteúdo da etapa nova (não ao topo absoluto da página se o cabeçalho for fixo) e mover o foco para o título da etapa, sem roubar o foco do teclado de forma abrupta; com `prefers-reduced-motion` a rolagem é imediata (sem animação); não rolar quando a troca vier de restaurar a etapa ao reabrir ou ao recarregar; funciona também em 375 px, com a barra lateral de resultados e ao trocar de seção (nesse caso, só se o início da seção estiver fora da janela). Testes: unidade da função que decide a rolagem; E2E em Chromium e Firefox conferindo a posição de rolagem e o foco após «Avançar» e «Voltar», com e sem movimento reduzido; axe.
+- [x] **T08** — (Logo único feito; E2E de logotipo atualizado; DT-0021 revisada na DT-0023.) **Logo único.** Remover o `GroupLogo` grande da tela inicial (`features/home/StartActions.tsx`), mantendo o do cabeçalho e o crédito nos relatórios; liberar o espaço (a pergunta «O que você quer fazer?» sobe); ajustar `themes-flow.spec.ts` (que confere o logo na tela inicial nos seis temas) para conferir só o cabeçalho e o relatório; atualizar a [DT-0021](../../decisoes-tecnicas/dt-0021-temas-adicionais-fontes-e-logo.md) (decisão 5, que prevê cabeçalho e tela inicial) e o [plano da ET12](../concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) com nota datada; conferir a captura nos seis temas e a ausência de requisições externas.
+- [x] **T09** — (`features/workflow/scrollToStep.ts`, `scrollToStep.test.ts` e E2E.) **Voltar ao topo de forma orgânica ao trocar de etapa** (`features/workflow/Workflow.tsx`). Comportamento: ao mudar a etapa, rolar suavemente até o topo do conteúdo da etapa nova (não ao topo absoluto da página se o cabeçalho for fixo) e mover o foco para o título da etapa, sem roubar o foco do teclado de forma abrupta; com `prefers-reduced-motion` a rolagem é imediata (sem animação); não rolar quando a troca vier de restaurar a etapa ao reabrir ou ao recarregar; funciona também em 375 px, com a barra lateral de resultados e ao trocar de seção (nesse caso, só se o início da seção estiver fora da janela). Testes: unidade da função que decide a rolagem; E2E em Chromium e Firefox conferindo a posição de rolagem e o foco após «Avançar» e «Voltar», com e sem movimento reduzido; axe.
 
 ## 7. Entregas
 
@@ -114,6 +114,7 @@ DT nova; ficha U18; capturas em `docs/imagens/`; CHANGELOG; relatório de valida
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado a pedido do usuário («somente ao plano por enquanto»). Etapa não iniciada. |
+| 2026-11-02 | **Ativada** («Pode seguir até completar v0.3»). T02, T03, T05, T08 e T09 implementadas; o teste de medidas apontou «Voltar → Avançar» a 8 px e a barra de seções a 4 px, corrigidos. Faltam as capturas antes e depois e a conferência no WebView2 (T06). |
 
 ## 13. Desvios e descobertas
 

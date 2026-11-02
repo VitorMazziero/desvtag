@@ -42,7 +42,7 @@ test("o seletor oferece os seis temas, aplica e lembra a escolha; valor desconhe
   await expect(html(page)).toHaveAttribute("data-theme", "soft-light");
 });
 
-test("o logotipo do grupo aparece no cabeçalho e na tela inicial, sem rede, nos seis temas", async ({
+test("o logotipo do grupo aparece uma única vez (no cabeçalho), sem rede, nos seis temas", async ({
   page,
 }) => {
   const external: string[] = [];
@@ -54,12 +54,11 @@ test("o logotipo do grupo aparece no cabeçalho e na tela inicial, sem rede, nos
   await page.goto("/");
   for (const theme of THEME_LIST) {
     await page.getByLabel("Tema").selectOption(theme);
-    for (const id of ["group-logo-header", "group-logo-large"]) {
-      const logo = page.getByTestId(id);
-      await expect(logo).toBeVisible();
-      await expect(logo).toHaveAttribute("alt", "Logotipo EnziTAG");
-      expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(558);
-    }
+    const logo = page.getByTestId("group-logo-header");
+    await expect(logo).toBeVisible();
+    await expect(logo).toHaveAttribute("alt", "Logotipo EnziTAG");
+    expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(558);
+    await expect(page.locator("img.group-logo")).toHaveCount(1); // a tela inicial não repete o logotipo
   }
   expect(external).toEqual([]);
   await page.getByLabel("Idioma").selectOption("en");

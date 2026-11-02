@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useEngine } from "../../services/engine/EngineContext";
 import type { EntryPath } from "../../state/project";
-import { GroupLogo } from "../branding";
 import { missingMethods } from "./availability";
 
 const PATHS: EntryPath[] = ["plan", "analyze", "compare"];
@@ -19,9 +18,6 @@ export function StartActions({ selected, onChoose }: Props) {
   return (
     <fieldset className="choice-group">
       <legend>{t("home.title")}</legend>
-      <div className="start-logo">
-        <GroupLogo size="large" />
-      </div>
       <div className="choice-grid">
         {PATHS.map((path) => {
           const missing = missingMethods(path, capabilities);

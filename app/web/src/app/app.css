@@ -121,7 +121,7 @@
 .steps {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -130,7 +130,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 40px;
+  min-height: var(--control-height);
   padding: 0 var(--space-3);
   font: inherit;
   font-size: var(--text-small);
@@ -170,14 +170,14 @@
 .step-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   align-items: center;
 }
 .spacer {
   flex: 1;
 }
 .button {
-  min-height: 40px;
+  min-height: var(--control-height);
   padding: 0 var(--space-4);
   font: inherit;
   font-size: var(--text-small);
@@ -210,8 +210,8 @@
   border-color: var(--color-ink-secondary);
 }
 .button.small {
-  min-height: 32px;
-  padding: 0 var(--space-2);
+  min-height: var(--control-height-small);
+  padding: 0 var(--space-3);
   font-weight: 400;
 }
 .button:disabled {
@@ -407,7 +407,7 @@ input[aria-invalid="true"] {
 .row {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   align-items: end;
 }
 .grow {
@@ -430,14 +430,14 @@ input[aria-invalid="true"] {
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   margin: var(--space-3) 0;
   padding: 0;
   list-style: none;
   align-items: center;
 }
 .tab {
-  min-height: 36px;
+  min-height: var(--control-height);
   padding: 0 var(--space-3);
   font: inherit;
   font-size: var(--text-small);
@@ -464,7 +464,7 @@ input[aria-invalid="true"] {
 .history-list li {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   align-items: center;
   margin: var(--space-2) 0;
 }
@@ -499,7 +499,7 @@ input[aria-invalid="true"] {
   margin-top: var(--space-2);
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
 }
 
 /* Resultados em seções com barra lateral (ET11) */
@@ -519,12 +519,13 @@ input[aria-invalid="true"] {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--gap-controls-row);
 }
 .results-nav button {
   width: 100%;
+  min-height: var(--control-height);
   text-align: left;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-rule, #dde0e6);
   border-radius: 0.5rem;
   background: var(--color-panel, #fff);
@@ -560,6 +561,7 @@ input[aria-invalid="true"] {
   .results-nav ul {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: var(--gap-controls-row) var(--gap-controls);
   }
   .results-nav button {
     width: auto;
@@ -590,7 +592,4 @@ input[aria-invalid="true"] {
   background: #fff;
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-control);
-}
-.start-logo {
-  margin-bottom: var(--space-3);
 }

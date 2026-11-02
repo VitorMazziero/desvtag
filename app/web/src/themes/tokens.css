@@ -5,6 +5,11 @@
   --space-3: 16px;
   --space-4: 24px;
   --space-5: 40px;
+  /* Controles (ET21): distância mínima entre botões vizinhos e altura dos controles. */
+  --gap-controls: var(--space-3);
+  --gap-controls-row: var(--space-2);
+  --control-height: 40px;
+  --control-height-small: 36px;
   --content-max: 1100px;
   --focus-width: 2px;
   --focus-offset: 2px;

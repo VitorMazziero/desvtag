@@ -3,7 +3,7 @@
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/enzitag-logo.png";
 
-const SIZES = { header: [108, 30], large: [216, 60] } as const;
+const SIZES = { header: [108, 30] } as const;
 
 export function GroupLogo({ size = "header" }: { size?: keyof typeof SIZES }) {
   const { t } = useTranslation();

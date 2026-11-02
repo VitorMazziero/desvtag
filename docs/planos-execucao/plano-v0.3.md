@@ -25,7 +25,7 @@ Ao final da v0.3:
 | Seleção de modelos para os efeitos de planejamentos de dois níveis | ET11-T09 | ET14 |
 | Capturas em inglês e inspeção visual dos temas no WebView2 | ET12-T10 | ET14 |
 | Notas de versão sem formatação, cortadas e desatualizadas no aviso de atualização | Verificação do usuário (2026-11-02) | ET14-T09 |
-| Botões próximos: auditoria de distância, preenchimento e tamanho dos controles em toda a interface | Verificação do usuário (2026-11-02) | [ET21](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| Botões próximos: auditoria de distância, preenchimento e tamanho dos controles em toda a interface | Verificação do usuário (2026-11-02) | [ET21](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
 | Dois logotipos na interface: manter só o do cabeçalho (retirar o da tela inicial) | Verificação do usuário (2026-11-02) | ET21-T08 |
 | Ao avançar de etapa, a interface deve voltar ao topo de forma orgânica (rolagem suave e foco no título) | Verificação do usuário (2026-11-02) | ET21-T09 |
 | Guia de resultados | ET11-T14 | ET14 |
@@ -66,7 +66,7 @@ Ao final da v0.3:
 | [ET18](planejados/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
-| [ET21](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
+| [ET21](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
 
 **Ordem recomendada:** ET13 e ET21 (interface; podem correr juntas) → ET14 → ET15 → ET16 → ET17 → ET18 → ET20, com a **ET19 em paralelo** a partir do momento em que o usuário criar o projeto OAuth (ela depende de configuração externa, não de código anterior). A regra «uma etapa ativa por vez» admite esse paralelismo, registrado aqui.
 
