@@ -55,6 +55,7 @@ Nada abaixo sai do escopo final aprovado; apenas não integra a primeira versão
 | DBC e blocos em planejamentos, ANOVA multifatorial geral, médias marginais, contrastes planejados | F08 | v0.2 |
 | Welch/Games–Howell, Dunnett, Bonferroni/Holm, Kruskal–Wallis/Dunn, comparações pareadas | F08 | v0.2 |
 | PDF de figuras e relatórios; personalização gráfica completa | F10 | v0.2 |
+| Temas **Industrial**, **Organic** e **Clay** e logo do grupo de pesquisa no aplicativo ([ET12](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md)) | F01 | v0.2 |
 | Migração do Node.js 22 para o 26 (toolchain; tarefa inicial da ET11, antes de novas funcionalidades), conforme [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md) | Transversal | v0.2 |
 | Google Drive, pasta visível, abrir compartilhado e criar cópia | F11 | v0.3 |
 | Níveis mistos, misturas, ótimos/restritos, modelos mistos, medidas repetidas, não lineares (Monod), potência | F09a–F09g | v0.4 em diante |

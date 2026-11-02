@@ -2,6 +2,8 @@
 
 **Estado:** **versão web publicada; instalador em rascunho de release (não publicado)** · **Atualizado em:** 2026-11-01
 
+> **v0.2.0:** está em preparação no ramo `feat/v0.2` e **não foi publicada** (nenhuma etiqueta, release ou publicação no Pages foi feita para ela). Quando o usuário decidir publicar, o registro correspondente entra aqui.
+
 Este documento registra o procedimento de publicação da v0.1.0 e **o que foi de fato executado**, com datas e endereços. O repositório é **público** desde 2026-11-01 (PD-15).
 
 ## Registro do que foi executado

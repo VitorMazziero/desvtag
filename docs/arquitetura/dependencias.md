@@ -30,7 +30,9 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 | `i18next` | 26.6.0 | Idiomas, interpolação e plural | MIT |
 | `react-i18next` | 17.1.10 | Integração do i18next com React | MIT |
 | `@tauri-apps/api` | 2.12.4 | Chamada de comandos Tauri | Apache-2.0 OR MIT |
-| `@fontsource/host-grotesk`, `instrument-sans`, `geist-sans`, `geist-mono`, `eb-garamond` | 5.3.0 | Fontes locais dos temas (subconjunto latin) | OFL-1.1 |
+| `pdfmake` | 0.3.13 | PDF de figuras e de relatórios (carregado sob demanda, só na exportação; traz `pdfkit`, `fontkit`, `png-js` e outras, todas MIT/BlueOak-1.0.0/0BSD; [DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)); inclui a fonte Roboto (OFL-1.1) embutida nos PDFs | MIT |
+| `@fontsource/host-grotesk`, `instrument-sans`, `geist-sans`, `geist-mono`, `eb-garamond`, `ibm-plex-mono` | 5.3.0 | Fontes locais dos temas (subconjunto latin; `ibm-plex-mono` no Industrial, v0.2) | OFL-1.1 |
+| `@fontsource/source-serif-4` | 5.3.1 | Fonte dos títulos do tema Organic (v0.2; [DT-0021](../decisoes-tecnicas/dt-0021-temas-adicionais-fontes-e-logo.md)) | OFL-1.1 |
 | `vite` | 8.3.5 | Bundler e servidor de desenvolvimento | MIT |
 | `@vitejs/plugin-react` | 6.1.2 | Plugin React do Vite | MIT |
 | `typescript` | 7.0.2 | Verificação de tipos | Apache-2.0 |
@@ -42,7 +44,7 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 | `@axe-core/playwright` | 4.14.0 | Varredura automática de acessibilidade nos E2E (somente desenvolvimento) | MPL-2.0 |
 | `@biomejs/biome` | 2.6.4 | Lint e formatação | MIT OR Apache-2.0 |
 | `@tauri-apps/cli` | 2.12.4 | Build e ícones do aplicativo Windows | Apache-2.0 OR MIT |
-| `@types/node` 22.20.5, `@types/react` 19.3.0, `@types/react-dom` 19.3.0 | — | Tipos (`@types/node` acompanha o Node 22 da v0.1 e passa para a linha 26 na migração da v0.2, [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) | MIT |
+| `@types/node` 26.6.6, `@types/react` 19.3.0, `@types/react-dom` 19.3.0 | — | Tipos (`@types/node` acompanha o Node 26 da v0.2, [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) | MIT |
 
 ## Observações
 

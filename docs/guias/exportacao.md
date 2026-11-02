@@ -1,19 +1,26 @@
 # Guia de exportação
 
-**Estado:** vigente (v0.1, ET09) · **Atualizado em:** 2026-11-01
+**Estado:** vigente (v0.2, ET09 e ET11) · **Atualizado em:** 2026-11-01
 
-O que o aplicativo exporta, como e com que garantias. Decisões em [DT-0014](../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md).
+O que o aplicativo exporta, como e com que garantias. Decisões em [DT-0014](../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md) e [DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md).
 
-## Formatos da v0.1
+## Formatos da v0.2
 
 | Conteúdo | Formatos | Onde |
 |---|---|---|
-| Figuras | SVG e PNG | Botões abaixo de cada figura |
+| Figuras | SVG, PNG e **PDF** | Botões abaixo de cada figura |
 | Tabelas | CSV e XLSX | Pares de botões `(CSV)` / `(XLSX)` junto de cada tabela (comparação, planejamento, matriz de ensaios, matriz do DIC, superfície, malha de predições, candidatos da otimização) |
-| Relatório | HTML autocontido | Painel **Exportação e aparência das figuras**, botão *Exportar relatório (HTML)* |
+| Relatório | HTML autocontido e **PDF** | Seção **Exportar** dos resultados (painel **Exportação e aparência das figuras**): *Exportar relatório (HTML)* e *Exportar relatório (PDF)* |
 | Projeto | `.enzitag` | Menu do projeto (não é exportação de resultados) |
 
-Não existem PDF, DOCX, Google Drive nem DBC na v0.1. Para obter PDF, abra o relatório HTML no navegador e imprima.
+Não existem DOCX nem Google Drive na v0.2. **A seção Exportar é a última** da barra lateral dos resultados; as tabelas e as figuras têm seus botões junto de cada uma.
+
+### PDF
+
+- **PDF da figura:** uma página do tamanho da figura, sem margens; o desenho é **vetorial** (texto selecionável) e já inclui a personalização escolhida (textos, letras manuais, anotações, cor, grade, legenda).
+- **PDF do relatório:** A4, com o logotipo do grupo como crédito (desligável no painel de exportação), a proveniência no início, as mesmas seções do relatório HTML (tabelas, interpretação, figuras vetoriais) e «Página X de Y». O relatório HTML continua sendo o formato completo e autocontido.
+- O PDF usa a fonte **Roboto** embutida (acentos, letras gregas e símbolos estatísticos corretos), gerada **localmente**, sem rede.
+- Diferenças em relação à tela: a **família de fonte** escolhida na figura (serifa, monoespaçada) não vale no PDF; a região de extrapolação, hachurada na tela, aparece como **sombreado translúcido**.
 
 ## Preferências (painel de resultados)
 
@@ -29,11 +36,19 @@ As preferências valem para o dispositivo, ficam registradas nos metadados dos a
 
 ## Personalização por figura
 
-Abaixo de cada figura, **Personalizar figura** permite trocar o **título**, os **rótulos dos eixos** (quando a figura os tem), **ocultar as letras de comparação** do gráfico de médias e escolher o **tamanho da fonte** só daquela figura. Os campos aparecem conforme o que a figura possui; o texto padrão aparece como sugestão e *Restaurar padrão* desfaz tudo.
+Abaixo de cada figura, **Personalizar figura** reúne quatro grupos de ajustes, aplicados à tela e a todos os arquivos exportados (SVG, PNG, PDF e relatório HTML):
 
-- A configuração é **salva no projeto** (`.enzitag`, campo opcional `figureStyles` do experimento) e vale para a tela, o SVG, o PNG e o relatório HTML.
-- É só apresentação: dados, escalas e resultados não mudam. Ocultar as letras remove-as do desenho; as letras calculadas continuam na tabela de resultados e a legenda da barra de incerteza continua visível.
-- Textos até 200 caracteres. Letras manuais, anotações livres, símbolos e posição das letras não existem na v0.1.
+| Grupo | Ajustes |
+|---|---|
+| Textos | título e rótulos dos eixos (quando a figura os tem) |
+| Letras de comparação | mostrar ou ocultar; **letras manuais** (uma por grupo, na ordem do gráfico, separadas por espaço; `-` deixa o grupo sem letra) |
+| Anotações livres | até 20 textos com posição horizontal e vertical em porcentagem da figura |
+| Aparência | tamanho e família da fonte, **cor principal**, fundo (branco ou transparente) da imagem exportada, **resolução do PNG** (1×, 2× ou 3×), linhas de grade e legenda |
+
+- A configuração é **salva no projeto** (`.enzitag`, campo opcional `figureStyles` do experimento).
+- É só apresentação: dados, escalas e resultados não mudam. **Letras manuais substituem as calculadas apenas no desenho**, e a legenda passa a dizer «Letras digitadas manualmente (não calculadas pelo aplicativo)»; a tabela de resultados continua com as letras calculadas.
+- A cor principal tem precedência sobre a paleta para daltonismo; a escolha de uma cor com contraste adequado é de quem a escolhe.
+- Textos até 200 caracteres; letras de até 8 caracteres.
 
 ## Proveniência
 
@@ -41,7 +56,7 @@ Todo arquivo informa aplicativo e versão, motor, método e versão, análise, r
 
 - CSV: linhas iniciais `# chave: valor` (leia com `pandas.read_csv(..., comment="#")`).
 - XLSX: planilha **Proveniência**.
-- SVG: elemento `<metadata>`; PNG: bloco `tEXt`.
+- SVG: elemento `<metadata>`; PNG: bloco `tEXt`; PDF da figura: campos de informação do documento; PDF do relatório: tabela de proveniência no início.
 - Relatório HTML: tabela de proveniência no início.
 
 ## Segurança das planilhas
@@ -52,8 +67,9 @@ Texto iniciado por `=`, `+`, `-`, `@`, tabulação ou retorno de carro nunca vir
 
 Arquivo único e offline: método, configuração, revisão, versões, tabelas, figuras (SVG embutido, fundo branco) e a interpretação exibida na tela, no idioma escolhido para exportação. Não carrega fontes, scripts nem imagens externas. A otimização aparece em versão somente leitura.
 
-## Limitações conhecidas (v0.1)
+## Limitações conhecidas (v0.2)
 
-- A personalização por figura cobre título, rótulos, exibição das letras e fonte; não há letras manuais, anotações, símbolos nem posição das letras (v0.2). Os rótulos dos eixos da superfície 3D não são editáveis.
-- O PNG tem resolução fixa; gráficos 3D são desenhados em SVG (não há partes rasterizadas).
-- Inspeção em Excel e LibreOffice foi feita por leitura programática (openpyxl) e pelo importador do próprio aplicativo; a abertura manual nesses programas não foi registrada.
+- Os rótulos dos eixos da superfície 3D não são editáveis; símbolos e posição individual das letras não existem (as letras ficam acima das barras).
+- O PNG é rasterizado a partir do SVG (1×, 2× ou 3×); gráficos 3D são desenhados em SVG.
+- No PDF, a família de fonte da figura e o hachurado da extrapolação não são reproduzidos, e todo o texto das figuras sai em Roboto normal (títulos em negrito perdem o peso) (ver acima).
+- Inspeção em Excel e LibreOffice foi feita por leitura programática (openpyxl) e pelo importador do próprio aplicativo; a abertura manual nesses programas não foi registrada. Os PDFs foram inspecionados com o PyMuPDF (texto extraível e renderização), não em todos os leitores de PDF.

@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 import { showAllSections } from "./showAll";
 import { THEME_LIST } from "./themes";
@@ -122,3 +123,36 @@ test("a grade de dados com 1 000 linhas continua fluida nos temas novos", async 
   console.log("grade com 1000 linhas (ms):", JSON.stringify(timings));
   for (const ms of Object.values(timings)) expect(ms).toBeLessThan(20_000);
 });
+
+for (const theme of ["industrial", "organic", "clay"]) {
+  test(`${theme}: movimento reduzido, alto contraste e tela estreita`, async ({ page }) => {
+    await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
+    // Movimento reduzido: sem transições nos controles, mantendo cor e profundidade.
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    const transition = await page
+      .getByRole("button", { name: "Salvar", exact: true })
+      .evaluate((el) => getComputedStyle(el).transitionProperty);
+    expect(transition).toBe("none");
+    // Alto contraste do Windows: relevo e sombras somem; as bordas reais permanecem.
+    await page.emulateMedia({ forcedColors: "active" });
+    const forced = await page
+      .getByRole("button", { name: "Salvar", exact: true })
+      .evaluate((el) => {
+        const style = getComputedStyle(el);
+        return { shadow: style.boxShadow, border: style.borderTopWidth };
+      });
+    expect(forced.shadow).toBe("none");
+    expect(forced.border).not.toBe("0px");
+    await page.emulateMedia({ forcedColors: "none", reducedMotion: "no-preference" });
+    // Largura de celular: sem rolagem horizontal da página e sem violações de acessibilidade.
+    await page.setViewportSize({ width: 375, height: 760 });
+    await expect(page.getByTestId("group-logo-header")).toBeVisible();
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+  });
+}

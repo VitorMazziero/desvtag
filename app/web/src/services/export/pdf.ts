@@ -37,22 +37,23 @@ export async function figurePdf(svg: string, info: PdfInfo): Promise<Uint8Array>
   return pdfMake
     .createPdf({
       info,
-      pageSize: { width, height },
+      pageSize: { width, height: height + 2 },
       pageMargins: [0, 0, 0, 0],
       defaultStyle: { font: "Roboto" },
+      // O conversor de SVG não consegue abrir fontes pelo nome fora do Node e usa a fonte corrente
+      // do documento; sem texto antes do desenho ela não existe e a conversão falha. Um ponto
+      // branco e invisível, antes do desenho, fixa a Roboto normal como fonte corrente (todo o
+      // texto da figura sai em Roboto normal). O desenho vai em posição absoluta.
       content: [
-        // O conversor de SVG só encontra as fontes já usadas pelo documento: um ponto branco
-        // invisível, em cada variante usada pelo desenho, as registra antes do desenho.
         {
           text: [
-            { text: ".", bold: false },
             { text: ".", bold: true },
+            { text: ".", bold: false },
           ],
           color: "#ffffff",
           fontSize: 1,
-          absolutePosition: { x: 0, y: 0 },
         },
-        { svg: pdfSvg(svg), width, height },
+        { svg: pdfSvg(svg), width, height, absolutePosition: { x: 0, y: 0 } },
       ],
     })
     .getBuffer();

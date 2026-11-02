@@ -2,7 +2,7 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-Comandos **executados com sucesso** em Linux (Ubuntu 24.04, Rust 1.97.0, Node 22.23.4) e no **Windows 10 Pro 22H2** (Rust 1.97.0, Node 22.23.4); a seção [Windows](#windows) registra a execução e o que não foi verificado (Windows 11).
+Comandos **executados com sucesso** no **Windows 10 Pro 22H2** (Rust 1.97.0, **Node 26.13.0**, v0.2) e, na v0.1, em Linux (Ubuntu 24.04, Rust 1.97.0, Node 22.23.4); a seção [Windows](#windows) registra a execução e o que não foi verificado (Windows 11).
 
 ## Pré-requisitos
 
@@ -10,7 +10,7 @@ Comandos **executados com sucesso** em Linux (Ubuntu 24.04, Rust 1.97.0, Node 22
 |---|---|---|
 | Git | recente | — |
 | Rust via `rustup` | 1.97.0 | `rust-toolchain.toml` instala a versão e o alvo `wasm32-unknown-unknown` automaticamente na primeira execução |
-| Node.js | 22 (`.nvmrc`) na v0.1; **26 a partir da v0.2** ([DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) | inclui o npm. Todas as evidências da v0.1 foram obtidas no Node 22; o Node 26 ainda não foi verificado com o projeto. Com mais de um Node instalado, use um gerenciador de versões que leia o `.nvmrc` (por exemplo fnm ou nvm-windows) para que o terminal use o 22 |
+| Node.js | **26** (`.nvmrc`; v0.2, [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) | inclui o npm. As evidências da v0.1 foram obtidas no Node 22 (linha 0.1.x); a v0.2 foi verificada no Node 26.13.0. Com mais de um Node instalado, use um gerenciador de versões que leia o `.nvmrc` (por exemplo fnm ou nvm-windows) |
 | `wasm-bindgen-cli` | 0.2.130 | mesma versão da crate: `cargo install wasm-bindgen-cli --version 0.2.130 --locked` |
 | Linux, para o Tauri | — | `libwebkit2gtk-4.1-dev libgtk-3-dev libsoup-3.0-dev librsvg2-dev patchelf build-essential pkg-config libssl-dev` |
 | Linux, verificação nativa | — | `webkit2gtk-driver xvfb` e `cargo install tauri-driver --locked` |
@@ -130,7 +130,7 @@ Executado em 2026-11-01 no **Windows 10 Pro 22H2 (build 19045, 64 bits)** da má
 | Ferramentas de compilação C++ (MSVC) | Visual Studio Community 2026 com a carga de trabalho de C++ |
 | WebView2 | Já presente (156.0.4314.58) |
 | Rust 1.97.0 | `rustup-init` oficial (`rust-toolchain.toml` instala o alvo `wasm32-unknown-unknown`); depois movido para `D:\Arquivos_de_Programas\Rust` ([limpeza local](limpeza-local.md#evitar-que-o-onedrive-sincronize-as-pastas-pesadas)) |
-| Node 22 | `node-v22.23.4-win-x64.zip` de nodejs.org (a versão do `.nvmrc`); o `winget install OpenJS.NodeJS.LTS` instala o Node 26, que o projeto ainda não usa ([DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)) |
+| Node 26 | `winget install OpenJS.NodeJS.LTS` (26.13.0, a versão do `.nvmrc`; [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)); a v0.1 usava uma cópia portátil do Node 22.23.4 |
 | `wasm-bindgen-cli` 0.2.130 | `cargo install wasm-bindgen-cli --version 0.2.130 --locked` |
 
 Com isso, os comandos das seções anteriores funcionaram sem alteração. Para o aplicativo nativo (em `app/desktop`, depois do `npm ci` em `app/web`), o instalador de teste **sem** a chave do atualizador pode ser gerado com:

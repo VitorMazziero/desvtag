@@ -69,6 +69,9 @@ test.describe("exportação", () => {
 
     expect(html.startsWith("<!doctype html>")).toBe(true);
     expect(html).toContain('<html lang="en">');
+    // Crédito do grupo: logotipo embutido (sem arquivo externo), com texto alternativo no idioma do relatório.
+    expect(html).toContain('alt="EnziTAG logo"');
+    expect(html).toMatch(/<img src="data:image\/png;base64,/);
     expect(html).toContain("Provenance");
     expect(html).toContain("Response surface");
     expect(html).toContain("<svg");

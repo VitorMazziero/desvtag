@@ -3,6 +3,8 @@
 // Uso: node tests/native-cdp.mjs <caminho-do-executável>
 // Requer `npm ci` em app/web (traz o módulo `playwright`; não é preciso baixar navegadores).
 import { execSync, spawn } from "node:child_process";
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -18,9 +20,15 @@ const { chromium } = await import(pathToFileURL(resolve(import.meta.dirname, "..
 const port = 9333;
 // A porta é habilitada no próprio executável de teste (`additionalBrowserArgs` via TAURI_CONFIG na CI);
 // a variável de ambiente é mantida por compatibilidade, mas o Tauri a ignora.
+// Pasta das exportações da verificação (só vale no executável construído com `--features automation`).
+const exportDir = mkdtempSync(resolve(tmpdir(), "enzitag-export-"));
 const child = spawn(resolve(app), [], {
   stdio: "ignore",
-  env: { ...process.env, WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}` },
+  env: {
+    ...process.env,
+    WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS: `--remote-debugging-port=${port}`,
+    ENZITAG_EXPORT_DIR: exportDir,
+  },
 });
 let failed = false;
 let browser;
@@ -61,7 +69,7 @@ try {
     invoke: (requestJson) =>
       page.evaluate((json) => window.__TAURI_INTERNALS__.invoke("engine_request", { requestJson: json }), requestJson),
   });
-  await runPdfCheck(page);
+  await runPdfCheck(page, exportDir);
 } catch (error) {
   failed = true;
   console.error("FALHA:", error);

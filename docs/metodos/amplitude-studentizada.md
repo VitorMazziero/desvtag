@@ -51,6 +51,10 @@ A cauda superior é `1 − cdf` (erro absoluto ~1e-13). Quantis: Brent no logari
 
 Não aplicável (interna ao Tukey).
 
+### Versão tabulada (v0.2)
+
+`StudentizedRange::tabulated(k, ν)` substitui, nas comparações, a quadratura de `W(w; k)` em cada ponto `w = q·s` por uma **tabela de Chebyshev em trechos** montada uma vez por `k` (`distributions/range_table.rs`); a integral externa em `s` é a mesma. O teste `tabulated_kernel_matches_direct_quadrature` confere a tabela contra a quadratura direta (erro máximo em `W` ≤ 1e-14), e a validação de Tukey contra o SciPy (p ajustado a 1e-10, intervalos a 1e-9) foi **repetida pelo caminho tabulado** com os mesmos resultados dentro das tolerâncias. Ganho medido: 100 grupos × 30 repetições de ≈ 30 s para ≈ 126 ms ([limites operacionais](../arquitetura/limites-operacionais.md), [DT-0019](../decisoes-tecnicas/dt-0019-procedimentos-de-comparacao-anova-multifatorial-e-dbc.md)).
+
 ## 10. Validação
 
 Grade de 432 pontos com **SciPy 1.18.1** (`studentized_range`): `k ∈ {2, 3, 4, 5, 8, 10, 20, 50}`, `ν ∈ {2, 3, 5, 10, 20, 60, 120, 1000, ∞}` e caudas `0,5, 0,1, 0,05, 0,01, 1e-3, 1e-5`. A referência foi conferida pela própria **definição com mpmath** (integral dupla, 20 dígitos) em 10 pontos: SciPy − mpmath ≤ 1,4e-14; implementação − mpmath ≤ 4,2e-13.

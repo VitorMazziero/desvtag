@@ -31,6 +31,13 @@ O [catálogo funcional](../produto/catalogo-funcional.md) está aprovado como es
 | [Plackett–Burman](plackett-burman.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Aleatorização reprodutível](aleatorizacao.md) | implementado; validado contra implementação independente |
 | [Delineamento inteiramente casualizado (DIC) aleatorizado](delineamento-inteiramente-casualizado.md) | implementado; validado contra implementação independente (nativo e WebAssembly) |
+| [Procedimentos de comparação múltipla: Games–Howell (Welch), Bonferroni e Holm](procedimentos-comparacao-multipla.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Dunnett](dunnett.md) | implementado; validado numericamente contra integração dupla independente (nativo e WebAssembly) |
+| [Kruskal–Wallis e Dunn](kruskal-wallis-dunn.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [ANOVA multifatorial com blocos](anova-multifatorial.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Médias marginais e contrastes](medias-marginais-contrastes.md) | implementado; validado numericamente (nativo e WebAssembly) |
+| [Delineamento em blocos completos casualizados (DBC)](delineamento-em-blocos.md) | implementado; validado contra implementação independente (nativo e WebAssembly) |
+| [Seleção e comparação de modelos de superfície](selecao-de-modelos.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Composto central](composto-central.md) | implementado; validado numericamente (nativo e WebAssembly) |
 | [Box–Behnken](box-behnken.md) | implementado (3 a 5 fatores); validado numericamente |
 | [Superfície de resposta de segunda ordem](superficie-resposta.md) | implementado; validado numericamente (nativo e WebAssembly) |

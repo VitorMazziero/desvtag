@@ -17,7 +17,7 @@ A ET01 precisa de um ambiente reproduzível para Rust, WebAssembly e interface, 
 | Item | Escolha | Fixação |
 |---|---|---|
 | Rust | 1.97.0 estável, edição 2024, resolver 3, alvo `wasm32-unknown-unknown` | `rust-toolchain.toml` |
-| Node.js | 22 (LTS; testado com 22.23.4) | `.nvmrc` e `engines` do `package.json` |
+| Node.js | 22 (LTS; testado com 22.23.4) na v0.1.x; **26 a partir da v0.2** ([DT-0015](dt-0015-migracao-node-26-na-v0-2.md)) | `.nvmrc` e `engines` do `package.json` |
 | Gerenciador JS | npm, com `package-lock.json` | `npm ci` na CI |
 | Bundler e servidor | Vite 8.3.5 com `@vitejs/plugin-react` | versões exatas no `package.json` |
 | Linguagem da interface | TypeScript 7.0.2, `strict` e `noUncheckedIndexedAccess` | idem |

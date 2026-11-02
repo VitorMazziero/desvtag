@@ -250,6 +250,22 @@ pub async fn export_file(
     if bytes.len() > MAX_EXPORT_BYTES {
         return Err("export.too_large".to_string());
     }
+    #[cfg(feature = "automation")]
+    if let Some(dir) = std::env::var_os("ENZITAG_EXPORT_DIR") {
+        // Verificação automatizada: sem diálogo; só o nome do arquivo sugerido é usado.
+        let name = Path::new(&suggested_name)
+            .file_name()
+            .map(std::path::PathBuf::from)
+            .ok_or_else(|| "export.unsupported_format".to_string())?;
+        let path = Path::new(&dir).join(name);
+        let target = path.clone();
+        jobs::run_blocking(move || write_atomic(&target, &bytes))
+            .await?
+            .map_err(|e| e.to_string())?;
+        return Ok(Some(SavedFile {
+            name: file_name(&path),
+        }));
+    }
     let Some(path) = pick_save_path_with(&app, suggested_name, filter_name, extension).await?
     else {
         return Ok(None);
