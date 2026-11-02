@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
@@ -74,7 +74,7 @@ test("a figura exportada é a mesma em qualquer tema", async ({ page }) => {
   await page.getByRole("button", { name: "Abrir…" }).click();
   await (await chooser).setFiles(example);
   await expect(page.getByTestId("results-layout")).toBeVisible();
-  const figure = page.locator("figure.chart").first();
+  const figure = page.getByTestId("observed-predicted-chart");
   const exportSvg = async () => {
     const download = page.waitForEvent("download");
     await figure.getByRole("button", { name: /Figura — SVG/ }).click();
@@ -90,7 +90,12 @@ test("a figura exportada é a mesma em qualquer tema", async ({ page }) => {
   for (const theme of ["industrial", "organic", "clay"]) {
     await page.getByLabel("Tema").selectOption(theme);
     // O desenho na tela usa os tokens do tema; o arquivo exportado não muda.
-    expect((await exportSvg()) === reference).toBe(true);
+    const other = await exportSvg();
+    if (other !== reference && process.env.ENZITAG_KEEP_DIR) {
+      writeFileSync(`${process.env.ENZITAG_KEEP_DIR}/tema-a.svg`, reference);
+      writeFileSync(`${process.env.ENZITAG_KEEP_DIR}/tema-b.svg`, other);
+    }
+    expect(other === reference).toBe(true);
   }
 });
 
