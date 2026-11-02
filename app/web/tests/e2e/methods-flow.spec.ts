@@ -367,7 +367,12 @@ test("calculadora de potência: tamanho de amostra de duas amostras igual ao Sci
 }) => {
   await page.goto("/");
   const panel = page.getByTestId("power-calculator");
-  await panel.getByText("Calculadora de potência e tamanho de amostra").click();
+  // A tela inicial pode remontar depois do primeiro clique (Firefox sob carga): repete até abrir.
+  await expect(async () => {
+    if ((await panel.getAttribute("open")) === null)
+      await panel.getByText("Calculadora de potência e tamanho de amostra").click();
+    await expect(page.getByLabel("Diferença esperada")).toBeVisible({ timeout: 2000 });
+  }).toPass({ timeout: 25_000 });
   await page.getByLabel("Diferença esperada").fill("1");
   await page.getByLabel("Desvio-padrão esperado (σ)").fill("1,5");
   await page.getByRole("button", { name: "Calcular" }).click();
