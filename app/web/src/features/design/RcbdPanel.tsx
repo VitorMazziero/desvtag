@@ -40,6 +40,8 @@ export function RcbdPanel() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [shown, setShown] = useState<GeneratedRcbd | null>(null);
+  // A matriz só vale para a especificação com que foi calculada (evita gravar a de um sorteio anterior).
+  const [shownKey, setShownKey] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
 
   const candidate: RcbdSpec | null =
@@ -75,6 +77,7 @@ export function RcbdPanel() {
           const generated = r.outcome.result as unknown as GeneratedRcbd;
           setTotal(generated.total);
           setShown(generated);
+          setShownKey(JSON.stringify(spec));
           setProblems([]);
         } else if (r.outcome.status === "error") {
           setTotal(null);
@@ -89,7 +92,7 @@ export function RcbdPanel() {
   }, [client, spec, t]);
 
   const generate = async () => {
-    if (!spec || !treatment || !block || !shown) return;
+    if (!spec || !treatment || !block || !shown || shownKey !== specKey) return;
     if (
       state.design !== null ||
       state.crd !== null ||
@@ -227,7 +230,7 @@ export function RcbdPanel() {
           <button
             type="button"
             className="button"
-            disabled={!spec || total === null || busy}
+            disabled={!spec || total === null || busy || shownKey !== specKey}
             onClick={generate}
           >
             {state.rcbd ? t("design.regenerate") : t("design.generate")}
