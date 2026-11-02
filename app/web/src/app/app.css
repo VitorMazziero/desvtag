@@ -591,7 +591,6 @@ input[aria-invalid="true"] {
 .term-weak {
   color: inherit;
   font-weight: 600;
-  text-decoration: underline dotted;
 }
 @media (max-width: 800px) {
   .results-layout {

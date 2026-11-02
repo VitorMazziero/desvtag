@@ -18,6 +18,8 @@ export interface ExportSettings {
   reportLogo: boolean;
   /** Incluir os comentários do experimento ao final dos relatórios. */
   reportComments: boolean;
+  /** Equações com os nomes das variáveis (padrão) ou com a notação ŷ e x₁, x₂… */
+  equationNames: boolean;
 }
 
 export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
@@ -28,6 +30,7 @@ export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
   digits: 4,
   reportLogo: true,
   reportComments: false,
+  equationNames: true,
 };
 
 const KEY = "optima.exportSettings";
@@ -45,6 +48,7 @@ export function loadExportSettings(): ExportSettings {
       digits: Math.min(6, Math.max(3, Math.floor(Number(v.digits) || 4))),
       reportLogo: v.reportLogo !== false,
       reportComments: v.reportComments === true,
+      equationNames: v.equationNames !== false,
     };
   } catch {
     return DEFAULT_EXPORT_SETTINGS;

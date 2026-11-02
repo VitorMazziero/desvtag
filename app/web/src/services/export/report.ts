@@ -34,7 +34,10 @@ export interface ReportInput {
   title: string;
   subtitle: string;
   provenanceTitle: string;
+  /** Proveniência sucinta, mostrada **no fim** do relatório. */
   provenance: Array<[string, string]>;
+  /** Proveniência completa, gravada só nos metadados do arquivo (`<meta>`). */
+  metadata?: Array<[string, string]>;
   bodyHtml: string;
   footer: string;
   /** Logotipo do grupo como crédito (PNG em `data:`); ausente = sem logotipo. */
@@ -61,13 +64,17 @@ export function buildReportHtml(input: ReportInput): string {
   return (
     `<!doctype html>\n<html lang="${input.language === "en" ? "en" : "pt-BR"}"><head><meta charset="utf-8">` +
     `<meta name="viewport" content="width=device-width, initial-scale=1">` +
-    `<title>${esc(input.title)}</title><style>${STYLE}</style></head><body>` +
+    `<title>${esc(input.title)}</title>` +
+    (input.metadata ?? [])
+      .map(([k, v]) => `<meta name="enzitag:${esc(k)}" content="${esc(v)}">`)
+      .join("") +
+    `<style>${STYLE}</style></head><body>` +
     (input.logo
       ? `<p class="credit"><img src="${esc(input.logo.dataUri)}" alt="${esc(input.logo.alt)}" width="140" height="39"></p>`
       : "") +
     `<h1>${esc(input.title)}</h1><p class="muted">${esc(input.subtitle)}</p>` +
-    `<section><h2>${esc(input.provenanceTitle)}</h2><table class="provenance"><tbody>${rows}</tbody></table></section>` +
     input.bodyHtml +
+    `<section class="provenance-end"><h2>${esc(input.provenanceTitle)}</h2><table class="provenance"><tbody>${rows}</tbody></table></section>` +
     `<footer>${esc(input.footer)}</footer></body></html>`
   );
 }

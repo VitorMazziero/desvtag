@@ -57,6 +57,15 @@ describe("reportDocx", () => {
     expect(out.text("docProps/core.xml")).toContain("Subtítulo");
   });
 
+  it("puts the short provenance after the results, not before", async () => {
+    const out = await build("<h2>Resultados</h2><p>Texto do resultado.</p>");
+    const at = (text: string) => out.document.indexOf(text);
+    expect(at("Texto do resultado.")).toBeGreaterThan(at("Subtítulo"));
+    expect(at("Proveniência")).toBeGreaterThan(at("Texto do resultado."));
+    expect(at("EnziTAG Optima 0.3.0")).toBeGreaterThan(at("Proveniência"));
+    expect(at("Gerado pelo EnziTAG Optima")).toBeGreaterThan(at("EnziTAG Optima 0.3.0"));
+  });
+
   it("keeps the table header row, numeric alignment and caption", async () => {
     const out = await build(
       "<table><caption>ANOVA</caption><thead><tr><th>Termo</th><th>p</th></tr></thead>" +

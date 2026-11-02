@@ -341,7 +341,10 @@
       "real": "Real units",
       "realUnavailable": "Unavailable: some terms are not estimable.",
       "help": "Both equations give the same prediction; the coded one is the one fitted and the real one is the same equation rewritten in the factor values.",
-      "prefix": "ŷ"
+      "prefix": "ŷ",
+      "style": "Show the equation with",
+      "styleNames": "Variable names",
+      "styleNotation": "Notation (y, x₁, x₂…)"
     },
     "region": {
       "title": "Experimental region",

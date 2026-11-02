@@ -348,7 +348,10 @@
       "real": "Unidades reais",
       "realUnavailable": "Indisponível: há termos não estimáveis.",
       "help": "As duas equações dão a mesma predição; a codificada é a ajustada e a real é a mesma equação reescrita nos valores dos fatores.",
-      "prefix": "ŷ"
+      "prefix": "ŷ",
+      "style": "Mostrar a equação com",
+      "styleNames": "Nomes das variáveis",
+      "styleNotation": "Notação (y, x₁, x₂…)"
     },
     "region": {
       "title": "Região experimental",

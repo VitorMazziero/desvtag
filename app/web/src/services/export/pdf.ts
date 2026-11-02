@@ -80,7 +80,10 @@ export async function reportPdf(input: ReportPdfInput): Promise<Uint8Array> {
     ...(input.logoDataUri ? [{ image: input.logoDataUri, width: 110, margin: [0, 0, 0, 8] }] : []),
     { text: input.title, fontSize: 18, bold: true, margin: [0, 0, 0, 2] },
     { text: input.subtitle, color: "#454c58", margin: [0, 0, 0, 8] },
-    { text: input.provenanceTitle, fontSize: 13.5, bold: true, margin: [0, 6, 0, 4] },
+  ];
+  // Proveniência sucinta **no fim**, depois dos resultados.
+  const provenance: PdfNode[] = [
+    { text: input.provenanceTitle, fontSize: 11, bold: true, margin: [0, 14, 0, 4] },
     {
       table: {
         widths: [110, "*"],
@@ -107,6 +110,7 @@ export async function reportPdf(input: ReportPdfInput): Promise<Uint8Array> {
       content: [
         ...header,
         ...blocks(input.body),
+        ...provenance,
         { text: input.footer, color: "#454c58", fontSize: 8, margin: [0, 16, 0, 0] },
       ],
       footer: (page: number, total: number) => ({

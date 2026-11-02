@@ -12,6 +12,7 @@ import type { AnalysisRecord, Stat, SurfaceResult } from "../../services/engine"
 import { issueMessage } from "../../services/errors/presentation";
 import { exportMetadata, flat } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
+import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
 import { formatFactParams } from "./ComparisonInterpretation";
@@ -92,7 +93,13 @@ export function SurfaceResults({ result, signature, language }: Props) {
   const base = `${slug(state.name)}-${slug(responseName)}`;
   const anova = result.anova;
   const names = result.factorNames;
-  const prefix = t("surface.equation.prefix");
+  const { settings, update } = useExportSettings();
+  // Nomes das variáveis (padrão) ou notação (ŷ, x₁, x₂…): preferência de exibição do dispositivo.
+  const subscripts = "₀₁₂₃₄₅₆₇₈₉";
+  const subscript = (n: number) => [...String(n)].map((d) => subscripts[Number(d)] ?? d).join("");
+  const equationNames = settings.equationNames;
+  const prefix = equationNames ? responseName : t("surface.equation.prefix");
+  const equationFactors = equationNames ? names : names.map((_, i) => `x${subscript(i + 1)}`);
 
   const evidence =
     val(anova.f) !== null && val(anova.pValue) !== null
@@ -290,14 +297,32 @@ export function SurfaceResults({ result, signature, language }: Props) {
         <section aria-labelledby="equation-title" data-testid="equation">
           <h3 id="equation-title">{t("surface.equation.title")}</h3>
           <p className="muted small">{t("surface.equation.help")}</p>
+          <label className="field">
+            <span>{t("surface.equation.style")}</span>
+            <select
+              data-testid="equation-style"
+              value={equationNames ? "names" : "notation"}
+              onChange={(e) => update({ equationNames: e.target.value === "names" })}
+            >
+              <option value="names">{t("surface.equation.styleNames")}</option>
+              <option value="notation">{t("surface.equation.styleNotation")}</option>
+            </select>
+          </label>
+          {!equationNames && (
+            <p className="muted small" data-testid="equation-legend">
+              {[responseName, ...names]
+                .map((n, i) => `${i === 0 ? "ŷ" : `x${subscript(i)}`} = ${n}`)
+                .join("; ")}
+            </p>
+          )}
           <h4>{t("surface.equation.coded")}</h4>
           <p className="equation" data-testid="equation-coded">
-            {formatEquation(result.equation.coded, names, language, prefix)}
+            {formatEquation(result.equation.coded, equationFactors, language, prefix)}
           </p>
           <h4>{t("surface.equation.real")}</h4>
           <p className="equation" data-testid="equation-real">
             {result.equation.real
-              ? formatEquation(result.equation.real, names, language, prefix)
+              ? formatEquation(result.equation.real, equationFactors, language, prefix)
               : t("surface.equation.realUnavailable")}
           </p>
         </section>

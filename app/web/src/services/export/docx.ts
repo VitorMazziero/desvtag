@@ -140,12 +140,6 @@ export async function reportDocx(input: ReportDocxInput): Promise<Uint8Array> {
       spacing: { after: 160 },
       children: [new TextRun({ text: input.subtitle, size: 20, color: MUTED })],
     }),
-    new Paragraph({
-      spacing: { before: 120, after: 80 },
-      children: [new TextRun({ text: input.provenanceTitle, bold: true, size: 27 })],
-    }),
-    provenanceTable(input.provenance),
-    new Paragraph({ spacing: { after: 120 }, children: [] }),
   );
 
   const body = await blocks(input.body, { rasterize, orderedLists: 0 });
@@ -184,6 +178,13 @@ export async function reportDocx(input: ReportDocxInput): Promise<Uint8Array> {
         children: [
           ...header,
           ...body,
+          // Proveniência sucinta **no fim**, depois dos resultados.
+          new Paragraph({
+            spacing: { before: 280, after: 80 },
+            keepNext: true,
+            children: [new TextRun({ text: input.provenanceTitle, bold: true, size: 23 })],
+          }),
+          provenanceTable(input.provenance),
           new Paragraph({
             spacing: { before: 320 },
             children: [new TextRun({ text: input.footer, size: 16, color: MUTED })],

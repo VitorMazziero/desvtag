@@ -93,6 +93,10 @@ export function ReportButton({
           ["exportedAt", nowIso()],
         ];
         const pairs = provenance.filter(([, v]) => v !== "");
+        // No fim do relatório só o essencial para reproduzir; o conjunto completo vai nos metadados.
+        const brief = pairs.filter(([k]) =>
+          ["app", "method", "engine", "analysis", "revision", "exportedAt"].includes(k),
+        );
         // Comentários (opcional): entram como seção do mesmo DOM, para sair igual em HTML, PDF e Word.
         if (settings.reportComments) {
           const section = commentsSection(document, state.comments, {
@@ -130,7 +134,7 @@ export function ReportButton({
             title,
             subtitle: tt("export.report.subtitle"),
             provenanceTitle: tt("export.report.provenance"),
-            provenance: pairs,
+            provenance: brief,
             body: cleanReportRoot(el),
             footer: tt("export.report.footerPdf", { version: APP_VERSION }),
             logoDataUri: settings.reportLogo ? logoInline : undefined,
@@ -153,7 +157,7 @@ export function ReportButton({
             title,
             subtitle: tt("export.report.subtitle"),
             provenanceTitle: tt("export.report.provenance"),
-            provenance: pairs,
+            provenance: brief,
             body: cleanReportRoot(el),
             footer: tt("export.report.footerPdf", { version: APP_VERSION }),
             logoDataUri: settings.reportLogo ? logoInline : undefined,
@@ -166,7 +170,8 @@ export function ReportButton({
             title,
             subtitle: tt("export.report.subtitle"),
             provenanceTitle: tt("export.report.provenance"),
-            provenance: pairs,
+            provenance: brief,
+            metadata: pairs,
             bodyHtml: cleanReportDom(el),
             footer: tt("export.report.footer", { version: APP_VERSION }),
             logo: settings.reportLogo
