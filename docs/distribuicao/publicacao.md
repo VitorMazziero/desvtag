@@ -1,12 +1,14 @@
 # Publicação
 
-**Estado:** **v0.3.0 em preparação (nada publicado)**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
+**Estado:** **v0.3.0 publicada (versão web e release do instalador; atualização no aplicativo ainda não verificada)**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
 
+> **v0.3.0 (2026-11-02):** PR 6 fundido, etiqueta `v0.3.0`, Pages publicado e **release publicado** pelo usuário; o canal experimental foi criado automaticamente. Registro em [Publicação da v0.3.0](#registro-da-publicação-da-v030-2026-11-02).
+>
 > **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
 
-## Publicação da v0.3.0 (preparação)
+## Publicação da v0.3.0
 
-**Estado:** candidata local pronta (versão 0.3.0 no código); **nada publicado**. A decisão do usuário de 2026-11-02 («partimos para publicação de v0.3») abre a fase de publicação; cada ato irreversível abaixo só é feito **depois da confirmação expressa** do usuário sobre a candidata e com a CI verde.
+**Estado:** **publicada em 2026-11-02** (versão web, etiqueta `v0.3.0` e release do instalador); **atualização no aplicativo ainda não verificada**. O procedimento seguido está na tabela de passos abaixo; o registro, na seção seguinte.
 
 | Passo | Quem | Observação |
 |---|---|---|
@@ -20,6 +22,21 @@
 | 8. Verificar a atualização **0.2.0 → 0.3.0** (instalar a 0.2.0 e usar *Verificar atualizações*) e a leitura do canal | Usuário | Registrar o resultado aqui e no relatório da v0.3.0 |
 
 **Notas da versão:** descrevem a **limitação conhecida** (resultados das famílias novas não guardados no projeto), o que **não foi verificado** (Drive com contas reais, Safari real, canal ponta a ponta, Windows 11) e o que vai para a [v0.4](../planos-execucao/plano-v0.4.md).
+
+### Registro da publicação da v0.3.0 (2026-11-02)
+
+| Hora (UTC, 2026-11-02) | Ato | Evidência |
+|---|---|---|
+| 21:2x | **CI verde no commit final do PR 6** (`63960c3`): documentação e versões, Rust, Web (contratos, lint, tipos, testes, build, E2E em Chromium, Firefox e WebKit), Tauri Linux e Tauri Windows | [execução 41524667311](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41524667311). As duas rodadas anteriores falharam e foram corrigidas: pasta `ativos/` vazia fora do git (job de documentação) e premissas de teste do WebKit do Linux e do Firefox da CI (ver o relatório) |
+| 21:26:19 | **PR 6 fundido** em `main` (mescla, por autorização do usuário: «you have go for merge/tag/Pages») | commit de mescla `20f337a` |
+| 21:26:31 | **Etiqueta anotada `v0.3.0`** («EnziTAG Optima v0.3.0 (experimental)») sobre `20f337a` | objeto da etiqueta `493db8e` |
+| 21:2x–21:44 | **CI da `main`** e **CI da etiqueta** verdes | execuções [41528343372](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528343372) e [41528370966](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528370966) |
+| 21:44:38 | Fluxo **Release** criou o **rascunho** com `EnziTAG-Optima_0.3.0_x64-setup.exe` (8 930 219 bytes), `.sig` (444 bytes) e `latest.json` | [execução 41528370967](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528370967) |
+| 21:30:29 | **GitHub Pages** publicado a partir de `main` | [execução 41528444201](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528444201); `tests/public` contra o endereço público confirmou a **0.3.0** (abre, calcula, sem rede externa) no Chromium |
+| 22:01:24 | **Usuário publicou o release** como release normal: **Latest**, `isPrerelease = false` | `gh release view v0.3.0` |
+| 22:01:27–22:01:40 | Fluxo **Canais de atualização** rodou sozinho (evento `release`) e criou o release fixo `channel-experimental` (pré-lançamento, só com o `latest.json`) | [execução 41533596696](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41533596696) |
+| depois | **Manifestos conferidos**: `releases/download/channel-experimental/latest.json` (aplicativos 0.3) e `releases/latest/download/latest.json` (aplicativos 0.1 e 0.2) respondem **0.3.0**, com assinatura de 444 bytes e endereço do instalador que responde **200** (8 930 219 bytes); `channel-stable/latest.json` responde **404**, como esperado até a 1.0.0 | `curl` |
+| pendente | **Atualização no aplicativo 0.2.0 → 0.3.0** (instalar a 0.2.0 e usar *Verificar atualizações*) e verificação do canal experimental num aplicativo 0.3.0 instalado | **ainda não relatada pelo usuário**; registrar aqui quando feita |
 
 ## Canais de atualização (v0.3)
 

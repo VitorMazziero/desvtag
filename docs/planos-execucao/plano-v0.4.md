@@ -2,7 +2,7 @@
 
 **Estado:** planejado · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.4.0 (canal experimental)
 
-Plano de versão pedido pelo usuário em 2026-11-02, ao fechar a v0.3: «todas as outras pendências ficam para v0.4». Reúne **tudo o que as etapas ET13–ET21 da v0.3 deixaram sem entregar**, mais as verificações que dependem do usuário ou de equipamento externo, em etapas novas (ET22–ET28). A decisão e o que ficou na v0.3 estão em [decisões aprovadas §18](../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02); o que foi e o que não foi verificado na v0.3, no [relatório da v0.3.0](../../validation/reports/v0.3.0/README.md).
+Plano de versão pedido pelo usuário em 2026-11-02, ao fechar a v0.3: «todas as outras pendências ficam para v0.4». Reúne **tudo o que as etapas ET13–ET21 da v0.3 deixaram sem entregar**, mais as verificações que dependem do usuário ou de equipamento externo, em etapas novas (ET22–ET29). A decisão e o que ficou na v0.3 estão em [decisões aprovadas §18](../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02); o que foi e o que não foi verificado na v0.3, no [relatório da v0.3.0](../../validation/reports/v0.3.0/README.md).
 
 A v0.4 continua no **canal experimental**; a v1.0.0 (canal estável e cobertura completa do catálogo) mantém os critérios do [roteiro](roteiro-produto.md).
 
@@ -10,16 +10,18 @@ A v0.4 continua no **canal experimental**; a v1.0.0 (canal estável e cobertura 
 
 Ao final da v0.4:
 
-1. os resultados de **misturas, modelos mistos, curvas de saturação e potência** ficam **guardados no projeto** (reabrir não recalcula) e entram nos relatórios (HTML, PDF e Word);
-2. as famílias F09 têm as variantes avançadas que a v0.3 deixou de fora (covariâncias de medidas repetidas, perfil de verossimilhança, limites superiores em misturas, otimização no simplex, simulação de potência);
-3. o Google Drive funciona também no aplicativo Windows, com fila persistente, e foi **verificado com contas reais**;
-4. a interface foi revista tela a tela (espaçamento, capturas «depois», WebView2);
-5. as verificações externas (Safari real, canal de atualização ponta a ponta, domínio próprio) estão feitas ou têm decisão registrada.
+1. a interface está reorganizada em menus e num **percurso guiado por blocos** (Voltar/Seguir, opções dependentes reveladas conforme a escolha), com melhor uso do espaço no computador;
+2. os resultados de **misturas, modelos mistos, curvas de saturação e potência** ficam **guardados no projeto** (reabrir não recalcula) e entram nos relatórios (HTML, PDF e Word);
+3. as famílias F09 têm as variantes avançadas que a v0.3 deixou de fora (covariâncias de medidas repetidas, perfil de verossimilhança, limites superiores em misturas, otimização no simplex, simulação de potência);
+4. o Google Drive funciona também no aplicativo Windows, com fila persistente, e foi **verificado com contas reais**;
+5. a interface foi revista tela a tela (espaçamento, capturas «depois», WebView2);
+6. as verificações externas (Safari real, canal de atualização ponta a ponta, domínio próprio) estão feitas ou têm decisão registrada.
 
 ## 2. Itens pendentes e etapa responsável
 
 | Item pendente | Origem (v0.3) | Etapa |
 |---|---|---|
+| Menus («Sobre e atualizações», «Extras» com potência e curvas de saturação), percurso guiado por blocos com Voltar/Seguir e opções dependentes, uso do espaço lateral, mais espaçamento, tela inicial sem «Avançar» ambíguo, valores-p sem tracejado, nomes das variáveis nas equações, proveniência no fim do relatório | Pedido do usuário (2026-11-02), depois da v0.3.0 | [ET29](#et29--reorganização-da-interface-e-da-navegação-primeira-da-v04) (**primeira**) |
 | Guardar no projeto os resultados de misturas, modelos mistos, saturação e potência (campos opcionais, esquema 1), mostrá-los em seções e levá-los aos relatórios | ET15-T09, ET17-T07, ET18-T07 | [ET22](#et22--resultados-das-famílias-novas-guardados-no-projeto) |
 | Modelo misto: testes F de vários graus de liberdade, médias marginais e comparações; AR(1) e covariância não estruturada; papéis de coluna «unidade» e «tempo»; figuras de perfis | ET17-T04, T05, T07 | [ET23](#et23--modelos-mistos-e-medidas-repetidas-avançados) |
 | Ajuste não linear: intervalos por perfil de verossimilhança; NIST StRD não linear; limites e valores iniciais editáveis; potência por simulação e para regressão, contrastes e efeitos de dois níveis | ET18-T02, T03, T05, T07 | [ET24](#et24--ajuste-não-linear-e-potência-avançados) |
@@ -29,9 +31,35 @@ Ao final da v0.4:
 | Seleção de modelos de dois níveis: casos independentes para fracionários e Plackett–Burman | ET14-T03 (limite) | [ET28](#et28--verificações-adicionais-e-itens-que-dependem-do-usuário) |
 | Safari real; canal de atualização ponta a ponta; domínio próprio; caminho da edição simultânea; inventário das funções internas do Protimiza (PD-05) | ET20-T04, T05, T06; ET14-T02 (resto) | ET28 |
 
+## 2.1 Defeitos encontrados na v0.3.0 publicada (2026-11-02)
+
+Relatados pelo usuário ao usar a v0.3.0 com um projeto real (`examples/14-meios`, não versionado). **São defeitos, não melhorias:** candidatos a uma versão de correção **v0.3.1** antes da v0.4, se o usuário decidir.
+
+| Defeito | Causa (diagnosticada) | Correção prevista |
+|---|---|---|
+| **Relatório em PDF sem os resultados; Word sem as figuras** (só aparecem a proveniência e a otimização) | O relatório é montado fora da tela **dentro** da seção «Exportar» dos resultados. A barra de seções (`SectionedResults`) esconde todos os blocos `[data-section]` que não são o ativo, **inclusive os do relatório**, e a conversão para PDF/Word ignora o que está escondido. Os testes de relatório usam «Mostrar todas as seções» e por isso não pegaram o defeito (existe desde a v0.2, quando as seções foram criadas) | Ignorar os blocos dentro de `[data-report-root]` ao aplicar as seções; teste E2E que gera HTML, PDF e Word **com a barra de seções ativa** e confere que resumo, modelo e figuras estão no arquivo |
+| **Modo escuro: o item ativo da barra de seções fica ilegível** (texto branco sobre fundo claro) | `.results-nav button.active` usa `color: #fff` fixo em vez do token `--color-on-action` do tema | Usar `--color-on-action`; axe da barra de seções nos seis temas com um item ativo |
+
 ## 3. Etapas
 
-Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa é ativada; abaixo ficam o escopo, a verificação esperada e as dependências.
+Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa é ativada; abaixo ficam o escopo, a verificação esperada e as dependências. **Ordem:** ET29 → ET22 → ET23, ET24 e ET25 → ET26 → ET27 → ET28 (ET26 e ET28 dependem do usuário e podem correr em paralelo).
+
+### ET29 — Reorganização da interface e da navegação (primeira da v0.4)
+
+Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». **É a primeira etapa a executar**, antes da ET22.
+
+- **Escopo:**
+  1. **Menus em vez de blocos soltos na página.** «Histórico de versões», «Motor científico» e a área de atualização (canal e *Verificar atualizações*) saem do fluxo e vão para um menu próprio no cabeçalho (por exemplo «Sobre e atualizações»). Um menu **«Extras»** reúne as ferramentas que não fazem parte do percurso de um planejamento: a **calculadora de potência e tamanho de amostra** e o **ajuste de curvas de saturação** (Monod, Haldane, Hill), que hoje aparece na etapa de análise de um DoE e tem outro objetivo.
+  2. **Percurso guiado por blocos.** Em vez de uma página longa que se desce até achar a opção, cada etapa mostra **um bloco por vez** (por exemplo: tipo de planejamento → níveis → objetivo → opções → geração), com **Voltar** e **Seguir** por bloco e um indicador lateral da etapa e do bloco atual. **Opções que dependem de uma escolha anterior só aparecem depois dela.** Quem quiser ver tudo de uma vez mantém a opção «Mostrar tudo», como na barra de seções dos resultados.
+  3. **Uso do espaço lateral no computador** (web e Windows, a maioria do uso): barra lateral fixa com o percurso (etapas e blocos) à esquerda e o conteúdo ao centro, em vez de uma coluna estreita com margens vazias; em telas estreitas a barra vira um seletor no topo.
+  4. **Mais espaço entre blocos e seções** (tokens de espaçamento vertical maiores entre painéis e entre seções; títulos de bloco mais destacados).
+  5. **Tela inicial:** o botão «Avançar» genérico se confunde com «Projetos recentes» e com as opções. Cada uma das três opções (planejar, analisar dados existentes, comparar tratamentos) ganha a **própria ação de começar**, e «Abrir projeto» fica separado e explícito; nada de «Avançar» solto abaixo de tudo.
+  6. **Valores-p** sem o sublinhado tracejado (`.term-weak`): o destaque de «não significativo» passa a ser só texto.
+  7. **Nomes das variáveis nas equações e figuras:** `ŷ` passa a ser o nome da resposta (por exemplo «Biomassa»), como os `x` já viraram os nomes dos fatores; uma opção de visualização alterna entre **notação (y, x₁, x₂)** e **nomes das variáveis**.
+  8. **Relatórios:** a tabela de proveniência (versões, identificadores, configuração) sai do início e vai para o **fim**, de forma sucinta (as informações completas continuam no arquivo, por exemplo nos metadados); o relatório começa pelo que interessa ao usuário.
+- **Verificação:** E2E do percurso guiado (Voltar/Seguir, opções dependentes, «Mostrar tudo»), dos menus e da tela inicial; medição de espaçamento e largura em 1920, 1200, 800 e 375 px nos seis temas; axe; capturas antes e depois arquivadas.
+- **Decisão técnica:** DT nova para a navegação por blocos e os menus (estado do bloco atual é da interface, não do projeto).
+- **Depende de:** nada. A ET27 (acabamento) passa a vir depois dela.
 
 ### ET22 — Resultados das famílias novas guardados no projeto
 
@@ -93,7 +121,7 @@ Os da [v0.3](plano-v0.3.md#5-princípios-que-continuam-valendo): cálculo só no
 
 ## 6. Critérios de lançamento da v0.4.0
 
-1. ET22–ET28 concluídas, ou itens não entregues registrados com destino e aprovados pelo usuário.
+1. ET22–ET29 concluídas, ou itens não entregues registrados com destino e aprovados pelo usuário.
 2. Todo método novo com caso de validação independente e paridade WebAssembly × nativo; resultados novos guardados no projeto sem recálculo ao reabrir.
 3. Projetos da v0.1 a v0.3 abrem sem perda.
 4. CI verde (Rust, web, E2E em cinco navegadores, Tauri Linux e Windows); verificação nativa no Windows 10, **incluindo os fluxos novos**.
