@@ -14,5 +14,7 @@ Exemplos previstos no [plano da v0.1](../docs/planos-execucao/plano-v0.1.md):
 | [03 — DCCR do meio de cultivo](03-superficie-meio-cultivo/README.md), com os fatores selecionados na triagem | ET07 (existe) |
 | [04 — Otimização de duas respostas e ensaios de confirmação](04-otimizacao-e-confirmacao/README.md) | ET08 (existe) |
 | [06 — kLa sintético: um modelo por resposta](06-kla-sintetico/README.md), composto central de face centrada com RPM e aeração | ET11 (existe) |
+| [07 — Misturas: simplex-lattice e modelo de Scheffé](07-misturas-scheffe/README.md) | ET15 (existe) |
+| [08 — Curva de saturação de Monod](08-saturacao-monod/README.md) | ET18 (existe) |
 
-Existem os exemplos 01, 02, 03, 04 e 06 (o 05 está reservado aos dados reais de kLa do grupo, ainda não distribuídos, PD-16); os demais entram nas etapas indicadas. Os exemplos são ligados às [fichas de módulos](../docs/modulos/README.md) e à [validação](../validation/README.md).
+Existem os exemplos 01, 02, 03, 04, 06, 07 e 08 (o 05 está reservado aos dados reais de kLa do grupo, ainda não distribuídos, PD-16); os demais entram nas etapas indicadas. Os exemplos são ligados às [fichas de módulos](../docs/modulos/README.md) e à [validação](../validation/README.md).

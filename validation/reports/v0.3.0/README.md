@@ -75,7 +75,7 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 | Resultados de misturas, modelos mistos, saturação e potência | **Não são guardados no projeto** nem entram nos relatórios (calculados ao pedir) |
 | Seleção de modelos para efeitos de dois níveis (ET14-T03); verificação do DCCR com as capturas do Protimiza (ET14-T02) | **Não feitas** |
 | Misturas: limites superiores, otimização no simplex; planejamentos ótimos: exemplo, blocos, gráfico de variância; modelos mistos: AR(1), não estruturada, F multi-gl; saturação: perfil de verossimilhança, NIST; potência: simulação | **Não feitos** |
-| Exemplos novos em `examples/` para os métodos da v0.3 | **Não criados** |
+| Exemplos para os métodos da v0.3 | **Criados só os 07 (misturas) e 08 (Monod)**, conferidos contra NumPy e SciPy e abertos em E2E; faltam exemplos de níveis mistos, ótimos, medidas repetidas, potência e planilha de coleta |
 | Verificação nativa no Windows 10 dos fluxos da v0.3 | **Não executada** |
 | Falhas intermitentes de CI vistas no PR 6 (Windows: «Nenhuma página do WebView2»; um job Web) | **Não investigadas a fundo** |
 

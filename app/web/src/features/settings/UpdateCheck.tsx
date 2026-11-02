@@ -1,6 +1,7 @@
 // Verificação de atualizações do aplicativo Windows (canal experimental). O Tauri baixa o pacote do
 // endereço configurado e só o instala se a assinatura conferir com a chave pública do aplicativo;
 // os projetos são arquivos do usuário e não são tocados. No navegador o controle não aparece.
+import { invoke } from "@tauri-apps/api/core";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { APP_VERSION } from "../../lib/version";
@@ -32,7 +33,6 @@ export function UpdateCheck() {
     setState({ kind: "checking" });
     try {
       // O endereço do manifesto vem do canal e é montado no Rust (a interface só escolhe o canal).
-      const { invoke } = await import("@tauri-apps/api/core");
       const update = await invoke<{ version: string; notes: string } | null>("update_check", {
         channel,
       });
@@ -50,7 +50,6 @@ export function UpdateCheck() {
     setState({ kind: "installing" });
     try {
       // No Windows o instalador fecha o aplicativo ao terminar.
-      const { invoke } = await import("@tauri-apps/api/core");
       await invoke("update_install", { channel });
     } catch {
       setState({ kind: "failed" });

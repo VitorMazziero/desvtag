@@ -12,6 +12,10 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Exemplos novos
+
+- [07 — Misturas e Scheffé](examples/07-misturas-scheffe/README.md) e [08 — Curva de saturação de Monod](examples/08-saturacao-monod/README.md): dados sintéticos, projeto `.enzitag` e resultados conferidos contra NumPy e SciPy (teste E2E que abre o projeto e confere os coeficientes).
+
 ### DOCX, comentários, canais e WebKit (ET20)
 
 - **Relatório em Word (.docx):** novo botão *Exportar relatório (Word)* com as mesmas seções do HTML e do PDF (proveniência, interpretação, listas, **tabelas editáveis**, figuras em PNG, logotipo opcional e «Página X de Y»), gerado no próprio dispositivo. Conferido por testes, por E2E em navegador real e pela abertura no **LibreOffice**; **não aberto no Word**. [Guia](docs/guias/exportacao.md), [DT-0026](docs/decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md).
