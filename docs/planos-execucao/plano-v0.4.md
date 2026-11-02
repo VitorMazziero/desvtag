@@ -21,7 +21,7 @@ Ao final da v0.4:
 
 | Item pendente | Origem (v0.3) | Etapa |
 |---|---|---|
-| Menus («Sobre e atualizações», «Extras» com potência e curvas de saturação), percurso guiado por blocos com Voltar/Seguir e opções dependentes, uso do espaço lateral, mais espaçamento, tela inicial sem «Avançar» ambíguo, valores-p sem tracejado, nomes das variáveis nas equações, proveniência no fim do relatório | Pedido do usuário (2026-11-02), depois da v0.3.0 | [ET29](#et29--reorganização-da-interface-e-da-navegação-primeira-da-v04) (**primeira**) |
+| Menus («Sobre e atualizações», «Extras» com potência e curvas de saturação), percurso guiado por blocos com Voltar/Seguir e opções dependentes, uso do espaço lateral, mais espaçamento, tela inicial sem «Avançar» ambíguo, valores-p sem tracejado, nomes das variáveis nas equações, proveniência no fim do relatório, **reorganização da área de salvamento** (menu «Arquivo», indicador único de estado, Drive discreto) | Pedido do usuário (2026-11-02), depois da v0.3.0 | [ET29](#et29--reorganização-da-interface-e-da-navegação-primeira-da-v04) (**primeira**) |
 | Guardar no projeto os resultados de misturas, modelos mistos, saturação e potência (campos opcionais, esquema 1), mostrá-los em seções e levá-los aos relatórios | ET15-T09, ET17-T07, ET18-T07 | [ET22](#et22--resultados-das-famílias-novas-guardados-no-projeto) |
 | Modelo misto: testes F de vários graus de liberdade, médias marginais e comparações; AR(1) e covariância não estruturada; papéis de coluna «unidade» e «tempo»; figuras de perfis | ET17-T04, T05, T07 | [ET23](#et23--modelos-mistos-e-medidas-repetidas-avançados) |
 | Ajuste não linear: intervalos por perfil de verossimilhança; NIST StRD não linear; limites e valores iniciais editáveis; potência por simulação e para regressão, contrastes e efeitos de dois níveis | ET18-T02, T03, T05, T07 | [ET24](#et24--ajuste-não-linear-e-potência-avançados) |
@@ -46,7 +46,7 @@ Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa 
 
 ### ET29 — Reorganização da interface e da navegação (primeira da v0.4)
 
-Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». **É a primeira etapa a executar**, antes da ET22.
+Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». Capturas «antes» em [`docs/imagens/evidencias-v0.3.0/`](../imagens/evidencias-v0.3.0/README.md). **É a primeira etapa a executar**, antes da ET22.
 
 - **Primeiro, os defeitos da v0.3.0 ([§2.1](#21-defeitos-encontrados-na-v030-publicada-2026-11-02)):**
   - **T01 — Relatório completo com a barra de seções ativa** (PDF, Word e HTML com resumo, modelo, ANOVA, figuras e otimização), com teste E2E que gera os três formatos **sem** «Mostrar todas as seções» e com o exemplo 14.
@@ -60,7 +60,13 @@ Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos imp
   6. **Valores-p** sem o sublinhado tracejado (`.term-weak`): o destaque de «não significativo» passa a ser só texto.
   7. **Nomes das variáveis nas equações e figuras:** `ŷ` passa a ser o nome da resposta (por exemplo «Biomassa»), como os `x` já viraram os nomes dos fatores; uma opção de visualização alterna entre **notação (y, x₁, x₂)** e **nomes das variáveis**.
   8. **Relatórios:** a tabela de proveniência (versões, identificadores, configuração) sai do início e vai para o **fim**, de forma sucinta (as informações completas continuam no arquivo, por exemplo nos metadados); o relatório começa pelo que interessa ao usuário.
-- **Verificação:** E2E do percurso guiado (Voltar/Seguir, opções dependentes, «Mostrar tudo»), dos menus e da tela inicial; medição de espaçamento e largura em 1920, 1200, 800 e 375 px nos seis temas; axe; capturas antes e depois arquivadas.
+  9. **Área de salvamento e arquivo do projeto.** Hoje a barra do projeto empilha o nome, quatro botões, o painel do Drive aberto com três parágrafos de explicação e quatro linhas de estado («Sem alterações pendentes», recuperação automática, arquivo baixado, ligação com o Drive). Reorganizar em:
+     - um **menu ou barra «Arquivo»** compacto no cabeçalho, com **Novo**, **Abrir** (do computador ou **do Drive**) e **Salvar** (no computador ou **no Drive**) como botões divididos, em vez de dois grupos de botões separados;
+     - o **nome do projeto** editável no próprio cabeçalho;
+     - **um único indicador de estado** (salvo / alterações pendentes / salvando), com os detalhes (recuperação automática, último arquivo, arquivo ligado do Drive) num painel que se abre ao clicar;
+     - a **conexão com o Drive** como indicador discreto (conectado / desconectado, com Conectar e Desconectar no menu), e as explicações longas num «Saiba mais» em vez de sempre visíveis;
+     - mensagens de resultado (por exemplo «arquivo criado na pasta EnziTAG Optima») como aviso temporário que não desloca o conteúdo.
+- **Verificação:** E2E do percurso guiado (Voltar/Seguir, opções dependentes, «Mostrar tudo»), dos menus, da tela inicial e da área de salvamento (local e Drive simulado, estados e avisos); medição de espaçamento e largura em 1920, 1200, 800 e 375 px nos seis temas; axe; capturas antes e depois arquivadas.
 - **Decisão técnica:** DT nova para a navegação por blocos e os menus (estado do bloco atual é da interface, não do projeto).
 - **Depende de:** nada. A ET27 (acabamento) passa a vir depois dela.
 
@@ -92,7 +98,7 @@ Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos imp
 ### ET26 — Google Drive completo e verificado
 
 - **Escopo:** autorização no aplicativo Windows (loopback + PKCE, credenciais no cofre do sistema; o segredo do cliente desktop só no segredo do GitHub); **fila persistente** de gravações pendentes; teste com arquivo compartilhado de verdade; compartilhar por leitura e criar cópia.
-- **Verificação:** simulado (unidade e E2E) e **contas reais do usuário** (primeira conexão, expiração, revogação, leitura, escrita, falta de permissão, duas cópias concorrentes), registradas como evidência manual.
+- **Verificação:** simulado (unidade e E2E) e **contas reais do usuário**. **Já feito:** conexão com uma **conta real do Google** e **Salvar no Drive** (criação de «Teste_Drive.enzitag» na pasta «EnziTAG Optima») verificados pelo usuário na versão web publicada em 2026-11-02. **Falta:** abrir do Drive pelo Picker, salvar de novo (atualizar o mesmo arquivo), expiração do token, desconectar e revogação, falta de permissão e duas cópias concorrentes (conflito), registradas como evidência manual.
 - **Depende de:** usuário (contas de teste) e [DT-0025](../decisoes-tecnicas/dt-0025-google-drive-opcional-na-versao-web.md).
 
 ### ET27 — Acabamento da interface e da exportação

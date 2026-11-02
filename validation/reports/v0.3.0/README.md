@@ -61,7 +61,7 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 |---|---|---|
 | **Relatório em Word** | Teste de unidade (pacote, títulos, tabelas, listas, imagens, paginação); E2E em navegador real (mesmos títulos do HTML, na mesma ordem; figuras PNG); abertura e conversão em PDF no **LibreOffice** (5 páginas, conferido a olho) | **Não aberto no Microsoft Word** |
 | **Comentários** | Rust (validação e JSON), reducer, E2E (escrever na figura, na tabela e no experimento, responder, resolver, salvar, reabrir, relatório HTML e Word), axe nos seis temas | Sem edição de comentário enviado |
-| **Google Drive** | Google **simulado** (unidade e E2E) | **Autorização real não verificada**; Windows sem Drive |
+| **Google Drive** | Google **simulado** (unidade e E2E); depois da publicação, conexão com uma **conta real do Google** e **Salvar no Drive** (criação de «Teste_Drive.enzitag» na pasta «EnziTAG Optima») verificados pelo usuário na versão web publicada em 2026-11-02 | Abrir pelo Picker, nova gravação, expiração, revogação, permissão e conflito **com conta real não verificados**; Windows sem Drive |
 | **Canais de atualização** | Teste do script de canais, do endereço no Rust e da preferência | **Fluxo `channels.yml` e atualização por canal não verificados** (exigem um release publicado) |
 | **WebKit** | Suíte E2E inteira no WebKit do Playwright | **Não é o Safari**; Safari real (Mac) não verificado |
 | Espaçamento, logotipo único, rolagem (ET21) | E2E de layout em 1200 px e 375 px nos seis temas | — |
