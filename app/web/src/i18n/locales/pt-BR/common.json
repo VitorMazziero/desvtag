@@ -412,7 +412,8 @@
     "mode": {
       "legend": "Tipo de planejamento",
       "factorial": "Fatores quantitativos (fatorial, triagem, superfície)",
-      "crd": "Um fator categórico (DIC aleatorizado)"
+      "crd": "Um fator categórico (DIC aleatorizado)",
+      "rcbd": "Um fator categórico em blocos (DBC aleatorizado)"
     },
     "crd": {
       "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
@@ -435,6 +436,20 @@
         "suffix": "do-dic"
       },
       "algorithm": "Algoritmo: {{algorithm}}; semente {{seed}}."
+    },
+    "rcbd": {
+      "intro": "Delineamento em blocos completos casualizados: cada bloco (dia, lote, operador…) recebe todos os tratamentos uma vez, em ordem sorteada dentro do bloco. A variação entre blocos sai do erro.",
+      "needFactors": "Cadastre na etapa anterior dois fatores categóricos com nome: um para os tratamentos e outro para os blocos.",
+      "treatmentFactor": "Fator de tratamento",
+      "blockFactor": "Fator de bloco",
+      "treatments": "Tratamentos",
+      "blocks": "Blocos",
+      "randomize": "Aleatorizar a ordem dentro de cada bloco",
+      "count": "{{total}} ensaios: {{levels}} tratamentos × {{blocks}} blocos.",
+      "matrix": "Ordem de execução do DBC",
+      "exportCsv": "Matriz do DBC (CSV)",
+      "position": "Posição no bloco",
+      "unitNote": "Cada ensaio recebe um identificador de unidade (por exemplo B2-T3: bloco 2, tratamento 3). A análise usa o bloco como efeito aditivo."
     }
   },
   "optimization": {

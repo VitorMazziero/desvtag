@@ -3,7 +3,7 @@ import { expect, type Page, test } from "@playwright/test";
 // Procedimentos de comparação múltipla e ANOVA multifatorial com o motor Rust real (WebAssembly).
 
 async function paste(page: Page, label: string, text: string) {
-  await page.getByLabel(label).evaluate((el, value) => {
+  await page.getByLabel(label, { exact: true }).evaluate((el, value) => {
     const data = new DataTransfer();
     data.setData("text/plain", value);
     const event = new Event("paste", { bubbles: true, cancelable: true });
@@ -119,4 +119,46 @@ test("ANOVA multifatorial com dois fatores: tabela, médias marginais e contrast
   await expect(anova).toContainText("Resíduo");
   await expect(anova.locator("tbody tr")).toHaveCount(5); // Dose, Tipo, Dose × Tipo, Resíduo, Total
   await expect(page.getByTestId("marginal-f1")).toBeVisible();
+});
+
+test("DBC aleatorizado: gerar blocos, preencher respostas e analisar com bloco", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(0).fill("Tratamento");
+  await page.getByLabel("Níveis (opcional)").nth(0).fill("A; B; C");
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(1).fill("Dia");
+  await page.getByLabel("Níveis (opcional)").nth(1).fill("d1; d2; d3; d4");
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /em blocos/ })
+    .check();
+  await expect(page.getByTestId("rcbd-count")).toContainText(
+    "12 ensaios: 3 tratamentos × 4 blocos.",
+  );
+  await page.getByRole("button", { name: "Gerar planejamento" }).click();
+  await expect(page.getByTestId("rcbd-generated")).toContainText("12 ensaios");
+  await expect(page.getByTestId("rcbd-table").locator("tbody tr")).toHaveCount(12);
+  await expect(page.getByTestId("rcbd-matrix")).toContainText("pcg32-xsh-rr/fisher-yates");
+
+  // Doze respostas distintas, na ordem de execução gerada.
+  const values = Array.from({ length: 12 }, (_, i) =>
+    String(10 + i * 0.7 + (i % 3) * 1.3).replace(".", ","),
+  );
+  await paste(page, "Atividade — Obs. 1", values.join("\n"));
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: /Analisar planejamento|Comparar tratamentos/ }).click();
+  await page.getByTestId("section-tables").click();
+  const anova = page.getByTestId("factorial-anova");
+  await expect(anova).toContainText("Dia (bloco)");
+  await expect(anova.locator("tbody tr")).toHaveCount(4); // Tratamento, Dia, Resíduo, Total
 });

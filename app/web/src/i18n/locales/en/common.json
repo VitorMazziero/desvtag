@@ -412,7 +412,8 @@
     "mode": {
       "legend": "Design type",
       "factorial": "Quantitative factors (factorial, screening, surface)",
-      "crd": "One categorical factor (randomized CRD)"
+      "crd": "One categorical factor (randomized CRD)",
+      "rcbd": "One categorical factor in blocks (randomized RCBD)"
     },
     "crd": {
       "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
@@ -435,6 +436,20 @@
         "suffix": "of-the-crd"
       },
       "algorithm": "Algorithm: {{algorithm}}; seed {{seed}}."
+    },
+    "rcbd": {
+      "intro": "Randomized complete block design: each block (day, batch, operator…) gets every treatment once, in an order drawn within the block. Between-block variation is removed from the error.",
+      "needFactors": "Add two named categorical factors in the previous step: one for the treatments and one for the blocks.",
+      "treatmentFactor": "Treatment factor",
+      "blockFactor": "Block factor",
+      "treatments": "Treatments",
+      "blocks": "Blocks",
+      "randomize": "Randomize the order within each block",
+      "count": "{{total}} runs: {{levels}} treatments × {{blocks}} blocks.",
+      "matrix": "RCBD run order",
+      "exportCsv": "RCBD matrix (CSV)",
+      "position": "Position in block",
+      "unitNote": "Each run gets a unit identifier (for example B2-T3: block 2, treatment 3). The analysis uses the block as an additive effect."
     }
   },
   "optimization": {
