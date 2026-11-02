@@ -70,6 +70,20 @@ Ao final da v0.3:
 
 **Ordem recomendada:** ET13 e ET21 (interface; podem correr juntas) → ET14 → ET15 → ET16 → ET17 → ET18 → ET20, com a **ET19 em paralelo** a partir do momento em que o usuário criar o projeto OAuth (ela depende de configuração externa, não de código anterior). A regra «uma etapa ativa por vez» admite esse paralelismo, registrado aqui.
 
+### Estado de execução (2026-11-02)
+
+| Etapa | Estado | O que falta |
+|---|---|---|
+| ET13 Planilha de coleta | **Concluída** | — |
+| ET21 Espaçamento, logotipo único e rolagem | **Quase concluída** (T01 parcial, T04 e T06 pendentes: revisão tela a tela fora das telas medidas e inspeção no WebView2) | Capturas antes/depois e conferência no aplicativo instalado |
+| ET14 Itens adiados | **Em andamento** (T01, T04–T07 e T09 feitas) | T02 (depende do usuário: capturas do Protimiza) e T03 (seleção de modelos para efeitos de dois níveis) |
+| ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos feitos e validados) | Misturas: simplex, modelos de Scheffé, gráfico ternário, otimização no simplex; estimabilidade em fracionários de níveis mistos |
+| ET16 Planejamentos ótimos | Planejada | tudo |
+| ET17 Modelos mistos e medidas repetidas | Planejada | tudo |
+| ET18 Monod e potência | Planejada | tudo |
+| ET19 Google Drive | Planejada | credenciais OAuth do usuário (PD-09) e tudo |
+| ET20 DOCX, comentários, Safari, domínio, canais | Planejada | tudo |
+
 ## 4. Dependências do usuário
 
 | Pendência | Etapa | O que o usuário precisa fazer |
