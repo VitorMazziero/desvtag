@@ -887,5 +887,13 @@
       "figure": "Figura «{{key}}»",
       "table": "Tabela «{{key}}»"
     }
+  },
+  "menus": {
+    "extras": "Extras",
+    "extrasHelp": "Ferramentas fora do percurso de um planejamento.",
+    "power": "Calculadora de potência e tamanho de amostra",
+    "saturation": "Curvas de saturação (Monod, Haldane, Hill)",
+    "about": "Sobre e atualizações",
+    "close": "Fechar"
   }
 }

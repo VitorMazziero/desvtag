@@ -62,6 +62,8 @@ export async function runV03Check(page, exportDir) {
   console.log("OK: comentário escrito no aplicativo nativo e incluído no relatório em Word.");
 
   // 3. Canal de atualização: a preferência chega ao comando nativo (sem instalar nada).
+  // «Sobre e atualizações» (v0.4, ET29): a verificação de atualizações fica nesse menu.
+  await page.getByTestId("about-menu").locator(":scope > summary").click();
   const update = page.getByTestId("update-check");
   await update.waitFor();
   const channel = update.getByLabel("Canal de atualização");

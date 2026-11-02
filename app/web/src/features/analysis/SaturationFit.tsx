@@ -15,7 +15,14 @@ import { SaturationChart } from "../results/SaturationChart";
 
 const num = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
 
-export function SaturationFit({ language }: { language: Language }) {
+export function SaturationFit({
+  language,
+  embedded = false,
+}: {
+  language: Language;
+  /** Dentro de uma janela do menu «Extras»: sempre aberto, sem o título recolhível. */
+  embedded?: boolean;
+}) {
   const { t } = useTranslation();
   const state = useProject();
   const { client } = useEngine();
@@ -90,13 +97,13 @@ export function SaturationFit({ language }: { language: Language }) {
 
   return (
     <details
-      className="advanced"
+      className={embedded ? "advanced embedded" : "advanced"}
       data-testid="saturation-fit"
-      open={open}
+      open={embedded || open}
       onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
     >
       <summary>{t("saturation.title")}</summary>
-      {open && (
+      {(embedded || open) && (
         <>
           <p className="muted">{t("saturation.intro")}</p>
           {factors.length === 0 ? (

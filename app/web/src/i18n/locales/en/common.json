@@ -887,5 +887,13 @@
       "figure": "Figure «{{key}}»",
       "table": "Table «{{key}}»"
     }
+  },
+  "menus": {
+    "extras": "Extras",
+    "extrasHelp": "Tools outside the experimental-design workflow.",
+    "power": "Power and sample-size calculator",
+    "saturation": "Saturation curves (Monod, Haldane, Hill)",
+    "about": "About and updates",
+    "close": "Close"
   }
 }

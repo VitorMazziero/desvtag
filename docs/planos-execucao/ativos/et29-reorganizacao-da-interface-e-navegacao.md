@@ -53,14 +53,14 @@ Corrigir os dois defeitos da v0.3.0 e reorganizar a interface pedida pelo usuár
 - [x] **T01** — **Defeito (corrigido):** relatório completo com a barra de seções ativa (ignorar `[data-report-root]` ao aplicar as seções, ou montar o relatório fora dela); E2E que gera HTML, PDF e Word **sem** «Mostrar todas as seções» e com o exemplo 14, conferindo resumo, modelo, ANOVA, figuras e otimização.
 - [x] **T02** — **Defeito (corrigido):** item ativo da barra de seções com `--color-on-action`; axe da barra com item ativo nos seis temas.
 - [ ] **T03** — DTs da §4.
-- [ ] **T04** — Cabeçalho com os menus **Arquivo**, **Extras** e **Sobre e atualizações**; nome do projeto editável no cabeçalho.
+- [x] **T04** (menus; o nome do projeto no cabeçalho vem com a T05) — Cabeçalho com os menus **Arquivo**, **Extras** e **Sobre e atualizações**; nome do projeto editável no cabeçalho.
 - [ ] **T05** — Área de salvamento: Novo/Abrir/Salvar como botões divididos (computador ou Drive), indicador único de estado com painel de detalhes, Drive como indicador discreto, explicações em «Saiba mais», avisos temporários.
-- [ ] **T06** — **Extras:** calculadora de potência e curvas de saturação saem da tela inicial e da análise do DoE e passam a abrir pelo menu, com os dados do projeto quando fizer sentido (saturação usa um fator e uma resposta do experimento).
+- [x] **T06** — **Extras:** calculadora de potência e curvas de saturação saem da tela inicial e da análise do DoE e passam a abrir pelo menu, com os dados do projeto quando fizer sentido (saturação usa um fator e uma resposta do experimento).
 - [ ] **T07** — Tela inicial: ação de começar em cada opção; «Abrir projeto» e «Projetos recentes» separados; sem «Avançar» solto.
 - [ ] **T08** — Percurso guiado por blocos com barra lateral do percurso (etapa e bloco), Voltar e Seguir por bloco, opções dependentes reveladas conforme a escolha, «Mostrar tudo»; rolagem e foco no título do bloco ao trocar (como na DT-0023).
 - [ ] **T09** — Layout largo no computador (barra do percurso + conteúdo; uso das margens), seletor no topo em telas estreitas; tokens de espaçamento vertical entre blocos e seções.
-- [ ] **T10** — Valores-p sem tracejado; nomes das variáveis nas equações e figuras com alternância notação × nomes (preferência do dispositivo).
-- [ ] **T11** — Relatório: proveniência no fim, sucinta (completa nos metadados); HTML, PDF e Word.
+- [x] **T10** — Valores-p sem tracejado; nomes das variáveis nas equações e figuras com alternância notação × nomes (preferência do dispositivo).
+- [x] **T11** — Relatório: proveniência no fim, sucinta (completa nos metadados); HTML, PDF e Word.
 - [ ] **T12** — Verificação: E2E dos menus, da tela inicial, do percurso (Voltar/Seguir, dependências, «Mostrar tudo»), da área de salvamento (local e Drive simulado) e do relatório; medição em 1920, 1200, 800 e 375 px nos seis temas; axe; verificação nativa no Windows 10; capturas «depois» ao lado das «antes».
 - [ ] **T13** — Documentação: DTs, guias (resultados, exportação, Drive, planilha de coleta) com as novas telas, ficha U18, CHANGELOG, matriz de cobertura.
 
@@ -101,6 +101,8 @@ DTs; guias de resultados, exportação, Drive e planilha de coleta; ficha U18; [
 | 2026-11-02 | Plano criado a partir dos pedidos do usuário e dos defeitos da v0.3.0. Etapa não iniciada. |
 | 2026-11-02 | **Ativada** pelo usuário («Sim, começar ET29») na ramificação `feat/v0.4`. |
 | 2026-11-02 | **T01 e T02 entregues.** Causa do relatório vazio: a barra de seções ativa escondia, por `hidden`, os blocos `data-section` do relatório montado fora da tela dentro da seção «Exportar»; agora `SectionedResults` ignora os blocos dentro de `[data-report-root]`. Teste `report-sections.spec.ts` (HTML, PDF e Word com a barra ativa iguais aos de «mostrar todas»; exemplo 14; axe da barra nos 6 temas): **falha sem a correção** (verificado) e passa com ela em Chromium, Firefox e WebKit. O item ativo usa `--color-on-action`. |
+
+| 2026-11-02 | **T10 e T11 entregues**: equações com os nomes das variáveis (opção para ŷ e x₁, x₂ com legenda), valores-p sem tracejado, proveniência sucinta no fim do HTML, PDF e Word (completa nos metadados). **T04 (menus) e T06 entregues**: menus «Extras» (potência e curvas de saturação em janelas modais) e «Sobre e atualizações» (histórico, motor e atualizações); `Menu` e `Modal` novos em `features/menus`. Testes E2E adaptados com `tests/e2e/menus.ts`. |
 
 ## 12. Desvios e descobertas
 

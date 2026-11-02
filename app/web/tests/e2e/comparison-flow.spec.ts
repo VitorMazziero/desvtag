@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { openAbout } from "./menus";
 import { showAllSections } from "./showAll";
 
 // Percurso de comparação de tratamentos com o motor Rust real (WebAssembly em Worker):
@@ -157,6 +158,7 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
       await expect(page.getByTestId(`letters-${i}`)).toHaveText(value);
     }
     await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
+    await openAbout(page);
     await page.getByTestId("history").locator("summary").click();
     await expect(page.getByTestId("analysis-record")).toHaveCount(1);
   });

@@ -15,7 +15,14 @@ type Goal = "sampleSizeFor" | "powerAt" | "precisionFor";
 
 const toNumber = (text: string) => Number(text.replace(",", "."));
 
-export function PowerCalculator({ language }: { language: Language }) {
+export function PowerCalculator({
+  language,
+  embedded = false,
+}: {
+  language: Language;
+  /** Dentro de uma janela do menu «Extras»: sempre aberta, sem o título recolhível. */
+  embedded?: boolean;
+}) {
   const { t } = useTranslation();
   const { client } = useEngine();
   const [open, setOpen] = useState(false);
@@ -77,13 +84,13 @@ export function PowerCalculator({ language }: { language: Language }) {
   const unit = kind === "anova" || kind === "twoSampleT" ? t("power.perGroup") : t("power.units");
   return (
     <details
-      className="advanced"
+      className={embedded ? "advanced embedded" : "advanced"}
       data-testid="power-calculator"
-      open={open}
+      open={embedded || open}
       onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
     >
       <summary>{t("power.title")}</summary>
-      {open && (
+      {(embedded || open) && (
         <>
           <p className="muted">{t("power.intro")}</p>
           <div className="row">

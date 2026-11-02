@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
+import { openPowerTool, openSaturationTool } from "./menus";
 
 // Procedimentos de comparação múltipla e ANOVA multifatorial com o motor Rust real (WebAssembly).
 
@@ -366,13 +367,8 @@ test("calculadora de potência: tamanho de amostra de duas amostras igual ao Sci
   page,
 }) => {
   await page.goto("/");
-  const panel = page.getByTestId("power-calculator");
-  // A tela inicial pode remontar depois do primeiro clique (Firefox sob carga): repete até abrir.
-  await expect(async () => {
-    if ((await panel.getAttribute("open")) === null)
-      await panel.getByText("Calculadora de potência e tamanho de amostra").click();
-    await expect(page.getByLabel("Diferença esperada")).toBeVisible({ timeout: 2000 });
-  }).toPass({ timeout: 25_000 });
+  // A calculadora fica no menu «Extras», numa janela própria.
+  await openPowerTool(page);
   await page.getByLabel("Diferença esperada").fill("1");
   await page.getByLabel("Desvio-padrão esperado (σ)").fill("1,5");
   await page.getByRole("button", { name: "Calcular" }).click();
@@ -417,8 +413,8 @@ test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico
   await paste(page, "Substrato — Obs. 1", rows.join(String.fromCharCode(10)));
   await page.getByRole("button", { name: "Avançar" }).click();
 
-  const panel = page.getByTestId("saturation-fit");
-  await panel.getByText(/Curvas de saturação/).click();
+  // O ajuste de curvas fica no menu «Extras», numa janela própria.
+  const panel = await openSaturationTool(page);
   await panel.getByRole("button", { name: "Ajustar curva" }).click();
   const table = page.getByTestId("saturation-parameters");
   await expect(table.locator("tbody tr")).toHaveCount(2);

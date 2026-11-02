@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { openAbout } from "./menus";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cases = resolve(here, "../../../../validation/cases");
@@ -123,6 +124,7 @@ test.describe("salvar e abrir (estados distintos)", () => {
       page.getByTestId("descriptive-table").getByRole("row", { name: /Condição: Água/ }),
     ).toContainText("11");
     // Histórico: versões e análise guardadas.
+    await openAbout(page);
     await page.getByTestId("history").locator("summary").click();
     await expect(page.getByTestId("revision").first()).toContainText("atual");
     await expect(page.getByTestId("analysis-record")).toHaveCount(1);
@@ -200,6 +202,7 @@ test.describe("importação", () => {
     await expect(page.getByLabel("Atividade (U/mL) — Obs. 4")).toHaveValue(""); // ausente preservado
     await expect(page.getByLabel("Condição — Obs. 3")).toHaveValue("Ácido");
     // A grade mostra a coluna de unidade? Só nas opções avançadas; os dados chegaram à tabela.
+    await openAbout(page);
     await page.getByTestId("history").locator("summary").click();
     await expect(page.getByTestId("revision").first()).toContainText("importação");
     await expect(page.getByTestId("revision").nth(1)).toContainText("alterações"); // dados anteriores preservados

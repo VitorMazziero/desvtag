@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { openPowerTool, openSaturationTool } from "./menus";
 import { showAllSections } from "./showAll";
 
 // Exemplos 07 (misturas) e 08 (Monod): o projeto distribuído abre e os resultados conferem com a
@@ -39,8 +40,8 @@ test("exemplo 07: Scheffé quadrático recupera os coeficientes do README", asyn
 test("exemplo 08: Monod recupera Vmax e Km do README", async ({ page }) => {
   test.setTimeout(120_000);
   await open(page, "08-saturacao-monod");
-  const panel = page.getByTestId("saturation-fit");
-  await panel.getByText(/Curvas de saturação/).click();
+  // O ajuste de curvas fica no menu «Extras», numa janela própria.
+  const panel = await openSaturationTool(page);
   await panel.getByRole("button", { name: "Ajustar curva" }).click();
   const rows = page.getByTestId("saturation-parameters").locator("tbody tr");
   await expect(rows).toHaveCount(2);
@@ -103,13 +104,8 @@ test("exemplo 12: tamanho de amostra de duas amostras (SciPy: 37 por grupo, pot�
 }) => {
   test.setTimeout(90_000); // o Firefox da CI é lento ao carregar o motor sob carga
   await page.goto("/");
-  const panel = page.getByTestId("power-calculator");
-  // A tela inicial pode remontar depois do primeiro clique (Firefox sob carga): repete até abrir.
-  await expect(async () => {
-    if ((await panel.getAttribute("open")) === null)
-      await panel.getByText("Calculadora de potência e tamanho de amostra").click();
-    await expect(page.getByLabel("Diferença esperada")).toBeVisible({ timeout: 2000 });
-  }).toPass({ timeout: 25_000 });
+  // A calculadora fica no menu «Extras», numa janela própria.
+  await openPowerTool(page);
   await page.getByLabel("Diferença esperada").fill("1");
   await page.getByLabel("Desvio-padrão esperado (σ)").fill("1,5");
   await page.getByRole("button", { name: "Calcular" }).click();
