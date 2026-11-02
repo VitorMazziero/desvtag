@@ -33,8 +33,20 @@ const scatter = {
 
 describe("figure customization", () => {
   it("finds the customizable fields from the marked texts", () => {
-    expect(figureFields(meansChart(means, "css", fmt))).toEqual(["title", "yLabel", "letters"]);
-    expect(figureFields(scatterChart(scatter, "css", fmt))).toEqual(["title", "xLabel", "yLabel"]);
+    expect(figureFields(meansChart(means, "css", fmt))).toEqual([
+      "title",
+      "yLabel",
+      "letters",
+      "grid",
+      "legend",
+    ]);
+    expect(figureFields(scatterChart(scatter, "css", fmt))).toEqual([
+      "title",
+      "xLabel",
+      "yLabel",
+      "grid",
+      "legend",
+    ]);
   });
 
   it("reads the default texts to suggest them", () => {
@@ -77,5 +89,61 @@ describe("figure customization", () => {
   it("limits custom texts to 200 characters", () => {
     const svg = applyFigureStyle(meansChart(means, "css", fmt), { title: "x".repeat(500) });
     expect(defaultFigureText(svg, "title")).toHaveLength(200);
+  });
+  it("replaces computed letters by manual ones and labels them as manual", () => {
+    const svg = applyFigureStyle(
+      meansChart(means, "static", fmt),
+      { manualLetters: ["x", "yz"] },
+      { manualLettersLegend: "Letras manuais" },
+    );
+    const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+    expect(
+      [...doc.querySelectorAll('text[data-figure="letters"]')].map((t) => t.textContent),
+    ).toEqual(["x", "yz"]);
+    expect(doc.querySelector('text[data-figure="lettersLegend"]')?.textContent).toBe(
+      "Letras manuais",
+    );
+  });
+
+  it("adds a manual-letters legend line when the chart has none and keeps the SVG valid", () => {
+    const bare = { ...means, lettersLegend: "" };
+    const svg = applyFigureStyle(
+      meansChart(bare, "static", fmt),
+      { manualLetters: ["a", "b"] },
+      { manualLettersLegend: "Letras manuais" },
+    );
+    const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+    expect(doc.querySelector("parsererror")).toBeNull();
+    expect(doc.querySelectorAll('text[data-figure="lettersLegend"]').length).toBe(1);
+  });
+
+  it("adds annotations at relative positions with escaped text", () => {
+    const svg = applyFigureStyle(meansChart(means, "static", fmt), {
+      annotations: [{ text: "p < 0,05 & ok", x: 0.5, y: 0.25 }],
+    });
+    const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+    const note = doc.querySelector('text[data-figure="annotation"]');
+    expect(note?.textContent).toBe("p < 0,05 & ok");
+    expect(note?.getAttribute("x")).toBe("320");
+    expect(note?.getAttribute("y")).toBe("95");
+  });
+
+  it("applies colour, background, font family, grid and legend choices", () => {
+    const raw = meansChart(means, "static", fmt);
+    expect(raw).toContain('data-figure="background"');
+    const out = applyFigureStyle(raw, {
+      primaryColor: "#aa3377",
+      background: "transparent",
+      fontFamily: "serif",
+      showGrid: false,
+      showLegend: false,
+    });
+    expect(out).toContain("#aa3377");
+    expect(out).not.toContain("#005a99");
+    expect(out).not.toContain('data-figure="background"');
+    expect(out).toContain("Georgia");
+    expect(out).not.toContain('data-figure="grid"');
+    expect(out).not.toContain('data-figure="legend"');
+    expect(out).not.toContain('data-figure="lettersLegend"');
   });
 });

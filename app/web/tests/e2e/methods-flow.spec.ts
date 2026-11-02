@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
 
 // Procedimentos de comparação múltipla e ANOVA multifatorial com o motor Rust real (WebAssembly).
@@ -161,4 +162,52 @@ test("DBC aleatorizado: gerar blocos, preencher respostas e analisar com bloco",
   const anova = page.getByTestId("factorial-anova");
   await expect(anova).toContainText("Dia (bloco)");
   await expect(anova.locator("tbody tr")).toHaveCount(4); // Tratamento, Dia, Resíduo, Total
+});
+
+test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await startCompare(page, ["Condição"]);
+  const rows = [
+    ...[10.1, 10.3, 9.9, 10.2].map((v) => ["A", v]),
+    ...[12.0, 12.4, 11.8, 12.1].map((v) => ["B", v]),
+    ...[15.0, 15.3, 14.8, 15.1].map((v) => ["C", v]),
+  ];
+  await paste(
+    page,
+    "Condição — Obs. 1",
+    rows.map(([l, v]) => `${l}\t${String(v).replace(".", ",")}`).join("\n"),
+  );
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByLabel("Fator que define os grupos").selectOption({ label: "Condição" });
+  await page.getByTestId("procedure-select").selectOption("gamesHowell");
+  await page.getByRole("button", { name: "Comparar tratamentos" }).click();
+  await page.getByTestId("section-charts").click();
+
+  const chart = page.getByTestId("procedure-chart");
+  await chart.getByText("Personalizar figura").click();
+  await chart.getByTestId("manual-letters").fill("a b -");
+  await chart.getByRole("button", { name: "Adicionar anotação" }).click();
+  await chart.getByLabel("Texto da anotação 1").fill("p < 0,05");
+  await chart.getByLabel("Cor principal").fill("#aa3377");
+  await chart.getByLabel("Fundo da imagem exportada").selectOption("transparent");
+  await chart.getByLabel("Fonte", { exact: true }).selectOption("serif");
+  await chart.getByLabel("Mostrar linhas de grade").uncheck();
+
+  const letters = chart.locator('svg text[data-figure="letters"]');
+  await expect(letters).toHaveText(["a", "b", ""]);
+  await expect(chart.locator('svg text[data-figure="annotation"]')).toHaveText("p < 0,05");
+  await expect(chart).toContainText("Letras digitadas manualmente");
+  await expect(chart.locator('svg line[data-figure="grid"]')).toHaveCount(0);
+
+  const download = page.waitForEvent("download");
+  await chart.getByRole("button", { name: /Figura — SVG/ }).click();
+  const svg = readFileSync((await (await download).path()) as string, "utf8");
+  expect(svg).toContain("#aa3377");
+  expect(svg).toContain("Georgia");
+  expect(svg).toContain("p &lt; 0,05");
+  expect(svg).not.toContain('data-figure="background"');
+  expect(svg).not.toContain('data-figure="grid"');
+  expect(svg).toContain("Letras digitadas manualmente");
 });

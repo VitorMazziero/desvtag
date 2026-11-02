@@ -3,9 +3,11 @@ export { contourChart } from "./contour";
 export { type EffectPanel, type EffectsChartSpec, effectsChart } from "./effects";
 export {
   applyFigureStyle,
+  computedLetters,
   defaultFigureText,
   type FigureField,
   figureFields,
+  letterSlots,
   MAX_FIGURE_TEXT,
 } from "./figureStyle";
 export { type MeansChartSpec, type MeansGroup, meansChart } from "./means";

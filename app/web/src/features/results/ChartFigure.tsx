@@ -37,8 +37,9 @@ export function ChartFigure({
   // A chave da figura é o seu `testId`; o ajuste guardado no projeto vale para tela e exportação.
   const figure = project.figureStyles[testId];
   const style = { palette: settings.palette, fontScale: figure?.fontScale ?? settings.fontScale };
-  const screenSvg = applyChartStyle(applyFigureStyle(rawScreenSvg, figure), style);
-  const exportSvg = applyChartStyle(applyFigureStyle(rawExportSvg, figure), style);
+  const options = { manualLettersLegend: t("figure.manualLettersLegend") };
+  const screenSvg = applyChartStyle(applyFigureStyle(rawScreenSvg, figure, options), style);
+  const exportSvg = applyChartStyle(applyFigureStyle(rawExportSvg, figure, options), style);
   const [message, setMessage] = useState<string | null>(null);
 
   const finish = (name: string | null) =>
@@ -76,6 +77,7 @@ export function ChartFigure({
               exportSvg,
               Number(viewBox?.[1] ?? 640),
               Number(viewBox?.[2] ?? 380),
+              figure?.exportScale ?? 2,
             );
             finish(
               (
