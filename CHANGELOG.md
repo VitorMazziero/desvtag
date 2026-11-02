@@ -8,7 +8,9 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 - Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
 - Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
 
-## [0.3.0] — 2026-11-02 (candidata local; ainda não publicada)
+## [0.3.0] — 2026-11-02
+
+> **Publicada em 2026-11-02**: versão web (https://vitormazziero.github.io/enzitag-optima/), etiqueta `v0.3.0` e release do instalador (publicado pelo usuário). A **atualização no aplicativo a partir da 0.2.0 foi verificada** pelo usuário. [Registro de publicação](docs/distribuicao/publicacao.md#registro-da-publicação-da-v030-2026-11-02).
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md) e o [relatório de validação](validation/reports/v0.3.0/README.md). O escopo foi fechado em 2026-11-02: o que não foi entregue vai para a [v0.4](docs/planos-execucao/plano-v0.4.md).
 

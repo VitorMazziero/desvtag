@@ -44,8 +44,8 @@
 
 O **WebKit do Playwright** (motor do Safari, versão 27.2 neste ambiente) foi acrescentado à configuração de testes e ao CI (Linux). A suíte E2E inteira roda nele; duas premissas dos testes eram do Chromium e foram corrigidas: (a) o WebKit **não inclui links na ordem do Tab** por padrão (no Safari é preciso Option+Tab ou a preferência «Pressionar Tab para destacar cada item»), então o link «Ir para o conteúdo» fica fora da sequência e o teste confere a ordem dos controles do cabeçalho; (b) uma espera faltava antes de ler as opções do seletor de tema.
 
-**WebKit do Playwright não é o Safari.** Safari real (macOS e iOS) **não foi verificado**: não há Mac neste ambiente. Fica registrado como **não verificado** até o usuário disponibilizar um Mac (ou um serviço de testes em Safari); IndexedDB/armazenamento persistente, downloads e fontes do Safari real não foram observados.
+**WebKit do Playwright não é o Safari.** Safari real (macOS e iOS) **não foi verificado**: não há Mac neste ambiente. Fica registrado como **não verificado**: o usuário decidiu em 2026-11-02 que **não haverá Mac** para isso. IndexedDB/armazenamento persistente, downloads e fontes do Safari real não foram observados; a cobertura é a do WebKit do Playwright no CI.
 
 ## 5. Domínio próprio
 
-**Sem decisão do usuário (PD-13): nada foi feito.** O endereço continua o do GitHub Pages. Se o usuário registrar um domínio: configurar `CNAME` no Pages, HTTPS, `base` do Vite, **atualizar o referenciador autorizado da chave do Picker e as origens do cliente OAuth** (DT-0025) e a política de privacidade.
+**Decisão do usuário (2026-11-02): não haverá domínio próprio**; o endereço é o do GitHub Pages (PD-13 resolvida). Se isso mudar no futuro: configurar `CNAME` no Pages, HTTPS, `base` do Vite, **atualizar o referenciador autorizado da chave do Picker e as origens do cliente OAuth** (DT-0025) e a política de privacidade.

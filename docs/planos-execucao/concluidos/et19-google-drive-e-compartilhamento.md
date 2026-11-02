@@ -99,4 +99,4 @@ Nenhum até o momento.
 O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
 
 - Autorização no Windows (loopback + PKCE + cofre), fila persistente e arquivo compartilhado real → [ET26](../plano-v0.4.md#et26--google-drive-completo-e-verificado).
-- **Verificação com contas reais do Google (T08)** → ET26 (depende do usuário).
+- **Verificação com contas reais do Google (T08)**: conexão com uma **conta real do Google** e **Salvar no Drive** (criação de «Teste_Drive.enzitag» na pasta «EnziTAG Optima») verificados pelo usuário na versão web publicada em 2026-11-02; o restante do roteiro → ET26 (depende do usuário).

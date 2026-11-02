@@ -1,6 +1,6 @@
-# Relatório de validação — v0.3.0 (candidata local)
+# Relatório de validação — v0.3.0
 
-**Estado:** verificação local final em 2026-11-02, na ramificação `feat/v0.3` (PR 6, **não fundido**), com o escopo **fechado por decisão do usuário** (o que não foi entregue vai para a [v0.4](../../../docs/planos-execucao/plano-v0.4.md)). A v0.3.0 **não foi publicada**: sem etiqueta, release nem Pages. · **Data:** 2026-11-02
+**Estado:** **publicada em 2026-11-02** (PR 6 fundido, etiqueta `v0.3.0`, Pages e release do instalador publicados; [registro](../../../docs/distribuicao/publicacao.md#registro-da-publicação-da-v030-2026-11-02)); escopo **fechado por decisão do usuário** (o que não foi entregue vai para a [v0.4](../../../docs/planos-execucao/plano-v0.4.md)). **A atualização no aplicativo 0.2.0 → 0.3.0 foi verificada pelo usuário.** · **Data:** 2026-11-02
 
 Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente ou foi desviado do plano**. Complementa os relatórios da [v0.1.0](../v0.1.0/README.md) e da [v0.2.0](../v0.2.0/README.md), que continuam valendo para o que a v0.3 não alterou. Não declara verificação no Windows 11 (a validação foi dispensada pelo usuário), nem no Safari real, nem com conta real do Google, nem nenhum dos marcos M1–M6. A versão do código é **0.3.0** (`check-versions`); a etiqueta, o release e o Pages dependem do «go» expresso do usuário.
 
@@ -10,7 +10,7 @@ Este relatório distingue o que **foi executado e tem evidência** do que **perm
 |---|---|
 | O que a v0.3 acrescenta? | Planilha de coleta (matriz com respostas e importação); níveis mistos e misturas (Scheffé, gráfico ternário); planejamentos D e I-ótimos com restrições; comparação pareada e modelo misto; ajuste de saturação (Monod, Haldane, Hill) e calculadora de potência; Google Drive opcional na versão web; relatório em Word; comentários de revisão; canais de atualização; notas de versão formatadas; revisão de espaçamento, logotipo único e rolagem entre etapas |
 | Está pronta localmente? | **Sim para o que foi entregue**: compila, passa nos testes e roda em cinco navegadores (Chromium, Firefox, WebKit do Playwright, Chrome e Edge) |
-| Está publicada? | **Não.** Depende de autorização do usuário |
+| Está publicada? | **Sim**, em 2026-11-02: versão web (Pages), etiqueta `v0.3.0` e release do instalador (publicado pelo usuário como *Latest*) |
 | Todo o plano da v0.3 foi entregue? | **Não.** Ver «Desvios e itens não entregues» |
 | Windows 11 / Safari real / Drive real? | **Não verificados** |
 
@@ -35,7 +35,7 @@ Este relatório distingue o que **foi executado e tem evidência** do que **perm
 | `node --test scripts/channels.test.mjs` | 4 aprovados |
 | Playwright (motor WebAssembly real), 5 navegadores | **671 aprovados de 675** (135 por navegador): os 4 que falharam foram **todos no Firefox**, por tempo esgotado sob carga paralela (4 *workers*; um dos falhos chegou a 1,5 min), e **passaram ao repetir** (3 com 2 *workers*; o axe do tema Industrial sozinho, duas vezes). É a mesma intermitência do Firefox já vista nas etapas anteriores; a causa não foi investigada |
 | `check-docs-links`, `check-case-collisions` | 251 arquivos `.md` e 1 518 links; 1 017 arquivos versionados, sem colisões de caixa |
-| CI do GitHub (PR 6) | primeira rodada do commit final: **documentação falhou** (pasta `ativos/` vazia fora do git; corrigido) e **Web falhou em 3 testes só no WebKit/Firefox da CI** (no WebKit do Linux o Tab alcança o link de salto e o nome sugerido do download troca espaço por «_»; um teste do Firefox estourou os 30 s); os três eram premissas de teste, corrigidas e verificadas em Chromium e WebKit; Rust, Tauri (Linux e Windows) passaram. A rodada seguinte é registrada na publicação |
+| CI do GitHub (PR 6) | primeira rodada do commit final: **documentação falhou** (pasta `ativos/` vazia fora do git; corrigido) e **Web falhou em 3 testes só no WebKit/Firefox da CI** (no WebKit do Linux o Tab alcança o link de salto e o nome sugerido do download troca espaço por «_»; um teste do Firefox estourou os 30 s); os três eram premissas de teste, corrigidas e verificadas em Chromium e WebKit; Rust, Tauri (Linux e Windows) passaram. A terceira rodada, no commit final `63960c3`, passou nos **5 jobs** ([execução 41524667311](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41524667311)); depois da mescla, a CI da `main` e a da etiqueta também passaram |
 | **Verificação nativa no Windows 10** (executável de verificação com `--features automation`, WebView2 por CDP, Windows 10 Pro 22H2) | **aprovada**: motor, `.enzitag`, estatísticas, planejamentos e comparações da v0.2; **na v0.3**: níveis mistos (5 casos), D e I-ótimo (ótimo conhecido e busca exaustiva), t pareado e Wilcoxon, potência e ajuste não linear (SciPy), seleção de modelos de dois níveis (statsmodels), 11 projetos de exemplo reabertos, PDF da figura e do relatório, **relatório em Word, comentário no relatório e comando nativo de atualização por canal** (o canal estável respondeu «não foi possível verificar», esperado: ainda não há manifesto publicado) |
 
 **Não executado nesta rodada:** o instalador NSIS assinado da v0.3 (construído pelo fluxo de release na publicação), o Windows 11 e a CI do GitHub para o último commit (conferida antes da publicação).
@@ -61,7 +61,7 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 |---|---|---|
 | **Relatório em Word** | Teste de unidade (pacote, títulos, tabelas, listas, imagens, paginação); E2E em navegador real (mesmos títulos do HTML, na mesma ordem; figuras PNG); abertura e conversão em PDF no **LibreOffice** (5 páginas, conferido a olho) | **Não aberto no Microsoft Word** |
 | **Comentários** | Rust (validação e JSON), reducer, E2E (escrever na figura, na tabela e no experimento, responder, resolver, salvar, reabrir, relatório HTML e Word), axe nos seis temas | Sem edição de comentário enviado |
-| **Google Drive** | Google **simulado** (unidade e E2E) | **Autorização real não verificada**; Windows sem Drive |
+| **Google Drive** | Google **simulado** (unidade e E2E); depois da publicação, conexão com uma **conta real do Google** e **Salvar no Drive** (criação de «Teste_Drive.enzitag» na pasta «EnziTAG Optima») verificados pelo usuário na versão web publicada em 2026-11-02 | Abrir pelo Picker, nova gravação, expiração, revogação, permissão e conflito **com conta real não verificados**; Windows sem Drive |
 | **Canais de atualização** | Teste do script de canais, do endereço no Rust e da preferência | **Fluxo `channels.yml` e atualização por canal não verificados** (exigem um release publicado) |
 | **WebKit** | Suíte E2E inteira no WebKit do Playwright | **Não é o Safari**; Safari real (Mac) não verificado |
 | Espaçamento, logotipo único, rolagem (ET21) | E2E de layout em 1200 px e 375 px nos seis temas | — |
@@ -90,9 +90,26 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 | npm — produção | **+ `docx` 9.15.1** (com `@types/node` e `undici-types`); **− `@tauri-apps/plugin-updater`** (a verificação passou ao Rust) | MIT | `docx` fica em um pacote carregado sob demanda (≈ 248 KB) e não acessa a rede |
 | `THIRD_PARTY_NOTICES.txt` | regenerado (61 pacotes npm, 7 fontes) | — | — |
 
+## Publicação
+
+| Hora (UTC, 2026-11-02) | Ato | Evidência |
+|---|---|---|
+| 21:2x | **CI verde no commit final do PR 6** (`63960c3`): documentação e versões, Rust, Web (contratos, lint, tipos, testes, build, E2E em Chromium, Firefox e WebKit), Tauri Linux e Tauri Windows | [execução 41524667311](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41524667311). As duas rodadas anteriores falharam e foram corrigidas: pasta `ativos/` vazia fora do git (job de documentação) e premissas de teste do WebKit do Linux e do Firefox da CI (ver o relatório) |
+| 21:26:19 | **PR 6 fundido** em `main` (mescla, por autorização do usuário: «you have go for merge/tag/Pages») | commit de mescla `20f337a` |
+| 21:26:31 | **Etiqueta anotada `v0.3.0`** («EnziTAG Optima v0.3.0 (experimental)») sobre `20f337a` | objeto da etiqueta `493db8e` |
+| 21:2x–21:44 | **CI da `main`** e **CI da etiqueta** verdes | execuções [41528343372](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528343372) e [41528370966](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528370966) |
+| 21:44:38 | Fluxo **Release** criou o **rascunho** com `EnziTAG-Optima_0.3.0_x64-setup.exe` (8 930 219 bytes), `.sig` (444 bytes) e `latest.json` | [execução 41528370967](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528370967) |
+| 21:30:29 | **GitHub Pages** publicado a partir de `main` | [execução 41528444201](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41528444201); `tests/public` contra o endereço público confirmou a **0.3.0** (abre, calcula, sem rede externa) no Chromium |
+| 22:01:24 | **Usuário publicou o release** como release normal: **Latest**, `isPrerelease = false` | `gh release view v0.3.0` |
+| 22:01:27–22:01:40 | Fluxo **Canais de atualização** rodou sozinho (evento `release`) e criou o release fixo `channel-experimental` (pré-lançamento, só com o `latest.json`) | [execução 41533596696](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41533596696) |
+| depois | **Manifestos conferidos**: `releases/download/channel-experimental/latest.json` (aplicativos 0.3) e `releases/latest/download/latest.json` (aplicativos 0.1 e 0.2) respondem **0.3.0**, com assinatura de 444 bytes e endereço do instalador que responde **200** (8 930 219 bytes); `channel-stable/latest.json` responde **404**, como esperado até a 1.0.0 | `curl` |
+| depois da publicação | **Atualização no aplicativo 0.2.0 → 0.3.0 verificada pelo usuário** (*Verificar atualizações* no aplicativo 0.2.0 instalado encontrou e instalou a 0.3.0) | relato do usuário em 2026-11-02 («a atualização 0.2.0 → 0.3.0 no aplicativo foi verificada») |
+| opcional | No aplicativo **0.3.0** instalado, *Verificar atualizações* no canal **experimental** deve responder «você já usa a versão mais recente» (o manifesto do canal responde 0.3.0); no **estável**, «não foi possível verificar» (sem versões até a 1.0.0) | não relatado; não bloqueia |
+
+
 ## Pendências do usuário
 
-1. Revisar e **autorizar** a fusão do PR 6, a etiqueta `v0.3.0`, o Pages e a publicação do release (nada disso foi feito).
-2. **Publicar os releases da série 0.x como releases normais** (não pré-lançamento) e, depois da publicação da v0.3.0, executar `channels.yml` (ou conferir que rodou) e **verificar a atualização por canal**.
-3. Decidir sobre **domínio próprio** (PD-13), sobre o **caminho da edição simultânea** (§9 da especificação) e se há um **Mac** para verificar o Safari.
+1. ~~Autorizar a fusão do PR 6, a etiqueta, o Pages e publicar o release~~ — **feito em 2026-11-02**.
+2. ~~Verificar a atualização 0.2.0 → 0.3.0~~ — **feito pelo usuário**. Continuar publicando a série 0.x como releases normais.
+3. ~~Domínio próprio e Mac~~ — **decidido em 2026-11-02**: GitHub Pages, sem domínio próprio; sem Mac (Safari real não verificado). Continua pendente o **caminho da edição simultânea** (§9 da especificação).
 4. Verificar o Drive com uma **conta real do Google** e abrir um relatório `.docx` no **Word**.
