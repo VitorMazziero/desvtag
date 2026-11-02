@@ -855,5 +855,30 @@
       "network": "Sem conexão com o Google. Seu trabalho continua no aplicativo; tente de novo quando houver rede.",
       "unknown": "O Drive devolveu um erro inesperado. Seu trabalho continua no aplicativo."
     }
+  },
+  "comments": {
+    "summary": "Comentários ({{count}}; {{open}} em aberto)",
+    "panelTitle": "Comentários do experimento ({{count}}; {{open}} em aberto)",
+    "intro": "Notas de revisão ficam guardadas no projeto, ligadas à análise ou à figura e à revisão dos dados em que foram escritas. Comentários de figuras são escritos na própria figura.",
+    "none": "Nenhum comentário ainda.",
+    "about": "Comentar sobre",
+    "new": "Novo comentário",
+    "author": "Seu nome (opcional, fica só neste dispositivo)",
+    "add": "Comentar",
+    "reply": "Responder",
+    "replyLabel": "Resposta",
+    "send": "Enviar resposta",
+    "resolve": "Resolver",
+    "reopen": "Reabrir",
+    "delete": "Excluir",
+    "confirmDelete": "Excluir este comentário e as respostas dele?",
+    "resolved": "resolvido",
+    "revision": "revisão {{id}}",
+    "target": {
+      "experiment": "Experimento",
+      "analysis": "Análise {{analysis}}",
+      "figure": "Figura «{{key}}»",
+      "table": "Tabela «{{key}}»"
+    }
   }
 }

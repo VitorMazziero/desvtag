@@ -290,6 +290,86 @@ ciLower: Stat,
 ciUpper: Stat, };
 
 /**
+ * Comentário ligado a um alvo e à revisão em que foi feito.
+ */
+export type Comment = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * A que se refere.
+ */
+target: CommentTarget, 
+/**
+ * Revisão dos dados vigente quando o comentário foi escrito.
+ */
+revisionId: StableId, 
+/**
+ * Nome de quem escreveu (livre; pode ficar vazio).
+ */
+author?: string | undefined, 
+/**
+ * Texto do comentário.
+ */
+text: string, 
+/**
+ * Criação (RFC 3339).
+ */
+createdAt: string, 
+/**
+ * Momento em que foi resolvido (RFC 3339); ausente enquanto estiver aberto.
+ */
+resolvedAt?: string, 
+/**
+ * Respostas, da mais antiga para a mais recente.
+ */
+replies?: Array<CommentReply> | undefined, };
+
+/**
+ * Resposta a um comentário.
+ */
+export type CommentReply = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome de quem respondeu (livre; pode ficar vazio).
+ */
+author?: string | undefined, 
+/**
+ * Texto da resposta.
+ */
+text: string, 
+/**
+ * Criação (RFC 3339).
+ */
+createdAt: string, };
+
+/**
+ * Alvo do comentário.
+ */
+export type CommentTarget = { 
+/**
+ * Tipo do alvo.
+ */
+kind: CommentTargetKind, 
+/**
+ * Chave estável da figura ou da tabela; vazia para experimento e análise.
+ */
+key?: string | undefined, 
+/**
+ * Análise a que o alvo pertence, quando houver.
+ */
+analysisId?: StableId, };
+
+/**
+ * A que o comentário se refere.
+ */
+export type CommentTargetKind = "experiment" | "analysis" | "figure" | "table";
+
+/**
  * Proposta de confirmação: previsões gravadas no momento da proposta, para comparação posterior
  * com o observado.
  */
@@ -1225,6 +1305,10 @@ mixtureModel?: MixtureModel,
  * Personalização gráfica por figura (chave estável da figura → ajustes).
  */
 figureStyles?: Record<string, FigureStyle> | undefined, 
+/**
+ * Comentários de revisão, ligados a análises, figuras e tabelas (v0.3).
+ */
+comments?: Array<Comment> | undefined, 
 /**
  * Experimento de origem, quando este é uma confirmação proposta por uma otimização.
  */

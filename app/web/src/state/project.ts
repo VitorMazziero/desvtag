@@ -3,6 +3,8 @@
 // texto digitado; a conversão para números ocorre ao montar o conjunto de dados.
 import type {
   AnalysisRecord,
+  Comment,
+  CommentTarget,
   ConfirmationPlan,
   CrdSpec,
   DescriptiveResult,
@@ -101,6 +103,8 @@ export interface ProjectState {
   mixtureModel: MixtureModel;
   /** Personalização gráfica por figura (chave estável da figura → ajustes). */
   figureStyles: Record<string, FigureStyle>;
+  /** Comentários de revisão ligados a análises, figuras e tabelas (v0.3). */
+  comments: Comment[];
   factors: FactorDraft[];
   responses: ResponseDraft[];
   rows: RowDraft[];
@@ -160,6 +164,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     mixture: null,
     mixtureModel: "quadratic",
     figureStyles: {},
+    comments: [],
     factors: [],
     responses: [],
     rows: [],
@@ -299,6 +304,10 @@ export type ProjectAction =
       now: string;
     }
   | { type: "setFigureStyle"; key: string; style: FigureStyle | null }
+  | { type: "addComment"; target: CommentTarget; text: string; author: string; now: string }
+  | { type: "replyComment"; id: string; text: string; author: string; now: string }
+  | { type: "setCommentResolved"; id: string; resolved: boolean; now: string }
+  | { type: "deleteComment"; id: string }
   | { type: "addRow" }
   | { type: "removeRow"; row: number }
   | { type: "setUnitColumn"; visible: boolean }
@@ -681,6 +690,67 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           empty || action.style === null ? rest : { ...rest, [action.key]: action.style },
       };
     }
+    case "addComment": {
+      const text = action.text.trim();
+      if (text === "") return state;
+      // A revisão do comentário é a da análise a que ele se refere; sem análise, a mais recente.
+      const analysis = state.analyses.find((a) => a.id === action.target.analysisId);
+      const revisionId = analysis?.revisionId ?? state.revisions[state.revisions.length - 1]?.id;
+      if (!revisionId) return state;
+      const { id } = freshId(
+        "c",
+        state.comments.length,
+        state.comments.map((c) => c.id),
+      );
+      const comment: Comment = {
+        id,
+        target: action.target,
+        revisionId,
+        ...(action.author.trim() !== "" ? { author: action.author.trim() } : {}),
+        text,
+        createdAt: action.now,
+      };
+      return { ...state, comments: [...state.comments, comment] };
+    }
+    case "replyComment": {
+      const text = action.text.trim();
+      if (text === "") return state;
+      return {
+        ...state,
+        comments: state.comments.map((c) => {
+          if (c.id !== action.id) return c;
+          const replies = c.replies ?? [];
+          const { id } = freshId(
+            `${c.id}-r`,
+            replies.length,
+            replies.map((r) => r.id),
+          );
+          return {
+            ...c,
+            replies: [
+              ...replies,
+              {
+                id,
+                ...(action.author.trim() !== "" ? { author: action.author.trim() } : {}),
+                text,
+                createdAt: action.now,
+              },
+            ],
+          };
+        }),
+      };
+    }
+    case "setCommentResolved":
+      return {
+        ...state,
+        comments: state.comments.map((c) => {
+          if (c.id !== action.id) return c;
+          const { resolvedAt: _resolvedAt, ...open } = c;
+          return action.resolved ? { ...open, resolvedAt: action.now } : open;
+        }),
+      };
+    case "deleteComment":
+      return { ...state, comments: state.comments.filter((c) => c.id !== action.id) };
     case "addRow": {
       const [row, counters] = blankRow(state);
       return { ...state, rows: [...state.rows, row], counters };

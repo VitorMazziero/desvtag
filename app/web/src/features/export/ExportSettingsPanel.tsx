@@ -79,6 +79,14 @@ export function ExportSettingsPanel() {
         />
         <span>{t("export.logo")}</span>
       </label>
+      <label className="check">
+        <input
+          type="checkbox"
+          checked={settings.reportComments}
+          onChange={(e) => update({ reportComments: e.target.checked })}
+        />
+        <span>{t("export.comments")}</span>
+      </label>
       <p className="muted small">{t("export.deviceNote")}</p>
       <div className="row">
         <ReportButton onDone={setNotice} />

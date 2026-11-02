@@ -31,7 +31,7 @@ Ferramentas de linha de comando (não entram no aplicativo): `wasm-bindgen-cli` 
 | `react-i18next` | 17.1.10 | Integração do i18next com React | MIT |
 | `@tauri-apps/api` | 2.12.4 | Chamada de comandos Tauri | Apache-2.0 OR MIT |
 | `pdfmake` | 0.3.13 | PDF de figuras e de relatórios (carregado sob demanda, só na exportação; traz `pdfkit`, `fontkit`, `png-js` e outras, todas MIT/BlueOak-1.0.0/0BSD; [DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)); inclui a fonte Roboto (OFL-1.1) embutida nos PDFs | MIT |
-| `docx` | 9.15.1 | Relatório em Word (.docx) (carregado sob demanda, só na exportação; roda no dispositivo, sem rede; traz `fflate`, `jszip`-equivalente interno e `@types/node`, todos MIT; [DT-0026](../decisoes-tecnicas/dt-0026-docx-comentarios-e-canais.md)) | MIT |
+| `docx` | 9.15.1 | Relatório em Word (.docx) (carregado sob demanda, só na exportação; roda no dispositivo, sem rede; traz `fflate`, `nanoid` e `@types/node`, todos MIT; [DT-0026](../decisoes-tecnicas/dt-0026-docx-comentarios-e-canais.md)) | MIT |
 | `@fontsource/host-grotesk`, `instrument-sans`, `geist-sans`, `geist-mono`, `eb-garamond`, `ibm-plex-mono` | 5.3.0 | Fontes locais dos temas (subconjunto latin; `ibm-plex-mono` no Industrial, v0.2) | OFL-1.1 |
 | `@fontsource/source-serif-4` | 5.3.1 | Fonte dos títulos do tema Organic (v0.2; [DT-0021](../decisoes-tecnicas/dt-0021-temas-adicionais-fontes-e-logo.md)) | OFL-1.1 |
 | `vite` | 8.3.5 | Bundler e servidor de desenvolvimento | MIT |

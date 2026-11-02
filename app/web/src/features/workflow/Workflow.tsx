@@ -6,6 +6,7 @@ import { AnalysisSetup, buildDataset } from "../analysis";
 import { MixtureAnalysis } from "../analysis/MixtureAnalysis";
 import { RepeatedMeasures } from "../analysis/RepeatedMeasures";
 import { SaturationFit } from "../analysis/SaturationFit";
+import { CommentsPanel } from "../comments";
 import { DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
@@ -145,6 +146,7 @@ export function Workflow({ language }: { language: Language }) {
         {step === "results" && state.mixture === null && (
           <>
             <ResultsView language={language} />
+            <CommentsPanel />
             {state.result &&
               !["surface", "procedure", "factorial", "oneWay", "design"].includes(
                 state.result.kind,

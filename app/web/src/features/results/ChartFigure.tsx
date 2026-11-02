@@ -6,6 +6,7 @@ import { addPngText, figurePdf, svgToPng, utf8 } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
+import { CommentThread } from "../comments";
 import { ExportButton } from "./ExportButton";
 import { FigureCustomizer } from "./FigureCustomizer";
 
@@ -41,6 +42,10 @@ export function ChartFigure({
   const screenSvg = applyChartStyle(applyFigureStyle(rawScreenSvg, figure, options), style);
   const exportSvg = applyChartStyle(applyFigureStyle(rawExportSvg, figure, options), style);
   const [message, setMessage] = useState<string | null>(null);
+  // Comentário de figura: a chave identifica a figura; a análise vigente fixa a revisão dos dados.
+  const analysisId = [...project.analyses]
+    .reverse()
+    .find((a) => a.signature === project.result?.signature)?.id;
 
   const finish = (name: string | null) =>
     setMessage(
@@ -60,6 +65,10 @@ export function ChartFigure({
         svg={rawScreenSvg}
         style={figure}
         onChange={(next) => dispatch({ type: "setFigureStyle", key: testId, style: next })}
+      />
+      <CommentThread
+        target={{ kind: "figure", key: testId, ...(analysisId ? { analysisId } : {}) }}
+        testId={testId}
       />
       <figcaption className="row">
         <ExportButton

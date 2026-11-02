@@ -11,6 +11,7 @@ import {
   buildReportHtml,
   cleanReportDom,
   cleanReportRoot,
+  commentsSection,
   exportLanguage,
   reportPdf,
   utf8,
@@ -92,6 +93,27 @@ export function ReportButton({
           ["exportedAt", nowIso()],
         ];
         const pairs = provenance.filter(([, v]) => v !== "");
+        // Comentários (opcional): entram como seção do mesmo DOM, para sair igual em HTML, PDF e Word.
+        if (settings.reportComments) {
+          const section = commentsSection(document, state.comments, {
+            title: tt("export.report.commentsTitle"),
+            resolved: tt("export.report.commentsResolved"),
+            revision: (id) => tt("export.report.commentsRevision", { id }),
+            date: (iso) => new Date(iso).toLocaleDateString(language),
+            target: (target) =>
+              target.kind === "experiment"
+                ? tt("export.report.commentsExperiment")
+                : target.kind === "analysis"
+                  ? tt("export.report.commentsAnalysis", { analysis: target.analysisId ?? "" })
+                  : tt(
+                      target.kind === "figure"
+                        ? "export.report.commentsFigure"
+                        : "export.report.commentsTable",
+                      { key: target.key ?? "" },
+                    ),
+          });
+          if (section) el.append(section);
+        }
         const title = `${state.name} — ${tt("export.report.title")}`;
         let saved: { name: string } | null;
         if (format === "pdf") {

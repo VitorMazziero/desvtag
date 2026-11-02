@@ -855,5 +855,30 @@
       "network": "No connection to Google. Your work stays in the app; try again when you are online.",
       "unknown": "Drive returned an unexpected error. Your work stays in the app."
     }
+  },
+  "comments": {
+    "summary": "Comments ({{count}}; {{open}} open)",
+    "panelTitle": "Experiment comments ({{count}}; {{open}} open)",
+    "intro": "Review notes are stored in the project, linked to the analysis or figure and to the data revision they were written against. Figure comments are written on the figure itself.",
+    "none": "No comments yet.",
+    "about": "Comment on",
+    "new": "New comment",
+    "author": "Your name (optional, stays on this device only)",
+    "add": "Comment",
+    "reply": "Reply",
+    "replyLabel": "Reply",
+    "send": "Send reply",
+    "resolve": "Resolve",
+    "reopen": "Reopen",
+    "delete": "Delete",
+    "confirmDelete": "Delete this comment and its replies?",
+    "resolved": "resolved",
+    "revision": "revision {{id}}",
+    "target": {
+      "experiment": "Experiment",
+      "analysis": "Analysis {{analysis}}",
+      "figure": "Figure «{{key}}»",
+      "table": "Table «{{key}}»"
+    }
   }
 }

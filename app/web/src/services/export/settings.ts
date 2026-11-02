@@ -16,6 +16,8 @@ export interface ExportSettings {
   digits: number;
   /** Incluir o logotipo do grupo nos relatórios (crédito; pode ser desligado). */
   reportLogo: boolean;
+  /** Incluir os comentários do experimento ao final dos relatórios. */
+  reportComments: boolean;
 }
 
 export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
@@ -25,6 +27,7 @@ export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
   fontScale: 1,
   digits: 4,
   reportLogo: true,
+  reportComments: false,
 };
 
 const KEY = "optima.exportSettings";
@@ -41,6 +44,7 @@ export function loadExportSettings(): ExportSettings {
       fontScale: [0.85, 1, 1.2].includes(v.fontScale as number) ? (v.fontScale as number) : 1,
       digits: Math.min(6, Math.max(3, Math.floor(Number(v.digits) || 4))),
       reportLogo: v.reportLogo !== false,
+      reportComments: v.reportComments === true,
     };
   } catch {
     return DEFAULT_EXPORT_SETTINGS;

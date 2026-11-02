@@ -409,9 +409,17 @@
       "buttonPdf": "Exportar relatório (PDF)",
       "footerPdf": "EnziTAG Optima {{version}} — PDF gerado localmente; as figuras são vetoriais.",
       "page": "Página {{page}} de {{total}}",
-      "buttonDocx": "Exportar relatório (Word)"
+      "buttonDocx": "Exportar relatório (Word)",
+      "commentsTitle": "Comentários",
+      "commentsResolved": "resolvido",
+      "commentsRevision": "revisão {{id}}",
+      "commentsExperiment": "Experimento",
+      "commentsAnalysis": "Análise {{analysis}}",
+      "commentsFigure": "Figura «{{key}}»",
+      "commentsTable": "Tabela «{{key}}»"
     },
-    "logo": "Incluir o logotipo do grupo nos relatórios"
+    "logo": "Incluir o logotipo do grupo nos relatórios",
+    "comments": "Incluir os comentários do experimento no fim dos relatórios"
   },
   "figure": {
     "customize": "Personalizar figura",
