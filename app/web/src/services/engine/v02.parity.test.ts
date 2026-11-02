@@ -197,4 +197,35 @@ describe("v0.2 operations in WebAssembly", () => {
       );
     }
   });
+  it("optimal design (WebAssembly) reaches the known D-optimum and the exhaustive optima", () => {
+    // Ótimo conhecido: o fatorial 2³ para o modelo com interações tem ln|M| = 7·ln 8.
+    const factors = [1, 2, 3].map((i) => ({ id: `f${i}`, name: `X${i}`, low: 10, high: 30 }));
+    const known = call({
+      type: "designOptimalGenerate",
+      factors,
+      model: "interactions",
+      criterion: "d",
+      runs: 8,
+      levels: 3,
+      constraints: [],
+      fixedRuns: [],
+      starts: 12,
+      randomize: false,
+      seed: 7,
+    });
+    expect(known.metrics.logDet).toBeCloseTo(7 * Math.log(8), 9);
+    const cases = read("optimal_design/optimal.json").exhaustiveCases as Json[];
+    for (const c of cases) {
+      const got = call({
+        type: "designOptimalGenerate",
+        ...c.spec,
+        factors: (c.spec.factors as Json[]).map((f, i) => ({ id: `f${i + 1}`, ...f })),
+      });
+      const value =
+        c.spec.criterion === "d" ? got.metrics.logDet : -got.metrics.iAverage / c.spec.runs;
+      expect(Math.abs(value - c.expected.best)).toBeLessThan(
+        1e-9 * (1 + Math.abs(c.expected.best)),
+      );
+    }
+  });
 });

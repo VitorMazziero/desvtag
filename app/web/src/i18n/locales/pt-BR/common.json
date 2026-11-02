@@ -434,7 +434,8 @@
       "crd": "Um fator categórico (DIC aleatorizado)",
       "rcbd": "Um fator categórico em blocos (DBC aleatorizado)",
       "mixed": "Níveis mistos (vários fatores)",
-      "mixture": "Misturas (componentes que somam 1)"
+      "mixture": "Misturas (componentes que somam 1)",
+      "optimal": "Ótimo D/I (restrições e ampliação)"
     },
     "crd": {
       "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
@@ -508,6 +509,58 @@
       "exportCsv": "Matriz de misturas (CSV)",
       "support": "Componentes presentes",
       "extraCenter": "central extra"
+    },
+    "optimal": {
+      "title": "Planejamento D e I-ótimo",
+      "intro": "Escolhe, entre uma malha de candidatos dentro das suas restrições, os ensaios que melhor estimam o modelo: D maximiza a informação sobre os coeficientes; I minimiza a variância média de predição na região. Serve para regiões irregulares, número de ensaios fixado e para ampliar ensaios já realizados.",
+      "needFactors": "Cadastre na etapa anterior pelo menos um fator numérico com nome.",
+      "needRanges": "Informe o limite baixo e o alto (números) de cada fator escolhido.",
+      "factors": "Fatores e faixas",
+      "low": "Limite baixo de {{name}}",
+      "high": "Limite alto de {{name}}",
+      "model": "Modelo",
+      "models": {
+        "linear": "Linear (efeitos principais)",
+        "interactions": "Com interações de dois fatores",
+        "quadratic": "Quadrático completo"
+      },
+      "criterion": "Critério",
+      "criteria": {
+        "d": "D (informação dos coeficientes)",
+        "i": "I (variância média de predição)"
+      },
+      "runs": "Total de ensaios",
+      "levels": "Níveis por fator na malha",
+      "starts": "Inícios aleatórios",
+      "constraints": "Restrições lineares (soma de coeficiente × valor ≤ limite, em unidades reais)",
+      "coefficient": "Restrição {{n}}: coeficiente de {{name}}",
+      "upper": "Limite",
+      "upperLabel": "Restrição {{n}}: limite",
+      "addConstraint": "Adicionar restrição",
+      "removeConstraint": "Remover",
+      "constraintHelp": "Exemplo: coeficientes 1 e 1 e limite 40 significam fator 1 + fator 2 ≤ 40. Deixe em branco o coeficiente de um fator que não participa.",
+      "augment": "Ampliar: manter os {{count}} ensaios já realizados (linhas com fatores numéricos e resposta)",
+      "randomize": "Aleatorizar a ordem de execução dos ensaios novos",
+      "search": "Buscar planejamento",
+      "searching": "Buscando…",
+      "cancel": "Cancelar",
+      "cancelled": "Busca cancelada.",
+      "result": "Planejamento encontrado",
+      "summary": "{{runs}} ensaios escolhidos entre {{candidates}} candidatos; o melhor valor foi alcançado em {{reached}} de {{starts}} inícios.",
+      "noGlobal": "A busca é local, com vários inícios: o planejamento é muito bom para o critério, mas o aplicativo não garante o ótimo global.",
+      "metrics": {
+        "parameters": "Parâmetros do modelo",
+        "d": "Eficiência D (por ensaio)",
+        "a": "Eficiência A",
+        "g": "Eficiência G",
+        "i": "Variância média de predição (escalada)"
+      },
+      "exportCsv": "Matriz ótima (CSV)",
+      "status": "Situação",
+      "done": "já realizado",
+      "new": "novo",
+      "apply": "Usar este planejamento nos dados",
+      "applied": "{{count}} ensaios novos foram para a grade de dados; a análise será de superfície de resposta (escolha os termos do modelo no resultado)."
     }
   },
   "optimization": {

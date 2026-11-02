@@ -47,6 +47,7 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "mixed_levels_design",
                     "mixture_design",
                     "mixture_model",
+                    "optimal_design",
                     "two_level_design_analysis",
                     "response_surface_design",
                     "response_surface",

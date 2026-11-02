@@ -106,6 +106,14 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::DesignOptimalGenerate(req) => {
+            match optima_core::designs::optimal::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignOptimalGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
         Operation::MixtureAnalyze(req) => match optima_core::models::mixture::analyze(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::MixtureAnalyze(Box::new(result)),

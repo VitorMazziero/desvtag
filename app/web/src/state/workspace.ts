@@ -69,6 +69,7 @@ const PROJECT_ACTIONS = new Set<string>([
   "applyMixed",
   "applyMixture",
   "setMixtureModel",
+  "applyOptimal",
   "setFigureStyle",
   "addRow",
   "removeRow",

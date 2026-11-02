@@ -1830,6 +1830,47 @@ issues: Array<Issue>,
 provenance: Provenance, };
 
 /**
+ * Planejamento gerado.
+ */
+export type GeneratedOptimal = { 
+/**
+ * Especificação usada.
+ */
+spec: OptimalSpec, 
+/**
+ * Candidatos (depois das restrições).
+ */
+candidates: number, 
+/**
+ * Ensaios (já realizados primeiro).
+ */
+runs: Array<OptimalRun>, 
+/**
+ * Critérios do planejamento final.
+ */
+metrics: OptimalMetrics, 
+/**
+ * Inícios executados.
+ */
+startsRun: number, 
+/**
+ * Inícios que chegaram ao melhor valor (a menos de 1e-9 relativo).
+ */
+startsReachingBest: number, 
+/**
+ * Algoritmo.
+ */
+algorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * DBC gerado.
  */
 export type GeneratedRcbd = { 
@@ -2177,6 +2218,19 @@ nLetters: number,
  * Havia pares sem resultado, tratados como diferentes.
  */
 hasUnknownPairs: boolean, };
+
+/**
+ * Restrição linear `Σ coeficienteᵢ · xᵢ ≤ limite` em unidades reais.
+ */
+export type LinearConstraint = { 
+/**
+ * Coeficiente de cada fator (mesma ordem de `factors`).
+ */
+coefficients: Array<number>, 
+/**
+ * Limite superior da combinação.
+ */
+upper: number, };
 
 /**
  * Resultado do ajuste.
@@ -2929,12 +2983,138 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designOptimalGenerate" } & OptimalSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designOptimalGenerate" } & GeneratedOptimal | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+
+/**
+ * Critério de otimalidade.
+ */
+export type OptimalCriterion = "d" | "i";
+
+/**
+ * Fator quantitativo com faixa.
+ */
+export type OptimalFactor = { 
+/**
+ * Identificador do fator no experimento.
+ */
+id: StableId, 
+/**
+ * Nome do fator.
+ */
+name: string, 
+/**
+ * Limite inferior (unidade real).
+ */
+low: number, 
+/**
+ * Limite superior (unidade real).
+ */
+high: number, };
+
+/**
+ * Valores dos critérios para um planejamento.
+ */
+export type OptimalMetrics = { 
+/**
+ * Número de parâmetros do modelo.
+ */
+parameters: number, 
+/**
+ * `ln|XᵀX|`; indefinido (`null`) se a matriz for singular.
+ */
+logDet: number | null, 
+/**
+ * Eficiência D por ensaio: `|XᵀX|^(1/p) / n`.
+ */
+dEfficiency: number | null, 
+/**
+ * Eficiência A: `p / (n·tr((XᵀX)⁻¹))`.
+ */
+aEfficiency: number | null, 
+/**
+ * Eficiência G: `p / (n·máx d(x))` sobre os candidatos.
+ */
+gEfficiency: number | null, 
+/**
+ * Variância média de predição escalada `n·tr((XᵀX)⁻¹W)` sobre os candidatos.
+ */
+iAverage: number | null, };
+
+/**
+ * Modelo a estimar.
+ */
+export type OptimalModel = "linear" | "interactions" | "quadratic";
+
+/**
+ * Um ensaio do resultado.
+ */
+export type OptimalRun = { 
+/**
+ * Posição (1-based): primeiro os já realizados, depois os novos.
+ */
+run: number, 
+/**
+ * Já realizado (mantido).
+ */
+fixed: boolean, 
+/**
+ * Níveis em unidades reais.
+ */
+real: Array<number>, 
+/**
+ * Níveis codificados.
+ */
+coded: Array<number>, };
+
+/**
+ * Especificação do planejamento ótimo.
+ */
+export type OptimalSpec = { 
+/**
+ * Fatores (1 a 5).
+ */
+factors: Array<OptimalFactor>, 
+/**
+ * Modelo.
+ */
+model: OptimalModel, 
+/**
+ * Critério.
+ */
+criterion: OptimalCriterion, 
+/**
+ * Total de ensaios, **incluindo** os já realizados.
+ */
+runs: number, 
+/**
+ * Níveis por fator na malha de candidatos (3 ou 5).
+ */
+levels: number, 
+/**
+ * Restrições lineares.
+ */
+constraints: Array<LinearConstraint>, 
+/**
+ * Ensaios já realizados (unidades reais, mesma ordem dos fatores), mantidos no planejamento.
+ */
+fixedRuns: Array<Array<number>>, 
+/**
+ * Inícios aleatórios (1 a 50).
+ */
+starts: number, 
+/**
+ * Aleatorizar a ordem de execução dos ensaios novos.
+ */
+randomize: boolean, 
+/**
+ * Semente (inteiro de até 2⁵³ − 1 na interface).
+ */
+seed: number, };
 
 /**
  * Pedido da malha de desejabilidade.

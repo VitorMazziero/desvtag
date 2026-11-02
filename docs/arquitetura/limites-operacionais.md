@@ -84,3 +84,7 @@ Medida de ponta a ponta no Chromium e no Firefox (exemplo 04, otimização com 4
 1. ~~Acelerar o cálculo dos valores-p de Tukey~~ — feito na v0.2 (tabela de `W(w; k)`). Falta caracterizar os limites do Dunnett exato e das operações novas.
 2. Medir o WebAssembly com os mesmos conjuntos sintéticos (aqui só há uma medição de ponta a ponta).
 3. Repetir as medições no Windows 11 (instalador) e em equipamento de referência.
+
+## Planejamento ótimo (v0.3)
+
+Limites do aplicativo: 5 fatores, 60 ensaios, 50 inícios e 1 500 candidatos depois das restrições. Medições nativas (`release`, 10 inícios, critério I, quadrático, Windows 10): 5 fatores × 3 níveis × 40 ensaios ≈ 1,6 s; 4 × 5 níveis × 30 ensaios ≈ 2,2 s ([`worst_cases_timing`](../../app/crates/optima-core/tests/optimal_validation.rs)). O WebAssembly não foi medido separadamente; a busca pode ser cancelada.

@@ -7,10 +7,11 @@ import { useProject } from "../../state/ProjectContext";
 import { CrdPanel } from "./CrdPanel";
 import { MixedPanel } from "./MixedPanel";
 import { MixturePanel } from "./MixturePanel";
+import { OptimalPanel } from "./OptimalPanel";
 import { RcbdPanel } from "./RcbdPanel";
 import { TwoLevelPanel } from "./TwoLevelPanel";
 
-type Mode = "factorial" | "crd" | "rcbd" | "mixed" | "mixture";
+type Mode = "factorial" | "crd" | "rcbd" | "mixed" | "mixture" | "optimal";
 
 export function DesignPanel({ language }: { language: Language }) {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ export function DesignPanel({ language }: { language: Language }) {
     <>
       <fieldset className="editor-card" data-testid="design-mode">
         <legend>{t("design.mode.legend")}</legend>
-        {(["factorial", "crd", "rcbd", "mixed", "mixture"] as const).map((m) => (
+        {(["factorial", "crd", "rcbd", "mixed", "mixture", "optimal"] as const).map((m) => (
           <label className="check" key={m}>
             <input
               type="radio"
@@ -59,6 +60,8 @@ export function DesignPanel({ language }: { language: Language }) {
         <MixedPanel />
       ) : mode === "mixture" ? (
         <MixturePanel />
+      ) : mode === "optimal" ? (
+        <OptimalPanel language={language} />
       ) : (
         <TwoLevelPanel language={language} />
       )}

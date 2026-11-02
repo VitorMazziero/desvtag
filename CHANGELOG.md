@@ -12,6 +12,10 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Planejamentos ótimos (ET16)
+
+- **Planejamento D e I-ótimo** por troca de Fedorov sobre uma malha de candidatos, com **restrições lineares** entre os fatores e **ampliação** que mantém os ensaios já realizados; relata eficiências D, A e G e a variância média de predição, e informa em quantos inícios o melhor valor foi alcançado. Validado contra NumPy e contra a busca exaustiva em 6 problemas pequenos. [Método](docs/metodos/planejamentos-otimos.md). **Sem garantia de ótimo global**; a análise posterior é a de superfície de resposta.
+
 ### Níveis mistos (ET15)
 
 - **Misturas**: simplex-lattice `{q, m}` e simplex-centroide com limites inferiores (pseudocomponentes), repetições e pontos centrais extras; modelos de **Scheffé** (linear, quadrático e cúbico especial) sem intercepto com ANOVA centrada, e **gráfico ternário** para três componentes. Validados contra `itertools` e `statsmodels` (11 casos). [Método](docs/metodos/misturas.md). Sem limites superiores, sem otimização no simplex e **a análise de misturas não é guardada no projeto** nem entra nos relatórios.

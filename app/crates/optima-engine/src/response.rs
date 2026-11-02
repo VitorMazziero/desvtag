@@ -9,6 +9,7 @@ use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::designs::completely_randomized::GeneratedCrd;
 use optima_core::designs::mixed_levels::GeneratedMixed;
 use optima_core::designs::mixture::GeneratedMixture;
+use optima_core::designs::optimal::GeneratedOptimal;
 use optima_core::designs::randomized_block::GeneratedRcbd;
 use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
@@ -96,6 +97,8 @@ pub enum OperationResult {
     DesignMixtureGenerate(Box<GeneratedMixture>),
     /// Modelo de Scheffé ajustado.
     MixtureAnalyze(Box<MixtureAnalysis>),
+    /// Planejamento ótimo gerado.
+    DesignOptimalGenerate(Box<GeneratedOptimal>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.

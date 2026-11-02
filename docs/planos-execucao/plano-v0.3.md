@@ -34,7 +34,7 @@ Ao final da v0.3:
 | Família de fonte da figura e hachura no PDF | DT-0020 (limitações aceitas) | ET14 (melhoria; aceitas até lá) |
 | Níveis mistos | F09a | [ET15](ativos/et15-niveis-mistos-e-misturas.md) |
 | Misturas | F09b | ET15 |
-| Ótimos e sujeitos a restrições, ampliação sequencial | F09c | [ET16](planejados/et16-planejamentos-otimos-e-restritos.md) |
+| Ótimos e sujeitos a restrições, ampliação sequencial | F09c | [ET16](ativos/et16-planejamentos-otimos-e-restritos.md) |
 | Modelos mistos | F09d | [ET17](planejados/et17-modelos-mistos-e-medidas-repetidas.md) |
 | Comparações pareadas (amostras dependentes) e medidas repetidas | F08/F09e | ET17 |
 | Ajuste não linear (Monod) | F09f | [ET18](planejados/et18-nao-linear-e-potencia.md) |
@@ -61,7 +61,7 @@ Ao final da v0.3:
 | [ET13](concluidos/et13-planilha-de-coleta.md) | Planilha de coleta: matriz com respostas e importação das respostas | F02, F05–F06 (U05, U16) | v0.2.0 | Ida e volta da matriz com conferência de níveis |
 | [ET14](ativos/et14-itens-adiados-v01-v02.md) | Itens adiados da v0.1 e da v0.2 | F05, F10, F12, F13 | ET13 (ordem); publicação da v0.2 (T01) | Atualização verificada, seleção em dois níveis, capturas EN, guia de resultados |
 | [ET15](ativos/et15-niveis-mistos-e-misturas.md) | Níveis mistos e misturas | F09a, F09b | ET14 | Geração e análise com referência independente |
-| [ET16](planejados/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |
+| [ET16](ativos/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |
 | [ET17](planejados/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
 | [ET18](planejados/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
@@ -78,7 +78,7 @@ Ao final da v0.3:
 | ET21 Espaçamento, logotipo único e rolagem | **Quase concluída** (T01 parcial, T04 e T06 pendentes: revisão tela a tela fora das telas medidas e inspeção no WebView2) | Capturas antes/depois e conferência no aplicativo instalado |
 | ET14 Itens adiados | **Em andamento** (T01, T04–T07 e T09 feitas) | T02 (depende do usuário: capturas do Protimiza) e T03 (seleção de modelos para efeitos de dois níveis) |
 | ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos e misturas feitos e validados) | Limites superiores, otimização no simplex, guarda da análise de misturas no projeto, exemplos; estimabilidade em fracionários de níveis mistos |
-| ET16 Planejamentos ótimos | Planejada | tudo |
+| ET16 Planejamentos ótimos | **Em andamento** (D e I-ótimos, restrições e ampliação entregues e validados) | Exemplo, verificação nativa, blocos na ampliação, gráfico de variância de predição |
 | ET17 Modelos mistos e medidas repetidas | Planejada | tudo |
 | ET18 Monod e potência | Planejada | tudo |
 | ET19 Google Drive | Planejada | credenciais OAuth do usuário (PD-09) e tudo |

@@ -7,6 +7,7 @@ use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::completely_randomized::CrdSpec;
 use optima_core::designs::mixed_levels::MixedSpec;
 use optima_core::designs::mixture::MixtureSpec;
+use optima_core::designs::optimal::OptimalSpec;
 use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
@@ -49,6 +50,8 @@ pub enum Operation {
     DesignMixtureGenerate(MixtureSpec),
     /// Ajusta um modelo de Scheffé (`mixture.analyze`).
     MixtureAnalyze(Box<MixtureAnalysisRequest>),
+    /// Gera um planejamento D ou I-ótimo (`design.optimalGenerate`).
+    DesignOptimalGenerate(OptimalSpec),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).

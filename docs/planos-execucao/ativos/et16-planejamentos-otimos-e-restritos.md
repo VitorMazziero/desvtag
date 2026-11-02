@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** (núcleo, motor e interface entregues; fechamento pendente de verificação nativa) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F09c |
 | Marco | Prepara M4 |
 | Depende de | ET15 (fatores de níveis mistos e componentes de mistura como candidatos) |
 | Módulos | C13 (`designs/{optimal,constraints,augmentation}.rs`), C03 (álgebra), C06 (matriz do modelo), U06, U08 |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -45,12 +45,12 @@ Gerar planejamentos **D-ótimos e I-ótimos** para um modelo escolhido, em regi�
 
 ## 5. Tarefas
 
-- [ ] **T01** — Especificação (`docs/metodos/planejamentos-otimos.md`) e DTs.
-- [ ] **T02** — Núcleo: candidatos com restrições, critérios, eficiências e algoritmo(s); propriedades (viabilidade, rank) e casos independentes.
-- [ ] **T03** — Núcleo: ampliação sequencial com ensaios fixos e blocos.
-- [ ] **T04** — Operação do motor com cancelamento (Worker recriado no navegador, como na otimização) e paridade.
-- [ ] **T05** — Interface: escolha do modelo, restrições, número de ensaios, critério; resultado com eficiências, gráfico de variância de predição e matriz exportável (planilha de coleta, ET13).
-- [ ] **T06** — Exemplos, E2E, verificação nativa e documentação.
+- [x] **T01** — Especificação [`planejamentos-otimos.md`](../../metodos/planejamentos-otimos.md); as decisões (troca de Fedorov com atualizações de posto 1, critério D por padrão para triagem e I para predição, inícios com semente e cancelamento) estão na especificação, sem DT separada.
+- [x] **T02** — Núcleo `designs/optimal.rs`: candidatos com restrições, critérios D e I, eficiências D, A e G, troca de Fedorov com vários inícios; testes de propriedade e casos independentes (NumPy e busca exaustiva).
+- [x] **T03** — Ampliação com ensaios já realizados mantidos no planejamento e na matriz de informação. *Blocos na ampliação não entregues.*
+- [x] **T04** — Operação `designOptimalGenerate`, contratos gerados, paridade WebAssembly e cancelamento pelo canal da busca (`client.cancel`, como na otimização).
+- [x] **T05** — `OptimalPanel`: faixas, modelo, critério, número de ensaios, restrições, ampliação, busca cancelável, eficiências, tabela, CSV/XLSX (planilha de coleta) e uso nos dados (análise de superfície); PT/EN. *O gráfico de variância de predição não foi entregue.*
+- [~] **T06** — E2E (`methods-flow.spec.ts`) e documentação feitos; exemplo em `examples/` e verificação nativa pendentes.
 
 ## 6. Entregas
 
@@ -84,6 +84,7 @@ Especificação, DTs, limites operacionais, mapa de módulos, fichas, matriz de 
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Etapa não iniciada. |
+| 2026-11-02 | **Ativada e implementada.** Núcleo, motor, interface e validação (NumPy e busca exaustiva, 6 problemas). Desempenho nativo medido (≤ 2,3 s nos piores casos). Pendentes: exemplo, verificação nativa e gráfico de variância de predição. |
 
 ## 12. Desvios e descobertas
 

@@ -275,6 +275,13 @@ export type ProjectAction =
       now: string;
     }
   | { type: "setMixtureModel"; model: MixtureModel }
+  /** Planejamento ótimo aplicado: as linhas viram a matriz personalizada, analisada como superfície. */
+  | {
+      type: "applyOptimal";
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      now: string;
+    }
   | {
       type: "applyMixed";
       mixed: MixedSpec;
@@ -611,6 +618,30 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           factorId: null,
           procedure: null,
           factorial: null,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "applyOptimal": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: null,
+        mixed: null,
+        mixture: null,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: null,
+          surface: true,
         },
         result: null,
       };

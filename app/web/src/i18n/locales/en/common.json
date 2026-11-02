@@ -434,7 +434,8 @@
       "crd": "One categorical factor (randomized CRD)",
       "rcbd": "One categorical factor in blocks (randomized RCBD)",
       "mixed": "Mixed levels (several factors)",
-      "mixture": "Mixtures (components summing to 1)"
+      "mixture": "Mixtures (components summing to 1)",
+      "optimal": "D/I-optimal (constraints and augmentation)"
     },
     "crd": {
       "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
@@ -508,6 +509,58 @@
       "exportCsv": "Mixture matrix (CSV)",
       "support": "Components present",
       "extraCenter": "extra center"
+    },
+    "optimal": {
+      "title": "D- and I-optimal design",
+      "intro": "Chooses, from a grid of candidates inside your constraints, the runs that best estimate the model: D maximizes the information on the coefficients; I minimizes the average prediction variance over the region. Useful for irregular regions, a fixed number of runs and for augmenting runs already done.",
+      "needFactors": "In the previous step, add at least one named numeric factor.",
+      "needRanges": "Enter the low and high limits (numbers) of every chosen factor.",
+      "factors": "Factors and ranges",
+      "low": "Low limit of {{name}}",
+      "high": "High limit of {{name}}",
+      "model": "Model",
+      "models": {
+        "linear": "Linear (main effects)",
+        "interactions": "With two-factor interactions",
+        "quadratic": "Full quadratic"
+      },
+      "criterion": "Criterion",
+      "criteria": {
+        "d": "D (coefficient information)",
+        "i": "I (average prediction variance)"
+      },
+      "runs": "Total runs",
+      "levels": "Levels per factor in the grid",
+      "starts": "Random starts",
+      "constraints": "Linear constraints (sum of coefficient × value ≤ limit, in real units)",
+      "coefficient": "Constraint {{n}}: coefficient of {{name}}",
+      "upper": "Limit",
+      "upperLabel": "Constraint {{n}}: limit",
+      "addConstraint": "Add constraint",
+      "removeConstraint": "Remove",
+      "constraintHelp": "Example: coefficients 1 and 1 with limit 40 mean factor 1 + factor 2 ≤ 40. Leave blank the coefficient of a factor that does not take part.",
+      "augment": "Augment: keep the {{count}} runs already done (rows with numeric factors and a response)",
+      "randomize": "Randomize the run order of the new runs",
+      "search": "Search design",
+      "searching": "Searching…",
+      "cancel": "Cancel",
+      "cancelled": "Search cancelled.",
+      "result": "Design found",
+      "summary": "{{runs}} runs chosen from {{candidates}} candidates; the best value was reached in {{reached}} of {{starts}} starts.",
+      "noGlobal": "The search is local with several starts: the design is very good for the criterion, but the application does not guarantee the global optimum.",
+      "metrics": {
+        "parameters": "Model parameters",
+        "d": "D-efficiency (per run)",
+        "a": "A-efficiency",
+        "g": "G-efficiency",
+        "i": "Average prediction variance (scaled)"
+      },
+      "exportCsv": "Optimal matrix (CSV)",
+      "status": "Status",
+      "done": "already done",
+      "new": "new",
+      "apply": "Use this design in the data",
+      "applied": "{{count}} new runs went to the data grid; the analysis will be a response surface (choose the model terms in the result)."
     }
   },
   "optimization": {

@@ -276,6 +276,55 @@ test("misturas: simplex-lattice {3,2}, resposta, modelo quadrático de Scheffé 
   await page.getByTestId("ternary-plot").screenshot({ path: testInfo.outputPath("ternario.png") });
 });
 
+test("planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  for (const [i, name] of ["Temperatura", "pH"].entries()) {
+    await page.getByRole("button", { name: "Adicionar fator" }).click();
+    await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
+    await page.getByLabel("Tipo").nth(i).selectOption("numeric");
+  }
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /Ótimo D\/I/ })
+    .check();
+  await page.getByLabel("Limite baixo de Temperatura").fill("20");
+  await page.getByLabel("Limite alto de Temperatura").fill("40");
+  await page.getByLabel("Limite baixo de pH").fill("5");
+  await page.getByLabel("Limite alto de pH").fill("7");
+  await page.getByRole("combobox", { name: "Modelo" }).selectOption("quadratic");
+  await page.getByLabel("Total de ensaios").fill("9");
+  // Restrição: Temperatura + 5·pH ≤ 70 (corta o canto de temperatura e pH altos).
+  await page.getByRole("button", { name: "Adicionar restrição" }).click();
+  await page.getByLabel("Restrição 1: coeficiente de Temperatura").fill("1");
+  await page.getByLabel("Restrição 1: coeficiente de pH").fill("5");
+  await page.getByLabel("Restrição 1: limite").fill("70");
+  await page.getByRole("button", { name: "Buscar planejamento" }).click();
+
+  await expect(page.getByTestId("optimal-summary")).toContainText("9 ensaios escolhidos entre");
+  const table = page.getByTestId("optimal-table");
+  await expect(table.locator("tbody tr")).toHaveCount(9);
+  for (const row of await table.locator("tbody tr").all()) {
+    const cells = await row.locator("td").allTextContents();
+    const temperature = Number((cells[1] ?? "").replace(",", "."));
+    const ph = Number((cells[2] ?? "").replace(",", "."));
+    expect(temperature + 5 * ph).toBeLessThanOrEqual(70 + 1e-9);
+  }
+  await expect(page.getByTestId("optimal-metrics")).toContainText("ln|X′X|");
+  await expect(page.getByTestId("optimal-result")).toContainText("não garante o ótimo global");
+
+  await page.getByRole("button", { name: "Usar este planejamento nos dados" }).click();
+  await expect(page.getByTestId("optimal-applied")).toContainText("9 ensaios novos");
+  await expect(page.getByLabel("Temperatura — Obs. 9")).not.toHaveValue("");
+  await expect(page.getByLabel("pH — Obs. 1")).not.toHaveValue("");
+});
+
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
   page,
 }) => {

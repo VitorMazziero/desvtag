@@ -45,7 +45,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET13 | Planilha de coleta: matriz com respostas e importação das respostas | v0.3 | **Concluído** (2026-11-02) | [concluidos/et13-planilha-de-coleta.md](concluidos/et13-planilha-de-coleta.md) |
 | ET14 | Itens adiados da v0.1 e da v0.2 | v0.3 | **Ativo** (2026-11-02) | [ativos/et14-itens-adiados-v01-v02.md](ativos/et14-itens-adiados-v01-v02.md) |
 | ET15 | Níveis mistos e misturas | v0.3 | **Ativo** (2026-11-02) | [ativos/et15-niveis-mistos-e-misturas.md](ativos/et15-niveis-mistos-e-misturas.md) |
-| ET16 | Planejamentos ótimos, restritos e ampliação sequencial | v0.3 | Planejado | [planejados/et16-planejamentos-otimos-e-restritos.md](planejados/et16-planejamentos-otimos-e-restritos.md) |
+| ET16 | Planejamentos ótimos, restritos e ampliação sequencial | v0.3 | **Ativo** (2026-11-02) | [ativos/et16-planejamentos-otimos-e-restritos.md](ativos/et16-planejamentos-otimos-e-restritos.md) |
 | ET17 | Modelos mistos, medidas repetidas e comparações pareadas | v0.3 | Planejado | [planejados/et17-modelos-mistos-e-medidas-repetidas.md](planejados/et17-modelos-mistos-e-medidas-repetidas.md) |
 | ET18 | Ajuste não linear (Monod) e potência | v0.3 | Planejado | [planejados/et18-nao-linear-e-potencia.md](planejados/et18-nao-linear-e-potencia.md) |
 | ET19 | Google Drive e compartilhamento inicial | v0.3 | Planejado | [planejados/et19-google-drive-e-compartilhamento.md](planejados/et19-google-drive-e-compartilhamento.md) |
