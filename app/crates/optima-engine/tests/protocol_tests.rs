@@ -50,6 +50,8 @@ fn engine_info_returns_versions_and_registered_methods() {
                     "optimal_design",
                     "paired_comparison",
                     "linear_mixed_model",
+                    "nonlinear_saturation_fit",
+                    "power_analysis",
                     "two_level_design_analysis",
                     "response_surface_design",
                     "response_surface",

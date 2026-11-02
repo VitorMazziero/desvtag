@@ -763,5 +763,70 @@
       "boundary": "The between-unit variance is zero (boundary): the model is equivalent to one without the random effect and the degrees of freedom are the residual ones.",
       "note": "REML estimation with compound symmetry (all measures of a unit share the same correlation). AR(1) and unstructured covariances are not available yet."
     }
+  },
+  "saturation": {
+    "title": "Saturation curves (Monod, Michaelis–Menten, Haldane and Hill)",
+    "intro": "Fits rate or growth against substrate by nonlinear least squares (Levenberg–Marquardt, several starts). The substrate is a numeric factor and the response is one of the responses. The result is computed on request and is not stored in the project.",
+    "needFactor": "Add a numeric factor (the substrate) to fit a saturation curve.",
+    "substrate": "Substrate (numeric factor)",
+    "response": "Response",
+    "model": "Model",
+    "models": {
+      "monod": "Monod / Michaelis–Menten: a·S/(b + S)",
+      "haldane": "Haldane (substrate inhibition): a·S/(b + S + S²/c)",
+      "hill": "Hill: a·Sⁿ/(bⁿ + Sⁿ)"
+    },
+    "fit": "Fit curve",
+    "badCells": "Some values are not numbers in rows {{rows}}.",
+    "parameters": "Parameters",
+    "parameter": "Parameter",
+    "estimate": "Estimate",
+    "se": "Std. error",
+    "ci": "Confidence interval",
+    "starts": "{{reached}} of {{run}} starts reached the best fit.",
+    "chartLabel": "Fitted saturation curve with the observed points and the confidence band",
+    "warn": {
+      "not_converged": "The fit did not converge within the iteration limit: do not use these values.",
+      "parameter_at_bound": "A parameter ended at a (positivity) bound: the model may not suit the data.",
+      "ill_conditioned": "The information matrix is ill-conditioned: parameters cannot be identified separately.",
+      "highly_correlated": "Two parameters are correlated above 0.99: the data do not separate them (substrate range too narrow).",
+      "imprecise_parameter": "A standard error is more than ten times the estimate: the parameter is practically undetermined.",
+      "few_degrees_of_freedom": "Few degrees of freedom: the intervals are unreliable.",
+      "single_start_best": "Only one start reached the best fit: confirm with runs at other concentrations."
+    },
+    "note": "Wald intervals (approximation). The fit only holds inside the measured substrate range; identifying Ks and μmax needs measurements below and above Ks."
+  },
+  "power": {
+    "title": "Power and sample size calculator",
+    "intro": "Use it before the runs: how many units are needed to detect an expected difference, or what power a sample has. The formulas are exact (noncentral F and t distributions). The result depends on the standard deviation and the effect you assume.",
+    "design": "Design",
+    "designs": {
+      "twoSampleT": "Two independent samples (t test)",
+      "pairedT": "Paired samples (t test)",
+      "oneSampleT": "One sample (t test)",
+      "anova": "One-way ANOVA"
+    },
+    "goal": "Goal",
+    "goals": {
+      "sampleSizeFor": "Sample size for a power",
+      "powerAt": "Power for a sample size",
+      "precisionFor": "Sample size for a precision (interval)"
+    },
+    "means": "Expected group means (separate by semicolons)",
+    "difference": "Expected difference",
+    "sigma": "Expected standard deviation (σ)",
+    "alpha": "Significance level (α)",
+    "target": "Desired power",
+    "n": "Sample size",
+    "halfWidth": "Desired interval half-width",
+    "twoSided": "Two-sided test",
+    "calculate": "Calculate",
+    "perGroup": "per group",
+    "units": "units",
+    "summary": "{{n}} {{unit}} (total {{total}}): power {{power}}.",
+    "details": "Noncentrality {{nc}}; df {{df1}}; critical value {{critical}}.",
+    "halfWidthResult": "Interval half-width at n: {{value}}.",
+    "power": "Power",
+    "note": "Power holds for the σ and effect entered. If the real σ is larger, power will be lower; consider a margin."
   }
 }

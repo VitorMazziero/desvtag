@@ -5,11 +5,13 @@ import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { AnalysisSetup, buildDataset } from "../analysis";
 import { MixtureAnalysis } from "../analysis/MixtureAnalysis";
 import { RepeatedMeasures } from "../analysis/RepeatedMeasures";
+import { SaturationFit } from "../analysis/SaturationFit";
 import { DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
 import { ExportSettingsPanel } from "../export";
 import { RecentProjects, StartActions } from "../home";
+import { PowerCalculator } from "../home/PowerCalculator";
 import { ImportButton } from "../import";
 import { ConfirmationCheck } from "../optimization";
 import { ResultsView } from "../results";
@@ -90,6 +92,7 @@ export function Workflow({ language }: { language: Language }) {
               onChoose={(path) => dispatch({ type: "choosePath", path })}
             />
             <RecentProjects />
+            <PowerCalculator language={language} />
           </>
         )}
         {step === "variables" && (
@@ -135,6 +138,7 @@ export function Workflow({ language }: { language: Language }) {
           <>
             <AnalysisSetup onDone={() => setStep("results")} />
             <RepeatedMeasures language={language} />
+            <SaturationFit language={language} />
           </>
         )}
         {step === "results" && state.mixture !== null && <MixtureAnalysis language={language} />}

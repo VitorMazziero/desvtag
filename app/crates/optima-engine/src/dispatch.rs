@@ -120,6 +120,18 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },
+        Operation::ModelNonlinear(req) => match optima_core::models::nonlinear::fit(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ModelNonlinear(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::PowerAnalyze(req) => match optima_core::power::analyze(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::PowerAnalyze(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::ModelMixed(req) => match optima_core::models::mixed::fit(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::ModelMixed(Box::new(result)),

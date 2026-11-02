@@ -246,4 +246,38 @@ describe("v0.2 operations in WebAssembly", () => {
       expect(Math.abs(val(got.wilcoxon.pValue) - c.expected.wilcoxon.p)).toBeLessThan(1e-9);
     }
   });
+  it("power analysis and nonlinear fit (WebAssembly) equal SciPy", () => {
+    const power = read("power_analysis/power.json").cases as Json[];
+    for (const c of power) {
+      const goal = c.goal as Json;
+      const got = call({
+        type: "powerAnalyze",
+        design: c.design,
+        sigma: c.sigma,
+        alpha: c.alpha,
+        twoSided: c.twoSided,
+        goal,
+      });
+      expect(got.n).toBe(c.expected.n);
+      expect(Math.abs(got.power.value - c.expected.power)).toBeLessThan(1e-9);
+    }
+    const nonlinear = read("nonlinear_saturation_fit/nonlinear.json").cases as Json[];
+    for (const c of nonlinear) {
+      const got = call({
+        type: "modelNonlinear",
+        x: c.x,
+        y: c.y,
+        model: c.model,
+        initial: null,
+        lower: null,
+        upper: null,
+        alpha: 0.05,
+      });
+      expect(got.converged).toBe(true);
+      (got.parameters as Json[]).forEach((p, i) => {
+        const want = c.expected.estimates[i] as number;
+        expect(Math.abs(p.estimate - want)).toBeLessThan(1e-5 * Math.abs(want) + 1e-8);
+      });
+    }
+  });
 });

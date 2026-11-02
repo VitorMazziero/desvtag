@@ -19,7 +19,9 @@ use optima_core::models::LinearFit;
 use optima_core::models::factorial_anova::FactorialResult;
 use optima_core::models::mixed::MixedModelResult;
 use optima_core::models::mixture::MixtureAnalysis;
+use optima_core::models::nonlinear::NonlinearResult;
 use optima_core::optimization::{Evaluation, OptimizationResult};
+use optima_core::power::PowerResult;
 use optima_core::registry::Capabilities;
 use optima_core::surface::selection::SelectionResult;
 use optima_core::surface::{SurfaceGrid, SurfaceResult};
@@ -105,6 +107,10 @@ pub enum OperationResult {
     ComparisonPaired(Box<PairedResult>),
     /// Modelo misto ajustado.
     ModelMixed(Box<MixedModelResult>),
+    /// Ajuste não linear.
+    ModelNonlinear(Box<NonlinearResult>),
+    /// Potência e tamanho de amostra.
+    PowerAnalyze(Box<PowerResult>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.

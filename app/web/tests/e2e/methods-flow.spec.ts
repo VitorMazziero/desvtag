@@ -362,6 +362,69 @@ test("medidas repetidas: unidades, t pareado, Wilcoxon e modelo misto com interc
   expect(Number((df ?? "").replace(",", "."))).toBeCloseTo(5, 1);
 });
 
+test("calculadora de potência: tamanho de amostra de duas amostras igual ao SciPy e precisão", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const panel = page.getByTestId("power-calculator");
+  await panel.getByText("Calculadora de potência e tamanho de amostra").click();
+  await page.getByLabel("Diferença esperada").fill("1");
+  await page.getByLabel("Desvio-padrão esperado (σ)").fill("1,5");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  // SciPy (nct): n = 37 por grupo, potência 0,8076.
+  await expect(page.getByTestId("power-summary")).toContainText("37 por grupo (total 74)");
+  await expect(page.getByTestId("power-summary")).toContainText("0,8076");
+  await expect(page.getByTestId("power-curve").locator("tbody tr").first()).toBeVisible();
+
+  await page.getByTestId("power-goal").selectOption("precisionFor");
+  await page.getByLabel("Semiamplitude desejada do intervalo").fill("0,5");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(page.getByTestId("power-result")).toContainText("Semiamplitude do intervalo em n");
+
+  await page.getByTestId("power-design").selectOption("anova");
+  await page.getByTestId("power-goal").selectOption("powerAt");
+  await page.getByLabel("Tamanho da amostra").fill("8");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(page.getByTestId("power-summary")).toContainText("8 por grupo");
+});
+
+test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(0).fill("Substrato");
+  await page.getByLabel("Tipo").nth(0).selectOption("numeric");
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(1).fill("Velocidade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar linha" }).click();
+  const x = [0.3, 0.6, 1, 1.6, 2.5, 4, 6.5, 10, 16, 25];
+  // y = 3·S/(2,5 + S) com pequenas perturbações fixas.
+  const noise = [0.01, -0.02, 0.015, -0.01, 0.02, -0.015, 0.01, -0.005, 0.02, -0.01];
+  const rows = x.map(
+    (s, i) =>
+      `${String(s).replace(".", ",")}	${String(Math.round(((3 * s) / (2.5 + s) + (noise[i] ?? 0)) * 1e4) / 1e4).replace(".", ",")}`,
+  );
+  await paste(page, "Substrato — Obs. 1", rows.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  const panel = page.getByTestId("saturation-fit");
+  await panel.getByText(/Curvas de saturação/).click();
+  await panel.getByRole("button", { name: "Ajustar curva" }).click();
+  const table = page.getByTestId("saturation-parameters");
+  await expect(table.locator("tbody tr")).toHaveCount(2);
+  const cells = await table.locator("tbody tr").nth(0).locator("td").first().textContent();
+  const vmax = Number((cells ?? "").replace(",", "."));
+  expect(vmax).toBeGreaterThan(2.8);
+  expect(vmax).toBeLessThan(3.3);
+  await expect(page.getByTestId("saturation-stats")).toContainText("R²");
+  await expect(page.getByTestId("saturation-chart")).toBeVisible();
+});
+
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
   page,
 }) => {

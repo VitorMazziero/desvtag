@@ -37,7 +37,7 @@ Ao final da v0.3:
 | Ótimos e sujeitos a restrições, ampliação sequencial | F09c | [ET16](ativos/et16-planejamentos-otimos-e-restritos.md) |
 | Modelos mistos | F09d | [ET17](ativos/et17-modelos-mistos-e-medidas-repetidas.md) |
 | Comparações pareadas (amostras dependentes) e medidas repetidas | F08/F09e | ET17 |
-| Ajuste não linear (Monod) | F09f | [ET18](planejados/et18-nao-linear-e-potencia.md) |
+| Ajuste não linear (Monod) | F09f | [ET18](ativos/et18-nao-linear-e-potencia.md) |
 | Potência e planejamento da precisão | F09g | ET18 |
 | Google Drive, pasta visível, abrir compartilhado e criar cópia | F11; PD-09, PD-10 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) |
 | Exportação DOCX | F14 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) |
@@ -63,7 +63,7 @@ Ao final da v0.3:
 | [ET15](ativos/et15-niveis-mistos-e-misturas.md) | Níveis mistos e misturas | F09a, F09b | ET14 | Geração e análise com referência independente |
 | [ET16](ativos/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |
 | [ET17](ativos/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
-| [ET18](planejados/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
+| [ET18](ativos/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
 | [ET21](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
@@ -80,7 +80,7 @@ Ao final da v0.3:
 | ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos e misturas feitos e validados) | Limites superiores, otimização no simplex, guarda da análise de misturas no projeto, exemplos; estimabilidade em fracionários de níveis mistos |
 | ET16 Planejamentos ótimos | **Em andamento** (D e I-ótimos, restrições e ampliação entregues e validados) | Exemplo, verificação nativa, blocos na ampliação, gráfico de variância de predição |
 | ET17 Modelos mistos e medidas repetidas | **Em andamento** (pareados e modelo misto de simetria composta entregues e validados) | AR(1) e não estruturada, testes F multi-gl, resultados guardados no projeto, exemplos |
-| ET18 Monod e potência | Planejada | tudo |
+| ET18 Monod e potência | **Em andamento** (Monod/Haldane/Hill e potência entregues e validados) | Perfil de verossimilhança, NIST StRD, simulação, exemplos |
 | ET19 Google Drive | Planejada | credenciais OAuth do usuário (PD-09) e tudo |
 | ET20 DOCX, comentários, Safari, domínio, canais | Planejada | tudo |
 

@@ -88,3 +88,7 @@ Medida de ponta a ponta no Chromium e no Firefox (exemplo 04, otimização com 4
 ## Planejamento ótimo (v0.3)
 
 Limites do aplicativo: 5 fatores, 60 ensaios, 50 inícios e 1 500 candidatos depois das restrições. Medições nativas (`release`, 10 inícios, critério I, quadrático, Windows 10): 5 fatores × 3 níveis × 40 ensaios ≈ 1,6 s; 4 × 5 níveis × 30 ensaios ≈ 2,2 s ([`worst_cases_timing`](../../app/crates/optima-core/tests/optimal_validation.rs)). O WebAssembly não foi medido separadamente; a busca pode ser cancelada.
+
+## Ajuste não linear e potência (v0.3)
+
+O ajuste não linear faz até 500 iterações por início e até 24 inícios automáticos (12 no Monod, 24 no Haldane e no Hill). A busca de tamanho de amostra examina `n` até 100 000 (dobramento e bisseção). **Tempos não foram medidos** (nem no nativo nem no WebAssembly); nos testes e no E2E, os ajustes de 10 pontos terminam em frações de segundo.

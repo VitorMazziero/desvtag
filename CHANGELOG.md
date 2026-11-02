@@ -12,6 +12,11 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Curvas de saturação e potência (ET18)
+
+- **Ajuste não linear** de **Monod / Michaelis–Menten, Haldane (inibição pelo substrato) e Hill** por Levenberg–Marquardt com vários inícios, intervalos de Wald, correlação entre parâmetros, avisos de **identificabilidade** e curva com faixa de confiança; validado contra o `scipy.optimize.curve_fit`. [Método](docs/metodos/ajuste-nao-linear.md). Sem intervalos por verossimilhança perfilada e sem NIST StRD.
+- **Calculadora de potência, tamanho de amostra e precisão** na tela inicial (ANOVA de um fator e testes t) com **F e t não centrais** exatos, validados contra o SciPy (220 pontos das distribuições e 9 casos). [Método](docs/metodos/potencia.md). Sem simulação. Os resultados são calculados ao pedir e não são guardados no projeto.
+
 ### Medidas repetidas e modelos mistos (ET17)
 
 - **Comparação pareada**: t pareado (intervalo e `d_z`) e **Wilcoxon** (exato ou aproximação normal com correção de empates), validados contra o SciPy. Os pares vêm da unidade experimental; unidades incompletas são listadas, nunca imputadas. [Método](docs/metodos/comparacoes-pareadas.md).

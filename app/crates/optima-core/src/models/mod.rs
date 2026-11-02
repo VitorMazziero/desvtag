@@ -14,6 +14,7 @@ pub mod factorial_anova;
 pub mod linear;
 pub mod mixed;
 pub mod mixture;
+pub mod nonlinear;
 pub mod prediction;
 pub mod terms;
 

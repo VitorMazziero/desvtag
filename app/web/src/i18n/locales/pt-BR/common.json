@@ -763,5 +763,70 @@
       "boundary": "A variância entre unidades é zero (fronteira): o modelo é equivalente ao sem efeito aleatório e os graus de liberdade são os do resíduo.",
       "note": "Estimação por REML com simetria composta (todas as medidas da mesma unidade com a mesma correlação). Estruturas AR(1) e não estruturada ainda não estão disponíveis."
     }
+  },
+  "saturation": {
+    "title": "Curvas de saturação (Monod, Michaelis–Menten, Haldane e Hill)",
+    "intro": "Ajusta a velocidade ou o crescimento em função do substrato por mínimos quadrados não lineares (Levenberg–Marquardt, vários inícios). O substrato é um fator numérico e a resposta, uma das respostas. O resultado é calculado ao pedir e não é guardado no projeto.",
+    "needFactor": "Cadastre um fator numérico (o substrato) para ajustar uma curva de saturação.",
+    "substrate": "Substrato (fator numérico)",
+    "response": "Resposta",
+    "model": "Modelo",
+    "models": {
+      "monod": "Monod / Michaelis–Menten: a·S/(b + S)",
+      "haldane": "Haldane (inibição pelo substrato): a·S/(b + S + S²/c)",
+      "hill": "Hill: a·Sⁿ/(bⁿ + Sⁿ)"
+    },
+    "fit": "Ajustar curva",
+    "badCells": "Há valores que não são números nas linhas {{rows}}.",
+    "parameters": "Parâmetros",
+    "parameter": "Parâmetro",
+    "estimate": "Estimativa",
+    "se": "Erro-padrão",
+    "ci": "Intervalo de confiança",
+    "starts": "{{reached}} de {{run}} inícios chegaram ao melhor ajuste.",
+    "chartLabel": "Curva de saturação ajustada com os pontos observados e a faixa de confiança",
+    "warn": {
+      "not_converged": "O ajuste não convergiu no número máximo de iterações: não use estes valores.",
+      "parameter_at_bound": "Algum parâmetro terminou em um limite (positivo): o modelo pode não ser adequado aos dados.",
+      "ill_conditioned": "A matriz de informação é mal condicionada: os parâmetros não são identificáveis separadamente.",
+      "highly_correlated": "Dois parâmetros têm correlação acima de 0,99: os dados não os separam (faixa de substrato estreita demais).",
+      "imprecise_parameter": "Algum erro-padrão é maior que dez vezes a estimativa: o parâmetro é praticamente indeterminado.",
+      "few_degrees_of_freedom": "Poucos graus de liberdade: os intervalos são pouco confiáveis.",
+      "single_start_best": "Só um início chegou ao melhor ajuste: confirme com ensaios em outras concentrações."
+    },
+    "note": "Intervalos de Wald (aproximação). O ajuste só vale dentro da faixa de substrato medida; para identificar Ks e μmax é preciso medir abaixo e acima de Ks."
+  },
+  "power": {
+    "title": "Calculadora de potência e tamanho de amostra",
+    "intro": "Use antes dos ensaios: quantas unidades são necessárias para detectar uma diferença esperada, ou que potência uma amostra tem. As fórmulas são exatas (distribuições F e t não centrais). O resultado depende do desvio-padrão e do efeito que você supõe.",
+    "design": "Desenho",
+    "designs": {
+      "twoSampleT": "Duas amostras independentes (teste t)",
+      "pairedT": "Amostras pareadas (teste t)",
+      "oneSampleT": "Uma amostra (teste t)",
+      "anova": "ANOVA de um fator"
+    },
+    "goal": "Objetivo",
+    "goals": {
+      "sampleSizeFor": "Tamanho de amostra para uma potência",
+      "powerAt": "Potência para um tamanho de amostra",
+      "precisionFor": "Tamanho de amostra para uma precisão (intervalo)"
+    },
+    "means": "Médias esperadas dos grupos (separe por ponto e vírgula)",
+    "difference": "Diferença esperada",
+    "sigma": "Desvio-padrão esperado (σ)",
+    "alpha": "Nível de significância (α)",
+    "target": "Potência desejada",
+    "n": "Tamanho da amostra",
+    "halfWidth": "Semiamplitude desejada do intervalo",
+    "twoSided": "Teste bilateral",
+    "calculate": "Calcular",
+    "perGroup": "por grupo",
+    "units": "unidades",
+    "summary": "{{n}} {{unit}} (total {{total}}): potência {{power}}.",
+    "details": "Não centralidade {{nc}}; gl {{df1}}; valor crítico {{critical}}.",
+    "halfWidthResult": "Semiamplitude do intervalo em n: {{value}}.",
+    "power": "Potência",
+    "note": "A potência vale para o σ e o efeito informados. Se o σ real for maior, a potência será menor; considere uma margem."
   }
 }

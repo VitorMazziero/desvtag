@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** (Monod/Haldane/Hill e potência entregues; perfil de verossimilhança, NIST e simulação pendentes) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F09f (não lineares), F09g (potência e precisão) |
 | Marco | Prepara M4 |
 | Depende de | ET17 (graus de liberdade e incerteza em modelos não triviais); ET15 (níveis mistos, para potência de ANOVA geral) |
 | Módulos | C14 (`models/{nonlinear,monod}.rs`), C15 (`power/{anova,regression,contrasts,simulation}.rs`), C03 (otimização numérica), C04 (distribuições não centrais), U07, U08, U09 |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -45,14 +45,14 @@ Ajustar o **modelo de Monod** (e a família de saturação aprovada na DT) a dad
 
 ## 5. Tarefas
 
-- [ ] **T01** — Especificações (`docs/metodos/monod.md`, `docs/metodos/potencia.md`) e DTs.
-- [ ] **T02** — Núcleo: Levenberg–Marquardt com limites, inicialização, convergência e não convergência explícitas; NIST StRD não linear (níveis de dificuldade baixo, médio e alto).
-- [ ] **T03** — Núcleo: Monod e modelos aprovados, intervalos, correlação, identificabilidade; casos SciPy/lmfit.
-- [ ] **T04** — Núcleo: distribuições não centrais (F, t, qui-quadrado) validadas contra SciPy/mpmath.
-- [ ] **T05** — Núcleo: potência e tamanho de amostra por desenho; simulação com semente e erro de Monte Carlo; casos statsmodels.
-- [ ] **T06** — Operações do motor, contratos e paridade.
-- [ ] **T07** — Interface: ajuste não linear (dados S × μ, inicialização, limites, resultados em seções, curva com faixa, exportação); potência como ferramenta de planejamento antes dos ensaios; PT/EN, temas, axe.
-- [ ] **T08** — Exemplos sintéticos (Monod com solução conhecida; potência de um DIC), E2E, verificação nativa e documentação.
+- [x] **T01** — Especificações [`ajuste-nao-linear.md`](../../metodos/ajuste-nao-linear.md) e [`potencia.md`](../../metodos/potencia.md); as decisões (modelos de saturação, Wald e não perfil, fórmulas exatas em vez de simulação) estão nelas, sem DT separada.
+- [~] **T02** — `models/nonlinear.rs`: LM com limites, vários inícios, convergência e não convergência explícitas; casos SciPy e recuperação de parâmetros. **NIST StRD não linear não foi incluído** (sem acesso aos arquivos nesta sessão).
+- [~] **T03** — Monod, Haldane e Hill com intervalos de Wald, correlação, condição e avisos de identificabilidade. **Intervalos por perfil de verossimilhança não entregues.**
+- [x] **T04** — `distributions/noncentral.rs`: F e t não centrais (AS 243), validadas contra `scipy.stats.ncf` e `nct` (erro < 1e-10). A qui-quadrado não central não foi necessária.
+- [~] **T05** — `power/`: potência, tamanho de amostra e precisão (ANOVA, t); **sem simulação** (as fórmulas são exatas) e sem regressão, contrastes e efeitos de dois níveis.
+- [x] **T06** — Operações `modelNonlinear` e `powerAnalyze`, contratos gerados e paridade WebAssembly.
+- [~] **T07** — `SaturationFit` (tabela, avisos, gráfico com faixa) na etapa de análise e `PowerCalculator` na tela inicial; PT/EN. *O resultado não é guardado no projeto e não entra nos relatórios; limites e valores iniciais editáveis não estão na interface.*
+- [~] **T08** — E2E (calculadora com n = 37 igual ao SciPy; ajuste de Monod) feito; exemplos sintéticos em `examples/` e verificação nativa pendentes.
 
 ## 6. Entregas
 
@@ -86,6 +86,7 @@ Especificações, DTs, mapa de módulos (C14, C15), fichas, matriz de cobertura 
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Etapa não iniciada. |
+| 2026-11-02 | **Ativada e implementada** (Monod, Haldane, Hill; potência por F e t não centrais), validada contra o SciPy. Descoberta: `scipy.stats.ncf.sf` dá valores negativos com não centralidade 0 (usada a F central como referência nesse ponto). Pendentes: perfil de verossimilhança, NIST StRD, simulação, exemplos e verificação nativa. |
 
 ## 12. Desvios e descobertas
 

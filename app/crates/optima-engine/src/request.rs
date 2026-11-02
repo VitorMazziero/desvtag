@@ -16,7 +16,9 @@ use optima_core::models::LinearModelRequest;
 use optima_core::models::factorial_anova::FactorialRequest;
 use optima_core::models::mixed::MixedModelRequest;
 use optima_core::models::mixture::MixtureAnalysisRequest;
+use optima_core::models::nonlinear::NonlinearRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
+use optima_core::power::PowerRequest;
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
 use optima_project::xlsx_writer::ExportWorkbook;
@@ -58,6 +60,10 @@ pub enum Operation {
     ComparisonPaired(PairedRequest),
     /// Ajusta um modelo linear misto com intercepto aleatório por unidade (`model.mixed`).
     ModelMixed(Box<MixedModelRequest>),
+    /// Ajusta um modelo de saturação não linear (`model.nonlinear`).
+    ModelNonlinear(Box<NonlinearRequest>),
+    /// Potência, tamanho de amostra e precisão (`power.analyze`).
+    PowerAnalyze(Box<PowerRequest>),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).

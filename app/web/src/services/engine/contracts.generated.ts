@@ -524,6 +524,27 @@ pValue: Stat,
 centerPoints: number, };
 
 /**
+ * Ponto da curva ajustada.
+ */
+export type CurvePoint = { 
+/**
+ * Substrato.
+ */
+x: number, 
+/**
+ * Valor ajustado.
+ */
+y: number, 
+/**
+ * Limite inferior da faixa de confiança da curva.
+ */
+lower: Stat, 
+/**
+ * Limite superior da faixa de confiança da curva.
+ */
+upper: Stat, };
+
+/**
  * Conjunto de dados.
  */
 export type Dataset = { 
@@ -2877,6 +2898,145 @@ coding: CategoricalCoding,
 confidenceLevel: number, };
 
 /**
+ * Parâmetro estimado.
+ */
+export type NonlinearParameter = { 
+/**
+ * Nome (`a`, `b`, `c` ou `n`).
+ */
+name: string, 
+/**
+ * Estimativa.
+ */
+estimate: number, 
+/**
+ * Erro-padrão (Wald).
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, 
+/**
+ * O parâmetro terminou em um limite.
+ */
+atBound: boolean, };
+
+/**
+ * Solicitação de ajuste.
+ */
+export type NonlinearRequest = { 
+/**
+ * Substrato (variável independente, `S ≥ 0`).
+ */
+x: Array<number>, 
+/**
+ * Resposta.
+ */
+y: Array<number>, 
+/**
+ * Modelo.
+ */
+model: SaturationModel, 
+/**
+ * Valores iniciais (um por parâmetro); `None` = vários inícios automáticos.
+ */
+initial: Array<number> | null, 
+/**
+ * Limites inferiores por parâmetro (`None` = sem limite); padrão: parâmetros positivos.
+ */
+lower: Array<number | null> | null, 
+/**
+ * Limites superiores por parâmetro (`None` = sem limite).
+ */
+upper: Array<number | null> | null, 
+/**
+ * Nível de significância dos intervalos (`1 − α` de confiança).
+ */
+alpha: number, };
+
+/**
+ * Resultado do ajuste.
+ */
+export type NonlinearResult = { 
+/**
+ * Modelo ajustado.
+ */
+model: SaturationModel, 
+/**
+ * Observações usadas.
+ */
+n: number, 
+/**
+ * Parâmetros.
+ */
+parameters: Array<NonlinearParameter>, 
+/**
+ * Soma de quadrados dos resíduos.
+ */
+sse: number, 
+/**
+ * Desvio-padrão residual.
+ */
+sigma: Stat, 
+/**
+ * `R² = 1 − SQR/SQT` (centrada).
+ */
+rSquared: Stat, 
+/**
+ * Matriz de correlação dos parâmetros (linha a linha); vazia se indefinida.
+ */
+correlation: Array<Array<number>>, 
+/**
+ * Número de condição da Jacobiana com colunas normalizadas.
+ */
+conditionNumber: Stat, 
+/**
+ * O ajuste convergiu.
+ */
+converged: boolean, 
+/**
+ * Iterações do melhor início.
+ */
+iterations: number, 
+/**
+ * Inícios executados.
+ */
+startsRun: number, 
+/**
+ * Inícios que chegaram à menor soma de quadrados.
+ */
+startsReachingBest: number, 
+/**
+ * Resíduos `y − ŷ`.
+ */
+residuals: Array<number>, 
+/**
+ * Curva ajustada com faixa de confiança.
+ */
+curve: Array<CurvePoint>, 
+/**
+ * Avisos (identificabilidade, limites, não convergência).
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * Uma observação (linha).
  */
 export type Observation = { 
@@ -3086,12 +3246,12 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designOptimalGenerate" } & OptimalSpec | { "type": "comparisonPaired" } & PairedRequest | { "type": "modelMixed" } & MixedModelRequest | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designOptimalGenerate" } & OptimalSpec | { "type": "comparisonPaired" } & PairedRequest | { "type": "modelMixed" } & MixedModelRequest | { "type": "modelNonlinear" } & NonlinearRequest | { "type": "powerAnalyze" } & PowerRequest | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designOptimalGenerate" } & GeneratedOptimal | { "type": "comparisonPaired" } & PairedResult | { "type": "modelMixed" } & MixedModelResult | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designOptimalGenerate" } & GeneratedOptimal | { "type": "comparisonPaired" } & PairedResult | { "type": "modelMixed" } & MixedModelResult | { "type": "modelNonlinear" } & NonlinearResult | { "type": "powerAnalyze" } & PowerResult | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
 
 /**
  * Critério de otimalidade.
@@ -3587,6 +3747,131 @@ export type ParetoBasis = "tStatistic" | "lenthEffect" | "effectOnly";
  * Tipo de ponto.
  */
 export type PointType = "factorial" | "center" | "axial";
+
+/**
+ * Desenho cuja potência se calcula.
+ */
+export type PowerDesign = { "type": "anova", 
+/**
+ * Médias esperadas dos grupos.
+ */
+means: Array<number>, } | { "type": "oneSampleT", 
+/**
+ * Diferença esperada.
+ */
+difference: number, } | { "type": "pairedT", 
+/**
+ * Diferença esperada.
+ */
+difference: number, } | { "type": "twoSampleT", 
+/**
+ * Diferença esperada entre as médias.
+ */
+difference: number, };
+
+/**
+ * O que calcular.
+ */
+export type PowerGoal = { "type": "powerAt", 
+/**
+ * Tamanho da amostra.
+ */
+n: number, } | { "type": "sampleSizeFor", 
+/**
+ * Potência-alvo (0 a 1, exclusivo).
+ */
+power: number, } | { "type": "precisionFor", 
+/**
+ * Semiamplitude desejada.
+ */
+halfWidth: number, };
+
+/**
+ * Ponto da curva de potência.
+ */
+export type PowerPoint = { 
+/**
+ * Tamanho da amostra.
+ */
+n: number, 
+/**
+ * Potência.
+ */
+power: number, };
+
+/**
+ * Solicitação.
+ */
+export type PowerRequest = { 
+/**
+ * Desenho.
+ */
+design: PowerDesign, 
+/**
+ * Desvio-padrão esperado do erro (σ > 0).
+ */
+sigma: number, 
+/**
+ * Nível de significância (0 a 1, exclusivo).
+ */
+alpha: number, 
+/**
+ * Teste bilateral (nos testes t); a ANOVA é sempre «unilateral» na cauda superior de F.
+ */
+twoSided: boolean, 
+/**
+ * Objetivo.
+ */
+goal: PowerGoal, };
+
+/**
+ * Resultado.
+ */
+export type PowerResult = { 
+/**
+ * `n` por grupo (ANOVA e duas amostras) ou número de unidades/pares.
+ */
+n: number, 
+/**
+ * Total de observações do estudo.
+ */
+total: number, 
+/**
+ * Potência em `n`.
+ */
+power: Stat, 
+/**
+ * Parâmetro de não centralidade (`λ` na ANOVA, `δ` nos testes t).
+ */
+noncentrality: number, 
+/**
+ * Graus de liberdade do numerador (ANOVA) ou do teste (t).
+ */
+df1: number, 
+/**
+ * Graus de liberdade do denominador (ANOVA); 0 nos testes t.
+ */
+df2: number, 
+/**
+ * Valor crítico usado.
+ */
+critical: number, 
+/**
+ * Semiamplitude do intervalo de confiança em `n` (só nos testes t).
+ */
+halfWidth: Stat, 
+/**
+ * Curva de potência em função de `n`.
+ */
+curve: Array<PowerPoint>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
 
 /**
  * Predição para uma linha.
@@ -4220,6 +4505,11 @@ centerRuns: number,
  * Total.
  */
 total: number, };
+
+/**
+ * Modelo de saturação.
+ */
+export type SaturationModel = "monod" | "haldane" | "hill";
 
 /**
  * Opções da busca.
