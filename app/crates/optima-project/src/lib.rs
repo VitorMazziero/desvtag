@@ -11,6 +11,7 @@
 
 pub mod analysis;
 pub mod archive;
+pub mod comment;
 pub mod confirmation;
 pub mod document;
 pub mod experiment;
@@ -23,6 +24,7 @@ pub mod xlsx;
 pub mod xlsx_writer;
 
 pub use analysis::{AnalysisOptions, AnalysisRecord, AnalysisResult};
+pub use comment::{Comment, CommentReply, CommentTarget, CommentTargetKind};
 pub use confirmation::{ConfirmationPlan, ConfirmationPrediction, ExperimentOrigin};
 pub use document::{EntryPath, Experiment, ProjectDocument, SCHEMA_VERSION};
 pub use experiment::{ExperimentData, FactorSpec, ResponseSpec, RowRecord};

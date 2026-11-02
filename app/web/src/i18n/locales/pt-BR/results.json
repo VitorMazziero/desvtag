@@ -312,6 +312,12 @@
     },
     "export": {
       "effectsCsv": "Efeitos (CSV)"
+    },
+    "model": {
+      "title": "Modelo: efeitos e comparação",
+      "intro": "Desmarque um efeito para retirá-lo do modelo (por exemplo, uma interação sem importância); o aplicativo recalcula e compara os modelos. O modelo completo tem os efeitos principais e todas as interações de dois fatores; em planejamentos fracionários, interações confundidas entre si não podem ser separadas.",
+      "terms": "Efeitos do modelo",
+      "confirmHierarchy": "Retirar este efeito principal deixa no modelo uma interação com o mesmo fator, o que quebra a hierarquia do modelo. Continuar?"
     }
   },
   "surface": {
@@ -408,9 +414,18 @@
       "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente.",
       "buttonPdf": "Exportar relatório (PDF)",
       "footerPdf": "EnziTAG Optima {{version}} — PDF gerado localmente; as figuras são vetoriais.",
-      "page": "Página {{page}} de {{total}}"
+      "page": "Página {{page}} de {{total}}",
+      "buttonDocx": "Exportar relatório (Word)",
+      "commentsTitle": "Comentários",
+      "commentsResolved": "resolvido",
+      "commentsRevision": "revisão {{id}}",
+      "commentsExperiment": "Experimento",
+      "commentsAnalysis": "Análise {{analysis}}",
+      "commentsFigure": "Figura «{{key}}»",
+      "commentsTable": "Tabela «{{key}}»"
     },
-    "logo": "Incluir o logotipo do grupo nos relatórios"
+    "logo": "Incluir o logotipo do grupo nos relatórios",
+    "comments": "Incluir os comentários do experimento no fim dos relatórios"
   },
   "figure": {
     "customize": "Personalizar figura",

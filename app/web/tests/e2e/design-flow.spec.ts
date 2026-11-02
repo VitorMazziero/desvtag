@@ -175,6 +175,68 @@ test.describe("planejamento fatorial 2³ com pontos centrais", () => {
   });
 });
 
+test.describe("seleção de modelos de efeitos (ET14-T03)", () => {
+  test("o modelo completo tem as interações; a recomendação mantém só o que importa e é reversível", async ({
+    page,
+  }) => {
+    test.setTimeout(120_000);
+    await startPlanning(page, [
+      ["Temperatura", "°C"],
+      ["pH", ""],
+      ["Tempo", "min"],
+    ]);
+    await setLevels(page, "Temperatura", "30", "50");
+    await setLevels(page, "pH", "5", "7");
+    await setLevels(page, "Tempo", "10", "30");
+    await page.getByLabel("Pontos centrais").fill("3");
+    await page.getByLabel("Repetições").fill("2");
+    await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
+    await page.getByRole("button", { name: "Gerar planejamento" }).click();
+    await expect(page.getByTestId("design-generated")).toContainText("19 ensaios");
+    // y = 50 + 3A + 2B + 1AB; o fator Tempo e as demais interações não têm efeito.
+    const noise = [0.12, -0.08, 0.05, -0.1, 0.07, -0.04, 0.09, -0.06, 0.02, -0.03, 0.04, 0.06];
+    const coded = (i: number) => [i & 1 ? 1 : -1, i & 2 ? 1 : -1, i & 4 ? 1 : -1];
+    const y = Array.from({ length: 19 }, (_, i) => {
+      if (i >= 16) return 50 + (noise[i - 16] as number);
+      const [a, b] = coded(i % 8) as [number, number, number];
+      return 50 + 3 * a + 2 * b + a * b + (noise[i % 12] as number);
+    });
+    await paste(
+      page,
+      "Atividade — Obs. 1",
+      y.map((v) => String(v).replace(".", ",")).join(String.fromCharCode(10)),
+    );
+    await page.getByRole("button", { name: "Avançar" }).click();
+    await page.getByLabel("Efeitos principais e interações de dois fatores").check();
+    await page.getByRole("button", { name: "Analisar planejamento" }).click();
+    await expect(page.getByTestId("effects-table")).toBeVisible();
+
+    const panel = page.getByTestId("model-panel");
+    await expect(panel).toBeVisible();
+    // Completo (3 principais + 3 interações), atual e recomendado, com as métricas do motor.
+    await expect(panel.getByTestId("model-compare")).toContainText("R² ajustado");
+    const row = (name: RegExp) => panel.getByRole("checkbox", { name });
+    await expect(row(/^Temperatura × pH/)).toBeChecked();
+    await expect(row(/^Temperatura × Tempo/)).toBeChecked();
+    await expect(row(/^pH × Tempo/)).toBeChecked();
+
+    await panel.getByTestId("apply-recommendation").click();
+    await expect(row(/^Temperatura × Tempo/)).not.toBeChecked();
+    await expect(row(/^pH × Tempo/)).not.toBeChecked();
+    await expect(row(/^Tempo/)).not.toBeChecked();
+    await expect(row(/^Temperatura × pH/)).toBeChecked();
+    await expect(row(/^Temperatura(?! ×)/)).toBeChecked();
+    await expect(panel.getByTestId("apply-recommendation")).toBeDisabled();
+    // A tabela de efeitos acompanha o modelo escolhido: intercepto + 3 termos.
+    await expect(page.getByTestId("effects-table").locator("tbody tr")).toHaveCount(4);
+
+    // Voltar ao modelo completo.
+    await panel.getByRole("button", { name: "Voltar ao modelo completo" }).click();
+    await expect(row(/^Tempo/)).toBeChecked();
+    await expect(page.getByTestId("effects-table").locator("tbody tr")).toHaveCount(7);
+  });
+});
+
 test.describe("fracionário e Plackett–Burman", () => {
   test("fracionário 2^(4−1): resolução IV e confundimento exibidos", async ({ page }) => {
     await startPlanning(page, [

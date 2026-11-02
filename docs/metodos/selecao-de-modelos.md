@@ -57,6 +57,19 @@ Lista de termos que se liga e desliga (com confirmação quando a remoção queb
 
 `statsmodels` (`OLS`, `aic`, `bic`, `rsquared_adj`, `OLSInfluence.resid_press`), falta de ajuste por definição (erro puro dos pontos centrais) e a eliminação regressiva com hierarquia escrita em Python. Tolerâncias de `selection_validation.rs`: `R²`, `RMSE` 1e-9 relativo; `PRESS` 1e-8; `AIC`, `AICc`, `BIC` 1e-10 relativo e 1e-8 absoluto; valores-p 1e-6 relativo. A **sequência de remoções** coincide termo a termo com a referência nos três casos.
 
+## 10.1 Planejamentos de dois níveis (ET14-T03)
+
+O mesmo painel existe na seção **Modelo** da análise de planejamentos de dois níveis (`designs::selection`, operação `design.selectModel`, método `two_level_model_selection` v1). Diferenças em relação às superfícies:
+
+- **Modelo completo:** todos os efeitos principais e **todas as interações de dois fatores** (em planejamentos fracionários, interações confundidas entre si não são separáveis; seus valores-p ficam indefinidos e elas nunca são candidatas à remoção por valor-p).
+- **Modelo atual:** os termos escolhidos (padrão da análise: efeitos principais).
+- **Hierarquia:** um efeito principal só sai se nenhuma interação com o fator permanecer.
+- **Curvatura** (pontos centrais), quando incluída, é uma coluna fixa em todos os modelos e conta nos parâmetros.
+- Métricas, fórmulas, critérios de parada e textos são os mesmos da seleção de superfícies.
+- Se o modelo completo não puder ser ajustado (por exemplo, saturado), o atual faz o papel de completo e um aviso é emitido.
+
+**Validação:** 4 casos fatoriais completos (2², 2³ e 2⁴, com repetições, pontos centrais e com ou sem curvatura) contra o `statsmodels`, com a mesma estrutura de tolerâncias da seleção de superfícies (`design_selection_validation.rs`, gerados por `validation/tools/make_design_selection_cases.py`); paridade no WebAssembly (`v02.parity.test.ts`); E2E em Chromium (completo → recomendado → completo). **Não validado:** planejamentos fracionários e de Plackett–Burman (a mecânica é a mesma, mas não há caso independente), nem o aplicativo Windows.
+
 ## 11. Referências
 
 - Allen, D. M. (1974). The relationship between variable selection and data augmentation and a method for prediction. *Technometrics* 16, 125–127 (PRESS).

@@ -1,8 +1,8 @@
 # Plano da v0.3
 
-**Estado:** planejado · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.3.0 (canal experimental)
+**Estado:** **fechado em 2026-11-02** (candidata local; itens não entregues → [plano da v0.4](plano-v0.4.md)) · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.3.0 (canal experimental)
 
-Plano de versão pedido pelo usuário em 2026-11-02: «escreva o plano v0.3 com tudo que ficou pendente». Reúne **todos os itens ainda não entregues** do [roteiro do produto](roteiro-produto.md), do [plano da v0.1](plano-v0.1.md#3-fora-da-v01), dos planos [ET10](ativos/et10-integracao-publicacao.md), [ET11](concluidos/et11-selecao-de-modelos-e-navegacao.md) e [ET12](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md), do [relatório de validação da v0.2](../../validation/reports/v0.2.0/README.md) e da [matriz de cobertura](../produto/matriz-cobertura.md), além da planilha de coleta pedida na mesma data. As decisões do usuário estão em [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02).
+Plano de versão pedido pelo usuário em 2026-11-02: «escreva o plano v0.3 com tudo que ficou pendente». Reúne **todos os itens ainda não entregues** do [roteiro do produto](roteiro-produto.md), do [plano da v0.1](plano-v0.1.md#3-fora-da-v01), dos planos [ET10](concluidos/et10-integracao-publicacao.md), [ET11](concluidos/et11-selecao-de-modelos-e-navegacao.md) e [ET12](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md), do [relatório de validação da v0.2](../../validation/reports/v0.2.0/README.md) e da [matriz de cobertura](../produto/matriz-cobertura.md), além da planilha de coleta pedida na mesma data. As decisões do usuário estão em [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02).
 
 Os destinos indicativos do plano da v0.1 (Drive na v0.3, famílias F09 da v0.4 em diante, F14 depois da v1.0.0) **foram antecipados para a v0.3** por essa decisão. A versão continua no canal **experimental**: a v1.0.0 (canal estável e cobertura completa do catálogo) mantém os critérios do roteiro.
 
@@ -20,27 +20,28 @@ Ao final da v0.3:
 
 | Item pendente | Origem | Etapa |
 |---|---|---|
-| Matriz exportada com colunas de resposta; importação que preenche respostas do planejamento; importação ignora as linhas `# metadados` | Pedido do usuário (2026-11-02) | [ET13](planejados/et13-planilha-de-coleta.md) |
-| Verificar a atualização ponta a ponta (v0.1 → v0.2) e fechar a ET10 | ET10 (T08, T09, critérios 2 e 3); relatório da v0.2 | [ET14](planejados/et14-itens-adiados-v01-v02.md) |
+| Matriz exportada com colunas de resposta; importação que preenche respostas do planejamento; importação ignora as linhas `# metadados` | Pedido do usuário (2026-11-02) | [ET13](concluidos/et13-planilha-de-coleta.md) |
+| Verificar a atualização ponta a ponta (v0.1 → v0.2) e fechar a ET10 | ET10 (T08, T09, critérios 2 e 3); relatório da v0.2 | [ET14](concluidos/et14-itens-adiados-v01-v02.md) |
 | Seleção de modelos para os efeitos de planejamentos de dois níveis | ET11-T09 | ET14 |
 | Capturas em inglês e inspeção visual dos temas no WebView2 | ET12-T10 | ET14 |
 | Notas de versão sem formatação, cortadas e desatualizadas no aviso de atualização | Verificação do usuário (2026-11-02) | ET14-T09 |
-| Botões próximos: auditoria de distância, preenchimento e tamanho dos controles em toda a interface | Verificação do usuário (2026-11-02) | [ET21](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| Botões próximos: auditoria de distância, preenchimento e tamanho dos controles em toda a interface | Verificação do usuário (2026-11-02) | [ET21](concluidos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
 | Dois logotipos na interface: manter só o do cabeçalho (retirar o da tela inicial) | Verificação do usuário (2026-11-02) | ET21-T08 |
+| Ao avançar de etapa, a interface deve voltar ao topo de forma orgânica (rolagem suave e foco no título) | Verificação do usuário (2026-11-02) | ET21-T09 |
 | Guia de resultados | ET11-T14 | ET14 |
 | Conferência da opção CCD e do rótulo no Protimiza | PD-05; decisões aprovadas §15, item 5 | ET14 (depende do usuário) |
 | Sementes acima de 2⁵³ no navegador (precisão do JavaScript) | ET11, descoberta 9 | ET14 |
 | Família de fonte da figura e hachura no PDF | DT-0020 (limitações aceitas) | ET14 (melhoria; aceitas até lá) |
-| Níveis mistos | F09a | [ET15](planejados/et15-niveis-mistos-e-misturas.md) |
+| Níveis mistos | F09a | [ET15](concluidos/et15-niveis-mistos-e-misturas.md) |
 | Misturas | F09b | ET15 |
-| Ótimos e sujeitos a restrições, ampliação sequencial | F09c | [ET16](planejados/et16-planejamentos-otimos-e-restritos.md) |
-| Modelos mistos | F09d | [ET17](planejados/et17-modelos-mistos-e-medidas-repetidas.md) |
+| Ótimos e sujeitos a restrições, ampliação sequencial | F09c | [ET16](concluidos/et16-planejamentos-otimos-e-restritos.md) |
+| Modelos mistos | F09d | [ET17](concluidos/et17-modelos-mistos-e-medidas-repetidas.md) |
 | Comparações pareadas (amostras dependentes) e medidas repetidas | F08/F09e | ET17 |
-| Ajuste não linear (Monod) | F09f | [ET18](planejados/et18-nao-linear-e-potencia.md) |
+| Ajuste não linear (Monod) | F09f | [ET18](concluidos/et18-nao-linear-e-potencia.md) |
 | Potência e planejamento da precisão | F09g | ET18 |
-| Google Drive, pasta visível, abrir compartilhado e criar cópia | F11; PD-09, PD-10 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) |
-| Exportação DOCX | F14 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) |
-| Comentários ligados a análises e gráficos | F14; PD-14 | ET20 |
+| Google Drive, pasta visível, abrir compartilhado e criar cópia | F11; PD-09, PD-10 | [ET19](concluidos/et19-google-drive-e-compartilhamento.md) |
+| Exportação DOCX | F14 | [ET20](concluidos/et20-docx-comentarios-e-distribuicao.md) |
+| Comentários ligados a análises e gráficos | F14; PD-14 | [ET20](concluidos/et20-docx-comentarios-e-distribuicao.md) |
 | Especificação da edição simultânea (sem implementação) | F14; PD-14 | ET20 |
 | Safari | F14; PD-13 | ET20 |
 | Domínio próprio | F14; PD-13 | ET20 (depende do usuário) |
@@ -57,17 +58,31 @@ Ao final da v0.3:
 
 | Etapa | Nome | Fases | Depende de | Entrega principal |
 |---|---|---|---|---|
-| [ET13](planejados/et13-planilha-de-coleta.md) | Planilha de coleta: matriz com respostas e importação das respostas | F02, F05–F06 (U05, U16) | v0.2.0 | Ida e volta da matriz com conferência de níveis |
-| [ET14](planejados/et14-itens-adiados-v01-v02.md) | Itens adiados da v0.1 e da v0.2 | F05, F10, F12, F13 | ET13 (ordem); publicação da v0.2 (T01) | Atualização verificada, seleção em dois níveis, capturas EN, guia de resultados |
-| [ET15](planejados/et15-niveis-mistos-e-misturas.md) | Níveis mistos e misturas | F09a, F09b | ET14 | Geração e análise com referência independente |
-| [ET16](planejados/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |
-| [ET17](planejados/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
-| [ET18](planejados/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
-| [ET19](planejados/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
-| [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
-| [ET21](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, preenchimento e tamanho dos controles | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
+| [ET13](concluidos/et13-planilha-de-coleta.md) | Planilha de coleta: matriz com respostas e importação das respostas | F02, F05–F06 (U05, U16) | v0.2.0 | Ida e volta da matriz com conferência de níveis |
+| [ET14](concluidos/et14-itens-adiados-v01-v02.md) | Itens adiados da v0.1 e da v0.2 | F05, F10, F12, F13 | ET13 (ordem); publicação da v0.2 (T01) | Atualização verificada, seleção em dois níveis, capturas EN, guia de resultados |
+| [ET15](concluidos/et15-niveis-mistos-e-misturas.md) | Níveis mistos e misturas | F09a, F09b | ET14 | Geração e análise com referência independente |
+| [ET16](concluidos/et16-planejamentos-otimos-e-restritos.md) | Planejamentos ótimos, restritos e ampliação sequencial | F09c | ET15 | Critérios D/I, restrições lineares, ampliação |
+| [ET17](concluidos/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
+| [ET18](concluidos/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
+| [ET19](concluidos/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
+| [ET20](concluidos/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
+| [ET21](concluidos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
 
 **Ordem recomendada:** ET13 e ET21 (interface; podem correr juntas) → ET14 → ET15 → ET16 → ET17 → ET18 → ET20, com a **ET19 em paralelo** a partir do momento em que o usuário criar o projeto OAuth (ela depende de configuração externa, não de código anterior). A regra «uma etapa ativa por vez» admite esse paralelismo, registrado aqui.
+
+### Estado de execução (2026-11-02)
+
+| Etapa | Estado | O que falta |
+|---|---|---|
+| ET13 Planilha de coleta | **Concluída** | — |
+| ET21 Espaçamento, logotipo único e rolagem | **Quase concluída** (T01 parcial, T04 e T06 pendentes: revisão tela a tela fora das telas medidas e inspeção no WebView2) | Capturas antes/depois e conferência no aplicativo instalado |
+| ET14 Itens adiados | **Em andamento** (T01, T04–T07 e T09 feitas) | T02 (depende do usuário: capturas do Protimiza) e T03 (seleção de modelos para efeitos de dois níveis) |
+| ET15 Níveis mistos e misturas | **Em andamento** (níveis mistos e misturas feitos e validados) | Limites superiores, otimização no simplex, guarda da análise de misturas no projeto, exemplos; estimabilidade em fracionários de níveis mistos |
+| ET16 Planejamentos ótimos | **Em andamento** (D e I-ótimos, restrições e ampliação entregues e validados) | Exemplo, verificação nativa, blocos na ampliação, gráfico de variância de predição |
+| ET17 Modelos mistos e medidas repetidas | **Em andamento** (pareados e modelo misto de simetria composta entregues e validados) | AR(1) e não estruturada, testes F multi-gl, resultados guardados no projeto, exemplos |
+| ET18 Monod e potência | **Em andamento** (Monod/Haldane/Hill e potência entregues e validados) | Perfil de verossimilhança, NIST StRD, simulação, exemplos |
+| ET19 Google Drive | **Em andamento** (versão web entregue, testada com Google simulado) | Verificação com conta real (usuário), Windows (loopback + PKCE), fila persistente |
+| ET20 DOCX, comentários, Safari, domínio, canais | **Em andamento** (DOCX, comentários e especificação entregues; WebKit e canais parciais) | Safari real (Mac), domínio (decisão do usuário), canal verificado com release publicado, comentários por tabela, revisão da especificação |
 
 ## 4. Dependências do usuário
 

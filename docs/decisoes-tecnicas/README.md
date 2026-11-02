@@ -29,6 +29,11 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0019](dt-0019-procedimentos-de-comparacao-anova-multifatorial-e-dbc.md) | Procedimentos de comparação, ANOVA multifatorial com blocos, DBC e desempenho do valor-p de Tukey (v0.2) | Aceita | 2026-11-01 |
 | [DT-0020](dt-0020-figuras-completas-e-exportacao-em-pdf.md) | Personalização gráfica completa e exportação em PDF (v0.2) | Aceita | 2026-11-01 |
 | [DT-0021](dt-0021-temas-adicionais-fontes-e-logo.md) | Temas Industrial, Organic e Clay, fontes novas e logo do grupo (ET12) | Aceita | 2026-11-01 |
+| [DT-0022](dt-0022-planilha-de-coleta-e-correspondencia-de-ensaios.md) | Planilha de coleta e correspondência de ensaios (ET13) | Aceita | 2026-11-02 |
+| [DT-0023](dt-0023-espacamento-dos-controles-logo-unico-e-rolagem-entre-etapas.md) | Espaçamento dos controles, logotipo único e rolagem entre etapas (ET21) | Aceita | 2026-11-02 |
+| [DT-0024](dt-0024-sementes-no-navegador-e-pdf-sem-novas-fontes.md) | Sementes no navegador e limitações do PDF mantidas (ET14) | Aceita | 2026-11-02 |
+| [DT-0025](dt-0025-google-drive-opcional-na-versao-web.md) | Google Drive opcional na versão web (ET19) | Aceita (parcial) | 2026-11-02 |
+| [DT-0026](dt-0026-docx-comentarios-canais-e-webkit.md) | Relatório em Word, comentários, canais de atualização e WebKit (ET20) | Aceita (parcial) | 2026-11-02 |
 
 ## Regras
 

@@ -1,9 +1,11 @@
 // Delineamento em blocos completos casualizados (DBC): cada bloco recebe todos os tratamentos uma
 // vez, em ordem sorteada dentro do bloco com semente registrada. A ordem vem do motor; aqui só há
 // entrada de dados. Os níveis ficam gravados nos fatores (`levelsText`).
+
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { nowIso } from "../../lib/ids";
+import { clampSeed, MAX_SEED, randomSeed } from "../../lib/seed";
 import type { GeneratedRcbd, RcbdSpec } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
@@ -11,12 +13,7 @@ import { useProject, useProjectDispatch, useWorkspace } from "../../state/Projec
 import { freshId } from "../../state/project";
 import { splitLevels } from "../analysis/buildRequest";
 import { TableExportButtons } from "../results/TableExportButtons";
-
-function randomSeed(): number {
-  const values = new Uint32Array(1);
-  crypto.getRandomValues(values);
-  return values[0] ?? 1;
-}
+import { collectionColumns } from "./collectionColumns";
 
 export function RcbdPanel() {
   const { t } = useTranslation();
@@ -137,6 +134,14 @@ export function RcbdPanel() {
 
   const levels = candidate?.levels.length ?? 0;
   const blocks = candidate?.blocks.length ?? 0;
+  const collection = collectionColumns(
+    state,
+    (shown?.runs ?? []).map((r) => ({
+      unit: `B${r.blockIndex + 1}-T${r.levelIndex + 1}`,
+      levels: state.factors.map(() => undefined),
+    })),
+  );
+
   return (
     <section aria-labelledby="rcbd-title" data-testid="rcbd-panel">
       <h2 id="rcbd-title">{t("design.title")}</h2>
@@ -202,8 +207,9 @@ export function RcbdPanel() {
                 <input
                   type="number"
                   min={0}
+                  max={MAX_SEED}
                   value={seed}
-                  onChange={(e) => setSeed(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
+                  onChange={(e) => setSeed(clampSeed(e.target.value))}
                 />
               </label>
               <button
@@ -249,8 +255,22 @@ export function RcbdPanel() {
             label={t("design.rcbd.exportCsv")}
             suffix="do-dbc"
             sheet={t("design.rcbd.matrix")}
-            header={["run", "block", "position", state.rcbd.factorName]}
-            rows={shown.runs.map((r) => [r.run, r.block, r.position, r.level])}
+            header={[
+              "run",
+              "unit_id",
+              "block",
+              "position",
+              state.rcbd.factorName,
+              ...collection.header,
+            ]}
+            rows={shown.runs.map((r, i) => [
+              r.run,
+              `B${r.blockIndex + 1}-T${r.levelIndex + 1}`,
+              r.block,
+              r.position,
+              r.level,
+              ...(collection.cells[i] ?? []),
+            ])}
             metadata={{
               app: "EnziTAG Optima",
               project: workspace.name,
@@ -262,6 +282,9 @@ export function RcbdPanel() {
             fileBase="matriz-dbc"
             onDone={setNotice}
           />
+          <p className="muted small" data-testid="collection-note">
+            {t("design.collectionNote")}
+          </p>
           {notice && (
             <p role="status" className="muted small">
               {notice}

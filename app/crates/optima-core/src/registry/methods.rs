@@ -56,6 +56,12 @@ pub fn registered_methods() -> Vec<MethodInfo> {
             validation: Validation::NumericallyValidated,
         },
         MethodInfo {
+            id: crate::designs::selection::METHOD_ID.to_string(),
+            version: crate::designs::selection::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
             id: crate::designs::generate::METHOD_ID.to_string(),
             version: crate::designs::generate::METHOD_VERSION,
             implementation: Implementation::Implemented,
@@ -70,6 +76,54 @@ pub fn registered_methods() -> Vec<MethodInfo> {
         MethodInfo {
             id: crate::designs::randomized_block::METHOD_ID.to_string(),
             version: crate::designs::randomized_block::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::designs::mixed_levels::METHOD_ID.to_string(),
+            version: crate::designs::mixed_levels::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::designs::mixture::METHOD_ID.to_string(),
+            version: crate::designs::mixture::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::models::mixture::METHOD_ID.to_string(),
+            version: crate::models::mixture::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::designs::optimal::METHOD_ID.to_string(),
+            version: crate::designs::optimal::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::comparisons::paired::METHOD_ID.to_string(),
+            version: crate::comparisons::paired::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::models::mixed::METHOD_ID.to_string(),
+            version: crate::models::mixed::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::models::nonlinear::METHOD_ID.to_string(),
+            version: crate::models::nonlinear::METHOD_VERSION,
+            implementation: Implementation::Implemented,
+            validation: Validation::NumericallyValidated,
+        },
+        MethodInfo {
+            id: crate::power::METHOD_ID.to_string(),
+            version: crate::power::METHOD_VERSION,
             implementation: Implementation::Implemented,
             validation: Validation::NumericallyValidated,
         },

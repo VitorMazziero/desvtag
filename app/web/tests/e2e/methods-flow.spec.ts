@@ -164,6 +164,272 @@ test("DBC aleatorizado: gerar blocos, preencher respostas e analisar com bloco",
   await expect(anova.locator("tbody tr")).toHaveCount(4); // Tratamento, Dia, Resíduo, Total
 });
 
+test("níveis mistos: 3 cepas × 2 pH × 2 repetições, ANOVA multifatorial e planilha de coleta", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(0).fill("Cepa");
+  await page.getByLabel("Níveis (opcional)").nth(0).fill("A; B; C");
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(1).fill("pH");
+  await page.getByLabel("Níveis (opcional)").nth(1).fill("5; 7");
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /Níveis mistos/ })
+    .check();
+  await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
+  await expect(page.getByTestId("mixed-count")).toContainText(
+    "12 ensaios: 6 combinações × 2 repetições.",
+  );
+  await page.getByRole("button", { name: "Gerar planejamento" }).click();
+  await expect(page.getByTestId("mixed-generated")).toContainText("12 ensaios");
+  const table = page.getByTestId("mixed-table");
+  await expect(table.locator("tbody tr")).toHaveCount(12);
+  // Ordem padrão (sem aleatorizar): a cepa varia mais depressa que o pH.
+  await expect(table.locator("tbody tr").nth(0)).toContainText("C1.1-R1");
+  await expect(table.locator("tbody tr").nth(1)).toContainText("C2.1-R1");
+  await expect(table.locator("tbody tr").nth(3)).toContainText("C1.2-R1");
+
+  const values = Array.from({ length: 12 }, (_, i) =>
+    String(10 + (i % 3) * 2 + Math.floor((i % 6) / 3) * 1.5 + (i % 5) * 0.2).replace(".", ","),
+  );
+  await paste(page, "Atividade — Obs. 1", values.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: /Analisar planejamento|Comparar tratamentos/ }).click();
+  await page.getByTestId("section-tables").click();
+  const anova = page.getByTestId("factorial-anova");
+  await expect(anova).toContainText("Cepa × pH");
+  await expect(anova).toContainText("Resíduo");
+  await expect(anova.locator("tbody tr")).toHaveCount(5); // Cepa, pH, Cepa × pH, Resíduo, Total
+});
+
+test("misturas: simplex-lattice {3,2}, resposta, modelo quadrático de Scheffé e gráfico ternário", async ({
+  page,
+}, testInfo) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  for (const [i, name] of ["Água", "Etanol", "Glicerol"].entries()) {
+    await page.getByRole("button", { name: "Adicionar fator" }).click();
+    await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
+    await page.getByLabel("Tipo").nth(i).selectOption("numeric");
+  }
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(3).fill("Rendimento");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /Misturas/ })
+    .check();
+  await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
+  await page.getByLabel("Pontos centrais extras").fill("1");
+  await expect(page.getByTestId("mixture-count")).toContainText(
+    "13 ensaios: 6 pontos × 2 repetições + 1 centrais extras.",
+  );
+  await page.getByRole("button", { name: "Gerar planejamento" }).click();
+  await expect(page.getByTestId("mixture-generated")).toContainText("13 ensaios");
+  const table = page.getByTestId("mixture-table");
+  await expect(table.locator("tbody tr")).toHaveCount(13);
+  // Ordem padrão: lexicográfica crescente; o primeiro ensaio é o vértice do 3.º componente.
+  await expect(table.locator("tbody tr").nth(0)).toContainText("0");
+  await expect(table.locator("tbody tr").nth(0).locator("td").nth(4)).toHaveText("1");
+
+  // Resposta verdadeira: 10·x1 + 20·x2 + 30·x3 + 25·x1·x2 (+ ruído pequeno e fixo).
+  const base = [
+    [0, 0, 2],
+    [0, 1, 1],
+    [0, 2, 0],
+    [1, 0, 1],
+    [1, 1, 0],
+    [2, 0, 0],
+  ];
+  const points = [...base, ...base].map((a) => a.map((v) => v / 2));
+  points.push([1 / 3, 1 / 3, 1 / 3]);
+  const noise = [0.02, -0.03, 0.01, 0.04, -0.02, 0.03, -0.01, 0.02, -0.04, 0.01, 0.03, -0.02, 0.0];
+  const values = points.map(([x1 = 0, x2 = 0, x3 = 0], i) =>
+    String(10 * x1 + 20 * x2 + 30 * x3 + 25 * x1 * x2 + (noise[i] ?? 0)).replace(".", ","),
+  );
+  await paste(page, "Rendimento — Obs. 1", values.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page.getByTestId("mixture-model").selectOption("quadratic");
+  await page.getByRole("button", { name: "Ajustar modelo" }).click();
+  const coefficients = page.getByTestId("scheffe-coefficients");
+  await expect(coefficients.locator("tbody tr")).toHaveCount(6);
+  await expect(coefficients).toContainText("Água·Etanol");
+  const cell = await coefficients.locator("tbody tr").nth(3).locator("td").first().textContent();
+  expect(Number((cell ?? "").replace(",", "."))).toBeGreaterThan(24);
+  expect(Number((cell ?? "").replace(",", "."))).toBeLessThan(26);
+  await expect(page.getByTestId("scheffe-anova")).toContainText("Resíduo");
+  await expect(page.getByTestId("scheffe-fit-stats")).toContainText("R²");
+  await expect(page.getByTestId("ternary-plot")).toBeVisible();
+  await page.getByTestId("ternary-plot").screenshot({ path: testInfo.outputPath("ternario.png") });
+});
+
+test("planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  for (const [i, name] of ["Temperatura", "pH"].entries()) {
+    await page.getByRole("button", { name: "Adicionar fator" }).click();
+    await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
+    await page.getByLabel("Tipo").nth(i).selectOption("numeric");
+  }
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  await page
+    .getByTestId("design-mode")
+    .getByRole("radio", { name: /Ótimo D\/I/ })
+    .check();
+  await page.getByLabel("Limite baixo de Temperatura").fill("20");
+  await page.getByLabel("Limite alto de Temperatura").fill("40");
+  await page.getByLabel("Limite baixo de pH").fill("5");
+  await page.getByLabel("Limite alto de pH").fill("7");
+  await page.getByRole("combobox", { name: "Modelo" }).selectOption("quadratic");
+  await page.getByLabel("Total de ensaios").fill("9");
+  // Restrição: Temperatura + 5·pH ≤ 70 (corta o canto de temperatura e pH altos).
+  await page.getByRole("button", { name: "Adicionar restrição" }).click();
+  await page.getByLabel("Restrição 1: coeficiente de Temperatura").fill("1");
+  await page.getByLabel("Restrição 1: coeficiente de pH").fill("5");
+  await page.getByLabel("Restrição 1: limite").fill("70");
+  await page.getByRole("button", { name: "Buscar planejamento" }).click();
+
+  await expect(page.getByTestId("optimal-summary")).toContainText("9 ensaios escolhidos entre");
+  const table = page.getByTestId("optimal-table");
+  await expect(table.locator("tbody tr")).toHaveCount(9);
+  for (const row of await table.locator("tbody tr").all()) {
+    const cells = await row.locator("td").allTextContents();
+    const temperature = Number((cells[1] ?? "").replace(",", "."));
+    const ph = Number((cells[2] ?? "").replace(",", "."));
+    expect(temperature + 5 * ph).toBeLessThanOrEqual(70 + 1e-9);
+  }
+  await expect(page.getByTestId("optimal-metrics")).toContainText("ln|X′X|");
+  await expect(page.getByTestId("optimal-result")).toContainText("não garante o ótimo global");
+
+  await page.getByRole("button", { name: "Usar este planejamento nos dados" }).click();
+  await expect(page.getByTestId("optimal-applied")).toContainText("9 ensaios novos");
+  await expect(page.getByLabel("Temperatura — Obs. 9")).not.toHaveValue("");
+  await expect(page.getByLabel("pH — Obs. 1")).not.toHaveValue("");
+});
+
+test("medidas repetidas: unidades, t pareado, Wilcoxon e modelo misto com intercepto aleatório", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await startCompare(page, ["Condição"]);
+  // «Unidade experimental» é uma coluna opcional da grade (opções avançadas da etapa de dados).
+  await page.getByText("Opções avançadas").click();
+  await page.getByLabel("Mostrar a coluna de unidade experimental").check();
+  const before = [10.1, 11.2, 9.8, 12.5, 10.9, 11.7];
+  const delta = [1.2, 0.8, 1.5, 1.1, 0.9, 1.4];
+  const lines = before.flatMap((b, i) => [
+    `S${i + 1}	Antes	${String(b).replace(".", ",")}`,
+    `S${i + 1}	Depois	${String(Math.round((b + (delta[i] ?? 0)) * 10) / 10).replace(".", ",")}`,
+  ]);
+  await paste(page, "Unidade experimental — Obs. 1", lines.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  const panel = page.getByTestId("repeated-measures");
+  await panel.getByText("Medidas repetidas, pareados e modelos mistos").click();
+  await expect(panel.getByTestId("repeated-need-units")).toHaveCount(0);
+  await panel.getByRole("button", { name: "Comparar pares" }).click();
+  const paired = page.getByTestId("paired-result");
+  await expect(paired).toContainText("6 pares");
+  await expect(paired).toContainText("-1,15");
+  await expect(page.getByTestId("paired-p")).not.toHaveText("—");
+  await expect(page.getByTestId("wilcoxon-p")).toContainText("0,03125"); // 2/64, exato
+
+  await panel.getByRole("button", { name: "Ajustar modelo misto" }).click();
+  const coefficients = page.getByTestId("mixed-coefficients");
+  await expect(coefficients.locator("tbody tr")).toHaveCount(2); // intercepto e Depois
+  await expect(coefficients).toContainText("Depois");
+  await expect(page.getByTestId("variance-components")).toContainText("ICC");
+  // Dados balanceados: os graus de liberdade do efeito de condição são (2−1)(6−1) = 5.
+  const df = await coefficients.locator("tbody tr").nth(1).locator("td").nth(2).textContent();
+  expect(Number((df ?? "").replace(",", "."))).toBeCloseTo(5, 1);
+});
+
+test("calculadora de potência: tamanho de amostra de duas amostras igual ao SciPy e precisão", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const panel = page.getByTestId("power-calculator");
+  // A tela inicial pode remontar depois do primeiro clique (Firefox sob carga): repete até abrir.
+  await expect(async () => {
+    if ((await panel.getAttribute("open")) === null)
+      await panel.getByText("Calculadora de potência e tamanho de amostra").click();
+    await expect(page.getByLabel("Diferença esperada")).toBeVisible({ timeout: 2000 });
+  }).toPass({ timeout: 25_000 });
+  await page.getByLabel("Diferença esperada").fill("1");
+  await page.getByLabel("Desvio-padrão esperado (σ)").fill("1,5");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  // SciPy (nct): n = 37 por grupo, potência 0,8076.
+  await expect(page.getByTestId("power-summary")).toContainText("37 por grupo (total 74)");
+  await expect(page.getByTestId("power-summary")).toContainText("0,8076");
+  await expect(page.getByTestId("power-curve").locator("tbody tr").first()).toBeVisible();
+
+  await page.getByTestId("power-goal").selectOption("precisionFor");
+  await page.getByLabel("Semiamplitude desejada do intervalo").fill("0,5");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(page.getByTestId("power-result")).toContainText("Semiamplitude do intervalo em n");
+
+  await page.getByTestId("power-design").selectOption("anova");
+  await page.getByTestId("power-goal").selectOption("powerAt");
+  await page.getByLabel("Tamanho da amostra").fill("8");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(page.getByTestId("power-summary")).toContainText("8 por grupo");
+});
+
+test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(0).fill("Substrato");
+  await page.getByLabel("Tipo").nth(0).selectOption("numeric");
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(1).fill("Velocidade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar linha" }).click();
+  const x = [0.3, 0.6, 1, 1.6, 2.5, 4, 6.5, 10, 16, 25];
+  // y = 3·S/(2,5 + S) com pequenas perturbações fixas.
+  const noise = [0.01, -0.02, 0.015, -0.01, 0.02, -0.015, 0.01, -0.005, 0.02, -0.01];
+  const rows = x.map(
+    (s, i) =>
+      `${String(s).replace(".", ",")}	${String(Math.round(((3 * s) / (2.5 + s) + (noise[i] ?? 0)) * 1e4) / 1e4).replace(".", ",")}`,
+  );
+  await paste(page, "Substrato — Obs. 1", rows.join(String.fromCharCode(10)));
+  await page.getByRole("button", { name: "Avançar" }).click();
+
+  const panel = page.getByTestId("saturation-fit");
+  await panel.getByText(/Curvas de saturação/).click();
+  await panel.getByRole("button", { name: "Ajustar curva" }).click();
+  const table = page.getByTestId("saturation-parameters");
+  await expect(table.locator("tbody tr")).toHaveCount(2);
+  const cells = await table.locator("tbody tr").nth(0).locator("td").first().textContent();
+  const vmax = Number((cells ?? "").replace(",", "."));
+  expect(vmax).toBeGreaterThan(2.8);
+  expect(vmax).toBeLessThan(3.3);
+  await expect(page.getByTestId("saturation-stats")).toContainText("R²");
+  await expect(page.getByTestId("saturation-chart")).toBeVisible();
+});
+
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({
   page,
 }) => {

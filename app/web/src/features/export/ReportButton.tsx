@@ -11,6 +11,7 @@ import {
   buildReportHtml,
   cleanReportDom,
   cleanReportRoot,
+  commentsSection,
   exportLanguage,
   reportPdf,
   utf8,
@@ -41,12 +42,18 @@ async function settled(root: HTMLElement): Promise<void> {
   }
 }
 
+const BUTTONS = {
+  html: { testId: "report-button", label: "export.report.button" },
+  pdf: { testId: "report-pdf-button", label: "export.report.buttonPdf" },
+  docx: { testId: "report-docx-button", label: "export.report.buttonDocx" },
+} as const;
+
 export function ReportButton({
   onDone,
   format = "html",
 }: {
   onDone: (message: string) => void;
-  format?: "html" | "pdf";
+  format?: "html" | "pdf" | "docx";
 }) {
   const { t, i18n } = useTranslation("results");
   const state = useProject();
@@ -86,6 +93,27 @@ export function ReportButton({
           ["exportedAt", nowIso()],
         ];
         const pairs = provenance.filter(([, v]) => v !== "");
+        // Comentários (opcional): entram como seção do mesmo DOM, para sair igual em HTML, PDF e Word.
+        if (settings.reportComments) {
+          const section = commentsSection(document, state.comments, {
+            title: tt("export.report.commentsTitle"),
+            resolved: tt("export.report.commentsResolved"),
+            revision: (id) => tt("export.report.commentsRevision", { id }),
+            date: (iso) => new Date(iso).toLocaleDateString(language),
+            target: (target) =>
+              target.kind === "experiment"
+                ? tt("export.report.commentsExperiment")
+                : target.kind === "analysis"
+                  ? tt("export.report.commentsAnalysis", { analysis: target.analysisId ?? "" })
+                  : tt(
+                      target.kind === "figure"
+                        ? "export.report.commentsFigure"
+                        : "export.report.commentsTable",
+                      { key: target.key ?? "" },
+                    ),
+          });
+          if (section) el.append(section);
+        }
         const title = `${state.name} — ${tt("export.report.title")}`;
         let saved: { name: string } | null;
         if (format === "pdf") {
@@ -109,6 +137,29 @@ export function ReportButton({
             pageLabel: (page, total) => tt("export.report.page", { page, total }),
           });
           saved = await storage.exportFile(bytes, `${slug(state.name)}-relatorio.pdf`);
+        } else if (format === "docx") {
+          // O Word é carregado só aqui: a biblioteca não pesa no início do aplicativo.
+          const { reportDocx } = await import("../../services/export/docx");
+          const bytes = await reportDocx({
+            info: {
+              title,
+              subject: tt("export.report.subtitle"),
+              keywords: pairs
+                .map(([k, v]) => `${k}=${v}`)
+                .join("; ")
+                .slice(0, 900),
+              creator: `EnziTAG Optima ${APP_VERSION}`,
+            },
+            title,
+            subtitle: tt("export.report.subtitle"),
+            provenanceTitle: tt("export.report.provenance"),
+            provenance: pairs,
+            body: cleanReportRoot(el),
+            footer: tt("export.report.footerPdf", { version: APP_VERSION }),
+            logoDataUri: settings.reportLogo ? logoInline : undefined,
+            pageLabel: (page, total) => tt("export.report.page", { page, total }),
+          });
+          saved = await storage.exportFile(bytes, `${slug(state.name)}-relatorio.docx`);
         } else {
           const html = buildReportHtml({
             language,
@@ -147,11 +198,9 @@ export function ReportButton({
         className="button secondary small"
         disabled={building || !stored}
         onClick={() => setBuilding(true)}
-        data-testid={format === "pdf" ? "report-pdf-button" : "report-button"}
+        data-testid={BUTTONS[format].testId}
       >
-        {building
-          ? t("export.report.building")
-          : t(format === "pdf" ? "export.report.buttonPdf" : "export.report.button")}
+        {building ? t("export.report.building") : t(BUTTONS[format].label)}
       </button>
       {building && (
         <div ref={root} hidden aria-hidden="true" data-report-root>

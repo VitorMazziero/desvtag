@@ -1,16 +1,24 @@
 //! Solicitações da interface ao motor.
 
 use optima_core::comparisons::OneWayRequest;
+use optima_core::comparisons::paired::PairedRequest;
 use optima_core::comparisons::procedures::ProcedureRequest;
 use optima_core::descriptive::DescriptiveRequest;
 use optima_core::designs::analysis::DesignAnalysisRequest;
 use optima_core::designs::completely_randomized::CrdSpec;
+use optima_core::designs::mixed_levels::MixedSpec;
+use optima_core::designs::mixture::MixtureSpec;
+use optima_core::designs::optimal::OptimalSpec;
 use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use optima_core::distributions::DistributionRequest;
 use optima_core::models::LinearModelRequest;
 use optima_core::models::factorial_anova::FactorialRequest;
+use optima_core::models::mixed::MixedModelRequest;
+use optima_core::models::mixture::MixtureAnalysisRequest;
+use optima_core::models::nonlinear::NonlinearRequest;
 use optima_core::optimization::{EvaluateRequest, OptimizationGridRequest, OptimizationRequest};
+use optima_core::power::PowerRequest;
 use optima_core::surface::{GridRequest, SurfaceRequest};
 use optima_project::ProjectDocument;
 use optima_project::xlsx_writer::ExportWorkbook;
@@ -40,6 +48,22 @@ pub enum Operation {
     DesignCrdGenerate(CrdSpec),
     /// Gera um delineamento em blocos completos casualizados (`design.rcbdGenerate`).
     DesignRcbdGenerate(RcbdSpec),
+    /// Gera um fatorial completo de níveis mistos (`design.mixedGenerate`).
+    DesignMixedGenerate(MixedSpec),
+    /// Gera um planejamento de misturas (`design.mixtureGenerate`).
+    DesignMixtureGenerate(MixtureSpec),
+    /// Ajusta um modelo de Scheffé (`mixture.analyze`).
+    MixtureAnalyze(Box<MixtureAnalysisRequest>),
+    /// Gera um planejamento D ou I-ótimo (`design.optimalGenerate`).
+    DesignOptimalGenerate(OptimalSpec),
+    /// Compara duas condições pareadas: t pareado e Wilcoxon (`comparison.paired`).
+    ComparisonPaired(PairedRequest),
+    /// Ajusta um modelo linear misto com intercepto aleatório por unidade (`model.mixed`).
+    ModelMixed(Box<MixedModelRequest>),
+    /// Ajusta um modelo de saturação não linear (`model.nonlinear`).
+    ModelNonlinear(Box<NonlinearRequest>),
+    /// Potência, tamanho de amostra e precisão (`power.analyze`).
+    PowerAnalyze(Box<PowerRequest>),
     /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
     DesignAnalyze(Box<DesignAnalysisRequest>),
     /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).
@@ -62,6 +86,8 @@ pub enum Operation {
     AnovaFactorial(Box<FactorialRequest>),
     /// Métricas de comparação e sequência de eliminação regressiva de termos (`surface.selectModel`).
     SurfaceSelectModel(Box<SurfaceRequest>),
+    /// Métricas de comparação e eliminação regressiva de termos de planejamentos de dois níveis (`design.selectModel`).
+    DesignSelectModel(Box<DesignAnalysisRequest>),
     /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
     DistributionEvaluate(DistributionRequest),
     /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).

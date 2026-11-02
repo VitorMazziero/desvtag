@@ -322,7 +322,22 @@
     "failed": "Não foi possível ler o arquivo:",
     "tooLarge": "Arquivo grande demais para importar.",
     "formulaNote": "Planilhas: só os valores armazenados são lidos; fórmulas nunca são executadas.",
-    "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta."
+    "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta.",
+    "fill": {
+      "title": "Preencher as respostas do planejamento",
+      "intro": "Este arquivo traz os fatores e as respostas deste experimento (por exemplo, a planilha de coleta exportada da matriz de ensaios). Cada linha é cruzada com o ensaio de mesmos níveis (ou de mesma unidade) e só as respostas são gravadas; o planejamento e os fatores ficam como estão.",
+      "modeLegend": "O que fazer com o arquivo",
+      "modeFill": "Preencher só as respostas do experimento atual (recomendado)",
+      "modeReplace": "Substituir todos os dados por este arquivo",
+      "summary": "{{filled}} valor(es) de resposta serão gravados; {{empty}} célula(s) em branco no arquivo ficam como estão.",
+      "columns": "Respostas encontradas no arquivo: {{responses}}.",
+      "replacing": "{{count}} valor(es) já digitado(s) serão substituídos; o estado anterior fica no histórico de versões.",
+      "unmatched": "{{count}} linha(s) do arquivo não correspondem a nenhum ensaio (níveis diferentes dos planejados ou ensaio já usado) e não serão gravadas. Linhas: {{lines}}.",
+      "invalid": "{{count}} célula(s) de resposta não são números e precisam ser corrigidas no arquivo. Linhas: {{lines}}.",
+      "rowsWithoutLine": "{{count}} ensaio(s) do experimento não têm linha no arquivo e continuam como estão.",
+      "keeps": "Fatores, ordem dos ensaios e planejamento não mudam.",
+      "confirm": "Preencher respostas"
+    }
   },
   "design": {
     "title": "Planejamento do experimento",
@@ -417,7 +432,10 @@
       "legend": "Tipo de planejamento",
       "factorial": "Fatores quantitativos (fatorial, triagem, superfície)",
       "crd": "Um fator categórico (DIC aleatorizado)",
-      "rcbd": "Um fator categórico em blocos (DBC aleatorizado)"
+      "rcbd": "Um fator categórico em blocos (DBC aleatorizado)",
+      "mixed": "Níveis mistos (vários fatores)",
+      "mixture": "Misturas (componentes que somam 1)",
+      "optimal": "Ótimo D/I (restrições e ampliação)"
     },
     "crd": {
       "intro": "Delineamento inteiramente casualizado: um fator com vários tratamentos (níveis), o mesmo número de unidades experimentais independentes em cada um e a ordem de execução sorteada com semente registrada.",
@@ -454,6 +472,95 @@
       "exportCsv": "Matriz do DBC (CSV)",
       "position": "Posição no bloco",
       "unitNote": "Cada ensaio recebe um identificador de unidade (por exemplo B2-T3: bloco 2, tratamento 3). A análise usa o bloco como efeito aditivo."
+    },
+    "collectionNote": "Planilha de coleta: o arquivo exportado traz uma coluna vazia para cada resposta. Preencha no laboratório e importe o mesmo arquivo em «Importar arquivo»: só as respostas são gravadas, nos ensaios correspondentes.",
+    "mixed": {
+      "title": "Fatorial de níveis mistos",
+      "intro": "Combina todos os níveis de dois ou mais fatores com números de níveis diferentes (por exemplo, 3 cepas × 2 valores de pH × 4 agitações), com repetições e ordem de execução sorteada com semente registrada. A análise é a ANOVA multifatorial, com médias marginais e contrastes.",
+      "needFactors": "Cadastre na etapa anterior pelo menos dois fatores com nome e com dois ou mais níveis digitados (campo «Níveis»).",
+      "factors": "Fatores que entram no planejamento",
+      "levelCount": "{{count}} níveis",
+      "levelsHelp": "Os níveis de cada fator ficam gravados no próprio fator, separados por ponto e vírgula ou quebra de linha. Fatores numéricos entram como níveis nomeados.",
+      "replicates": "Repetições da combinação completa",
+      "randomize": "Aleatorizar a ordem de execução",
+      "count": "{{total}} ensaios: {{combinations}} combinações × {{replicates}} repetições.",
+      "matrix": "Ordem de execução do fatorial de níveis mistos",
+      "exportCsv": "Matriz de níveis mistos (CSV)"
+    },
+    "mixture": {
+      "title": "Planejamento de misturas",
+      "intro": "Os componentes são proporções que somam 1. O simplex-lattice {q, m} usa as combinações de proporções múltiplas de 1/m; o simplex-centroide usa todos os subconjuntos de componentes em partes iguais. Limites inferiores reduzem a região (pseudocomponentes). Limites superiores ainda não são tratados.",
+      "needFactors": "Cadastre na etapa anterior pelo menos dois fatores numéricos com nome: cada um é a proporção de um componente da mistura.",
+      "components": "Componentes da mistura",
+      "lower": "Limite inferior de {{name}} (0 a 1)",
+      "lowerHelp": "A soma dos limites inferiores precisa ser menor que 1. Deixe 0 se não houver limite.",
+      "kind": "Tipo de planejamento",
+      "lattice": "Simplex-lattice {q, m}",
+      "centroid": "Simplex-centroide",
+      "degree": "Grau m do lattice",
+      "replicates": "Repetições dos pontos",
+      "centers": "Pontos centrais extras",
+      "randomize": "Aleatorizar a ordem de execução",
+      "count": "{{total}} ensaios: {{points}} pontos × {{replicates}} repetições + {{centers}} centrais extras.",
+      "warn": {
+        "no_pure_error": "Sem repetições nem pontos centrais extras não há erro puro para testar a falta de ajuste."
+      },
+      "matrix": "Ordem de execução da mistura",
+      "exportCsv": "Matriz de misturas (CSV)",
+      "support": "Componentes presentes",
+      "extraCenter": "central extra"
+    },
+    "optimal": {
+      "title": "Planejamento D e I-ótimo",
+      "intro": "Escolhe, entre uma malha de candidatos dentro das suas restrições, os ensaios que melhor estimam o modelo: D maximiza a informação sobre os coeficientes; I minimiza a variância média de predição na região. Serve para regiões irregulares, número de ensaios fixado e para ampliar ensaios já realizados.",
+      "needFactors": "Cadastre na etapa anterior pelo menos um fator numérico com nome.",
+      "needRanges": "Informe o limite baixo e o alto (números) de cada fator escolhido.",
+      "factors": "Fatores e faixas",
+      "low": "Limite baixo de {{name}}",
+      "high": "Limite alto de {{name}}",
+      "model": "Modelo",
+      "models": {
+        "linear": "Linear (efeitos principais)",
+        "interactions": "Com interações de dois fatores",
+        "quadratic": "Quadrático completo"
+      },
+      "criterion": "Critério",
+      "criteria": {
+        "d": "D (informação dos coeficientes)",
+        "i": "I (variância média de predição)"
+      },
+      "runs": "Total de ensaios",
+      "levels": "Níveis por fator na malha",
+      "starts": "Inícios aleatórios",
+      "constraints": "Restrições lineares (soma de coeficiente × valor ≤ limite, em unidades reais)",
+      "coefficient": "Restrição {{n}}: coeficiente de {{name}}",
+      "upper": "Limite",
+      "upperLabel": "Restrição {{n}}: limite",
+      "addConstraint": "Adicionar restrição",
+      "removeConstraint": "Remover",
+      "constraintHelp": "Exemplo: coeficientes 1 e 1 e limite 40 significam fator 1 + fator 2 ≤ 40. Deixe em branco o coeficiente de um fator que não participa.",
+      "augment": "Ampliar: manter os {{count}} ensaios já realizados (linhas com fatores numéricos e resposta)",
+      "randomize": "Aleatorizar a ordem de execução dos ensaios novos",
+      "search": "Buscar planejamento",
+      "searching": "Buscando…",
+      "cancel": "Cancelar",
+      "cancelled": "Busca cancelada.",
+      "result": "Planejamento encontrado",
+      "summary": "{{runs}} ensaios escolhidos entre {{candidates}} candidatos; o melhor valor foi alcançado em {{reached}} de {{starts}} inícios.",
+      "noGlobal": "A busca é local, com vários inícios: o planejamento é muito bom para o critério, mas o aplicativo não garante o ótimo global.",
+      "metrics": {
+        "parameters": "Parâmetros do modelo",
+        "d": "Eficiência D (por ensaio)",
+        "a": "Eficiência A",
+        "g": "Eficiência G",
+        "i": "Variância média de predição (escalada)"
+      },
+      "exportCsv": "Matriz ótima (CSV)",
+      "status": "Situação",
+      "done": "já realizado",
+      "new": "novo",
+      "apply": "Usar este planejamento nos dados",
+      "applied": "{{count}} ensaios novos foram para a grade de dados; a análise será de superfície de resposta (escolha os termos do modelo no resultado)."
     }
   },
   "optimization": {
@@ -583,6 +690,202 @@
     "install": "Baixar e instalar",
     "installing": "Baixando e instalando…",
     "failed": "Não foi possível verificar agora (sem internet ou serviço indisponível).",
-    "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados."
+    "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados.",
+    "notes": "Novidades desta versão",
+    "channel": "Canal de atualização",
+    "channelExperimental": "Experimental",
+    "channelStable": "Estável",
+    "channelHelp": {
+      "experimental": "Recebe todas as versões publicadas, inclusive as da série 0.x. É o único canal enquanto não houver a versão 1.0.0.",
+      "stable": "Recebe somente versões estáveis (a partir da 1.0.0). Antes disso este canal não tem versões e a verificação avisará que não foi possível verificar."
+    }
+  },
+  "mixture": {
+    "analysis": {
+      "title": "Análise de misturas (modelos de Scheffé)",
+      "intro": "Ajusta o modelo escolhido sem intercepto nos pseudocomponentes. A ANOVA usa a soma total centrada na média. O resultado é calculado ao pedir e não é guardado no projeto.",
+      "response": "Resposta",
+      "model": "Modelo",
+      "models": {
+        "linear": "Linear",
+        "quadratic": "Quadrático",
+        "specialCubic": "Cúbico especial"
+      },
+      "fit": "Ajustar modelo",
+      "note": "Sem intercepto: os termos lineares já contêm o nível médio. Os coeficientes são em pseudocomponentes; a previsão só vale dentro da região do planejamento.",
+      "coefficients": "Coeficientes",
+      "term": "Termo",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "anova": "ANOVA (soma total centrada na média)",
+      "source": "Fonte",
+      "model_": "Modelo",
+      "residual": "Resíduo",
+      "total": "Total",
+      "adjusted": "ajustado",
+      "exportCsv": "Coeficientes (CSV)",
+      "badCells": "Há respostas que não são números nas linhas {{rows}}.",
+      "ternaryLabel": "Previsão de {{response}} sobre o triângulo dos componentes",
+      "min": "mínimo",
+      "max": "máximo"
+    }
+  },
+  "repeated": {
+    "title": "Medidas repetidas, pareados e modelos mistos",
+    "intro": "Para dados que não são independentes: a mesma unidade medida em duas condições (pareados) ou várias vezes (medidas repetidas, lotes, dias). As duas ferramentas usam a coluna «Unidade» da grade de dados. Os resultados são calculados ao pedir e não são guardados no projeto.",
+    "needUnits": "Nenhuma linha tem unidade experimental informada. Mostre a coluna «Unidade» e preencha-a (por exemplo, o identificador do indivíduo ou do lote).",
+    "showUnitColumn": "Mostrar a coluna «Unidade» na grade",
+    "response": "Resposta",
+    "paired": {
+      "title": "Comparação pareada (duas condições)",
+      "needTwoLevels": "Precisa de um fator categórico com exatamente dois níveis nos dados.",
+      "factor": "Fator com as duas condições",
+      "run": "Comparar pares",
+      "noPairs": "Nenhuma unidade tem as duas condições com resposta. Informe a unidade experimental de cada linha.",
+      "incomplete": "Unidades fora do teste por terem só uma das condições: {{units}}.",
+      "duplicated": "Unidades fora do teste por terem mais de uma observação no mesmo nível: {{units}}.",
+      "withoutUnit": "{{count}} linha(s) sem unidade foram ignoradas.",
+      "result": "{{n}} pares",
+      "meanDiff": "Diferença média (1.ª − 2.ª condição)",
+      "sd": "Desvio-padrão das diferenças",
+      "ci": "Intervalo de confiança da diferença",
+      "wilcoxon": "Wilcoxon (postos sinalizados)",
+      "method": {
+        "exact": "valor-p exato",
+        "normalApproximation": "aproximação normal"
+      },
+      "note": "O t pareado supõe diferenças aproximadamente normais; o Wilcoxon descarta diferenças nulas e usa postos médios nos empates."
+    },
+    "mixed": {
+      "title": "Modelo misto (intercepto aleatório por unidade)",
+      "fixed": "Efeitos fixos",
+      "run": "Ajustar modelo misto",
+      "result": "{{n}} observações em {{g}} unidades",
+      "term": "Termo",
+      "estimate": "Estimativa",
+      "se": "Erro-padrão",
+      "df": "GL (Satterthwaite)",
+      "varianceUnit": "Variância entre unidades",
+      "varianceResidual": "variância residual",
+      "boundary": "A variância entre unidades é zero (fronteira): o modelo é equivalente ao sem efeito aleatório e os graus de liberdade são os do resíduo.",
+      "note": "Estimação por REML com simetria composta (todas as medidas da mesma unidade com a mesma correlação). Estruturas AR(1) e não estruturada ainda não estão disponíveis."
+    }
+  },
+  "saturation": {
+    "title": "Curvas de saturação (Monod, Michaelis–Menten, Haldane e Hill)",
+    "intro": "Ajusta a velocidade ou o crescimento em função do substrato por mínimos quadrados não lineares (Levenberg–Marquardt, vários inícios). O substrato é um fator numérico e a resposta, uma das respostas. O resultado é calculado ao pedir e não é guardado no projeto.",
+    "needFactor": "Cadastre um fator numérico (o substrato) para ajustar uma curva de saturação.",
+    "substrate": "Substrato (fator numérico)",
+    "response": "Resposta",
+    "model": "Modelo",
+    "models": {
+      "monod": "Monod / Michaelis–Menten: a·S/(b + S)",
+      "haldane": "Haldane (inibição pelo substrato): a·S/(b + S + S²/c)",
+      "hill": "Hill: a·Sⁿ/(bⁿ + Sⁿ)"
+    },
+    "fit": "Ajustar curva",
+    "badCells": "Há valores que não são números nas linhas {{rows}}.",
+    "parameters": "Parâmetros",
+    "parameter": "Parâmetro",
+    "estimate": "Estimativa",
+    "se": "Erro-padrão",
+    "ci": "Intervalo de confiança",
+    "starts": "{{reached}} de {{run}} inícios chegaram ao melhor ajuste.",
+    "chartLabel": "Curva de saturação ajustada com os pontos observados e a faixa de confiança",
+    "warn": {
+      "not_converged": "O ajuste não convergiu no número máximo de iterações: não use estes valores.",
+      "parameter_at_bound": "Algum parâmetro terminou em um limite (positivo): o modelo pode não ser adequado aos dados.",
+      "ill_conditioned": "A matriz de informação é mal condicionada: os parâmetros não são identificáveis separadamente.",
+      "highly_correlated": "Dois parâmetros têm correlação acima de 0,99: os dados não os separam (faixa de substrato estreita demais).",
+      "imprecise_parameter": "Algum erro-padrão é maior que dez vezes a estimativa: o parâmetro é praticamente indeterminado.",
+      "few_degrees_of_freedom": "Poucos graus de liberdade: os intervalos são pouco confiáveis.",
+      "single_start_best": "Só um início chegou ao melhor ajuste: confirme com ensaios em outras concentrações."
+    },
+    "note": "Intervalos de Wald (aproximação). O ajuste só vale dentro da faixa de substrato medida; para identificar Ks e μmax é preciso medir abaixo e acima de Ks."
+  },
+  "power": {
+    "title": "Calculadora de potência e tamanho de amostra",
+    "intro": "Use antes dos ensaios: quantas unidades são necessárias para detectar uma diferença esperada, ou que potência uma amostra tem. As fórmulas são exatas (distribuições F e t não centrais). O resultado depende do desvio-padrão e do efeito que você supõe.",
+    "design": "Desenho",
+    "designs": {
+      "twoSampleT": "Duas amostras independentes (teste t)",
+      "pairedT": "Amostras pareadas (teste t)",
+      "oneSampleT": "Uma amostra (teste t)",
+      "anova": "ANOVA de um fator"
+    },
+    "goal": "Objetivo",
+    "goals": {
+      "sampleSizeFor": "Tamanho de amostra para uma potência",
+      "powerAt": "Potência para um tamanho de amostra",
+      "precisionFor": "Tamanho de amostra para uma precisão (intervalo)"
+    },
+    "means": "Médias esperadas dos grupos (separe por ponto e vírgula)",
+    "difference": "Diferença esperada",
+    "sigma": "Desvio-padrão esperado (σ)",
+    "alpha": "Nível de significância (α)",
+    "target": "Potência desejada",
+    "n": "Tamanho da amostra",
+    "halfWidth": "Semiamplitude desejada do intervalo",
+    "twoSided": "Teste bilateral",
+    "calculate": "Calcular",
+    "perGroup": "por grupo",
+    "units": "unidades",
+    "summary": "{{n}} {{unit}} (total {{total}}): potência {{power}}.",
+    "details": "Não centralidade {{nc}}; gl {{df1}}; valor crítico {{critical}}.",
+    "halfWidthResult": "Semiamplitude do intervalo em n: {{value}}.",
+    "power": "Potência",
+    "note": "A potência vale para o σ e o efeito informados. Se o σ real for maior, a potência será menor; considere uma margem."
+  },
+  "drive": {
+    "title": "Google Drive (opcional)",
+    "intro": "Salve e abra seus projetos no Google Drive. Nada é enviado sem você conectar, e o aplicativo só enxerga a pasta «EnziTAG Optima» e os arquivos que ele criou ou que você escolher abrir (escopo drive.file).",
+    "connect": "Conectar ao Google Drive",
+    "connected": "Conectado ao Google Drive.",
+    "disconnect": "Desconectar",
+    "open": "Abrir do Drive…",
+    "save": "Salvar no Drive",
+    "linked": "Projeto ligado ao arquivo «{{name}}» do Drive.",
+    "unlinked": "Este projeto ainda não está no Drive: «Salvar no Drive» cria o arquivo na pasta «EnziTAG Optima».",
+    "saved": "Salvo no Drive: «{{name}}».",
+    "created": "Arquivo «{{name}}» criado na pasta «EnziTAG Optima» do seu Drive.",
+    "conflict": "O arquivo foi alterado no Drive depois da sua última leitura, então **não foi sobrescrito**. Seu trabalho foi salvo como «{{copy}}» na mesma pasta; abra os dois e compare antes de apagar algum.",
+    "opened": "Aberto do Drive: «{{name}}».",
+    "connectFirst": "Conecte-se ao Google Drive primeiro.",
+    "localStillWorks": "O Drive é opcional: salvar e abrir arquivos no computador continuam funcionando normalmente.",
+    "desktopNote": "Na versão para Windows, a integração com o Google Drive ainda não está disponível; use a versão web ou salve no computador.",
+    "errors": {
+      "auth": "A autorização do Google expirou ou foi recusada. Conecte-se novamente.",
+      "permission": "Sem permissão para este arquivo no Drive.",
+      "quota": "O armazenamento do seu Drive está cheio.",
+      "rateLimit": "O Google limitou as requisições. Tente de novo em alguns minutos.",
+      "notFound": "O arquivo não foi encontrado no Drive (apagado ou fora do alcance do aplicativo).",
+      "network": "Sem conexão com o Google. Seu trabalho continua no aplicativo; tente de novo quando houver rede.",
+      "unknown": "O Drive devolveu um erro inesperado. Seu trabalho continua no aplicativo."
+    }
+  },
+  "comments": {
+    "summary": "Comentários ({{count}}; {{open}} em aberto)",
+    "panelTitle": "Comentários do experimento ({{count}}; {{open}} em aberto)",
+    "intro": "Notas de revisão ficam guardadas no projeto, ligadas à análise ou à figura e à revisão dos dados em que foram escritas. Comentários de figuras são escritos na própria figura.",
+    "none": "Nenhum comentário ainda.",
+    "about": "Comentar sobre",
+    "new": "Novo comentário",
+    "author": "Seu nome (opcional, fica só neste dispositivo)",
+    "add": "Comentar",
+    "reply": "Responder",
+    "replyLabel": "Resposta",
+    "send": "Enviar resposta",
+    "resolve": "Resolver",
+    "reopen": "Reabrir",
+    "delete": "Excluir",
+    "confirmDelete": "Excluir este comentário e as respostas dele?",
+    "resolved": "resolvido",
+    "revision": "revisão {{id}}",
+    "target": {
+      "experiment": "Experimento",
+      "analysis": "Análise {{analysis}}",
+      "figure": "Figura «{{key}}»",
+      "table": "Tabela «{{key}}»"
+    }
   }
 }

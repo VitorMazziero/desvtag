@@ -305,6 +305,12 @@
     },
     "export": {
       "effectsCsv": "Effects (CSV)"
+    },
+    "model": {
+      "title": "Model: effects and comparison",
+      "intro": "Clear an effect to remove it from the model (for example, an unimportant interaction); the app recalculates and compares the models. The full model has the main effects and all two-factor interactions; in fractional designs, interactions that are aliased with each other cannot be separated.",
+      "terms": "Model effects",
+      "confirmHierarchy": "Removing this main effect leaves an interaction with the same factor in the model, which breaks model hierarchy. Continue?"
     }
   },
   "surface": {
@@ -401,9 +407,18 @@
       "footer": "EnziTAG Optima {{version}} — self-contained file, generated locally.",
       "buttonPdf": "Export report (PDF)",
       "footerPdf": "EnziTAG Optima {{version}} — PDF generated locally; figures are vector graphics.",
-      "page": "Page {{page}} of {{total}}"
+      "page": "Page {{page}} of {{total}}",
+      "buttonDocx": "Export report (Word)",
+      "commentsTitle": "Comments",
+      "commentsResolved": "resolved",
+      "commentsRevision": "revision {{id}}",
+      "commentsExperiment": "Experiment",
+      "commentsAnalysis": "Analysis {{analysis}}",
+      "commentsFigure": "Figure «{{key}}»",
+      "commentsTable": "Table «{{key}}»"
     },
-    "logo": "Include the group logo in reports"
+    "logo": "Include the group logo in reports",
+    "comments": "Include the experiment comments at the end of reports"
   },
   "figure": {
     "customize": "Customize figure",

@@ -322,7 +322,22 @@
     "failed": "The file could not be read:",
     "tooLarge": "File too large to import.",
     "formulaNote": "Spreadsheets: only stored values are read; formulas are never executed.",
-    "nothing": "Nothing to import: choose at least one column as a factor or response."
+    "nothing": "Nothing to import: choose at least one column as a factor or response.",
+    "fill": {
+      "title": "Fill in the design responses",
+      "intro": "This file has the factors and responses of this experiment (for example, the collection sheet exported from the run matrix). Each line is matched to the run with the same levels (or the same unit) and only the responses are written; the design and the factors stay as they are.",
+      "modeLegend": "What to do with the file",
+      "modeFill": "Fill in only the responses of the current experiment (recommended)",
+      "modeReplace": "Replace all data with this file",
+      "summary": "{{filled}} response value(s) will be written; {{empty}} blank cell(s) in the file are left as they are.",
+      "columns": "Responses found in the file: {{responses}}.",
+      "replacing": "{{count}} value(s) already entered will be replaced; the previous state stays in the version history.",
+      "unmatched": "{{count}} line(s) of the file match no run (levels differ from the planned ones, or the run was already used) and will not be written. Lines: {{lines}}.",
+      "invalid": "{{count}} response cell(s) are not numbers and must be fixed in the file. Lines: {{lines}}.",
+      "rowsWithoutLine": "{{count}} run(s) of the experiment have no line in the file and stay as they are.",
+      "keeps": "Factors, run order and design do not change.",
+      "confirm": "Fill in responses"
+    }
   },
   "design": {
     "title": "Experiment design",
@@ -417,7 +432,10 @@
       "legend": "Design type",
       "factorial": "Quantitative factors (factorial, screening, surface)",
       "crd": "One categorical factor (randomized CRD)",
-      "rcbd": "One categorical factor in blocks (randomized RCBD)"
+      "rcbd": "One categorical factor in blocks (randomized RCBD)",
+      "mixed": "Mixed levels (several factors)",
+      "mixture": "Mixtures (components summing to 1)",
+      "optimal": "D/I-optimal (constraints and augmentation)"
     },
     "crd": {
       "intro": "Completely randomized design: one factor with several treatments (levels), the same number of independent experimental units in each, and a run order drawn with a recorded seed.",
@@ -454,6 +472,95 @@
       "exportCsv": "RCBD matrix (CSV)",
       "position": "Position in block",
       "unitNote": "Each run gets a unit identifier (for example B2-T3: block 2, treatment 3). The analysis uses the block as an additive effect."
+    },
+    "collectionNote": "Collection sheet: the exported file has an empty column for each response. Fill it in at the lab and import the same file with “Import file”: only the responses are written, into the matching runs.",
+    "mixed": {
+      "title": "Mixed-levels factorial",
+      "intro": "Combines every level of two or more factors with different numbers of levels (for example 3 strains × 2 pH values × 4 agitation speeds), with replicates and a run order drawn with a recorded seed. The analysis is the multi-factor ANOVA, with marginal means and contrasts.",
+      "needFactors": "In the previous step, add at least two named factors with two or more levels typed in the «Levels» field.",
+      "factors": "Factors in the design",
+      "levelCount": "{{count}} levels",
+      "levelsHelp": "Each factor's levels are stored on the factor itself, separated by semicolons or line breaks. Numeric factors enter as named levels.",
+      "replicates": "Replicates of the full combination",
+      "randomize": "Randomize the run order",
+      "count": "{{total}} runs: {{combinations}} combinations × {{replicates}} replicates.",
+      "matrix": "Run order of the mixed-levels factorial",
+      "exportCsv": "Mixed-levels matrix (CSV)"
+    },
+    "mixture": {
+      "title": "Mixture design",
+      "intro": "Components are proportions that sum to 1. The simplex-lattice {q, m} uses the combinations of proportions that are multiples of 1/m; the simplex-centroid uses every subset of components in equal parts. Lower bounds shrink the region (pseudo-components). Upper bounds are not handled yet.",
+      "needFactors": "In the previous step, add at least two named numeric factors: each is the proportion of one mixture component.",
+      "components": "Mixture components",
+      "lower": "Lower bound of {{name}} (0 to 1)",
+      "lowerHelp": "The lower bounds must sum to less than 1. Leave 0 when there is no bound.",
+      "kind": "Design type",
+      "lattice": "Simplex-lattice {q, m}",
+      "centroid": "Simplex-centroid",
+      "degree": "Lattice degree m",
+      "replicates": "Replicates of the points",
+      "centers": "Extra center points",
+      "randomize": "Randomize the run order",
+      "count": "{{total}} runs: {{points}} points × {{replicates}} replicates + {{centers}} extra centers.",
+      "warn": {
+        "no_pure_error": "Without replicates or extra center points there is no pure error to test lack of fit."
+      },
+      "matrix": "Run order of the mixture",
+      "exportCsv": "Mixture matrix (CSV)",
+      "support": "Components present",
+      "extraCenter": "extra center"
+    },
+    "optimal": {
+      "title": "D- and I-optimal design",
+      "intro": "Chooses, from a grid of candidates inside your constraints, the runs that best estimate the model: D maximizes the information on the coefficients; I minimizes the average prediction variance over the region. Useful for irregular regions, a fixed number of runs and for augmenting runs already done.",
+      "needFactors": "In the previous step, add at least one named numeric factor.",
+      "needRanges": "Enter the low and high limits (numbers) of every chosen factor.",
+      "factors": "Factors and ranges",
+      "low": "Low limit of {{name}}",
+      "high": "High limit of {{name}}",
+      "model": "Model",
+      "models": {
+        "linear": "Linear (main effects)",
+        "interactions": "With two-factor interactions",
+        "quadratic": "Full quadratic"
+      },
+      "criterion": "Criterion",
+      "criteria": {
+        "d": "D (coefficient information)",
+        "i": "I (average prediction variance)"
+      },
+      "runs": "Total runs",
+      "levels": "Levels per factor in the grid",
+      "starts": "Random starts",
+      "constraints": "Linear constraints (sum of coefficient × value ≤ limit, in real units)",
+      "coefficient": "Constraint {{n}}: coefficient of {{name}}",
+      "upper": "Limit",
+      "upperLabel": "Constraint {{n}}: limit",
+      "addConstraint": "Add constraint",
+      "removeConstraint": "Remove",
+      "constraintHelp": "Example: coefficients 1 and 1 with limit 40 mean factor 1 + factor 2 ≤ 40. Leave blank the coefficient of a factor that does not take part.",
+      "augment": "Augment: keep the {{count}} runs already done (rows with numeric factors and a response)",
+      "randomize": "Randomize the run order of the new runs",
+      "search": "Search design",
+      "searching": "Searching…",
+      "cancel": "Cancel",
+      "cancelled": "Search cancelled.",
+      "result": "Design found",
+      "summary": "{{runs}} runs chosen from {{candidates}} candidates; the best value was reached in {{reached}} of {{starts}} starts.",
+      "noGlobal": "The search is local with several starts: the design is very good for the criterion, but the application does not guarantee the global optimum.",
+      "metrics": {
+        "parameters": "Model parameters",
+        "d": "D-efficiency (per run)",
+        "a": "A-efficiency",
+        "g": "G-efficiency",
+        "i": "Average prediction variance (scaled)"
+      },
+      "exportCsv": "Optimal matrix (CSV)",
+      "status": "Status",
+      "done": "already done",
+      "new": "new",
+      "apply": "Use this design in the data",
+      "applied": "{{count}} new runs went to the data grid; the analysis will be a response surface (choose the model terms in the result)."
     }
   },
   "optimization": {
@@ -583,6 +690,202 @@
     "install": "Download and install",
     "installing": "Downloading and installing…",
     "failed": "Could not check right now (no internet or service unavailable).",
-    "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed."
+    "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed.",
+    "notes": "What is new in this version",
+    "channel": "Update channel",
+    "channelExperimental": "Experimental",
+    "channelStable": "Stable",
+    "channelHelp": {
+      "experimental": "Receives every published version, including the 0.x series. It is the only channel until version 1.0.0 exists.",
+      "stable": "Receives stable versions only (from 1.0.0). Until then this channel has no versions and the check will report that it could not verify."
+    }
+  },
+  "mixture": {
+    "analysis": {
+      "title": "Mixture analysis (Scheffé models)",
+      "intro": "Fits the chosen model without an intercept on the pseudo-components. The ANOVA uses the mean-centered total sum of squares. The result is computed on request and is not stored in the project.",
+      "response": "Response",
+      "model": "Model",
+      "models": {
+        "linear": "Linear",
+        "quadratic": "Quadratic",
+        "specialCubic": "Special cubic"
+      },
+      "fit": "Fit model",
+      "note": "No intercept: the linear terms already carry the average level. Coefficients are in pseudo-components; predictions are valid only inside the design region.",
+      "coefficients": "Coefficients",
+      "term": "Term",
+      "estimate": "Estimate",
+      "se": "Std. error",
+      "anova": "ANOVA (mean-centered total sum of squares)",
+      "source": "Source",
+      "model_": "Model",
+      "residual": "Residual",
+      "total": "Total",
+      "adjusted": "adjusted",
+      "exportCsv": "Coefficients (CSV)",
+      "badCells": "Some responses are not numbers in rows {{rows}}.",
+      "ternaryLabel": "Predicted {{response}} over the component triangle",
+      "min": "minimum",
+      "max": "maximum"
+    }
+  },
+  "repeated": {
+    "title": "Repeated measures, paired data and mixed models",
+    "intro": "For data that are not independent: the same unit measured under two conditions (paired) or several times (repeated measures, lots, days). Both tools use the «Unit» column of the data grid. Results are computed on request and are not stored in the project.",
+    "needUnits": "No row has an experimental unit. Show the «Unit» column and fill it in (for example, the subject or lot identifier).",
+    "showUnitColumn": "Show the «Unit» column in the grid",
+    "response": "Response",
+    "paired": {
+      "title": "Paired comparison (two conditions)",
+      "needTwoLevels": "Needs a categorical factor with exactly two levels in the data.",
+      "factor": "Factor with the two conditions",
+      "run": "Compare pairs",
+      "noPairs": "No unit has both conditions with a response. Enter the experimental unit of each row.",
+      "incomplete": "Units left out because they have only one of the conditions: {{units}}.",
+      "duplicated": "Units left out because they have more than one observation at the same level: {{units}}.",
+      "withoutUnit": "{{count}} row(s) without a unit were ignored.",
+      "result": "{{n}} pairs",
+      "meanDiff": "Mean difference (1st − 2nd condition)",
+      "sd": "Standard deviation of the differences",
+      "ci": "Confidence interval of the difference",
+      "wilcoxon": "Wilcoxon (signed ranks)",
+      "method": {
+        "exact": "exact p-value",
+        "normalApproximation": "normal approximation"
+      },
+      "note": "The paired t assumes roughly normal differences; Wilcoxon drops zero differences and uses mid-ranks for ties."
+    },
+    "mixed": {
+      "title": "Mixed model (random intercept per unit)",
+      "fixed": "Fixed effects",
+      "run": "Fit mixed model",
+      "result": "{{n}} observations in {{g}} units",
+      "term": "Term",
+      "estimate": "Estimate",
+      "se": "Std. error",
+      "df": "DF (Satterthwaite)",
+      "varianceUnit": "Between-unit variance",
+      "varianceResidual": "residual variance",
+      "boundary": "The between-unit variance is zero (boundary): the model is equivalent to one without the random effect and the degrees of freedom are the residual ones.",
+      "note": "REML estimation with compound symmetry (all measures of a unit share the same correlation). AR(1) and unstructured covariances are not available yet."
+    }
+  },
+  "saturation": {
+    "title": "Saturation curves (Monod, Michaelis–Menten, Haldane and Hill)",
+    "intro": "Fits rate or growth against substrate by nonlinear least squares (Levenberg–Marquardt, several starts). The substrate is a numeric factor and the response is one of the responses. The result is computed on request and is not stored in the project.",
+    "needFactor": "Add a numeric factor (the substrate) to fit a saturation curve.",
+    "substrate": "Substrate (numeric factor)",
+    "response": "Response",
+    "model": "Model",
+    "models": {
+      "monod": "Monod / Michaelis–Menten: a·S/(b + S)",
+      "haldane": "Haldane (substrate inhibition): a·S/(b + S + S²/c)",
+      "hill": "Hill: a·Sⁿ/(bⁿ + Sⁿ)"
+    },
+    "fit": "Fit curve",
+    "badCells": "Some values are not numbers in rows {{rows}}.",
+    "parameters": "Parameters",
+    "parameter": "Parameter",
+    "estimate": "Estimate",
+    "se": "Std. error",
+    "ci": "Confidence interval",
+    "starts": "{{reached}} of {{run}} starts reached the best fit.",
+    "chartLabel": "Fitted saturation curve with the observed points and the confidence band",
+    "warn": {
+      "not_converged": "The fit did not converge within the iteration limit: do not use these values.",
+      "parameter_at_bound": "A parameter ended at a (positivity) bound: the model may not suit the data.",
+      "ill_conditioned": "The information matrix is ill-conditioned: parameters cannot be identified separately.",
+      "highly_correlated": "Two parameters are correlated above 0.99: the data do not separate them (substrate range too narrow).",
+      "imprecise_parameter": "A standard error is more than ten times the estimate: the parameter is practically undetermined.",
+      "few_degrees_of_freedom": "Few degrees of freedom: the intervals are unreliable.",
+      "single_start_best": "Only one start reached the best fit: confirm with runs at other concentrations."
+    },
+    "note": "Wald intervals (approximation). The fit only holds inside the measured substrate range; identifying Ks and μmax needs measurements below and above Ks."
+  },
+  "power": {
+    "title": "Power and sample size calculator",
+    "intro": "Use it before the runs: how many units are needed to detect an expected difference, or what power a sample has. The formulas are exact (noncentral F and t distributions). The result depends on the standard deviation and the effect you assume.",
+    "design": "Design",
+    "designs": {
+      "twoSampleT": "Two independent samples (t test)",
+      "pairedT": "Paired samples (t test)",
+      "oneSampleT": "One sample (t test)",
+      "anova": "One-way ANOVA"
+    },
+    "goal": "Goal",
+    "goals": {
+      "sampleSizeFor": "Sample size for a power",
+      "powerAt": "Power for a sample size",
+      "precisionFor": "Sample size for a precision (interval)"
+    },
+    "means": "Expected group means (separate by semicolons)",
+    "difference": "Expected difference",
+    "sigma": "Expected standard deviation (σ)",
+    "alpha": "Significance level (α)",
+    "target": "Desired power",
+    "n": "Sample size",
+    "halfWidth": "Desired interval half-width",
+    "twoSided": "Two-sided test",
+    "calculate": "Calculate",
+    "perGroup": "per group",
+    "units": "units",
+    "summary": "{{n}} {{unit}} (total {{total}}): power {{power}}.",
+    "details": "Noncentrality {{nc}}; df {{df1}}; critical value {{critical}}.",
+    "halfWidthResult": "Interval half-width at n: {{value}}.",
+    "power": "Power",
+    "note": "Power holds for the σ and effect entered. If the real σ is larger, power will be lower; consider a margin."
+  },
+  "drive": {
+    "title": "Google Drive (optional)",
+    "intro": "Save and open your projects in Google Drive. Nothing is sent until you connect, and the app only sees the «EnziTAG Optima» folder and the files it created or that you choose to open (drive.file scope).",
+    "connect": "Connect to Google Drive",
+    "connected": "Connected to Google Drive.",
+    "disconnect": "Disconnect",
+    "open": "Open from Drive…",
+    "save": "Save to Drive",
+    "linked": "Project linked to the Drive file «{{name}}».",
+    "unlinked": "This project is not in Drive yet: «Save to Drive» creates the file in the «EnziTAG Optima» folder.",
+    "saved": "Saved to Drive: «{{name}}».",
+    "created": "File «{{name}}» created in the «EnziTAG Optima» folder of your Drive.",
+    "conflict": "The file was changed in Drive after your last read, so it was **not overwritten**. Your work was saved as «{{copy}}» in the same folder; open both and compare before deleting either.",
+    "opened": "Opened from Drive: «{{name}}».",
+    "connectFirst": "Connect to Google Drive first.",
+    "localStillWorks": "Drive is optional: saving and opening files on your computer keep working as usual.",
+    "desktopNote": "The Windows version does not have Google Drive integration yet; use the web version or save to your computer.",
+    "errors": {
+      "auth": "Google authorization expired or was refused. Connect again.",
+      "permission": "No permission for this file in Drive.",
+      "quota": "Your Drive storage is full.",
+      "rateLimit": "Google rate-limited the requests. Try again in a few minutes.",
+      "notFound": "The file was not found in Drive (deleted or outside the app's reach).",
+      "network": "No connection to Google. Your work stays in the app; try again when you are online.",
+      "unknown": "Drive returned an unexpected error. Your work stays in the app."
+    }
+  },
+  "comments": {
+    "summary": "Comments ({{count}}; {{open}} open)",
+    "panelTitle": "Experiment comments ({{count}}; {{open}} open)",
+    "intro": "Review notes are stored in the project, linked to the analysis or figure and to the data revision they were written against. Figure comments are written on the figure itself.",
+    "none": "No comments yet.",
+    "about": "Comment on",
+    "new": "New comment",
+    "author": "Your name (optional, stays on this device only)",
+    "add": "Comment",
+    "reply": "Reply",
+    "replyLabel": "Reply",
+    "send": "Send reply",
+    "resolve": "Resolve",
+    "reopen": "Reopen",
+    "delete": "Delete",
+    "confirmDelete": "Delete this comment and its replies?",
+    "resolved": "resolved",
+    "revision": "revision {{id}}",
+    "target": {
+      "experiment": "Experiment",
+      "analysis": "Analysis {{analysis}}",
+      "figure": "Figure «{{key}}»",
+      "table": "Table «{{key}}»"
+    }
   }
 }

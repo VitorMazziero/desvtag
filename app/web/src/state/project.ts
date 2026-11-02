@@ -3,6 +3,8 @@
 // texto digitado; a conversão para números ocorre ao montar o conjunto de dados.
 import type {
   AnalysisRecord,
+  Comment,
+  CommentTarget,
   ConfirmationPlan,
   CrdSpec,
   DescriptiveResult,
@@ -16,6 +18,9 @@ import type {
   FactorKind,
   FactorSpec,
   FigureStyle,
+  MixedSpec,
+  MixtureModel,
+  MixtureSpec,
   OneWayResult,
   OptimizationResult,
   OptimizationSetup,
@@ -91,8 +96,15 @@ export interface ProjectState {
   crd: CrdSpec | null;
   /** Delineamento em blocos completos casualizados gerado para o experimento. */
   rcbd: RcbdSpec | null;
+  mixed: MixedSpec | null;
+  /** Planejamento de misturas gerado (v0.3). */
+  mixture: MixtureSpec | null;
+  /** Modelo de Scheffé escolhido na análise de misturas. */
+  mixtureModel: MixtureModel;
   /** Personalização gráfica por figura (chave estável da figura → ajustes). */
   figureStyles: Record<string, FigureStyle>;
+  /** Comentários de revisão ligados a análises, figuras e tabelas (v0.3). */
+  comments: Comment[];
   factors: FactorDraft[];
   responses: ResponseDraft[];
   rows: RowDraft[];
@@ -148,7 +160,11 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     design: null,
     crd: null,
     rcbd: null,
+    mixed: null,
+    mixture: null,
+    mixtureModel: "quadratic",
     figureStyles: {},
+    comments: [],
     factors: [],
     responses: [],
     rows: [],
@@ -257,6 +273,29 @@ export type ProjectAction =
       now: string;
     }
   | {
+      type: "applyMixture";
+      mixture: MixtureSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      now: string;
+    }
+  | { type: "setMixtureModel"; model: MixtureModel }
+  /** Planejamento ótimo aplicado: as linhas viram a matriz personalizada, analisada como superfície. */
+  | {
+      type: "applyOptimal";
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      now: string;
+    }
+  | {
+      type: "applyMixed";
+      mixed: MixedSpec;
+      rows: RowDraft[];
+      counters: ProjectState["counters"];
+      factorial: FactorialSetup;
+      now: string;
+    }
+  | {
       type: "applyRcbd";
       rcbd: RcbdSpec;
       rows: RowDraft[];
@@ -265,6 +304,10 @@ export type ProjectAction =
       now: string;
     }
   | { type: "setFigureStyle"; key: string; style: FigureStyle | null }
+  | { type: "addComment"; target: CommentTarget; text: string; author: string; now: string }
+  | { type: "replyComment"; id: string; text: string; author: string; now: string }
+  | { type: "setCommentResolved"; id: string; resolved: boolean; now: string }
+  | { type: "deleteComment"; id: string }
   | { type: "addRow" }
   | { type: "removeRow"; row: number }
   | { type: "setUnitColumn"; visible: boolean }
@@ -281,6 +324,12 @@ export type ProjectAction =
       now: string;
     }
   | { type: "applyImport"; data: ExperimentData; now: string }
+  /** Planilha de coleta (ET13): grava só as respostas das linhas indicadas; o planejamento fica. */
+  | {
+      type: "applyResponses";
+      cells: Array<{ row: number; response: number; text: string }>;
+      now: string;
+    }
   | { type: "restoreRevision"; revisionId: string; now: string };
 
 /** Nova linha em branco com identificador ainda não usado. */
@@ -382,6 +431,15 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
       ? state.design
       : null,
     crd: state.crd && data.factors.some((d) => d.id === state.crd?.factorId) ? state.crd : null,
+    mixed:
+      state.mixed && state.mixed.factors.every((f) => data.factors.some((d) => d.id === f.id))
+        ? state.mixed
+        : null,
+    mixture:
+      state.mixture &&
+      state.mixture.components.every((c) => data.factors.some((d) => d.id === c.id))
+        ? state.mixture
+        : null,
   };
 }
 
@@ -416,6 +474,8 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         factors: state.factors.filter((f) => f.id !== action.id),
         crd: state.crd?.factorId === action.id ? null : state.crd,
         rcbd: state.rcbd?.factorId === action.id ? null : state.rcbd,
+        mixed: state.mixed?.factors.some((f) => f.id === action.id) ? null : state.mixed,
+        mixture: state.mixture?.components.some((c) => c.id === action.id) ? null : state.mixture,
         rows: state.rows.map((r) => ({ ...r, factors: r.factors.filter((_, i) => i !== index) })),
         analysis: {
           ...state.analysis,
@@ -495,6 +555,8 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         design: action.design,
         crd: null,
         rcbd: null,
+        mixed: null,
+        mixture: null,
         // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
         analysis: { ...before.analysis, designTerms: null, responseModels: {} },
         result: null,
@@ -511,6 +573,8 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         design: null,
         crd: action.crd,
         rcbd: null,
+        mixed: null,
+        mixture: null,
         // O fator do DIC define os grupos da comparação de tratamentos.
         analysis: {
           ...before.analysis,
@@ -531,6 +595,80 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         design: null,
         crd: null,
         rcbd: action.rcbd,
+        mixed: null,
+        mixture: null,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: action.factorial,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "applyMixture": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: null,
+        mixed: null,
+        mixture: action.mixture,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: null,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "applyOptimal": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: null,
+        mixed: null,
+        mixture: null,
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: null,
+          procedure: null,
+          factorial: null,
+          surface: true,
+        },
+        result: null,
+      };
+      return commitRevision(next, "design", action.now);
+    }
+    case "setMixtureModel":
+      return { ...state, mixtureModel: action.model };
+    case "applyMixed": {
+      const before = commitRevision(state, "edit", action.now);
+      const next: ProjectState = {
+        ...before,
+        rows: action.rows,
+        counters: { ...before.counters, row: action.counters.row },
+        design: null,
+        crd: null,
+        rcbd: null,
+        mixed: action.mixed,
+        mixture: null,
         analysis: {
           ...before.analysis,
           designTerms: null,
@@ -552,6 +690,67 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           empty || action.style === null ? rest : { ...rest, [action.key]: action.style },
       };
     }
+    case "addComment": {
+      const text = action.text.trim();
+      if (text === "") return state;
+      // A revisão do comentário é a da análise a que ele se refere; sem análise, a mais recente.
+      const analysis = state.analyses.find((a) => a.id === action.target.analysisId);
+      const revisionId = analysis?.revisionId ?? state.revisions[state.revisions.length - 1]?.id;
+      if (!revisionId) return state;
+      const { id } = freshId(
+        "c",
+        state.comments.length,
+        state.comments.map((c) => c.id),
+      );
+      const comment: Comment = {
+        id,
+        target: action.target,
+        revisionId,
+        ...(action.author.trim() !== "" ? { author: action.author.trim() } : {}),
+        text,
+        createdAt: action.now,
+      };
+      return { ...state, comments: [...state.comments, comment] };
+    }
+    case "replyComment": {
+      const text = action.text.trim();
+      if (text === "") return state;
+      return {
+        ...state,
+        comments: state.comments.map((c) => {
+          if (c.id !== action.id) return c;
+          const replies = c.replies ?? [];
+          const { id } = freshId(
+            `${c.id}-r`,
+            replies.length,
+            replies.map((r) => r.id),
+          );
+          return {
+            ...c,
+            replies: [
+              ...replies,
+              {
+                id,
+                ...(action.author.trim() !== "" ? { author: action.author.trim() } : {}),
+                text,
+                createdAt: action.now,
+              },
+            ],
+          };
+        }),
+      };
+    }
+    case "setCommentResolved":
+      return {
+        ...state,
+        comments: state.comments.map((c) => {
+          if (c.id !== action.id) return c;
+          const { resolvedAt: _resolvedAt, ...open } = c;
+          return action.resolved ? { ...open, resolvedAt: action.now } : open;
+        }),
+      };
+    case "deleteComment":
+      return { ...state, comments: state.comments.filter((c) => c.id !== action.id) };
     case "addRow": {
       const [row, counters] = blankRow(state);
       return { ...state, rows: [...state.rows, row], counters };
@@ -690,6 +889,20 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       const before = commitRevision(state, "edit", action.now);
       const next = withData(before, action.data);
       return commitRevision(next, "import", action.now);
+    }
+    case "applyResponses": {
+      // Estado anterior preservado em uma revisão `edit`; as respostas viram a revisão `import`.
+      const before = commitRevision(state, "edit", action.now);
+      const factorCount = before.factors.length;
+      const rows = before.rows.map((r, i) =>
+        action.cells
+          .filter((c) => c.row === i)
+          .reduce(
+            (acc, c) => setCellText(acc, 1 + factorCount + c.response, factorCount, c.text),
+            r,
+          ),
+      );
+      return commitRevision({ ...before, rows }, "import", action.now);
     }
     case "restoreRevision": {
       const before = commitRevision(state, "edit", action.now);

@@ -95,12 +95,16 @@ export function analysisKind(state: ProjectState): AnalysisKind {
   // Um DIC gerado no caminho "Planejar" é analisado como comparação de tratamentos.
   if (
     state.path === "compare" ||
-    (state.path === "plan" && (state.crd !== null || state.rcbd !== null))
+    (state.path === "plan" && (state.crd !== null || state.rcbd !== null || state.mixed !== null))
   ) {
     if (state.analysis.factorial !== null) return "factorial";
     return state.analysis.procedure !== null ? "procedure" : "oneWay";
   }
-  if (state.path === "plan") return isSurfaceDesign(state) ? "surface" : "design";
+  // Planejamento ótimo (matriz personalizada): superfície sobre os dados, sem especificação de dois níveis.
+  if (state.path === "plan")
+    return isSurfaceDesign(state) || (state.design === null && state.analysis.surface)
+      ? "surface"
+      : "design";
   return state.analysis.surface ? "surface" : "descriptive";
 }
 

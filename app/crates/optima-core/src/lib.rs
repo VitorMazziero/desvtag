@@ -21,6 +21,7 @@ pub mod interpretation;
 pub mod models;
 pub mod numeric;
 pub mod optimization;
+pub mod power;
 pub mod provenance;
 pub mod registry;
 pub mod surface;

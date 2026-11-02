@@ -42,7 +42,11 @@
       "duplicate_analysis_id": "Two analyses have the same identifier.",
       "analysis_unknown_revision": "An analysis points to a data version that does not exist.",
       "origin_not_found": "The confirmation experiment points to an origin experiment or analysis that does not exist in the project.",
-      "invalid_figure_style": "The figure customization of experiment {{id}} has invalid values."
+      "invalid_figure_style": "The figure customization of experiment {{id}} has invalid values.",
+      "duplicate_comment_id": "Comment {{id}} appears more than once.",
+      "invalid_comment": "Comment {{id}} is empty, too long or missing the analysis it refers to.",
+      "comment_unknown_revision": "Comment {{id}} points to a revision that does not exist.",
+      "comment_unknown_analysis": "Comment {{id}} points to an analysis that does not exist."
     },
     "import": {
       "not_xlsx": "The file is not a readable XLSX spreadsheet.",

@@ -9,11 +9,14 @@ use std::collections::HashSet;
 use ts_rs::TS;
 
 use optima_core::designs::completely_randomized::CrdSpec;
+use optima_core::designs::mixed_levels::MixedSpec;
+use optima_core::designs::mixture::MixtureSpec;
 use optima_core::designs::randomized_block::RcbdSpec;
 use optima_core::designs::spec::DesignSpec;
 use std::collections::BTreeMap;
 
 use crate::analysis::{AnalysisOptions, AnalysisRecord};
+use crate::comment::Comment;
 use crate::confirmation::{ConfirmationPlan, ExperimentOrigin};
 use crate::experiment::ExperimentData;
 use crate::figure_style::FigureStyle;
@@ -63,10 +66,26 @@ pub struct Experiment {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub rcbd: Option<RcbdSpec>,
+    /// Fatorial completo de níveis mistos gerado para este experimento (v0.3).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub mixed: Option<MixedSpec>,
+    /// Planejamento de misturas gerado para este experimento (v0.3).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub mixture: Option<MixtureSpec>,
+    /// Modelo de Scheffé escolhido na análise de misturas (v0.3).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub mixture_model: Option<optima_core::models::mixture::MixtureModel>,
     /// Personalização gráfica por figura (chave estável da figura → ajustes).
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     #[ts(type = "Record<string, FigureStyle> | undefined", optional)]
     pub figure_styles: BTreeMap<String, FigureStyle>,
+    /// Comentários de revisão, ligados a análises, figuras e tabelas (v0.3).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    #[ts(type = "Array<Comment> | undefined", optional)]
+    pub comments: Vec<Comment>,
     /// Experimento de origem, quando este é uma confirmação proposta por uma otimização.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
@@ -104,7 +123,11 @@ impl Experiment {
             design: None,
             crd: None,
             rcbd: None,
+            mixed: None,
+            mixture: None,
+            mixture_model: None,
             figure_styles: BTreeMap::new(),
+            comments: Vec::new(),
             origin: None,
             confirmation: None,
             analysis_selection: AnalysisOptions {
@@ -250,6 +273,27 @@ impl ProjectDocument {
                     );
                 }
             }
+            let mut comment_ids = HashSet::new();
+            for comment in &exp.comments {
+                let id = &comment.id;
+                if !comment_ids.insert(id.as_str()) {
+                    issues.push(error("project.duplicate_comment_id").with_param("id", id));
+                }
+                if !comment.is_valid() {
+                    issues.push(error("project.invalid_comment").with_param("id", id));
+                }
+                if !revision_ids.contains(comment.revision_id.as_str()) {
+                    issues.push(error("project.comment_unknown_revision").with_param("id", id));
+                }
+                if comment
+                    .target
+                    .analysis_id
+                    .as_ref()
+                    .is_some_and(|a| !analysis_ids.contains(a.as_str()))
+                {
+                    issues.push(error("project.comment_unknown_analysis").with_param("id", id));
+                }
+            }
         }
         issues
     }
@@ -258,6 +302,7 @@ impl ProjectDocument {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::comment::{CommentTarget, CommentTargetKind};
 
     fn id(s: &str) -> StableId {
         StableId::new(s).unwrap_or_else(|_| unreachable!())
@@ -325,6 +370,65 @@ mod tests {
         let mut d = sample();
         d.experiments[0].revisions[0].parent = Some(id("ghost"));
         assert_eq!(codes(&d), vec!["project.unknown_parent_revision"]);
+    }
+
+    fn comment(target_kind: CommentTargetKind, analysis: Option<&str>, revision: &str) -> Comment {
+        Comment {
+            id: id("c1"),
+            target: CommentTarget {
+                kind: target_kind,
+                key: "means".to_string(),
+                analysis_id: analysis.map(id),
+            },
+            revision_id: id(revision),
+            author: String::new(),
+            text: "Conferir.".to_string(),
+            created_at: "2026-11-02T12:00:00Z".to_string(),
+            resolved_at: None,
+            replies: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn comments_must_point_to_existing_revisions_and_analyses() {
+        let codes =
+            |d: &ProjectDocument| d.validate().into_iter().map(|i| i.code).collect::<Vec<_>>();
+
+        let mut d = sample();
+        d.experiments[0]
+            .comments
+            .push(comment(CommentTargetKind::Figure, None, "v1"));
+        assert!(codes(&d).is_empty());
+
+        let mut d = sample();
+        d.experiments[0]
+            .comments
+            .push(comment(CommentTargetKind::Figure, None, "ghost"));
+        assert_eq!(codes(&d), vec!["project.comment_unknown_revision"]);
+
+        let mut d = sample();
+        d.experiments[0]
+            .comments
+            .push(comment(CommentTargetKind::Figure, Some("a9"), "v1"));
+        assert_eq!(codes(&d), vec!["project.comment_unknown_analysis"]);
+
+        let mut d = sample();
+        let c = comment(CommentTargetKind::Experiment, None, "v1");
+        d.experiments[0].comments.push(c.clone());
+        d.experiments[0].comments.push(c);
+        assert_eq!(codes(&d), vec!["project.duplicate_comment_id"]);
+
+        let mut d = sample();
+        let mut c = comment(CommentTargetKind::Figure, None, "v1");
+        c.text = String::new();
+        d.experiments[0].comments.push(c);
+        assert_eq!(codes(&d), vec!["project.invalid_comment"]);
+    }
+
+    #[test]
+    fn a_project_without_comments_keeps_the_same_json() {
+        let json = serde_json::to_string(&sample()).unwrap_or_default();
+        assert!(!json.contains("comments"));
     }
 
     #[test]

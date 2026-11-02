@@ -1,8 +1,43 @@
 # Publicação
 
-**Estado:** **v0.2.0 na versão web publicada; instaladores da v0.1.0 e da v0.2.0 em rascunho de release (não publicados)** · **Atualizado em:** 2026-11-02
+**Estado:** **v0.3.0 em preparação (nada publicado)**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
 
-> **v0.2.0 (2026-11-02):** versão web **publicada** e etiqueta `v0.2.0` criada; o instalador está em **rascunho de release** (não publicado), como o da v0.1.0. Registro na seção [Publicação da v0.2.0](#publicação-da-v020).
+> **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
+
+## Publicação da v0.3.0 (preparação)
+
+**Estado:** candidata local pronta (versão 0.3.0 no código); **nada publicado**. A decisão do usuário de 2026-11-02 («partimos para publicação de v0.3») abre a fase de publicação; cada ato irreversível abaixo só é feito **depois da confirmação expressa** do usuário sobre a candidata e com a CI verde.
+
+| Passo | Quem | Observação |
+|---|---|---|
+| 1. CI verde no PR 6 (Rust, web, E2E em Chromium, Firefox e WebKit, Tauri Linux e Windows) | Claude | Conferir no commit final |
+| 2. Fundir o PR 6 em `main` | Claude, com a confirmação do usuário | Mescla (não *squash*), como nos PR anteriores |
+| 3. Etiqueta anotada `v0.3.0` | Claude, com a confirmação do usuário | `check-versions` exige que a etiqueta confira com a versão |
+| 4. O fluxo **Release** cria o **rascunho** com o instalador assinado, o `.sig` e o `latest.json` | Automático | Notas = seção `[0.3.0]` do CHANGELOG |
+| 5. **GitHub Pages** (`pages.yml`, manual) | Claude, com a confirmação do usuário | Depois, `tests/public` confere a versão publicada nos quatro navegadores |
+| 6. **Publicar o rascunho** como release normal (**não** pré-lançamento) | Usuário | Os aplicativos 0.1 e 0.2 só enxergam releases não pré-lançamento |
+| 7. O fluxo **Canais de atualização** copia o `latest.json` para `channel-experimental` | Automático | Se não rodar, executar à mão com a etiqueta `v0.3.0` |
+| 8. Verificar a atualização **0.2.0 → 0.3.0** (instalar a 0.2.0 e usar *Verificar atualizações*) e a leitura do canal | Usuário | Registrar o resultado aqui e no relatório da v0.3.0 |
+
+**Notas da versão:** descrevem a **limitação conhecida** (resultados das famílias novas não guardados no projeto), o que **não foi verificado** (Drive com contas reais, Safari real, canal ponta a ponta, Windows 11) e o que vai para a [v0.4](../planos-execucao/plano-v0.4.md).
+
+## Canais de atualização (v0.3)
+
+O aplicativo Windows tem um **canal de atualização** nas preferências (junto do botão *Verificar atualizações*):
+
+| Canal | Recebe | Manifesto |
+|---|---|---|
+| **Experimental** (padrão na série 0.x) | Toda versão publicada | `https://github.com/VitorMazziero/enzitag-optima/releases/download/channel-experimental/latest.json` |
+| **Estável** | Só versões ≥ 1.0.0, sem sufixo e não marcadas como pré-lançamento | `.../releases/download/channel-stable/latest.json` |
+
+**Como funciona.** Cada release continua trazendo o seu `latest.json` assinado ([`release.yml`](../../.github/workflows/release.yml)). Quando o mantenedor **publica** o release, o fluxo [`channels.yml`](../../.github/workflows/channels.yml) copia esse `latest.json` para o release fixo de cada canal em que a versão entra (regra em `scripts/channels.mjs`, testada). Os releases `channel-*` só guardam o manifesto; **não são versões para baixar**. Também é possível rodar o fluxo à mão (*Run workflow*, informando uma etiqueta já publicada), por exemplo para criar os canais a partir da v0.2.0 ou da v0.3.0.
+
+**Regras de publicação**
+
+1. **Até a v1.0.0, publique os releases da série 0.x como releases normais** (não como pré-lançamento): os aplicativos 0.1 e 0.2 já instalados consultam `releases/latest/download/latest.json`, que só enxerga releases não pré-lançamento.
+2. Pré-lançamentos (`v1.1.0-rc.1` ou release marcado como pré-lançamento) entram só no canal experimental.
+3. A assinatura é a mesma nos dois canais (chave pública embutida): trocar de canal não permite instalar nada sem a assinatura.
+4. **Verificação pendente:** o fluxo `channels.yml` só pode ser exercitado com um release publicado; registrar o resultado na primeira publicação com a v0.3.0.
 
 ## Publicação da v0.2.0
 
@@ -27,12 +62,24 @@ Datas de 2026-11-02, horário de Brasília (UTC−3), extraídas do GitHub. Ende
 | `EnziTAG-Optima_0.2.0_x64-setup.exe.sig` (assinatura do atualizador) | 444 bytes |
 | `latest.json` (manifesto do atualizador) | 4 874 bytes |
 
-**O que não foi feito:**
+**Situação no momento da publicação (superada pelas seções seguintes):** o release da v0.2.0 foi criado como **rascunho** pelo fluxo Release; o usuário o publicou depois (abaixo).
 
-- O release **continua rascunho** (`isDraft = true`): publicá-lo é ato do mantenedor, depois de instalar o arquivo do rascunho. Enquanto os releases da v0.1.0 e da v0.2.0 forem rascunhos, o `latest.json` não é servido e **a atualização v0.1 → v0.2 não pode ser verificada** (tarefa [ET14-T01](../planos-execucao/planejados/et14-itens-adiados-v01-v02.md)).
-- O instalador do rascunho não foi instalado por quem o gerou; o testado (instalar, executar por 10 s, desinstalar) foi o construído localmente no Windows 10 com o mesmo código, assinado com a mesma chave.
-- O aplicativo web publicado não foi aberto e usado em navegador a partir da URL pública.
-- Windows 11: validação **não será realizada** (decisão do usuário, [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+**Windows 11:** validação **não será realizada** (decisão do usuário, [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+
+### Publicação dos releases e atualização (2026-11-02)
+
+Consulta ao GitHub (`gh release list`) e ao endereço do atualizador, depois dos atos do usuário:
+
+| Hora (Brasília) | Ação | Resultado |
+|---|---|---|
+| 10:11 | Usuário publicou o release da **v0.1.0** | marcado como **pré-lançamento** (`isPrerelease = true`; não é o «mais recente», o que não atrapalha o atualizador) |
+| 10:13 | Usuário publicou o release da **v0.2.0** | **mais recente** (`isLatest = true`, rótulo «None») |
+| depois | Consulta de `.../releases/latest/download/latest.json` | HTTP 200, `version = 0.2.0`, instalador `EnziTAG-Optima_0.2.0_x64-setup.exe` |
+| depois | **Atualização v0.1.0 → v0.2.0 no aplicativo instalado** (Windows 10, pelo usuário) | **«Deu certo»** (relato do usuário); a captura de tela mostra «Nova versão disponível: 0.2.0» e «Baixar e instalar». Não foi registrado por mim que o projeto salvo na v0.1.0 abriu sem perda; o relato do usuário cobre o resultado final |
+
+**Verificação da versão web publicada** (`app/web/tests/public/published.spec.ts`, config `playwright.public.config.ts`, URL `https://vitormazziero.github.io/enzitag-optima/`): em **Chrome, Edge, Chromium e Firefox** a página abre, o motor WebAssembly informa a versão `0.2.0`, a comparação de três tratamentos calcula ANOVA e letras e **nenhuma requisição externa** é feita.
+
+**Observação:** as notas da atualização apareciam como Markdown cru, cortadas e com texto desatualizado; corrigido na v0.3 ([ET14-T09](../planos-execucao/concluidos/et14-itens-adiados-v01-v02.md)). O release da v0.2.0 publicado traz as notas da versão antiga do fluxo (CHANGELOG inteiro).
 
 ---
 

@@ -29,4 +29,4 @@ Utilizar exemplos sintéticos ou dados cuja distribuição esteja autorizada. O 
 
 ## Licença e publicação
 
-O código e a documentação própria adotam a [licença MIT](LICENSE). Os comandos de desenvolvimento e as verificações automatizadas serão documentados na [ET01](docs/planos-execucao/concluidos/et01-fundacao-tecnica.md); o fluxo de publicação, na [ET10](docs/planos-execucao/ativos/et10-integracao-publicacao.md), somente depois de executados.
+O código e a documentação própria adotam a [licença MIT](LICENSE). Os comandos de desenvolvimento e as verificações automatizadas serão documentados na [ET01](docs/planos-execucao/concluidos/et01-fundacao-tecnica.md); o fluxo de publicação, na [ET10](docs/planos-execucao/concluidos/et10-integracao-publicacao.md), somente depois de executados.

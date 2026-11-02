@@ -13,10 +13,12 @@ import {
   detectDelimiter,
   MAX_TEXT_BYTES,
   parseCsv,
+  splitMetadata,
   type TextEncodingName,
 } from "../../services/import/csv";
 import { bytesToBase64 } from "../../services/storage";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
+import { fillResponses, planSheet, responseLabel } from "./fillResponses";
 import {
   buildExperimentData,
   type ColumnMapping,
@@ -59,10 +61,12 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
       return { phase: "error", messages: [t("import.tooLarge")] };
     try {
       const decoded = decodeText(file.bytes, encoding);
-      const delim = delimiter ?? detectDelimiter(decoded.text);
+      // Os CSV exportados pelo aplicativo começam por linhas `# chave: valor`: não são dados.
+      const { body } = splitMetadata(decoded.text);
+      const delim = delimiter ?? detectDelimiter(body);
       return {
         phase: "ready",
-        rows: parseCsv(decoded.text, delim),
+        rows: parseCsv(body, delim),
         warnings: decoded.fellBack ? [t("import.encodingFallback")] : [],
         sheets: [],
         selected: "",
@@ -127,12 +131,41 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
     [rows, header, mapping],
   );
   const hasData = experiment.rows.length > 0;
+  // Planilha de coleta (ET13): o arquivo traz os fatores e as respostas do experimento atual.
+  const sheetFactors = useMemo(
+    () => experiment.factors.map((f) => ({ name: f.name, kind: f.kind })),
+    [experiment.factors],
+  );
+  const sheetPlan = useMemo(
+    () =>
+      header && rows.length > 0 && hasData
+        ? planSheet(
+            rows[0] ?? [],
+            sheetFactors,
+            experiment.responses.map((r) => ({ name: r.name, unit: r.unit })),
+          )
+        : null,
+    [header, rows, hasData, sheetFactors, experiment.responses],
+  );
+  const fill = useMemo(
+    () =>
+      sheetPlan ? fillResponses(rows.slice(1), sheetPlan, experiment.rows, sheetFactors) : null,
+    [sheetPlan, rows, experiment.rows, sheetFactors],
+  );
+  const [mode, setMode] = useState<"fill" | "replace">("fill");
+  const filling = fill !== null && mode === "fill";
   const width = rows.reduce((max, r) => Math.max(max, r.length), 0);
 
   const update = (index: number, patch: Partial<ColumnMapping>) =>
     setMapping((m) => m.map((c, i) => (i === index ? { ...c, ...patch } : c)));
 
   const confirm = () => {
+    if (filling && fill) {
+      if (fill.cells.length === 0 || fill.invalid.length > 0) return;
+      dispatch({ type: "applyResponses", cells: fill.cells, now: nowIso() });
+      onClose();
+      return;
+    }
     if (!result || result.issues.length > 0) return;
     dispatch({ type: "applyImport", data: result.data, now: nowIso() });
     onClose();
@@ -236,77 +269,162 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
             </table>
           </div>
 
-          <h3>{t("import.mapping")}</h3>
-          <p className="muted small">{t("import.unitHelp")}</p>
-          <div className="grid-scroll">
-            <table className="data-grid">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">{t("variables.name")}</th>
-                  <th scope="col">{t("import.role")}</th>
-                  <th scope="col">{t("import.kind")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {mapping.map((m, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a coluna do arquivo é identificada pela posição.
-                  <tr key={i}>
-                    <th scope="row">{i + 1}</th>
-                    <td>
-                      <input
-                        type="text"
-                        aria-label={`${t("variables.name")} ${i + 1}`}
-                        value={m.name}
-                        onChange={(e) => update(i, { name: e.target.value })}
-                      />
-                    </td>
-                    <td>
-                      <select
-                        aria-label={`${t("import.role")} ${i + 1}`}
-                        value={m.role}
-                        onChange={(e) => update(i, { role: e.target.value as ColumnRole })}
-                      >
-                        {ROLES.map((role) => (
-                          <option key={role} value={role}>
-                            {t(`import.roleOptions.${role}`)}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      {m.role === "factor" && (
-                        <select
-                          aria-label={`${t("import.kind")} ${i + 1}`}
-                          value={m.kind}
-                          onChange={(e) => update(i, { kind: e.target.value as FactorKindChoice })}
-                        >
-                          <option value="categorical">{t("variables.kindCategorical")}</option>
-                          <option value="numeric">{t("variables.kindNumeric")}</option>
-                        </select>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {result && result.skippedEmptyRows > 0 && (
-            <p className="muted small">
-              {t("import.skippedEmpty", { count: result.skippedEmptyRows })}
-            </p>
-          )}
-          {result && result.issues.length > 0 && (
-            <div role="alert" className="error">
-              {result.issues.map((issue) => (
-                <p key={issue.code}>
-                  {t(`issues.${issue.code}`, { ns: "diagnostics", rows: issue.rows.join(", ") })}
-                </p>
-              ))}
+          {fill && (
+            <div className="panel" data-testid="fill-responses">
+              <h3>{t("import.fill.title")}</h3>
+              <p className="muted">{t("import.fill.intro")}</p>
+              <fieldset className="check-group">
+                <legend className="visually-hidden">{t("import.fill.modeLegend")}</legend>
+                <label className="check">
+                  <input
+                    type="radio"
+                    name={`${id}-mode`}
+                    checked={mode === "fill"}
+                    onChange={() => setMode("fill")}
+                  />
+                  <span>{t("import.fill.modeFill")}</span>
+                </label>
+                <label className="check">
+                  <input
+                    type="radio"
+                    name={`${id}-mode`}
+                    checked={mode === "replace"}
+                    onChange={() => setMode("replace")}
+                  />
+                  <span>{t("import.fill.modeReplace")}</span>
+                </label>
+              </fieldset>
+              {filling && (
+                <>
+                  <p role="status" data-testid="fill-summary">
+                    {t("import.fill.summary", {
+                      filled: fill.cells.length,
+                      empty: fill.empty,
+                    })}
+                  </p>
+                  <p className="muted small">
+                    {t("import.fill.columns", {
+                      responses: experiment.responses
+                        .filter((_, j) => (sheetPlan?.responseColumns[j] ?? -1) >= 0)
+                        .map(responseLabel)
+                        .join(", "),
+                    })}
+                  </p>
+                  {fill.replacing > 0 && (
+                    <p role="status" className="muted">
+                      {t("import.fill.replacing", { count: fill.replacing })}
+                    </p>
+                  )}
+                  {fill.unmatchedLines.length > 0 && (
+                    <div role="alert" className="error" data-testid="fill-unmatched">
+                      {t("import.fill.unmatched", {
+                        count: fill.unmatchedLines.length,
+                        lines: fill.unmatchedLines.slice(0, 5).join(", "),
+                      })}
+                    </div>
+                  )}
+                  {fill.invalid.length > 0 && (
+                    <div role="alert" className="error" data-testid="fill-invalid">
+                      {t("import.fill.invalid", {
+                        count: fill.invalid.length,
+                        lines: fill.invalid
+                          .slice(0, 5)
+                          .map((i) => `${i.line} (“${i.text}”)`)
+                          .join(", "),
+                      })}
+                    </div>
+                  )}
+                  {fill.rowsWithoutLine > 0 && (
+                    <p className="muted small">
+                      {t("import.fill.rowsWithoutLine", { count: fill.rowsWithoutLine })}
+                    </p>
+                  )}
+                  <p className="muted small">{t("import.fill.keeps")}</p>
+                </>
+              )}
             </div>
           )}
-          {hasData && <p className="muted">{t("import.replaceNote")}</p>}
+
+          {!filling && (
+            <>
+              <h3>{t("import.mapping")}</h3>
+              <p className="muted small">{t("import.unitHelp")}</p>
+              <div className="grid-scroll">
+                <table className="data-grid">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">{t("variables.name")}</th>
+                      <th scope="col">{t("import.role")}</th>
+                      <th scope="col">{t("import.kind")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mapping.map((m, i) => (
+                      // biome-ignore lint/suspicious/noArrayIndexKey: a coluna do arquivo é identificada pela posição.
+                      <tr key={i}>
+                        <th scope="row">{i + 1}</th>
+                        <td>
+                          <input
+                            type="text"
+                            aria-label={`${t("variables.name")} ${i + 1}`}
+                            value={m.name}
+                            onChange={(e) => update(i, { name: e.target.value })}
+                          />
+                        </td>
+                        <td>
+                          <select
+                            aria-label={`${t("import.role")} ${i + 1}`}
+                            value={m.role}
+                            onChange={(e) => update(i, { role: e.target.value as ColumnRole })}
+                          >
+                            {ROLES.map((role) => (
+                              <option key={role} value={role}>
+                                {t(`import.roleOptions.${role}`)}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          {m.role === "factor" && (
+                            <select
+                              aria-label={`${t("import.kind")} ${i + 1}`}
+                              value={m.kind}
+                              onChange={(e) =>
+                                update(i, { kind: e.target.value as FactorKindChoice })
+                              }
+                            >
+                              <option value="categorical">{t("variables.kindCategorical")}</option>
+                              <option value="numeric">{t("variables.kindNumeric")}</option>
+                            </select>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {result && result.skippedEmptyRows > 0 && (
+                <p className="muted small">
+                  {t("import.skippedEmpty", { count: result.skippedEmptyRows })}
+                </p>
+              )}
+              {result && result.issues.length > 0 && (
+                <div role="alert" className="error">
+                  {result.issues.map((issue) => (
+                    <p key={issue.code}>
+                      {t(`issues.${issue.code}`, {
+                        ns: "diagnostics",
+                        rows: issue.rows.join(", "),
+                      })}
+                    </p>
+                  ))}
+                </div>
+              )}
+              {hasData && <p className="muted">{t("import.replaceNote")}</p>}
+            </>
+          )}
         </>
       )}
 
@@ -315,9 +433,13 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
           type="button"
           className="button"
           onClick={confirm}
-          disabled={!result || result.issues.length > 0}
+          disabled={
+            filling && fill
+              ? fill.cells.length === 0 || fill.invalid.length > 0
+              : !result || result.issues.length > 0
+          }
         >
-          {t("import.confirm")}
+          {filling ? t("import.fill.confirm") : t("import.confirm")}
         </button>
         <button type="button" className="button secondary" onClick={onClose}>
           {t("import.cancel")}
@@ -330,7 +452,7 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
 /** Separador sugerido para o seletor enquanto o usuário ainda não escolheu um. */
 function detectDelimiterOf(bytes: Uint8Array, encoding: TextEncodingName | "auto"): Delimiter {
   try {
-    return detectDelimiter(decodeText(bytes, encoding).text);
+    return detectDelimiter(splitMetadata(decodeText(bytes, encoding).text).body);
   } catch {
     return ";";
   }

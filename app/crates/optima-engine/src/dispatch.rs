@@ -90,6 +90,60 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
                 Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
             }
         }
+        Operation::DesignMixedGenerate(req) => {
+            match optima_core::designs::mixed_levels::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignMixedGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::DesignMixtureGenerate(req) => {
+            match optima_core::designs::mixture::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignMixtureGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::DesignOptimalGenerate(req) => {
+            match optima_core::designs::optimal::generate(req) {
+                Ok(result) => Outcome::Ok {
+                    result: OperationResult::DesignOptimalGenerate(Box::new(result)),
+                },
+                Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+            }
+        }
+        Operation::ComparisonPaired(req) => match optima_core::comparisons::paired::compare(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ComparisonPaired(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::ModelNonlinear(req) => match optima_core::models::nonlinear::fit(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ModelNonlinear(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::PowerAnalyze(req) => match optima_core::power::analyze(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::PowerAnalyze(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::ModelMixed(req) => match optima_core::models::mixed::fit(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::ModelMixed(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::MixtureAnalyze(req) => match optima_core::models::mixture::analyze(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::MixtureAnalyze(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
         Operation::DesignAnalyze(req) => {
             match optima_core::designs::analysis::analyze(req.as_ref()) {
                 Ok(result) => Outcome::Ok {
@@ -169,6 +223,12 @@ pub fn handle_request(request: &EngineRequest) -> EngineResponse {
         Operation::SurfaceSelectModel(req) => match optima_core::surface::selection::select(req) {
             Ok(result) => Outcome::Ok {
                 result: OperationResult::SurfaceSelectModel(Box::new(result)),
+            },
+            Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
+        },
+        Operation::DesignSelectModel(req) => match optima_core::designs::selection::select(req) {
+            Ok(result) => Outcome::Ok {
+                result: OperationResult::DesignSelectModel(Box::new(result)),
             },
             Err(CoreError::InvalidInput(issues)) => failure(ErrorCode::InvalidInput, issues),
         },

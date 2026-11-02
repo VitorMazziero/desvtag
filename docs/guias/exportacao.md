@@ -1,19 +1,19 @@
 # Guia de exportação
 
-**Estado:** vigente (v0.2, ET09 e ET11) · **Atualizado em:** 2026-11-01
+**Estado:** vigente (v0.3, ET09, ET11 e ET20) · **Atualizado em:** 2026-11-02
 
 O que o aplicativo exporta, como e com que garantias. Decisões em [DT-0014](../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md) e [DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md).
 
-## Formatos da v0.2
+## Formatos
 
 | Conteúdo | Formatos | Onde |
 |---|---|---|
 | Figuras | SVG, PNG e **PDF** | Botões abaixo de cada figura |
 | Tabelas | CSV e XLSX | Pares de botões `(CSV)` / `(XLSX)` junto de cada tabela (comparação, planejamento, matriz de ensaios, matriz do DIC, superfície, malha de predições, candidatos da otimização) |
-| Relatório | HTML autocontido e **PDF** | Seção **Exportar** dos resultados (painel **Exportação e aparência das figuras**): *Exportar relatório (HTML)* e *Exportar relatório (PDF)* |
+| Relatório | HTML autocontido, **PDF** e **Word (.docx)** | Seção **Exportar** dos resultados (painel **Exportação e aparência das figuras**): *Exportar relatório (HTML)*, *(PDF)* e *(Word)* |
 | Projeto | `.enzitag` | Menu do projeto (não é exportação de resultados) |
 
-Não existem DOCX nem Google Drive na v0.2. **A seção Exportar é a última** da barra lateral dos resultados; as tabelas e as figuras têm seus botões junto de cada uma.
+O Google Drive (opcional, versão web) guarda o **projeto**, não os relatórios: veja o [guia do Drive](google-drive.md). **A seção Exportar é a última** da barra lateral dos resultados; as tabelas e as figuras têm seus botões junto de cada uma.
 
 ### PDF
 
@@ -22,7 +22,18 @@ Não existem DOCX nem Google Drive na v0.2. **A seção Exportar é a última** 
 - O PDF usa a fonte **Roboto** embutida (acentos, letras gregas e símbolos estatísticos corretos), gerada **localmente**, sem rede.
 - Diferenças em relação à tela: a **família de fonte** escolhida na figura (serifa, monoespaçada) não vale no PDF; a região de extrapolação, hachurada na tela, aparece como **sombreado translúcido**.
 
-## Preferências (painel de resultados)
+### Word (.docx)
+
+- Mesmas seções do relatório HTML e do PDF: proveniência no início, títulos, interpretação, listas, **tabelas editáveis** (com linha de cabeçalho repetida entre páginas) e «Página X de Y»; logotipo do grupo opcional.
+- **As figuras entram como imagens PNG** de alta resolução (não são editáveis); para figuras editáveis use o SVG ou o PDF vetorial.
+- O arquivo é gerado **no próprio dispositivo**, sem rede. Foi aberto e convertido no **LibreOffice**; **não foi aberto no Microsoft Word** neste ambiente: se algo aparecer diferente no Word, por favor registre.
+- A fonte padrão é a do computador de quem abre (Calibri, com substituição automática).
+
+### Comentários no relatório
+
+A opção **Incluir os comentários do experimento no fim dos relatórios** (desligada por padrão) acrescenta a seção «Comentários» ao HTML, ao PDF e ao Word. Veja o [guia de comentários](comentarios.md).
+
+## Publicação da v0.2.0Preferências (painel de resultados)
 
 | Preferência | Efeito |
 |---|---|

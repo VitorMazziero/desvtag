@@ -290,6 +290,86 @@ ciLower: Stat,
 ciUpper: Stat, };
 
 /**
+ * Comentário ligado a um alvo e à revisão em que foi feito.
+ */
+export type Comment = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * A que se refere.
+ */
+target: CommentTarget, 
+/**
+ * Revisão dos dados vigente quando o comentário foi escrito.
+ */
+revisionId: StableId, 
+/**
+ * Nome de quem escreveu (livre; pode ficar vazio).
+ */
+author?: string | undefined, 
+/**
+ * Texto do comentário.
+ */
+text: string, 
+/**
+ * Criação (RFC 3339).
+ */
+createdAt: string, 
+/**
+ * Momento em que foi resolvido (RFC 3339); ausente enquanto estiver aberto.
+ */
+resolvedAt?: string, 
+/**
+ * Respostas, da mais antiga para a mais recente.
+ */
+replies?: Array<CommentReply> | undefined, };
+
+/**
+ * Resposta a um comentário.
+ */
+export type CommentReply = { 
+/**
+ * Identificador estável.
+ */
+id: StableId, 
+/**
+ * Nome de quem respondeu (livre; pode ficar vazio).
+ */
+author?: string | undefined, 
+/**
+ * Texto da resposta.
+ */
+text: string, 
+/**
+ * Criação (RFC 3339).
+ */
+createdAt: string, };
+
+/**
+ * Alvo do comentário.
+ */
+export type CommentTarget = { 
+/**
+ * Tipo do alvo.
+ */
+kind: CommentTargetKind, 
+/**
+ * Chave estável da figura ou da tabela; vazia para experimento e análise.
+ */
+key?: string | undefined, 
+/**
+ * Análise a que o alvo pertence, quando houver.
+ */
+analysisId?: StableId, };
+
+/**
+ * A que o comentário se refere.
+ */
+export type CommentTargetKind = "experiment" | "analysis" | "figure" | "table";
+
+/**
  * Proposta de confirmação: previsões gravadas no momento da proposta, para comparação posterior
  * com o observado.
  */
@@ -522,6 +602,27 @@ pValue: Stat,
  * Pontos centrais usados.
  */
 centerPoints: number, };
+
+/**
+ * Ponto da curva ajustada.
+ */
+export type CurvePoint = { 
+/**
+ * Substrato.
+ */
+x: number, 
+/**
+ * Valor ajustado.
+ */
+y: number, 
+/**
+ * Limite inferior da faixa de confiança da curva.
+ */
+lower: Stat, 
+/**
+ * Limite superior da faixa de confiança da curva.
+ */
+upper: Stat, };
 
 /**
  * Conjunto de dados.
@@ -1189,9 +1290,25 @@ crd?: CrdSpec,
  */
 rcbd?: RcbdSpec, 
 /**
+ * Fatorial completo de níveis mistos gerado para este experimento (v0.3).
+ */
+mixed?: MixedSpec, 
+/**
+ * Planejamento de misturas gerado para este experimento (v0.3).
+ */
+mixture?: MixtureSpec, 
+/**
+ * Modelo de Scheffé escolhido na análise de misturas (v0.3).
+ */
+mixtureModel?: MixtureModel, 
+/**
  * Personalização gráfica por figura (chave estável da figura → ajustes).
  */
 figureStyles?: Record<string, FigureStyle> | undefined, 
+/**
+ * Comentários de revisão, ligados a análises, figuras e tabelas (v0.3).
+ */
+comments?: Array<Comment> | undefined, 
 /**
  * Experimento de origem, quando este é uma confirmação proposta por uma otimização.
  */
@@ -1752,6 +1869,113 @@ issues: Array<Issue>,
 provenance: Provenance, };
 
 /**
+ * Planejamento gerado.
+ */
+export type GeneratedMixed = { 
+/**
+ * Especificação usada.
+ */
+spec: MixedSpec, 
+/**
+ * Combinações de níveis (produto dos números de níveis).
+ */
+combinations: number, 
+/**
+ * Total de ensaios (`combinações × repetições`).
+ */
+total: number, 
+/**
+ * Ensaios na ordem de execução.
+ */
+runs: Array<MixedRun>, 
+/**
+ * Algoritmo de aleatorização (ou a ordem padrão, quando não aleatorizado).
+ */
+randomizationAlgorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Planejamento gerado.
+ */
+export type GeneratedMixture = { 
+/**
+ * Especificação usada.
+ */
+spec: MixtureSpec, 
+/**
+ * Pontos distintos do planejamento (sem repetições nem centrais extras).
+ */
+basePoints: number, 
+/**
+ * Total de ensaios.
+ */
+total: number, 
+/**
+ * Ensaios na ordem de execução.
+ */
+runs: Array<MixtureRun>, 
+/**
+ * Algoritmo de aleatorização (ou a ordem padrão).
+ */
+randomizationAlgorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Planejamento gerado.
+ */
+export type GeneratedOptimal = { 
+/**
+ * Especificação usada.
+ */
+spec: OptimalSpec, 
+/**
+ * Candidatos (depois das restrições).
+ */
+candidates: number, 
+/**
+ * Ensaios (já realizados primeiro).
+ */
+runs: Array<OptimalRun>, 
+/**
+ * Critérios do planejamento final.
+ */
+metrics: OptimalMetrics, 
+/**
+ * Inícios executados.
+ */
+startsRun: number, 
+/**
+ * Inícios que chegaram ao melhor valor (a menos de 1e-9 relativo).
+ */
+startsReachingBest: number, 
+/**
+ * Algoritmo.
+ */
+algorithm: string, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
  * DBC gerado.
  */
 export type GeneratedRcbd = { 
@@ -2101,6 +2325,19 @@ nLetters: number,
 hasUnknownPairs: boolean, };
 
 /**
+ * Restrição linear `Σ coeficienteᵢ · xᵢ ≤ limite` em unidades reais.
+ */
+export type LinearConstraint = { 
+/**
+ * Coeficiente de cada fator (mesma ordem de `factors`).
+ */
+coefficients: Array<number>, 
+/**
+ * Limite superior da combinação.
+ */
+upper: number, };
+
+/**
  * Resultado do ajuste.
  */
 export type LinearFit = { 
@@ -2329,6 +2566,336 @@ implementation: Implementation,
 validation: Validation, };
 
 /**
+ * Coeficiente dos efeitos fixos.
+ */
+export type MixedCoefficient = { 
+/**
+ * Rótulo da coluna.
+ */
+label: string, 
+/**
+ * Estimativa.
+ */
+estimate: number, 
+/**
+ * Erro-padrão.
+ */
+stdError: Stat, 
+/**
+ * Graus de liberdade (Satterthwaite).
+ */
+df: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, };
+
+/**
+ * Um fator do planejamento, com seus níveis nomeados.
+ */
+export type MixedFactor = { 
+/**
+ * Identificador do fator no experimento.
+ */
+id: StableId, 
+/**
+ * Nome do fator, como digitado.
+ */
+name: string, 
+/**
+ * Níveis, na ordem em que foram digitados.
+ */
+levels: Array<string>, };
+
+/**
+ * Solicitação: dados (com a unidade experimental de cada observação) e efeitos fixos.
+ */
+export type MixedModelRequest = { 
+/**
+ * Dados; toda observação usada precisa ter `unit_id`.
+ */
+dataset: Dataset, 
+/**
+ * Resposta, termos dos efeitos fixos, codificação e nível de confiança.
+ */
+spec: ModelSpec, };
+
+/**
+ * Resultado do ajuste.
+ */
+export type MixedModelResult = { 
+/**
+ * Observações usadas.
+ */
+nObservations: number, 
+/**
+ * Unidades (grupos).
+ */
+nGroups: number, 
+/**
+ * Efeitos fixos.
+ */
+coefficients: Array<MixedCoefficient>, 
+/**
+ * Variância entre unidades `σᵤ²`.
+ */
+varianceUnit: Stat, 
+/**
+ * Variância residual `σₑ²`.
+ */
+varianceResidual: Stat, 
+/**
+ * Correlação intraclasse `σᵤ²/(σᵤ² + σₑ²)`.
+ */
+icc: Stat, 
+/**
+ * `σᵤ²` na fronteira (zero): o modelo se reduz ao sem efeito aleatório.
+ */
+boundary: boolean, 
+/**
+ * Valor do REML perfilado (sem constantes) no ótimo.
+ */
+remlProfile: number, 
+/**
+ * Efeitos aleatórios previstos.
+ */
+randomEffects: Array<RandomEffect>, 
+/**
+ * Observações fora do ajuste.
+ */
+excluded: Array<ExcludedObservation>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Um ensaio do planejamento.
+ */
+export type MixedRun = { 
+/**
+ * Posição de execução (1-based).
+ */
+run: number, 
+/**
+ * Posição na ordem padrão (1-based).
+ */
+standardOrder: number, 
+/**
+ * Índice (0-based) do nível de cada fator.
+ */
+levelIndices: Array<number>, 
+/**
+ * Nome do nível de cada fator.
+ */
+levels: Array<string>, 
+/**
+ * Repetição da combinação (1-based).
+ */
+replicate: number, };
+
+/**
+ * Especificação do fatorial de níveis mistos.
+ */
+export type MixedSpec = { 
+/**
+ * Fatores, na ordem das colunas (o primeiro varia mais depressa).
+ */
+factors: Array<MixedFactor>, 
+/**
+ * Repetições da combinação completa (≥ 1).
+ */
+replicates: number, 
+/**
+ * Aleatorizar a ordem de execução.
+ */
+randomize: boolean, 
+/**
+ * Semente da aleatorização (registrada no resultado); inteiro de até 2⁵³ − 1 na interface.
+ */
+seed: number, };
+
+/**
+ * Resultado da análise.
+ */
+export type MixtureAnalysis = { 
+/**
+ * Modelo ajustado.
+ */
+model: MixtureModel, 
+/**
+ * Ajuste: coeficientes, ANOVA centrada, resíduos e diagnósticos.
+ */
+fit: LinearFit, 
+/**
+ * Previsões sobre o triângulo (só com três componentes; vazio nos demais casos).
+ */
+grid: Array<MixtureGridPoint>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Solicitação de análise de uma mistura.
+ */
+export type MixtureAnalysisRequest = { 
+/**
+ * Nomes dos componentes (2 a 8).
+ */
+componentNames: Array<string>, 
+/**
+ * Limites inferiores (mesma ordem; 0 se não houver).
+ */
+lowerBounds: Array<number>, 
+/**
+ * Proporções reais de cada ensaio (uma linha por ensaio, somando 1).
+ */
+proportions: Array<Array<number>>, 
+/**
+ * Resposta de cada ensaio.
+ */
+response: Array<number>, 
+/**
+ * Modelo.
+ */
+model: MixtureModel, 
+/**
+ * Nível de significância dos intervalos (`1 − α` de confiança).
+ */
+alpha: number, };
+
+/**
+ * Componente da mistura.
+ */
+export type MixtureComponent = { 
+/**
+ * Identificador do fator no experimento.
+ */
+id: StableId, 
+/**
+ * Nome do componente.
+ */
+name: string, 
+/**
+ * Limite inferior da proporção (0 ≤ L < 1).
+ */
+lower: number, };
+
+/**
+ * Ponto da malha ternária.
+ */
+export type MixtureGridPoint = { 
+/**
+ * Pseudocomponentes (somam 1).
+ */
+pseudo: Array<number>, 
+/**
+ * Proporções reais.
+ */
+proportions: Array<number>, 
+/**
+ * Resposta prevista.
+ */
+value: number, };
+
+/**
+ * Tipo de planejamento de misturas.
+ */
+export type MixtureKind = { "type": "lattice", 
+/**
+ * Grau `m` (1 a 6).
+ */
+degree: number, } | { "type": "centroid" };
+
+/**
+ * Modelo de Scheffé.
+ */
+export type MixtureModel = "linear" | "quadratic" | "specialCubic";
+
+/**
+ * Um ensaio.
+ */
+export type MixtureRun = { 
+/**
+ * Posição de execução (1-based).
+ */
+run: number, 
+/**
+ * Posição na ordem padrão (1-based).
+ */
+standardOrder: number, 
+/**
+ * Quantidade de componentes presentes (> 0) no ponto: 1 = vértice, 2 = aresta…
+ */
+support: number, 
+/**
+ * Ponto central extra.
+ */
+extraCenter: boolean, 
+/**
+ * Pseudocomponentes (somam 1).
+ */
+pseudo: Array<number>, 
+/**
+ * Proporções reais (somam 1).
+ */
+proportions: Array<number>, 
+/**
+ * Repetição (1-based; nos centrais extras, o número do ponto).
+ */
+replicate: number, };
+
+/**
+ * Especificação do planejamento de misturas.
+ */
+export type MixtureSpec = { 
+/**
+ * Componentes (2 a 8).
+ */
+components: Array<MixtureComponent>, 
+/**
+ * Tipo de planejamento.
+ */
+kind: MixtureKind, 
+/**
+ * Repetições de todos os pontos (≥ 1).
+ */
+replicates: number, 
+/**
+ * Pontos centrais extras (centroide geral), além dos do planejamento.
+ */
+centerPoints: number, 
+/**
+ * Aleatorizar a ordem de execução.
+ */
+randomize: boolean, 
+/**
+ * Semente da aleatorização; inteiro de até 2⁵³ − 1 na interface.
+ */
+seed: number, };
+
+/**
  * Métricas de um modelo.
  */
 export type ModelMetrics = { 
@@ -2413,6 +2980,145 @@ coding: CategoricalCoding,
  * Nível de confiança dos intervalos (padrão 0,95).
  */
 confidenceLevel: number, };
+
+/**
+ * Parâmetro estimado.
+ */
+export type NonlinearParameter = { 
+/**
+ * Nome (`a`, `b`, `c` ou `n`).
+ */
+name: string, 
+/**
+ * Estimativa.
+ */
+estimate: number, 
+/**
+ * Erro-padrão (Wald).
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+tValue: Stat, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, 
+/**
+ * O parâmetro terminou em um limite.
+ */
+atBound: boolean, };
+
+/**
+ * Solicitação de ajuste.
+ */
+export type NonlinearRequest = { 
+/**
+ * Substrato (variável independente, `S ≥ 0`).
+ */
+x: Array<number>, 
+/**
+ * Resposta.
+ */
+y: Array<number>, 
+/**
+ * Modelo.
+ */
+model: SaturationModel, 
+/**
+ * Valores iniciais (um por parâmetro); `None` = vários inícios automáticos.
+ */
+initial: Array<number> | null, 
+/**
+ * Limites inferiores por parâmetro (`None` = sem limite); padrão: parâmetros positivos.
+ */
+lower: Array<number | null> | null, 
+/**
+ * Limites superiores por parâmetro (`None` = sem limite).
+ */
+upper: Array<number | null> | null, 
+/**
+ * Nível de significância dos intervalos (`1 − α` de confiança).
+ */
+alpha: number, };
+
+/**
+ * Resultado do ajuste.
+ */
+export type NonlinearResult = { 
+/**
+ * Modelo ajustado.
+ */
+model: SaturationModel, 
+/**
+ * Observações usadas.
+ */
+n: number, 
+/**
+ * Parâmetros.
+ */
+parameters: Array<NonlinearParameter>, 
+/**
+ * Soma de quadrados dos resíduos.
+ */
+sse: number, 
+/**
+ * Desvio-padrão residual.
+ */
+sigma: Stat, 
+/**
+ * `R² = 1 − SQR/SQT` (centrada).
+ */
+rSquared: Stat, 
+/**
+ * Matriz de correlação dos parâmetros (linha a linha); vazia se indefinida.
+ */
+correlation: Array<Array<number>>, 
+/**
+ * Número de condição da Jacobiana com colunas normalizadas.
+ */
+conditionNumber: Stat, 
+/**
+ * O ajuste convergiu.
+ */
+converged: boolean, 
+/**
+ * Iterações do melhor início.
+ */
+iterations: number, 
+/**
+ * Inícios executados.
+ */
+startsRun: number, 
+/**
+ * Inícios que chegaram à menor soma de quadrados.
+ */
+startsReachingBest: number, 
+/**
+ * Resíduos `y − ŷ`.
+ */
+residuals: Array<number>, 
+/**
+ * Curva ajustada com faixa de confiança.
+ */
+curve: Array<CurvePoint>, 
+/**
+ * Avisos (identificabilidade, limites, não convergência).
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
 
 /**
  * Uma observação (linha).
@@ -2624,12 +3330,138 @@ provenance: Provenance, };
 /**
  * Operação solicitada. Cada etapa acrescenta suas variantes.
  */
-export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
+export type Operation = { "type": "engineInfo" } | { "type": "descriptiveSummarize" } & DescriptiveRequest | { "type": "designRecommend" } & DesignRecommendRequest | { "type": "designCount" } & DesignSpec | { "type": "designGenerate" } & DesignSpec | { "type": "designCrdGenerate" } & CrdSpec | { "type": "designRcbdGenerate" } & RcbdSpec | { "type": "designMixedGenerate" } & MixedSpec | { "type": "designMixtureGenerate" } & MixtureSpec | { "type": "mixtureAnalyze" } & MixtureAnalysisRequest | { "type": "designOptimalGenerate" } & OptimalSpec | { "type": "comparisonPaired" } & PairedRequest | { "type": "modelMixed" } & MixedModelRequest | { "type": "modelNonlinear" } & NonlinearRequest | { "type": "powerAnalyze" } & PowerRequest | { "type": "designAnalyze" } & DesignAnalysisRequest | { "type": "surfaceAnalyze" } & SurfaceRequest | { "type": "surfaceGrid" } & GridRequest | { "type": "exportXlsx" } & ExportWorkbook | { "type": "optimizationRun" } & OptimizationRequest | { "type": "optimizationEvaluate" } & EvaluateRequest | { "type": "optimizationGrid" } & OptimizationGridRequest | { "type": "comparisonOneWay" } & OneWayRequest | { "type": "comparisonProcedure" } & ProcedureRequest | { "type": "anovaFactorial" } & FactorialRequest | { "type": "surfaceSelectModel" } & SurfaceRequest | { "type": "designSelectModel" } & DesignAnalysisRequest | { "type": "distributionEvaluate" } & DistributionRequest | { "type": "modelFitLinear" } & LinearModelRequest | { "type": "projectEncode" } & ProjectEncodeRequest | { "type": "projectDecode" } & BytesRequest | { "type": "importXlsx" } & ImportXlsxRequest;
 
 /**
  * Resultado de uma operação.
  */
-export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+export type OperationResult = { "type": "engineInfo" } & EngineInfo | { "type": "descriptiveSummarize" } & DescriptiveResult | { "type": "designRecommend" } & DesignOptions | { "type": "designCount" } & RunCount | { "type": "designGenerate" } & GeneratedDesign | { "type": "designCrdGenerate" } & GeneratedCrd | { "type": "designRcbdGenerate" } & GeneratedRcbd | { "type": "designMixedGenerate" } & GeneratedMixed | { "type": "designMixtureGenerate" } & GeneratedMixture | { "type": "mixtureAnalyze" } & MixtureAnalysis | { "type": "designOptimalGenerate" } & GeneratedOptimal | { "type": "comparisonPaired" } & PairedResult | { "type": "modelMixed" } & MixedModelResult | { "type": "modelNonlinear" } & NonlinearResult | { "type": "powerAnalyze" } & PowerResult | { "type": "designAnalyze" } & DesignAnalysisResult | { "type": "surfaceAnalyze" } & SurfaceResult | { "type": "surfaceGrid" } & SurfaceGrid | { "type": "exportXlsx" } & ProjectEncodeResult | { "type": "optimizationRun" } & OptimizationResult | { "type": "optimizationEvaluate" } & Evaluation | { "type": "optimizationGrid" } & SurfaceGrid | { "type": "comparisonOneWay" } & OneWayResult | { "type": "comparisonProcedure" } & ProcedureResult | { "type": "anovaFactorial" } & FactorialResult | { "type": "surfaceSelectModel" } & SelectionResult | { "type": "designSelectModel" } & SelectionResult | { "type": "distributionEvaluate" } & DistributionResult | { "type": "modelFitLinear" } & LinearFit | { "type": "projectEncode" } & ProjectEncodeResult | { "type": "projectDecode" } & ProjectDecodeResult | { "type": "importXlsx" } & SheetData;
+
+/**
+ * Critério de otimalidade.
+ */
+export type OptimalCriterion = "d" | "i";
+
+/**
+ * Fator quantitativo com faixa.
+ */
+export type OptimalFactor = { 
+/**
+ * Identificador do fator no experimento.
+ */
+id: StableId, 
+/**
+ * Nome do fator.
+ */
+name: string, 
+/**
+ * Limite inferior (unidade real).
+ */
+low: number, 
+/**
+ * Limite superior (unidade real).
+ */
+high: number, };
+
+/**
+ * Valores dos critérios para um planejamento.
+ */
+export type OptimalMetrics = { 
+/**
+ * Número de parâmetros do modelo.
+ */
+parameters: number, 
+/**
+ * `ln|XᵀX|`; indefinido (`null`) se a matriz for singular.
+ */
+logDet: number | null, 
+/**
+ * Eficiência D por ensaio: `|XᵀX|^(1/p) / n`.
+ */
+dEfficiency: number | null, 
+/**
+ * Eficiência A: `p / (n·tr((XᵀX)⁻¹))`.
+ */
+aEfficiency: number | null, 
+/**
+ * Eficiência G: `p / (n·máx d(x))` sobre os candidatos.
+ */
+gEfficiency: number | null, 
+/**
+ * Variância média de predição escalada `n·tr((XᵀX)⁻¹W)` sobre os candidatos.
+ */
+iAverage: number | null, };
+
+/**
+ * Modelo a estimar.
+ */
+export type OptimalModel = "linear" | "interactions" | "quadratic";
+
+/**
+ * Um ensaio do resultado.
+ */
+export type OptimalRun = { 
+/**
+ * Posição (1-based): primeiro os já realizados, depois os novos.
+ */
+run: number, 
+/**
+ * Já realizado (mantido).
+ */
+fixed: boolean, 
+/**
+ * Níveis em unidades reais.
+ */
+real: Array<number>, 
+/**
+ * Níveis codificados.
+ */
+coded: Array<number>, };
+
+/**
+ * Especificação do planejamento ótimo.
+ */
+export type OptimalSpec = { 
+/**
+ * Fatores (1 a 5).
+ */
+factors: Array<OptimalFactor>, 
+/**
+ * Modelo.
+ */
+model: OptimalModel, 
+/**
+ * Critério.
+ */
+criterion: OptimalCriterion, 
+/**
+ * Total de ensaios, **incluindo** os já realizados.
+ */
+runs: number, 
+/**
+ * Níveis por fator na malha de candidatos (3 ou 5).
+ */
+levels: number, 
+/**
+ * Restrições lineares.
+ */
+constraints: Array<LinearConstraint>, 
+/**
+ * Ensaios já realizados (unidades reais, mesma ordem dos fatores), mantidos no planejamento.
+ */
+fixedRuns: Array<Array<number>>, 
+/**
+ * Inícios aleatórios (1 a 50).
+ */
+starts: number, 
+/**
+ * Aleatorizar a ordem de execução dos ensaios novos.
+ */
+randomize: boolean, 
+/**
+ * Semente (inteiro de até 2⁵³ − 1 na interface).
+ */
+seed: number, };
 
 /**
  * Pedido da malha de desejabilidade.
@@ -2861,6 +3693,97 @@ ciUpper: Stat,
 significant: boolean | null, };
 
 /**
+ * Pares de observações.
+ */
+export type PairedRequest = { 
+/**
+ * Primeira condição (uma observação por par).
+ */
+first: Array<number>, 
+/**
+ * Segunda condição (mesma ordem de pares).
+ */
+second: Array<number>, 
+/**
+ * Nível de significância (`1 − α` de confiança).
+ */
+alpha: number, };
+
+/**
+ * Resultado da comparação pareada.
+ */
+export type PairedResult = { 
+/**
+ * Pares.
+ */
+n: number, 
+/**
+ * Média da primeira condição.
+ */
+meanFirst: number, 
+/**
+ * Média da segunda condição.
+ */
+meanSecond: number, 
+/**
+ * Teste t pareado.
+ */
+tTest: PairedT, 
+/**
+ * Teste de Wilcoxon (indefinido se todas as diferenças forem nulas).
+ */
+wilcoxon: Wilcoxon | null, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
+
+/**
+ * Teste t pareado.
+ */
+export type PairedT = { 
+/**
+ * Média das diferenças `primeiro − segundo`.
+ */
+meanDifference: Stat, 
+/**
+ * Desvio-padrão das diferenças.
+ */
+sdDifference: Stat, 
+/**
+ * Erro-padrão da média das diferenças.
+ */
+stdError: Stat, 
+/**
+ * Estatística t.
+ */
+t: Stat, 
+/**
+ * Graus de liberdade (`n − 1`).
+ */
+df: number, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * Limite inferior do intervalo de confiança.
+ */
+ciLower: Stat, 
+/**
+ * Limite superior do intervalo de confiança.
+ */
+ciUpper: Stat, 
+/**
+ * Tamanho de efeito `d_z = d̄/s_d`.
+ */
+effectSize: Stat, };
+
+/**
  * Ajuste das comparações entre médias marginais.
  */
 export type PairwiseAdjustment = "tukey" | "none" | "bonferroni" | "holm";
@@ -2908,6 +3831,131 @@ export type ParetoBasis = "tStatistic" | "lenthEffect" | "effectOnly";
  * Tipo de ponto.
  */
 export type PointType = "factorial" | "center" | "axial";
+
+/**
+ * Desenho cuja potência se calcula.
+ */
+export type PowerDesign = { "type": "anova", 
+/**
+ * Médias esperadas dos grupos.
+ */
+means: Array<number>, } | { "type": "oneSampleT", 
+/**
+ * Diferença esperada.
+ */
+difference: number, } | { "type": "pairedT", 
+/**
+ * Diferença esperada.
+ */
+difference: number, } | { "type": "twoSampleT", 
+/**
+ * Diferença esperada entre as médias.
+ */
+difference: number, };
+
+/**
+ * O que calcular.
+ */
+export type PowerGoal = { "type": "powerAt", 
+/**
+ * Tamanho da amostra.
+ */
+n: number, } | { "type": "sampleSizeFor", 
+/**
+ * Potência-alvo (0 a 1, exclusivo).
+ */
+power: number, } | { "type": "precisionFor", 
+/**
+ * Semiamplitude desejada.
+ */
+halfWidth: number, };
+
+/**
+ * Ponto da curva de potência.
+ */
+export type PowerPoint = { 
+/**
+ * Tamanho da amostra.
+ */
+n: number, 
+/**
+ * Potência.
+ */
+power: number, };
+
+/**
+ * Solicitação.
+ */
+export type PowerRequest = { 
+/**
+ * Desenho.
+ */
+design: PowerDesign, 
+/**
+ * Desvio-padrão esperado do erro (σ > 0).
+ */
+sigma: number, 
+/**
+ * Nível de significância (0 a 1, exclusivo).
+ */
+alpha: number, 
+/**
+ * Teste bilateral (nos testes t); a ANOVA é sempre «unilateral» na cauda superior de F.
+ */
+twoSided: boolean, 
+/**
+ * Objetivo.
+ */
+goal: PowerGoal, };
+
+/**
+ * Resultado.
+ */
+export type PowerResult = { 
+/**
+ * `n` por grupo (ANOVA e duas amostras) ou número de unidades/pares.
+ */
+n: number, 
+/**
+ * Total de observações do estudo.
+ */
+total: number, 
+/**
+ * Potência em `n`.
+ */
+power: Stat, 
+/**
+ * Parâmetro de não centralidade (`λ` na ANOVA, `δ` nos testes t).
+ */
+noncentrality: number, 
+/**
+ * Graus de liberdade do numerador (ANOVA) ou do teste (t).
+ */
+df1: number, 
+/**
+ * Graus de liberdade do denominador (ANOVA); 0 nos testes t.
+ */
+df2: number, 
+/**
+ * Valor crítico usado.
+ */
+critical: number, 
+/**
+ * Semiamplitude do intervalo de confiança em `n` (só nos testes t).
+ */
+halfWidth: Stat, 
+/**
+ * Curva de potência em função de `n`.
+ */
+curve: Array<PowerPoint>, 
+/**
+ * Avisos.
+ */
+issues: Array<Issue>, 
+/**
+ * Proveniência.
+ */
+provenance: Provenance, };
 
 /**
  * Predição para uma linha.
@@ -3201,6 +4249,23 @@ theoretical: number,
  * Resíduo padronizado ordenado.
  */
 sample: number, };
+
+/**
+ * Efeito aleatório previsto (BLUP) de uma unidade.
+ */
+export type RandomEffect = { 
+/**
+ * Unidade experimental.
+ */
+unit: string, 
+/**
+ * Observações da unidade usadas no ajuste.
+ */
+observations: number, 
+/**
+ * Efeito previsto.
+ */
+blup: number, };
 
 /**
  * Um ensaio.
@@ -3524,6 +4589,11 @@ centerRuns: number,
  * Total.
  */
 total: number, };
+
+/**
+ * Modelo de saturação.
+ */
+export type SaturationModel = "monod" | "haldane" | "hill";
 
 /**
  * Opções da busca.
@@ -3980,3 +5050,40 @@ export type UndefinedReason = "noValidObservations" | "fewerThanTwoObservations"
  * Situação da validação numérica.
  */
 export type Validation = "notValidated" | "numericallyValidated" | "validated";
+
+/**
+ * Teste dos postos sinalizados de Wilcoxon.
+ */
+export type Wilcoxon = { 
+/**
+ * Pares com diferença não nula (usados no teste).
+ */
+nUsed: number, 
+/**
+ * Pares com diferença nula (descartados).
+ */
+nZero: number, 
+/**
+ * Soma dos postos das diferenças positivas.
+ */
+wPlus: number, 
+/**
+ * Soma dos postos das diferenças negativas.
+ */
+wMinus: number, 
+/**
+ * Estatística `mín(W₊, W₋)`.
+ */
+statistic: number, 
+/**
+ * Valor-p bilateral.
+ */
+pValue: Stat, 
+/**
+ * `exact` ou `normalApproximation`.
+ */
+method: string, 
+/**
+ * Há empates entre os valores absolutos das diferenças.
+ */
+hasTies: boolean, };

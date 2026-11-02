@@ -44,6 +44,25 @@ export function decodeText(
   }
 }
 
+/**
+ * Separa as linhas de metadados `# chave: valor` que o aplicativo grava no início dos CSV
+ * exportados (e a linha em branco que as segue) da tabela. Só as linhas **iniciais** que começam
+ * por `#` são metadados; um `#` no meio dos dados continua sendo dado.
+ */
+export function splitMetadata(text: string): { metadata: Record<string, string>; body: string } {
+  const metadata: Record<string, string> = {};
+  const lines = text.split(/\r\n|\n|\r/);
+  let i = 0;
+  while (i < lines.length && (lines[i] ?? "").startsWith("#")) {
+    const match = /^#\s*([^:]+?)\s*:\s*(.*)$/.exec(lines[i] ?? "");
+    if (match?.[1] !== undefined) metadata[match[1]] = (match[2] ?? "").trim();
+    i += 1;
+  }
+  if (i === 0) return { metadata, body: text };
+  while (i < lines.length && (lines[i] ?? "").trim() === "") i += 1;
+  return { metadata, body: lines.slice(i).join("\n") };
+}
+
 /** Escolhe o separador mais consistente nas primeiras linhas (fora de aspas). */
 export function detectDelimiter(text: string): Delimiter {
   const sample = text

@@ -3,6 +3,7 @@ import { nowIso } from "../../lib/ids";
 import type { RecoveryStatus } from "../../services/storage/autosave";
 import { useStorage } from "../../services/storage/context";
 import { useProjectDispatch, useWorkspace } from "../../state/ProjectContext";
+import { DrivePanel } from "../drive/DrivePanel";
 import { SaveStatus } from "./SaveStatus";
 import { useProjectActions } from "./useProjectActions";
 
@@ -11,7 +12,8 @@ export function ProjectBar({ recovery }: { recovery: RecoveryStatus }) {
   const workspace = useWorkspace();
   const dispatch = useProjectDispatch();
   const storage = useStorage();
-  const { notice, busy, newProject, open, save } = useProjectActions();
+  const actions = useProjectActions();
+  const { notice, busy, newProject, open, save } = actions;
   return (
     <section className="panel project-bar" aria-label={t("project.bar")}>
       <div className="row">
@@ -67,6 +69,8 @@ export function ProjectBar({ recovery }: { recovery: RecoveryStatus }) {
         </div>
       </div>
       {!storage.overwritesFile && <p className="muted small">{t("project.saveBrowserHelp")}</p>}
+      {storage.kind === "browser" && <DrivePanel actions={actions} />}
+      {storage.kind === "desktop" && <p className="muted small">{t("drive.desktopNote")}</p>}
       <SaveStatus workspace={workspace} recovery={recovery} downloads={!storage.overwritesFile} />
       {notice && (
         <div

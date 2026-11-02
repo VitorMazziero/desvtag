@@ -1,3 +1,4 @@
+export { type CommentsLabels, commentsSection } from "./commentsSection";
 export {
   type Cell,
   type CsvDialect,

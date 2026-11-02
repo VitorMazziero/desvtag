@@ -9,6 +9,7 @@ pub mod chi_square;
 pub mod dunnett;
 pub mod evaluate;
 pub mod f;
+pub mod noncentral;
 pub mod normal;
 pub mod quantile;
 mod range_table;

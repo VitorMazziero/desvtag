@@ -42,7 +42,11 @@
       "duplicate_analysis_id": "Há duas análises com o mesmo identificador.",
       "analysis_unknown_revision": "Uma análise aponta para uma versão dos dados inexistente.",
       "origin_not_found": "O experimento de confirmação aponta para um experimento ou análise de origem que não existe no projeto.",
-      "invalid_figure_style": "A personalização gráfica do experimento {{id}} tem valores inválidos."
+      "invalid_figure_style": "A personalização gráfica do experimento {{id}} tem valores inválidos.",
+      "duplicate_comment_id": "O comentário {{id}} aparece mais de uma vez.",
+      "invalid_comment": "O comentário {{id}} está vazio, longo demais ou sem a análise a que se refere.",
+      "comment_unknown_revision": "O comentário {{id}} aponta para uma revisão que não existe.",
+      "comment_unknown_analysis": "O comentário {{id}} aponta para uma análise que não existe."
     },
     "import": {
       "not_xlsx": "O arquivo não é uma planilha XLSX legível.",

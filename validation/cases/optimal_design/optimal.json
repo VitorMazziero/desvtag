@@ -1,0 +1,577 @@
+{
+ "id": "optimal_design",
+ "metricCases": [
+  {
+   "name": "2^2-interacoes",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 4,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "runsReal": [
+    [
+     10,
+     10
+    ],
+    [
+     30,
+     10
+    ],
+    [
+     10,
+     30
+    ],
+    [
+     30,
+     30
+    ]
+   ],
+   "expected": {
+    "parameters": 4,
+    "logDet": 5.545177444479562,
+    "dEfficiency": 1.0,
+    "aEfficiency": 1.0,
+    "gEfficiency": 1.0,
+    "iAverage": 2.7777777777777777
+   }
+  },
+  {
+   "name": "2^2+centrais-quadratico",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "d",
+    "runs": 9,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "runsReal": [
+    [
+     10,
+     10
+    ],
+    [
+     30,
+     10
+    ],
+    [
+     10,
+     30
+    ],
+    [
+     30,
+     30
+    ],
+    [
+     20,
+     10
+    ],
+    [
+     20,
+     30
+    ],
+    [
+     10,
+     20
+    ],
+    [
+     30,
+     20
+    ],
+    [
+     20,
+     20
+    ]
+   ],
+   "expected": {
+    "parameters": 6,
+    "logDet": 8.55333223803211,
+    "dEfficiency": 0.4622408495670898,
+    "aEfficiency": 0.3116883116883117,
+    "gEfficiency": 0.8275862068965517,
+    "iAverage": 6.000000000000001
+   }
+  },
+  {
+   "name": "3-fatores-linear-8",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X3",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 8,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "runsReal": [
+    [
+     10,
+     10,
+     10
+    ],
+    [
+     30,
+     10,
+     10
+    ],
+    [
+     10,
+     30,
+     10
+    ],
+    [
+     30,
+     30,
+     10
+    ],
+    [
+     10,
+     10,
+     30
+    ],
+    [
+     30,
+     10,
+     30
+    ],
+    [
+     10,
+     30,
+     30
+    ],
+    [
+     30,
+     30,
+     30
+    ]
+   ],
+   "expected": {
+    "parameters": 4,
+    "logDet": 8.317766166719343,
+    "dEfficiency": 0.9999999999999998,
+    "aEfficiency": 1.0,
+    "gEfficiency": 1.0,
+    "iAverage": 2.9999999999999996
+   }
+  },
+  {
+   "name": "2-fatores-restrito",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 6,
+    "levels": 5,
+    "constraints": [
+     {
+      "coefficients": [
+       1.0,
+       1.0
+      ],
+      "upper": 40.0
+     }
+    ],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "runsReal": [
+    [
+     10,
+     10
+    ],
+    [
+     30,
+     10
+    ],
+    [
+     10,
+     30
+    ],
+    [
+     20,
+     20
+    ],
+    [
+     10,
+     20
+    ],
+    [
+     20,
+     10
+    ]
+   ],
+   "expected": {
+    "parameters": 4,
+    "logDet": 3.5553480614894144,
+    "dEfficiency": 0.40538321318296466,
+    "aEfficiency": 0.13182674199623357,
+    "gEfficiency": 0.6666666666666669,
+    "iAverage": 3.192857142857143
+   }
+  },
+  {
+   "name": "3-fatores-interacoes-10",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X3",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 10,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "runsReal": [
+    [
+     10,
+     10,
+     10
+    ],
+    [
+     30,
+     30,
+     10
+    ],
+    [
+     30,
+     10,
+     30
+    ],
+    [
+     10,
+     30,
+     30
+    ],
+    [
+     20,
+     20,
+     20
+    ],
+    [
+     20,
+     20,
+     20
+    ],
+    [
+     10,
+     10,
+     30
+    ],
+    [
+     30,
+     10,
+     10
+    ],
+    [
+     10,
+     30,
+     10
+    ],
+    [
+     30,
+     30,
+     30
+    ]
+   ],
+   "expected": {
+    "parameters": 7,
+    "logDet": 14.779234343073062,
+    "dEfficiency": 0.8259129477680016,
+    "aEfficiency": 0.8235294117647058,
+    "gEfficiency": 0.8235294117647058,
+    "iAverage": 5.166666666666667
+   }
+  }
+ ],
+ "exhaustiveCases": [
+  {
+   "name": "D-quadratico-2f-7",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "d",
+    "runs": 7,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "expected": {
+    "best": 6.866933284461884,
+    "evaluated": 492
+   }
+  },
+  {
+   "name": "I-quadratico-2f-8",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "i",
+    "runs": 8,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "expected": {
+    "best": -0.8055555555555551,
+    "evaluated": 1857
+   }
+  },
+  {
+   "name": "D-interacoes-2f-5-restrito",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 5,
+    "levels": 3,
+    "constraints": [
+     {
+      "coefficients": [
+       1.0,
+       1.0
+      ],
+      "upper": 40.0
+     }
+    ],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "expected": {
+    "best": 3.465735902799727,
+    "evaluated": 37
+   }
+  },
+  {
+   "name": "D-linear-3f-5",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X3",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 5,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "expected": {
+    "best": 6.238324625039507,
+    "evaluated": 136984
+   }
+  },
+  {
+   "name": "D-ampliacao-2f",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 6,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      10,
+      10
+     ],
+     [
+      30,
+      10
+     ],
+     [
+      20,
+      20
+     ]
+    ],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "expected": {
+    "best": 6.436150368369427,
+    "evaluated": 130
+   }
+  },
+  {
+   "name": "I-interacoes-2f-6",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": 10.0,
+      "high": 30.0
+     },
+     {
+      "name": "X2",
+      "low": 10.0,
+      "high": 30.0
+     }
+    ],
+    "model": "interactions",
+    "criterion": "i",
+    "runs": 6,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 20,
+    "randomize": false,
+    "seed": 11
+   },
+   "expected": {
+    "best": -0.5208333333333334,
+    "evaluated": 1479
+   }
+  }
+ ]
+}

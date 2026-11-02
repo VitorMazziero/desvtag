@@ -5,6 +5,8 @@ import { type Cell, toCsv } from "../../services/export";
 export function matrixTable(
   design: GeneratedDesign,
   metadata: Record<string, string>,
+  /** Colunas de resposta a preencher (planilha de coleta, ET13). */
+  collection?: { header: string[]; cells: Cell[][] },
 ): { header: string[]; rows: Cell[][]; meta: Record<string, string> } {
   const names = design.spec.factors.map((f) => f.name);
   const header = [
@@ -14,14 +16,16 @@ export function matrixTable(
     "replicate",
     ...names,
     ...names.map((n) => `${n} (coded)`),
+    ...(collection?.header ?? []),
   ];
-  const rows: Cell[][] = design.runs.map((r) => [
+  const rows: Cell[][] = design.runs.map((r, i) => [
     r.run,
     r.standardOrder,
     r.point,
     r.replicate,
     ...r.real,
     ...r.coded,
+    ...(collection?.cells[i] ?? []),
   ]);
   const kind =
     design.spec.kind.type === "fractional"

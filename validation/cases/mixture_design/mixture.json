@@ -1,0 +1,1828 @@
+{
+ "id": "mixture_design",
+ "cases": [
+  {
+   "q": 3,
+   "kind": "lattice",
+   "degree": 2,
+   "lowers": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "replicates": 2,
+   "centerPoints": 2,
+   "randomize": true,
+   "seed": 42,
+   "baseCount": 6,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 4,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 11,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 3,
+     "standardOrder": 13,
+     "support": 3,
+     "extraCenter": true,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 3,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 1,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 2,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 8,
+     "standardOrder": 10,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 9,
+     "standardOrder": 8,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 10,
+     "standardOrder": 6,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 14,
+     "support": 3,
+     "extraCenter": true,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 12,
+     "standardOrder": 9,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 13,
+     "standardOrder": 7,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 14,
+     "standardOrder": 12,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 2
+    }
+   ]
+  },
+  {
+   "q": 4,
+   "kind": "centroid",
+   "degree": 0,
+   "lowers": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "replicates": 1,
+   "centerPoints": 0,
+   "randomize": false,
+   "seed": 0,
+   "baseCount": 15,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.5,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.5,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 7,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.0,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 8,
+     "standardOrder": 8,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.5,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 9,
+     "standardOrder": 9,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.0,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 10,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.5,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 11,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0
+     ],
+     "proportions": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 12,
+     "standardOrder": 12,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0,
+      0.3333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 13,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.0,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.3333333333333333,
+      0.0,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 14,
+     "standardOrder": 14,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.0,
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 15,
+     "standardOrder": 15,
+     "support": 4,
+     "extraCenter": false,
+     "pseudo": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+     ],
+     "proportions": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+     ],
+     "replicate": 1
+    }
+   ]
+  },
+  {
+   "q": 4,
+   "kind": "lattice",
+   "degree": 3,
+   "lowers": [
+    0.1,
+    0.05,
+    0.0,
+    0.2
+   ],
+   "replicates": 1,
+   "centerPoints": 1,
+   "randomize": true,
+   "seed": 7,
+   "baseCount": 20,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 15,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0
+     ],
+     "proportions": [
+      0.31666666666666665,
+      0.2666666666666666,
+      0.21666666666666662,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 20,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.7499999999999999,
+      0.05,
+      0.0,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 3,
+     "standardOrder": 21,
+     "support": 4,
+     "extraCenter": true,
+     "pseudo": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+     ],
+     "proportions": [
+      0.26249999999999996,
+      0.21249999999999997,
+      0.16249999999999998,
+      0.3625
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 5,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.3333333333333333,
+      0.0,
+      0.6666666666666666
+     ],
+     "proportions": [
+      0.1,
+      0.2666666666666666,
+      0.0,
+      0.6333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 18,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.6666666666666666,
+      0.0,
+      0.3333333333333333,
+      0.0
+     ],
+     "proportions": [
+      0.5333333333333332,
+      0.05,
+      0.21666666666666662,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 13,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.0,
+      0.6666666666666666,
+      0.0
+     ],
+     "proportions": [
+      0.31666666666666665,
+      0.05,
+      0.43333333333333324,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 1,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.1,
+      0.05,
+      0.0,
+      0.8499999999999999
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 8,
+     "standardOrder": 11,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.0,
+      0.0,
+      0.6666666666666666
+     ],
+     "proportions": [
+      0.31666666666666665,
+      0.05,
+      0.0,
+      0.6333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 9,
+     "standardOrder": 17,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.6666666666666666,
+      0.0,
+      0.0,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.5333333333333332,
+      0.05,
+      0.0,
+      0.41666666666666663
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 7,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666,
+      0.0
+     ],
+     "proportions": [
+      0.1,
+      0.2666666666666666,
+      0.43333333333333324,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 14,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.0,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.31666666666666665,
+      0.2666666666666666,
+      0.0,
+      0.41666666666666663
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 12,
+     "standardOrder": 4,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.1,
+      0.05,
+      0.6499999999999999,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 6,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.1,
+      0.2666666666666666,
+      0.21666666666666662,
+      0.41666666666666663
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 14,
+     "standardOrder": 10,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.1,
+      0.7,
+      0.0,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 15,
+     "standardOrder": 12,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.0,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.31666666666666665,
+      0.05,
+      0.21666666666666662,
+      0.41666666666666663
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 16,
+     "standardOrder": 16,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.6666666666666666,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.31666666666666665,
+      0.4833333333333332,
+      0.0,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 17,
+     "standardOrder": 2,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.3333333333333333,
+      0.6666666666666666
+     ],
+     "proportions": [
+      0.1,
+      0.05,
+      0.21666666666666662,
+      0.6333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 18,
+     "standardOrder": 3,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.6666666666666666,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.1,
+      0.05,
+      0.43333333333333324,
+      0.41666666666666663
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 19,
+     "standardOrder": 19,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.6666666666666666,
+      0.3333333333333333,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.5333333333333332,
+      0.2666666666666666,
+      0.0,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 20,
+     "standardOrder": 9,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.6666666666666666,
+      0.3333333333333333,
+      0.0
+     ],
+     "proportions": [
+      0.1,
+      0.4833333333333332,
+      0.21666666666666662,
+      0.2
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 21,
+     "standardOrder": 8,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.6666666666666666,
+      0.0,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.1,
+      0.4833333333333332,
+      0.0,
+      0.41666666666666663
+     ],
+     "replicate": 1
+    }
+   ]
+  },
+  {
+   "q": 2,
+   "kind": "lattice",
+   "degree": 1,
+   "lowers": [
+    0.0,
+    0.0
+   ],
+   "replicates": 3,
+   "centerPoints": 0,
+   "randomize": true,
+   "seed": 12345,
+   "baseCount": 2,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      1.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 3,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      1.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 3,
+     "standardOrder": 5,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      1.0
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 4,
+     "standardOrder": 6,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 5,
+     "standardOrder": 4,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 6,
+     "standardOrder": 2,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0
+     ],
+     "replicate": 1
+    }
+   ]
+  },
+  {
+   "q": 3,
+   "kind": "centroid",
+   "degree": 0,
+   "lowers": [
+    0.0,
+    0.3,
+    0.0
+   ],
+   "replicates": 3,
+   "centerPoints": 2,
+   "randomize": true,
+   "seed": 9007199254740991,
+   "baseCount": 7,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 15,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.7,
+      0.3,
+      0.0
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 2,
+     "standardOrder": 11,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.35,
+      0.6499999999999999,
+      0.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 3,
+     "standardOrder": 2,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 1,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.7,
+      0.3,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 13,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.6499999999999999,
+      0.35
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 6,
+     "standardOrder": 21,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.2333333333333333,
+      0.5333333333333333,
+      0.2333333333333333
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 7,
+     "standardOrder": 23,
+     "support": 3,
+     "extraCenter": true,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.2333333333333333,
+      0.5333333333333333,
+      0.2333333333333333
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 8,
+     "standardOrder": 10,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.3,
+      0.7
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 9,
+     "standardOrder": 19,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.35,
+      0.3,
+      0.35
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 10,
+     "standardOrder": 20,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.6499999999999999,
+      0.35
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 11,
+     "standardOrder": 6,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.6499999999999999,
+      0.35
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 12,
+     "standardOrder": 5,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.35,
+      0.3,
+      0.35
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 9,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 14,
+     "standardOrder": 17,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.3,
+      0.7
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 15,
+     "standardOrder": 18,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.35,
+      0.6499999999999999,
+      0.0
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 16,
+     "standardOrder": 16,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 3
+    },
+    {
+     "run": 17,
+     "standardOrder": 8,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.7,
+      0.3,
+      0.0
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 18,
+     "standardOrder": 14,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.2333333333333333,
+      0.5333333333333333,
+      0.2333333333333333
+     ],
+     "replicate": 2
+    },
+    {
+     "run": 19,
+     "standardOrder": 22,
+     "support": 3,
+     "extraCenter": true,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.2333333333333333,
+      0.5333333333333333,
+      0.2333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 20,
+     "standardOrder": 3,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.3,
+      0.7
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 21,
+     "standardOrder": 7,
+     "support": 3,
+     "extraCenter": false,
+     "pseudo": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "proportions": [
+      0.2333333333333333,
+      0.5333333333333333,
+      0.2333333333333333
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 22,
+     "standardOrder": 4,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.35,
+      0.6499999999999999,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 23,
+     "standardOrder": 12,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.35,
+      0.3,
+      0.35
+     ],
+     "replicate": 2
+    }
+   ]
+  },
+  {
+   "q": 5,
+   "kind": "lattice",
+   "degree": 2,
+   "lowers": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "replicates": 1,
+   "centerPoints": 0,
+   "randomize": false,
+   "seed": 99,
+   "baseCount": 15,
+   "runs": [
+    {
+     "run": 1,
+     "standardOrder": 1,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 2,
+     "standardOrder": 2,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 3,
+     "standardOrder": 3,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 4,
+     "standardOrder": 4,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 5,
+     "standardOrder": 5,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      0.5,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      0.5,
+      0.5,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 6,
+     "standardOrder": 6,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 7,
+     "standardOrder": 7,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 8,
+     "standardOrder": 8,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.0,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.0,
+      0.5,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 9,
+     "standardOrder": 9,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      0.5,
+      0.5,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      0.5,
+      0.5,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 10,
+     "standardOrder": 10,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 11,
+     "standardOrder": 11,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.5
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.5
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 12,
+     "standardOrder": 12,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 13,
+     "standardOrder": 13,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.0,
+      0.5,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 14,
+     "standardOrder": 14,
+     "support": 2,
+     "extraCenter": false,
+     "pseudo": [
+      0.5,
+      0.5,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      0.5,
+      0.5,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    },
+    {
+     "run": 15,
+     "standardOrder": 15,
+     "support": 1,
+     "extraCenter": false,
+     "pseudo": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "proportions": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "replicate": 1
+    }
+   ]
+  }
+ ]
+}

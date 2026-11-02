@@ -1,17 +1,23 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { AnalysisSetup, buildDataset } from "../analysis";
+import { MixtureAnalysis } from "../analysis/MixtureAnalysis";
+import { RepeatedMeasures } from "../analysis/RepeatedMeasures";
+import { SaturationFit } from "../analysis/SaturationFit";
+import { CommentsPanel } from "../comments";
 import { DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
 import { ExportSettingsPanel } from "../export";
 import { RecentProjects, StartActions } from "../home";
+import { PowerCalculator } from "../home/PowerCalculator";
 import { ImportButton } from "../import";
 import { ConfirmationCheck } from "../optimization";
 import { ResultsView } from "../results";
 import { canEnter, firstUnsatisfied, stepSatisfied } from "./guards";
+import { prefersReducedMotion, scrollToStep } from "./scrollToStep";
 import { STEPS, type StepId } from "./steps";
 
 export function Workflow({ language }: { language: Language }) {
@@ -24,6 +30,17 @@ export function Workflow({ language }: { language: Language }) {
   const [step, setStep] = useState<StepId>(() =>
     state.confirmation ? "data" : (firstUnsatisfied(state, ctx) ?? "results"),
   );
+  // Ao trocar de etapa, volta ao topo de forma suave e foca o título (não na primeira exibição).
+  const root = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a rolagem deve ocorrer só quando a etapa muda.
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    scrollToStep(root.current, prefersReducedMotion());
+  }, [step]);
   const index = STEPS.indexOf(step);
   const next = STEPS[index + 1];
   const previous = STEPS[index - 1];
@@ -31,7 +48,7 @@ export function Workflow({ language }: { language: Language }) {
     next !== undefined && stepSatisfied(step, state, ctx) && canEnter(next, state, ctx);
 
   return (
-    <div className="workflow">
+    <div className="workflow" ref={root}>
       <nav aria-label={t("workflow.navLabel")}>
         <ol className="steps">
           {STEPS.map((id, i) => {
@@ -76,6 +93,7 @@ export function Workflow({ language }: { language: Language }) {
               onChoose={(path) => dispatch({ type: "choosePath", path })}
             />
             <RecentProjects />
+            <PowerCalculator language={language} />
           </>
         )}
         {step === "variables" && (
@@ -116,10 +134,19 @@ export function Workflow({ language }: { language: Language }) {
             <ConfirmationCheck language={language} />
           </section>
         )}
-        {step === "analysis" && <AnalysisSetup onDone={() => setStep("results")} />}
-        {step === "results" && (
+        {step === "analysis" && state.mixture !== null && <MixtureAnalysis language={language} />}
+        {step === "analysis" && state.mixture === null && (
+          <>
+            <AnalysisSetup onDone={() => setStep("results")} />
+            <RepeatedMeasures language={language} />
+            <SaturationFit language={language} />
+          </>
+        )}
+        {step === "results" && state.mixture !== null && <MixtureAnalysis language={language} />}
+        {step === "results" && state.mixture === null && (
           <>
             <ResultsView language={language} />
+            <CommentsPanel />
             {state.result &&
               !["surface", "procedure", "factorial", "oneWay", "design"].includes(
                 state.result.kind,

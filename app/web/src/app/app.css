@@ -121,7 +121,7 @@
 .steps {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -130,7 +130,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 40px;
+  min-height: var(--control-height);
   padding: 0 var(--space-3);
   font: inherit;
   font-size: var(--text-small);
@@ -170,14 +170,14 @@
 .step-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   align-items: center;
 }
 .spacer {
   flex: 1;
 }
 .button {
-  min-height: 40px;
+  min-height: var(--control-height);
   padding: 0 var(--space-4);
   font: inherit;
   font-size: var(--text-small);
@@ -210,8 +210,8 @@
   border-color: var(--color-ink-secondary);
 }
 .button.small {
-  min-height: 32px;
-  padding: 0 var(--space-2);
+  min-height: var(--control-height-small);
+  padding: 0 var(--space-3);
   font-weight: 400;
 }
 .button:disabled {
@@ -326,6 +326,48 @@ input[aria-invalid="true"] {
 .advanced {
   margin: var(--space-2) 0;
 }
+.row > details.comments {
+  flex: 1 1 100%;
+}
+.comment-list,
+.comment-replies {
+  list-style: none;
+  margin: var(--space-2) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.comment {
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--color-rule);
+}
+.comment.resolved {
+  border-left-style: dashed;
+}
+.comment-replies {
+  margin: var(--space-2) 0 var(--space-2) var(--space-4);
+  gap: var(--space-2);
+}
+.comment-text {
+  white-space: pre-wrap;
+  margin: var(--space-1) 0;
+}
+.comment-form {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+.comment-form textarea {
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  font-size: var(--text-small);
+  color: var(--color-ink);
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-inset);
+  resize: vertical;
+}
 .grid-scroll {
   overflow-x: auto;
   margin: var(--space-3) 0;
@@ -407,7 +449,7 @@ input[aria-invalid="true"] {
 .row {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   align-items: end;
 }
 .grow {
@@ -430,14 +472,14 @@ input[aria-invalid="true"] {
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   margin: var(--space-3) 0;
   padding: 0;
   list-style: none;
   align-items: center;
 }
 .tab {
-  min-height: 36px;
+  min-height: var(--control-height);
   padding: 0 var(--space-3);
   font: inherit;
   font-size: var(--text-small);
@@ -464,7 +506,7 @@ input[aria-invalid="true"] {
 .history-list li {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
   align-items: center;
   margin: var(--space-2) 0;
 }
@@ -499,7 +541,7 @@ input[aria-invalid="true"] {
   margin-top: var(--space-2);
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--gap-controls-row) var(--gap-controls);
 }
 
 /* Resultados em seções com barra lateral (ET11) */
@@ -519,12 +561,13 @@ input[aria-invalid="true"] {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--gap-controls-row);
 }
 .results-nav button {
   width: 100%;
+  min-height: var(--control-height);
   text-align: left;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-rule, #dde0e6);
   border-radius: 0.5rem;
   background: var(--color-panel, #fff);
@@ -560,6 +603,7 @@ input[aria-invalid="true"] {
   .results-nav ul {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: var(--gap-controls-row) var(--gap-controls);
   }
   .results-nav button {
     width: auto;
@@ -591,6 +635,42 @@ input[aria-invalid="true"] {
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-control);
 }
-.start-logo {
-  margin-bottom: var(--space-3);
+
+/* Notas de versão no aviso de atualização (ET14): formatadas, com rolagem própria. */
+.update-check {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-controls-row) var(--gap-controls);
+}
+.release-notes {
+  flex: 1 1 100%;
+  max-height: 16rem;
+  overflow: auto;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-small);
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-control);
+}
+.release-notes h4,
+.release-notes h5 {
+  margin: var(--space-3) 0 var(--space-1);
+}
+.release-notes p,
+.release-notes ul,
+.release-notes blockquote {
+  margin: var(--space-1) 0;
+}
+.release-notes ul {
+  padding-left: var(--space-4);
+}
+.release-notes blockquote {
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--color-rule);
+  color: var(--color-ink-secondary);
+}
+.release-notes code {
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
 }

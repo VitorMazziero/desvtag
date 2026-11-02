@@ -3,17 +3,25 @@
 use std::collections::BTreeMap;
 
 use optima_core::comparisons::OneWayResult;
+use optima_core::comparisons::paired::PairedResult;
 use optima_core::comparisons::procedures::ProcedureResult;
 use optima_core::descriptive::DescriptiveResult;
 use optima_core::designs::analysis::DesignAnalysisResult;
 use optima_core::designs::completely_randomized::GeneratedCrd;
+use optima_core::designs::mixed_levels::GeneratedMixed;
+use optima_core::designs::mixture::GeneratedMixture;
+use optima_core::designs::optimal::GeneratedOptimal;
 use optima_core::designs::randomized_block::GeneratedRcbd;
 use optima_core::designs::recommend::DesignOptions;
 use optima_core::designs::spec::{GeneratedDesign, RunCount};
 use optima_core::distributions::DistributionResult;
 use optima_core::models::LinearFit;
 use optima_core::models::factorial_anova::FactorialResult;
+use optima_core::models::mixed::MixedModelResult;
+use optima_core::models::mixture::MixtureAnalysis;
+use optima_core::models::nonlinear::NonlinearResult;
 use optima_core::optimization::{Evaluation, OptimizationResult};
+use optima_core::power::PowerResult;
 use optima_core::registry::Capabilities;
 use optima_core::surface::selection::SelectionResult;
 use optima_core::surface::{SurfaceGrid, SurfaceResult};
@@ -87,6 +95,22 @@ pub enum OperationResult {
     DesignCrdGenerate(Box<GeneratedCrd>),
     /// DBC gerado.
     DesignRcbdGenerate(Box<GeneratedRcbd>),
+    /// Fatorial de níveis mistos gerado.
+    DesignMixedGenerate(Box<GeneratedMixed>),
+    /// Planejamento de misturas gerado.
+    DesignMixtureGenerate(Box<GeneratedMixture>),
+    /// Modelo de Scheffé ajustado.
+    MixtureAnalyze(Box<MixtureAnalysis>),
+    /// Planejamento ótimo gerado.
+    DesignOptimalGenerate(Box<GeneratedOptimal>),
+    /// Comparação pareada.
+    ComparisonPaired(Box<PairedResult>),
+    /// Modelo misto ajustado.
+    ModelMixed(Box<MixedModelResult>),
+    /// Ajuste não linear.
+    ModelNonlinear(Box<NonlinearResult>),
+    /// Potência e tamanho de amostra.
+    PowerAnalyze(Box<PowerResult>),
     /// Análise do planejamento.
     DesignAnalyze(Box<DesignAnalysisResult>),
     /// Análise da superfície de resposta.
@@ -109,6 +133,8 @@ pub enum OperationResult {
     AnovaFactorial(Box<FactorialResult>),
     /// Comparação de modelos e recomendação de remoção de termos.
     SurfaceSelectModel(Box<SelectionResult>),
+    /// Comparação de modelos de efeitos e recomendação de remoção de termos (dois níveis).
+    DesignSelectModel(Box<SelectionResult>),
     /// Valores de uma função de distribuição.
     DistributionEvaluate(DistributionResult),
     /// Ajuste de modelo linear.

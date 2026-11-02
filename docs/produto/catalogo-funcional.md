@@ -14,7 +14,7 @@ As capturas fornecidas mostram as seguintes opções de planejamento:
 |---|---|
 | Central Composite Rotatable Design — CCRD | Planejamento composto central rotacional, DCCR |
 | Face Centred Design — FCD | Planejamento composto central de face centrada |
-| Central Composite Design — CCD | Opção identificada por esse rótulo na referência; conferir sua matriz e nomenclatura |
+| Central Composite Design — CCD | **Conferido (ET14-T02):** apesar do rótulo, é o fatorial completo de dois níveis com pontos centrais (`r·2^k + cp`; sem pontos axiais) |
 | Fractional Factorial Design — FFD | Fatorial fracionário, geradores e estrutura de confundimento |
 | Plackett & Burman — PB | Planejamento Plackett–Burman |
 | Custom Design | Planejamento personalizado |
