@@ -828,5 +828,32 @@
     "halfWidthResult": "Interval half-width at n: {{value}}.",
     "power": "Power",
     "note": "Power holds for the σ and effect entered. If the real σ is larger, power will be lower; consider a margin."
+  },
+  "drive": {
+    "title": "Google Drive (optional)",
+    "intro": "Save and open your projects in Google Drive. Nothing is sent until you connect, and the app only sees the «EnziTAG Optima» folder and the files it created or that you choose to open (drive.file scope).",
+    "connect": "Connect to Google Drive",
+    "connected": "Connected to Google Drive.",
+    "disconnect": "Disconnect",
+    "open": "Open from Drive…",
+    "save": "Save to Drive",
+    "linked": "Project linked to the Drive file «{{name}}».",
+    "unlinked": "This project is not in Drive yet: «Save to Drive» creates the file in the «EnziTAG Optima» folder.",
+    "saved": "Saved to Drive: «{{name}}».",
+    "created": "File «{{name}}» created in the «EnziTAG Optima» folder of your Drive.",
+    "conflict": "The file was changed in Drive after your last read, so it was **not overwritten**. Your work was saved as «{{copy}}» in the same folder; open both and compare before deleting either.",
+    "opened": "Opened from Drive: «{{name}}».",
+    "connectFirst": "Connect to Google Drive first.",
+    "localStillWorks": "Drive is optional: saving and opening files on your computer keep working as usual.",
+    "desktopNote": "The Windows version does not have Google Drive integration yet; use the web version or save to your computer.",
+    "errors": {
+      "auth": "Google authorization expired or was refused. Connect again.",
+      "permission": "No permission for this file in Drive.",
+      "quota": "Your Drive storage is full.",
+      "rateLimit": "Google rate-limited the requests. Try again in a few minutes.",
+      "notFound": "The file was not found in Drive (deleted or outside the app's reach).",
+      "network": "No connection to Google. Your work stays in the app; try again when you are online.",
+      "unknown": "Drive returned an unexpected error. Your work stays in the app."
+    }
   }
 }

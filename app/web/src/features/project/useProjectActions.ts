@@ -113,9 +113,16 @@ export function useProjectActions() {
     [confirmDiscard, loadOpened, storage, t],
   );
 
-  /** Registra as versões, codifica pelo motor e grava. Em falha, o projeto continua editável. */
-  const save = useCallback(
-    async (options: { saveAs?: boolean; copy?: boolean } = {}) => {
+  /**
+   * Registra as versões, codifica pelo motor e grava com `write` (arquivo local, cópia ou Drive).
+   * Em falha, o projeto continua editável. `write` devolve `null` quando o usuário cancela;
+   * `markAsSaved = false` grava uma cópia sem ligar o projeto ao destino.
+   */
+  const saveWith = useCallback(
+    async (
+      write: (bytes: Uint8Array, name: string) => Promise<{ name: string } | null>,
+      options: { markAsSaved?: boolean } = {},
+    ) => {
       setBusy(true);
       setNotice(null);
       try {
@@ -125,29 +132,57 @@ export function useProjectActions() {
         const encoded = await encodeDocument(client, toDocument(committed, now, APP_VERSION), t);
         if (!encoded.ok) {
           setNotice({ kind: "error", messages: encoded.messages });
-          return;
+          return false;
         }
-        const name = suggestedFileName(workspace.name);
-        const saved = options.copy
-          ? await storage.saveCopy(encoded.value, name)
-          : await storage.save(encoded.value, {
-              saveAs: options.saveAs ?? false,
-              suggestedName: name,
-            });
-        if (!saved) return; // cancelado pelo usuário
+        const saved = await write(encoded.value, suggestedFileName(workspace.name));
+        if (!saved) return false; // cancelado pelo usuário
         dispatch({ type: "commitAll", reason: "manualSave", now });
-        if (!options.copy) {
+        if (options.markAsSaved ?? true) {
           dispatch({ type: "markSaved", fileName: saved.name, now, seq });
           await clearRecovery();
         }
-      } catch {
-        setNotice({ kind: "error", messages: [t("project.failed")] });
+        return true;
+      } catch (error) {
+        setNotice({
+          kind: "error",
+          messages: [
+            error instanceof Error && error.message.startsWith("drive.")
+              ? t(`drive.errors.${error.message.slice(6)}`, { defaultValue: t("project.failed") })
+              : t("project.failed"),
+          ],
+        });
+        return false;
       } finally {
         setBusy(false);
       }
     },
-    [client, dispatch, storage, t, workspace],
+    [client, dispatch, t, workspace],
   );
 
-  return { notice, setNotice, busy, newProject, open, openRecent, save, loadOpened };
+  const save = useCallback(
+    async (options: { saveAs?: boolean; copy?: boolean } = {}) => {
+      await saveWith(
+        (bytes, name) =>
+          options.copy
+            ? storage.saveCopy(bytes, name)
+            : storage.save(bytes, { saveAs: options.saveAs ?? false, suggestedName: name }),
+        { markAsSaved: !options.copy },
+      );
+    },
+    [saveWith, storage],
+  );
+
+  return {
+    notice,
+    setNotice,
+    busy,
+    setBusy,
+    newProject,
+    open,
+    openRecent,
+    save,
+    saveWith,
+    loadOpened,
+    confirmDiscard,
+  };
 }

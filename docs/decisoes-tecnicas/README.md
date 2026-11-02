@@ -32,6 +32,7 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0022](dt-0022-planilha-de-coleta-e-correspondencia-de-ensaios.md) | Planilha de coleta e correspondência de ensaios (ET13) | Aceita | 2026-11-02 |
 | [DT-0023](dt-0023-espacamento-dos-controles-logo-unico-e-rolagem-entre-etapas.md) | Espaçamento dos controles, logotipo único e rolagem entre etapas (ET21) | Aceita | 2026-11-02 |
 | [DT-0024](dt-0024-sementes-no-navegador-e-pdf-sem-novas-fontes.md) | Sementes no navegador e limitações do PDF mantidas (ET14) | Aceita | 2026-11-02 |
+| [DT-0025](dt-0025-google-drive-opcional-na-versao-web.md) | Google Drive opcional na versão web (ET19) | Aceita (parcial) | 2026-11-02 |
 
 ## Regras
 

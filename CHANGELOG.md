@@ -12,6 +12,10 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### Google Drive (ET19)
+
+- **Google Drive opcional na versão web:** conectar (Google Identity Services, escopo `drive.file`), **Salvar no Drive** na pasta «EnziTAG Optima», **Abrir do Drive…** pelo Picker e desconectar. Os scripts do Google só carregam ao clicar em Conectar; o token fica só na memória. Se o arquivo foi alterado no Drive depois da sua leitura, ele **não é sobrescrito**: seu trabalho vai para uma cópia ao lado. [Guia](docs/guias/google-drive.md), [DT-0025](docs/decisoes-tecnicas/dt-0025-google-drive-opcional-na-versao-web.md). **Testado com Google simulado; autorização real não verificada; versão para Windows ainda sem Drive.**
+
 ### Curvas de saturação e potência (ET18)
 
 - **Ajuste não linear** de **Monod / Michaelis–Menten, Haldane (inibição pelo substrato) e Hill** por Levenberg–Marquardt com vários inícios, intervalos de Wald, correlação entre parâmetros, avisos de **identificabilidade** e curva com faixa de confiança; validado contra o `scipy.optimize.curve_fit`. [Método](docs/metodos/ajuste-nao-linear.md). Sem intervalos por verossimilhança perfilada e sem NIST StRD.

@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** (versão web entregue com Google simulado; autorização real e Windows pendentes) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F11 |
 | Marco | Prepara M5 |
 | Depende de | ET14; **credenciais OAuth do usuário (PD-09)**. Pode correr em paralelo às ET15–ET18 ([plano da v0.3 §3](../plano-v0.3.md#3-etapas-e-ordem)) |
 | Módulos | U14 (`services/drive/*`, `features/drive/*`), U15 (`features/sharing/{OpenShared}`), U13 (armazenamento), E04 (`auth.rs` no Tauri), P02 (bytes `.enzitag`) |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -47,14 +47,14 @@ Permitir, **de forma opcional**, abrir e salvar projetos `.enzitag` no Google Dr
 
 ## 5. Tarefas
 
-- [ ] **T01** — **Usuário:** criar projeto no Google Cloud, tela de consentimento, clientes web e desktop e origens; informar só os identificadores públicos (sem segredos no repositório). Registrar PD-09.
-- [ ] **T02** — DTs (§4), com teste do comportamento real da API para conflitos antes de escolher.
-- [ ] **T03** — Autorização web e desktop; desconexão e revogação.
-- [ ] **T04** — Cliente do Drive: pasta visível, abrir, salvar, salvar como, metadados; mesmos bytes `.enzitag`.
-- [ ] **T05** — Fila de sincronização, retomada, detecção de divergência e diálogo de conflito com cópia preservada.
-- [ ] **T06** — Abrir compartilhado (leitura) e criar cópia; respeito à permissão.
-- [ ] **T07** — Interface: estado de conexão, indicadores de recuperação/arquivo/nuvem, mensagens PT/EN, temas e axe.
-- [ ] **T08** — Verificação com contas reais (web e Windows 10): primeira conexão, expiração, desconexão, leitura, escrita, falta de permissão, duas cópias concorrentes e preservação de dados; documentação.
+- [x] **T01** — **Usuário (feito em 2026-11-02):** projeto `enzitag-optima` (618382101076), tela de consentimento externa «Em produção» com `drive.file`, clientes web e desktop, chave do Picker restrita e política de privacidade ([PR #7](https://github.com/VitorMazziero/enzitag-optima/pull/7)); segredo desktop no segredo do GitHub. Identificadores públicos em `services/drive/config.ts`.
+- [x] **T02** — [DT-0025](../../decisoes-tecnicas/dt-0025-google-drive-opcional-na-versao-web.md). *O comportamento real da API para conflitos não foi testado com conta real;* a decisão usa o campo `version` do Drive.
+- [~] **T03** — Autorização **web** (GIS e Picker, token em memória, revogação) entregue e testada com Google simulado. **Windows (loopback + PKCE + cofre de credenciais) não entregue.**
+- [x] **T04** — `services/drive/client.ts`: pasta visível, listar, metadados, baixar e criar/atualizar por multipart, com os mesmos bytes `.enzitag`.
+- [~] **T05** — Detecção de divergência por versão e cópia em conflito entregues (`sync.ts`). **Sem fila persistente nem retomada automática**: a falha mantém o trabalho e permite repetir.
+- [~] **T06** — Abrir pelo Picker entregue; **sem teste de arquivo compartilhado de verdade** (a gravação sem permissão devolve `permission`).
+- [x] **T07** — `DrivePanel` na barra do projeto (versão web): conectar, abrir, salvar, desconectar, mensagens PT/EN; no Windows, nota informando que ainda não há Drive.
+- [ ] **T08** — **Pendente (depende do usuário):** verificação com contas reais (primeira conexão, expiração, revogação, leitura, escrita, falta de permissão, duas cópias concorrentes). Testes automáticos com Google simulado entregues (unidade e E2E).
 
 ## 6. Entregas
 
@@ -88,6 +88,7 @@ DTs, guia «Usar o Google Drive», política de privacidade (dados acessados, es
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Aguarda credenciais OAuth do usuário (PD-09). Etapa não iniciada. |
+| 2026-11-02 | **Ativada.** Credenciais criadas pelo usuário. Entregue: cliente da API, sincronização com conflito sem sobrescrever, autorização web (GIS e Picker) e painel, testados com Google simulado (15 testes de unidade; E2E em Chromium e Firefox). **Pendentes:** verificação com conta real, Windows (loopback + PKCE), fila persistente, arquivo compartilhado real. |
 
 ## 12. Desvios e descobertas
 
