@@ -1,6 +1,6 @@
 # Plano da v0.4
 
-**Estado:** planejado · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.4.0 (canal experimental)
+**Estado:** **finalizado em 2026-11-02** — pronto para começar pela [ET29](planejados/et29-reorganizacao-da-interface-e-navegacao.md) · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.4.0 (canal experimental)
 
 Plano de versão pedido pelo usuário em 2026-11-02, ao fechar a v0.3: «todas as outras pendências ficam para v0.4». Reúne **tudo o que as etapas ET13–ET21 da v0.3 deixaram sem entregar**, mais as verificações que dependem do usuário ou de equipamento externo, em etapas novas (ET22–ET29). A decisão e o que ficou na v0.3 estão em [decisões aprovadas §18](../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02); o que foi e o que não foi verificado na v0.3, no [relatório da v0.3.0](../../validation/reports/v0.3.0/README.md).
 
@@ -15,7 +15,7 @@ Ao final da v0.4:
 3. as famílias F09 têm as variantes avançadas que a v0.3 deixou de fora (covariâncias de medidas repetidas, perfil de verossimilhança, limites superiores em misturas, otimização no simplex, simulação de potência);
 4. o Google Drive funciona também no aplicativo Windows, com fila persistente, e foi **verificado com contas reais**;
 5. a interface foi revista tela a tela (espaçamento, capturas «depois», WebView2);
-6. as verificações externas (Safari real, canal de atualização ponta a ponta, domínio próprio) estão feitas ou têm decisão registrada.
+6. o canal de atualização foi verificado ponta a ponta pelos dois canais e a decisão sobre a edição simultânea está registrada. **Domínio próprio e Safari real ficam fora** por decisão do usuário (GitHub Pages; sem Mac).
 
 ## 2. Itens pendentes e etapa responsável
 
@@ -29,7 +29,8 @@ Ao final da v0.4:
 | Drive no Windows (loopback + PKCE + cofre), fila persistente, arquivo compartilhado real; **verificação com contas reais (usuário)** | ET19-T03, T05, T06, T08 | [ET26](#et26--google-drive-completo-e-verificado) |
 | Revisão tela a tela dos componentes fora das classes comuns, capturas «depois», conferência no WebView2, documentação da ET21; capturas em inglês e temas no WebView2; família de fonte e hachura no PDF; editar um comentário enviado | ET21-T01, T04, T06, T07; ET12-T10; DT-0020; ET20 | [ET27](#et27--acabamento-da-interface-e-da-exportação) |
 | Seleção de modelos de dois níveis: casos independentes para fracionários e Plackett–Burman | ET14-T03 (limite) | [ET28](#et28--verificações-adicionais-e-itens-que-dependem-do-usuário) |
-| Safari real; canal de atualização ponta a ponta; domínio próprio; caminho da edição simultânea; inventário das funções internas do Protimiza (PD-05) | ET20-T04, T05, T06; ET14-T02 (resto) | ET28 |
+| Canal de atualização ponta a ponta pelos dois canais; caminho da edição simultânea; inventário das funções internas do Protimiza (PD-05) | ET20-T06; ET14-T02 (resto) | ET28 |
+| ~~Domínio próprio~~ (**não será usado**: GitHub Pages) e ~~Safari real~~ (**não será verificado**: sem Mac; o WebKit do Playwright continua no CI) | ET20-T04, T05 | — (decisão do usuário, 2026-11-02) |
 
 ## 2.1 Defeitos encontrados na v0.3.0 publicada (2026-11-02)
 
@@ -45,6 +46,8 @@ Relatados pelo usuário ao usar a v0.3.0 com o projeto do [exemplo 14](../../exa
 Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa é ativada; abaixo ficam o escopo, a verificação esperada e as dependências. **Ordem:** ET29 → ET22 → ET23, ET24 e ET25 → ET26 → ET27 → ET28 (ET26 e ET28 dependem do usuário e podem correr em paralelo).
 
 ### ET29 — Reorganização da interface e da navegação (primeira da v0.4)
+
+**Plano detalhado:** [planejados/et29-reorganizacao-da-interface-e-navegacao.md](planejados/et29-reorganizacao-da-interface-e-navegacao.md) (tarefas T01–T13).
 
 Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». Capturas «antes» em [`docs/imagens/evidencias-v0.3.0/`](../imagens/evidencias-v0.3.0/README.md). **É a primeira etapa a executar**, antes da ET22.
 
@@ -75,7 +78,7 @@ Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos imp
 - **Escopo:** campos opcionais do experimento para o resultado de cada análise nova (`mixtureResult`, `mixedModelResult`, `nonlinearResult`, `powerResult`), com assinatura de entrada como nas análises atuais; reabrir mostra o resultado guardado **sem recalcular** e avisa quando dados ou opções mudaram; resultados em seções com barra lateral; entrada nos relatórios HTML, PDF e Word; exportação CSV/XLSX das tabelas.
 - **Verificação:** Rust (ida e volta do documento, validação das referências), WebAssembly × nativo (SHA-256 idêntico), E2E (salvar → reabrir sem recálculo), exemplos 07, 08, 11 e 12 reabrindo com o resultado.
 - **Decisão técnica:** esquema 1 com campos opcionais (como `comments`); migração só se um campo exigir mudança incompatível.
-- **Depende de:** nada (primeira da v0.4).
+- **Depende de:** ET29 (ordem; usa a nova navegação para as seções e os relatórios).
 
 ### ET23 — Modelos mistos e medidas repetidas avançados
 
@@ -109,17 +112,17 @@ Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos imp
 
 ### ET28 — Verificações adicionais e itens que dependem do usuário
 
-- **Escopo:** casos independentes (statsmodels) para a seleção de modelos de dois níveis em **fracionários e Plackett–Burman**; **Safari real** (Mac) e registro; **canal de atualização ponta a ponta** (publicar, rodar `channels.yml`, atualizar por canal); **domínio próprio** (se o usuário registrar; [DT-0026 §5](../decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md)); **decisão do caminho da edição simultânea** ([especificação §9](../arquitetura/edicao-simultanea.md#9-perguntas-para-o-usuário-decisões-que-esta-especificação-não-toma)) e, se decidida, a etapa de implementação do caminho A; inventário das demais funções do Protimiza (PD-05).
+- **Escopo:** casos independentes (statsmodels) para a seleção de modelos de dois níveis em **fracionários e Plackett–Burman**; **canal de atualização ponta a ponta** pelos dois canais (com a v0.4.0 publicada: atualizar um 0.3.0 pelo canal experimental e confirmar que o estável não oferece versões); **decisão do caminho da edição simultânea** ([especificação §9](../arquitetura/edicao-simultanea.md#9-perguntas-para-o-usuário-decisões-que-esta-especificação-não-toma)) e, se decidida, a etapa de implementação do caminho A; inventário das demais funções do Protimiza (PD-05).
 - **Verificação:** evidências manuais registradas no relatório da v0.4.0.
-- **Depende de:** usuário (Mac, domínio, decisões).
+- **Depende de:** usuário (decisão da edição simultânea; capturas do Protimiza, se quiser cobertura integral).
 
 ## 4. Dependências do usuário
 
 | Pendência | Etapa | O que o usuário precisa fazer |
 |---|---|---|
 | Contas do Google para teste | ET26 | Disponibilizar uma ou duas contas de teste e executar o roteiro de verificação |
-| Mac com Safari | ET28 | Disponibilizar um Mac ou aceitar que o Safari siga «não verificado» |
-| Domínio próprio (PD-13) | ET28 | Decidir se haverá domínio e registrá-lo |
+| ~~Mac com Safari~~ | — | **Decidido (2026-11-02):** não haverá Mac; o Safari real segue «não verificado» e o WebKit do Playwright continua no CI |
+| ~~Domínio próprio (PD-13)~~ | — | **Decidido (2026-11-02):** não será usado; o endereço é o do GitHub Pages |
 | Caminho da edição simultânea (PD-14) | ET28 | Responder às perguntas da §9 da especificação |
 | Arquivos NIST StRD não lineares | ET24 | Autorizar o download ou fornecê-los |
 | Funções internas do Protimiza (PD-05) | ET28 | Enviar capturas das telas ainda não vistas, se quiser cobertura integral |
@@ -146,4 +149,9 @@ Os da [v0.3](plano-v0.3.md#5-princípios-que-continuam-valendo): cálculo só no
 | Covariâncias AR(1) e não estruturada com convergência frágil | Estados de não convergência explícitos; limites e inicialização documentados |
 | Perfil de verossimilhança e simulação lentos no navegador | Execução em *worker* com cancelamento e medição prévia dos limites |
 | Drive no Windows depender de credenciais e do cofre do sistema | Segredos só no GitHub; cofre abstraído atrás de uma interface testável |
-| Verificações externas (Safari, contas, domínio) sem data | Registradas como pendentes no relatório; não bloqueiam as etapas locais |
+| Verificações com conta real do Google sem data | Registradas como pendentes no relatório; não bloqueiam as etapas locais |
+| Reorganização da interface (ET29) quebrar os E2E das etapas seguintes | ET29 primeiro; `data-testid` mantidos; suíte inteira a cada tarefa |
+
+## 8. Início das implementações
+
+O plano está **finalizado**. As implementações começam pela **ET29** assim que o usuário der o «go» para ativá-la: o plano detalhado sai de `planejados/` para `ativos/`, e as tarefas seguem a ordem T01 (relatório completo) → T02 (modo escuro) → T03–T13 (reorganização). Nada da v0.4 depende de ação do usuário para começar; as dependências do usuário (§4) só afetam a ET26 (contas do Google) e a ET28 (edição simultânea, Protimiza). O trabalho é feito numa ramificação própria (`feat/v0.4`) com PR para `main`; publicação só com decisão expressa do usuário (§6, critério 7).

@@ -111,5 +111,5 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 
 1. ~~Autorizar a fusão do PR 6, a etiqueta, o Pages e publicar o release~~ — **feito em 2026-11-02**.
 2. ~~Verificar a atualização 0.2.0 → 0.3.0~~ — **feito pelo usuário**. Continuar publicando a série 0.x como releases normais.
-3. Decidir sobre **domínio próprio** (PD-13), sobre o **caminho da edição simultânea** (§9 da especificação) e se há um **Mac** para verificar o Safari.
+3. ~~Domínio próprio e Mac~~ — **decidido em 2026-11-02**: GitHub Pages, sem domínio próprio; sem Mac (Safari real não verificado). Continua pendente o **caminho da edição simultânea** (§9 da especificação).
 4. Verificar o Drive com uma **conta real do Google** e abrir um relatório `.docx` no **Word**.
