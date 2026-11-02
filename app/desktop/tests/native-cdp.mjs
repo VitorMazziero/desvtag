@@ -7,6 +7,7 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { setTimeout as sleep } from "node:timers/promises";
 import { runChecks } from "./native-checks.mjs";
+import { runPdfCheck } from "./native-pdf-check.mjs";
 
 const app = process.argv[2];
 if (!app) {
@@ -60,6 +61,7 @@ try {
     invoke: (requestJson) =>
       page.evaluate((json) => window.__TAURI_INTERNALS__.invoke("engine_request", { requestJson: json }), requestJson),
   });
+  await runPdfCheck(page);
 } catch (error) {
   failed = true;
   console.error("FALHA:", error);
