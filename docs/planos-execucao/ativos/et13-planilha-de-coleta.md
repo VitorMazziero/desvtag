@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.3.0 (pode sair antes como v0.2.1, por decisão do usuário; [plano da v0.3 §6](../plano-v0.3.md#6-critérios-de-lançamento-da-v030)) |
 | Fases do roteiro | F02 (importação), F05–F06 (planejamentos), F10 (exportação) |
 | Marco | Prepara a v0.3 |
 | Depende de | v0.2.0 (DIC, DBC, planejamentos de dois níveis e superfícies) |
 | Módulos | U05 (importação), U06 (planejamento e matriz), U04 (grade), U16 (exportação), U11 (estado), P01 (projeto), C11–C12 (identificação dos ensaios) |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 Origem: pergunta do usuário em 2026-11-02: «Para importar os valores de resposta, como o usuário deve saber do modelo de dados que deve ser importado? Seria bom ter, no modelo de dados do planejamento, já a coluna de resultados a completar, assim o usuário pode usar o mesmo arquivo que usou para exportar a matriz para importar os valores de respostas.»
@@ -65,15 +65,15 @@ O arquivo da matriz de ensaios exportado pelo aplicativo (CSV ou XLSX) passa a s
 
 ## 6. Tarefas
 
-- [ ] **T01** — DT do identificador do ensaio, da correspondência e da tolerância (§5).
-- [ ] **T02** — Projeto: `run_id` opcional nas linhas geradas por planejamento (esquema 1, campo aditivo) e regra para projetos sem o campo; testes de abertura dos exemplos.
-- [ ] **T03** — Exportação: colunas de resposta e `run_id` em `matrixCsv.ts`, `CrdMatrix` e matriz do DBC; metadados com identificadores do experimento, das respostas e do planejamento; XLSX com aba de metadados.
-- [ ] **T04** — Importação de CSV: reconhecer e separar as linhas `# chave: valor` (`services/import/csv.ts`), com teste de ida e volta de todas as tabelas exportadas.
-- [ ] **T05** — Correspondência e conferência (módulo e testes, inclusive linhas reordenadas, faltantes, extras, níveis divergentes, vírgula decimal e células vazias).
-- [ ] **T06** — Interface: modo «Preencher respostas do planejamento» no `ImportWizard`, resumo da conferência, confirmação e revisão no histórico.
-- [ ] **T07** — Botão «Baixar planilha de coleta» na matriz e texto de orientação na importação; PT/EN.
-- [ ] **T08** — E2E: gerar planejamento → exportar CSV e XLSX → preencher fora do aplicativo (script) → importar → analisar, nos quatro navegadores; verificação nativa no Windows 10.
-- [ ] **T09** — Exemplo e documentação: guia de importação (formato da planilha), fichas U05 e U06, matriz de cobertura, CHANGELOG.
+- [x] **T01** — DT do identificador do ensaio, da correspondência e da tolerância (§5): [DT-0022](../../decisoes-tecnicas/dt-0022-planilha-de-coleta-e-correspondencia-de-ensaios.md). Decisão: sem `run_id` novo; unidade experimental quando houver, senão combinação de níveis (réplicas na ordem de aparição), tolerância relativa 1e-9.
+- [x] **T02** — *Substituída pela DT-0022:* nenhum campo novo no projeto (esquema 1 intacto); a correspondência usa `unitId` e os níveis que já existem, e funciona em projetos da v0.1 e da v0.2.
+- [x] **T03** — Exportação: colunas de resposta (nome e unidade, com os valores já digitados) em `matrixCsv.ts`/`RunMatrix`, `CrdMatrix` e matriz do DBC (que ganhou `unit_id`); o XLSX usa as mesmas colunas pelo mesmo caminho. *Adiado:* aba de metadados no XLSX (não é necessária para a importação).
+- [x] **T04** — Importação de CSV: `splitMetadata` em `services/import/csv.ts`, usada na leitura e na detecção do separador; teste de ida e volta com `toCsv`.
+- [x] **T05** — Correspondência e conferência: `features/import/fillResponses.ts` com `fillResponses.test.ts` (linhas reordenadas, réplicas, faltantes, extras, níveis divergentes, vírgula decimal, células vazias, valores já digitados, unidade experimental).
+- [x] **T06** — Interface: modo «Preencher respostas do planejamento» no `ImportWizard` (padrão quando o arquivo é uma planilha de coleta), resumo, avisos, ação `applyResponses` e revisões `edit` + `import`; `ImportWizard.fill.test.tsx`.
+- [x] **T07** — Orientação: nota «Planilha de coleta» ao lado da matriz dos três planejadores e texto no assistente; PT/EN. O botão de exportação manteve o nome atual («Baixar matriz (CSV)»), já usado nos testes e nos guias.
+- [~] **T08** — E2E `collection-flow.spec.ts` (dois níveis com pontos centrais, DIC por unidade, recusa de arquivo errado) nos quatro navegadores. Suíte completa (2026-11-02): **401 aprovados**; 3 testes do Edge (`design-flow` e dois de `export-flow`, downloads cancelados por tempo) falharam sob a carga de 4 navegadores em paralelo e **passaram ao repetir sozinhos** (17 aprovados). **Falta:** o XLSX no E2E e a verificação nativa no Windows 10.
+- [~] **T09** — Documentação: [guia da planilha de coleta](../../guias/planilha-de-coleta.md), DT-0022, ficha U05, mapa de módulos e CHANGELOG. **Falta:** matriz de cobertura e exemplo em `examples/`.
 
 ## 7. Entregas
 
@@ -109,6 +109,7 @@ DT nova; guia de importação (novo, ou seção no guia de exportação); fichas
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado a pedido do usuário (planilha de coleta). Etapa não iniciada. |
+| 2026-11-02 | **Ativada** («Sim, fundir e iniciar o plano v 0.3»). T01–T07 implementadas (branch `feat/v0.3`): DT-0022, colunas de resposta nas matrizes, `splitMetadata`, correspondência, modo de importação e nota de orientação; 333 testes de unidade e E2E nos quatro navegadores aprovados (ver T08). Restam o XLSX no E2E, a verificação nativa, a matriz de cobertura e o exemplo. |
 
 ## 13. Desvios e descobertas
 

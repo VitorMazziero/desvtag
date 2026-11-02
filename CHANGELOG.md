@@ -8,6 +8,16 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 - Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
 - Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
 
+## Não lançado — v0.3 (em desenvolvimento)
+
+Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
+
+### Planilha de coleta (ET13)
+
+- A matriz de ensaios exportada (dois níveis, superfícies, DIC e DBC) traz **uma coluna vazia para cada resposta**, com a unidade no cabeçalho, e reexportar preserva os valores já digitados; a matriz do DBC ganhou `unit_id`.
+- Importar o **mesmo arquivo** preenchido grava só as respostas nos ensaios correspondentes (por unidade experimental ou por níveis), com conferência: linhas sem ensaio, valores não numéricos, valores que serão substituídos. Planejamento, fatores e ordem dos ensaios não mudam; o estado anterior fica no histórico. [Guia](docs/guias/planilha-de-coleta.md), [DT-0022](docs/decisoes-tecnicas/dt-0022-planilha-de-coleta-e-correspondencia-de-ensaios.md).
+- O importador de CSV passa a **ignorar as linhas `# chave: valor`** que o aplicativo grava nos CSV exportados.
+
 ## [0.2.0] — 2026-11-02
 
 > **Versão web publicada em 2026-11-02** (https://vitormazziero.github.io/enzitag-optima/) e etiqueta `v0.2.0` criada. O **instalador do Windows está em rascunho de release** (não publicado), como o da 0.1.0; a atualização não foi verificada ([registro de publicação](docs/distribuicao/publicacao.md#publicação-da-v020)). Evidências em [validation/reports/v0.2.0](validation/reports/v0.2.0/README.md).

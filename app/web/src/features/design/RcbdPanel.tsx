@@ -11,6 +11,7 @@ import { useProject, useProjectDispatch, useWorkspace } from "../../state/Projec
 import { freshId } from "../../state/project";
 import { splitLevels } from "../analysis/buildRequest";
 import { TableExportButtons } from "../results/TableExportButtons";
+import { collectionColumns } from "./collectionColumns";
 
 function randomSeed(): number {
   const values = new Uint32Array(1);
@@ -137,6 +138,14 @@ export function RcbdPanel() {
 
   const levels = candidate?.levels.length ?? 0;
   const blocks = candidate?.blocks.length ?? 0;
+  const collection = collectionColumns(
+    state,
+    (shown?.runs ?? []).map((r) => ({
+      unit: `B${r.blockIndex + 1}-T${r.levelIndex + 1}`,
+      levels: state.factors.map(() => undefined),
+    })),
+  );
+
   return (
     <section aria-labelledby="rcbd-title" data-testid="rcbd-panel">
       <h2 id="rcbd-title">{t("design.title")}</h2>
@@ -249,8 +258,22 @@ export function RcbdPanel() {
             label={t("design.rcbd.exportCsv")}
             suffix="do-dbc"
             sheet={t("design.rcbd.matrix")}
-            header={["run", "block", "position", state.rcbd.factorName]}
-            rows={shown.runs.map((r) => [r.run, r.block, r.position, r.level])}
+            header={[
+              "run",
+              "unit_id",
+              "block",
+              "position",
+              state.rcbd.factorName,
+              ...collection.header,
+            ]}
+            rows={shown.runs.map((r, i) => [
+              r.run,
+              `B${r.blockIndex + 1}-T${r.levelIndex + 1}`,
+              r.block,
+              r.position,
+              r.level,
+              ...(collection.cells[i] ?? []),
+            ])}
             metadata={{
               app: "EnziTAG Optima",
               project: workspace.name,
@@ -262,6 +285,9 @@ export function RcbdPanel() {
             fileBase="matriz-dbc"
             onDone={setNotice}
           />
+          <p className="muted small" data-testid="collection-note">
+            {t("design.collectionNote")}
+          </p>
           {notice && (
             <p role="status" className="muted small">
               {notice}

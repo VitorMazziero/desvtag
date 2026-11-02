@@ -7,8 +7,9 @@ import { formatSignificant } from "../../i18n/format";
 import type { DesignSpec, GeneratedDesign } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { useStorage } from "../../services/storage/context";
-import { useWorkspace } from "../../state/ProjectContext";
+import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { TableExportButtons } from "../results/TableExportButtons";
+import { collectionColumns } from "./collectionColumns";
 import { matrixTable } from "./matrixCsv";
 
 const VISIBLE_ROWS = 200;
@@ -18,6 +19,7 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
   const { client } = useEngine();
   const _storage = useStorage();
   const workspace = useWorkspace();
+  const project = useProject();
   const [design, setDesign] = useState<GeneratedDesign | null>(null);
   const [view, setView] = useState<"real" | "coded">("real");
   const [notice, setNotice] = useState<string | null>(null);
@@ -47,7 +49,18 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
   if (!design) return null;
   const fmt = (v: number) => formatSignificant(v, language, 8);
   const properties = design.spec.kind.type !== "fullFactorial";
-  const table = matrixTable(design, { app: "EnziTAG Optima", project: workspace.name });
+  const collection = collectionColumns(
+    project,
+    design.runs.map((run) => ({
+      unit: "",
+      levels: project.factors.map((f) => {
+        const j = design.spec.factors.findIndex((d) => d.id === f.id);
+        const value = j < 0 ? undefined : run.real[j];
+        return value === undefined ? undefined : String(value);
+      }),
+    })),
+  );
+  const table = matrixTable(design, { app: "EnziTAG Optima", project: workspace.name }, collection);
 
   return (
     <section aria-labelledby="matrix-title" data-testid="run-matrix">
@@ -71,6 +84,9 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
           onDone={setNotice}
         />
       </div>
+      <p className="muted small" data-testid="collection-note">
+        {t("design.collectionNote")}
+      </p>
       {notice && (
         <p role="status" className="muted small">
           {notice}

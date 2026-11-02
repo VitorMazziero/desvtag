@@ -17,9 +17,10 @@ Ler um arquivo para uma **grade de texto**, mostrar a prévia, deixar o usuário
 
 | Arquivo | Responsabilidade |
 |---|---|
-| `services/import/csv.ts` | `decodeText` (UTF-8, retorno a Windows-1252 com aviso), `detectDelimiter`, `parseCsv` (RFC 4180) |
+| `services/import/csv.ts` | `decodeText` (UTF-8, retorno a Windows-1252 com aviso), `splitMetadata` (linhas `# chave: valor` dos CSV exportados), `detectDelimiter`, `parseCsv` (RFC 4180) |
+| `features/import/fillResponses.ts` | Planilha de coleta (ET13): `planSheet` (reconhece o cabeçalho), `assignRows` (correspondência por unidade ou por níveis), `fillResponses` (células a gravar e conferência), `existingResponses` (valores já digitados para reexportar); ver [DT-0022](../decisoes-tecnicas/dt-0022-planilha-de-coleta-e-correspondencia-de-ensaios.md) |
 | `features/import/mapping.ts` | `looksLikeHeader`, `guessMapping` (sugestão), `buildExperimentData` (papéis → dados; identificadores válidos e únicos) |
-| `features/import/ImportWizard.tsx` | Prévia, opções (separador, codificação, planilha, cabeçalho), mapeamento e confirmação |
+| `features/import/ImportWizard.tsx` | Prévia, opções (separador, codificação, planilha, cabeçalho), mapeamento e confirmação; modo «Preencher respostas do planejamento» quando o arquivo é uma planilha de coleta (ação `applyResponses`) |
 | `features/import/ImportButton.tsx` | Escolha do arquivo e abertura do assistente |
 | motor (`import.xlsx`) | Valores armazenados do XLSX; fórmulas nunca executadas |
 

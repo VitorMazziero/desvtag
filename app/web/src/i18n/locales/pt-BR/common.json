@@ -322,7 +322,22 @@
     "failed": "Não foi possível ler o arquivo:",
     "tooLarge": "Arquivo grande demais para importar.",
     "formulaNote": "Planilhas: só os valores armazenados são lidos; fórmulas nunca são executadas.",
-    "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta."
+    "nothing": "Nada a importar: escolha ao menos uma coluna como fator ou resposta.",
+    "fill": {
+      "title": "Preencher as respostas do planejamento",
+      "intro": "Este arquivo traz os fatores e as respostas deste experimento (por exemplo, a planilha de coleta exportada da matriz de ensaios). Cada linha é cruzada com o ensaio de mesmos níveis (ou de mesma unidade) e só as respostas são gravadas; o planejamento e os fatores ficam como estão.",
+      "modeLegend": "O que fazer com o arquivo",
+      "modeFill": "Preencher só as respostas do experimento atual (recomendado)",
+      "modeReplace": "Substituir todos os dados por este arquivo",
+      "summary": "{{filled}} valor(es) de resposta serão gravados; {{empty}} célula(s) em branco no arquivo ficam como estão.",
+      "columns": "Respostas encontradas no arquivo: {{responses}}.",
+      "replacing": "{{count}} valor(es) já digitado(s) serão substituídos; o estado anterior fica no histórico de versões.",
+      "unmatched": "{{count}} linha(s) do arquivo não correspondem a nenhum ensaio (níveis diferentes dos planejados ou ensaio já usado) e não serão gravadas. Linhas: {{lines}}.",
+      "invalid": "{{count}} célula(s) de resposta não são números e precisam ser corrigidas no arquivo. Linhas: {{lines}}.",
+      "rowsWithoutLine": "{{count}} ensaio(s) do experimento não têm linha no arquivo e continuam como estão.",
+      "keeps": "Fatores, ordem dos ensaios e planejamento não mudam.",
+      "confirm": "Preencher respostas"
+    }
   },
   "design": {
     "title": "Planejamento do experimento",
@@ -454,7 +469,8 @@
       "exportCsv": "Matriz do DBC (CSV)",
       "position": "Posição no bloco",
       "unitNote": "Cada ensaio recebe um identificador de unidade (por exemplo B2-T3: bloco 2, tratamento 3). A análise usa o bloco como efeito aditivo."
-    }
+    },
+    "collectionNote": "Planilha de coleta: o arquivo exportado traz uma coluna vazia para cada resposta. Preencha no laboratório e importe o mesmo arquivo em «Importar arquivo»: só as respostas são gravadas, nos ensaios correspondentes."
   },
   "optimization": {
     "title": "Otimização por desejabilidade",

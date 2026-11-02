@@ -281,6 +281,12 @@ export type ProjectAction =
       now: string;
     }
   | { type: "applyImport"; data: ExperimentData; now: string }
+  /** Planilha de coleta (ET13): grava só as respostas das linhas indicadas; o planejamento fica. */
+  | {
+      type: "applyResponses";
+      cells: Array<{ row: number; response: number; text: string }>;
+      now: string;
+    }
   | { type: "restoreRevision"; revisionId: string; now: string };
 
 /** Nova linha em branco com identificador ainda não usado. */
@@ -690,6 +696,20 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       const before = commitRevision(state, "edit", action.now);
       const next = withData(before, action.data);
       return commitRevision(next, "import", action.now);
+    }
+    case "applyResponses": {
+      // Estado anterior preservado em uma revisão `edit`; as respostas viram a revisão `import`.
+      const before = commitRevision(state, "edit", action.now);
+      const factorCount = before.factors.length;
+      const rows = before.rows.map((r, i) =>
+        action.cells
+          .filter((c) => c.row === i)
+          .reduce(
+            (acc, c) => setCellText(acc, 1 + factorCount + c.response, factorCount, c.text),
+            r,
+          ),
+      );
+      return commitRevision({ ...before, rows }, "import", action.now);
     }
     case "restoreRevision": {
       const before = commitRevision(state, "edit", action.now);

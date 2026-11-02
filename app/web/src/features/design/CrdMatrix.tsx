@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { CrdSpec, GeneratedCrd } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
-import { useWorkspace } from "../../state/ProjectContext";
+import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { TableExportButtons } from "../results/TableExportButtons";
+import { collectionColumns } from "./collectionColumns";
 import { unitIdOf } from "./crdRows";
 
 const VISIBLE_ROWS = 200;
@@ -14,6 +15,7 @@ export function CrdMatrix({ spec }: { spec: CrdSpec }) {
   const { t } = useTranslation();
   const { client } = useEngine();
   const workspace = useWorkspace();
+  const project = useProject();
   const [crd, setCrd] = useState<GeneratedCrd | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -40,8 +42,29 @@ export function CrdMatrix({ spec }: { spec: CrdSpec }) {
   }, [client, spec]);
 
   if (!crd) return null;
-  const header = ["run", "standard_order", "unit_id", spec.factorName, "replicate"];
-  const rows = crd.runs.map((r) => [r.run, r.standardOrder, unitIdOf(r), r.level, r.replicate]);
+  const collection = collectionColumns(
+    project,
+    crd.runs.map((r) => ({
+      unit: unitIdOf(r),
+      levels: project.factors.map((f) => (f.id === spec.factorId ? r.level : undefined)),
+    })),
+  );
+  const header = [
+    "run",
+    "standard_order",
+    "unit_id",
+    spec.factorName,
+    "replicate",
+    ...collection.header,
+  ];
+  const rows = crd.runs.map((r, i) => [
+    r.run,
+    r.standardOrder,
+    unitIdOf(r),
+    r.level,
+    r.replicate,
+    ...(collection.cells[i] ?? []),
+  ]);
   const meta = {
     app: "EnziTAG Optima",
     project: workspace.name,
@@ -68,6 +91,9 @@ export function CrdMatrix({ spec }: { spec: CrdSpec }) {
         fileBase="matriz-dic"
         onDone={setNotice}
       />
+      <p className="muted small" data-testid="collection-note">
+        {t("design.collectionNote")}
+      </p>
       {notice && (
         <p role="status" className="muted small">
           {notice}

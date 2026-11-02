@@ -77,6 +77,7 @@ const PROJECT_ACTIONS = new Set<string>([
   "setOptimizationSetup",
   "storeOptimization",
   "applyImport",
+  "applyResponses",
   "restoreRevision",
 ]);
 

@@ -322,7 +322,22 @@
     "failed": "The file could not be read:",
     "tooLarge": "File too large to import.",
     "formulaNote": "Spreadsheets: only stored values are read; formulas are never executed.",
-    "nothing": "Nothing to import: choose at least one column as a factor or response."
+    "nothing": "Nothing to import: choose at least one column as a factor or response.",
+    "fill": {
+      "title": "Fill in the design responses",
+      "intro": "This file has the factors and responses of this experiment (for example, the collection sheet exported from the run matrix). Each line is matched to the run with the same levels (or the same unit) and only the responses are written; the design and the factors stay as they are.",
+      "modeLegend": "What to do with the file",
+      "modeFill": "Fill in only the responses of the current experiment (recommended)",
+      "modeReplace": "Replace all data with this file",
+      "summary": "{{filled}} response value(s) will be written; {{empty}} blank cell(s) in the file are left as they are.",
+      "columns": "Responses found in the file: {{responses}}.",
+      "replacing": "{{count}} value(s) already entered will be replaced; the previous state stays in the version history.",
+      "unmatched": "{{count}} line(s) of the file match no run (levels differ from the planned ones, or the run was already used) and will not be written. Lines: {{lines}}.",
+      "invalid": "{{count}} response cell(s) are not numbers and must be fixed in the file. Lines: {{lines}}.",
+      "rowsWithoutLine": "{{count}} run(s) of the experiment have no line in the file and stay as they are.",
+      "keeps": "Factors, run order and design do not change.",
+      "confirm": "Fill in responses"
+    }
   },
   "design": {
     "title": "Experiment design",
@@ -454,7 +469,8 @@
       "exportCsv": "RCBD matrix (CSV)",
       "position": "Position in block",
       "unitNote": "Each run gets a unit identifier (for example B2-T3: block 2, treatment 3). The analysis uses the block as an additive effect."
-    }
+    },
+    "collectionNote": "Collection sheet: the exported file has an empty column for each response. Fill it in at the lab and import the same file with “Import file”: only the responses are written, into the matching runs."
   },
   "optimization": {
     "title": "Desirability optimization",
