@@ -1,8 +1,8 @@
 # Publicação
 
-**Estado:** **v0.2.0 na versão web publicada; instaladores da v0.1.0 e da v0.2.0 em rascunho de release (não publicados)** · **Atualizado em:** 2026-11-02
+**Estado:** **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
 
-> **v0.2.0 (2026-11-02):** versão web **publicada** e etiqueta `v0.2.0` criada; o instalador está em **rascunho de release** (não publicado), como o da v0.1.0. Registro na seção [Publicação da v0.2.0](#publicação-da-v020).
+> **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
 
 ## Publicação da v0.2.0
 
@@ -27,12 +27,24 @@ Datas de 2026-11-02, horário de Brasília (UTC−3), extraídas do GitHub. Ende
 | `EnziTAG-Optima_0.2.0_x64-setup.exe.sig` (assinatura do atualizador) | 444 bytes |
 | `latest.json` (manifesto do atualizador) | 4 874 bytes |
 
-**O que não foi feito:**
+**Situação no momento da publicação (superada pelas seções seguintes):** o release da v0.2.0 foi criado como **rascunho** pelo fluxo Release; o usuário o publicou depois (abaixo).
 
-- O release **continua rascunho** (`isDraft = true`): publicá-lo é ato do mantenedor, depois de instalar o arquivo do rascunho. Enquanto os releases da v0.1.0 e da v0.2.0 forem rascunhos, o `latest.json` não é servido e **a atualização v0.1 → v0.2 não pode ser verificada** (tarefa [ET14-T01](../planos-execucao/planejados/et14-itens-adiados-v01-v02.md)).
-- O instalador do rascunho não foi instalado por quem o gerou; o testado (instalar, executar por 10 s, desinstalar) foi o construído localmente no Windows 10 com o mesmo código, assinado com a mesma chave.
-- O aplicativo web publicado não foi aberto e usado em navegador a partir da URL pública.
-- Windows 11: validação **não será realizada** (decisão do usuário, [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+**Windows 11:** validação **não será realizada** (decisão do usuário, [decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+
+### Publicação dos releases e atualização (2026-11-02)
+
+Consulta ao GitHub (`gh release list`) e ao endereço do atualizador, depois dos atos do usuário:
+
+| Hora (Brasília) | Ação | Resultado |
+|---|---|---|
+| 10:11 | Usuário publicou o release da **v0.1.0** | marcado como **pré-lançamento** (`isPrerelease = true`; não é o «mais recente», o que não atrapalha o atualizador) |
+| 10:13 | Usuário publicou o release da **v0.2.0** | **mais recente** (`isLatest = true`, rótulo «None») |
+| depois | Consulta de `.../releases/latest/download/latest.json` | HTTP 200, `version = 0.2.0`, instalador `EnziTAG-Optima_0.2.0_x64-setup.exe` |
+| depois | **Atualização v0.1.0 → v0.2.0 no aplicativo instalado** (Windows 10, pelo usuário) | **«Deu certo»** (relato do usuário); a captura de tela mostra «Nova versão disponível: 0.2.0» e «Baixar e instalar». Não foi registrado por mim que o projeto salvo na v0.1.0 abriu sem perda; o relato do usuário cobre o resultado final |
+
+**Verificação da versão web publicada** (`app/web/tests/public/published.spec.ts`, config `playwright.public.config.ts`, URL `https://vitormazziero.github.io/enzitag-optima/`): em **Chrome, Edge, Chromium e Firefox** a página abre, o motor WebAssembly informa a versão `0.2.0`, a comparação de três tratamentos calcula ANOVA e letras e **nenhuma requisição externa** é feita.
+
+**Observação:** as notas da atualização apareciam como Markdown cru, cortadas e com texto desatualizado; corrigido na v0.3 ([ET14-T09](../planos-execucao/ativos/et14-itens-adiados-v01-v02.md)). O release da v0.2.0 publicado traz as notas da versão antiga do fluxo (CHANGELOG inteiro).
 
 ---
 

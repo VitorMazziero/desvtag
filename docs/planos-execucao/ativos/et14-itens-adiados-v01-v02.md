@@ -2,18 +2,18 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F05 (efeitos), F10 (exportação), F12 (verificação), F13 (atualizações) |
 | Marco | Prepara a v0.3 |
 | Depende de | ET13 (ordem do plano); publicação da v0.1.0 e da v0.2.0 pelo usuário (T01) |
 | Módulos | C11/C16 (efeitos), C18 (recomendações), U08 (resultados), U09/U16 (figuras e PDF), U12 (contratos), U17 (textos), U18 (temas), E04 (atualizador) |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
 
-Fechar o que ficou pendente nas versões anteriores, mais o defeito encontrado ao verificar a atualização (notas de versão sem formatação): verificar a atualização ponta a ponta e encerrar a [ET10](../ativos/et10-integracao-publicacao.md); entregar a seleção de modelos para os efeitos de planejamentos de dois níveis (ET11-T09); arquivar as capturas em inglês e a inspeção dos temas no WebView2 (ET12-T10); escrever o guia de resultados; resolver as sementes acima de 2⁵³ no navegador; e, se possível, retirar as duas limitações aceitas do PDF.
+Fechar o que ficou pendente nas versões anteriores, mais o defeito encontrado ao verificar a atualização (notas de versão sem formatação): verificar a atualização ponta a ponta e encerrar a [ET10](../concluidos/et10-integracao-publicacao.md); entregar a seleção de modelos para os efeitos de planejamentos de dois níveis (ET11-T09); arquivar as capturas em inglês e a inspeção dos temas no WebView2 (ET12-T10); escrever o guia de resultados; resolver as sementes acima de 2⁵³ no navegador; e, se possível, retirar as duas limitações aceitas do PDF.
 
 ## 2. Escopo
 
@@ -34,7 +34,7 @@ Fechar o que ficou pendente nas versões anteriores, mais o defeito encontrado a
 
 ## 3. Entradas e referências
 
-- [ET10](../ativos/et10-integracao-publicacao.md) (T08, T09, critérios 2 e 3); [registro de publicação](../../distribuicao/publicacao.md); [DT-0017](../../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md).
+- [ET10](../concluidos/et10-integracao-publicacao.md) (T08, T09, critérios 2 e 3); [registro de publicação](../../distribuicao/publicacao.md); [DT-0017](../../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md).
 - [ET11](../concluidos/et11-selecao-de-modelos-e-navegacao.md) (T09; descoberta 9); [DT-0018](../../decisoes-tecnicas/dt-0018-selecao-de-modelos-e-resultados-em-secoes.md); [seleção de modelos](../../metodos/selecao-de-modelos.md).
 - [ET12](../concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) (T10); [DT-0020](../../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md) (limitações do PDF).
 - Pendências: PD-05 (CCD no Protimiza), PD-12 (matriz de navegadores).
@@ -50,7 +50,7 @@ Fechar o que ficou pendente nas versões anteriores, mais o defeito encontrado a
 
 ## 5. Tarefas
 
-- [ ] **T01** — Depois da publicação da v0.1.0 e da v0.2.0 pelo usuário: instalar a v0.1.0 no Windows 10, abrir projetos de exemplo, atualizar pelo aplicativo, conferir versão, projetos e preferências; repetir na web (aviso de versão nova). Registrar em `docs/distribuicao/publicacao.md` e concluir a ET10.
+- [x] **T01** — Atualização v0.1.0 → v0.2.0 verificada **pelo usuário** em 2026-11-02 (releases publicados; «Deu certo»); URL publicada verificada por mim em quatro navegadores (`tests/public`). Registrado em `docs/distribuicao/publicacao.md`; ET10 concluída.
 - [ ] **T02** — PD-05: se o usuário enviar as capturas do Protimiza, comparar matriz e rótulo da opção CCD com o composto central do aplicativo e registrar o resultado na matriz de cobertura; sem capturas, manter a pendência registrada.
 - [ ] **T03** — DT e implementação da seleção de modelos para efeitos de dois níveis (núcleo, operação, painel na seção «Efeitos»), com casos independentes (statsmodels) e E2E.
 - [ ] **T04** — DT e correção das sementes acima de 2⁵³ (contratos, projeto, geração do DIC/DBC e dos planejamentos); casos com a semente 9223372036854775813 também no WebAssembly e no nativo pela interface.
@@ -66,7 +66,7 @@ Atualização verificada e ET10 concluída; seleção de modelos em dois níveis
 
 ## 7. Critérios de conclusão
 
-1. Atualização v0.1.0 → v0.2.0 verificada sem perda de projetos. *Evidência:* registro de publicação. **Situação em 2026-11-02:** o usuário relatou que a atualização funcionou (releases v0.1.0 e v0.2.0 publicados; o aplicativo mostrou «Nova versão disponível: 0.2.0»); o registro formal e o fechamento da [ET10](../ativos/et10-integracao-publicacao.md) aguardam a confirmação dos detalhes (projeto reaberto sem perda, versão após atualizar).
+1. Atualização v0.1.0 → v0.2.0 verificada sem perda de projetos. *Evidência:* registro de publicação. **Situação em 2026-11-02:** o usuário relatou que a atualização funcionou (releases v0.1.0 e v0.2.0 publicados; o aplicativo mostrou «Nova versão disponível: 0.2.0»); o registro formal e o fechamento da [ET10](../concluidos/et10-integracao-publicacao.md) aguardam a confirmação dos detalhes (projeto reaberto sem perda, versão após atualizar).
 2. Seleção de modelos em dois níveis igual à referência independente; E2E. *Evidência:* casos em `validation/cases/`.
 3. A semente máxima `u64` gera a mesma matriz no WebAssembly, no nativo e na referência. *Evidência:* teste de paridade.
 4. Capturas PT/EN dos seis temas arquivadas; guia de resultados publicado no repositório.

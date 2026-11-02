@@ -26,7 +26,7 @@ Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
 ## [0.2.0] — 2026-11-02
 
-> **Versão web publicada em 2026-11-02** (https://vitormazziero.github.io/enzitag-optima/) e etiqueta `v0.2.0` criada. O **instalador do Windows está em rascunho de release** (não publicado), como o da 0.1.0; a atualização não foi verificada ([registro de publicação](docs/distribuicao/publicacao.md#publicação-da-v020)). Evidências em [validation/reports/v0.2.0](validation/reports/v0.2.0/README.md).
+> **Versão web publicada em 2026-11-02** (https://vitormazziero.github.io/enzitag-optima/) e etiqueta `v0.2.0` criada. O **release do instalador foi publicado pelo usuário** e a **atualização a partir da 0.1.0 foi verificada** ([registro de publicação](docs/distribuicao/publicacao.md#publicação-dos-releases-e-atualização-2026-11-02)). Evidências em [validation/reports/v0.2.0](validation/reports/v0.2.0/README.md).
 
 ### Mudanças de ferramenta e desempenho
 
@@ -70,9 +70,9 @@ Projetos da 0.1 abrem sem migração (`schemaVersion` permanece 1; campos novos 
 - A otimização continua sendo uma busca local com vários inícios: **não prova ótimo global**.
 - Sem DOCX nem Google Drive. Marcos M1–M3 não declarados.
 
-## [0.1.0] — versão web publicada; instalador em rascunho
+## [0.1.0] — 2026-11-01 (release publicado em 2026-11-02 como pré-lançamento)
 
-> A **versão web foi publicada em 2026-11-01** (https://vitormazziero.github.io/enzitag-optima/) e a etiqueta `v0.1.0` existe. O **instalador do Windows ainda é um rascunho de release** (não publicado) e a atualização não foi verificada; ver o [registro de publicação](docs/distribuicao/publicacao.md#registro-do-que-foi-executado) e o [relatório de validação](validation/reports/v0.1.0/README.md).
+> A **versão web foi publicada em 2026-11-01** (https://vitormazziero.github.io/enzitag-optima/) e a etiqueta `v0.1.0` existe. O **release do instalador foi publicado pelo usuário em 2026-11-02** (como pré-lançamento) e a atualização para a 0.2.0 foi verificada; ver o [registro de publicação](docs/distribuicao/publicacao.md).
 
 ### Métodos e variantes disponíveis
 

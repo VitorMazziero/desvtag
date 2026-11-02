@@ -6,13 +6,13 @@ Diretório exclusivo dos planos de execução do EnziTAG Optima. Requisitos de p
 
 Para iniciar ou retomar a implementação, use o [prompt de execução passo a passo da v0.1](prompt-execucao-v0.1.md). A [análise da base recebida do GitHub](analise-github-v0.1.md) registra a origem dos planos e as verificações realizadas antes de preparar o prompt. Esses documentos não alteram o estado das etapas.
 
-## Plano ativo
+## Planos ativos
 
-> **ET10 — Integração, verificação e publicação** · [ativos/et10-integracao-publicacao.md](ativos/et10-integracao-publicacao.md)
+> **v0.3** · [plano da versão](plano-v0.3.md)
 >
-> Versão-alvo: v0.1.0 · Fase do roteiro: F12–F13 · Candidata pronta localmente; **publicação (etiqueta, release e Pages) e verificação da atualização dependem do mantenedor** · Marcos M1–M3 não declarados
+> Ativos em 2026-11-02: **ET14** — [itens adiados da v0.1 e da v0.2](ativos/et14-itens-adiados-v01-v02.md) e **ET21** — [espaçamento, logotipo único e rolagem entre etapas](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md). A **ET13** (planilha de coleta) e a **ET10** (publicação da v0.1) estão concluídas. ET15 a ET20 continuam planejadas.
 
-**Exceção ao "uma etapa ativa por vez" (2026-11-01):** a ET11 e a ET12 (v0.2) foram executadas e concluídas em 2026-11-02 com a ET10 ainda aberta (a publicação da v0.1.0 depende do mantenedor), por pedido do usuário. Além disso, durante a implementação, as etapas ET01–ET05 ficaram abertas apenas pela evidência no Windows 11 e as seguintes avançaram em paralelo. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); com essa evidência, ET01–ET09 foram concluídas. O Windows 11 permanece **não verificado** e consta das notas de versão; em 2026-11-02 o usuário decidiu que essa validação **não será realizada** ([decisões aprovadas §17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+**Paralelismo (2026-11-02):** a ET14 e a ET21 correm juntas por pedido do usuário («Pode seguir até completar v0.3»); as etapas que dependem de configuração externa (ET19, credenciais OAuth) ou de decisão do usuário seguem o [plano da v0.3](plano-v0.3.md#4-dependências-do-usuário). Histórico: a ET11 e a ET12 (v0.2) foram executadas com a ET10 ainda aberta, e a ET10 foi concluída em 2026-11-02 com a publicação dos releases e a atualização verificada. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); em 2026-11-02 decidiu que a validação no Windows 11 **não será realizada** ([§17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
 
 O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se este quadro e o diretório divergirem, o diretório prevalece e este índice deve ser corrigido.
 
@@ -39,11 +39,11 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET07 | Superfícies de resposta e planejamento personalizado | v0.1 | **Concluído** (2026-11-01) | [concluidos/et07-superficies-resposta.md](concluidos/et07-superficies-resposta.md) |
 | ET08 | Otimização de uma ou várias respostas | v0.1 | **Concluído** (2026-11-01) | [concluidos/et08-otimizacao.md](concluidos/et08-otimizacao.md) |
 | ET09 | Gráficos e exportação essenciais | v0.1 | **Concluído** (2026-11-01) | [concluidos/et09-graficos-exportacao.md](concluidos/et09-graficos-exportacao.md) |
-| ET10 | Integração, verificação e publicação | v0.1 | **Ativo** (publicação pendente) | [ativos/et10-integracao-publicacao.md](ativos/et10-integracao-publicacao.md) |
+| ET10 | Integração, verificação e publicação | v0.1 | **Concluído** (2026-11-02) | [concluidos/et10-integracao-publicacao.md](concluidos/et10-integracao-publicacao.md) |
 | ET11 | Seleção e comparação de modelos, navegação por seções e métodos da v0.2 (começa pela migração do Node.js, DT-0015) | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et11-selecao-de-modelos-e-navegacao.md](concluidos/et11-selecao-de-modelos-e-navegacao.md) |
 | ET12 | Temas adicionais (Industrial, Organic e Clay) e logo do grupo de pesquisa | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et12-temas-adicionais-e-identidade-do-grupo.md](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) |
 | ET13 | Planilha de coleta: matriz com respostas e importação das respostas | v0.3 | **Concluído** (2026-11-02) | [concluidos/et13-planilha-de-coleta.md](concluidos/et13-planilha-de-coleta.md) |
-| ET14 | Itens adiados da v0.1 e da v0.2 | v0.3 | Planejado | [planejados/et14-itens-adiados-v01-v02.md](planejados/et14-itens-adiados-v01-v02.md) |
+| ET14 | Itens adiados da v0.1 e da v0.2 | v0.3 | **Ativo** (2026-11-02) | [ativos/et14-itens-adiados-v01-v02.md](ativos/et14-itens-adiados-v01-v02.md) |
 | ET15 | Níveis mistos e misturas | v0.3 | Planejado | [planejados/et15-niveis-mistos-e-misturas.md](planejados/et15-niveis-mistos-e-misturas.md) |
 | ET16 | Planejamentos ótimos, restritos e ampliação sequencial | v0.3 | Planejado | [planejados/et16-planejamentos-otimos-e-restritos.md](planejados/et16-planejamentos-otimos-e-restritos.md) |
 | ET17 | Modelos mistos, medidas repetidas e comparações pareadas | v0.3 | Planejado | [planejados/et17-modelos-mistos-e-medidas-repetidas.md](planejados/et17-modelos-mistos-e-medidas-repetidas.md) |

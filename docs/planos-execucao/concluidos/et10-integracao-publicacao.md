@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (verificação local feita; publicação bloqueada por decisão do usuário e por Windows 11) |
+| Estado | **Concluído** (2026-11-02) |
 | Versão-alvo | v0.1.0 |
 | Fases do roteiro | F12 e F13 (recortes da v0.1) |
 | Marco | **Versão v0.1.0** |
 | Depende de | ET01–ET09 |
 | Módulos | Todos os entregues; C19 (situação dos métodos), E02, E04 (`updater`), U18 (`UpdateSettings`) |
 | Ativado em | 2026-11-01 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 |
 
 ## 1. Objetivo
 
@@ -61,8 +61,8 @@ Verificar o produto da v0.1 como um todo, medir limites operacionais, auditar de
 - [x] **T05** — Cancelamento e respostas obsoletas: testes do cliente (`EngineClient.test.ts`: descarte por canal, cancelamento, falha de transporte) e E2E de cancelamento da busca. Sem progresso incremental (DT-0013).
 - [x] **T06** — Auditoria de dependências e licenças (Rust e npm), ausência de credenciais e de `referencias/` no repositório e nos artefatos; avisos de terceiros gerados (`THIRD_PARTY_NOTICES.txt` na build). Registro no [relatório](../../../validation/reports/v0.1.0/README.md#auditoria-de-dependências-e-licenças).
 - [x] **T07** — **Decisão do usuário sobre PD-15 obtida em 2026-11-01:** repositório público; Pages por disparo manual ([DT-0017](../../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)). A varredura de credenciais e dados pessoais no histórico foi refeita antes de mudar a visibilidade.
-- [ ] **T08** — Workflow de publicação web e teste da URL publicada. *Parcial:* `pages.yml` (disparo manual) criado; a build estática foi servida sob `/enzitag-optima/` e aberta no Chromium e no Firefox. **Falta** disparar a publicação e abrir a URL publicada (depende de ato do mantenedor).
-- [ ] **T09** — Instalador e publicação no Releases. *Parcial:* o instalador NSIS assinado para o atualizador foi construído no Windows 10, **instalado em modo silencioso, executado por 10 s e desinstalado sem resíduos**; `release.yml` cria um rascunho de release a partir de uma etiqueta. **Falta** criar a etiqueta, conferir o rascunho e publicá-lo (ato do mantenedor); Windows 11 não verificado.
+- [x] **T08** — Workflow de publicação web e teste da URL publicada. `pages.yml` (disparo manual); publicado em 2026-11-01 (v0.1.0) e 2026-11-02 (v0.2.0); a URL publicada foi aberta e usada em **Chrome, Edge, Chromium e Firefox** (`tests/public/published.spec.ts`), com o motor WebAssembly, ANOVA e letras e sem rede externa.
+- [x] **T09** — Instalador e publicação no Releases. Releases da v0.1.0 (pré-lançamento) e da v0.2.0 (mais recente) **publicados pelo usuário em 2026-11-02**; o instalador foi instalado e a atualização v0.1.0 → v0.2.0 foi feita no Windows 10 (relato do usuário). Windows 11: não será validado (decisão do usuário).
 - [x] **T10** — Atualizador assinado: par de chaves gerado com autorização do usuário (pública em `tauri.conf.json`; privada e senha em segredos do GitHub e cópia local fora do repositório), plugin `tauri-plugin-updater`, permissão mínima, controle “Verificar atualizações” (só no app Windows), `scripts/make-updater-manifest.mjs` (testado) e fluxo `release.yml`; o instalador da 0.1.0 gera `.exe.sig`. **A atualização ponta a ponta só pode ser verificada depois de existir um release publicado** (critério 3).
 - [x] **T11** — Notas de versão e [`CHANGELOG.md`](../../../CHANGELOG.md) (rascunho da v0.1.0 marcada como **não publicada**), com métodos, variantes, situação de validação e limitações.
 - [x] **T12** — [Relatório de validação](../../../validation/reports/v0.1.0/README.md) da candidata; [`docs/distribuicao/publicacao.md`](../../distribuicao/publicacao.md) contém o **procedimento previsto e o que ainda não foi executado** (não há procedimento executado a registrar).
@@ -74,10 +74,10 @@ Versão `v0.1.0` publicada no canal experimental, com evidências, notas de vers
 
 ## 7. Critérios de conclusão
 
-1. [ ] Critérios de lançamento da [v0.1](../plano-v0.1.md#6-critérios-de-lançamento-da-v010) atendidos. *Situação:* **atendidos, exceto o item 8 (publicação)** — ver o [relatório](../../../validation/reports/v0.1.0/README.md): nada foi publicado e a atualização não foi verificada.
-2. [ ] URL e instalador publicados foram abertos e testados. *Situação:* **nada publicado** (instalador local testado no Windows 10; ver T09).
-3. [ ] Atualização a partir de versão anterior verificada. *Situação:* **implementada, não verificada** (exige release publicado).
-4. [ ] Problemas que comprometem cálculos, integridade dos projetos ou funcionamento nos ambientes declarados resolvidos; limitações documentadas. *Situação:* nenhum problema de cálculo conhecido em aberto; limitações documentadas no relatório, em [limites operacionais](../../arquitetura/limites-operacionais.md) e na matriz; funcionamento em Windows 11 não verificado (decisão do usuário); verificado no Windows 10 e em `windows-latest`.
+1. [x] Critérios de lançamento da [v0.1](../plano-v0.1.md#6-critérios-de-lançamento-da-v010) atendidos. *Situação:* **atendidos, exceto o item 8 (publicação)** — ver o [relatório](../../../validation/reports/v0.1.0/README.md): nada foi publicado e a atualização não foi verificada.
+2. [x] URL e instalador publicados foram abertos e testados. *Situação:* **sim**: URL testada em quatro navegadores e instalador instalado e atualizado pelo usuário (ver T08 e T09).
+3. [x] Atualização a partir de versão anterior verificada. *Situação:* **v0.1.0 → v0.2.0 verificada pelo usuário em 2026-11-02** (relato e captura); ver o [registro de publicação](../../distribuicao/publicacao.md).
+4. [x] Problemas que comprometem cálculos, integridade dos projetos ou funcionamento nos ambientes declarados resolvidos; limitações documentadas. *Situação:* nenhum problema de cálculo conhecido em aberto; limitações documentadas no relatório, em [limites operacionais](../../arquitetura/limites-operacionais.md) e na matriz; funcionamento em Windows 11 não verificado (decisão do usuário); verificado no Windows 10 e em `windows-latest`.
 
 ## 8. Verificação
 
@@ -99,6 +99,7 @@ Execução registrada dos percursos integrados; relatório de validação da ver
 
 | Data | Registro |
 |---|---|
+| 2026-11-02 | **Concluída:** releases publicados e atualização verificada pelo usuário; URL publicada verificada em quatro navegadores. |
 | 2026-11-01 | **Ativação** após a ET09 (essencial entregue). Esta etapa foi conduzida **sem publicar nada**, sem alterar a visibilidade do repositório e sem gerar chaves de assinatura. |
 | 2026-11-01 | **Desempenho:** `performance.rs` (nativo, `release`) e medição no navegador; superfície e otimização < 70 ms até 5 fatores; ANOVA + Tukey cresce com o número de pares (≈ 0,2 s com 4 grupos; ≈ 3,4 s com 40; ≈ 16 s com 100). Memória de pico 48 MiB. Ver [limites operacionais](../../arquitetura/limites-operacionais.md). |
 | 2026-11-01 | **Licenças:** Rust (motor WASM 70 crates; aplicativo Windows 438), npm de produção (14) — nenhuma licença copyleft forte; MPL-2.0 em quatro crates do Tauri (distribuídos sem modificação) e fontes OFL-1.1; `THIRD_PARTY_NOTICES.txt` gerado e incluído na build. Nenhuma credencial encontrada; `referencias/` não versionada. |
@@ -114,3 +115,4 @@ Execução registrada dos percursos integrados; relatório de validação da ver
 - **Lacuna de escopo da v0.1:** geração aleatorizada de DIC com fator categórico (matriz) e personalização gráfica por figura não foram implementadas; exigem decisão do usuário (aceitar na v0.1.0 ou implementar antes).
 - **Desempenho:** a comparação com muitos tratamentos (≥ 40) é lenta por causa do valor-p de Tukey (≈ 10–12 ms por valor); o cálculo é correto. Melhoria registrada.
 - **Verificação em Windows:** apenas em `windows-latest` (Windows Server 2025).
+- **2026-11-02 — fechamento:** a etapa foi concluída com a publicação dos releases pelo usuário; as lacunas encontradas na verificação (notas de versão sem formatação, espaçamento dos botões, logotipo repetido, rolagem entre etapas) foram para a v0.3 (ET14-T09 e ET21).
