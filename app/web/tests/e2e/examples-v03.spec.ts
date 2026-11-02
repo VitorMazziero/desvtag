@@ -101,6 +101,7 @@ test("exemplo 11: pareado, Wilcoxon e modelo misto conferem com SciPy e statsmod
 test("exemplo 12: tamanho de amostra de duas amostras (SciPy: 37 por grupo, potência 0,8076)", async ({
   page,
 }) => {
+  test.setTimeout(90_000); // o Firefox da CI é lento ao carregar o motor sob carga
   await page.goto("/");
   const panel = page.getByTestId("power-calculator");
   await panel.getByText("Calculadora de potência e tamanho de amostra").click();

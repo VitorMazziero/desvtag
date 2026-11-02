@@ -77,6 +77,7 @@ test.describe("recuperação após dois segundos de pausa", () => {
 test.describe("salvar e abrir (estados distintos)", () => {
   test("salvar baixa um .enzitag; abrir restaura dados, experimentos e histórico", async ({
     page,
+    browserName,
   }) => {
     await page.goto("/");
     await page.getByLabel("Nome do projeto").fill("Projeto salvo");
@@ -89,7 +90,11 @@ test.describe("salvar e abrir (estados distintos)", () => {
     const download = page.waitForEvent("download");
     await page.getByRole("button", { name: "Salvar", exact: true }).click();
     const file = await download;
-    expect(file.suggestedFilename()).toBe("Projeto salvo.enzitag");
+    // O WebKit do Linux troca o espaço do nome sugerido por «_».
+    const suggested = file.suggestedFilename();
+    expect(browserName === "webkit" ? suggested.replace(/_/g, " ") : suggested).toBe(
+      "Projeto salvo.enzitag",
+    );
     const path = await file.path();
     expect(readFileSync(path).subarray(0, 2).toString()).toBe("PK"); // contêiner ZIP
 

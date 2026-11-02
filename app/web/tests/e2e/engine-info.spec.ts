@@ -41,18 +41,18 @@ test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () =
   test("is operable by keyboard: skip link first, visible focus", async ({ page, browserName }) => {
     await page.goto("/");
     await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
-    if (browserName === "webkit") {
-      // O WebKit (Safari) não inclui links na ordem do Tab por padrão (é preciso Option+Tab ou a
-      // preferência «Pressionar Tab para destacar cada item»): o link «Ir para o conteúdo» fica
-      // fora da sequência, e os controles do cabeçalho continuam operáveis na ordem esperada.
-      await page.keyboard.press("Tab");
+    await page.keyboard.press("Tab");
+    const skip = page.getByRole("link", { name: "Ir para o conteúdo" });
+    if (browserName === "webkit" && !(await skip.evaluate((el) => el === document.activeElement))) {
+      // O WebKit do Windows e do macOS (Safari) não inclui links na ordem do Tab por padrão (é
+      // preciso Option+Tab ou a preferência «Pressionar Tab para destacar cada item»): o link «Ir
+      // para o conteúdo» fica fora da sequência, e os controles do cabeçalho continuam operáveis na
+      // ordem esperada. O WebKit do Linux inclui o link e segue o caminho comum abaixo.
       await expect(page.locator("header.app-header").getByLabel("Idioma")).toBeFocused();
       await page.keyboard.press("Tab");
       await expect(page.getByLabel("Tema")).toBeFocused();
       return;
     }
-    await page.keyboard.press("Tab");
-    const skip = page.getByRole("link", { name: "Ir para o conteúdo" });
     await expect(skip).toBeFocused();
     const outline = await skip.evaluate((el) => getComputedStyle(el).outlineStyle);
     expect(outline).toBe("solid");

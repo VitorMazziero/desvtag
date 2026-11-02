@@ -84,7 +84,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npx playwright install --with-deps chromium firefox webkit
-      - name: E2E com o motor WASM real (Chromium e Firefox)
+      - name: E2E com o motor WASM real (Chromium, Firefox e WebKit)
         run: E2E_BROWSERS=chromium,firefox,webkit npm run test:e2e
         env:
           CI: "true"
