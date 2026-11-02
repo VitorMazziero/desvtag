@@ -24,7 +24,7 @@ O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se es
 | Versão | [Plano da v0.1](plano-v0.1.md), [plano da v0.3](plano-v0.3.md) | O que entra em cada versão, em que ordem e com quais critérios de lançamento? (a v0.2 foi planejada nas próprias ET11 e ET12) |
 | Etapa | `ativos/`, `planejados/`, `concluidos/` | Quais tarefas executar agora, como verificar e o que foi feito? |
 
-Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etapas é global e nunca reutilizada: a v0.2 usou ET11 e ET12 (a ET11 começou pela migração do Node.js 22 para o 26, [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)); a v0.3 usa ET13 a ET20 ([plano da v0.3](plano-v0.3.md)).
+Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etapas é global e nunca reutilizada: a v0.2 usou ET11 e ET12 (a ET11 começou pela migração do Node.js 22 para o 26, [DT-0015](../decisoes-tecnicas/dt-0015-migracao-node-26-na-v0-2.md)); a v0.3 usa ET13 a ET21 ([plano da v0.3](plano-v0.3.md)).
 
 ## Situação das etapas
 
@@ -50,6 +50,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET18 | Ajuste não linear (Monod) e potência | v0.3 | Planejado | [planejados/et18-nao-linear-e-potencia.md](planejados/et18-nao-linear-e-potencia.md) |
 | ET19 | Google Drive e compartilhamento inicial | v0.3 | Planejado | [planejados/et19-google-drive-e-compartilhamento.md](planejados/et19-google-drive-e-compartilhamento.md) |
 | ET20 | DOCX, comentários, Safari, domínio próprio e canais de atualização | v0.3 | Planejado | [planejados/et20-docx-comentarios-e-distribuicao.md](planejados/et20-docx-comentarios-e-distribuicao.md) |
+| ET21 | Revisão de espaçamento, preenchimento e tamanho dos controles (e logo só no cabeçalho) | v0.3 | Planejado | [planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.
 

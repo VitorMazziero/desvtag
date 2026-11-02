@@ -13,7 +13,7 @@
 
 ## 1. Objetivo
 
-Fechar o que ficou pendente nas versões anteriores: verificar a atualização ponta a ponta e encerrar a [ET10](../ativos/et10-integracao-publicacao.md); entregar a seleção de modelos para os efeitos de planejamentos de dois níveis (ET11-T09); arquivar as capturas em inglês e a inspeção dos temas no WebView2 (ET12-T10); escrever o guia de resultados; resolver as sementes acima de 2⁵³ no navegador; e, se possível, retirar as duas limitações aceitas do PDF.
+Fechar o que ficou pendente nas versões anteriores, mais o defeito encontrado ao verificar a atualização (notas de versão sem formatação): verificar a atualização ponta a ponta e encerrar a [ET10](../ativos/et10-integracao-publicacao.md); entregar a seleção de modelos para os efeitos de planejamentos de dois níveis (ET11-T09); arquivar as capturas em inglês e a inspeção dos temas no WebView2 (ET12-T10); escrever o guia de resultados; resolver as sementes acima de 2⁵³ no navegador; e, se possível, retirar as duas limitações aceitas do PDF.
 
 ## 2. Escopo
 
@@ -25,6 +25,7 @@ Fechar o que ficou pendente nas versões anteriores: verificar a atualização p
 - Sementes como texto nos contratos (ou outra solução da DT), para que qualquer semente `u64` funcione no navegador.
 - PDF: família de fonte da figura (serifa e monoespaçada embutidas) e hachura real na região de extrapolação, se a DT mostrar que é viável sem dependência pesada.
 - Capturas em PT e EN dos seis temas e inspeção no WebView2; guia de resultados.
+- **Notas de versão formatadas no aviso de atualização** (T09), encontradas pelo usuário em 2026-11-02.
 
 **Não inclui**
 
@@ -44,6 +45,7 @@ Fechar o que ficou pendente nas versões anteriores: verificar a atualização p
 |---|---|---|---|
 | Seleção em dois níveis | Que critério usar com efeitos de dois níveis, inclusive desenhos saturados? | Eliminação regressiva por valor-p (como DT-0018); Lenth para saturados; AICc/BIC | Coerência com DT-0018, graus de liberdade, desenhos sem erro puro |
 | Sementes no navegador | Como representar sementes `u64` sem perda no JavaScript? | Texto decimal no contrato; `bigint`; limitar a 2⁵³ − 1 na geração | Compatibilidade de projetos (esquema 1), ts-rs, paridade |
+| Notas de versão | Como mostrar as notas da atualização? | Renderizar Markdown seguro no aplicativo; texto curto e estruturado no `latest.json`; só um resumo e um link para o CHANGELOG | Segurança (sem HTML arbitrário), tamanho do manifesto, leitura rápida, PT |
 | Fontes e hachura no PDF | Vale embutir mais famílias e desenhar padrões? | Fontes OFL já empacotadas (Source Serif 4, IBM Plex Mono) passadas ao conversor como bytes; hachura por linhas recortadas | Tamanho do pacote, fidelidade, carga sob demanda |
 
 ## 5. Tarefas
@@ -56,6 +58,7 @@ Fechar o que ficou pendente nas versões anteriores: verificar a atualização p
 - [ ] **T06** — Capturas em PT e EN dos seis temas (navegador e WebView2), arquivadas em `docs/imagens/` com inspeção registrada.
 - [ ] **T07** — Guia de resultados (`docs/guias/resultados.md`): seções, modelo, diagnóstico, figuras, otimização, confirmação e exportação, com as capturas da T06.
 - [ ] **T08** — Atualizar matriz de cobertura, relatório de validação da v0.3 (parcial) e CHANGELOG.
+- [ ] **T09** — **Notas de versão formatadas.** Defeito observado na tela «Verificar atualizações» (`features/settings/UpdateCheck.tsx`) em 2026-11-02: as notas aparecem como **um único parágrafo de Markdown cru** (títulos `###`, tabelas `|---|`, negritos `**`, links), **cortadas no meio de uma frase** (limite de 4 000 caracteres em `scripts/make-updater-manifest.mjs`) e com **texto desatualizado** copiado do CHANGELOG («Nenhuma etiqueta, release ou publicação existe…»). Corrigir: (a) mostrar as notas formatadas (títulos, listas, tabelas, negrito e links seguros; **sem HTML arbitrário** e sem carregar recursos externos) com rolagem interna e botões sempre visíveis; (b) gerar as notas do `latest.json` e do release a partir da **seção da versão** no CHANGELOG, sem cortar no meio de uma frase (resumo curto + link), em vez de anexar o arquivo inteiro (`release.yml` hoje faz `Get-Content CHANGELOG.md`); (c) atualizar o CHANGELOG antes da etiqueta para que não afirme «não publicada»; (d) teste de unidade (conversão e sanitização), E2E do painel com notas longas e verificação do manifesto gerado.
 
 ## 6. Entregas
 
@@ -63,11 +66,12 @@ Atualização verificada e ET10 concluída; seleção de modelos em dois níveis
 
 ## 7. Critérios de conclusão
 
-1. Atualização v0.1.0 → v0.2.0 verificada sem perda de projetos (ou registrada como impossível enquanto o usuário não publicar, com a ET14 aguardando só esse item). *Evidência:* registro de publicação.
+1. Atualização v0.1.0 → v0.2.0 verificada sem perda de projetos. *Evidência:* registro de publicação. **Situação em 2026-11-02:** o usuário relatou que a atualização funcionou (releases v0.1.0 e v0.2.0 publicados; o aplicativo mostrou «Nova versão disponível: 0.2.0»); o registro formal e o fechamento da [ET10](../ativos/et10-integracao-publicacao.md) aguardam a confirmação dos detalhes (projeto reaberto sem perda, versão após atualizar).
 2. Seleção de modelos em dois níveis igual à referência independente; E2E. *Evidência:* casos em `validation/cases/`.
 3. A semente máxima `u64` gera a mesma matriz no WebAssembly, no nativo e na referência. *Evidência:* teste de paridade.
 4. Capturas PT/EN dos seis temas arquivadas; guia de resultados publicado no repositório.
 5. Limitações do PDF retiradas ou mantidas por DT.
+6. O aviso de atualização mostra as notas **formatadas, completas e sem texto desatualizado**; o manifesto e o release trazem só a seção da versão. *Evidência:* teste de unidade, E2E e manifesto gerado.
 
 ## 8. Verificação
 
@@ -90,6 +94,7 @@ DTs novas; [seleção de modelos](../../metodos/selecao-de-modelos.md); guia de 
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3: «tudo que ficou pendente»). Windows 11 retirado por decisão do usuário. Etapa não iniciada. |
+| 2026-11-02 | O usuário publicou os releases v0.1.0 (pré-lançamento) e v0.2.0 (mais recente) e relatou que a atualização funcionou. Adicionada a **T09** (notas de versão formatadas) a pedido do usuário, «somente ao plano por enquanto». |
 
 ## 12. Desvios e descobertas
 

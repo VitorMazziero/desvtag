@@ -24,6 +24,9 @@ Ao final da v0.3:
 | Verificar a atualização ponta a ponta (v0.1 → v0.2) e fechar a ET10 | ET10 (T08, T09, critérios 2 e 3); relatório da v0.2 | [ET14](planejados/et14-itens-adiados-v01-v02.md) |
 | Seleção de modelos para os efeitos de planejamentos de dois níveis | ET11-T09 | ET14 |
 | Capturas em inglês e inspeção visual dos temas no WebView2 | ET12-T10 | ET14 |
+| Notas de versão sem formatação, cortadas e desatualizadas no aviso de atualização | Verificação do usuário (2026-11-02) | ET14-T09 |
+| Botões próximos: auditoria de distância, preenchimento e tamanho dos controles em toda a interface | Verificação do usuário (2026-11-02) | [ET21](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| Dois logotipos na interface: manter só o do cabeçalho (retirar o da tela inicial) | Verificação do usuário (2026-11-02) | ET21-T08 |
 | Guia de resultados | ET11-T14 | ET14 |
 | Conferência da opção CCD e do rótulo no Protimiza | PD-05; decisões aprovadas §15, item 5 | ET14 (depende do usuário) |
 | Sementes acima de 2⁵³ no navegador (precisão do JavaScript) | ET11, descoberta 9 | ET14 |
@@ -62,8 +65,9 @@ Ao final da v0.3:
 | [ET18](planejados/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
 | [ET19](planejados/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
+| [ET21](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, preenchimento e tamanho dos controles | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
 
-**Ordem recomendada:** ET13 → ET14 → ET15 → ET16 → ET17 → ET18 → ET20, com a **ET19 em paralelo** a partir do momento em que o usuário criar o projeto OAuth (ela depende de configuração externa, não de código anterior). A regra «uma etapa ativa por vez» admite esse paralelismo, registrado aqui.
+**Ordem recomendada:** ET13 e ET21 (interface; podem correr juntas) → ET14 → ET15 → ET16 → ET17 → ET18 → ET20, com a **ET19 em paralelo** a partir do momento em que o usuário criar o projeto OAuth (ela depende de configuração externa, não de código anterior). A regra «uma etapa ativa por vez» admite esse paralelismo, registrado aqui.
 
 ## 4. Dependências do usuário
 
@@ -88,7 +92,7 @@ Nenhuma dessas pendências bloqueia as etapas locais: cada etapa registra o item
 
 ## 6. Critérios de lançamento da v0.3.0
 
-1. Etapas ET13–ET20 concluídas, ou itens não entregues registrados com destino e aprovados pelo usuário.
+1. Etapas ET13–ET21 concluídas, ou itens não entregues registrados com destino e aprovados pelo usuário.
 2. Todos os métodos novos com caso de validação independente e paridade WebAssembly × nativo.
 3. Projetos da v0.1 e da v0.2 abrem sem perda; reabrir não recalcula.
 4. CI verde (Rust, web, E2E, Tauri Linux e Windows); verificação nativa no Windows 10.
