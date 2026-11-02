@@ -40,8 +40,8 @@ Ao final da v0.3:
 | Ajuste não linear (Monod) | F09f | [ET18](ativos/et18-nao-linear-e-potencia.md) |
 | Potência e planejamento da precisão | F09g | ET18 |
 | Google Drive, pasta visível, abrir compartilhado e criar cópia | F11; PD-09, PD-10 | [ET19](ativos/et19-google-drive-e-compartilhamento.md) |
-| Exportação DOCX | F14 | [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) |
-| Comentários ligados a análises e gráficos | F14; PD-14 | ET20 |
+| Exportação DOCX | F14 | [ET20](ativos/et20-docx-comentarios-e-distribuicao.md) |
+| Comentários ligados a análises e gráficos | F14; PD-14 | [ET20](ativos/et20-docx-comentarios-e-distribuicao.md) |
 | Especificação da edição simultânea (sem implementação) | F14; PD-14 | ET20 |
 | Safari | F14; PD-13 | ET20 |
 | Domínio próprio | F14; PD-13 | ET20 (depende do usuário) |
@@ -65,7 +65,7 @@ Ao final da v0.3:
 | [ET17](ativos/et17-modelos-mistos-e-medidas-repetidas.md) | Modelos mistos, medidas repetidas e comparações pareadas | F08, F09d, F09e | ET14 | REML, componentes de variância, covariância repetida |
 | [ET18](ativos/et18-nao-linear-e-potencia.md) | Ajuste não linear (Monod) e potência | F09f, F09g | ET17 (graus de liberdade e incerteza) | Monod com incerteza; potência por desenho |
 | [ET19](ativos/et19-google-drive-e-compartilhamento.md) | Google Drive e compartilhamento inicial | F11 | ET14; credenciais OAuth do usuário (PD-09) | Abrir, salvar, compartilhar por leitura e cópia |
-| [ET20](planejados/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
+| [ET20](ativos/et20-docx-comentarios-e-distribuicao.md) | DOCX, comentários, Safari, domínio e canais | F13, F14 | ET14; ET19 para comentários compartilhados | DOCX, comentários, Safari, canais, especificação da edição simultânea |
 | [ET21](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | F12, F01 | v0.2.0 (pode correr junto da ET13) | Regras em tokens, interface corrigida nos seis temas, teste de medidas |
 
 **Ordem recomendada:** ET13 e ET21 (interface; podem correr juntas) → ET14 → ET15 → ET16 → ET17 → ET18 → ET20, com a **ET19 em paralelo** a partir do momento em que o usuário criar o projeto OAuth (ela depende de configuração externa, não de código anterior). A regra «uma etapa ativa por vez» admite esse paralelismo, registrado aqui.
@@ -82,7 +82,7 @@ Ao final da v0.3:
 | ET17 Modelos mistos e medidas repetidas | **Em andamento** (pareados e modelo misto de simetria composta entregues e validados) | AR(1) e não estruturada, testes F multi-gl, resultados guardados no projeto, exemplos |
 | ET18 Monod e potência | **Em andamento** (Monod/Haldane/Hill e potência entregues e validados) | Perfil de verossimilhança, NIST StRD, simulação, exemplos |
 | ET19 Google Drive | **Em andamento** (versão web entregue, testada com Google simulado) | Verificação com conta real (usuário), Windows (loopback + PKCE), fila persistente |
-| ET20 DOCX, comentários, Safari, domínio, canais | Planejada | tudo |
+| ET20 DOCX, comentários, Safari, domínio, canais | **Em andamento** (DOCX, comentários e especificação entregues; WebKit e canais parciais) | Safari real (Mac), domínio (decisão do usuário), canal verificado com release publicado, comentários por tabela, revisão da especificação |
 
 ## 4. Dependências do usuário
 

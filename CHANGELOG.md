@@ -12,6 +12,14 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 
+### DOCX, comentários, canais e WebKit (ET20)
+
+- **Relatório em Word (.docx):** novo botão *Exportar relatório (Word)* com as mesmas seções do HTML e do PDF (proveniência, interpretação, listas, **tabelas editáveis**, figuras em PNG, logotipo opcional e «Página X de Y»), gerado no próprio dispositivo. Conferido por testes, por E2E em navegador real e pela abertura no **LibreOffice**; **não aberto no Word**. [Guia](docs/guias/exportacao.md), [DT-0026](docs/decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md).
+- **Comentários de revisão:** na figura, no experimento ou numa análise; respostas, resolver e reabrir; cada um registra a **revisão dos dados** em que foi escrito e é salvo no projeto (campo opcional `comments`, esquema 1). Opcionais nos relatórios (HTML, PDF e Word). [Guia](docs/guias/comentarios.md). Sem interface por tabela nem edição de comentário enviado.
+- **Canais de atualização** experimental e estável: manifesto assinado por canal, fluxo `channels.yml` após a publicação do release e escolha do canal nas preferências do aplicativo Windows. O canal estável não tem versões até a 1.0.0; **fluxo não verificado com um release real**. [Publicação](docs/distribuicao/publicacao.md).
+- **WebKit** (motor do Safari) no Playwright e no CI: a suíte E2E inteira passa nele. **Safari real não foi verificado** (sem Mac); no Safari o Tab não percorre links por padrão (use Option+Tab). **Domínio próprio:** não feito (sem decisão do usuário).
+- **Especificação da edição simultânea** (sem implementação): [operações, conflitos, presença, transporte e verificação](docs/arquitetura/edicao-simultanea.md), com as decisões pedidas ao usuário.
+
 ### Google Drive (ET19)
 
 - **Google Drive opcional na versão web:** conectar (Google Identity Services, escopo `drive.file`), **Salvar no Drive** na pasta «EnziTAG Optima», **Abrir do Drive…** pelo Picker e desconectar. Os scripts do Google só carregam ao clicar em Conectar; o token fica só na memória. Se o arquivo foi alterado no Drive depois da sua leitura, ele **não é sobrescrito**: seu trabalho vai para uma cópia ao lado. [Guia](docs/guias/google-drive.md), [DT-0025](docs/decisoes-tecnicas/dt-0025-google-drive-opcional-na-versao-web.md). **Testado com Google simulado; autorização real não verificada; versão para Windows ainda sem Drive.**

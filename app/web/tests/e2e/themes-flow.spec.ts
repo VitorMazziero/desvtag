@@ -21,6 +21,7 @@ test("o seletor oferece os seis temas, aplica e lembra a escolha; valor desconhe
 }) => {
   await page.goto("/");
   const select = page.getByLabel("Tema");
+  await expect(select).toBeVisible();
   const options = await select.locator("option").allTextContents();
   expect(options).toEqual([
     "Soft Light",

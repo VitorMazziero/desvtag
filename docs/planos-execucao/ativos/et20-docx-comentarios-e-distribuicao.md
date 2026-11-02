@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado |
+| Estado | **Ativo** (2026-11-02) — entregue parcialmente; ver §11 |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F13 (canais), F14 (DOCX, comentários, Safari, domínio próprio, especificação da edição simultânea) |
 | Marco | Prepara M5 e M6 |
 | Depende de | ET14; ET19 para comentários em projetos compartilhados |
 | Módulos | U16 (`services/export/docx.ts`), U15 (`CommentsPanel`), P01 (`annotation.rs`), E04 (`updater.rs`), U18/U12 (compatibilidade WebKit), `.github/workflows/{release,pages}.yml` |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -47,14 +47,14 @@ Exportar relatórios em **DOCX** com o mesmo conteúdo e metadados do relatório
 
 ## 5. Tarefas
 
-- [ ] **T01** — DTs (§4).
-- [ ] **T02** — DOCX: gerador, conteúdo igual ao relatório, botão na seção «Exportar», verificação no Word e no LibreOffice.
-- [ ] **T03** — Comentários: projeto (campo opcional), interface (`CommentsPanel`), exportação opcional no relatório; PT/EN, temas, axe.
-- [ ] **T04** — Safari: correções de compatibilidade; E2E no WebKit do Playwright; verificação no Safari real se o usuário disponibilizar um Mac (senão, registrar como não verificado).
-- [ ] **T05** — Domínio próprio: só com decisão do usuário (PD-13); configuração, HTTPS e caminhos; senão, registrar que continua o endereço do GitHub Pages.
-- [ ] **T06** — Canais experimental e estável: release, manifestos, preferência no aplicativo, teste de troca de canal.
-- [ ] **T07** — Especificação da edição simultânea em `docs/arquitetura/` (sem código).
-- [ ] **T08** — Relatório de validação da v0.3, matriz de cobertura e CHANGELOG.
+- [x] **T01** — DTs (§4): [DT-0026](../../decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md).
+- [x] **T02** — DOCX: gerador, conteúdo igual ao relatório, botão na seção «Exportar». Verificado por teste de unidade (pacote e estrutura), E2E em navegador real (mesmos títulos do HTML, na mesma ordem; figuras PNG) e **abertura e conversão no LibreOffice**; **Word não foi aberto** (não há Word neste ambiente).
+- [x] **T03** — Comentários: projeto (campo opcional `comments`), interface (`CommentThread` na figura e `CommentsPanel`), exportação opcional no relatório; PT/EN, seis temas, axe. **Sem interface por tabela** (o modelo aceita) e sem edição de comentário já enviado.
+- [~] **T04** — Safari: E2E no **WebKit do Playwright** (suíte inteira verde; no CI em Linux); **Safari real não verificado** (sem Mac).
+- [ ] **T05** — Domínio próprio: **sem decisão do usuário (PD-13)**; nada feito; continua o endereço do GitHub Pages. Passos previstos na [DT-0026 §5](../../decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md).
+- [~] **T06** — Canais experimental e estável: `channels.yml`, `scripts/channels.mjs` (testado), comandos Rust `update_check`/`update_install` com endereço por canal (testado), preferência no aplicativo. **Fluxo ponta a ponta não verificado** (exige um release publicado).
+- [x] **T07** — [Especificação da edição simultânea](../../arquitetura/edicao-simultanea.md) (sem código), **aguardando a revisão do usuário**.
+- [~] **T08** — Matriz de cobertura e CHANGELOG atualizados; [relatório de validação da v0.3](../../../validation/reports/v0.3.0/README.md) escrito como **rascunho** (a v0.3.0 não está publicada).
 
 ## 6. Entregas
 
@@ -89,7 +89,9 @@ DTs; guia de exportação (DOCX); guia de comentários; [publicação](../../dis
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado (plano da v0.3). Etapa não iniciada. |
+| 2026-11-02 | **Ativada.** Entregues T01–T03 e T07; T04 e T06 parciais (WebKit do Playwright; canais sem verificação com release real); T05 aguarda decisão do usuário; T08 rascunho. Vitest 380+; Chromium E2E verde; WebKit E2E verde após duas correções de premissa dos testes. |
 
 ## 12. Desvios e descobertas
 
-Nenhum até o momento.
+- **Link de salto no WebKit:** o WebKit (Safari) não põe links na ordem do Tab; o teste do link «Ir para o conteúdo» passou a conferir, no WebKit, a ordem dos controles do cabeçalho. Para usuários de Safari, o guia de acessibilidade deve lembrar Option+Tab.
+- **Resolvido sem opacidade:** comentários resolvidos usam borda tracejada (a opacidade reduzia o contraste abaixo de 4,5:1; detectado pelo axe).

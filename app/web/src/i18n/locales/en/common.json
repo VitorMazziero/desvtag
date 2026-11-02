@@ -691,7 +691,14 @@
     "installing": "Downloading and installing…",
     "failed": "Could not check right now (no internet or service unavailable).",
     "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed.",
-    "notes": "What is new in this version"
+    "notes": "What is new in this version",
+    "channel": "Update channel",
+    "channelExperimental": "Experimental",
+    "channelStable": "Stable",
+    "channelHelp": {
+      "experimental": "Receives every published version, including the 0.x series. It is the only channel until version 1.0.0 exists.",
+      "stable": "Receives stable versions only (from 1.0.0). Until then this channel has no versions and the check will report that it could not verify."
+    }
   },
   "mixture": {
     "analysis": {

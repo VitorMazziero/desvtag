@@ -16,7 +16,6 @@ O aplicativo (MIT) inclui os componentes abaixo, sob as licenças indicadas.
 @noble/hashes 1.8.0 — MIT — Copyright (c) 2022 Paul Miller (https://paulmillr.com)
 @swc/helpers 0.5.23 — Apache-2.0 — "Licensor" shall mean the copyright owner or entity authorized by
 @tauri-apps/api 2.12.4 — Apache-2.0 OR MIT
-@tauri-apps/plugin-updater 2.14.1 — MIT OR Apache-2.0
 @types/node 26.6.6 — MIT — Copyright (c) Microsoft Corporation.
 @typescript/typescript-aix-ppc64 7.0.2 — Apache-2.0
 @typescript/typescript-darwin-arm64 7.0.2 — Apache-2.0

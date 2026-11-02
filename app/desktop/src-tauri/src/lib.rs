@@ -6,6 +6,7 @@
 mod commands;
 mod files;
 mod jobs;
+mod updates;
 
 /// Inicia o aplicativo.
 pub fn run() {
@@ -22,6 +23,8 @@ pub fn run() {
             commands::project_save,
             commands::project_save_copy,
             commands::project_detach,
+            updates::update_check,
+            updates::update_install,
         ])
         .run(tauri::generate_context!());
     if let Err(error) = result {

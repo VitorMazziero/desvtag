@@ -4,6 +4,24 @@
 
 > **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
 
+## Canais de atualização (v0.3)
+
+O aplicativo Windows tem um **canal de atualização** nas preferências (junto do botão *Verificar atualizações*):
+
+| Canal | Recebe | Manifesto |
+|---|---|---|
+| **Experimental** (padrão na série 0.x) | Toda versão publicada | `https://github.com/VitorMazziero/enzitag-optima/releases/download/channel-experimental/latest.json` |
+| **Estável** | Só versões ≥ 1.0.0, sem sufixo e não marcadas como pré-lançamento | `.../releases/download/channel-stable/latest.json` |
+
+**Como funciona.** Cada release continua trazendo o seu `latest.json` assinado ([`release.yml`](../../.github/workflows/release.yml)). Quando o mantenedor **publica** o release, o fluxo [`channels.yml`](../../.github/workflows/channels.yml) copia esse `latest.json` para o release fixo de cada canal em que a versão entra (regra em `scripts/channels.mjs`, testada). Os releases `channel-*` só guardam o manifesto; **não são versões para baixar**. Também é possível rodar o fluxo à mão (*Run workflow*, informando uma etiqueta já publicada), por exemplo para criar os canais a partir da v0.2.0 ou da v0.3.0.
+
+**Regras de publicação**
+
+1. **Até a v1.0.0, publique os releases da série 0.x como releases normais** (não como pré-lançamento): os aplicativos 0.1 e 0.2 já instalados consultam `releases/latest/download/latest.json`, que só enxerga releases não pré-lançamento.
+2. Pré-lançamentos (`v1.1.0-rc.1` ou release marcado como pré-lançamento) entram só no canal experimental.
+3. A assinatura é a mesma nos dois canais (chave pública embutida): trocar de canal não permite instalar nada sem a assinatura.
+4. **Verificação pendente:** o fluxo `channels.yml` só pode ser exercitado com um release publicado; registrar o resultado na primeira publicação com a v0.3.0.
+
 ## Publicação da v0.2.0
 
 Datas de 2026-11-02, horário de Brasília (UTC−3), extraídas do GitHub. Endereços consultados na data do registro.

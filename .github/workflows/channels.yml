@@ -1,0 +1,59 @@
+name: Canais de atualização
+
+# Depois que o mantenedor PUBLICA um release, copia o manifesto assinado (latest.json) para o release
+# fixo de cada canal em que a versão entra (scripts/channels.mjs). O aplicativo lê o manifesto do
+# seu canal; nada muda para quem não publicou. Rascunhos nunca chegam aqui.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Etiqueta já publicada a redistribuir nos canais (vX.Y.Z)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  channels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Etiqueta e canais
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          tag="${EVENT_TAG:-$INPUT_TAG}"
+          case "$tag" in channel-*) echo "release de canal: nada a fazer"; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0;; esac
+          prerelease=$(gh release view "$tag" --json isPrerelease --jq .isPrerelease)
+          channels=$(node scripts/channels.mjs "$tag" "$prerelease" | tr '\n' ' ')
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "channels=$channels" >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "Versão $tag → canais: $channels"
+      - name: Copiar o manifesto para cada canal
+        if: steps.plan.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.plan.outputs.tag }}
+          CHANNELS: ${{ steps.plan.outputs.channels }}
+        run: |
+          mkdir manifest && gh release download "$TAG" --pattern latest.json --dir manifest
+          test -s manifest/latest.json
+          for channel in $CHANNELS; do
+            name="channel-$channel"
+            if ! gh release view "$name" >/dev/null 2>&1; then
+              gh release create "$name" --prerelease --target "${GITHUB_SHA}" \
+                --title "Canal de atualização: $channel" \
+                --notes "Release fixo do canal $channel. Contém só o manifesto assinado (latest.json) da versão mais recente do canal; não é uma versão para baixar."
+            fi
+            gh release upload "$name" manifest/latest.json --clobber
+            echo "canal $channel → $TAG"
+          done

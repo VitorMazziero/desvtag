@@ -30,6 +30,7 @@ jobs:
       - run: node scripts/check-docs-links.mjs
       - run: node scripts/check-case-collisions.mjs
       - run: node scripts/check-versions.mjs
+      - run: node --test scripts/channels.test.mjs
 
   rust:
     name: Rust (fmt, clippy, testes, WASM)
@@ -82,9 +83,9 @@ jobs:
       - run: npm run build:wasm
       - run: npm run typecheck
       - run: npm test
-      - run: npx playwright install --with-deps chromium firefox
+      - run: npx playwright install --with-deps chromium firefox webkit
       - name: E2E com o motor WASM real (Chromium e Firefox)
-        run: E2E_BROWSERS=chromium,firefox npm run test:e2e
+        run: E2E_BROWSERS=chromium,firefox,webkit npm run test:e2e
         env:
           CI: "true"
       - uses: actions/upload-artifact@v4

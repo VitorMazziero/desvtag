@@ -691,7 +691,14 @@
     "installing": "Baixando e instalando…",
     "failed": "Não foi possível verificar agora (sem internet ou serviço indisponível).",
     "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados.",
-    "notes": "Novidades desta versão"
+    "notes": "Novidades desta versão",
+    "channel": "Canal de atualização",
+    "channelExperimental": "Experimental",
+    "channelStable": "Estável",
+    "channelHelp": {
+      "experimental": "Recebe todas as versões publicadas, inclusive as da série 0.x. É o único canal enquanto não houver a versão 1.0.0.",
+      "stable": "Recebe somente versões estáveis (a partir da 1.0.0). Antes disso este canal não tem versões e a verificação avisará que não foi possível verificar."
+    }
   },
   "mixture": {
     "analysis": {

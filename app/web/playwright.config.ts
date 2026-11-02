@@ -8,6 +8,8 @@ const projectFor: Record<string, object> = {
   firefox: devices["Desktop Firefox"],
   chrome: { ...devices["Desktop Chrome"], channel: "chrome" },
   msedge: { ...devices["Desktop Edge"], channel: "msedge" },
+  // WebKit do Playwright: o motor do Safari, mas não o Safari em si (ver DT-0026).
+  webkit: devices["Desktop Safari"],
 };
 
 export default defineConfig({

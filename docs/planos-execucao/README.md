@@ -49,7 +49,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET17 | Modelos mistos, medidas repetidas e comparações pareadas | v0.3 | **Ativo** (2026-11-02) | [ativos/et17-modelos-mistos-e-medidas-repetidas.md](ativos/et17-modelos-mistos-e-medidas-repetidas.md) |
 | ET18 | Ajuste não linear (Monod) e potência | v0.3 | **Ativo** (2026-11-02) | [ativos/et18-nao-linear-e-potencia.md](ativos/et18-nao-linear-e-potencia.md) |
 | ET19 | Google Drive e compartilhamento inicial | v0.3 | **Ativo** (2026-11-02) | [ativos/et19-google-drive-e-compartilhamento.md](ativos/et19-google-drive-e-compartilhamento.md) |
-| ET20 | DOCX, comentários, Safari, domínio próprio e canais de atualização | v0.3 | Planejado | [planejados/et20-docx-comentarios-e-distribuicao.md](planejados/et20-docx-comentarios-e-distribuicao.md) |
+| ET20 | DOCX, comentários, Safari, domínio próprio e canais de atualização | v0.3 | **Ativo** (2026-11-02) | [ativos/et20-docx-comentarios-e-distribuicao.md](ativos/et20-docx-comentarios-e-distribuicao.md) |
 | ET21 | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | v0.3 | **Ativo** (2026-11-02) | [ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.
