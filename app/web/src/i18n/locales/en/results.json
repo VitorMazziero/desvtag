@@ -467,5 +467,104 @@
     "warnFewDf": "Only {{df}} residual degrees of freedom remain: error estimates are unreliable.",
     "warnOverfit": "Predicted R² is well below adjusted R²: a sign of overfitting. Prefer a simpler model.",
     "optimism": "P-values computed after choosing terms from the same data are optimistic. Confirm the final model with new runs."
+  },
+  "procedure": {
+    "title": "Treatment comparison",
+    "groups": "Groups",
+    "pairs": "Comparisons",
+    "different": "difference detected",
+    "notDetected": "difference not detected",
+    "pairsHelp": "The adjusted p-value already accounts for the family of comparisons. Sharing a letter does not prove equivalence: it only means the difference was not detected.",
+    "controlNote": "Each treatment is compared only with the control ({{control}}); there are no letters.",
+    "names": {
+      "gamesHowell": "Games–Howell (unequal variances)",
+      "dunnett": "Dunnett (against a control)",
+      "bonferroni": "t tests with Bonferroni adjustment",
+      "holm": "t tests with Holm adjustment",
+      "kruskalDunn": "Kruskal–Wallis with Dunn comparisons"
+    },
+    "explain": {
+      "gamesHowell": "Does not assume equal variances: uses Welch's ANOVA and, for each pair, Welch–Satterthwaite degrees of freedom with the studentized range.",
+      "dunnett": "Compares each treatment only with the control, controlling the family error with the exact distribution of the maximum of the t statistics.",
+      "bonferroni": "t tests between all pairs with the pooled variance; p-values are multiplied by the number of comparisons.",
+      "holm": "t tests between all pairs with the pooled variance; Holm adjustment, always at least as powerful as Bonferroni.",
+      "kruskalDunn": "Rank-based method, no normality assumption; ties receive the average rank and enter the correction."
+    },
+    "global": {
+      "welch_anova": "Welch's ANOVA: F = {{stat}} ({{df1}} and {{df2}} d.f.), p = {{p}}.",
+      "anova": "One-way ANOVA: F = {{stat}} ({{df1}} and {{df2}} d.f.), p = {{p}}.",
+      "kruskal_wallis": "Kruskal–Wallis: H = {{stat}} ({{df1}} d.f.), p = {{p}}."
+    },
+    "cols": {
+      "group": "Group",
+      "mean": "Mean",
+      "sd": "Standard deviation",
+      "median": "Median",
+      "meanRank": "Mean rank",
+      "letters": "Letters",
+      "comparison": "Comparison",
+      "difference": "Mean difference",
+      "rankDifference": "Mean rank difference",
+      "stdError": "Standard error",
+      "statistic": "Statistic",
+      "p": "p-value",
+      "pAdjusted": "Adjusted p-value",
+      "result": "Result"
+    },
+    "chart": {
+      "title": "Means of {{response}}",
+      "description": "Group means with one-standard-deviation bars and comparison letters.",
+      "sd": "Bars: mean ± group standard deviation",
+      "letters": "Shared letters = difference not detected (α = {{alpha}})"
+    },
+    "export": {
+      "groupsCsv": "Groups (CSV)",
+      "pairsCsv": "Comparisons (CSV)"
+    }
+  },
+  "factorial": {
+    "title": "Multifactor ANOVA",
+    "summary": "Model with {{type}} sums of squares, {{n}} observations, R² = {{r2}} and adjusted R² = {{adj}}.",
+    "significant": "Significant terms: {{terms}}.",
+    "noneSignificant": "No term was significant at the chosen level.",
+    "anova": "ANOVA table",
+    "block": "block",
+    "ssType": {
+      "typeI": "type I (sequential)",
+      "typeII": "type II",
+      "typeIII": "type III"
+    },
+    "cols": {
+      "term": "Term",
+      "df": "d.f.",
+      "ss": "Sum of squares",
+      "ms": "Mean square",
+      "p": "p-value",
+      "estimate": "Estimate",
+      "se": "Standard error",
+      "ci": "Confidence interval",
+      "letters": "Letters",
+      "contrast": "Contrast"
+    },
+    "marginal": "Marginal means: {{factors}}",
+    "marginalCaption": "Least-squares means; comparisons with {{adjustment}} adjustment",
+    "adjustment": {
+      "tukey": "Tukey",
+      "none": "no",
+      "bonferroni": "Bonferroni",
+      "holm": "Holm"
+    },
+    "contrasts": "Contrasts",
+    "chart": {
+      "title": "Marginal means of {{response}} ({{factors}})",
+      "description": "Least-squares means with confidence intervals and letters.",
+      "ci": "Bars: {{level}}% CI of the marginal mean",
+      "letters": "Shared letters = difference not detected (α = {{alpha}})"
+    },
+    "export": {
+      "anovaCsv": "ANOVA (CSV)",
+      "marginalCsv": "Marginal means of {{factors}} (CSV)",
+      "pairsCsv": "Comparisons of {{factors}} (CSV)"
+    }
   }
 }

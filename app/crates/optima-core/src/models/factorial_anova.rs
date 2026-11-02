@@ -139,7 +139,7 @@ pub struct FactorialRequest {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
 #[serde(rename_all = "camelCase")]
 #[ts(export)]
-pub struct AnovaRow {
+pub struct FactorialAnovaRow {
     /// Termo (`A`, `A × B`, `Resíduo`, `Total`).
     pub term: String,
     /// Fatores do termo (vazio no resíduo e no total).
@@ -254,11 +254,11 @@ pub struct FactorialResult {
     /// Nível de significância.
     pub alpha: f64,
     /// Termos do modelo.
-    pub terms: Vec<AnovaRow>,
+    pub terms: Vec<FactorialAnovaRow>,
     /// Resíduo.
-    pub residual: AnovaRow,
+    pub residual: FactorialAnovaRow,
     /// Total corrigido.
-    pub total: AnovaRow,
+    pub total: FactorialAnovaRow,
     /// `R²`.
     pub r_squared: Stat,
     /// `R²` ajustado.
@@ -625,7 +625,7 @@ pub fn analyze(request: &FactorialRequest) -> Result<FactorialResult, CoreError>
         } else {
             (f64::NAN, f64::NAN, f64::NAN)
         };
-        rows.push(AnovaRow {
+        rows.push(FactorialAnovaRow {
             term: term_name(&setup.factors, term),
             factors: term.iter().map(|&p| setup.factors[p].id.clone()).collect(),
             is_block: term.len() == 1 && setup.factors[term[0]].is_block,
@@ -636,7 +636,7 @@ pub fn analyze(request: &FactorialRequest) -> Result<FactorialResult, CoreError>
             p_value: stat(p),
         });
     }
-    let blank = |term: &str, df: usize, ss: f64, ms: f64| AnovaRow {
+    let blank = |term: &str, df: usize, ss: f64, ms: f64| FactorialAnovaRow {
         term: term.to_string(),
         factors: Vec::new(),
         is_block: false,

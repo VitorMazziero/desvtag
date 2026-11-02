@@ -7,7 +7,9 @@ import { resultIsCurrent } from "../workflow/guards";
 import { ComparisonResults } from "./ComparisonResults";
 import { DescriptiveTable } from "./DescriptiveTable";
 import { DesignResults } from "./DesignResults";
+import { FactorialResults } from "./FactorialResults";
 import { Interpretation } from "./Interpretation";
+import { ProcedureResults } from "./ProcedureResults";
 import { SectionedResults } from "./SectionedResults";
 import { SurfaceResults } from "./SurfaceResults";
 
@@ -86,9 +88,36 @@ export function ResultsView({
         )}
       </section>
     );
-  // Procedimentos novos e ANOVA multifatorial: resultados já calculados e guardados; a tela deles
-  // é a próxima tarefa da ET11 (ver o plano).
-  if (stored.kind === "procedure" || stored.kind === "factorial") return null;
+  if (stored.kind === "procedure" || stored.kind === "factorial") {
+    const body =
+      stored.kind === "procedure" ? (
+        <ProcedureResults result={stored.result} signature={stored.signature} language={language} />
+      ) : (
+        <FactorialResults result={stored.result} signature={stored.signature} language={language} />
+      );
+    return (
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">
+          {t(stored.kind === "procedure" ? "procedure.title" : "factorial.title")}
+        </h2>
+        {!resultIsCurrent(state) && (
+          <p role="status" className="error">
+            {t("stale")}
+          </p>
+        )}
+        {report ? (
+          body
+        ) : (
+          <SectionedResults>
+            {body}
+            <div data-section="export">
+              <ExportSettingsPanel />
+            </div>
+          </SectionedResults>
+        )}
+      </section>
+    );
+  }
   const response = state.responses.find((r) => r.id === stored.result.responseId);
   const responseName = response?.name || stored.result.responseId;
   return (

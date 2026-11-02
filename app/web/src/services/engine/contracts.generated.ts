@@ -1394,6 +1394,43 @@ levelsText: string, };
 export type FactorValue = number | string;
 
 /**
+ * Linha da tabela de ANOVA.
+ */
+export type FactorialAnovaRow = { 
+/**
+ * Termo (`A`, `A × B`, `Resíduo`, `Total`).
+ */
+term: string, 
+/**
+ * Fatores do termo (vazio no resíduo e no total).
+ */
+factors: Array<StableId>, 
+/**
+ * É o efeito do bloco.
+ */
+isBlock: boolean, 
+/**
+ * Graus de liberdade.
+ */
+df: number, 
+/**
+ * Soma de quadrados.
+ */
+sumSquares: Stat, 
+/**
+ * Quadrado médio.
+ */
+meanSquare: Stat, 
+/**
+ * Estatística `F`.
+ */
+fValue: Stat, 
+/**
+ * Valor-p.
+ */
+pValue: Stat, };
+
+/**
  * Solicitação.
  */
 export type FactorialRequest = { 
@@ -1449,15 +1486,15 @@ alpha: number,
 /**
  * Termos do modelo.
  */
-terms: Array<AnovaRow>, 
+terms: Array<FactorialAnovaRow>, 
 /**
  * Resíduo.
  */
-residual: AnovaRow, 
+residual: FactorialAnovaRow, 
 /**
  * Total corrigido.
  */
-total: AnovaRow, 
+total: FactorialAnovaRow, 
 /**
  * `R²`.
  */

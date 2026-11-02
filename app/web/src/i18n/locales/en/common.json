@@ -168,6 +168,55 @@
       "asSurface": "Fit a response surface (second-order model)",
       "asSurfaceHelp": "Use for custom or imported matrices with quantitative factors; the coded scale uses the lowest and highest value of each factor.",
       "needDesign": "Generate the design in the data step."
+    },
+    "method": {
+      "legend": "Analysis method",
+      "oneWay": "One factor (treatment comparison)",
+      "factorial": "Several factors and/or blocks (multifactor ANOVA)",
+      "procedure": "Comparison procedure",
+      "procedures": {
+        "tukey": "Tukey (equal variances)",
+        "gamesHowell": "Games–Howell (unequal variances)",
+        "dunnett": "Dunnett (each treatment against a control)",
+        "bonferroni": "Bonferroni (adjusted t tests)",
+        "holm": "Holm (adjusted t tests)",
+        "kruskalDunn": "Kruskal–Wallis with Dunn (non-parametric)"
+      },
+      "help": {
+        "tukey": "Default: all pairs, assuming equal variances.",
+        "gamesHowell": "Use when groups have very different variances or sizes.",
+        "dunnett": "Use when only each treatment against the control matters.",
+        "bonferroni": "All pairs with pooled variance; conservative.",
+        "holm": "Like Bonferroni but less conservative.",
+        "kruskalDunn": "Use when data are not normally distributed or are ordinal."
+      },
+      "control": "Control level",
+      "adjustment": "Dunn p-value adjustment",
+      "treatments": "Treatment factors",
+      "block": "Block factor (optional)",
+      "noBlock": "No block",
+      "blockHelp": "The block enters as an additive effect (no interaction) and removes between-block variation from the error.",
+      "order": "Interactions",
+      "orders": {
+        "1": "Main effects only",
+        "2": "Up to two-factor interactions",
+        "3": "Up to three-factor interactions"
+      },
+      "ssType": "Sums of squares",
+      "ssTypes": {
+        "typeI": "Type I (sequential)",
+        "typeII": "Type II",
+        "typeIII": "Type III"
+      },
+      "ssHelp": "With balanced data the three types agree; with unbalanced data, type III tests each term after all others and type II respects model hierarchy.",
+      "contrasts": "Contrasts",
+      "contrastsHelp": "Define a linear combination of one factor's means (coefficients sum to zero), for example 1; -0.5; -0.5.",
+      "contrastName": "Contrast name",
+      "contrastFactor": "Factor",
+      "contrastCoefficients": "Coefficients (one per level)",
+      "addContrast": "Add contrast",
+      "removeContrast": "Remove",
+      "contrastInvalid": "Enter a name and {{count}} numeric coefficients (one per factor level)."
     }
   },
   "project": {

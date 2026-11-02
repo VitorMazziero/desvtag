@@ -37,7 +37,10 @@ export function stepSatisfied(step: StepId, state: ProjectState, ctx: GuardConte
     case "analysis":
       return (
         state.analysis.responseId !== null &&
-        (analysisKind(state) !== "oneWay" || state.analysis.factorId !== null) &&
+        (!["oneWay", "procedure"].includes(analysisKind(state)) ||
+          state.analysis.factorId !== null) &&
+        (analysisKind(state) !== "factorial" ||
+          (state.analysis.factorial?.factorIds.length ?? 0) > 0) &&
         (analysisKind(state) !== "design" || state.design !== null) &&
         resultIsCurrent(state)
       );
