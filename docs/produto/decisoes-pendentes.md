@@ -1,6 +1,6 @@
 # Decisões pendentes
 
-**Estado:** vigente · **Atualizado em:** 2026-11-01
+**Estado:** vigente · **Atualizado em:** 2026-11-02
 
 Detalhes de implementação ainda não resolvidos, após aprovação explícita dos 14 pontos de produto.
 
@@ -14,16 +14,16 @@ O [roteiro do produto](../planos-execucao/roteiro-produto.md) define a sequênci
 | PD-02 | Contêiner interno, esquema e migrações | F02 | ET03 | Arquivo aberto `.enzitag`, vários experimentos, revisões e resultados preservados |
 | PD-03 | Retenção/compactação do histórico e limites de recuperação | F02 | ET03 | Recuperação após dois segundos e checkpoints; sem perda silenciosa |
 | PD-04 | Variantes, estimadores, algoritmos e tolerâncias | F03–F09 | ET04–ET08 (v0.1); demais posteriores | Catálogo completo e validação por método |
-| PD-05 | Inventário Protimiza não visível nas capturas e rótulo CCD | F05–F06 | ET06–ET07 | Cobertura integral requerida; não copiar nomenclatura sem conferir a matriz |
+| PD-05 | Inventário Protimiza não visível nas capturas e rótulo CCD | F05–F06 | ET06–ET07; conferência do CCD na ET14-T02 (depende das capturas do usuário) | Cobertura integral requerida; não copiar nomenclatura sem conferir a matriz |
 | PD-06 | Biblioteca de tabelas/gráficos e renderização 3D | F01/F04/F06/F10 | ET02, ET05, ET07, ET09 | Arquitetura de cálculo separada da apresentação; formatos aprovados |
 | PD-07 | Estratégia de busca e critérios de parada | F07 | ET08 | Desejabilidade, restrições e vários candidatos |
 | PD-08 | Escala dos casos reais e dados autorizados para distribuição | Durante cada fase | Todas | Exemplos sintéticos identificados e referências independentes |
-| PD-09 | Credenciais públicas de cliente OAuth, origens e fluxo nativo | F11 | Posterior à v0.1 | Drive opcional, pasta visível e escopo `drive.file`; nunca exigir login local |
-| PD-10 | Detecção de conflitos e proteção contra gravações concorrentes | F11 | Posterior à v0.1 | Preservar versões e permitir escolha/cópia |
+| PD-09 | Credenciais públicas de cliente OAuth, origens e fluxo nativo | F11 | ET19 (v0.3; o usuário cria o projeto OAuth) | Drive opcional, pasta visível e escopo `drive.file`; nunca exigir login local |
+| PD-10 | Detecção de conflitos e proteção contra gravações concorrentes | F11 | ET19 (v0.3) | Preservar versões e permitir escolha/cópia |
 | PD-11 | Fonte de assinatura de código do instalador, se adotada | F13 | ET10 | **Resolvida em 2026-11-01:** instalador sem assinatura de código na v0.1 (aviso do Windows explicado nas notas); atualizador com chave própria ([DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
-| PD-12 | Versões exatas dos navegadores e matriz de compatibilidade | F12/F13 | ET10 | Windows 11 de 64 bits, Chrome, Edge e Firefox prioritários |
-| PD-13 | Domínio próprio, Windows 10 e Safari | F14 | Posterior à v0.1 | **Windows 10 resolvida em 2026-11-01** (plataforma verificada da v0.2, [decisões aprovadas §16](decisoes-aprovadas.md#16-escopo-e-plataforma-da-v02-2026-11-01)); domínio próprio (por ora o endereço do GitHub Pages) e Safari seguem como adições posteriores |
-| PD-14 | Protocolo de comentários e colaboração simultânea | F14 | Posterior à v0.1 | Comentários posteriores; edição simultânea exige especificação própria |
+| PD-12 | Versões exatas dos navegadores e matriz de compatibilidade | F12/F13 | ET10 | Chrome, Edge e Firefox prioritários; Windows 10 Pro como plataforma Windows verificada (Windows 11 não será validado, [decisões aprovadas §17](decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)) |
+| PD-13 | Domínio próprio, Windows 10 e Safari | F14 | ET20 (v0.3) | **Windows 10 resolvida em 2026-11-01** (plataforma verificada da v0.2, [decisões aprovadas §16](decisoes-aprovadas.md#16-escopo-e-plataforma-da-v02-2026-11-01)); domínio próprio (por ora o endereço do GitHub Pages) e Safari seguem como adições posteriores |
+| PD-14 | Protocolo de comentários e colaboração simultânea | F14 | ET20 (v0.3: comentários e especificação) | Comentários posteriores; edição simultânea exige especificação própria |
 | PD-15 | Hospedagem web e visibilidade do repositório na publicação | F13 | ET10 (decisão do usuário) | **Resolvida em 2026-11-01:** repositório público; GitHub Pages por disparo manual ([DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md)) |
 | PD-16 | Autorização para distribuir os dados reais do exemplo `kLa` (repositório público) | F12 | ET11 (T13) | **Tratada em 2026-11-01:** sem confirmação de distribuição, o repositório traz o exemplo [06 — kLa sintético](../../examples/06-kla-sintetico/README.md) (dados sintéticos equivalentes); os dados reais ficam só na máquina do usuário e podem ser versionados se ele autorizar |
 | PD-17 | Logo do grupo de pesquisa: arquivo, autorização de uso e locais de exibição | F01 | ET12 (T01) | **Resolvida em 2026-11-01:** logo = `docs/imagens/logo.png` (marca EnziTAG, 558 × 155 px, já versionado); exibido no cabeçalho, na tela inicial e como crédito no relatório HTML (desligável); fora das figuras exportadas; ícone do aplicativo inalterado. Padrões mantidos sem pedido em contrário: texto alternativo sem nome por extenso e logo fora da licença MIT |

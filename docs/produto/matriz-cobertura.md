@@ -31,9 +31,9 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Box–Behnken | F06 | v0.1 | ET07 | implementado para 3 a 5 fatores (6 e 7 recusados explicitamente); validado numericamente (nativo e WebAssembly); Windows 11 pendente | [método](../metodos/box-behnken.md#10-validação), [análise 003](../../validation/cases/response_surface/003-box-behnken-3-fatores/README.md) |
 | Planejamento personalizado ou matriz importada | F06 | v0.1 | ET07 | implementado; validado numericamente (nativo e WebAssembly); Windows 11 pendente (análise de qualquer matriz quantitativa, com posto e estimabilidade) | [método](../metodos/planejamento-personalizado.md#10-validação), [análise 004](../../validation/cases/response_surface/004-personalizado-3-fatores/README.md) |
 | DBC e blocos em planejamentos | F08 | v0.2 | ET11 | implementado; validado numericamente (nativo, WebAssembly e aplicativo Windows 10): delineamento em blocos completos casualizados, aleatorizado com semente e idêntico à implementação independente | [método](../metodos/delineamento-em-blocos.md#10-validação), [casos](../../validation/cases/randomized_block_design/rcbd.json) |
-| Níveis mistos | F09a | posterior | — | não iniciado | — |
-| Misturas | F09b | posterior | — | não iniciado | — |
-| Ótimos e sujeitos a restrições, ampliação sequencial | F09c | posterior | — | não iniciado | — |
+| Níveis mistos | F09a | v0.3 | ET15 | não iniciado | — |
+| Misturas | F09b | v0.3 | ET15 | não iniciado | — |
+| Ótimos e sujeitos a restrições, ampliação sequencial | F09c | v0.3 | ET16 | não iniciado | — |
 
 ## Modelos, inferência e diagnósticos
 
@@ -51,10 +51,10 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Falta de ajuste e erro puro | F06 | v0.1 | ET06, ET07 | implementado; validado numericamente (nativo e WebAssembly); Windows 11 pendente; só calculada quando identificável, com a ausência explicada | [método](../metodos/superficie-resposta.md#10-validação), [análise 001](../../validation/cases/response_surface/001-ccd-rotacional-2-fatores/README.md), [sem erro puro 006](../../validation/cases/response_surface/006-sem-erro-puro/README.md) |
 | ANOVA multifatorial geral com interações e médias marginais | F08 | v0.2 | ET11 | implementado; validado numericamente (nativo, WebAssembly e aplicativo Windows 10): fatores cruzados, bloco aditivo, soma de quadrados tipos I, II e III, médias marginais com Tukey–Kramer, Bonferroni ou Holm | [método](../metodos/anova-multifatorial.md#10-validação), [médias marginais](../metodos/medias-marginais-contrastes.md#10-validação) |
 | ANOVA de Welch | F08 | v0.2 | ET11 | implementado; validado numericamente (nativo, WebAssembly e aplicativo Windows 10) (teste global do Games–Howell) | [método](../metodos/procedimentos-comparacao-multipla.md#10-validação) |
-| Modelos mistos | F09d | posterior | — | não iniciado | — |
-| Pares e medidas repetidas | F08/F09e | posterior | — | não iniciado | — |
-| Ajuste não linear (Monod) | F09f | posterior | — | não iniciado | — |
-| Potência e planejamento da precisão | F09g | posterior | — | não iniciado | — |
+| Modelos mistos | F09d | v0.3 | ET17 | não iniciado | — |
+| Pares e medidas repetidas | F08/F09e | v0.3 | ET17 | não iniciado | — |
+| Ajuste não linear (Monod) | F09f | v0.3 | ET18 | não iniciado | — |
+| Potência e planejamento da precisão | F09g | v0.3 | ET18 | não iniciado | — |
 
 ## Comparações
 
@@ -114,12 +114,12 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Relatório HTML | F10 | v0.1 | ET09 | implementado: autocontido, no idioma da exportação, com proveniência, tabelas, figuras e interpretação; inspecionado visualmente | [guia](../guias/exportacao.md), [DT-0014](../decisoes-tecnicas/dt-0014-exportacao-e-relatorio.md) |
 | Personalização gráfica essencial | F10 | v0.1 | ET09, fechamento | implementado: por figura, título, rótulos dos eixos, exibição das letras de comparação e tamanho da fonte, **salvos no projeto** e válidos na tela, no SVG/PNG e no relatório; paleta (inclui daltonismo), algarismos e idioma de exportação como preferências do dispositivo. Fora da v0.1: letras manuais e anotações livres, símbolos e posição das letras | [guia](../guias/exportacao.md), [DT-0016](../decisoes-tecnicas/dt-0016-dic-aleatorizado-e-estilo-por-figura.md) |
 | Figuras e relatórios em PDF; personalização completa | F10 | v0.2 | ET11 | implementado: PDF de figuras (vetorial) e de relatórios, letras manuais, anotações livres, cor, fundo, fonte, grade, legenda e resolução do PNG; verificado no navegador e no aplicativo Windows 10; no PDF a família de fonte e o hachurado não são reproduzidos | [DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md), [guia de exportação](../guias/exportacao.md), [relatório da v0.2](../../validation/reports/v0.2.0/README.md) |
-| DOCX | F14 | posterior | — | não iniciado | — |
+| DOCX | F14 | v0.3 | ET20 | não iniciado | — |
 | Publicação web e instalador Windows | F13 | v0.1 | ET10 | parcial: instalador NSIS construído, instalado, executado e desinstalado no Windows 10; fluxos `release.yml` (rascunho) e `pages.yml` (manual) prontos; **nada publicado** | [publicação](../distribuicao/publicacao.md), [DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md) |
 | Atualizador assinado, canal experimental | F13 | v0.1 | ET10 | implementado (chaves geradas, plugin, manifesto e fluxo de release); **atualização ponta a ponta não verificada** por exigir um release publicado | [DT-0017](../decisoes-tecnicas/dt-0017-atualizador-assinado-e-publicacao.md) |
-| Canal estável | F13 | posterior | — | não iniciado | — |
-| Google Drive opcional e compartilhamento por leitura/cópia | F11 | posterior | — | não iniciado | — |
-| Comentários e colaboração simultânea | F14 | posterior | — | não iniciado | — |
+| Canal estável | F13 | v0.3 (infraestrutura); v1.0.0 (primeira versão estável) | ET20 | não iniciado | — |
+| Google Drive opcional e compartilhamento por leitura/cópia | F11 | v0.3 | ET19 | não iniciado | — |
+| Comentários e colaboração simultânea | F14 | v0.3 (comentários e especificação da edição simultânea) | ET20 | não iniciado | — |
 | Windows 10 | F14 | v0.2 | ET11 | **plataforma verificada** da v0.2 (decisão do usuário, [§16](decisoes-aprovadas.md#16-escopo-e-plataforma-da-v02-2026-11-01)): testes, instalador NSIS e verificação nativa por WebView2 no Windows 10 Pro 22H2 | [relatório da v0.2](../../validation/reports/v0.2.0/README.md) |
-| Safari e domínio próprio | F14 | posterior | — | não iniciado (o endereço atual é o do GitHub Pages) | — |
+| Safari e domínio próprio | F14 | v0.3 | ET20 | não iniciado (o endereço atual é o do GitHub Pages) | — |
 | Funções do Protimiza não visíveis nas capturas | F05–F09 | a definir após inventário | ET06 | em andamento: inventário parcial registrado (sem acesso ao serviço); itens incertos listados; pergunta não bloqueante ao usuário | [inventário](catalogo-funcional.md#inventário-protimiza-et06) |
