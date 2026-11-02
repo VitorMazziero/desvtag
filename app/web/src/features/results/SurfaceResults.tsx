@@ -1,10 +1,12 @@
 // Resultados da superfície de resposta (U08/U09/U16): explicação curta, coeficientes (escala
 // codificada), ANOVA, falta de ajuste, equação nas duas escalas, região experimental, gráficos e
 // exportação com proveniência.
+
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
+import { APP_VERSION } from "../../lib/version";
 import { scatterChart } from "../../services/charts";
 import type { AnalysisRecord, Stat, SurfaceResult } from "../../services/engine";
 import { issueMessage } from "../../services/errors/presentation";
@@ -78,7 +80,7 @@ export function SurfaceResults({ result, signature, language }: Props) {
             revisionHash: revision?.contentHash ?? "",
             project: workspace.name,
             experiment: state.name,
-            appVersion: "0.1.0",
+            appVersion: APP_VERSION,
             now: new Date().toISOString(),
           })
         : null,

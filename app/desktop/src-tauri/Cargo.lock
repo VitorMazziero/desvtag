@@ -2346,7 +2346,7 @@ checksum = "7e036b411754132fd6b74e94b74e9a13c5cf606fa93d1885c35860d3060820b1"
 
 [[package]]
 name = "optima-core"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "serde",
  "ts-rs",
@@ -2354,7 +2354,7 @@ dependencies = [
 
 [[package]]
 name = "optima-desktop"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "base64 0.23.1",
  "optima-engine",
@@ -2368,7 +2368,7 @@ dependencies = [
 
 [[package]]
 name = "optima-engine"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "base64 0.23.1",
  "optima-core",
@@ -2380,7 +2380,7 @@ dependencies = [
 
 [[package]]
 name = "optima-project"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "base64 0.23.1",
  "calamine",

@@ -24,7 +24,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   test(`axe: fluxo completo sem violações no tema ${theme}`, async ({ page }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     await scan(page, `${theme}/objetivo`);
 
     await page
@@ -65,7 +65,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
 
 test("axe: controle negativo — o verificador detecta violações conhecidas", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+  await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
   await page.evaluate(() => {
     const bad = document.createElement("div");
     bad.innerHTML = '<img src="x.png"><input type="text"><button></button>';
@@ -78,7 +78,7 @@ test("axe: controle negativo — o verificador detecta violações conhecidas", 
 
 test("axe: assistente de importação e aviso de recuperação sem violações", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+  await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
   await page
     .getByRole("radio", { name: /Analyze existing data|Analisar dados existentes/ })
     .check();
@@ -112,7 +112,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     await page.getByRole("radio", { name: /Compare treatments|Comparar tratamentos/ }).check();
     await page.getByRole("button", { name: /Next|Avançar/ }).click();
     await page.getByRole("button", { name: /Add factor|Adicionar fator/ }).click();
@@ -157,7 +157,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -179,7 +179,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -203,7 +203,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.1.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(

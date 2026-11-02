@@ -1,9 +1,11 @@
 // Relatório HTML (U16): renderiza os resultados no idioma da exportação fora da tela, espera as
 // figuras e grava um arquivo único e autocontido. Os textos vêm das mesmas chaves da interface.
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { nowIso } from "../../lib/ids";
+import { APP_VERSION } from "../../lib/version";
 import {
   buildReportHtml,
   cleanReportDom,
@@ -16,8 +18,6 @@ import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ResultsView } from "../results";
-
-const APP_VERSION = "0.1.0";
 
 const slug = (text: string): string =>
   text

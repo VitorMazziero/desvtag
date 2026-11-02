@@ -1,9 +1,11 @@
 // Resultados da comparação de tratamentos de um fator (U08/U09/U16): explicação curta, tabelas,
 // gráficos com incerteza nomeada e letras, diagnósticos e exportação com proveniência.
+
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
+import { APP_VERSION } from "../../lib/version";
 import { boxChart, meansChart, scatterChart } from "../../services/charts";
 import type { AnalysisRecord, OneWayResult, Stat } from "../../services/engine";
 import { type ExportMetadata, exportMetadata, flat } from "../../services/export";
@@ -68,7 +70,7 @@ export function ComparisonResults({ result, signature, language }: Props) {
             revisionHash: revision?.contentHash ?? "",
             project: workspace.name,
             experiment: state.name,
-            appVersion: "0.1.0",
+            appVersion: APP_VERSION,
             now: new Date().toISOString(),
           })
         : null,

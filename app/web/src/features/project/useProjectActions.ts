@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { newProjectId, nowIso } from "../../lib/ids";
+import { APP_VERSION } from "../../lib/version";
 import { useEngine } from "../../services/engine/EngineContext";
 import type { OpenedFile } from "../../services/storage";
 import { useStorage } from "../../services/storage/context";
@@ -8,8 +9,6 @@ import { clearRecovery } from "../../services/storage/recovery";
 import { useProjectDispatch, useWorkspace } from "../../state/ProjectContext";
 import { commitWorkspace, hasUnsavedChanges, toDocument } from "../../state/workspace";
 import { decodeBytes, encodeDocument } from "./projectFile";
-
-const APP_VERSION = "0.1.0";
 
 /** Slug de arquivo: sem caracteres inválidos em nomes do Windows. */
 export function suggestedFileName(projectName: string): string {

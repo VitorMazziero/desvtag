@@ -1,6 +1,8 @@
 // Proveniência dos arquivos exportados a partir de um resultado guardado (método, configuração,
 // revisão e versões); compartilhada pelas telas de resultado novas.
+
 import { useMemo } from "react";
+import { APP_VERSION } from "../../lib/version";
 import type { AnalysisRecord } from "../../services/engine";
 import { type ExportMetadata, exportMetadata, flat } from "../../services/export/metadata";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
@@ -35,7 +37,7 @@ export function useResultMetadata(signature: string): {
             revisionHash: revision?.contentHash ?? "",
             project: workspace.name,
             experiment: state.name,
-            appVersion: "0.1.0",
+            appVersion: APP_VERSION,
             now: new Date().toISOString(),
           })
         : null,
