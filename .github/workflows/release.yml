@@ -70,5 +70,6 @@ jobs:
 
           "@
           Set-Content release/NOTES.md ($intro) -Encoding utf8
-          Get-Content CHANGELOG.md | Add-Content release/NOTES.md -Encoding utf8
+          # Só a seção desta versão (o CHANGELOG inteiro fica no repositório).
+          node scripts/release-notes.mjs "${{ github.ref_name }}" | Add-Content release/NOTES.md -Encoding utf8
           gh release create "${{ github.ref_name }}" --draft --title "EnziTAG Optima ${{ github.ref_name }} (canal experimental)" --notes-file release/NOTES.md (Get-ChildItem release -Exclude NOTES.md | ForEach-Object FullName)

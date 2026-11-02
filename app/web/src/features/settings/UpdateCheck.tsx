@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isTauri } from "../../services/engine";
+import { ReleaseNotes } from "./ReleaseNotes";
 
 type State =
   | { kind: "idle" }
@@ -68,7 +69,7 @@ export function UpdateCheck() {
       </span>
       {state.kind === "available" && (
         <>
-          {state.notes !== "" && <p className="muted small">{state.notes}</p>}
+          {state.notes !== "" && <ReleaseNotes markdown={state.notes} label={t("update.notes")} />}
           <button type="button" className="button small" onClick={install}>
             {t("update.install")}
           </button>

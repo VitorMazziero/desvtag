@@ -599,6 +599,7 @@
     "install": "Download and install",
     "installing": "Downloading and installing…",
     "failed": "Could not check right now (no internet or service unavailable).",
-    "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed."
+    "safe": "The update is installed only if its signature matches the app's key. Your projects are your own files and are not changed.",
+    "notes": "What is new in this version"
   }
 }

@@ -599,6 +599,7 @@
     "install": "Baixar e instalar",
     "installing": "Baixando e instalando…",
     "failed": "Não foi possível verificar agora (sem internet ou serviço indisponível).",
-    "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados."
+    "safe": "A atualização só é instalada se a assinatura conferir com a chave do aplicativo. Seus projetos são arquivos seus e não são alterados.",
+    "notes": "Novidades desta versão"
   }
 }

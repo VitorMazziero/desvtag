@@ -5,6 +5,7 @@
 //
 // Uso: node scripts/make-updater-manifest.mjs <instalador.exe> <instalador.exe.sig> <saida/latest.json> [tag]
 // A etiqueta (`v0.1.0`) vem do 4.º argumento ou de GITHUB_REF_NAME.
+import { notesFor } from "./release-notes.mjs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { basename } from "node:path";
 
@@ -26,14 +27,12 @@ if (signature === "") {
   process.exit(2);
 }
 
-// Notas: seção da versão no CHANGELOG, se existir; senão, uma frase padrão.
+// Notas: só a seção da versão no CHANGELOG (cortada em limite de bloco, não no meio de uma frase);
+// sem seção, uma frase padrão.
 let notes = `EnziTAG Optima ${version} (canal experimental).`;
 try {
   const changelog = readFileSync(new URL("../CHANGELOG.md", import.meta.url), "utf8");
-  const match = new RegExp(`^## \\[${version.replace(/\./g, "\\.")}\\][^\\n]*\\n([\\s\\S]*?)(?=^## |$(?![\\s\\S]))`, "m").exec(
-    changelog,
-  );
-  if (match?.[1]?.trim()) notes = match[1].trim().slice(0, 4000);
+  notes = notesFor(changelog, version, 4000);
 } catch {
   // sem CHANGELOG legível: mantém a frase padrão
 }
