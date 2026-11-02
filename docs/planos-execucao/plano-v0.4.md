@@ -1,6 +1,6 @@
 # Plano da v0.4
 
-**Estado:** **finalizado em 2026-11-02** — pronto para começar pela [ET29](planejados/et29-reorganizacao-da-interface-e-navegacao.md) · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.4.0 (canal experimental)
+**Estado:** **finalizado em 2026-11-02** — pronto para começar pela [ET29](ativos/et29-reorganizacao-da-interface-e-navegacao.md) · **Criado em:** 2026-11-02 · **Versão-alvo:** v0.4.0 (canal experimental)
 
 Plano de versão pedido pelo usuário em 2026-11-02, ao fechar a v0.3: «todas as outras pendências ficam para v0.4». Reúne **tudo o que as etapas ET13–ET21 da v0.3 deixaram sem entregar**, mais as verificações que dependem do usuário ou de equipamento externo, em etapas novas (ET22–ET29). A decisão e o que ficou na v0.3 estão em [decisões aprovadas §18](../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02); o que foi e o que não foi verificado na v0.3, no [relatório da v0.3.0](../../validation/reports/v0.3.0/README.md).
 
@@ -47,7 +47,7 @@ Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa 
 
 ### ET29 — Reorganização da interface e da navegação (primeira da v0.4)
 
-**Plano detalhado:** [planejados/et29-reorganizacao-da-interface-e-navegacao.md](planejados/et29-reorganizacao-da-interface-e-navegacao.md) (tarefas T01–T13).
+**Plano detalhado:** [ativos/et29-reorganizacao-da-interface-e-navegacao.md](ativos/et29-reorganizacao-da-interface-e-navegacao.md) (tarefas T01–T13).
 
 Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». Capturas «antes» em [`docs/imagens/evidencias-v0.3.0/`](../imagens/evidencias-v0.3.0/README.md). **É a primeira etapa a executar**, antes da ET22.
 

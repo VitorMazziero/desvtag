@@ -577,7 +577,7 @@ input[aria-invalid="true"] {
 }
 .results-nav button.active {
   background: var(--color-action, #005a99);
-  color: #fff;
+  color: var(--color-on-action, #fff);
   border-color: var(--color-action, #005a99);
   font-weight: 600;
 }

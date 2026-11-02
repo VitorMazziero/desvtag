@@ -10,7 +10,7 @@ Para iniciar ou retomar a implementação, use o [prompt de execução passo a p
 
 > **v0.3** · [plano da versão](plano-v0.3.md) — **fechada em 2026-11-02** (etapas ET13–ET21 concluídas; itens não entregues → v0.4)
 >
-> **v0.4** · [plano da versão](plano-v0.4.md) — **plano finalizado em 2026-11-02**; etapas ET22–ET29 planejadas, começando pela ET29 (interface), cujo [plano detalhado](planejados/et29-reorganizacao-da-interface-e-navegacao.md) está pronto (sem plano detalhado até a ativação).
+> **v0.4** · [plano da versão](plano-v0.4.md) — **plano finalizado em 2026-11-02**; etapas ET22–ET29 planejadas, começando pela ET29 (interface), cujo [plano detalhado](ativos/et29-reorganizacao-da-interface-e-navegacao.md) está pronto (sem plano detalhado até a ativação).
 
 **Paralelismo (2026-11-02, histórico):** a ET14 e a ET21 correm juntas por pedido do usuário («Pode seguir até completar v0.3»); as etapas que dependem de configuração externa (ET19, credenciais OAuth) ou de decisão do usuário seguem o [plano da v0.3](plano-v0.3.md#4-dependências-do-usuário). Histórico: a ET11 e a ET12 (v0.2) foram executadas com a ET10 ainda aberta, e a ET10 foi concluída em 2026-11-02 com a publicação dos releases e a atualização verificada. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); em 2026-11-02 decidiu que a validação no Windows 11 **não será realizada** ([§17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
 
@@ -57,7 +57,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET25 | Misturas e planejamentos ótimos avançados | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et25--misturas-e-planejamentos-ótimos-avançados) |
 | ET26 | Google Drive completo e verificado | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et26--google-drive-completo-e-verificado) |
 | ET27 | Acabamento da interface e da exportação | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et27--acabamento-da-interface-e-da-exportação) |
-| ET29 | Reorganização da interface e da navegação (**primeira da v0.4**) | v0.4 | Planejado (plano detalhado pronto) | [planejados/et29-reorganizacao-da-interface-e-navegacao.md](planejados/et29-reorganizacao-da-interface-e-navegacao.md) |
+| ET29 | Reorganização da interface e da navegação (**primeira da v0.4**) | v0.4 | **Ativo** (2026-11-02) | [ativos/et29-reorganizacao-da-interface-e-navegacao.md](ativos/et29-reorganizacao-da-interface-e-navegacao.md) |
 | ET28 | Verificações adicionais e itens que dependem do usuário | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et28--verificações-adicionais-e-itens-que-dependem-do-usuário) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.

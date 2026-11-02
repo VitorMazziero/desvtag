@@ -70,7 +70,11 @@ export function SectionedResults({ children }: { children: ReactNode }) {
   const apply = useCallback(() => {
     const el = host.current;
     if (!el) return;
-    const blocks = [...el.querySelectorAll<HTMLElement>("[data-section]")];
+    // O relatório é montado fora da tela dentro da seção «Exportar»: seus blocos `data-section` não
+    // pertencem a esta barra e nunca podem ser escondidos por ela (senão o PDF e o Word saem vazios).
+    const blocks = [...el.querySelectorAll<HTMLElement>("[data-section]")].filter(
+      (b) => b.closest("[data-report-root]") === null,
+    );
     const found = [...new Set(blocks.map((b) => b.dataset.section ?? ""))]
       .filter((id) => id !== "")
       .sort((a, b) => rank(a) - rank(b));

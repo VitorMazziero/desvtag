@@ -2,13 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | Planejado (**primeira etapa da v0.4**; ativar com o «go» do usuário) |
+| Estado | **Ativo** (primeira etapa da v0.4) |
 | Versão-alvo | v0.4.0 |
 | Fases do roteiro | F12 (interface, acessibilidade), F10 (relatórios) |
 | Marco | Prepara a v0.4 |
 | Depende de | v0.3.0 publicada (feito) |
 | Módulos | U01 (`app/`, cabeçalho e menus), U02/U03 (`features/workflow`, percurso guiado), U08/U16 (`features/results`, `features/export`, relatório), U14 (`features/project`, `features/drive`, área de salvamento), U18 (`styles`, tokens), U17 (i18n PT/EN) |
-| Ativado em | — |
+| Ativado em | 2026-11-02 |
 | Concluído em | — |
 
 ## 1. Objetivo
@@ -50,8 +50,8 @@ Corrigir os dois defeitos da v0.3.0 e reorganizar a interface pedida pelo usuár
 
 ## 5. Tarefas
 
-- [ ] **T01** — **Defeito:** relatório completo com a barra de seções ativa (ignorar `[data-report-root]` ao aplicar as seções, ou montar o relatório fora dela); E2E que gera HTML, PDF e Word **sem** «Mostrar todas as seções» e com o exemplo 14, conferindo resumo, modelo, ANOVA, figuras e otimização.
-- [ ] **T02** — **Defeito:** item ativo da barra de seções com `--color-on-action`; axe da barra com item ativo nos seis temas.
+- [x] **T01** — **Defeito (corrigido):** relatório completo com a barra de seções ativa (ignorar `[data-report-root]` ao aplicar as seções, ou montar o relatório fora dela); E2E que gera HTML, PDF e Word **sem** «Mostrar todas as seções» e com o exemplo 14, conferindo resumo, modelo, ANOVA, figuras e otimização.
+- [x] **T02** — **Defeito (corrigido):** item ativo da barra de seções com `--color-on-action`; axe da barra com item ativo nos seis temas.
 - [ ] **T03** — DTs da §4.
 - [ ] **T04** — Cabeçalho com os menus **Arquivo**, **Extras** e **Sobre e atualizações**; nome do projeto editável no cabeçalho.
 - [ ] **T05** — Área de salvamento: Novo/Abrir/Salvar como botões divididos (computador ou Drive), indicador único de estado com painel de detalhes, Drive como indicador discreto, explicações em «Saiba mais», avisos temporários.
@@ -99,6 +99,8 @@ DTs; guias de resultados, exportação, Drive e planilha de coleta; ficha U18; [
 | Data | Registro |
 |---|---|
 | 2026-11-02 | Plano criado a partir dos pedidos do usuário e dos defeitos da v0.3.0. Etapa não iniciada. |
+| 2026-11-02 | **Ativada** pelo usuário («Sim, começar ET29») na ramificação `feat/v0.4`. |
+| 2026-11-02 | **T01 e T02 entregues.** Causa do relatório vazio: a barra de seções ativa escondia, por `hidden`, os blocos `data-section` do relatório montado fora da tela dentro da seção «Exportar»; agora `SectionedResults` ignora os blocos dentro de `[data-report-root]`. Teste `report-sections.spec.ts` (HTML, PDF e Word com a barra ativa iguais aos de «mostrar todas»; exemplo 14; axe da barra nos 6 temas): **falha sem a correção** (verificado) e passa com ela em Chromium, Firefox e WebKit. O item ativo usa `--color-on-action`. |
 
 ## 12. Desvios e descobertas
 
