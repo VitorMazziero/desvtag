@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (2026-11-02) — entregue parcialmente; ver §11 |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F13 (canais), F14 (DOCX, comentários, Safari, domínio próprio, especificação da edição simultânea) |
 | Marco | Prepara M5 e M6 |
 | Depende de | ET14; ET19 para comentários em projetos compartilhados |
 | Módulos | U16 (`services/export/docx.ts`), U15 (`CommentsPanel`), P01 (`annotation.rs`), E04 (`updater.rs`), U18/U12 (compatibilidade WebKit), `.github/workflows/{release,pages}.yml` |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 ## 1. Objetivo
 
@@ -95,3 +95,11 @@ DTs; guia de exportação (DOCX); guia de comentários; [publicação](../../dis
 
 - **Link de salto no WebKit:** o WebKit (Safari) não põe links na ordem do Tab; o teste do link «Ir para o conteúdo» passou a conferir, no WebKit, a ordem dos controles do cabeçalho. Para usuários de Safari, o guia de acessibilidade deve lembrar Option+Tab.
 - **Resolvido sem opacidade:** comentários resolvidos usam borda tracejada (a opacidade reduzia o contraste abaixo de 4,5:1; detectado pelo axe).
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Safari real; canal de atualização ponta a ponta; domínio próprio (PD-13); caminho da edição simultânea (PD-14) → [ET28](../plano-v0.4.md#et28--verificações-adicionais-e-itens-que-dependem-do-usuário).
+- Editar um comentário já enviado → [ET27](../plano-v0.4.md#et27--acabamento-da-interface-e-da-exportação).
+- Interface de comentários por tabela: **entregue** na v0.3 depois do plano (ver o registro de progresso).

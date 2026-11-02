@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `optimal_design` |
 | Módulo | C13 `designs/optimal` |
-| Etapa | [ET16](../planos-execucao/ativos/et16-planejamentos-otimos-e-restritos.md) |
+| Etapa | [ET16](../planos-execucao/concluidos/et16-planejamentos-otimos-e-restritos.md) |
 | Casos de validação | [`validation/cases/optimal_design`](../../validation/cases/optimal_design/optimal.json) (5 de métricas e 6 de busca exaustiva); gerador [`make_optimal_cases.py`](../../validation/tools/make_optimal_cases.py) |
 
 ## 1. Pergunta

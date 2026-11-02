@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `paired_comparison` |
 | Módulo | C09 `comparisons/paired` |
-| Etapa | [ET17](../planos-execucao/ativos/et17-modelos-mistos-e-medidas-repetidas.md) |
+| Etapa | [ET17](../planos-execucao/concluidos/et17-modelos-mistos-e-medidas-repetidas.md) |
 | Casos de validação | [`validation/cases/paired_comparison`](../../validation/cases/paired_comparison/paired.json) (4 casos); gerador [`make_mixed_model_cases.py`](../../validation/tools/make_mixed_model_cases.py) |
 
 ## 1. Pergunta

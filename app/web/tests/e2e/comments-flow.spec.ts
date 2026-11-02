@@ -109,6 +109,22 @@ test("comentários na figura e no experimento sobrevivem a salvar e reabrir e v�
   expect(document).toContain("Combinado.");
 });
 
+test("comentário numa tabela de resultados aparece no painel com o alvo «Tabela»", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await openExample(page);
+  const thread = page.getByTestId("comments-table-coeficientes");
+  await thread.locator("summary").click();
+  await thread.getByLabel("Novo comentário").fill("Conferir os coeficientes desta tabela.");
+  await thread.getByRole("button", { name: "Comentar" }).click();
+  await expect(thread.locator("summary")).toContainText("Comentários (1; 1 em aberto)");
+  const panel = page.getByTestId("comments-panel");
+  await panel.locator("summary").click();
+  await expect(panel.getByTestId("comment-c1")).toContainText("Tabela");
+  await expect(panel.getByTestId("comment-c1")).toContainText("Conferir os coeficientes");
+});
+
 test("excluir um comentário pede confirmação", async ({ page }) => {
   await openExample(page);
   const panel = page.getByTestId("comments-panel");

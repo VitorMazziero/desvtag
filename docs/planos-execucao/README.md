@@ -8,11 +8,11 @@ Para iniciar ou retomar a implementação, use o [prompt de execução passo a p
 
 ## Planos ativos
 
-> **v0.3** · [plano da versão](plano-v0.3.md)
+> **v0.3** · [plano da versão](plano-v0.3.md) — **fechada em 2026-11-02** (etapas ET13–ET21 concluídas; itens não entregues → v0.4)
 >
-> Ativos em 2026-11-02: **ET14** — [itens adiados da v0.1 e da v0.2](ativos/et14-itens-adiados-v01-v02.md) e **ET21** — [espaçamento, logotipo único e rolagem entre etapas](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md). A **ET13** (planilha de coleta) e a **ET10** (publicação da v0.1) estão concluídas. ET15 a ET20 continuam planejadas.
+> **v0.4** · [plano da versão](plano-v0.4.md) — etapas ET22–ET28 planejadas (sem plano detalhado até a ativação).
 
-**Paralelismo (2026-11-02):** a ET14 e a ET21 correm juntas por pedido do usuário («Pode seguir até completar v0.3»); as etapas que dependem de configuração externa (ET19, credenciais OAuth) ou de decisão do usuário seguem o [plano da v0.3](plano-v0.3.md#4-dependências-do-usuário). Histórico: a ET11 e a ET12 (v0.2) foram executadas com a ET10 ainda aberta, e a ET10 foi concluída em 2026-11-02 com a publicação dos releases e a atualização verificada. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); em 2026-11-02 decidiu que a validação no Windows 11 **não será realizada** ([§17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
+**Paralelismo (2026-11-02, histórico):** a ET14 e a ET21 correm juntas por pedido do usuário («Pode seguir até completar v0.3»); as etapas que dependem de configuração externa (ET19, credenciais OAuth) ou de decisão do usuário seguem o [plano da v0.3](plano-v0.3.md#4-dependências-do-usuário). Histórico: a ET11 e a ET12 (v0.2) foram executadas com a ET10 ainda aberta, e a ET10 foi concluída em 2026-11-02 com a publicação dos releases e a atualização verificada. Em 2026-11-01 o usuário decidiu **não usar Windows 11** e verificar o aplicativo no **Windows 10 Pro 22H2** da máquina de desenvolvimento ([decisões aprovadas §15](../produto/decisoes-aprovadas.md#15-fechamento-da-v01-2026-11-01)); em 2026-11-02 decidiu que a validação no Windows 11 **não será realizada** ([§17](../produto/decisoes-aprovadas.md#17-escopo-da-v03-2026-11-02)).
 
 O diretório [`ativos/`](ativos/) contém somente os planos em execução. Se este quadro e o diretório divergirem, o diretório prevalece e este índice deve ser corrigido.
 
@@ -43,14 +43,21 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET11 | Seleção e comparação de modelos, navegação por seções e métodos da v0.2 (começa pela migração do Node.js, DT-0015) | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et11-selecao-de-modelos-e-navegacao.md](concluidos/et11-selecao-de-modelos-e-navegacao.md) |
 | ET12 | Temas adicionais (Industrial, Organic e Clay) e logo do grupo de pesquisa | v0.2 | **Concluído** (2026-11-02; candidata local, não publicada) | [concluidos/et12-temas-adicionais-e-identidade-do-grupo.md](concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) |
 | ET13 | Planilha de coleta: matriz com respostas e importação das respostas | v0.3 | **Concluído** (2026-11-02) | [concluidos/et13-planilha-de-coleta.md](concluidos/et13-planilha-de-coleta.md) |
-| ET14 | Itens adiados da v0.1 e da v0.2 | v0.3 | **Ativo** (2026-11-02) | [ativos/et14-itens-adiados-v01-v02.md](ativos/et14-itens-adiados-v01-v02.md) |
-| ET15 | Níveis mistos e misturas | v0.3 | **Ativo** (2026-11-02) | [ativos/et15-niveis-mistos-e-misturas.md](ativos/et15-niveis-mistos-e-misturas.md) |
-| ET16 | Planejamentos ótimos, restritos e ampliação sequencial | v0.3 | **Ativo** (2026-11-02) | [ativos/et16-planejamentos-otimos-e-restritos.md](ativos/et16-planejamentos-otimos-e-restritos.md) |
-| ET17 | Modelos mistos, medidas repetidas e comparações pareadas | v0.3 | **Ativo** (2026-11-02) | [ativos/et17-modelos-mistos-e-medidas-repetidas.md](ativos/et17-modelos-mistos-e-medidas-repetidas.md) |
-| ET18 | Ajuste não linear (Monod) e potência | v0.3 | **Ativo** (2026-11-02) | [ativos/et18-nao-linear-e-potencia.md](ativos/et18-nao-linear-e-potencia.md) |
-| ET19 | Google Drive e compartilhamento inicial | v0.3 | **Ativo** (2026-11-02) | [ativos/et19-google-drive-e-compartilhamento.md](ativos/et19-google-drive-e-compartilhamento.md) |
-| ET20 | DOCX, comentários, Safari, domínio próprio e canais de atualização | v0.3 | **Ativo** (2026-11-02) | [ativos/et20-docx-comentarios-e-distribuicao.md](ativos/et20-docx-comentarios-e-distribuicao.md) |
-| ET21 | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | v0.3 | **Ativo** (2026-11-02) | [ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md](ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| ET14 | Itens adiados da v0.1 e da v0.2 | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et14-itens-adiados-v01-v02.md](concluidos/et14-itens-adiados-v01-v02.md) |
+| ET15 | Níveis mistos e misturas | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et15-niveis-mistos-e-misturas.md](concluidos/et15-niveis-mistos-e-misturas.md) |
+| ET16 | Planejamentos ótimos, restritos e ampliação sequencial | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et16-planejamentos-otimos-e-restritos.md](concluidos/et16-planejamentos-otimos-e-restritos.md) |
+| ET17 | Modelos mistos, medidas repetidas e comparações pareadas | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et17-modelos-mistos-e-medidas-repetidas.md](concluidos/et17-modelos-mistos-e-medidas-repetidas.md) |
+| ET18 | Ajuste não linear (Monod) e potência | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et18-nao-linear-e-potencia.md](concluidos/et18-nao-linear-e-potencia.md) |
+| ET19 | Google Drive e compartilhamento inicial | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et19-google-drive-e-compartilhamento.md](concluidos/et19-google-drive-e-compartilhamento.md) |
+| ET20 | DOCX, comentários, Safari, domínio próprio e canais de atualização | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et20-docx-comentarios-e-distribuicao.md](concluidos/et20-docx-comentarios-e-distribuicao.md) |
+| ET21 | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | v0.3 | **Concluído** (2026-11-02; itens → v0.4) | [concluidos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md](concluidos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| ET22 | Resultados das famílias novas guardados no projeto | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et22--resultados-das-famílias-novas-guardados-no-projeto) |
+| ET23 | Modelos mistos e medidas repetidas avançados | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et23--modelos-mistos-e-medidas-repetidas-avançados) |
+| ET24 | Ajuste não linear e potência avançados | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et24--ajuste-não-linear-e-potência-avançados) |
+| ET25 | Misturas e planejamentos ótimos avançados | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et25--misturas-e-planejamentos-ótimos-avançados) |
+| ET26 | Google Drive completo e verificado | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et26--google-drive-completo-e-verificado) |
+| ET27 | Acabamento da interface e da exportação | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et27--acabamento-da-interface-e-da-exportação) |
+| ET28 | Verificações adicionais e itens que dependem do usuário | v0.4 | Planejado | [plano-v0.4.md](plano-v0.4.md#et28--verificações-adicionais-e-itens-que-dependem-do-usuário) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.
 

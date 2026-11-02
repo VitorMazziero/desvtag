@@ -48,3 +48,74 @@ test("exemplo 08: Monod recupera Vmax e Km do README", async ({ page }) => {
   expect(Math.abs(number(await first(0)) - 3.0022)).toBeLessThan(5e-4);
   expect(Math.abs(number(await first(1)) - 2.4983)).toBeLessThan(5e-4);
 });
+
+test("exemplo 09: ANOVA de níveis mistos confere com o statsmodels", async ({ page }) => {
+  test.setTimeout(120_000);
+  await open(page, "09-niveis-mistos");
+  await page.getByRole("button", { name: /Analisar planejamento|Comparar tratamentos/ }).click();
+  await page.getByTestId("section-tables").click();
+  const anova = page.getByTestId("factorial-anova");
+  await expect(anova).toContainText("Cepa × pH");
+  await expect(anova).toContainText("217,3");
+  await expect(anova).toContainText("109,7");
+  await expect(anova).toContainText("3,571");
+});
+
+test("exemplo 10: superfície do D-ótimo confere com a regressão independente", async ({ page }) => {
+  test.setTimeout(120_000);
+  await open(page, "10-planejamento-otimo");
+  await page.getByRole("button", { name: "Calcular superfície" }).click();
+  await page.getByTestId("section-model").click();
+  const rows = page.getByTestId("surface-terms").locator("tbody tr");
+  await expect(rows).toHaveCount(6);
+  const estimates = (
+    await rows.evaluateAll((trs) => trs.map((tr) => tr.querySelector("td")?.textContent ?? ""))
+  )
+    .map((text) => number(text.replace("−", "-")))
+    .sort((a, b) => a - b);
+  const expected = [-3.0125, -1.9775, 1.3712, 3.0438, 4.0088, 19.985];
+  for (const [i, value] of expected.entries())
+    expect(Math.abs((estimates[i] ?? Number.NaN) - value)).toBeLessThan(5e-4);
+});
+
+test("exemplo 11: pareado, Wilcoxon e modelo misto conferem com SciPy e statsmodels", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await open(page, "11-medidas-repetidas");
+  const panel = page.getByTestId("repeated-measures");
+  await panel.getByText("Medidas repetidas, pareados e modelos mistos").click();
+  await panel.getByRole("button", { name: "Comparar pares" }).click();
+  const paired = page.getByTestId("paired-result");
+  await expect(paired).toContainText("6 pares");
+  await expect(paired).toContainText("-1,15");
+  await expect(paired).toContainText("-10,29");
+  await expect(paired).toContainText("0,0001493");
+  await expect(paired).toContainText("W = 0 ");
+  await expect(page.getByTestId("wilcoxon-p")).toContainText("0,03125");
+  await panel.getByRole("button", { name: "Ajustar modelo misto" }).click();
+  await expect(page.getByTestId("variance-components")).toContainText("0,961");
+  await expect(page.getByTestId("variance-components")).toContainText("0,92467");
+});
+
+test("exemplo 12: tamanho de amostra de duas amostras (SciPy: 37 por grupo, potência 0,8076)", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const panel = page.getByTestId("power-calculator");
+  await panel.getByText("Calculadora de potência e tamanho de amostra").click();
+  await page.getByLabel("Diferença esperada").fill("1");
+  await page.getByLabel("Desvio-padrão esperado (σ)").fill("1,5");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(page.getByTestId("power-summary")).toContainText("37 por grupo (total 74)");
+  await expect(page.getByTestId("power-summary")).toContainText("0,8076");
+});
+
+test("exemplo 13: o projeto tem as respostas da planilha nos ensaios certos", async ({ page }) => {
+  await open(page, "13-planilha-de-coleta");
+  await page.getByRole("button", { name: /Planejamento e dados/ }).click();
+  for (const [i, value] of ["10.0", "11.5", "13.0", "14.5", "16.0", "17.5"].entries())
+    await expect(
+      page.getByRole("textbox", { name: new RegExp(`^Atividade.* — Obs. ${i + 1}$`) }),
+    ).toHaveValue(value);
+});

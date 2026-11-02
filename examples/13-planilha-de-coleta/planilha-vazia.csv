@@ -1,0 +1,21 @@
+﻿# app: EnziTAG Optima
+# project: Planilha de coleta — exemplo sintético
+# method: two_level_design v1
+# engine: 0.2.0
+# design: full factorial
+# resolution: none
+# replicates: 1
+# center_points: 2
+# randomized: false
+# seed: 1309518233
+# randomization: pcg32-xsh-rr/fisher-yates
+# export_language: pt-BR
+# csv_format: technical (, e ponto decimal)
+
+run,standard_order,point,replicate,Temperatura,pH,Temperatura (coded),pH (coded),Atividade (U/mL)
+1,1,factorial,1,20,5,-1,-1,
+2,2,factorial,1,30,5,1,-1,
+3,3,factorial,1,20,7,-1,1,
+4,4,factorial,1,30,7,1,1,
+5,5,center,0,25,6,0,0,
+6,6,center,0,25,6,0,0,

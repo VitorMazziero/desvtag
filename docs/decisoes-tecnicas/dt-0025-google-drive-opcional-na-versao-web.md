@@ -4,7 +4,7 @@
 |---|---|
 | Estado | Aceita (parcial: versão web; Windows adiado) |
 | Data | 2026-11-02 |
-| Origem | [ET19](../planos-execucao/ativos/et19-google-drive-e-compartilhamento.md); decisões aprovadas (Drive opcional, pasta visível, escopo `drive.file`); PD-09 e PD-10 |
+| Origem | [ET19](../planos-execucao/concluidos/et19-google-drive-e-compartilhamento.md); decisões aprovadas (Drive opcional, pasta visível, escopo `drive.file`); PD-09 e PD-10 |
 | Pendências relacionadas | PD-09 (credenciais públicas e fluxo nativo), PD-10 (conflitos) |
 | Substitui / substituída por | — |
 

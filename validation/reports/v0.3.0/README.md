@@ -1,4 +1,4 @@
-# Relatório de validação — v0.3.0 (rascunho)
+# Relatório de validação — v0.3.0 (candidata local)
 
 **Estado:** **rascunho** da verificação local em 2026-11-02, na ramificação `feat/v0.3` (PR 6, **não fundido**). A v0.3.0 **não foi publicada**: sem etiqueta, release nem Pages. · **Data:** 2026-11-02
 
@@ -58,7 +58,7 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 | Funcionalidade | Como foi verificada | Limites |
 |---|---|---|
 | **Relatório em Word** | Teste de unidade (pacote, títulos, tabelas, listas, imagens, paginação); E2E em navegador real (mesmos títulos do HTML, na mesma ordem; figuras PNG); abertura e conversão em PDF no **LibreOffice** (5 páginas, conferido a olho) | **Não aberto no Microsoft Word** |
-| **Comentários** | Rust (validação e JSON), reducer, E2E (escrever, responder, resolver, salvar, reabrir, relatório HTML e Word), axe nos seis temas | Sem interface por tabela |
+| **Comentários** | Rust (validação e JSON), reducer, E2E (escrever na figura, na tabela e no experimento, responder, resolver, salvar, reabrir, relatório HTML e Word), axe nos seis temas | Sem edição de comentário enviado |
 | **Google Drive** | Google **simulado** (unidade e E2E) | **Autorização real não verificada**; Windows sem Drive |
 | **Canais de atualização** | Teste do script de canais, do endereço no Rust e da preferência | **Fluxo `channels.yml` e atualização por canal não verificados** (exigem um release publicado) |
 | **WebKit** | Suíte E2E inteira no WebKit do Playwright | **Não é o Safari**; Safari real (Mac) não verificado |
@@ -73,9 +73,10 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 | Edição simultânea | **Só a [especificação](../../../docs/arquitetura/edicao-simultanea.md)**, aguardando decisões do usuário |
 | Drive: Windows (loopback + PKCE, chaveiro), fila persistente, compartilhamento por leitura real | **Adiados** |
 | Resultados de misturas, modelos mistos, saturação e potência | **Não são guardados no projeto** nem entram nos relatórios (calculados ao pedir) |
-| Seleção de modelos para efeitos de dois níveis (ET14-T03); verificação do DCCR com as capturas do Protimiza (ET14-T02) | **Não feitas** |
+| Seleção de modelos para efeitos de dois níveis (ET14-T03) | **Feita** (statsmodels em 4 fatoriais completos; paridade WebAssembly; E2E); **sem caso independente para fracionários e Plackett–Burman** → v0.4 |
+| Verificação do CCD com as capturas do Protimiza (ET14-T02) | **Feita**: a opção «CCD» é o fatorial completo com pontos centrais; contagens e matriz reproduzidas (`protimiza_counts.rs`) |
 | Misturas: limites superiores, otimização no simplex; planejamentos ótimos: exemplo, blocos, gráfico de variância; modelos mistos: AR(1), não estruturada, F multi-gl; saturação: perfil de verossimilhança, NIST; potência: simulação | **Não feitos** |
-| Exemplos para os métodos da v0.3 | **Criados só os 07 (misturas) e 08 (Monod)**, conferidos contra NumPy e SciPy e abertos em E2E; faltam exemplos de níveis mistos, ótimos, medidas repetidas, potência e planilha de coleta |
+| Exemplos para os métodos da v0.3 | **Criados os 07 a 13** (misturas, Monod, níveis mistos, D-ótimo, medidas repetidas, potência, planilha de coleta), conferidos contra NumPy, SciPy ou `statsmodels` e abertos em E2E |
 | Verificação nativa no Windows 10 dos fluxos da v0.3 | **Não executada** |
 | Falhas intermitentes de CI vistas no PR 6 (Windows: «Nenhuma página do WebView2»; um job Web) | **Não investigadas a fundo** |
 

@@ -62,7 +62,7 @@ Consulta ao GitHub (`gh release list`) e ao endereço do atualizador, depois dos
 
 **Verificação da versão web publicada** (`app/web/tests/public/published.spec.ts`, config `playwright.public.config.ts`, URL `https://vitormazziero.github.io/enzitag-optima/`): em **Chrome, Edge, Chromium e Firefox** a página abre, o motor WebAssembly informa a versão `0.2.0`, a comparação de três tratamentos calcula ANOVA e letras e **nenhuma requisição externa** é feita.
 
-**Observação:** as notas da atualização apareciam como Markdown cru, cortadas e com texto desatualizado; corrigido na v0.3 ([ET14-T09](../planos-execucao/ativos/et14-itens-adiados-v01-v02.md)). O release da v0.2.0 publicado traz as notas da versão antiga do fluxo (CHANGELOG inteiro).
+**Observação:** as notas da atualização apareciam como Markdown cru, cortadas e com texto desatualizado; corrigido na v0.3 ([ET14-T09](../planos-execucao/concluidos/et14-itens-adiados-v01-v02.md)). O release da v0.2.0 publicado traz as notas da versão antiga do fluxo (CHANGELOG inteiro).
 
 ---
 

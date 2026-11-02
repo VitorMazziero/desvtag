@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `power_analysis` |
 | Módulos | C15 `power/{anova,t_test}`; C04 `distributions/noncentral` |
-| Etapa | [ET18](../planos-execucao/ativos/et18-nao-linear-e-potencia.md) |
+| Etapa | [ET18](../planos-execucao/concluidos/et18-nao-linear-e-potencia.md) |
 | Casos de validação | [`validation/cases/power_analysis`](../../validation/cases/power_analysis/power.json) (100 pontos de F não central, 120 de t não central e 9 casos de potência); gerador [`make_power_nonlinear_cases.py`](../../validation/tools/make_power_nonlinear_cases.py) |
 
 ## 1. Pergunta

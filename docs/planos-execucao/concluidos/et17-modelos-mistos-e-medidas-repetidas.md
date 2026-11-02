@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (pareados e modelo misto de simetria composta entregues; AR(1) e não estruturada pendentes) |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F08 (comparações pareadas), F09d (mistos), F09e (medidas repetidas) |
 | Marco | Prepara M4 |
 | Depende de | ET14 |
 | Módulos | C14 (`models/{mixed,repeated_measures}.rs`), C03 (otimização numérica, Cholesky), C04 (t e F aproximados), C07, C09 (comparações), C01 (unidade experimental e tempo), U03, U07, U08, U09 |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 ## 1. Objetivo
 
@@ -93,3 +93,11 @@ Especificações, DTs, mapa de módulos (C14), fichas U03/U07/U08, matriz de cob
 ## 12. Desvios e descobertas
 
 Nenhum até o momento.
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Testes F de vários graus de liberdade, médias marginais e comparações; AR(1) e covariância não estruturada; papéis de coluna «unidade» e «tempo»; figuras de perfis → [ET23](../plano-v0.4.md#et23--modelos-mistos-e-medidas-repetidas-avançados).
+- Guardar no projeto os resultados e levá-los aos relatórios → [ET22](../plano-v0.4.md#et22--resultados-das-famílias-novas-guardados-no-projeto).
+- Exemplo criado na v0.3 (11 — medidas repetidas).

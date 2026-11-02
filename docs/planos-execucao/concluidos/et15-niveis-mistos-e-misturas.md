@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (níveis mistos e misturas entregues; restam itens listados na seção 12) |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F09a (níveis mistos), F09b (misturas) |
 | Marco | Prepara M4 |
 | Depende de | ET14 |
 | Módulos | C13 (`designs/{mixed_levels,mixture}.rs`), C06 (modelos de Scheffé), C16 (gráfico ternário), C17 (otimização em misturas), U06, U08, U09 |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 ## 1. Objetivo
 
@@ -95,3 +95,11 @@ Especificações e DTs; mapa de módulos (C13); fichas U06/U08/U09; matriz de co
 ## 12. Desvios e descobertas
 
 Nenhum até o momento.
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Misturas: limites superiores, traço de Cox e otimização restrita ao simplex; estimabilidade em fracionários de níveis mistos → [ET25](../plano-v0.4.md#et25--misturas-e-planejamentos-ótimos-avançados).
+- Guardar no projeto o resultado da análise de misturas e levá-lo aos relatórios → [ET22](../plano-v0.4.md#et22--resultados-das-famílias-novas-guardados-no-projeto).
+- Exemplos criados na v0.3 (07 — misturas; 09 — níveis mistos); a verificação nativa dos fluxos novos está descrita no relatório de validação da v0.3.0.

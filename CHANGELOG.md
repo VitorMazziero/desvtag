@@ -4,13 +4,29 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 ## Planejado (ainda não implementado)
 
-- [Plano da v0.3](docs/planos-execucao/plano-v0.3.md) (ET13–ET20): planilha de coleta (matriz com respostas e importação das respostas), itens adiados da v0.1 e da v0.2 (inclui a seleção de modelos para efeitos de dois níveis), níveis mistos e misturas, planejamentos ótimos, modelos mistos e medidas repetidas, Monod e potência, Google Drive, DOCX, comentários, Safari e canais de atualização.
+- [Plano da v0.4](docs/planos-execucao/plano-v0.4.md) (ET22–ET28): resultados das famílias novas guardados no projeto e nos relatórios; modelos mistos, não linear, potência, misturas e planejamentos ótimos avançados; Google Drive no Windows e verificado com contas reais; acabamento da interface; Safari real, canal de atualização ponta a ponta, domínio próprio e edição simultânea.
 - Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
 - Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
 
-## Não lançado — v0.3 (em desenvolvimento)
+## Não lançado — v0.3 (candidata local)
 
-Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
+Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md) e o [relatório de validação](validation/reports/v0.3.0/README.md). O escopo foi fechado em 2026-11-02: o que não foi entregue vai para a [v0.4](docs/planos-execucao/plano-v0.4.md).
+
+**Limitação conhecida:** os resultados de misturas, modelos mistos, curvas de saturação e potência são **calculados ao pedir** e **não são guardados no projeto** nem entram nos relatórios; os dados e as opções ficam guardados, e a análise é refeita ao pedir. Fica para a v0.4.
+
+### Seleção de modelos de efeitos de dois níveis (ET14-T03) e conferência do CCD (ET14-T02)
+
+- Na análise de um planejamento de dois níveis, a seção **Modelo** compara o modelo completo (efeitos principais e todas as interações de dois fatores), o atual e o recomendado (eliminação regressiva com hierarquia), com os mesmos critérios da seleção de superfícies (`R²` ajustado e predito, AICc, BIC, falta de ajuste). Validado contra o `statsmodels` em 4 fatoriais completos; **sem caso independente para fracionários**. [Método](docs/metodos/selecao-de-modelos.md).
+- A opção «CCD» do serviço de referência, conferida nas capturas, é o **fatorial completo com pontos centrais** (`r·2^k + cp`, sem pontos axiais); o aplicativo reproduz as contagens (27 e 19 ensaios para 4 fatores) e a matriz.
+
+### Exemplos novos
+
+- Também [09 — níveis mistos](examples/09-niveis-mistos/README.md), [10 — planejamento D-ótimo](examples/10-planejamento-otimo/README.md), [11 — medidas repetidas](examples/11-medidas-repetidas/README.md), [12 — potência](examples/12-potencia-e-tamanho-de-amostra/README.md) e [13 — planilha de coleta](examples/13-planilha-de-coleta/README.md), todos conferidos contra NumPy, SciPy ou `statsmodels` e abertos em teste E2E.
+
+### Correções
+
+- A estatística `W` do Wilcoxon aparecia como «−0» quando era zero.
+- O aplicativo Windows recusava exportar `.docx` (a lista de extensões do comando de exportação não o incluía).
 
 ### Exemplos novos
 
@@ -19,7 +35,7 @@ Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md).
 ### DOCX, comentários, canais e WebKit (ET20)
 
 - **Relatório em Word (.docx):** novo botão *Exportar relatório (Word)* com as mesmas seções do HTML e do PDF (proveniência, interpretação, listas, **tabelas editáveis**, figuras em PNG, logotipo opcional e «Página X de Y»), gerado no próprio dispositivo. Conferido por testes, por E2E em navegador real e pela abertura no **LibreOffice**; **não aberto no Word**. [Guia](docs/guias/exportacao.md), [DT-0026](docs/decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md).
-- **Comentários de revisão:** na figura, no experimento ou numa análise; respostas, resolver e reabrir; cada um registra a **revisão dos dados** em que foi escrito e é salvo no projeto (campo opcional `comments`, esquema 1). Opcionais nos relatórios (HTML, PDF e Word). [Guia](docs/guias/comentarios.md). Sem interface por tabela nem edição de comentário enviado.
+- **Comentários de revisão:** na figura, no experimento ou numa análise; respostas, resolver e reabrir; cada um registra a **revisão dos dados** em que foi escrito e é salvo no projeto (campo opcional `comments`, esquema 1). Opcionais nos relatórios (HTML, PDF e Word). [Guia](docs/guias/comentarios.md). Também por **tabela** de resultados. Sem edição de comentário enviado.
 - **Canais de atualização** experimental e estável: manifesto assinado por canal, fluxo `channels.yml` após a publicação do release e escolha do canal nas preferências do aplicativo Windows. O canal estável não tem versões até a 1.0.0; **fluxo não verificado com um release real**. [Publicação](docs/distribuicao/publicacao.md).
 - **WebKit** (motor do Safari) no Playwright e no CI: a suíte E2E inteira passa nele. **Safari real não foi verificado** (sem Mac); no Safari o Tab não percorre links por padrão (use Option+Tab). **Domínio próprio:** não feito (sem decisão do usuário).
 - **Especificação da edição simultânea** (sem implementação): [operações, conflitos, presença, transporte e verificação](docs/arquitetura/edicao-simultanea.md), com as decisões pedidas ao usuário.

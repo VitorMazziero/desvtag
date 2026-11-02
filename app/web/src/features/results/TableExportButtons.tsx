@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 import type { Cell } from "../../services/export";
+import { useProject } from "../../state/ProjectContext";
+import { CommentThread } from "../comments";
 import { ExportButton } from "./ExportButton";
 import { useTableExport } from "./useTableExport";
 
@@ -27,12 +29,17 @@ export function TableExportButtons({
   onDone,
 }: Props) {
   const { t } = useTranslation("results");
+  const project = useProject();
   const { exportCsv, exportXlsx } = useTableExport(metadata, fileBase);
   const finish = (name: string | null) =>
     onDone(
       name === null ? t("comparison.export.cancelled") : t("comparison.export.done", { name }),
     );
   const failed = () => onDone(t("comparison.export.failed"));
+  // A análise vigente fixa a revisão dos dados em que o comentário foi escrito.
+  const analysisId = [...project.analyses]
+    .reverse()
+    .find((a) => a.signature === project.result?.signature)?.id;
   return (
     <>
       <ExportButton
@@ -44,6 +51,14 @@ export function TableExportButtons({
         label={label.replace(/\(CSV\)/, "(XLSX)")}
         onExport={async () => finish((await exportXlsx(suffix, sheet, header, rows))?.name ?? null)}
         onError={failed}
+      />
+      <CommentThread
+        target={{
+          kind: "table",
+          key: `${project.result?.kind ?? "plan"}/${suffix}`,
+          ...(analysisId ? { analysisId } : {}),
+        }}
+        testId={`table-${suffix}`}
       />
     </>
   );

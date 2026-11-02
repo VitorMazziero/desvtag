@@ -4,7 +4,7 @@
 |---|---|
 | Estado | Aceita |
 | Data | 2026-11-02 |
-| Origem | Verificação da v0.2.0 instalada pelo usuário (2026-11-02); [ET21](../planos-execucao/ativos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| Origem | Verificação da v0.2.0 instalada pelo usuário (2026-11-02); [ET21](../planos-execucao/concluidos/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
 | Pendências relacionadas | PD-17 (revisada: o logotipo sai da tela inicial) |
 | Substitui / substituída por | Revisa a decisão 5 da [DT-0021](dt-0021-temas-adicionais-fontes-e-logo.md) (logotipo no cabeçalho **e** na tela inicial) |
 

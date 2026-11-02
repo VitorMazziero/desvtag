@@ -4,7 +4,7 @@
 |---|---|
 | Estado | Aceita |
 | Data | 2026-11-02 |
-| Origem | [ET14](../planos-execucao/ativos/et14-itens-adiados-v01-v02.md), tarefas T04 e T05; descoberta 9 da [ET11](../planos-execucao/concluidos/et11-selecao-de-modelos-e-navegacao.md); limitações aceitas da [DT-0020](dt-0020-figuras-completas-e-exportacao-em-pdf.md) |
+| Origem | [ET14](../planos-execucao/concluidos/et14-itens-adiados-v01-v02.md), tarefas T04 e T05; descoberta 9 da [ET11](../planos-execucao/concluidos/et11-selecao-de-modelos-e-navegacao.md); limitações aceitas da [DT-0020](dt-0020-figuras-completas-e-exportacao-em-pdf.md) |
 | Pendências relacionadas | — |
 | Substitui / substituída por | Complementa a DT-0016 (aleatorização com semente) e a DT-0020 (PDF) |
 

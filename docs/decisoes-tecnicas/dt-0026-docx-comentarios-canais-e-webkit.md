@@ -4,7 +4,7 @@
 |---|---|
 | Estado | Aceita (parcial: sem Safari real, sem domínio próprio, canal estável sem versões) |
 | Data | 2026-11-02 |
-| Origem | [ET20](../planos-execucao/ativos/et20-docx-comentarios-e-distribuicao.md); [DT-0014](dt-0014-exportacao-e-relatorio.md), [DT-0017](dt-0017-atualizador-assinado-e-publicacao.md), [DT-0020](dt-0020-figuras-completas-e-exportacao-em-pdf.md) |
+| Origem | [ET20](../planos-execucao/concluidos/et20-docx-comentarios-e-distribuicao.md); [DT-0014](dt-0014-exportacao-e-relatorio.md), [DT-0017](dt-0017-atualizador-assinado-e-publicacao.md), [DT-0020](dt-0020-figuras-completas-e-exportacao-em-pdf.md) |
 | Pendências relacionadas | PD-13 (Safari e domínio), PD-14 (comentários e edição simultânea) |
 | Substitui / substituída por | — |
 
@@ -24,7 +24,9 @@
 
 **Decisões:** (a) figuras e tabelas são encontradas pela **chave**, não pelo identificador da análise, para que o comentário continue visível quando a análise é refeita; (b) revisões nunca são apagadas, então o `revisionId` sempre resolve; (c) o nome de quem comenta é **livre e fica só no dispositivo** (não há contas); (d) no relatório os comentários entram **só quando o usuário marca a opção** (padrão: desligada), como seção final do mesmo DOM, saindo igual em HTML, PDF e Word.
 
-**Não feito:** interface de comentário **por tabela** (o modelo e a validação aceitam `table`; a interface expõe experimento, análise e figura), edição de um comentário já enviado (só responder, resolver, reabrir e excluir) e qualquer sincronização entre pessoas (ver [edição simultânea](../arquitetura/edicao-simultanea.md)).
+**Tabelas:** o comentário de tabela vale pela chave `<tipo de resultado>/<sufixo de exportação>` e aparece junto dos botões CSV/XLSX da tabela.
+
+**Não feito:** edição de um comentário já enviado (só responder, resolver, reabrir e excluir) e qualquer sincronização entre pessoas (ver [edição simultânea](../arquitetura/edicao-simultanea.md)).
 
 ## 3. Canais de atualização
 

@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F12 (verificação de interface), F01 (interface básica) |
 | Marco | Prepara a v0.3 |
 | Depende de | v0.2.0 (seis temas e barra lateral de seções); pode correr junto da ET13 |
 | Módulos | U18 (temas e tokens), U01–U11 (telas), `app/app.css`, `themes/tokens.css` |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 Origem: pedido do usuário em 2026-11-02, ao verificar a v0.2.0 instalada: «Os botões da interface também estão próximos; faça uma checagem na interface na v0.3 quanto a distância, padding e tamanho». Na mesma verificação o usuário pediu: «Não são necessários 2 logos, apenas o superior» e «Ao clicar na próxima etapa, a interface deve voltar ao topo de forma orgânica». **Só planejamento por ora**: nenhuma alteração de interface foi feita.
 
@@ -119,3 +119,9 @@ DT nova; ficha U18; capturas em `docs/imagens/`; CHANGELOG; relatório de valida
 ## 13. Desvios e descobertas
 
 Nenhum até o momento.
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Inventário completo (T01), revisão tela a tela dos componentes fora das classes comuns (T04), capturas «depois» e conferência no WebView2 (T06) e documentação (T07) → [ET27](../plano-v0.4.md#et27--acabamento-da-interface-e-da-exportação).

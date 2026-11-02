@@ -41,7 +41,11 @@ Objetivos (maximizar, minimizar, alvo, faixa), restrições, candidatos com prev
 
 ## Exportar
 
-Relatório HTML e PDF (completos, em sequência), tabelas em CSV e XLSX, figuras em SVG, PNG e PDF e as preferências de exportação (decimais, paleta, idioma do relatório, logotipo do grupo). Ver o [guia de exportação](exportacao.md).
+Relatório HTML, PDF e Word (completos, em sequência), tabelas em CSV e XLSX, figuras em SVG, PNG e PDF e as preferências de exportação (decimais, paleta, idioma do relatório, logotipo do grupo). Ver o [guia de exportação](exportacao.md).
+
+## Resultados que não ficam guardados no projeto (v0.3)
+
+Misturas (Scheffé), modelo misto e comparação pareada, curva de saturação e calculadora de potência são **calculados ao pedir**. O projeto guarda os dados e as opções, mas **não** o resultado destas análises, e elas **não** entram nos relatórios: ao reabrir um projeto, peça a análise de novo. As análises anteriores (comparações, procedimentos, ANOVA multifatorial, planejamentos de dois níveis, superfícies e otimização) continuam guardadas e **não são recalculadas** ao reabrir. Guardar os resultados novos está previsto para a v0.4 ([plano](../planos-execucao/plano-v0.4.md#et22--resultados-das-famílias-novas-guardados-no-projeto)).
 
 ## Teclado e acessibilidade
 

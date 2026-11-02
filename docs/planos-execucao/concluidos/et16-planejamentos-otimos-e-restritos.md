@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (núcleo, motor e interface entregues; fechamento pendente de verificação nativa) |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F09c |
 | Marco | Prepara M4 |
 | Depende de | ET15 (fatores de níveis mistos e componentes de mistura como candidatos) |
 | Módulos | C13 (`designs/{optimal,constraints,augmentation}.rs`), C03 (álgebra), C06 (matriz do modelo), U06, U08 |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 ## 1. Objetivo
 
@@ -89,3 +89,10 @@ Especificação, DTs, limites operacionais, mapa de módulos, fichas, matriz de 
 ## 12. Desvios e descobertas
 
 Nenhum até o momento.
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Blocos na ampliação e gráfico de variância de predição → [ET25](../plano-v0.4.md#et25--misturas-e-planejamentos-ótimos-avançados).
+- Exemplo criado na v0.3 (10 — planejamento D-ótimo).

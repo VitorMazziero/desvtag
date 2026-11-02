@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** (versão web entregue com Google simulado; autorização real e Windows pendentes) |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F11 |
 | Marco | Prepara M5 |
 | Depende de | ET14; **credenciais OAuth do usuário (PD-09)**. Pode correr em paralelo às ET15–ET18 ([plano da v0.3 §3](../plano-v0.3.md#3-etapas-e-ordem)) |
 | Módulos | U14 (`services/drive/*`, `features/drive/*`), U15 (`features/sharing/{OpenShared}`), U13 (armazenamento), E04 (`auth.rs` no Tauri), P02 (bytes `.enzitag`) |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 ## 1. Objetivo
 
@@ -93,3 +93,10 @@ DTs, guia «Usar o Google Drive», política de privacidade (dados acessados, es
 ## 12. Desvios e descobertas
 
 Nenhum até o momento.
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Autorização no Windows (loopback + PKCE + cofre), fila persistente e arquivo compartilhado real → [ET26](../plano-v0.4.md#et26--google-drive-completo-e-verificado).
+- **Verificação com contas reais do Google (T08)** → ET26 (depende do usuário).

@@ -2,14 +2,14 @@
 
 | Campo | Valor |
 |---|---|
-| Estado | **Ativo** |
+| Estado | **Concluído na v0.3** (2026-11-02) com itens movidos para a v0.4 (§13) |
 | Versão-alvo | v0.3.0 |
 | Fases do roteiro | F05 (efeitos), F10 (exportação), F12 (verificação), F13 (atualizações) |
 | Marco | Prepara a v0.3 |
 | Depende de | ET13 (ordem do plano); publicação da v0.1.0 e da v0.2.0 pelo usuário (T01) |
 | Módulos | C11/C16 (efeitos), C18 (recomendações), U08 (resultados), U09/U16 (figuras e PDF), U12 (contratos), U17 (textos), U18 (temas), E04 (atualizador) |
 | Ativado em | 2026-11-02 |
-| Concluído em | — |
+| Concluído em | 2026-11-02 (itens não entregues → v0.4) |
 
 ## 1. Objetivo
 
@@ -101,3 +101,11 @@ DTs novas; [seleção de modelos](../../metodos/selecao-de-modelos.md); guia de 
 ## 12. Desvios e descobertas
 
 Nenhum até o momento.
+
+## 13. Destino dos itens não entregues (decisão de 2026-11-02)
+
+O usuário fechou a v0.3 e levou as demais pendências para a [v0.4](../plano-v0.4.md) ([decisões aprovadas §18](../../produto/decisoes-aprovadas.md#18-fechamento-da-v03-e-escopo-da-v04-2026-11-02)). Itens desta etapa que ficam sem entrega na v0.3:
+
+- Capturas em inglês e inspeção dos temas no WebView2 (ET12-T10) e família de fonte e hachura no PDF → [ET27](../plano-v0.4.md#et27--acabamento-da-interface-e-da-exportação).
+- Seleção de modelos de dois níveis: casos independentes para fracionários e Plackett–Burman → [ET28](../plano-v0.4.md#et28--verificações-adicionais-e-itens-que-dependem-do-usuário).
+- Inventário das demais funções do Protimiza (PD-05, além do rótulo CCD, já conferido) → ET28.

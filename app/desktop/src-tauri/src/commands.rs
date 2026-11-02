@@ -209,13 +209,14 @@ async fn pick_save_path_with(
 }
 
 /// Extensões de exportação permitidas e o nome do filtro do diálogo.
-pub const EXPORT_FORMATS: [(&str, &str); 6] = [
+pub const EXPORT_FORMATS: [(&str, &str); 7] = [
     ("csv", "CSV"),
     ("xlsx", "XLSX"),
     ("svg", "SVG"),
     ("png", "PNG"),
     ("html", "HTML"),
     ("pdf", "PDF"),
+    ("docx", "Word"),
 ];
 /// Tamanho máximo de um arquivo exportado.
 pub const MAX_EXPORT_BYTES: usize = 64 * 1024 * 1024;
@@ -290,6 +291,7 @@ mod export_tests {
         assert_eq!(export_format("figura.png"), Ok(("png", "PNG")));
         assert_eq!(export_format("tabela.xlsx"), Ok(("xlsx", "XLSX")));
         assert_eq!(export_format("relatorio.pdf"), Ok(("pdf", "PDF")));
+        assert_eq!(export_format("relatorio.docx"), Ok(("docx", "Word")));
         assert!(export_format("programa.exe").is_err());
         assert!(export_format("semextensao").is_err());
         assert!(export_format("projeto.enzitag").is_err());

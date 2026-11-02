@@ -6,7 +6,7 @@
 |---|---|
 | IDs no registro do motor | `mixture_design` (geração) e `mixture_model` (modelos de Scheffé) |
 | Módulos | C13 `designs/mixture`, C06 `models/mixture` |
-| Etapa | [ET15](../planos-execucao/ativos/et15-niveis-mistos-e-misturas.md) |
+| Etapa | [ET15](../planos-execucao/concluidos/et15-niveis-mistos-e-misturas.md) |
 | Casos de validação | [`validation/cases/mixture_design`](../../validation/cases/mixture_design/mixture.json) (6 casos) e [`validation/cases/mixture_model`](../../validation/cases/mixture_model/scheffe.json) (5 casos); gerador [`make_mixture_cases.py`](../../validation/tools/make_mixture_cases.py) |
 
 ![Previsão do modelo quadrático sobre o triângulo (exemplo do E2E)](../imagens/capturas/misturas-ternario.png)

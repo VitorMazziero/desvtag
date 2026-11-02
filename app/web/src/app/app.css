@@ -326,6 +326,9 @@ input[aria-invalid="true"] {
 .advanced {
   margin: var(--space-2) 0;
 }
+.row > details.comments {
+  flex: 1 1 100%;
+}
 .comment-list,
 .comment-replies {
   list-style: none;

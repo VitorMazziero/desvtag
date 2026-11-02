@@ -1,0 +1,9 @@
+﻿# app: EnziTAG Optima
+
+run,standard_order,point,replicate,Temperatura,pH,Temperatura (coded),pH (coded),Atividade (U/mL)
+1,1,factorial,1,20,5,-1,-1,10.0
+2,2,factorial,1,30,5,1,-1,11.5
+3,3,factorial,1,20,7,-1,1,13.0
+4,4,factorial,1,30,7,1,1,14.5
+5,5,center,0,25,6,0,0,16.0
+6,6,center,0,25,6,0,0,17.5

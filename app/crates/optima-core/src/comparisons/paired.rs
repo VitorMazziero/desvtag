@@ -175,7 +175,9 @@ fn wilcoxon(differences: &[f64]) -> Option<Wilcoxon> {
         .zip(&ranks)
         .filter(|(d, _)| **d > 0.0)
         .map(|(_, r)| r)
-        .sum();
+        .sum::<f64>()
+        // A soma de uma lista vazia é −0,0 (aparece como «−0» na tela): normaliza para +0,0.
+        + 0.0;
     let n = nonzero.len();
     let total = n as f64 * (n as f64 + 1.0) / 2.0;
     let w_minus = total - w_plus;
@@ -323,6 +325,7 @@ mod tests {
         let w = r.wilcoxon.expect("wilcoxon");
         assert_eq!(w.method, "exact");
         assert_eq!(w.statistic, 0.0);
+        assert!(w.statistic.is_sign_positive(), "o zero não pode ser −0");
         assert!((w.p_value.value().expect("p") - 0.0625).abs() < 1e-12);
     }
 

@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `nonlinear_saturation_fit` |
 | Módulo | C14 `models/nonlinear` |
-| Etapa | [ET18](../planos-execucao/ativos/et18-nao-linear-e-potencia.md) |
+| Etapa | [ET18](../planos-execucao/concluidos/et18-nao-linear-e-potencia.md) |
 | Casos de validação | [`validation/cases/nonlinear_saturation_fit`](../../validation/cases/nonlinear_saturation_fit/nonlinear.json) (4 casos); gerador [`make_power_nonlinear_cases.py`](../../validation/tools/make_power_nonlinear_cases.py) |
 
 ## 1. Pergunta

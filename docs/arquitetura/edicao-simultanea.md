@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Estado | **Especificação para revisão do usuário** — nada disto está implementado |
-| Origem | [ET20](../planos-execucao/ativos/et20-docx-comentarios-e-distribuicao.md) (T07); PD-14 |
+| Origem | [ET20](../planos-execucao/concluidos/et20-docx-comentarios-e-distribuicao.md) (T07); PD-14 |
 | Depende de | [formato `.enzitag`](formato-enzitag.md), [DT-0025](../decisoes-tecnicas/dt-0025-google-drive-opcional-na-versao-web.md) (Drive), [DT-0026](../decisoes-tecnicas/dt-0026-docx-comentarios-canais-e-webkit.md) (comentários) |
 | Decisão pedida | §9: qual caminho seguir e se haverá infraestrutura de transporte |
 

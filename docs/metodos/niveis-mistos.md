@@ -6,7 +6,7 @@
 |---|---|
 | ID no registro do motor | `mixed_levels_design` |
 | Módulo | C13 `designs/mixed_levels` |
-| Etapa | [ET15](../planos-execucao/ativos/et15-niveis-mistos-e-misturas.md) (níveis mistos entregues; misturas em seguida) |
+| Etapa | [ET15](../planos-execucao/concluidos/et15-niveis-mistos-e-misturas.md) (níveis mistos entregues; misturas em seguida) |
 | Casos de validação | [`validation/cases/mixed_levels_design`](../../validation/cases/mixed_levels_design/mixed.json) (6 casos; gerador [`make_mixed_cases.py`](../../validation/tools/make_mixed_cases.py)) |
 | Análise | [ANOVA multifatorial](anova-multifatorial.md) |
 
