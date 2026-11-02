@@ -9,7 +9,9 @@ O aplicativo (MIT) inclui os componentes abaixo, sob as licenças indicadas.
 @fontsource/geist-mono 5.3.0 — OFL-1.1 — Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font.git) GeistMono-Italic[wght].ttf: Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font.git)
 @fontsource/geist-sans 5.3.0 — OFL-1.1 — (C) 2023 Vercel, made in collaboration with basement.studio
 @fontsource/host-grotesk 5.3.0 — OFL-1.1 — Copyright 2023 The Host Grotesk Project Authors (https://github.com/Element-Type/HostGrotesk) HostGrotesk-Italic[wght].ttf: Copyright 2023 The Host Grotesk Project Authors (https://github.com/Element-Type/HostGrotesk)
+@fontsource/ibm-plex-mono 5.3.0 — OFL-1.1 — Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-ThinItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-ExtraLight.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-ExtraLightItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Light.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-LightItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Regular.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Italic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Medium.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-MediumItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-SemiBold.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-SemiBoldItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Bold.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-BoldItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
 @fontsource/instrument-sans 5.3.0 — OFL-1.1 — Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans) InstrumentSans-Italic[wdth,wght].ttf: Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans)
+@fontsource/source-serif-4 5.3.1 — OFL-1.1 — "Font Software" refers to the set of files released by the Copyright
 @noble/ciphers 1.3.0 — MIT — Copyright (c) 2022 Paul Miller (https://paulmillr.com)
 @noble/hashes 1.8.0 — MIT — Copyright (c) 2022 Paul Miller (https://paulmillr.com)
 @swc/helpers 0.5.23 — Apache-2.0 — "Licensor" shall mean the copyright owner or entity authorized by
@@ -77,8 +79,14 @@ Geist Sans and Geist Mono Font
 -- @fontsource/host-grotesk 5.3.0
 Copyright 2023 The Host Grotesk Project Authors (https://github.com/Element-Type/HostGrotesk) HostGrotesk-Italic[wght].ttf: Copyright 2023 The Host Grotesk Project Authors (https://github.com/Element-Type/HostGrotesk)
 
+-- @fontsource/ibm-plex-mono 5.3.0
+Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-ThinItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-ExtraLight.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-ExtraLightItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Light.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-LightItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Regular.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Italic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Medium.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-MediumItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-SemiBold.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-SemiBoldItalic.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-Bold.ttf: Copyright 2017 IBM Corp. All rights reserved. IBMPlexMono-BoldItalic.ttf: Copyright 2017 IBM Corp. All rights reserved.
+
 -- @fontsource/instrument-sans 5.3.0
 Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans) InstrumentSans-Italic[wdth,wght].ttf: Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans)
+
+-- @fontsource/source-serif-4 5.3.1
+Google Inc.
 
 Texto da licença (comum a todas as fontes acima):
 

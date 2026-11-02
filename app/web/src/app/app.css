@@ -24,6 +24,7 @@
 .field {
   display: grid;
   gap: var(--space-1);
+  font-family: var(--font-label);
   font-size: var(--text-label);
   color: var(--color-ink-secondary);
 }
@@ -36,6 +37,7 @@
   background: var(--color-panel);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-control);
+  box-shadow: var(--shadow-inset);
   transition: border-color var(--motion-duration) var(--motion-ease);
 }
 .field select:hover {
@@ -183,11 +185,16 @@
   color: var(--color-on-action);
   background: var(--color-action);
   border: 1px solid var(--color-action);
-  border-radius: var(--radius-control);
+  border-radius: var(--radius-button);
+  box-shadow: var(--shadow-control);
   cursor: pointer;
   transition:
     background-color var(--motion-duration) var(--motion-ease),
-    border-color var(--motion-duration) var(--motion-ease);
+    border-color var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease);
+}
+.button:active:not(:disabled) {
+  box-shadow: var(--shadow-control-pressed);
 }
 .button:hover:not(:disabled) {
   background: var(--color-action-hover);
@@ -302,6 +309,7 @@ input[type="text"] {
   background: var(--color-panel);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-control);
+  box-shadow: var(--shadow-inset);
   width: 100%;
 }
 input[aria-invalid="true"] {
@@ -556,4 +564,33 @@ input[aria-invalid="true"] {
   .results-nav button {
     width: auto;
   }
+}
+
+/* Alto contraste do Windows: relevo e sombras somem; bordas reais delimitam os controles. */
+@media (forced-colors: active) {
+  .panel,
+  .button,
+  .field select,
+  input[type="text"] {
+    box-shadow: none;
+    border: 1px solid ButtonText;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+.group-logo {
+  display: block;
+  box-sizing: content-box;
+  padding: var(--space-1) var(--space-2);
+  background: #fff;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-control);
+}
+.start-logo {
+  margin-bottom: var(--space-3);
 }

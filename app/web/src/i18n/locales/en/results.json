@@ -402,7 +402,8 @@
       "buttonPdf": "Export report (PDF)",
       "footerPdf": "EnziTAG Optima {{version}} — PDF generated locally; figures are vector graphics.",
       "page": "Page {{page}} of {{total}}"
-    }
+    },
+    "logo": "Include the group logo in reports"
   },
   "figure": {
     "customize": "Customize figure",

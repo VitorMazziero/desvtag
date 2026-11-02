@@ -67,6 +67,8 @@ export interface ReportPdfInput {
   /** DOM já limpo do relatório (sem controles; figuras com o SVG de exportação). */
   body: HTMLElement;
   footer: string;
+  /** Logotipo do grupo como crédito (PNG em `data:`); ausente = sem logotipo. */
+  logoDataUri?: string;
   /** Texto do rodapé de página, por exemplo «Página 2 de 7». */
   pageLabel: (page: number, total: number) => string;
 }
@@ -74,6 +76,7 @@ export interface ReportPdfInput {
 export async function reportPdf(input: ReportPdfInput): Promise<Uint8Array> {
   const pdfMake = await load();
   const header: PdfNode[] = [
+    ...(input.logoDataUri ? [{ image: input.logoDataUri, width: 110, margin: [0, 0, 0, 8] }] : []),
     { text: input.title, fontSize: 18, bold: true, margin: [0, 0, 0, 2] },
     { text: input.subtitle, color: "#454c58", margin: [0, 0, 0, 8] },
     { text: input.provenanceTitle, fontSize: 13.5, bold: true, margin: [0, 6, 0, 4] },

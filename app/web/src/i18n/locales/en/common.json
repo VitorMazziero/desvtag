@@ -2,7 +2,8 @@
   "app": {
     "name": "EnziTAG Optima",
     "tagline": "Experimental design, statistics and optimization",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "logoAlt": "EnziTAG logo"
   },
   "settings": {
     "language": "Language",
@@ -15,7 +16,10 @@
   "theme": {
     "soft-light": "Soft Light",
     "modern-dark": "Modern Dark",
-    "professional": "Professional"
+    "professional": "Professional",
+    "industrial": "Industrial",
+    "organic": "Organic",
+    "clay": "Clay"
   },
   "engine": {
     "title": "Scientific engine",

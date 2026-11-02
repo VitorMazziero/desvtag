@@ -1,0 +1,36 @@
+/* Industrial: tokens do prompt (docs/temas/prompts/industrial.txt) mapeados para os tokens
+   semânticos (DT-0021). Chassi cinza frio, painéis em relevo, campos rebaixados e teclas.
+   O laranja #f15b22 (2,2:1 sobre o chassi) é só decoração (--color-indicator): nunca texto,
+   ação ou foco. A ação é a tinta escura; o foco usa a tinta (≥ 4,5:1). */
+:root[data-theme="industrial"] {
+  color-scheme: light;
+  --color-ground: #cbd0d2;
+  --color-ground-muted: #b6bec2;
+  --color-panel: #e7eaeb;
+  --color-ink: #181e22;
+  --color-ink-secondary: #414b52;
+  --color-rule: #8e999e;
+  --color-action: #20272b;
+  --color-on-action: #f2f4f4;
+  --color-action-hover: #0e1214;
+  --color-accent-text: #181e22;
+  --color-ok: #1f5a1f;
+  --color-focus: #181e22;
+  --color-indicator: #f15b22;
+  --font-display: "Host Grotesk", Arial, sans-serif;
+  --font-body: "Host Grotesk", Arial, sans-serif;
+  --font-label: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --display-tracking: -0.01em;
+  --focus-width: 3px;
+  --focus-offset: 2px;
+  --radius-panel: 4px;
+  --radius-control: 4px;
+  --radius-button: 4px;
+  --shadow-panel: inset 1px 1px 0 rgb(255 255 255 / 70%), 2px 3px 6px rgb(24 30 34 / 28%);
+  --shadow-control: inset 0 1px 0 rgb(255 255 255 / 25%), 0 2px 3px rgb(24 30 34 / 40%);
+  --shadow-control-pressed: inset 0 2px 4px rgb(0 0 0 / 55%);
+  --shadow-inset: inset 1px 2px 3px rgb(24 30 34 / 35%);
+  --motion-duration: 140ms;
+  --motion-ease: cubic-bezier(0.3, 0.7, 0.4, 1.25);
+}

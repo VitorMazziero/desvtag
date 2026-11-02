@@ -2,7 +2,8 @@
   "app": {
     "name": "EnziTAG Optima",
     "tagline": "Planejamento experimental, estatística e otimização",
-    "skipToContent": "Ir para o conteúdo"
+    "skipToContent": "Ir para o conteúdo",
+    "logoAlt": "Logotipo EnziTAG"
   },
   "settings": {
     "language": "Idioma",
@@ -15,7 +16,10 @@
   "theme": {
     "soft-light": "Soft Light",
     "modern-dark": "Modern Dark",
-    "professional": "Professional"
+    "professional": "Professional",
+    "industrial": "Industrial",
+    "organic": "Organic",
+    "clay": "Clay"
   },
   "engine": {
     "title": "Motor científico",

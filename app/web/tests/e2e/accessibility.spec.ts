@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 import { showAllSections } from "./showAll";
+import { THEME_LIST } from "./themes";
 
 test.beforeEach(async ({ page }) => {
   await showAllSections(page);
@@ -20,7 +21,7 @@ async function scan(page: Page, where: string) {
   expect(summary, `violações de acessibilidade em ${where}`).toEqual([]);
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: fluxo completo sem violações no tema ${theme}`, async ({ page }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
@@ -106,7 +107,7 @@ test("axe: assistente de importação e aviso de recuperação sem violações",
   await scan(page, "aviso de recuperação");
 });
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: comparação de tratamentos (configuração, tabelas e gráficos) no tema ${theme}`, async ({
     page,
   }) => {
@@ -151,7 +152,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   });
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: planejamento, matriz e resultados de triagem sem violações no tema ${theme}`, async ({
     page,
   }) => {
@@ -173,7 +174,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   });
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: superfície de resposta (resultados, gráficos e planejamento de superfície) sem violações no tema ${theme}`, async ({
     page,
   }) => {
@@ -197,7 +198,7 @@ for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
   });
 }
 
-for (const theme of ["soft-light", "modern-dark", "professional"] as const) {
+for (const theme of THEME_LIST) {
   test(`axe: otimização, candidatos e conferência da confirmação sem violações no tema ${theme}`, async ({
     page,
   }) => {

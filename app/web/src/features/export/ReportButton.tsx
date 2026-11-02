@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
+import logoInline from "../../assets/enzitag-logo.png?inline";
 import type { Language } from "../../i18n";
 import { nowIso } from "../../lib/ids";
 import { APP_VERSION } from "../../lib/version";
@@ -104,6 +105,7 @@ export function ReportButton({
             provenance: pairs,
             body: cleanReportRoot(el),
             footer: tt("export.report.footerPdf", { version: APP_VERSION }),
+            logoDataUri: settings.reportLogo ? logoInline : undefined,
             pageLabel: (page, total) => tt("export.report.page", { page, total }),
           });
           saved = await storage.exportFile(bytes, `${slug(state.name)}-relatorio.pdf`);
@@ -116,6 +118,9 @@ export function ReportButton({
             provenance: pairs,
             bodyHtml: cleanReportDom(el),
             footer: tt("export.report.footer", { version: APP_VERSION }),
+            logo: settings.reportLogo
+              ? { dataUri: logoInline, alt: exportI18n.getFixedT(language)("app.logoAlt") }
+              : undefined,
           });
           saved = await storage.exportFile(utf8(html), `${slug(state.name)}-relatorio.html`);
         }
