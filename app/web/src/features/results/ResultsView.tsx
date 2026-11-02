@@ -34,11 +34,24 @@ export function ResultsView({
             {t("stale")}
           </p>
         )}
-        <ComparisonResults
-          result={stored.result}
-          signature={stored.signature}
-          language={language}
-        />
+        {report ? (
+          <ComparisonResults
+            result={stored.result}
+            signature={stored.signature}
+            language={language}
+          />
+        ) : (
+          <SectionedResults>
+            <ComparisonResults
+              result={stored.result}
+              signature={stored.signature}
+              language={language}
+            />
+            <div data-section="export">
+              <ExportSettingsPanel />
+            </div>
+          </SectionedResults>
+        )}
       </section>
     );
   if (stored.kind === "design")
@@ -50,7 +63,20 @@ export function ResultsView({
             {t("stale")}
           </p>
         )}
-        <DesignResults result={stored.result} signature={stored.signature} language={language} />
+        {report ? (
+          <DesignResults result={stored.result} signature={stored.signature} language={language} />
+        ) : (
+          <SectionedResults>
+            <DesignResults
+              result={stored.result}
+              signature={stored.signature}
+              language={language}
+            />
+            <div data-section="export">
+              <ExportSettingsPanel />
+            </div>
+          </SectionedResults>
+        )}
       </section>
     );
   if (stored.kind === "surface")

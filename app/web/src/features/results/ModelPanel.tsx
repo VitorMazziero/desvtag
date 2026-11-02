@@ -106,6 +106,41 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
     }
   };
 
+  // Trocar de resposta traz o modelo que ela já tinha (cada resposta guarda o seu).
+  const switchResponse = async (responseId: string) => {
+    const nextState = {
+      ...state,
+      analysis: {
+        ...state.analysis,
+        responseId,
+        designTerms: state.analysis.responseModels[responseId] ?? null,
+      },
+    };
+    const { dataset } = buildDataset(nextState);
+    const operation = buildOperation(nextState, dataset);
+    if (!operation) return;
+    setBusy(true);
+    setProblems([]);
+    try {
+      const response = await client.request(operation, { channel: "surface" });
+      if (response.outcome.status === "ok" && response.outcome.result.type === "surfaceAnalyze") {
+        const { type: _type, ...fresh } = response.outcome.result;
+        dispatch({ type: "setAnalysis", patch: { responseId } });
+        dispatch({
+          type: "storeResult",
+          result: { signature: inputSignature(nextState), kind: "surface", result: fresh },
+          now: nowIso(),
+        });
+      } else if (response.outcome.status === "error") {
+        setProblems(engineErrorMessages(t, response.outcome.error));
+      }
+    } catch {
+      // resposta obsoleta ou falha de transporte: o resultado atual permanece
+    } finally {
+      setBusy(false);
+    }
+  };
+
   if (!selection) return problems.length > 0 ? <ProblemList problems={problems} /> : null;
   const current = selection.steps[0]?.metrics;
   const recommended = selection.steps[selection.steps.length - 1]?.metrics;
@@ -168,6 +203,24 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
     <section className="panel" aria-labelledby="model-panel-title" data-testid="model-panel">
       <h3 id="model-panel-title">{t("model.title")}</h3>
       <p className="muted small">{t("model.intro")}</p>
+      {state.responses.length > 1 && (
+        <label className="field">
+          <span>{t("model.response")}</span>
+          <select
+            data-testid="model-response"
+            disabled={busy}
+            value={state.analysis.responseId ?? ""}
+            onChange={(e) => void switchResponse(e.target.value)}
+          >
+            {state.responses.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name || r.id}
+              </option>
+            ))}
+          </select>
+          <small className="muted">{t("model.responseHelp")}</small>
+        </label>
+      )}
       <fieldset disabled={busy} className="editor-card">
         <legend>{t("model.terms")}</legend>
         <ul className="facts-list term-toggles">

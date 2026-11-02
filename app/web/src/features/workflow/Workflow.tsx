@@ -120,9 +120,10 @@ export function Workflow({ language }: { language: Language }) {
         {step === "results" && (
           <>
             <ResultsView language={language} />
-            {state.result && !["surface", "procedure", "factorial"].includes(state.result.kind) && (
-              <ExportSettingsPanel />
-            )}
+            {state.result &&
+              !["surface", "procedure", "factorial", "oneWay", "design"].includes(
+                state.result.kind,
+              ) && <ExportSettingsPanel />}
           </>
         )}
       </div>

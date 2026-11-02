@@ -118,6 +118,7 @@ impl Experiment {
                 optimization: None,
                 procedure: None,
                 factorial: None,
+                response_models: None,
             },
             revisions: vec![Revision {
                 id: revision_id,

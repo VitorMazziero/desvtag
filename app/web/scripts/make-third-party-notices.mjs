@@ -32,7 +32,9 @@ for (const p of prod) {
   // Pacotes sem o campo `license` no `package.json` (ex.: png-js) declaram a licença no arquivo.
   const license =
     p.license ??
-    (file && /^MIT License/i.test(readFileSync(file, "utf8")) ? "MIT (arquivo LICENSE)" : "ver LICENSE");
+    (file && /^MIT License/i.test(readFileSync(file, "utf8"))
+      ? "MIT (arquivo LICENSE)"
+      : "ver LICENSE");
   add(`${p.name} ${p.version} — ${license}${copyright ? ` — ${copyright}` : ""}`);
 }
 add("");

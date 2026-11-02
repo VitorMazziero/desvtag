@@ -261,6 +261,11 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
       factorId: doc.analysisSelection.factorId ?? null,
       alpha: doc.analysisSelection.alpha ?? DEFAULT_ALPHA,
       designTerms: doc.analysisSelection.terms ?? null,
+      responseModels: Object.fromEntries(
+        Object.entries(doc.analysisSelection.responseModels ?? {}).flatMap(([id, terms]) =>
+          terms ? [[id, terms.map((t) => [...t])]] : [],
+        ),
+      ),
       includeCurvature: doc.analysisSelection.includeCurvature ?? true,
       surface: doc.analysisSelection.surface ?? false,
       procedure: doc.analysisSelection.procedure ?? null,
@@ -360,6 +365,9 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
             }
           : {}),
         ...(e.optimization.setup ? { optimization: e.optimization.setup } : {}),
+        ...(Object.keys(e.analysis.responseModels).length > 0
+          ? { responseModels: e.analysis.responseModels }
+          : {}),
         ...(e.analysis.procedure
           ? { procedure: e.analysis.procedure, alpha: e.analysis.alpha }
           : {}),

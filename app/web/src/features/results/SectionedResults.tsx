@@ -25,6 +25,16 @@ const ORDER = [
 ];
 
 const STORAGE_KEY = "optima.showAllSections";
+const ACTIVE_KEY = "optima.activeSection";
+
+/** Seção ativa lembrada ao navegar e ao recarregar (estado da interface, não do projeto). */
+function readActive(): string | null {
+  try {
+    return localStorage.getItem(ACTIVE_KEY);
+  } catch {
+    return null;
+  }
+}
 
 function readShowAll(): boolean {
   try {
@@ -42,11 +52,20 @@ const rank = (id: string): number => {
 export function SectionedResults({ children }: { children: ReactNode }) {
   const { t } = useTranslation("results");
   const host = useRef<HTMLDivElement>(null);
-  const activeRef = useRef<string | null>(null);
+  const initialActive = useRef(readActive());
+  const activeRef = useRef<string | null>(initialActive.current);
   const showAllRef = useRef(readShowAll());
   const [showAll, setShowAll] = useState(showAllRef.current);
   const [ids, setIds] = useState<string[]>([]);
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActiveState] = useState<string | null>(initialActive.current);
+  const setActive = (id: string) => {
+    setActiveState(id);
+    try {
+      localStorage.setItem(ACTIVE_KEY, id);
+    } catch {
+      // sem armazenamento: vale só nesta sessão
+    }
+  };
 
   const apply = useCallback(() => {
     const el = host.current;

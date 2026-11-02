@@ -71,7 +71,12 @@ procedure?: Procedure,
 /**
  * Configuração da ANOVA multifatorial.
  */
-factorial?: FactorialSetup, };
+factorial?: FactorialSetup, 
+/**
+ * Modelo escolhido para cada resposta (id da resposta → termos, no formato de `terms`).
+ * `terms` continua sendo o modelo da resposta analisada; a otimização usa o de cada resposta.
+ */
+responseModels?: { [key in string]: Array<Array<StableId>> }, };
 
 /**
  * Análise guardada. Reabrir um projeto **não recalcula**: o resultado é o que foi guardado.

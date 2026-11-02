@@ -46,6 +46,8 @@ export interface AnalysisDraft {
   alpha: number;
   /** Termos do modelo do planejamento (cada termo = ids dos fatores); `null` = só efeitos principais. */
   designTerms: string[][] | null;
+  /** Modelo escolhido de cada resposta (id → termos); `designTerms` é o da resposta analisada. */
+  responseModels: Record<string, string[][]>;
   /** Incluir o termo de curvatura quando houver pontos centrais. */
   includeCurvature: boolean;
   /** Analisar como superfície de resposta (caminho "Analisar dados existentes"). */
@@ -156,6 +158,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
       factorId: null,
       alpha: DEFAULT_ALPHA,
       designTerms: null,
+      responseModels: {},
       includeCurvature: true,
       surface: false,
       procedure: null,
@@ -368,6 +371,7 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
         : null,
       alpha: state.analysis.alpha,
       designTerms: state.analysis.designTerms,
+      responseModels: state.analysis.responseModels,
       includeCurvature: state.analysis.includeCurvature,
       surface: state.analysis.surface,
       procedure: state.analysis.procedure,
@@ -420,6 +424,12 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           designTerms: state.analysis.designTerms
             ? state.analysis.designTerms.filter((term) => !term.includes(action.id))
             : null,
+          responseModels: Object.fromEntries(
+            Object.entries(state.analysis.responseModels).map(([id, terms]) => [
+              id,
+              terms.filter((term) => !term.includes(action.id)),
+            ]),
+          ),
         },
       };
     }
@@ -486,7 +496,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: null,
         rcbd: null,
         // Os termos pertencem ao tipo de planejamento anterior: voltam ao padrão.
-        analysis: { ...before.analysis, designTerms: null },
+        analysis: { ...before.analysis, designTerms: null, responseModels: {} },
         result: null,
       };
       return commitRevision(next, "design", action.now);
@@ -502,7 +512,12 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         crd: action.crd,
         rcbd: null,
         // O fator do DIC define os grupos da comparação de tratamentos.
-        analysis: { ...before.analysis, designTerms: null, factorId: action.crd.factorId },
+        analysis: {
+          ...before.analysis,
+          designTerms: null,
+          responseModels: {},
+          factorId: action.crd.factorId,
+        },
         result: null,
       };
       return commitRevision(next, "design", action.now);
@@ -519,6 +534,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         analysis: {
           ...before.analysis,
           designTerms: null,
+          responseModels: {},
           factorId: null,
           procedure: null,
           factorial: action.factorial,
@@ -544,8 +560,24 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       return { ...state, rows: state.rows.filter((_, i) => i !== action.row) };
     case "setUnitColumn":
       return { ...state, showUnitColumn: action.visible };
-    case "setAnalysis":
-      return { ...state, analysis: { ...state.analysis, ...action.patch } };
+    case "setAnalysis": {
+      const next = { ...state.analysis, ...action.patch };
+      const changedResponse =
+        action.patch.responseId !== undefined &&
+        action.patch.responseId !== state.analysis.responseId;
+      if (action.patch.designTerms !== undefined) {
+        // O modelo escolhido pertence à resposta analisada.
+        const { [next.responseId ?? ""]: _old, ...rest } = next.responseModels;
+        next.responseModels =
+          next.designTerms && next.responseId
+            ? { ...rest, [next.responseId]: next.designTerms }
+            : rest;
+      } else if (changedResponse) {
+        // Trocar de resposta traz o modelo que ela já tinha (ou o completo).
+        next.designTerms = next.responseId ? (next.responseModels[next.responseId] ?? null) : null;
+      }
+      return { ...state, analysis: next };
+    }
     case "setNotes":
       return { ...state, notes: action.notes };
     case "rename":

@@ -9,7 +9,7 @@ import type {
   ResponseGoal,
 } from "../../services/engine";
 import type { ProjectState, RowDraft } from "../../state/project";
-import { buildDataset, surfaceFactors } from "../analysis";
+import { buildDataset, responseTerms, surfaceFactors } from "../analysis";
 
 export type GoalType = Goal["type"];
 export const GOAL_TYPES: GoalType[] = ["maximize", "minimize", "target", "range"];
@@ -63,17 +63,34 @@ export function defaultSetup(state: ProjectState): OptimizationSetup {
   };
 }
 
+/** A configuração com o modelo escolhido de cada resposta (a otimização usa o modelo da análise). */
+export function effectiveSetup(state: ProjectState, setup: OptimizationSetup): OptimizationSetup {
+  return {
+    ...setup,
+    responses: setup.responses.map((g) => ({ ...g, terms: responseTerms(state, g.responseId) })),
+  };
+}
+
 export function buildOptimizationRequest(
   state: ProjectState,
   setup: OptimizationSetup,
 ): OptimizationRequest {
-  return { dataset: buildDataset(state).dataset, factors: surfaceFactors(state), setup };
+  return {
+    dataset: buildDataset(state).dataset,
+    factors: surfaceFactors(state),
+    setup: effectiveSetup(state, setup),
+  };
 }
 
 /** Assinatura dos dados e da configuração: muda quando qualquer entrada do resultado muda. */
 export function optimizationSignature(state: ProjectState, setup: OptimizationSetup): string {
   const { dataset } = buildDataset(state);
-  return JSON.stringify(["optimization", dataset, surfaceFactors(state), setup]);
+  return JSON.stringify([
+    "optimization",
+    dataset,
+    surfaceFactors(state),
+    effectiveSetup(state, setup),
+  ]);
 }
 
 /** Valor real com 5 algarismos significativos, como texto da grade (ponto decimal). */

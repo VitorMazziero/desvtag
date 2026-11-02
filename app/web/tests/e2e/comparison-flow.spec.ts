@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
 
 // Percurso de comparação de tratamentos com o motor Rust real (WebAssembly em Worker):
 // importar/colar → ANOVA → Tukey → letras → exportar → salvar → reabrir.
@@ -42,6 +43,9 @@ const pt = (n: number, digits: number) =>
   );
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
+
+// Estes percursos conferem todo o resultado de uma vez; a navegação por seções tem teste próprio.
+test.beforeEach(async ({ page }) => showAllSections(page));
 
 test.describe("comparação de tratamentos (quatro condições enzimáticas)", () => {
   test("ANOVA, Tukey, letras, gráficos, exportação e reabertura", async ({ page }) => {

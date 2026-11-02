@@ -498,7 +498,9 @@
     "warnLackOfFit": "Significant lack of fit: the current model may be too simple for these data.",
     "warnFewDf": "Only {{df}} residual degrees of freedom remain: error estimates are unreliable.",
     "warnOverfit": "Predicted R² is well below adjusted R²: a sign of overfitting. Prefer a simpler model.",
-    "optimism": "P-values computed after choosing terms from the same data are optimistic. Confirm the final model with new runs."
+    "optimism": "P-values computed after choosing terms from the same data are optimistic. Confirm the final model with new runs.",
+    "response": "Analysed response",
+    "responseHelp": "Each response keeps its own model; the optimization uses the model chosen for each one."
   },
   "procedure": {
     "title": "Treatment comparison",

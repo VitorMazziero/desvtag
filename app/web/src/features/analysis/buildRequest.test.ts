@@ -82,6 +82,7 @@ describe("comparison of treatments", () => {
       procedure: null,
       factorial: null,
       designTerms: null,
+      responseModels: {},
       includeCurvature: true,
       surface: false,
     },

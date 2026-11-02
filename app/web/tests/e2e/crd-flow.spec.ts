@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
+import { showAllSections } from "./showAll";
 
 // DIC aleatorizado com o motor Rust real (WebAssembly): definir o fator categórico → gerar a ordem
 // de execução (conferida contra a reimplementação independente em Python) → preencher respostas →
@@ -23,6 +24,9 @@ const reference = JSON.parse(
 const BASE: Record<string, number> = { Controle: 10, "pH 5": 16, "pH 7": 14, "Temperatura 37": 12 };
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
+
+// Estes percursos conferem todo o resultado de uma vez; a navegação por seções tem teste próprio.
+test.beforeEach(async ({ page }) => showAllSections(page));
 
 test.describe("DIC aleatorizado (um fator categórico)", () => {
   test("gerar, analisar, personalizar a figura, salvar e reabrir", async ({ page }) => {

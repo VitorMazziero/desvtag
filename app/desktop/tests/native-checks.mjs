@@ -519,7 +519,10 @@ export async function runChecks({ text, invoke }) {
     }
     console.log(`OK: ANOVA multifatorial com blocos (${factorial.length} casos, tipos I, II e III) igual ao statsmodels no motor nativo.`);
 
-    const rcbd = JSON.parse(readFileSync(root("validation/cases/randomized_block_design/rcbd.json"), "utf8")).cases;
+    // A semente do contrato JSON é um inteiro seguro (≤ 2^53 − 1): o caso com semente maior só vale no Rust.
+    const rcbd = JSON.parse(readFileSync(root("validation/cases/randomized_block_design/rcbd.json"), "utf8")).cases.filter((c) =>
+      Number.isSafeInteger(c.seed),
+    );
     for (const [index, c] of rcbd.entries()) {
       const result = await call(`native-rcbd-${index}`, {
         type: "designRcbdGenerate",
@@ -535,7 +538,7 @@ export async function runChecks({ text, invoke }) {
       const want = c.runs.map((r) => [r.blockIndex, r.levelIndex]);
       if (JSON.stringify(got) !== JSON.stringify(want)) throw new Error(`DBC nativo ${index}: ordem difere da referência independente`);
     }
-    console.log(`OK: DBC aleatorizado (${rcbd.length} casos, incluindo semente acima de 2^53) idêntico à implementação independente no motor nativo.`);
+    console.log(`OK: DBC aleatorizado (${rcbd.length} casos com semente representável em JavaScript) idêntico à implementação independente no motor nativo.`);
   }
 
   // Reabertura cruzada: os projetos de exemplo foram escritos pelo motor WebAssembly (navegador) e

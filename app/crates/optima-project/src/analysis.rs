@@ -55,6 +55,11 @@ pub struct AnalysisOptions {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     #[ts(optional)]
     pub factorial: Option<FactorialSetup>,
+    /// Modelo escolhido para cada resposta (id da resposta → termos, no formato de `terms`).
+    /// `terms` continua sendo o modelo da resposta analisada; a otimização usa o de cada resposta.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[ts(optional)]
+    pub response_models: Option<std::collections::BTreeMap<String, Vec<Vec<StableId>>>>,
 }
 
 /// Resultado guardado, por método.

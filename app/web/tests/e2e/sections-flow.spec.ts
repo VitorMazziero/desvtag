@@ -104,3 +104,79 @@ test.describe("resultados em seções", () => {
     }
   });
 });
+
+test("comparação de um fator em seções: resumo primeiro, gráficos à parte e exportação por último", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/");
+  await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar fator" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(0).fill("Condição");
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByRole("button", { name: "Adicionar linha" }).click();
+  const rows = [
+    ...[10.1, 10.3, 9.9, 10.2].map((v) => ["A", v]),
+    ...[12.0, 12.4, 11.8, 12.1].map((v) => ["B", v]),
+    ...[15.0, 15.3, 14.8, 15.1].map((v) => ["C", v]),
+  ];
+  await page.getByLabel("Condição — Obs. 1", { exact: true }).evaluate(
+    (el, value) => {
+      const data = new DataTransfer();
+      data.setData("text/plain", value);
+      const event = new Event("paste", { bubbles: true, cancelable: true });
+      Object.defineProperty(event, "clipboardData", { value: data });
+      el.dispatchEvent(event);
+    },
+    rows.map(([l, v]) => `${l}\t${String(v).replace(".", ",")}`).join("\n"),
+  );
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByLabel("Fator que define os grupos").selectOption({ label: "Condição" });
+  await page.getByRole("button", { name: "Comparar tratamentos" }).click();
+
+  const nav = page.getByRole("navigation", { name: "Seções dos resultados" });
+  await expect(nav).toBeVisible();
+  const names = await nav.getByRole("button").allTextContents();
+  expect(names.at(0)).toBe("Resumo");
+  expect(names.at(-1)).toBe("Exportar");
+  // Só o resumo aparece de início: a tabela, o gráfico e o painel de exportação ficam em suas seções.
+  await expect(page.getByTestId("interpretation")).toBeVisible();
+  await expect(page.getByTestId("anova-table")).toBeHidden();
+  await expect(page.getByTestId("means-chart")).toBeHidden();
+  await page.getByTestId("section-charts").click();
+  await expect(page.getByTestId("means-chart")).toBeVisible();
+  await page.getByTestId("section-tables").click();
+  await expect(page.getByTestId("anova-table")).toBeVisible();
+  await page.getByTestId("section-export").click();
+  await expect(page.getByTestId("report-pdf-button")).toBeVisible();
+  // A seção ativa fica lembrada no dispositivo (vale ao recarregar a página).
+  expect(await page.evaluate(() => localStorage.getItem("optima.activeSection"))).toBe("export");
+});
+
+test("um modelo por resposta: cada resposta guarda o seu e a troca é imediata", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  const kla = fileURLToPath(
+    new URL("../../../../examples/06-kla-sintetico/projeto.enzitag", import.meta.url),
+  );
+  await page.goto("/");
+  const chooser = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Abrir…" }).click();
+  await (await chooser).setFiles(kla);
+  await expect(page.getByTestId("results-layout")).toBeVisible();
+  await page.getByTestId("section-model").click();
+  const select = page.getByTestId("model-response");
+  await expect(select).toHaveValue("r1");
+  // kLa guarda o modelo recomendado (intercepto, RPM, aeração e RPM²): 4 parâmetros.
+  await expect.poll(async () => Number(await parameters(page, 1))).toBe(4);
+  // A potência ainda não tem modelo escolhido: usa o completo (6 parâmetros).
+  await select.selectOption({ label: "Potência" });
+  await expect.poll(async () => Number(await parameters(page, 1))).toBe(6);
+  // Voltar ao kLa traz o modelo reduzido de novo.
+  await select.selectOption({ label: "kLa" });
+  await expect.poll(async () => Number(await parameters(page, 1))).toBe(4);
+});

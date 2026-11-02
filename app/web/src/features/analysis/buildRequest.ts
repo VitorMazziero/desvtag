@@ -124,15 +124,28 @@ export function surfaceFactors(state: ProjectState): DesignFactor[] {
   });
 }
 
-/** Termos da superfície: lista vazia = modelo completo de segunda ordem (padrão do motor). */
-export function surfaceTerms(state: ProjectState): TermSpec[] {
-  return (state.analysis.designTerms ?? []).map((ids) =>
+function termSpecs(termIds: string[][]): TermSpec[] {
+  return termIds.map((ids) =>
     ids.length === 1
       ? { type: "main", factorId: ids[0] as string }
       : ids.length === 2 && ids[0] === ids[1]
         ? { type: "power", factorId: ids[0] as string, degree: 2 }
         : { type: "interaction", factorIds: ids },
   );
+}
+
+/** Termos da superfície: lista vazia = modelo completo de segunda ordem (padrão do motor). */
+export function surfaceTerms(state: ProjectState): TermSpec[] {
+  return termSpecs(state.analysis.designTerms ?? []);
+}
+
+/** Modelo escolhido para uma resposta (vazio = completo); a otimização usa o de cada resposta. */
+export function responseTerms(state: ProjectState, responseId: string): TermSpec[] {
+  const terms =
+    responseId === state.analysis.responseId
+      ? state.analysis.designTerms
+      : state.analysis.responseModels[responseId];
+  return termSpecs(terms ?? []);
 }
 
 /** Termos do modelo do planejamento: os escolhidos ou, por padrão, os efeitos principais. */

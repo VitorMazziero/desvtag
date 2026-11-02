@@ -505,7 +505,9 @@
     "warnLackOfFit": "Falta de ajuste significativa: o modelo atual pode ser simples demais para estes dados.",
     "warnFewDf": "Restam só {{df}} graus de liberdade no resíduo: as estimativas de erro são pouco confiáveis.",
     "warnOverfit": "O R² predito está bem abaixo do R² ajustado: sinal de sobreajuste. Prefira um modelo mais simples.",
-    "optimism": "Valores-p calculados depois de escolher termos pelos próprios dados são otimistas. Confirme o modelo final com ensaios novos."
+    "optimism": "Valores-p calculados depois de escolher termos pelos próprios dados são otimistas. Confirme o modelo final com ensaios novos.",
+    "response": "Resposta analisada",
+    "responseHelp": "Cada resposta guarda o seu modelo; a otimização usa o modelo escolhido de cada uma."
   },
   "procedure": {
     "title": "Comparação de tratamentos",
