@@ -1,4 +1,4 @@
-# ET21 — Revisão de espaçamento, preenchimento e tamanho dos controles da interface (e logo só no cabeçalho)
+# ET21 — Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas
 
 | Campo | Valor |
 |---|---|
@@ -11,7 +11,7 @@
 | Ativado em | — |
 | Concluído em | — |
 
-Origem: pedido do usuário em 2026-11-02, ao verificar a v0.2.0 instalada: «Os botões da interface também estão próximos; faça uma checagem na interface na v0.3 quanto a distância, padding e tamanho». Na mesma verificação o usuário pediu: «Não são necessários 2 logos, apenas o superior». **Só planejamento por ora**: nenhuma alteração de interface foi feita.
+Origem: pedido do usuário em 2026-11-02, ao verificar a v0.2.0 instalada: «Os botões da interface também estão próximos; faça uma checagem na interface na v0.3 quanto a distância, padding e tamanho». Na mesma verificação o usuário pediu: «Não são necessários 2 logos, apenas o superior» e «Ao clicar na próxima etapa, a interface deve voltar ao topo de forma orgânica». **Só planejamento por ora**: nenhuma alteração de interface foi feita.
 
 ## 1. Objetivo
 
@@ -40,6 +40,7 @@ Esses números são ponto de partida; a auditoria mede o que o usuário **vê** 
 - Correções em `app.css` e nos tokens; sem regras por tema espalhadas nos componentes (DT-0021).
 - Teste automatizado que **mede** a distância e o tamanho dos controles nas telas principais e falha quando passam do limite.
 - Capturas antes e depois, nos seis temas, PT e EN.
+- **Rolagem ao trocar de etapa:** ao avançar ou voltar no fluxo guiado (Avançar, Voltar e a barra de etapas), a página volta ao topo com rolagem suave, em vez de ficar na posição do botão clicado.
 - **Logo só no cabeçalho:** retirar o logotipo da tela inicial («O que você quer fazer?»), que hoje repete o do cabeçalho; o logo do cabeçalho e o crédito nos relatórios continuam.
 
 **Não inclui**
@@ -75,6 +76,7 @@ Esses números são ponto de partida; a auditoria mede o que o usuário **vê** 
 - [ ] **T06** — Capturas «depois» (seis temas, PT/EN, 800 e 375 px) arquivadas e inspeção visual registrada; conferência no WebView2.
 - [ ] **T07** — Documentação: DT, ficha U18, guia de interface (se houver) e CHANGELOG.
 - [ ] **T08** — **Logo único.** Remover o `GroupLogo` grande da tela inicial (`features/home/StartActions.tsx`), mantendo o do cabeçalho e o crédito nos relatórios; liberar o espaço (a pergunta «O que você quer fazer?» sobe); ajustar `themes-flow.spec.ts` (que confere o logo na tela inicial nos seis temas) para conferir só o cabeçalho e o relatório; atualizar a [DT-0021](../../decisoes-tecnicas/dt-0021-temas-adicionais-fontes-e-logo.md) (decisão 5, que prevê cabeçalho e tela inicial) e o [plano da ET12](../concluidos/et12-temas-adicionais-e-identidade-do-grupo.md) com nota datada; conferir a captura nos seis temas e a ausência de requisições externas.
+- [ ] **T09** — **Voltar ao topo de forma orgânica ao trocar de etapa** (`features/workflow/Workflow.tsx`). Comportamento: ao mudar a etapa, rolar suavemente até o topo do conteúdo da etapa nova (não ao topo absoluto da página se o cabeçalho for fixo) e mover o foco para o título da etapa, sem roubar o foco do teclado de forma abrupta; com `prefers-reduced-motion` a rolagem é imediata (sem animação); não rolar quando a troca vier de restaurar a etapa ao reabrir ou ao recarregar; funciona também em 375 px, com a barra lateral de resultados e ao trocar de seção (nesse caso, só se o início da seção estiver fora da janela). Testes: unidade da função que decide a rolagem; E2E em Chromium e Firefox conferindo a posição de rolagem e o foco após «Avançar» e «Voltar», com e sem movimento reduzido; axe.
 
 ## 7. Entregas
 
@@ -87,7 +89,8 @@ Regras de espaçamento e tamanho em tokens, interface corrigida nos seis temas, 
 3. Axe sem violações; foco visível e não cortado; `forced-colors` e movimento reduzido preservados. *Evidência:* E2E.
 4. Sem rolagem horizontal em 375 px. *Evidência:* E2E.
 5. O logotipo aparece **uma única vez** na interface (cabeçalho); a tela inicial não o repete. *Evidência:* E2E nos seis temas e captura.
-6. O usuário revisa as capturas antes e depois.
+6. Ao avançar ou voltar de etapa, a página rola suavemente ao topo da etapa e o foco vai ao título; sem animação com movimento reduzido. *Evidência:* E2E e teste de unidade.
+7. O usuário revisa as capturas antes e depois.
 
 ## 9. Verificação
 
@@ -101,6 +104,7 @@ DT nova; ficha U18; capturas em `docs/imagens/`; CHANGELOG; relatório de valida
 
 | Risco | Mitigação |
 |---|---|
+| A rolagem ao topo atrapalhar quem usa teclado ou leitor de tela | Foco no título da etapa, rolagem só em troca de etapa (não ao reabrir), movimento reduzido respeitado |
 | Aumentar espaços empurrar conteúdo para fora em 375 px | Quebra de linha e teste em 375 px |
 | Grade e tabelas perderem densidade | Regras só para controles interativos; medir a grade |
 | Regressão visual em algum dos seis temas | Capturas antes e depois em todos; teste de medidas por tema |

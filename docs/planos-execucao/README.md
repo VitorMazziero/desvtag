@@ -50,7 +50,7 @@ Cada etapa (ETnn) referencia as fases do roteiro que cobre. Numeração das etap
 | ET18 | Ajuste não linear (Monod) e potência | v0.3 | Planejado | [planejados/et18-nao-linear-e-potencia.md](planejados/et18-nao-linear-e-potencia.md) |
 | ET19 | Google Drive e compartilhamento inicial | v0.3 | Planejado | [planejados/et19-google-drive-e-compartilhamento.md](planejados/et19-google-drive-e-compartilhamento.md) |
 | ET20 | DOCX, comentários, Safari, domínio próprio e canais de atualização | v0.3 | Planejado | [planejados/et20-docx-comentarios-e-distribuicao.md](planejados/et20-docx-comentarios-e-distribuicao.md) |
-| ET21 | Revisão de espaçamento, preenchimento e tamanho dos controles (e logo só no cabeçalho) | v0.3 | Planejado | [planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
+| ET21 | Revisão de espaçamento, tamanho dos controles, logo único e rolagem entre etapas | v0.3 | Planejado | [planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md](planejados/et21-revisao-de-espacamento-e-tamanho-dos-controles.md) |
 
 **Evidência de Windows:** além de `windows-latest` na CI (Windows Server 2025, build 26100), a verificação nativa, os testes Rust, o instalador e a suíte E2E foram executados no Windows 10 Pro 22H2 (build 19045) da máquina de desenvolvimento, com WebView2 156.0.4314.58, Chrome 156.0.8078.74 e Edge 156.0.4314.58 estáveis.
 
