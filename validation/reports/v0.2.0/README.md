@@ -1,8 +1,8 @@
-# Relatório de validação — candidata à v0.2.0
+# Relatório de validação — v0.2.0
 
-**Estado:** candidata **local**, no ramo `feat/v0.2`; pronta para a verificação do usuário antes da publicação · **Data:** 2026-11-02
+**Estado:** verificada localmente e publicada em 2026-11-02 (versão web e etiqueta `v0.2.0`; instalador em rascunho de release, [registro](../../../docs/distribuicao/publicacao.md#publicação-da-v020)) · **Data:** 2026-11-02
 
-Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente ou foi desviado do plano**. Não declara a v0.2 como publicada, não declara verificação em Windows 11 e não declara nenhum dos marcos M1–M3. Complementa o [relatório da v0.1.0](../v0.1.0/README.md), que continua valendo para o que a v0.2 não alterou.
+Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente ou foi desviado do plano**. A publicação foi registrada depois da verificação (cabeçalho e pendências); o relatório não declara verificação em Windows 11 e não declara nenhum dos marcos M1–M3. Complementa o [relatório da v0.1.0](../v0.1.0/README.md), que continua valendo para o que a v0.2 não alterou.
 
 ## Resumo
 
@@ -91,7 +91,7 @@ Detalhes e demais operações em [limites operacionais](../../../docs/arquitetur
 | Termos dentro da tabela de coeficientes (ET11-T06) | Painel «Modelo: termos e comparação» na seção Modelo (equivalente funcional) |
 | Guia de resultados | Não criado; o conteúdo está nas especificações e no guia de exportação |
 | Capturas em inglês e inspeção visual no WebView2 (ET12-T10) | Não arquivadas |
-| CI do GitHub com Node 26 e a v0.2 | **Ainda não executada** (nada foi enviado antes desta verificação) |
+| CI do GitHub com Node 26 e a v0.2 | **Aprovada** depois do envio: o job do Windows falhou na primeira execução porque o executável de verificação era construído sem a característica `automation` (a exportação abria o diálogo «Salvar como»); corrigido em `071e3dc` ([execução 41445123635](https://github.com/VitorMazziero/enzitag-optima/actions/runs/41445123635)) |
 | Atualização ponta a ponta (instalar a v0.1 e atualizar para a v0.2) | **Não verificada** |
 
 ## Auditoria de dependências e licenças
@@ -107,6 +107,6 @@ Nenhuma dependência com copyleft forte (GPL/AGPL) foi encontrada na distribuiç
 
 ## Pendências do usuário
 
-1. **Verificar** a candidata e decidir a publicação (etiqueta `v0.2.0`, release e Pages) — nada disso foi feito ainda.
+1. Publicação feita em 2026-11-02 por autorização do usuário (PR 3, etiqueta `v0.2.0`, Pages); o **release da v0.2.0 é rascunho**: instalar o arquivo do rascunho e publicá-lo.
 2. A v0.1.0 continua com o **release em rascunho** e a atualização não verificada ([registro de publicação](../../../docs/distribuicao/publicacao.md)).
 3. Guardar a chave privada do atualizador em local seguro (cópia em `D:\Arquivos_de_Programas\Rust\tauri`, fora do repositório).

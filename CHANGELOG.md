@@ -4,13 +4,13 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 
 ## Planejado (ainda não implementado)
 
-- Seleção de modelos para os efeitos de planejamentos de dois níveis (T09 da ET11).
+- [Plano da v0.3](docs/planos-execucao/plano-v0.3.md) (ET13–ET20): planilha de coleta (matriz com respostas e importação das respostas), itens adiados da v0.1 e da v0.2 (inclui a seleção de modelos para efeitos de dois níveis), níveis mistos e misturas, planejamentos ótimos, modelos mistos e medidas repetidas, Monod e potência, Google Drive, DOCX, comentários, Safari e canais de atualização.
 - Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
-- Candidatos fora da v0.2: DOCX, Google Drive, Windows 11 e Safari verificados.
+- Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
 
-## [0.2.0] — candidata local (ramo `feat/v0.2`; não publicada)
+## [0.2.0] — 2026-11-02
 
-> Nenhuma etiqueta, release ou publicação no Pages existe para a 0.2.0. A 0.1.0 continua sendo a única versão com etiqueta (web publicada; instalador em rascunho). Evidências em [validation/reports/v0.2.0](validation/reports/v0.2.0/README.md).
+> **Versão web publicada em 2026-11-02** (https://vitormazziero.github.io/enzitag-optima/) e etiqueta `v0.2.0` criada. O **instalador do Windows está em rascunho de release** (não publicado), como o da 0.1.0; a atualização não foi verificada ([registro de publicação](docs/distribuicao/publicacao.md#publicação-da-v020)). Evidências em [validation/reports/v0.2.0](validation/reports/v0.2.0/README.md).
 
 ### Mudanças de ferramenta e desempenho
 
