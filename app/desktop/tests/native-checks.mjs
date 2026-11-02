@@ -20,7 +20,7 @@ export async function runChecks({ text, invoke }) {
   const environment = await text("engine-environment");
   const protocol = await text("engine-protocol");
   console.log({ version, protocol, environment });
-  if (version !== "0.2.0" || protocol !== "1") throw new Error("Versões inesperadas do motor");
+  if (version !== "0.3.0" || protocol !== "1") throw new Error("Versões inesperadas do motor");
   if (!/Tauri|nativo|native/i.test(environment)) throw new Error("Ambiente não é o nativo Tauri");
   console.log("OK: interface obteve engine.info do motor nativo via comando Tauri.");
 
@@ -541,6 +541,122 @@ export async function runChecks({ text, invoke }) {
     console.log(`OK: DBC aleatorizado (${rcbd.length} casos com semente representável em JavaScript) idêntico à implementação independente no motor nativo.`);
   }
 
+  // v0.3 pelo IPC nativo: níveis mistos, planejamento ótimo, comparação pareada, potência, ajuste não
+  // linear e seleção de modelos de dois níveis, contra as mesmas referências independentes dos testes
+  // em Rust e do WebAssembly.
+  {
+    const call = async (taskId, operation) => {
+      const reply = JSON.parse(await invoke(JSON.stringify({ protocolVersion: 1, taskId, operation })));
+      if (reply.outcome?.status !== "ok") throw new Error(`${taskId}: ${JSON.stringify(reply.outcome).slice(0, 300)}`);
+      return reply.outcome.result;
+    };
+    const cases = (name) => JSON.parse(readFileSync(root(`validation/cases/${name}`), "utf8"));
+    const val = (stat) => (stat?.status === "defined" ? stat.value : Number.NaN);
+    const near = (got, want, rel, abs, what) => {
+      if (!(Math.abs(got - want) <= abs + rel * Math.abs(want))) throw new Error(`${what}: ${got} ≠ ${want}`);
+    };
+
+    const mixed = cases("mixed_levels_design/mixed.json").cases.filter((c) => Number.isSafeInteger(c.seed));
+    for (const [index, c] of mixed.entries()) {
+      const result = await call(`native-mixed-${index}`, {
+        type: "designMixedGenerate",
+        factors: c.factors.map((f, i) => ({ id: `f${i + 1}`, name: f.name, levels: f.levels })),
+        replicates: c.replicates,
+        randomize: c.randomize,
+        seed: c.seed,
+      });
+      const got = JSON.stringify(result.runs.map((r) => [r.standardOrder, r.levelIndices, r.replicate]));
+      const want = JSON.stringify(c.runs.map((r) => [r.standardOrder, r.levelIndices, r.replicate]));
+      if (got !== want) throw new Error(`Níveis mistos nativo ${index}: matriz difere da referência independente`);
+    }
+    console.log(`OK: níveis mistos (${mixed.length} casos) idênticos à implementação independente no motor nativo.`);
+
+    const factors = [1, 2, 3].map((i) => ({ id: `f${i}`, name: `X${i}`, low: 10, high: 30 }));
+    const known = await call("native-optimal-known", {
+      type: "designOptimalGenerate",
+      factors,
+      model: "interactions",
+      criterion: "d",
+      runs: 8,
+      levels: 3,
+      constraints: [],
+      fixedRuns: [],
+      starts: 12,
+      randomize: false,
+      seed: 7,
+    });
+    near(known.metrics.logDet, 7 * Math.log(8), 1e-9, 1e-9, "D-ótimo conhecido (2³)");
+    for (const [index, c] of cases("optimal_design/optimal.json").exhaustiveCases.entries()) {
+      const got = await call(`native-optimal-${index}`, {
+        type: "designOptimalGenerate",
+        ...c.spec,
+        factors: c.spec.factors.map((f, i) => ({ id: `f${i + 1}`, ...f })),
+      });
+      const value = c.spec.criterion === "d" ? got.metrics.logDet : -got.metrics.iAverage / c.spec.runs;
+      near(value, c.expected.best, 1e-9, 1e-9, `ótimo exaustivo ${index}`);
+    }
+    console.log("OK: planejamento D e I-ótimo iguais ao ótimo conhecido e à busca exaustiva no motor nativo.");
+
+    for (const [index, c] of cases("paired_comparison/paired.json").cases.entries()) {
+      const got = await call(`native-paired-${index}`, { type: "comparisonPaired", first: c.first, second: c.second, alpha: 0.05 });
+      near(val(got.tTest.t), c.expected.t, 1e-9, 1e-9, `t pareado ${index}`);
+      near(val(got.tTest.pValue), c.expected.p, 0, 1e-9, `p pareado ${index}`);
+      if (got.wilcoxon.method !== c.expected.wilcoxon.method) throw new Error(`Wilcoxon ${index}: método difere`);
+      near(val(got.wilcoxon.pValue), c.expected.wilcoxon.p, 0, 1e-9, `p de Wilcoxon ${index}`);
+    }
+    console.log("OK: t pareado e Wilcoxon iguais ao SciPy no motor nativo.");
+
+    for (const [index, c] of cases("power_analysis/power.json").cases.entries()) {
+      const got = await call(`native-power-${index}`, {
+        type: "powerAnalyze",
+        design: c.design,
+        sigma: c.sigma,
+        alpha: c.alpha,
+        twoSided: c.twoSided,
+        goal: c.goal,
+      });
+      if (got.n !== c.expected.n) throw new Error(`Potência ${index}: n ${got.n} ≠ ${c.expected.n}`);
+      near(val(got.power), c.expected.power, 0, 1e-9, `potência ${index}`);
+    }
+    for (const [index, c] of cases("nonlinear_saturation_fit/nonlinear.json").cases.entries()) {
+      const got = await call(`native-nonlinear-${index}`, {
+        type: "modelNonlinear",
+        x: c.x,
+        y: c.y,
+        model: c.model,
+        initial: null,
+        lower: null,
+        upper: null,
+        alpha: 0.05,
+      });
+      if (!got.converged) throw new Error(`Ajuste não linear ${index} não convergiu`);
+      for (const [i, p] of got.parameters.entries()) near(p.estimate, c.expected.estimates[i], 1e-5, 1e-8, `parâmetro ${i} do caso ${index}`);
+    }
+    console.log("OK: potência (F e t não centrais) e ajuste não linear iguais ao SciPy no motor nativo.");
+
+    for (const [index, c] of cases("two_level_model_selection/selection.json").cases.entries()) {
+      const k = c.k;
+      const designFactors = Array.from({ length: k }, (_, i) => ({ id: `f${i + 1}`, name: `x${i + 1}`, low: c.low[i], high: c.high[i], unit: null }));
+      const got = await call(`native-selection-${index}`, {
+        type: "designSelectModel",
+        dataset: {
+          factors: designFactors.map((f) => ({ id: f.id, name: f.name, kind: "numeric", unit: null, levels: [] })),
+          responses: [{ id: "y", name: "y", unit: null }],
+          observations: c.real.map((row, i) => ({ id: `o${i + 1}`, unitId: null, factors: row, responses: [c.y[i]] })),
+        },
+        responseId: "y",
+        spec: { kind: { type: "fullFactorial" }, factors: designFactors, replicates: 1, centerPoints: 0, randomize: false, seed: 1 },
+        terms: [],
+        alpha: c.alpha,
+        includeCurvature: c.curvature,
+      });
+      if (got.steps.length !== c.steps.length) throw new Error(`Seleção ${index}: passos ${got.steps.length} ≠ ${c.steps.length}`);
+      for (const [i, step] of got.steps.entries()) near(val(step.metrics.aic), c.steps[i].metrics.aic, 1e-10, 1e-8, `AIC ${index}.${i}`);
+      if (got.stoppedBecause !== c.stopped) throw new Error(`Seleção ${index}: parada ${got.stoppedBecause} ≠ ${c.stopped}`);
+    }
+    console.log("OK: seleção de modelos de dois níveis igual ao statsmodels no motor nativo.");
+  }
+
   // Reabertura cruzada: os projetos de exemplo foram escritos pelo motor WebAssembly (navegador) e
   // são lidos aqui pelo motor nativo (Windows), com resultados guardados e sem avisos.
   {
@@ -555,10 +671,13 @@ export async function runChecks({ text, invoke }) {
       if (reply.outcome?.status !== "ok" || !doc?.experiments?.length)
         throw new Error(`Exemplo ${folder.name} não abriu no motor nativo: ${JSON.stringify(reply.outcome).slice(0, 300)}`);
       if (reply.outcome.result.migratedFrom !== null) throw new Error(`Exemplo ${folder.name}: migração inesperada`);
-      if (!doc.experiments.some((e) => e.analyses?.length > 0)) throw new Error(`Exemplo ${folder.name}: sem análise guardada`);
+      // Os exemplos 01 a 06 trazem análises guardadas (reabrir não recalcula); a partir do 07 as análises
+      // são calculadas ao pedir (limitação da v0.3), então basta abrir sem migração nem avisos.
+      const legacy = Number(folder.name.slice(0, 2)) <= 6;
+      if (legacy && !doc.experiments.some((e) => e.analyses?.length > 0)) throw new Error(`Exemplo ${folder.name}: sem análise guardada`);
       opened += 1;
     }
     if (opened < 4) throw new Error(`Esperava abrir os 4 exemplos, abriu ${opened}`);
-    console.log(`OK: ${opened} projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo, com análises guardadas.`);
+    console.log(`OK: ${opened} projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo; os de 01 a 06 com análises guardadas.`);
   }
 }

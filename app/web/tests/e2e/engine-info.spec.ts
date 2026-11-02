@@ -10,7 +10,7 @@ test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () =
     page,
   }) => {
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
     await expect(page.getByTestId("engine-protocol")).toHaveText("1");
     await expect(page.getByTestId("engine-schema")).toHaveText("1");
     await expect(page.getByTestId("engine-environment")).toContainText("Navegador");
@@ -23,11 +23,11 @@ test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () =
     page,
   }) => {
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
 
     await page.locator("header.app-header").getByLabel("Idioma").selectOption("en");
     await expect(page.getByTestId("engine-environment")).toContainText("Browser");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
 
     await page.getByLabel("Theme").selectOption("modern-dark");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "modern-dark");
@@ -35,12 +35,12 @@ test.describe("engine.info via WebAssembly Worker (rodapé do aplicativo)", () =
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "modern-dark");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
   });
 
   test("is operable by keyboard: skip link first, visible focus", async ({ page, browserName }) => {
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
+    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
     if (browserName === "webkit") {
       // O WebKit (Safari) não inclui links na ordem do Tab por padrão (é preciso Option+Tab ou a
       // preferência «Pressionar Tab para destacar cada item»): o link «Ir para o conteúdo» fica
@@ -79,7 +79,7 @@ test.describe("theme screenshots", () => {
     test(`renders ${theme}`, async ({ page }, testInfo) => {
       await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
       await page.goto("/");
-      await expect(page.getByTestId("engine-version")).toHaveText("0.2.0");
+      await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
       await page.screenshot({ path: testInfo.outputPath(`${theme}.png`), fullPage: true });
       const ground = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       expect(ground).not.toBe("rgba(0, 0, 0, 0)");

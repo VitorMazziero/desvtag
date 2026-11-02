@@ -8,7 +8,7 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 - Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
 - Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
 
-## Não lançado — v0.3 (candidata local)
+## [0.3.0] — 2026-11-02 (candidata local; ainda não publicada)
 
 Ver o [plano da v0.3](docs/planos-execucao/plano-v0.3.md) e o [relatório de validação](validation/reports/v0.3.0/README.md). O escopo foi fechado em 2026-11-02: o que não foi entregue vai para a [v0.4](docs/planos-execucao/plano-v0.4.md).
 

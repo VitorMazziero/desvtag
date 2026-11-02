@@ -1,8 +1,25 @@
 # Publicação
 
-**Estado:** **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
+**Estado:** **v0.3.0 em preparação (nada publicado)**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
 
 > **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
+
+## Publicação da v0.3.0 (preparação)
+
+**Estado:** candidata local pronta (versão 0.3.0 no código); **nada publicado**. A decisão do usuário de 2026-11-02 («partimos para publicação de v0.3») abre a fase de publicação; cada ato irreversível abaixo só é feito **depois da confirmação expressa** do usuário sobre a candidata e com a CI verde.
+
+| Passo | Quem | Observação |
+|---|---|---|
+| 1. CI verde no PR 6 (Rust, web, E2E em Chromium, Firefox e WebKit, Tauri Linux e Windows) | Claude | Conferir no commit final |
+| 2. Fundir o PR 6 em `main` | Claude, com a confirmação do usuário | Mescla (não *squash*), como nos PR anteriores |
+| 3. Etiqueta anotada `v0.3.0` | Claude, com a confirmação do usuário | `check-versions` exige que a etiqueta confira com a versão |
+| 4. O fluxo **Release** cria o **rascunho** com o instalador assinado, o `.sig` e o `latest.json` | Automático | Notas = seção `[0.3.0]` do CHANGELOG |
+| 5. **GitHub Pages** (`pages.yml`, manual) | Claude, com a confirmação do usuário | Depois, `tests/public` confere a versão publicada nos quatro navegadores |
+| 6. **Publicar o rascunho** como release normal (**não** pré-lançamento) | Usuário | Os aplicativos 0.1 e 0.2 só enxergam releases não pré-lançamento |
+| 7. O fluxo **Canais de atualização** copia o `latest.json` para `channel-experimental` | Automático | Se não rodar, executar à mão com a etiqueta `v0.3.0` |
+| 8. Verificar a atualização **0.2.0 → 0.3.0** (instalar a 0.2.0 e usar *Verificar atualizações*) e a leitura do canal | Usuário | Registrar o resultado aqui e no relatório da v0.3.0 |
+
+**Notas da versão:** descrevem a **limitação conhecida** (resultados das famílias novas não guardados no projeto), o que **não foi verificado** (Drive com contas reais, Safari real, canal ponta a ponta, Windows 11) e o que vai para a [v0.4](../planos-execucao/plano-v0.4.md).
 
 ## Canais de atualização (v0.3)
 

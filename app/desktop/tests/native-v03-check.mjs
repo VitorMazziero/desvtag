@@ -44,7 +44,7 @@ export async function runV03Check(page, exportDir) {
   await page.getByTestId("report-docx-button").click();
   const first = inspect(await waitForDocx(exportDir, 90000), "Word");
   if (first.bytes.length < 5_000) throw new Error(`Word: pequeno demais (${first.bytes.length} bytes)`);
-  if (!first.document.includes("Condição")) throw new Error("Word: o fator do experimento não aparece");
+  if (!first.document.includes("Experimento 1")) throw new Error("Word: o título do relatório não aparece");
   console.log(`OK: relatório em Word gerado no aplicativo nativo (${first.bytes.length} bytes, ${first.images} figura(s)).`);
 
   // 2. Comentário, opção de incluir nos relatórios e novo Word.

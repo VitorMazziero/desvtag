@@ -1,8 +1,8 @@
 # Relatório de validação — v0.3.0 (candidata local)
 
-**Estado:** **rascunho** da verificação local em 2026-11-02, na ramificação `feat/v0.3` (PR 6, **não fundido**). A v0.3.0 **não foi publicada**: sem etiqueta, release nem Pages. · **Data:** 2026-11-02
+**Estado:** verificação local final em 2026-11-02, na ramificação `feat/v0.3` (PR 6, **não fundido**), com o escopo **fechado por decisão do usuário** (o que não foi entregue vai para a [v0.4](../../../docs/planos-execucao/plano-v0.4.md)). A v0.3.0 **não foi publicada**: sem etiqueta, release nem Pages. · **Data:** 2026-11-02
 
-Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente ou foi desviado do plano**. Complementa os relatórios da [v0.1.0](../v0.1.0/README.md) e da [v0.2.0](../v0.2.0/README.md), que continuam valendo para o que a v0.3 não alterou. Não declara verificação no Windows 11 (a validação foi dispensada pelo usuário), nem no Safari real, nem com conta real do Google, nem nenhum dos marcos M1–M6. **A versão do pacote ainda é 0.2.0** (`check-versions`): a mudança de versão é ato de publicação.
+Este relatório distingue o que **foi executado e tem evidência** do que **permanece pendente ou foi desviado do plano**. Complementa os relatórios da [v0.1.0](../v0.1.0/README.md) e da [v0.2.0](../v0.2.0/README.md), que continuam valendo para o que a v0.3 não alterou. Não declara verificação no Windows 11 (a validação foi dispensada pelo usuário), nem no Safari real, nem com conta real do Google, nem nenhum dos marcos M1–M6. A versão do código é **0.3.0** (`check-versions`); a etiqueta, o release e o Pages dependem do «go» expresso do usuário.
 
 ## Resumo
 
@@ -27,16 +27,17 @@ Este relatório distingue o que **foi executado e tem evidência** do que **perm
 | Verificação | Resultado |
 |---|---|
 | `cargo fmt --all --check`, `cargo clippy --workspace --all-targets -- -D warnings` (e o pacote Tauri) | sem avisos |
-| `cargo test --workspace --release` | **536 aprovados**, 0 falhas, 3 ignorados (medições de desempenho) |
+| `cargo test --workspace --release` | **541 aprovados**, 0 falhas, 3 ignorados (medições de desempenho) |
 | Pacote Tauri: `cargo test` | 10 aprovados (inclui o endereço por canal) |
 | `biome check`, `tsc --noEmit` | sem erros (6 avisos preexistentes do Biome) |
 | `npm run check:contracts` | sem diferenças (**uma execução falhou de forma intermitente** logo após o `cargo test` em lote e não se repetiu em três execuções seguidas; causa não investigada) |
-| `vitest` (inclui paridade WebAssembly × referências independentes) | **382 aprovados** (46 arquivos) |
+| `vitest` (inclui paridade WebAssembly × referências independentes) | **383 aprovados** (46 arquivos) |
 | `node --test scripts/channels.test.mjs` | 4 aprovados |
-| Playwright (motor WebAssembly real), 5 navegadores | **630 aprovados** (126 por navegador), 0 falhas |
-| `check-docs-links`, `check-case-collisions` | 243 arquivos `.md` e 1 421 links; 986 arquivos versionados, sem colisões de caixa |
+| Playwright (motor WebAssembly real), 5 navegadores | **671 aprovados de 675** (135 por navegador): os 4 que falharam foram **todos no Firefox**, por tempo esgotado sob carga paralela (4 *workers*; um dos falhos chegou a 1,5 min), e **passaram ao repetir** (3 com 2 *workers*; o axe do tema Industrial sozinho, duas vezes). É a mesma intermitência do Firefox já vista nas etapas anteriores; a causa não foi investigada |
+| `check-docs-links`, `check-case-collisions` | 251 arquivos `.md` e 1 518 links; 1 017 arquivos versionados, sem colisões de caixa |
+| **Verificação nativa no Windows 10** (executável de verificação com `--features automation`, WebView2 por CDP, Windows 10 Pro 22H2) | **aprovada**: motor, `.enzitag`, estatísticas, planejamentos e comparações da v0.2; **na v0.3**: níveis mistos (5 casos), D e I-ótimo (ótimo conhecido e busca exaustiva), t pareado e Wilcoxon, potência e ajuste não linear (SciPy), seleção de modelos de dois níveis (statsmodels), 11 projetos de exemplo reabertos, PDF da figura e do relatório, **relatório em Word, comentário no relatório e comando nativo de atualização por canal** (o canal estável respondeu «não foi possível verificar», esperado: ainda não há manifesto publicado) |
 
-**Não executado nesta rodada:** a verificação nativa no Windows 10 (WebView2 por CDP) dos fluxos novos e o instalador da v0.3; o CI do GitHub para o último commit do PR 6 não foi conferido.
+**Não executado nesta rodada:** o instalador NSIS assinado da v0.3 (construído pelo fluxo de release na publicação), o Windows 11 e a CI do GitHub para o último commit (conferida antes da publicação).
 
 ## Validação numérica dos métodos novos
 
@@ -77,7 +78,7 @@ Todas as referências são **independentes do código Rust** (Python). Tolerânc
 | Verificação do CCD com as capturas do Protimiza (ET14-T02) | **Feita**: a opção «CCD» é o fatorial completo com pontos centrais; contagens e matriz reproduzidas (`protimiza_counts.rs`) |
 | Misturas: limites superiores, otimização no simplex; planejamentos ótimos: exemplo, blocos, gráfico de variância; modelos mistos: AR(1), não estruturada, F multi-gl; saturação: perfil de verossimilhança, NIST; potência: simulação | **Não feitos** |
 | Exemplos para os métodos da v0.3 | **Criados os 07 a 13** (misturas, Monod, níveis mistos, D-ótimo, medidas repetidas, potência, planilha de coleta), conferidos contra NumPy, SciPy ou `statsmodels` e abertos em E2E |
-| Verificação nativa no Windows 10 dos fluxos da v0.3 | **Não executada** |
+| Verificação nativa no Windows 10 dos fluxos da v0.3 | **Feita** (ver «Verificações executadas»); falta o instalador NSIS da v0.3, construído na publicação |
 | Falhas intermitentes de CI vistas no PR 6 (Windows: «Nenhuma página do WebView2»; um job Web) | **Não investigadas a fundo** |
 
 ## Auditoria de dependências e licenças

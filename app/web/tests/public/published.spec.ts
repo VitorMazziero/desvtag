@@ -20,7 +20,7 @@ test("a versão publicada abre, calcula e não usa rede externa", async ({ page,
   await page.addInitScript(() => localStorage.setItem("optima.showAllSections", "1"));
   await page.goto("./");
   await expect(page.getByTestId("engine-version")).toHaveText(
-    process.env.EXPECTED_VERSION ?? "0.2.0",
+    process.env.EXPECTED_VERSION ?? "0.3.0",
   );
   await expect(page.getByTestId("engine-methods")).toContainText("descriptive_summary");
 

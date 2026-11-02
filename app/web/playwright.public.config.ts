@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 // Verificação da versão web PUBLICADA (GitHub Pages): sem servidor local.
-// Uso: PUBLIC_URL=https://vitormazziero.github.io/enzitag-optima/ EXPECTED_VERSION=0.2.0 \
+// Uso: PUBLIC_URL=https://vitormazziero.github.io/enzitag-optima/ EXPECTED_VERSION=0.3.0 \
 //      E2E_BROWSERS=chromium,firefox,chrome,msedge npx playwright test -c playwright.public.config.ts
 const browsers = (process.env.E2E_BROWSERS ?? "chromium").split(",");
 const projectFor: Record<string, object> = {
