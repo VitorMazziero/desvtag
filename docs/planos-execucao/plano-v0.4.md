@@ -6,6 +6,21 @@ Plano de versão pedido pelo usuário em 2026-11-02, ao fechar a v0.3: «todas a
 
 A v0.4 continua no **canal experimental**; a v1.0.0 (canal estável e cobertura completa do catálogo) mantém os critérios do [roteiro](roteiro-produto.md).
 
+## Auditoria exploratória de uso real (2026-11-02)
+
+Complemento solicitado pelo usuário após experimentar a interface inicial da v0.4: [auditoria de experiência de uso por página/bloco](auditoria-ux-v0.4-2026-11-02.md), com **85 fichas de observação/recomendação (50 UX, 14 de sistema visual, seis de temas e 15 de figuras)**, prioridades, recomendações abertas ao agente executor, percursos reais de nove experimentos criados do zero mais uma confirmação gerada, projeto reabrível e [151 screenshots originais em duas rodadas](../imagens/auditoria-ux-v0.4-2026-11-02/README.md).
+
+As recomendações devem orientar a continuação da ET29, a integração das famílias na ET22 e o acabamento da ET27. São achados exploratórios da compilação servida em `http://127.0.0.1:4173/`, com limites explícitos; não representam conclusão dessas etapas nem substituem suas verificações. A auditoria não altera decisões metodológicas ou impõe uma implementação fechada.
+
+**Análise e destino (2026-11-02).** As fichas foram cruzadas com o código; cada uma tem destino e mudança prevista:
+
+| Grupos da auditoria | Destino | Onde está a mudança no código |
+|---|---|---|
+| G01 resultado e contexto (P1), G02 integridade das figuras (P1) | ET29 T14 e T15 — **primeiro** | [ET29 §5.1](ativos/et29-reorganizacao-da-interface-e-navegacao.md#51-tarefas-da-auditoria-de-uso-real-2026-11-02) |
+| G04 navegação, G05 fluxo de dados e análises, G09 projeto, relatório e versão | ET29 T16–T22 | idem |
+| G03 base visual, G06 seis temas, G07 figuras por família, G08 otimização e confirmação, G10 conferência transversal | [ET27](#et27--acabamento-da-interface-e-da-exportação), que passa a vir **logo depois da ET29** | ET27 abaixo |
+| Limitações de método já previstas (UX39 parte de mistura, UX41, UX43, UX45; ótimo com fatores categóricos de UX20; papéis «unidade» e «tempo» de UX25) | [ET22](#et22--resultados-das-famílias-novas-guardados-no-projeto)–[ET25](#et25--misturas-e-planejamentos-ótimos-avançados) | escopo dessas etapas, com nota abaixo |
+
 ## 1. Objetivo
 
 Ao final da v0.4:
@@ -43,11 +58,11 @@ Relatados pelo usuário ao usar a v0.3.0 com o projeto do [exemplo 14](../../exa
 
 ## 3. Etapas
 
-Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa é ativada; abaixo ficam o escopo, a verificação esperada e as dependências. **Ordem:** ET29 → ET22 → ET23, ET24 e ET25 → ET26 → ET27 → ET28 (ET26 e ET28 dependem do usuário e podem correr em paralelo).
+Os planos detalhados de cada etapa (`planejados/`) são escritos quando a etapa é ativada; abaixo ficam o escopo, a verificação esperada e as dependências. **Ordem:** ET29 → ET27 → ET22 → ET23, ET24 e ET25 → ET26 → ET28 (ET27 subiu para logo depois da ET29 com a análise da auditoria, 2026-11-02) (ET26 e ET28 dependem do usuário e podem correr em paralelo).
 
 ### ET29 — Reorganização da interface e da navegação (primeira da v0.4)
 
-**Plano detalhado:** [ativos/et29-reorganizacao-da-interface-e-navegacao.md](ativos/et29-reorganizacao-da-interface-e-navegacao.md) (tarefas T01–T13).
+**Plano detalhado:** [ativos/et29-reorganizacao-da-interface-e-navegacao.md](ativos/et29-reorganizacao-da-interface-e-navegacao.md) (tarefas T01–T22; T14–T22 vêm da [auditoria de uso real](auditoria-ux-v0.4-2026-11-02.md)).
 
 Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos implementar essas alterações na interface como primeiros itens na v0.4». Capturas «antes» em [`docs/imagens/evidencias-v0.3.0/`](../imagens/evidencias-v0.3.0/README.md). **É a primeira etapa a executar**, antes da ET22.
 
@@ -71,14 +86,16 @@ Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos imp
      - mensagens de resultado (por exemplo «arquivo criado na pasta EnziTAG Optima») como aviso temporário que não desloca o conteúdo.
 - **Verificação:** E2E do percurso guiado (Voltar/Seguir, opções dependentes, «Mostrar tudo»), dos menus, da tela inicial e da área de salvamento (local e Drive simulado, estados e avisos); medição de espaçamento e largura em 1920, 1200, 800 e 375 px nos seis temas; axe; capturas antes e depois arquivadas.
 - **Decisão técnica:** DT nova para a navegação por blocos e os menus (estado do bloco atual é da interface, não do projeto).
-- **Depende de:** nada. A ET27 (acabamento) passa a vir depois dela.
+- **Tarefas da auditoria (T14–T22, 2026-11-02):** T14 resultado confiável e contexto correto (saturação e potência desatualizadas, `{{aliased}}` literal na mistura, texto falso sobre ANOVA/Tukey, fatores excluídos no ótimo, resposta errada na importação, unidade experimental, textos do método, equação codificada); T15 integridade das figuras (Q–Q fora da área, nota do Pareto cortada, rótulos das interações, layout comum de figura); T16 navegação única (sem blocos aninhados, último bloco leva à etapa seguinte, bloqueios com caminho, retomar o bloco, resultado novo abre no resumo); T17 tela inicial, arquivo e experimentos; T18 fatores e planejamento; T19 grade e importação; T20 configuração das análises; T21 relatório, comentários e versão em teste; T22 telas pequenas e modais.
+- **Depende de:** nada. A ET27 (acabamento) passa a vir logo depois dela.
 
 ### ET22 — Resultados das famílias novas guardados no projeto
 
 - **Escopo:** campos opcionais do experimento para o resultado de cada análise nova (`mixtureResult`, `mixedModelResult`, `nonlinearResult`, `powerResult`), com assinatura de entrada como nas análises atuais; reabrir mostra o resultado guardado **sem recalcular** e avisa quando dados ou opções mudaram; resultados em seções com barra lateral; entrada nos relatórios HTML, PDF e Word; exportação CSV/XLSX das tabelas.
 - **Verificação:** Rust (ida e volta do documento, validação das referências), WebAssembly × nativo (SHA-256 idêntico), E2E (salvar → reabrir sem recálculo), exemplos 07, 08, 11 e 12 reabrindo com o resultado.
 - **Decisão técnica:** esquema 1 com campos opcionais (como `comments`); migração só se um campo exigir mudança incompatível.
-- **Depende de:** ET29 (ordem; usa a nova navegação para as seções e os relatórios).
+- **Da auditoria:** a análise de mistura e o resultado de saturação/potência devem aparecer na etapa Resultados como as demais análises (UX39, UX42–UX45); a assinatura de entrada que a T14 da ET29 cria para saturação e potência passa a ser a guardada no projeto.
+- **Depende de:** ET29 (ordem; usa a nova navegação para as seções e os relatórios) e ET27.
 
 ### ET23 — Modelos mistos e medidas repetidas avançados
 
@@ -107,8 +124,16 @@ Pedido do usuário em 2026-11-02, depois de usar a v0.3.0 publicada: «vamos imp
 ### ET27 — Acabamento da interface e da exportação
 
 - **Escopo:** ET21-T01/T04/T06/T07 (inventário completo, componentes fora das classes comuns, capturas «depois» nos seis temas, PT/EN, 800 e 375 px, WebView2, DT e ficha U18); capturas em inglês e inspeção dos temas no WebView2 (ET12-T10); família de fonte e hachura no PDF ([DT-0020](../decisoes-tecnicas/dt-0020-figuras-completas-e-exportacao-em-pdf.md)); **editar** um comentário já enviado; aviso sobre Option+Tab para usuários de Safari.
-- **Verificação:** medição automática (E2E de layout) estendida, axe nos seis temas, inspeção visual registrada.
-- **Depende de:** nada.
+- **Escopo acrescentado pela [auditoria de uso real](auditoria-ux-v0.4-2026-11-02.md) (2026-11-02)** — grupos G03, G06, G07, G08 e G10. A ET27 passa a vir **logo depois da ET29**, antes das etapas de métodos, para que a base visual seja corrigida uma vez antes de as novas famílias criarem mais telas.
+  - **Base tipográfica e de espaço (G03: DS01–DS03, DS07, DS08, DS13).** Em `themes/tokens.css`, papéis tipográficos nomeados (`--type-title`, `--type-subtitle`, `--type-label`, `--type-result`, `--type-help`) com tamanho, peso e entrelinha; cada tema os ajusta **opticamente** (Garamond, Geist, Host Grotesk etc.), em vez de todos usarem os mesmos números. Escala de espaçamento por relação: rótulo–campo 4–8 px, controles irmãos 8–12 px, grupos 16–24 px, seções 24–40 px (`--space-block` já criado na T09). Largura máxima de parágrafo (~70 caracteres) em ajudas e conclusões; texto alinhado à esquerda na interface; justificado só no relatório, com hifenização e conferência. Redação em camadas: cada bloco abre com finalidade e ação; método e algoritmo num «Saiba mais» (`<details>`); avisos que mudam a decisão (extrapolação, não estimável, excluídos, desatualizado) num componente de aviso próprio junto do resultado. Revisão das ajudas longas listadas em UX03, UX16, UX28, UX32, UX43, UX45.
+  - **Números e tabelas (G05 visual: DS09, UX32, UX37).** Precisão de apresentação única (`i18n/format.ts`: significativos por papel — estatística 4, valor-p regra própria, médias pela unidade), valor completo no `title`; «≈ 0 (< 10⁻¹²)» para resíduos numéricos e «não disponível: 0 g.l.» em vez de números sem sentido; colunas numéricas alinhadas por casa decimal (`font-variant-numeric: tabular-nums`, alinhamento à direita); intervalos sem quebra (`white-space: nowrap`); «não aplicável», «não estimável» e «ausente» com marcas distintas; resumo sem repetir a lista de termos ativos.
+  - **Botões, ações e estados (DS04, DS05, DS11, DS14).** Hierarquia ação principal × alternativa × manutenção × remoção com classes (`button`, `button secondary`, `button quiet`, `button danger-quiet`); ações por figura (formatos, personalizar, comentários) num único menu «Figura ▾»; geometria das abas de seção alinhada à dos botões de cada tema; estados selecionado, foco, desabilitado, aviso e pendência distinguíveis por texto e forma, não só por cor.
+  - **Seis temas (G06: TM01–TM06).** Em cada `themes/<tema>.css`: Soft Light — reforçar limites de campos e reduzir azul repetido; Modern Dark — progressão de luminância fundo/painel/campo (sem preto absoluto), menos contornos claros, papéis de cor científica legíveis no escuro; Professional — compensação óptica dos títulos serifados e redundância traço/símbolo nas figuras; Industrial — sombras só em controles interativos, monoespaçada só em identificadores; Organic — planos com contraste discreto entre chão, cartão e campo; Clay — volume e rosa só na ação principal, raios menores em grades e figuras, pontos científicos com contorno. Conferência individual por tema (capturas «depois» ao lado das da auditoria).
+  - **Figuras por família (G07: FG02, FG04–FG07, FG09–FG14).** Sobre a gramática comum criada na T15 da ET29: efeitos e interações com **níveis reais e unidades** (FG02/UX34); observado × predito com eixos iguais, reta de identidade evidente e resposta/unidade nos eixos (FG04); médias e boxplot com n e observações individuais quando n é pequeno, letras afastadas do intervalo e explicação do IC × comparação ajustada (FG05/FG06); resíduos com zero distinto e identificação do ponto ao passar o cursor (FG07); contorno com **escala de cor** ao lado e marcadores separados dos ticks (FG09); superfície 3D com malha visual mais rala que a de cálculo, ticks numéricos e rótulos fora da superfície (FG10); ternário maior, com graduações de fração, escala completa, vírgula decimal em PT e as mesmas ações das demais figuras (FG12/UX41); saturação nas cores do tema, unidades nos eixos e legenda da faixa de confiança (FG13/UX43); papéis de cor científica (`series`, `reference`, `uncertainty`, `grid`) nos tokens dos temas (FG14). Exportação: prévia que mostra a aparência neutra do arquivo (DT-0021) e conferência no tamanho final (FG15).
+  - **Otimização e confirmação (G08: UX36–UX38, FG11).** `GoalsEditor` em decisões (objetivo → faixa/alvo → importância → limites obrigatórios), com uma frase-resumo do critério; candidatos com **empates** explícitos («5 candidatos com desejabilidade 1: escolha pela resposta prevista ou pela condição»), total encontrado × exibido, e ordenação explicada; mapa de desejabilidade com o número de cada candidato e a escala 0–1; uma só tabela que leva à proposta de confirmação; confirmação com a origem clicável e observado − previsto com unidade.
+  - **Conferência transversal (G10).** Seis temas × PT/EN × 375/800/1200/1920 px × fonte 0,85/1/1,2, teclado e zoom de texto 200 %, na tela e nos arquivos exportados; capturas «depois» equivalentes às da auditoria em `docs/imagens/`.
+- **Verificação:** medição automática (E2E de layout) estendida, axe nos seis temas, inspeção visual registrada; testes de figura (elementos dentro da área de dados, notas dentro do `viewBox`) em todas as famílias; capturas «depois» de cada tema e de cada família de figura ao lado das da auditoria.
+- **Depende de:** ET29 (navegação e layout de figura comum da T15).
 
 ### ET28 — Verificações adicionais e itens que dependem do usuário
 
