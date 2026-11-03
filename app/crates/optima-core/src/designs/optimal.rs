@@ -221,7 +221,7 @@ fn validate(spec: &OptimalSpec) -> Vec<Issue> {
         issues.push(error("design.optimal_invalid_range"));
     }
     if spec.model != OptimalModel::Linear && k < 2 && spec.model == OptimalModel::Interactions {
-        issues.push(error("design.optimal_interactions_need_two"));
+        issues.push(error("design.optimal_interactions_need_more_factors"));
     }
     if !matches!(spec.levels, 3 | 5) {
         issues.push(error("design.optimal_invalid_levels"));

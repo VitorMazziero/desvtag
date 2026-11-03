@@ -52,7 +52,7 @@
     },
     "availability": {
       "available": "Available in this version",
-      "limited": "Partial: in this version you can only enter data and get the descriptive summary. The {{missing}} part has not been delivered yet.",
+      "limited": "Unavailable in this engine: the {{missing}} part is not registered in the loaded build. Update the app or reload the page.",
       "missing": {
         "plan": "design (run-matrix generation)",
         "compare": "comparison (ANOVA and Tukey)"
@@ -820,7 +820,8 @@
       "few_degrees_of_freedom": "Few degrees of freedom: the intervals are unreliable.",
       "single_start_best": "Only one start reached the best fit: confirm with runs at other concentrations."
     },
-    "note": "Wald intervals (approximation). The fit only holds inside the measured substrate range; identifying Ks and μmax needs measurements below and above Ks."
+    "note": "Wald intervals (approximation). The fit only holds inside the measured substrate range; identifying Ks and μmax needs measurements below and above Ks.",
+    "stale": "This fit is for other inputs (factor, response, model or data): fit again to update it."
   },
   "power": {
     "title": "Power and sample size calculator",
@@ -853,7 +854,8 @@
     "details": "Noncentrality {{nc}}; df {{df1}}; critical value {{critical}}.",
     "halfWidthResult": "Interval half-width at n: {{value}}.",
     "power": "Power",
-    "note": "Power holds for the σ and effect entered. If the real σ is larger, power will be lower; consider a margin."
+    "note": "Power holds for the σ and effect entered. If the real σ is larger, power will be lower; consider a margin.",
+    "stale": "This result is for other values: a field changed after calculating. Calculate again to update it."
   },
   "drive": {
     "title": "Google Drive (optional)",

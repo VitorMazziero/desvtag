@@ -7,7 +7,7 @@ import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
 import type { MixtureAnalysis as Analysis, MixtureModel, Stat } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
-import { engineErrorMessages } from "../../services/errors/presentation";
+import { engineErrorMessages, issueMessage } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { parseNumberCell } from "../data/editing";
 import { TableExportButtons } from "../results/TableExportButtons";
@@ -221,8 +221,8 @@ export function MixtureAnalysis({ language }: { language: Language }) {
             {fmt(num(a.adjustedRSquared), 5)}
           </p>
           {result.fit.issues.map((i) => (
-            <p key={i.code} role="status" className="muted">
-              {t(`issues.${i.code}`, { ns: "diagnostics", defaultValue: i.code })}
+            <p key={i.code + JSON.stringify(i.params)} role="status" className="muted">
+              {issueMessage(t, i)}
             </p>
           ))}
           {result.grid.length > 0 && (

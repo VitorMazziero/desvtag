@@ -124,7 +124,39 @@
       "crd_too_many_levels": "São {{count}} níveis; o máximo é {{max}}.",
       "crd_empty_level": "O nível {{level}} está vazio.",
       "crd_duplicate_level": "O nível \"{{level}}\" está repetido.",
-      "crd_single_replicate": "Com uma só unidade experimental por nível não há estimativa do erro; use pelo menos duas."
+      "crd_single_replicate": "Com uma só unidade experimental por nível não há estimativa do erro; use pelo menos duas.",
+      "mixed_duplicate_factor": "O fator «{{factor}}» aparece mais de uma vez.",
+      "mixed_duplicate_level": "O fator «{{factor}}» tem o nível «{{level}}» repetido.",
+      "mixed_empty_factor_name": "Dê um nome a todos os fatores.",
+      "mixed_empty_level": "O fator «{{factor}}» tem um nível sem nome.",
+      "mixed_too_few_factors": "Informe pelo menos dois fatores; recebidos: {{count}}.",
+      "mixed_too_few_levels": "O fator «{{factor}}» precisa de pelo menos dois níveis; recebidos: {{count}}.",
+      "mixed_too_many_factors": "Fatores demais ({{count}}); o máximo é {{max}}.",
+      "mixed_too_many_levels": "O fator «{{factor}}» tem níveis demais ({{count}}); o máximo é {{max}}.",
+      "mixture_duplicate_component": "O componente «{{component}}» aparece mais de uma vez.",
+      "mixture_empty_component_name": "Dê um nome a todos os componentes.",
+      "mixture_invalid_degree": "O grau {{degree}} não é aceito; o máximo é {{max}}.",
+      "mixture_invalid_lower_bound": "Os limites inferiores precisam estar entre 0 e 1.",
+      "mixture_lower_bounds_sum": "A soma dos limites inferiores precisa ser menor que 1.",
+      "mixture_too_few_components": "Informe pelo menos dois componentes; recebidos: {{count}}.",
+      "mixture_too_many_center_points": "Pontos centrais demais; o máximo é {{max}}.",
+      "mixture_too_many_components": "Componentes demais ({{count}}); o máximo é {{max}}.",
+      "optimal_interactions_need_more_factors": "Interações exigem pelo menos dois fatores.",
+      "optimal_invalid_constraint": "A restrição informada é inválida.",
+      "optimal_invalid_factor_count": "O número de fatores precisa estar entre 1 e {{max}}.",
+      "optimal_invalid_fixed_run": "Um ensaio fixo é inválido (fora da faixa dos fatores ou com número de valores errado).",
+      "optimal_invalid_levels": "Os níveis dos fatores são inválidos.",
+      "optimal_invalid_range": "A faixa de um fator é inválida: o mínimo precisa ser menor que o máximo.",
+      "optimal_invalid_runs": "O número de ensaios é inválido; o máximo é {{max}}.",
+      "optimal_invalid_starts": "O número de inícios é inválido; o máximo é {{max}}.",
+      "optimal_more_fixed_than_runs": "Há mais ensaios fixos do que ensaios no planejamento.",
+      "optimal_too_few_runs": "{{runs}} ensaios não bastam para estimar {{parameters}} termos do modelo.",
+      "optimal_too_many_candidates": "Candidatos demais ({{candidates}}); o máximo é {{max}}. Reduza os níveis ou os fatores.",
+      "rcbd_duplicate": "O nível «{{level}}» de {{kind}} está repetido.",
+      "rcbd_empty_level": "Há um nível de {{kind}} sem nome.",
+      "rcbd_empty_name": "Dê um nome ao fator e ao bloco.",
+      "rcbd_too_few_levels": "Informe pelo menos dois níveis de {{kind}}; recebidos: {{count}}.",
+      "rcbd_too_many_levels": "Níveis de {{kind}} demais; o máximo é {{max}}."
     },
     "surface": {
       "invalid_alpha": "O nível de significância precisa estar entre 0 e 1.",
@@ -156,6 +188,76 @@
       "invalid_bounds": "Limites inválidos para o fator {{id}} (mínimo menor que o máximo).",
       "invalid_points": "Condições inválidas: informe de 1 a 200 pontos com todos os fatores numéricos.",
       "infeasible": "Nenhum ponto da região satisfaz os limites obrigatórios."
+    },
+    "anova": {
+      "empty_cells": "Há combinações de níveis sem observações; algumas somas de quadrados podem não ser estimáveis."
+    },
+    "data": {
+      "too_few_observations": "Há menos observações válidas do que o necessário (mínimo: {{n}})."
+    },
+    "kind": {
+      "treatment": "tratamento",
+      "block": "bloco"
+    },
+    "export": {
+      "duplicate_sheet_name": "Há duas planilhas com o nome «{{name}}».",
+      "invalid_sheet_name": "O nome de planilha «{{name}}» não é aceito pelo Excel.",
+      "no_sheets": "Não há planilhas para exportar.",
+      "non_finite": "Há um valor não finito (NaN ou infinito) nas tabelas a exportar.",
+      "too_large": "A tabela é grande demais para exportar.",
+      "write_failed": "Não foi possível gerar o arquivo XLSX."
+    },
+    "mixed": {
+      "boundary_variance": "A variância entre unidades ficou no limite (zero): o modelo equivale a um sem efeito de unidade.",
+      "df_fallback": "Os graus de liberdade usaram uma aproximação simples; trate os valores-p como aproximados.",
+      "missing_unit": "{{count}} observações estão sem unidade experimental.",
+      "too_few_observations": "{{observations}} observações não bastam para {{parameters}} parâmetros.",
+      "too_few_units": "Unidades insuficientes ({{count}}) para estimar a variância entre unidades.",
+      "unbalanced": "Os dados são desbalanceados: as unidades têm números de observações diferentes."
+    },
+    "mixture": {
+      "invalid_component_count": "Número de componentes inválido ({{count}}).",
+      "invalid_dimensions": "As proporções e a resposta têm números de linhas diferentes.",
+      "invalid_lower_bounds": "Os limites inferiores são inválidos.",
+      "invalid_proportions": "As proporções da linha {{row}} precisam ser não negativas e somar 1.",
+      "special_cubic_needs_three": "O modelo cúbico especial exige pelo menos três componentes."
+    },
+    "nonlinear": {
+      "few_degrees_of_freedom": "Poucos graus de liberdade: erros-padrão e intervalos são pouco confiáveis.",
+      "highly_correlated": "Há parâmetros fortemente correlacionados; as estimativas individuais são incertas.",
+      "hill_needs_positive_substrate": "O modelo de Hill exige substrato positivo.",
+      "ill_conditioned": "O problema é mal condicionado: pequenas mudanças nos dados mudam muito as estimativas.",
+      "imprecise_parameter": "Algum parâmetro foi estimado com baixa precisão (intervalo muito largo).",
+      "invalid_bounds": "Os limites dos parâmetros são inválidos.",
+      "invalid_dimensions": "Substrato e resposta têm números de valores diferentes.",
+      "invalid_initial": "Os valores iniciais são inválidos.",
+      "invalid_values": "Há valores não numéricos ou infinitos nos dados.",
+      "no_fit": "Nenhum ajuste foi possível. Revise os dados ou o modelo.",
+      "not_converged": "O ajuste não convergiu por completo; use as estimativas com cautela.",
+      "parameter_at_bound": "Um parâmetro ficou no limite permitido.",
+      "single_start_best": "Só um dos inícios chegou ao melhor ajuste; confira se não há outro mínimo.",
+      "too_few_observations": "{{observations}} observações não bastam para {{parameters}} parâmetros."
+    },
+    "paired": {
+      "few_pairs": "Poucos pares: o resultado é pouco confiável.",
+      "length_mismatch": "As duas medidas têm números de valores diferentes.",
+      "too_few_pairs": "São necessários pelo menos dois pares completos."
+    },
+    "power": {
+      "invalid_alpha": "O nível de significância (α) precisa estar entre 0 e 1.",
+      "invalid_difference": "A diferença esperada precisa ser um número diferente de zero.",
+      "invalid_half_width": "A semiamplitude desejada precisa ser positiva.",
+      "invalid_means": "Informe pelo menos duas médias numéricas.",
+      "invalid_n": "O tamanho da amostra precisa ser um inteiro de pelo menos 2.",
+      "invalid_sigma": "O desvio-padrão esperado (σ) precisa ser positivo.",
+      "invalid_target": "A potência desejada precisa estar entre 0 e 1.",
+      "no_effect": "Não há efeito a detectar: a diferença é zero ou as médias são todas iguais.",
+      "precision_needs_t": "A precisão só se aplica aos testes t, não à ANOVA.",
+      "small_n": "Amostra muito pequena: a potência é sensível às suposições.",
+      "unreachable": "A potência pedida não é alcançada com até {{max}} unidades por grupo."
+    },
+    "selection": {
+      "step_failed": "Um passo da seleção de modelo falhou e foi ignorado."
     }
   },
   "cellErrors": {

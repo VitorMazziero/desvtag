@@ -108,14 +108,14 @@ pub fn generate(spec: &RcbdSpec) -> Result<GeneratedRcbd, CoreError> {
     for (levels, kind) in [(&spec.levels, "treatment"), (&spec.blocks, "block")] {
         if levels.len() < 2 {
             issues.push(
-                error("design.rcbd_too_few")
+                error("design.rcbd_too_few_levels")
                     .with_param("kind", &kind)
                     .with_param("count", &levels.len()),
             );
         }
         if levels.len() > MAX_LEVELS {
             issues.push(
-                error("design.rcbd_too_many")
+                error("design.rcbd_too_many_levels")
                     .with_param("kind", &kind)
                     .with_param("max", &MAX_LEVELS),
             );

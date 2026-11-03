@@ -17,6 +17,26 @@ describe("looksLikeHeader / guessMapping", () => {
     expect(m[0]).toMatchObject({ role: "factor", kind: "categorical", name: "Condição" });
     expect(m[1]).toMatchObject({ role: "response", name: "Atividade (U/mL)" });
   });
+  it("gives priority to the names of existing responses and factors over the last numeric column (UX23)", () => {
+    const g = [
+      ["Tratamento", "Biomassa (g)", "Replicata"],
+      ["A", "1,5", "1"],
+      ["B", "2,5", "2"],
+    ];
+    const m = guessMapping(g, true, {
+      factors: [{ name: "Tratamento", kind: "categorical" }],
+      responses: [{ name: "biomassa" }],
+    });
+    expect(m.map((c) => c.role)).toEqual(["factor", "response", "factor"]);
+    // Sem nada cadastrado, a heurística antiga escolhe a última coluna numérica.
+    expect(guessMapping(g, true).map((c) => c.role)).toEqual(["factor", "factor", "response"]);
+    // Com um fator cadastrado, ele não vira resposta pela heurística.
+    const onlyFactor = guessMapping(g, true, {
+      factors: [{ name: "Replicata", kind: "numeric" }],
+      responses: [],
+    });
+    expect(onlyFactor.map((c) => c.role)).toEqual(["factor", "response", "factor"]);
+  });
   it("names columns when there is no header", () => {
     expect(
       guessMapping(

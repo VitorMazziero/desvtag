@@ -37,6 +37,27 @@ describe("locales", () => {
   it("have no empty values", () => {
     expect(JSON.stringify(resources)).not.toContain('""');
   });
+
+  it("do not tell the user that delivered methods are still missing (UX31)", () => {
+    const text = JSON.stringify(resources);
+    expect(text).not.toMatch(/ainda não (foi|foram|está) entregue/i);
+    expect(text).not.toMatch(/ainda não entregue/i);
+    expect(text).not.toMatch(/has not been delivered yet/i);
+  });
+
+  it("interpolates the aliased terms of a rank-deficient model (UX40)", () => {
+    for (const lang of ["pt-BR", "en"] as const) {
+      const i18n = createI18n(lang);
+      const text = i18n.t("issues.model.rank_deficient", {
+        ns: "diagnostics",
+        rank: 2,
+        columns: 3,
+        aliased: "A·B",
+      });
+      expect(text, lang).toContain("A·B");
+      expect(text, lang).not.toContain("{{");
+    }
+  });
 });
 
 describe("detectLanguage", () => {

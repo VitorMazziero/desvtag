@@ -28,8 +28,8 @@
     "conclusion": "Foram resumidas {{valid}} de {{total}} observações de «{{response}}».",
     "evidence": "Média geral {{mean}} e desvio-padrão {{sd}}{{unit}}; veja a tabela por grupo.",
     "evidenceUndefined": "Nem todas as estatísticas gerais puderam ser calculadas; veja os motivos na tabela.",
-    "nextStepGroups": "As médias dos grupos descrevem os dados, mas não mostram se os grupos diferem. Essa decisão exige um teste de comparação (ANOVA e Tukey), ainda não entregue.",
-    "nextStepNoGroups": "Para comparar condições, cadastre um fator e agrupe por ele; o teste de comparação (ANOVA e Tukey) ainda não foi entregue."
+    "nextStepGroups": "As médias dos grupos descrevem os dados, mas não mostram se os grupos diferem. Essa decisão exige um teste de comparação: use «Comparar tratamentos» na tela inicial ou escolha a comparação na etapa de análise.",
+    "nextStepNoGroups": "Para comparar condições, cadastre um fator, agrupe por ele e escolha a comparação (ANOVA e comparações múltiplas) na etapa de análise, ou comece por «Comparar tratamentos»."
   },
   "labels": {
     "conclusion": "Conclusão",

@@ -43,11 +43,32 @@ function columnIsNumeric(rows: string[][], column: number): boolean {
   return cells.length > 0 && cells.every((c) => parseNumberCell(c).ok);
 }
 
+/** Fatores e respostas já cadastrados no experimento: os nomes iguais têm prioridade na sugestão. */
+export interface KnownVariables {
+  factors: Array<{ name: string; kind: FactorKindChoice }>;
+  responses: Array<{ name: string }>;
+}
+
+/** Nome comparável: sem acentos, caixa ou unidade entre parênteses/colchetes no fim. */
+function comparableName(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s*[([][^)\]]*[)\]]\s*$/, "")
+    .trim()
+    .toLowerCase();
+}
+
 /**
- * Sugestão inicial: nomes de coluna como fatores categóricos/numéricos; a última coluna numérica
- * como resposta quando houver pelo menos duas colunas. É só uma sugestão: o usuário confirma.
+ * Sugestão inicial. Colunas com o nome de uma resposta ou de um fator já cadastrados (UX23)
+ * recebem esse papel; só depois, entre as demais, a última coluna numérica vira resposta quando
+ * o experimento ainda não tem resposta correspondente. É só uma sugestão: o usuário confirma.
  */
-export function guessMapping(rows: string[][], hasHeader: boolean): ColumnMapping[] {
+export function guessMapping(
+  rows: string[][],
+  hasHeader: boolean,
+  known?: KnownVariables,
+): ColumnMapping[] {
   const width = rows.reduce((max, r) => Math.max(max, r.length), 0);
   const body = hasHeader ? rows.slice(1) : rows;
   const names = Array.from({ length: width }, (_, i) => {
@@ -55,8 +76,22 @@ export function guessMapping(rows: string[][], hasHeader: boolean): ColumnMappin
     return raw !== "" ? raw : `Coluna ${i + 1}`;
   });
   const numeric = names.map((_, i) => columnIsNumeric(body, i));
-  const lastNumeric = numeric.lastIndexOf(true);
-  return names.map((name, i) => {
+  const knownResponse = new Set((known?.responses ?? []).map((r) => comparableName(r.name)));
+  const knownFactor = new Map((known?.factors ?? []).map((f) => [comparableName(f.name), f.kind]));
+  const matchesResponse = names.map((n) => hasHeader && knownResponse.has(comparableName(n)));
+  const matchesFactor = names.map((n) => hasHeader && knownFactor.has(comparableName(n)));
+  const hasKnownResponse = matchesResponse.some(Boolean);
+  const lastNumeric = hasKnownResponse
+    ? -1
+    : numeric.reduce((last, isNumeric, i) => (isNumeric && !matchesFactor[i] ? i : last), -1);
+  return names.map((name, i): ColumnMapping => {
+    if (matchesResponse[i]) return { role: "response", kind: "numeric", name };
+    if (matchesFactor[i])
+      return {
+        role: "factor",
+        kind: knownFactor.get(comparableName(name)) ?? (numeric[i] ? "numeric" : "categorical"),
+        name,
+      };
     if (width >= 2 && i === lastNumeric) return { role: "response", kind: "numeric", name };
     return { role: "factor", kind: numeric[i] ? "numeric" : "categorical", name };
   });

@@ -52,7 +52,7 @@
     },
     "availability": {
       "available": "Disponível nesta versão",
-      "limited": "Parcial: nesta versão só é possível cadastrar dados e obter o resumo descritivo. A parte {{missing}} ainda não foi entregue.",
+      "limited": "Indisponível neste motor: a parte {{missing}} não está registrada na compilação carregada. Atualize o aplicativo ou recarregue a página.",
       "missing": {
         "plan": "de planejamento (geração de matrizes)",
         "compare": "de comparação (ANOVA e Tukey)"
@@ -820,7 +820,8 @@
       "few_degrees_of_freedom": "Poucos graus de liberdade: os intervalos são pouco confiáveis.",
       "single_start_best": "Só um início chegou ao melhor ajuste: confirme com ensaios em outras concentrações."
     },
-    "note": "Intervalos de Wald (aproximação). O ajuste só vale dentro da faixa de substrato medida; para identificar Ks e μmax é preciso medir abaixo e acima de Ks."
+    "note": "Intervalos de Wald (aproximação). O ajuste só vale dentro da faixa de substrato medida; para identificar Ks e μmax é preciso medir abaixo e acima de Ks.",
+    "stale": "Este ajuste é de outras entradas (fator, resposta, modelo ou dados): ajuste de novo para atualizar."
   },
   "power": {
     "title": "Calculadora de potência e tamanho de amostra",
@@ -853,7 +854,8 @@
     "details": "Não centralidade {{nc}}; gl {{df1}}; valor crítico {{critical}}.",
     "halfWidthResult": "Semiamplitude do intervalo em n: {{value}}.",
     "power": "Potência",
-    "note": "A potência vale para o σ e o efeito informados. Se o σ real for maior, a potência será menor; considere uma margem."
+    "note": "A potência vale para o σ e o efeito informados. Se o σ real for maior, a potência será menor; considere uma margem.",
+    "stale": "Este resultado é de outros valores: alterou-se algum campo depois de calcular. Calcule de novo para atualizar."
   },
   "drive": {
     "title": "Google Drive (opcional)",

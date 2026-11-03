@@ -36,7 +36,7 @@ O mesmo PCG32 e a mesma redução de índices usados no [DIC](delineamento-intei
 
 ## 7. Casos sem resultado válido
 
-Erros de entrada localizados: `design.rcbd_empty_name`, `design.rcbd_too_few`, `design.rcbd_too_many`, `design.rcbd_empty_level`, `design.rcbd_duplicate` e `design.too_many_runs`.
+Erros de entrada localizados: `design.rcbd_empty_name`, `design.rcbd_too_few_levels`, `design.rcbd_too_many_levels`, `design.rcbd_empty_level`, `design.rcbd_duplicate` e `design.too_many_runs`.
 
 ## 8. Exemplo
 

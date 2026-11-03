@@ -28,8 +28,8 @@
     "conclusion": "{{valid}} of {{total}} observations of “{{response}}” were summarized.",
     "evidence": "Overall mean {{mean}} and standard deviation {{sd}}{{unit}}; see the table by group.",
     "evidenceUndefined": "Not every overall statistic could be calculated; see the reasons in the table.",
-    "nextStepGroups": "Group means describe the data but do not show whether the groups differ. That decision needs a comparison test (ANOVA and Tukey), which has not been delivered yet.",
-    "nextStepNoGroups": "To compare conditions, add a factor and group by it; the comparison test (ANOVA and Tukey) has not been delivered yet."
+    "nextStepGroups": "Group means describe the data but do not show whether the groups differ. That decision needs a comparison test: use “Compare treatments” on the start screen or choose the comparison in the analysis step.",
+    "nextStepNoGroups": "To compare conditions, add a factor, group by it and choose the comparison (ANOVA and multiple comparisons) in the analysis step, or start with “Compare treatments”."
   },
   "labels": {
     "conclusion": "Conclusion",

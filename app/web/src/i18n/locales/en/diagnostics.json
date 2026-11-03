@@ -124,7 +124,39 @@
       "crd_too_many_levels": "{{count}} levels; the maximum is {{max}}.",
       "crd_empty_level": "Level {{level}} is empty.",
       "crd_duplicate_level": "Level \"{{level}}\" is repeated.",
-      "crd_single_replicate": "With a single experimental unit per level the error cannot be estimated; use at least two."
+      "crd_single_replicate": "With a single experimental unit per level the error cannot be estimated; use at least two.",
+      "mixed_duplicate_factor": "Factor “{{factor}}” appears more than once.",
+      "mixed_duplicate_level": "Factor “{{factor}}” has the level “{{level}}” repeated.",
+      "mixed_empty_factor_name": "Name every factor.",
+      "mixed_empty_level": "Factor “{{factor}}” has a level without a name.",
+      "mixed_too_few_factors": "Enter at least two factors; received: {{count}}.",
+      "mixed_too_few_levels": "Factor “{{factor}}” needs at least two levels; received: {{count}}.",
+      "mixed_too_many_factors": "Too many factors ({{count}}); the maximum is {{max}}.",
+      "mixed_too_many_levels": "Factor “{{factor}}” has too many levels ({{count}}); the maximum is {{max}}.",
+      "mixture_duplicate_component": "Component “{{component}}” appears more than once.",
+      "mixture_empty_component_name": "Name every component.",
+      "mixture_invalid_degree": "Degree {{degree}} is not accepted; the maximum is {{max}}.",
+      "mixture_invalid_lower_bound": "Lower bounds must be between 0 and 1.",
+      "mixture_lower_bounds_sum": "The lower bounds must add up to less than 1.",
+      "mixture_too_few_components": "Enter at least two components; received: {{count}}.",
+      "mixture_too_many_center_points": "Too many center points; the maximum is {{max}}.",
+      "mixture_too_many_components": "Too many components ({{count}}); the maximum is {{max}}.",
+      "optimal_interactions_need_more_factors": "Interactions need at least two factors.",
+      "optimal_invalid_constraint": "The constraint entered is invalid.",
+      "optimal_invalid_factor_count": "The number of factors must be between 1 and {{max}}.",
+      "optimal_invalid_fixed_run": "A fixed run is invalid (outside the factor ranges or with the wrong number of values).",
+      "optimal_invalid_levels": "The factor levels are invalid.",
+      "optimal_invalid_range": "A factor range is invalid: the minimum must be below the maximum.",
+      "optimal_invalid_runs": "The number of runs is invalid; the maximum is {{max}}.",
+      "optimal_invalid_starts": "The number of starts is invalid; the maximum is {{max}}.",
+      "optimal_more_fixed_than_runs": "There are more fixed runs than runs in the design.",
+      "optimal_too_few_runs": "{{runs}} runs are not enough to estimate {{parameters}} model terms.",
+      "optimal_too_many_candidates": "Too many candidates ({{candidates}}); the maximum is {{max}}. Reduce the levels or factors.",
+      "rcbd_duplicate": "The {{kind}} level “{{level}}” is repeated.",
+      "rcbd_empty_level": "A {{kind}} level has no name.",
+      "rcbd_empty_name": "Name the factor and the block.",
+      "rcbd_too_few_levels": "Enter at least two {{kind}} levels; received: {{count}}.",
+      "rcbd_too_many_levels": "Too many {{kind}} levels; the maximum is {{max}}."
     },
     "surface": {
       "invalid_alpha": "The significance level must be between 0 and 1.",
@@ -156,6 +188,76 @@
       "invalid_bounds": "Invalid limits for factor {{id}} (minimum below maximum).",
       "invalid_points": "Invalid conditions: give 1 to 200 points with every factor numeric.",
       "infeasible": "No point of the region satisfies the mandatory limits."
+    },
+    "anova": {
+      "empty_cells": "Some level combinations have no observations; some sums of squares may not be estimable."
+    },
+    "data": {
+      "too_few_observations": "There are fewer valid observations than required (minimum: {{n}})."
+    },
+    "kind": {
+      "treatment": "treatment",
+      "block": "block"
+    },
+    "export": {
+      "duplicate_sheet_name": "Two sheets are named “{{name}}”.",
+      "invalid_sheet_name": "The sheet name “{{name}}” is not accepted by Excel.",
+      "no_sheets": "There are no sheets to export.",
+      "non_finite": "There is a non-finite value (NaN or infinity) in the tables to export.",
+      "too_large": "The table is too large to export.",
+      "write_failed": "The XLSX file could not be produced."
+    },
+    "mixed": {
+      "boundary_variance": "The between-unit variance is at the boundary (zero): the model is equivalent to one without a unit effect.",
+      "df_fallback": "The degrees of freedom used a simple approximation; treat the p-values as approximate.",
+      "missing_unit": "{{count}} observations have no experimental unit.",
+      "too_few_observations": "{{observations}} observations are not enough for {{parameters}} parameters.",
+      "too_few_units": "Too few units ({{count}}) to estimate the between-unit variance.",
+      "unbalanced": "The data are unbalanced: units have different numbers of observations."
+    },
+    "mixture": {
+      "invalid_component_count": "Invalid number of components ({{count}}).",
+      "invalid_dimensions": "The proportions and the response have different numbers of rows.",
+      "invalid_lower_bounds": "The lower bounds are invalid.",
+      "invalid_proportions": "The proportions in row {{row}} must be non-negative and add up to 1.",
+      "special_cubic_needs_three": "The special cubic model needs at least three components."
+    },
+    "nonlinear": {
+      "few_degrees_of_freedom": "Few degrees of freedom: standard errors and intervals are unreliable.",
+      "highly_correlated": "Some parameters are strongly correlated; individual estimates are uncertain.",
+      "hill_needs_positive_substrate": "The Hill model needs a positive substrate.",
+      "ill_conditioned": "The problem is ill-conditioned: small changes in the data change the estimates a lot.",
+      "imprecise_parameter": "A parameter was estimated with low precision (very wide interval).",
+      "invalid_bounds": "The parameter bounds are invalid.",
+      "invalid_dimensions": "Substrate and response have different numbers of values.",
+      "invalid_initial": "The initial values are invalid.",
+      "invalid_values": "There are non-numeric or infinite values in the data.",
+      "no_fit": "No fit was possible. Review the data or the model.",
+      "not_converged": "The fit did not fully converge; use the estimates with caution.",
+      "parameter_at_bound": "A parameter ended at its allowed limit.",
+      "single_start_best": "Only one start reached the best fit; check for another minimum.",
+      "too_few_observations": "{{observations}} observations are not enough for {{parameters}} parameters."
+    },
+    "paired": {
+      "few_pairs": "Few pairs: the result is unreliable.",
+      "length_mismatch": "The two measurements have different numbers of values.",
+      "too_few_pairs": "At least two complete pairs are required."
+    },
+    "power": {
+      "invalid_alpha": "The significance level (α) must be between 0 and 1.",
+      "invalid_difference": "The expected difference must be a number other than zero.",
+      "invalid_half_width": "The desired half-width must be positive.",
+      "invalid_means": "Enter at least two numeric means.",
+      "invalid_n": "The sample size must be an integer of at least 2.",
+      "invalid_sigma": "The expected standard deviation (σ) must be positive.",
+      "invalid_target": "The desired power must be between 0 and 1.",
+      "no_effect": "There is no effect to detect: the difference is zero or all means are equal.",
+      "precision_needs_t": "Precision only applies to t tests, not to ANOVA.",
+      "small_n": "Very small sample: power is sensitive to the assumptions.",
+      "unreachable": "The requested power is not reached with up to {{max}} units per group."
+    },
+    "selection": {
+      "step_failed": "A model-selection step failed and was skipped."
     }
   },
   "cellErrors": {

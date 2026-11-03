@@ -25,6 +25,7 @@ import {
   type ColumnRole,
   type FactorKindChoice,
   guessMapping,
+  type KnownVariables,
   looksLikeHeader,
 } from "./mapping";
 
@@ -122,9 +123,20 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
   const header = hasHeader ?? looksLikeHeader(rows);
   const [mapping, setMapping] = useState<ColumnMapping[]>([]);
   // Nova grade ou nova opção de cabeçalho: recomeça a sugestão de mapeamento.
+  const known = useMemo<KnownVariables>(
+    () => ({
+      factors: experiment.factors
+        .filter((f) => f.name.trim() !== "")
+        .map((f) => ({ name: f.name, kind: f.kind })),
+      responses: experiment.responses
+        .filter((r) => r.name.trim() !== "")
+        .map((r) => ({ name: r.name })),
+    }),
+    [experiment.factors, experiment.responses],
+  );
   useEffect(() => {
-    setMapping(rows.length > 0 ? guessMapping(rows, header) : []);
-  }, [rows, header]);
+    setMapping(rows.length > 0 ? guessMapping(rows, header, known) : []);
+  }, [rows, header, known]);
 
   const result = useMemo(
     () => (rows.length > 0 ? buildExperimentData(rows, header, mapping) : null),

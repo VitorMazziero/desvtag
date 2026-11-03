@@ -62,7 +62,7 @@ mod tests {
 
     #[test]
     fn builds_with_params_and_serializes_camel_case() {
-        let issue = Issue::new("data.too_few", Severity::Error).with_param("n", &1);
+        let issue = Issue::new("data.too_few_observations", Severity::Error).with_param("n", &1);
         assert!(issue.is_blocking());
         let json = serde_json::to_value(&issue).unwrap_or_default();
         assert_eq!(json["severity"], "error");

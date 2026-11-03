@@ -36,6 +36,23 @@ export function SaturationFit({
   const [problems, setProblems] = useState<string[]>([]);
   const [result, setResult] = useState<NonlinearResult | null>(null);
   const [points, setPoints] = useState<Array<{ x: number; y: number }>>([]);
+  // Entradas que produziram `result` (UX42): trocar fator, resposta, modelo ou dados o deixa
+  // desatualizado em vez de apresentá-lo como se fosse do que está selecionado agora.
+  const [fitted, setFitted] = useState<{
+    signature: string;
+    xLabel: string;
+    yLabel: string;
+  } | null>(null);
+  const factorIndex = state.factors.findIndex((x) => x.id === factorId);
+  const responseIndex = state.responses.findIndex((x) => x.id === responseId);
+  const currentSignature = JSON.stringify([
+    factorId,
+    responseId,
+    model,
+    state.analysis.alpha,
+    state.rows.map((row) => [row.factors[factorIndex] ?? "", row.responses[responseIndex] ?? ""]),
+  ]);
+  const stale = result !== null && fitted?.signature !== currentSignature;
 
   const fmt = (v: number | null, digits = 5) =>
     v === null ? "—" : formatSignificant(v, language, digits);
@@ -84,6 +101,11 @@ export function SaturationFit({
       if (response.outcome.status === "ok" && response.outcome.result.type === "modelNonlinear") {
         setResult(response.outcome.result as unknown as NonlinearResult);
         setPoints(xs.map((x, i) => ({ x, y: ys[i] as number })));
+        setFitted({
+          signature: currentSignature,
+          xLabel: state.factors[f]?.name ?? "S",
+          yLabel: state.responses[r]?.name ?? "y",
+        });
       } else if (response.outcome.status === "error") {
         setResult(null);
         setProblems(engineErrorMessages(t, response.outcome.error));
@@ -155,7 +177,12 @@ export function SaturationFit({
             </div>
           )}
           {result && (
-            <section data-testid="saturation-result">
+            <section data-testid="saturation-result" data-stale={stale || undefined}>
+              {stale && (
+                <p role="status" className="stale-notice" data-testid="saturation-stale">
+                  {t("saturation.stale")}
+                </p>
+              )}
               <h3>{t("saturation.parameters")}</h3>
               <div className="grid-scroll">
                 <table className="results-table" data-testid="saturation-parameters">
@@ -205,8 +232,8 @@ export function SaturationFit({
               <SaturationChart
                 points={points}
                 curve={result.curve}
-                xLabel={state.factors.find((f) => f.id === factorId)?.name ?? "S"}
-                yLabel={state.responses.find((r) => r.id === responseId)?.name ?? "y"}
+                xLabel={fitted?.xLabel ?? "S"}
+                yLabel={fitted?.yLabel ?? "y"}
                 label={t("saturation.chartLabel")}
               />
               <p className="muted small">{t("saturation.note")}</p>
