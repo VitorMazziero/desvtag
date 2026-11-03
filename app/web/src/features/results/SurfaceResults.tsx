@@ -16,6 +16,7 @@ import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
 import { formatFactParams } from "./ComparisonInterpretation";
+import { CopyText } from "./CopyText";
 import { ModelPanel } from "./ModelPanel";
 import { SurfaceView } from "./SurfaceView";
 import { formatEquation } from "./surfaceEquation";
@@ -100,6 +101,17 @@ export function SurfaceResults({ result, signature, language }: Props) {
   const equationNames = settings.equationNames;
   const prefix = equationNames ? responseName : t("surface.equation.prefix");
   const equationFactors = equationNames ? names : names.map((_, i) => `x${subscript(i + 1)}`);
+  // A equação codificada usa SEMPRE símbolos codificados (z₁, z₂…): com os nomes dos fatores ela
+  // convidaria a inserir 30 e 6 onde vale 0 e 0 (UX33). A transformação vem logo abaixo.
+  const codedSymbols = names.map((_, i) => `z${subscript(i + 1)}`);
+  const codedEquation = formatEquation(result.equation.coded, codedSymbols, language, prefix);
+  const realEquation = result.equation.real
+    ? formatEquation(result.equation.real, equationFactors, language, prefix)
+    : null;
+  const transformations = result.ranges.map((r, i) => {
+    const nameOrSymbol = equationNames ? r.name : `x${subscript(i + 1)}`;
+    return `${codedSymbols[i] ?? "z"} = (${nameOrSymbol} − ${formatSignificant(r.center, language, 5)}) / ${formatSignificant(r.halfRange, language, 5)}`;
+  });
 
   const evidence =
     val(anova.f) !== null && val(anova.pValue) !== null
@@ -317,14 +329,20 @@ export function SurfaceResults({ result, signature, language }: Props) {
           )}
           <h4>{t("surface.equation.coded")}</h4>
           <p className="equation" data-testid="equation-coded">
-            {formatEquation(result.equation.coded, equationFactors, language, prefix)}
+            {codedEquation}
           </p>
+          <p className="muted small" data-testid="equation-transform">
+            {t("surface.equation.codedWhere")} {transformations.join("; ")}
+          </p>
+          <CopyText
+            label={t("surface.equation.copyCoded")}
+            text={[codedEquation, ...transformations].join("\n")}
+          />
           <h4>{t("surface.equation.real")}</h4>
           <p className="equation" data-testid="equation-real">
-            {result.equation.real
-              ? formatEquation(result.equation.real, equationFactors, language, prefix)
-              : t("surface.equation.realUnavailable")}
+            {realEquation ?? t("surface.equation.realUnavailable")}
           </p>
+          {realEquation && <CopyText label={t("surface.equation.copyReal")} text={realEquation} />}
         </section>
 
         <section aria-labelledby="region-title">

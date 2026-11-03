@@ -354,7 +354,7 @@ test("abre o exemplo 03 (DCCR) com coeficientes, falta de ajuste e superfícies 
   await expect(terms.locator("tbody tr").nth(4)).toContainText("-5,7833");
   await expect(page.getByTestId("fit-measures")).toContainText("0,98776");
   await expect(page.getByTestId("lack-of-fit")).toContainText("0,6918");
-  await expect(page.getByTestId("equation-coded")).toContainText("119,4 + 5,0158·Glicose");
+  await expect(page.getByTestId("equation-coded")).toContainText("119,4 + 5,0158·z₁");
   await expect(page.getByTestId("equation-real")).toContainText("2,1753 + 3,6059·Glicose");
   await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
   // Superfície 3D e contorno vêm da malha do motor; a região extrapolada é identificada.

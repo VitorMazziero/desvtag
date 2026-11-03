@@ -347,11 +347,16 @@
       "coded": "Escala codificada",
       "real": "Unidades reais",
       "realUnavailable": "Indisponível: há termos não estimáveis.",
-      "help": "As duas equações dão a mesma predição; a codificada é a ajustada e a real é a mesma equação reescrita nos valores dos fatores.",
+      "help": "As duas equações dão a mesma predição. A codificada é a ajustada e usa variáveis codificadas z (−1 a +1 na região experimental): não insira nela os valores reais. A real é a mesma equação reescrita nos valores dos fatores.",
       "prefix": "ŷ",
       "style": "Mostrar a equação com",
       "styleNames": "Nomes das variáveis",
-      "styleNotation": "Notação (y, x₁, x₂…)"
+      "styleNotation": "Notação (y, x₁, x₂…)",
+      "codedWhere": "Em que:",
+      "copyCoded": "Copiar equação codificada",
+      "copyReal": "Copiar equação em unidades reais",
+      "copied": "Copiado.",
+      "copyFailed": "Não foi possível copiar; selecione o texto e copie manualmente."
     },
     "region": {
       "title": "Região experimental",

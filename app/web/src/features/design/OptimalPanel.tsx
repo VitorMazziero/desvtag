@@ -62,6 +62,12 @@ export function OptimalPanel({ language }: { language: Language }) {
     v === null || v === undefined ? "—" : formatSignificant(v, language, digits);
 
   // Ensaios já realizados: linhas com todos os fatores escolhidos numéricos e alguma resposta.
+  // Fatores que o ótimo não coloca na matriz (UX20): categóricos (o ótimo D/I desta versão só trata
+  // fatores numéricos) e numéricos desmarcados. Suas colunas ficam vazias na grade.
+  const categorical = state.factors.filter((f) => f.name.trim() !== "" && f.kind !== "numeric");
+  const unchecked = candidates.filter((f) => !selected.some((s) => s.id === f.id));
+  const leftEmpty = [...categorical, ...unchecked].map((f) => f.name).join(", ");
+
   const doneRows = state.rows.flatMap((row, index) => {
     const values = selected.map((f) => {
       const k = state.factors.findIndex((x) => x.id === f.id);
@@ -136,6 +142,8 @@ export function OptimalPanel({ language }: { language: Language }) {
     if (!augment && state.rows.some((r) => r.responses.some((c) => c.trim() !== ""))) {
       if (!window.confirm(t("design.confirmReplace"))) return;
     }
+    if (leftEmpty !== "" && !window.confirm(t("design.optimal.confirmEmpty", { names: leftEmpty })))
+      return;
     let counter = state.counters.row;
     const keep = augment ? state.rows : [];
     const fresh = result.runs
@@ -184,6 +192,14 @@ export function OptimalPanel({ language }: { language: Language }) {
       )}
       {candidates.length > 0 && (
         <>
+          {categorical.length > 0 && (
+            <p role="status" className="error" data-testid="optimal-excluded">
+              {t("design.optimal.excluded", {
+                names: categorical.map((f) => f.name).join(", "),
+                count: categorical.length,
+              })}
+            </p>
+          )}
           <fieldset className="editor-card">
             <legend>{t("design.optimal.factors")}</legend>
             {candidates.map((f) => (
@@ -508,6 +524,7 @@ export function OptimalPanel({ language }: { language: Language }) {
           {applied && (
             <p role="status" className="muted" data-testid="optimal-applied">
               {t("design.optimal.applied", { count: result.runs.filter((r) => !r.fixed).length })}
+              {leftEmpty !== "" && ` ${t("design.optimal.appliedEmpty", { names: leftEmpty })}`}
             </p>
           )}
         </section>

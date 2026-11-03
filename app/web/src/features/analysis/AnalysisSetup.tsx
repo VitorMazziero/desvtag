@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { nowIso } from "../../lib/ids";
 import { StaleResponseError } from "../../services/engine";
@@ -28,9 +28,22 @@ export function AnalysisSetup({ onDone }: Props) {
   const [running, setRunning] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
 
+  // Um único fator elegível já vem escolhido (UX27): o «—» só aparece quando há o que escolher.
+  const onlyFactor = state.factors.length === 1 ? (state.factors[0]?.id ?? null) : null;
+  const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  useEffect(() => {
+    if (needsFactor && onlyFactor !== null && state.analysis.factorId === null)
+      dispatch({ type: "setAnalysis", patch: { factorId: onlyFactor } });
+  }, [needsFactor, onlyFactor, state.analysis.factorId, dispatch]);
+
   if (state.responses.length === 0) return <p className="muted">{t("analysis.noResponse")}</p>;
 
   const kind = analysisKind(state);
+  // Textos que dependem do procedimento escolhido (UX26): nada de «Tukey» fixo quando o usuário
+  // escolheu Dunnett, Games–Howell ou Kruskal–Wallis, nem de «pares» quando o modelo é multifatorial.
+  const textKey = kind === "factorial" ? "factorial" : (state.analysis.procedure ?? "tukey");
+  const compareIntro = t(`analysis.compare.introFor.${textKey}`);
+  const compareAlphaHelp = t(`analysis.compare.alphaHelpFor.${textKey}`);
   const run = async () => {
     const { dataset } = buildDataset(state);
     const operation = buildOperation(state, dataset);
@@ -130,7 +143,7 @@ export function AnalysisSetup({ onDone }: Props) {
       </h2>
       <p className="muted">
         {kind === "oneWay" || kind === "procedure" || kind === "factorial"
-          ? t("analysis.compare.intro")
+          ? compareIntro
           : kind === "design"
             ? t("analysis.design.intro")
             : kind === "surface"
@@ -211,7 +224,7 @@ export function AnalysisSetup({ onDone }: Props) {
                 </option>
               ))}
             </select>
-            <small className="muted">{t("analysis.compare.alphaHelp")}</small>
+            <small className="muted">{compareAlphaHelp}</small>
           </label>
         </>
       )}

@@ -69,12 +69,12 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     await expect(page.getByLabel("Atividade — Obs. 20")).toHaveValue("12,9");
     await page.getByRole("button", { name: "Avançar" }).click();
 
-    // Configuração: fator e α; o botão só habilita com o fator escolhido.
+    // Configuração: com um único fator cadastrado ele já vem escolhido (UX27).
     await expect(
       page.getByRole("heading", { name: "Análise: comparação de tratamentos" }),
     ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Comparar tratamentos" })).toBeDisabled();
-    await page.getByLabel("Fator que define os grupos").selectOption({ label: "Condição" });
+    await expect(page.getByLabel("Fator que define os grupos")).toHaveValue(/.+/);
+    await expect(page.getByRole("button", { name: "Comparar tratamentos" })).toBeEnabled();
     await page.getByRole("button", { name: "Comparar tratamentos" }).click();
 
     // ANOVA contra o SciPy (5 algarismos significativos exibidos).

@@ -78,7 +78,7 @@ test.describe("fluxo guiado em português", () => {
 
     const interpretation = page.getByTestId("interpretation");
     await expect(interpretation).toContainText("5 de 6 observações");
-    await expect(interpretation).toContainText("ainda não entregue");
+    await expect(interpretation).toContainText("use «Comparar tratamentos»");
     await expect(interpretation).toContainText("não presume que elas sejam réplicas independentes");
     await expect(interpretation).toContainText("O grupo «B» tem 1 observação");
 

@@ -154,7 +154,25 @@
       "alphaHelp": "Applies to the family of all pairwise comparisons (simultaneous confidence 1 − α).",
       "run": "Compare treatments",
       "needFactor": "Add a factor (for example, the condition being tested) to define the groups.",
-      "needLevels": "Enter the factor levels in the variables step or type the data: at least two groups are required."
+      "needLevels": "Enter the factor levels in the variables step or type the data: at least two groups are required.",
+      "introFor": {
+        "tukey": "Compares the means of a factor's levels: one-way ANOVA (completely randomized design), Tukey comparisons (Tukey–Kramer when group sizes differ) and comparison letters. Each row must be an independent experimental replicate.",
+        "gamesHowell": "Compares the means of a factor's levels without assuming equal variances: Welch ANOVA and Games–Howell comparisons, with comparison letters. Each row must be an independent experimental replicate.",
+        "dunnett": "Compares each treatment with a control (Dunnett), starting from the one-way ANOVA. Choose the control level. Each row must be an independent experimental replicate.",
+        "bonferroni": "Compares the means of a factor's levels with pairwise t tests adjusted by Bonferroni, starting from the one-way ANOVA. Each row must be an independent experimental replicate.",
+        "holm": "Compares the means of a factor's levels with pairwise t tests adjusted by Holm, starting from the one-way ANOVA. Each row must be an independent experimental replicate.",
+        "kruskalDunn": "Compares the groups without assuming normality: Kruskal–Wallis and Dunn comparisons. Each row must be an independent experimental replicate.",
+        "factorial": "Fits the ANOVA with several factors and/or blocks, in the model chosen below, and compares the means of each effect with the chosen multiplicity adjustment. Each row must be an independent experimental replicate."
+      },
+      "alphaHelpFor": {
+        "tukey": "Applies to the family of all pairwise comparisons (simultaneous confidence 1 − α).",
+        "gamesHowell": "Applies to the family of all pairwise comparisons (simultaneous confidence 1 − α).",
+        "dunnett": "Applies to the family of comparisons of each treatment with the control (simultaneous confidence 1 − α).",
+        "bonferroni": "Applies to the family of all pairwise comparisons, with the Bonferroni adjustment.",
+        "holm": "Applies to the family of all pairwise comparisons, with the Holm adjustment.",
+        "kruskalDunn": "Applies to the global test and to the family of Dunn pairwise comparisons.",
+        "factorial": "Applies to the ANOVA and to the family of comparisons of each effect."
+      }
     },
     "design": {
       "title": "Analysis: two-level design",
@@ -572,7 +590,10 @@
       "done": "already done",
       "new": "new",
       "apply": "Use this design in the data",
-      "applied": "{{count}} new runs went to the data grid; the analysis will be a response surface (choose the model terms in the result)."
+      "applied": "{{count}} new runs went to the data grid; the analysis will be a response surface (choose the model terms in the result).",
+      "excluded": "Left out of the optimal design: {{names}}. This version only handles numeric factors in the D/I-optimal design; {{count}} categorical factor(s) are not in the matrix and their columns stay empty.",
+      "confirmEmpty": "These columns will be empty in the data grid: {{names}}. You will have to fill them in before analyzing. Use the design anyway?",
+      "appliedEmpty": "Fill in the columns that were left empty in the grid: {{names}}."
     },
     "blocks": {
       "levels": "Factor levels",
@@ -760,7 +781,7 @@
       "needTwoLevels": "Needs a categorical factor with exactly two levels in the data.",
       "factor": "Factor with the two conditions",
       "run": "Compare pairs",
-      "noPairs": "No unit has both conditions with a response. Enter the experimental unit of each row.",
+      "noPairs": "No unit has both conditions with a response. Check the “Experimental unit” chosen above and that each unit was measured in both conditions.",
       "incomplete": "Units left out because they have only one of the conditions: {{units}}.",
       "duplicated": "Units left out because they have more than one observation at the same level: {{units}}.",
       "withoutUnit": "{{count}} row(s) without a unit were ignored.",
@@ -788,6 +809,14 @@
       "varianceResidual": "residual variance",
       "boundary": "The between-unit variance is zero (boundary): the model is equivalent to one without the random effect and the degrees of freedom are the residual ones.",
       "note": "REML estimation with compound symmetry (all measures of a unit share the same correlation). AR(1) and unstructured covariances are not available yet."
+    },
+    "unit": {
+      "label": "Experimental unit",
+      "grid": "“Unit” column of the data grid",
+      "factor": "Factor “{{name}}”",
+      "help": "The individual, batch or plot measured more than once. Choose a factor if the unit is already in it.",
+      "summary": "{{complete}} unit(s) with both conditions form a pair; {{incomplete}} incomplete and {{duplicated}} with a repeat in the same level are left out.",
+      "sameAsPair": "The experimental unit cannot be the same factor that defines the two conditions."
     }
   },
   "saturation": {

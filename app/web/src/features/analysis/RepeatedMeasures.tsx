@@ -2,7 +2,7 @@
 // linear misto com intercepto aleatório por unidade experimental (REML, Satterthwaite). Os dois usam
 // a coluna «Unidade» da grade de dados. Os resultados são calculados ao pedir e **não são
 // guardados no projeto**.
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
@@ -20,7 +20,28 @@ export function RepeatedMeasures({ language }: { language: Language }) {
   const state = useProject();
   const dispatch = useProjectDispatch();
   const { client } = useEngine();
-  const { dataset } = buildDataset(state);
+  const { dataset: gridDataset } = buildDataset(state);
+  // Unidade experimental (UX25): a coluna «Unidade» da grade (padrão) ou um fator categórico usado
+  // como identificador da unidade, sem copiar valores para a coluna.
+  const [unitSource, setUnitSource] = useState("");
+  const unitFactor = state.factors.findIndex((f) => f.id === unitSource);
+  const dataset = useMemo(
+    () =>
+      unitFactor < 0
+        ? gridDataset
+        : {
+            ...gridDataset,
+            observations: gridDataset.observations.map((o) => {
+              const value = o.factors[unitFactor];
+              const id =
+                typeof value === "string"
+                  ? value.replace(/[^A-Za-z0-9_.:-]/g, "_").slice(0, 64)
+                  : "";
+              return { ...o, unitId: id === "" ? null : id };
+            }),
+          },
+    [gridDataset, unitFactor],
+  );
   const responses = state.responses.filter((r) => r.name.trim() !== "");
   const [responseId, setResponseId] = useState(state.analysis.responseId ?? responses[0]?.id ?? "");
   const twoLevel = state.factors.flatMap((f, i) =>
@@ -42,14 +63,30 @@ export function RepeatedMeasures({ language }: { language: Language }) {
   const fmt = (v: number | null, digits = 5) =>
     v === null ? "—" : formatSignificant(v, language, digits);
   const fmtP = (v: number | null) => (v === null ? "—" : formatP(v, language));
-  const unitsFilled = state.rows.some((r) => r.unitId.trim() !== "");
   const responseIndex = state.responses.findIndex((r) => r.id === responseId);
+  const unitsFilled =
+    unitFactor >= 0
+      ? dataset.observations.some((o) => o.unitId !== null)
+      : state.rows.some((r) => r.unitId.trim() !== "");
+  const unitCandidates = state.factors.filter(
+    (f) => f.kind === "categorical" && f.name.trim() !== "",
+  );
+  const pairPreview = (() => {
+    const factor = twoLevel.find((f) => f.id === pairFactor);
+    if (!factor || responseIndex < 0 || !unitsFilled) return null;
+    return formPairs(dataset, factor.index, responseIndex);
+  })();
 
   const runPaired = async () => {
     const factor = twoLevel.find((f) => f.id === pairFactor);
     if (!factor || responseIndex < 0) return;
-    const pairs = formPairs(dataset, factor.index, responseIndex);
     setMixed(null);
+    if (unitSource === factor.id) {
+      setPaired(null);
+      setProblems([t("repeated.unit.sameAsPair")]);
+      return;
+    }
+    const pairs = formPairs(dataset, factor.index, responseIndex);
     if (!pairs || pairs.units.length < 2) {
       setPaired(null);
       setProblems([t("repeated.paired.noPairs")]);
@@ -93,7 +130,10 @@ export function RepeatedMeasures({ language }: { language: Language }) {
 
   const runMixed = async () => {
     if (responseIndex < 0) return;
-    const terms: TermSpec[] = chosenFixed.map((id) => ({ type: "main", factorId: id }));
+    // O fator que identifica a unidade não é efeito fixo: ele define o efeito aleatório.
+    const terms: TermSpec[] = chosenFixed
+      .filter((id) => id !== unitSource)
+      .map((id) => ({ type: "main", factorId: id }));
     setPaired(null);
     setBusy(true);
     setProblems([]);
@@ -136,7 +176,28 @@ export function RepeatedMeasures({ language }: { language: Language }) {
       {open && (
         <>
           <p className="muted">{t("repeated.intro")}</p>
-          {!unitsFilled && (
+          <label className="field" data-testid="repeated-unit-source">
+            <span>{t("repeated.unit.label")}</span>
+            <select value={unitSource} onChange={(e) => setUnitSource(e.target.value)}>
+              <option value="">{t("repeated.unit.grid")}</option>
+              {unitCandidates.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {t("repeated.unit.factor", { name: f.name })}
+                </option>
+              ))}
+            </select>
+            <small className="muted">{t("repeated.unit.help")}</small>
+          </label>
+          {pairPreview && (
+            <p className="muted small" role="status" data-testid="repeated-unit-summary">
+              {t("repeated.unit.summary", {
+                complete: pairPreview.units.length,
+                incomplete: pairPreview.incomplete.length,
+                duplicated: pairPreview.duplicated.length,
+              })}
+            </p>
+          )}
+          {!unitsFilled && unitSource === "" && (
             <div role="status" className="muted" data-testid="repeated-need-units">
               <p>{t("repeated.needUnits")}</p>
               <button

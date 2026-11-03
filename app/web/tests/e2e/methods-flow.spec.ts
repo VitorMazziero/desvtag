@@ -387,6 +387,25 @@ test("calculadora de potência: tamanho de amostra de duas amostras igual ao Sci
   await page.getByLabel("Tamanho da amostra").fill("8");
   await page.getByRole("button", { name: "Calcular" }).click();
   await expect(page.getByTestId("power-summary")).toContainText("8 por grupo");
+
+  // UX44: mudar uma entrada deixa o resultado marcado como desatualizado; α inválido é recusado
+  // junto do campo, sem chamar o motor e sem «erro desconhecido».
+  await expect(page.getByTestId("power-stale")).toHaveCount(0);
+  await page.getByLabel("Tamanho da amostra").fill("9");
+  await expect(page.getByTestId("power-stale")).toBeVisible();
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(page.getByTestId("power-stale")).toHaveCount(0);
+  await expect(page.getByTestId("power-summary")).toContainText("9 por grupo");
+  await page.getByLabel("Nível de significância (α)").fill("2");
+  await page.getByRole("button", { name: "Calcular" }).click();
+  await expect(
+    page.getByText("O nível de significância (α) precisa estar entre 0 e 1."),
+  ).toBeVisible();
+  await expect(page.getByLabel("Nível de significância (α)")).toHaveAttribute(
+    "aria-invalid",
+    "true",
+  );
+  await expect(page.getByText(/Erro desconhecido/i)).toHaveCount(0);
 });
 
 test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico", async ({
@@ -424,6 +443,13 @@ test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico
   expect(vmax).toBeLessThan(3.3);
   await expect(page.getByTestId("saturation-stats")).toContainText("R²");
   await expect(page.getByTestId("saturation-chart")).toBeVisible();
+
+  // UX42: trocar o modelo não pode deixar o resultado de Monod passar por ajuste de Hill.
+  await expect(page.getByTestId("saturation-stale")).toHaveCount(0);
+  await page.getByTestId("saturation-model").selectOption("hill");
+  await expect(page.getByTestId("saturation-stale")).toBeVisible();
+  await panel.getByRole("button", { name: "Ajustar curva" }).click();
+  await expect(page.getByTestId("saturation-stale")).toHaveCount(0);
 });
 
 test("figura: letras manuais, anotação livre e aparência completa vão para o SVG exportado", async ({

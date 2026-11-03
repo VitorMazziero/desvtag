@@ -154,7 +154,25 @@
       "alphaHelp": "Vale para a família de todas as comparações de pares (confiança simultânea 1 − α).",
       "run": "Comparar tratamentos",
       "needFactor": "Cadastre um fator (por exemplo, a condição testada) para definir os grupos.",
-      "needLevels": "Informe os níveis do fator na aba de variáveis ou digite os dados: são necessários pelo menos dois grupos."
+      "needLevels": "Informe os níveis do fator na aba de variáveis ou digite os dados: são necessários pelo menos dois grupos.",
+      "introFor": {
+        "tukey": "Compara as médias dos níveis de um fator: ANOVA de um fator (delineamento inteiramente casualizado), comparações de Tukey (Tukey–Kramer se os grupos tiverem tamanhos diferentes) e letras de comparação. Cada linha deve ser uma réplica experimental independente.",
+        "gamesHowell": "Compara as médias dos níveis de um fator sem supor variâncias iguais: ANOVA de Welch e comparações de Games–Howell, com letras de comparação. Cada linha deve ser uma réplica experimental independente.",
+        "dunnett": "Compara cada tratamento com um controle (Dunnett), a partir da ANOVA de um fator. Escolha o nível de controle. Cada linha deve ser uma réplica experimental independente.",
+        "bonferroni": "Compara as médias dos níveis de um fator por testes t entre pares com ajuste de Bonferroni, a partir da ANOVA de um fator. Cada linha deve ser uma réplica experimental independente.",
+        "holm": "Compara as médias dos níveis de um fator por testes t entre pares com ajuste de Holm, a partir da ANOVA de um fator. Cada linha deve ser uma réplica experimental independente.",
+        "kruskalDunn": "Compara os grupos sem supor distribuição normal: Kruskal–Wallis e comparações de Dunn. Cada linha deve ser uma réplica experimental independente.",
+        "factorial": "Ajusta a ANOVA com vários fatores e/ou blocos, no modelo escolhido abaixo, e compara as médias de cada efeito com o ajuste de multiplicidade escolhido. Cada linha deve ser uma réplica experimental independente."
+      },
+      "alphaHelpFor": {
+        "tukey": "Vale para a família de todas as comparações de pares (confiança simultânea 1 − α).",
+        "gamesHowell": "Vale para a família de todas as comparações de pares (confiança simultânea 1 − α).",
+        "dunnett": "Vale para a família das comparações de cada tratamento com o controle (confiança simultânea 1 − α).",
+        "bonferroni": "Vale para a família de todas as comparações de pares, com o ajuste de Bonferroni.",
+        "holm": "Vale para a família de todas as comparações de pares, com o ajuste de Holm.",
+        "kruskalDunn": "Vale para o teste global e para a família de comparações de pares de Dunn.",
+        "factorial": "Vale para a ANOVA e para a família de comparações de cada efeito."
+      }
     },
     "design": {
       "title": "Análise: planejamento de dois níveis",
@@ -572,7 +590,10 @@
       "done": "já realizado",
       "new": "novo",
       "apply": "Usar este planejamento nos dados",
-      "applied": "{{count}} ensaios novos foram para a grade de dados; a análise será de superfície de resposta (escolha os termos do modelo no resultado)."
+      "applied": "{{count}} ensaios novos foram para a grade de dados; a análise será de superfície de resposta (escolha os termos do modelo no resultado).",
+      "excluded": "Fora do planejamento ótimo: {{names}}. Esta versão só trata fatores numéricos no ótimo D/I; {{count}} fator(es) categórico(s) não entram na matriz e suas colunas ficam vazias.",
+      "confirmEmpty": "Estas colunas ficarão vazias na grade de dados: {{names}}. Você terá de preenchê-las antes de analisar. Usar o planejamento mesmo assim?",
+      "appliedEmpty": "Preencha na grade as colunas que ficaram vazias: {{names}}."
     },
     "blocks": {
       "levels": "Níveis dos fatores",
@@ -760,7 +781,7 @@
       "needTwoLevels": "Precisa de um fator categórico com exatamente dois níveis nos dados.",
       "factor": "Fator com as duas condições",
       "run": "Comparar pares",
-      "noPairs": "Nenhuma unidade tem as duas condições com resposta. Informe a unidade experimental de cada linha.",
+      "noPairs": "Nenhuma unidade tem as duas condições com resposta. Confira a «Unidade experimental» escolhida acima e se cada unidade foi medida nas duas condições.",
       "incomplete": "Unidades fora do teste por terem só uma das condições: {{units}}.",
       "duplicated": "Unidades fora do teste por terem mais de uma observação no mesmo nível: {{units}}.",
       "withoutUnit": "{{count}} linha(s) sem unidade foram ignoradas.",
@@ -788,6 +809,14 @@
       "varianceResidual": "variância residual",
       "boundary": "A variância entre unidades é zero (fronteira): o modelo é equivalente ao sem efeito aleatório e os graus de liberdade são os do resíduo.",
       "note": "Estimação por REML com simetria composta (todas as medidas da mesma unidade com a mesma correlação). Estruturas AR(1) e não estruturada ainda não estão disponíveis."
+    },
+    "unit": {
+      "label": "Unidade experimental",
+      "grid": "Coluna «Unidade» da grade de dados",
+      "factor": "Fator «{{name}}»",
+      "help": "É o indivíduo, lote ou parcela medido mais de uma vez. Escolha um fator se a unidade já está nele.",
+      "summary": "{{complete}} unidade(s) com as duas condições formam par; {{incomplete}} incompleta(s) e {{duplicated}} com repetição no mesmo nível ficam de fora.",
+      "sameAsPair": "A unidade experimental não pode ser o mesmo fator que define as duas condições."
     }
   },
   "saturation": {

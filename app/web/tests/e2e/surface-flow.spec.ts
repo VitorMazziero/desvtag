@@ -144,9 +144,14 @@ test.describe("análise da superfície", () => {
     // Por padrão a equação usa os nomes das variáveis; a opção de exibição alterna para ŷ e x₁, x₂.
     await expect(page.getByTestId("equation-coded")).toContainText("Rendimento = ");
     await expect(page.getByTestId("equation-coded")).not.toContainText("ŷ");
+    // A equação codificada usa z₁, z₂… com a transformação (UX33), nunca os nomes dos fatores.
+    await expect(page.getByTestId("equation-coded")).toContainText("z₁");
+    await expect(page.getByTestId("equation-coded")).not.toContainText("Temperatura");
+    await expect(page.getByTestId("equation-transform")).toContainText("z₁ = (Temperatura −");
     await expect(page.getByTestId("equation-real")).toContainText("Temperatura²");
     await page.getByTestId("equation-style").selectOption("notation");
     await expect(page.getByTestId("equation-coded")).toContainText("ŷ = ");
+    await expect(page.getByTestId("equation-transform")).toContainText("z₁ = (x₁ −");
     await expect(page.getByTestId("equation-real")).toContainText("x₁²");
     await expect(page.getByTestId("equation-legend")).toContainText("ŷ = Rendimento");
     await expect(page.getByTestId("equation-legend")).toContainText("x₁ = Temperatura");

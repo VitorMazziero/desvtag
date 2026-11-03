@@ -340,11 +340,16 @@
       "coded": "Coded scale",
       "real": "Real units",
       "realUnavailable": "Unavailable: some terms are not estimable.",
-      "help": "Both equations give the same prediction; the coded one is the one fitted and the real one is the same equation rewritten in the factor values.",
+      "help": "Both equations give the same prediction. The coded one is the fitted equation and uses coded variables z (−1 to +1 over the experimental region): do not plug real values into it. The real one is the same equation rewritten in factor values.",
       "prefix": "ŷ",
       "style": "Show the equation with",
       "styleNames": "Variable names",
-      "styleNotation": "Notation (y, x₁, x₂…)"
+      "styleNotation": "Notation (y, x₁, x₂…)",
+      "codedWhere": "Where:",
+      "copyCoded": "Copy coded equation",
+      "copyReal": "Copy equation in real units",
+      "copied": "Copied.",
+      "copyFailed": "Could not copy; select the text and copy it manually."
     },
     "region": {
       "title": "Experimental region",
