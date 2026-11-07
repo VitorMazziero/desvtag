@@ -356,7 +356,9 @@ test("AU-B09/P05: real worker refuses unsupported degree and oversized resources
 test("AU-P05: unfinished 4096-row profile preserves fit, explicit warnings, themes, reports and stored result", async ({
   page,
 }, info) => {
-  test.setTimeout(240000);
+  // A matriz de temas e idiomas executa 12 varreduras axe e seis exportações.
+  // O ajuste científico conserva seu limite separado de 90 s abaixo.
+  test.setTimeout(360_000);
   const input = inputs.find((c: { name: string }) => c.name === "nonlinear-hill-4096");
   const tool = await setupProfile(page, { name: input.name, request: input.operation });
   await tool.getByRole("button", { name: "Ajustar curva", exact: true }).click();
