@@ -16,6 +16,9 @@ export type DriveErrorCode =
   | "quota" // armazenamento cheio
   | "rateLimit" // limite de requisições: tentar de novo mais tarde
   | "notFound" // arquivo inexistente, na lixeira ou fora do alcance do escopo
+  | "cancelled" // o usuário interrompeu a conexão
+  | "timeout" // o navegador não devolveu a autorização a tempo
+  | "unavailable" // esta compilação não pode conectar (sem credencial do cliente ou cofre)
   | "network" // sem rede ou resposta inválida
   | "unknown";
 

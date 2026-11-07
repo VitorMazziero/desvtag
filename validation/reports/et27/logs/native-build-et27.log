@@ -1,0 +1,10 @@
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+   Compiling optima-desktop v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\desktop\src-tauri)
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+   Compiling optima-engine v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-engine)
+warning: linker stdout: Criando biblioteca D:/Arquivos_de_Programas/Rust/target\release\deps\optima_desktop_lib.dll.lib e objeto D:/Arquivos_de_Programas/Rust/target\release\deps\optima_desktop_lib.dll.exp
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `optima-desktop` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 10m 10s

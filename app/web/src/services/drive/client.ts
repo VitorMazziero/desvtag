@@ -54,9 +54,19 @@ function toInfo(raw: Record<string, unknown>): DriveFileInfo {
 
 export class DriveClient {
   constructor(
-    private readonly auth: DriveAuth,
+    private readonly auth: Pick<DriveAuth, "getToken">,
     private readonly fetcher: Fetcher = (input, init) => fetch(input, init),
   ) {}
+
+  /** Identifica a conta e mantém o mesmo token durante a operação retomada. */
+  async accountSession(): Promise<{ accountId: string; client: DriveClient }> {
+    const token = await this.auth.getToken();
+    const client = new DriveClient({ getToken: async () => token }, this.fetcher);
+    const about = await client.json(`${API}/about?fields=user(permissionId)`);
+    const id = (about.user as { permissionId?: unknown } | null)?.permissionId;
+    if (typeof id !== "string" || id.trim() === "") throw new DriveError("network");
+    return { accountId: id, client };
+  }
 
   private async request(url: string, init: RequestInit = {}): Promise<Response> {
     const token = await this.auth.getToken();
@@ -120,16 +130,34 @@ export class DriveClient {
     return new Uint8Array(await response.arrayBuffer());
   }
 
+  async reserveFileId(): Promise<string> {
+    const response = await this.json(`${API}/files/generateIds?count=1&space=drive`);
+    const id = Array.isArray(response.ids) ? response.ids[0] : undefined;
+    if (typeof id !== "string" || !id) throw new DriveError("network");
+    return id;
+  }
+
+  async shareReadOnly(fileId: string, emailAddress: string): Promise<void> {
+    await this.request(
+      `${API}/files/${encodeURIComponent(fileId)}/permissions?sendNotificationEmail=false&supportsAllDrives=true`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "user", role: "reader", emailAddress }),
+      },
+    );
+  }
+
   /** Cria (`fileId` ausente) ou atualiza o conteúdo; devolve os metadados gravados. */
   async upload(
     name: string,
     bytes: Uint8Array,
-    options: { folderId?: string; fileId?: string },
+    options: { folderId?: string; fileId?: string; createId?: string },
   ): Promise<DriveFileInfo> {
     const boundary = `enzitag-${Math.random().toString(36).slice(2)}-${Date.now().toString(36)}`;
     const metadata = options.fileId
       ? { name }
-      : { name, parents: options.folderId ? [options.folderId] : undefined };
+      : { name, id: options.createId, parents: options.folderId ? [options.folderId] : undefined };
     const encoder = new TextEncoder();
     const head = encoder.encode(
       `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(metadata)}\r\n--${boundary}\r\nContent-Type: ${DRIVE_FILE_MIME}\r\n\r\n`,

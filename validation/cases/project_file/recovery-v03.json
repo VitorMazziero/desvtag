@@ -1,0 +1,2194 @@
+{
+  "version": 1,
+  "savedAt": "2026-11-06T22:29:05.492Z",
+  "workspace": {
+    "projectId": "p-initial",
+    "name": "Recuperação sintética v0.3",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "experiments": [
+      {
+        "id": "e1",
+        "name": "Experimento 1",
+        "path": "compare",
+        "factors": [
+          {
+            "id": "f1",
+            "name": "Condição",
+            "kind": "categorical",
+            "unit": "",
+            "levelsText": "controle; pH 5; pH 7; pH 9"
+          }
+        ],
+        "responses": [
+          {
+            "id": "r1",
+            "name": "Atividade",
+            "unit": "U/mL"
+          }
+        ],
+        "rows": [
+          {
+            "id": "o1",
+            "unitId": "",
+            "factors": [
+              "controle"
+            ],
+            "responses": [
+              "10,2"
+            ]
+          },
+          {
+            "id": "o2",
+            "unitId": "",
+            "factors": [
+              "controle"
+            ],
+            "responses": [
+              "9,8"
+            ]
+          },
+          {
+            "id": "o3",
+            "unitId": "",
+            "factors": [
+              "controle"
+            ],
+            "responses": [
+              "10,5"
+            ]
+          },
+          {
+            "id": "o4",
+            "unitId": "",
+            "factors": [
+              "controle"
+            ],
+            "responses": [
+              "10,1"
+            ]
+          },
+          {
+            "id": "o5",
+            "unitId": "",
+            "factors": [
+              "controle"
+            ],
+            "responses": [
+              "9,9"
+            ]
+          },
+          {
+            "id": "o6",
+            "unitId": "",
+            "factors": [
+              "pH 5"
+            ],
+            "responses": [
+              "12,4"
+            ]
+          },
+          {
+            "id": "o7",
+            "unitId": "",
+            "factors": [
+              "pH 5"
+            ],
+            "responses": [
+              "12,9"
+            ]
+          },
+          {
+            "id": "o8",
+            "unitId": "",
+            "factors": [
+              "pH 5"
+            ],
+            "responses": [
+              "12,1"
+            ]
+          },
+          {
+            "id": "o9",
+            "unitId": "",
+            "factors": [
+              "pH 5"
+            ],
+            "responses": [
+              "12,7"
+            ]
+          },
+          {
+            "id": "o10",
+            "unitId": "",
+            "factors": [
+              "pH 5"
+            ],
+            "responses": [
+              "12,5"
+            ]
+          },
+          {
+            "id": "o11",
+            "unitId": "",
+            "factors": [
+              "pH 7"
+            ],
+            "responses": [
+              "15,8"
+            ]
+          },
+          {
+            "id": "o12",
+            "unitId": "",
+            "factors": [
+              "pH 7"
+            ],
+            "responses": [
+              "16,3"
+            ]
+          },
+          {
+            "id": "o13",
+            "unitId": "",
+            "factors": [
+              "pH 7"
+            ],
+            "responses": [
+              "15,5"
+            ]
+          },
+          {
+            "id": "o14",
+            "unitId": "",
+            "factors": [
+              "pH 7"
+            ],
+            "responses": [
+              "16,1"
+            ]
+          },
+          {
+            "id": "o15",
+            "unitId": "",
+            "factors": [
+              "pH 7"
+            ],
+            "responses": [
+              "15,9"
+            ]
+          },
+          {
+            "id": "o16",
+            "unitId": "",
+            "factors": [
+              "pH 9"
+            ],
+            "responses": [
+              "12,8"
+            ]
+          },
+          {
+            "id": "o17",
+            "unitId": "",
+            "factors": [
+              "pH 9"
+            ],
+            "responses": [
+              "13,1"
+            ]
+          },
+          {
+            "id": "o18",
+            "unitId": "",
+            "factors": [
+              "pH 9"
+            ],
+            "responses": [
+              "12,6"
+            ]
+          },
+          {
+            "id": "o19",
+            "unitId": "",
+            "factors": [
+              "pH 9"
+            ],
+            "responses": [
+              "13,3"
+            ]
+          },
+          {
+            "id": "o20",
+            "unitId": "",
+            "factors": [
+              "pH 9"
+            ],
+            "responses": [
+              "12,9"
+            ]
+          }
+        ],
+        "analysis": {
+          "responseId": "r1",
+          "groupBy": [],
+          "factorId": "f1",
+          "alpha": 0.05,
+          "designTerms": null,
+          "responseModels": {},
+          "includeCurvature": true,
+          "surface": false,
+          "procedure": null,
+          "factorial": null
+        },
+        "design": null,
+        "crd": null,
+        "rcbd": null,
+        "mixed": null,
+        "mixture": null,
+        "mixtureModel": "quadratic",
+        "figureStyles": {},
+        "comments": [],
+        "origin": null,
+        "confirmation": null,
+        "optimization": {
+          "setup": null,
+          "result": null,
+          "signature": null
+        },
+        "result": {
+          "signature": "[\"oneWay\",{\"factors\":[{\"id\":\"f1\",\"name\":\"Condição\",\"kind\":\"categorical\",\"unit\":null,\"levels\":[\"controle\",\"pH 5\",\"pH 7\",\"pH 9\"]}],\"responses\":[{\"id\":\"r1\",\"name\":\"Atividade\",\"unit\":\"U/mL\"}],\"observations\":[{\"id\":\"o1\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[10.2]},{\"id\":\"o2\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[9.8]},{\"id\":\"o3\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[10.5]},{\"id\":\"o4\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[10.1]},{\"id\":\"o5\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[9.9]},{\"id\":\"o6\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.4]},{\"id\":\"o7\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.9]},{\"id\":\"o8\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.1]},{\"id\":\"o9\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.7]},{\"id\":\"o10\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.5]},{\"id\":\"o11\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[15.8]},{\"id\":\"o12\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[16.3]},{\"id\":\"o13\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[15.5]},{\"id\":\"o14\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[16.1]},{\"id\":\"o15\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[15.9]},{\"id\":\"o16\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[12.8]},{\"id\":\"o17\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[13.1]},{\"id\":\"o18\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[12.6]},{\"id\":\"o19\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[13.3]},{\"id\":\"o20\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[12.9]}]},\"r1\",\"f1\",0.05]",
+          "kind": "oneWay",
+          "result": {
+            "responseId": "r1",
+            "factorId": "f1",
+            "alpha": 0.05,
+            "groups": [
+              {
+                "label": "controle",
+                "n": 5,
+                "mean": {
+                  "status": "defined",
+                  "value": 10.1
+                },
+                "sd": {
+                  "status": "defined",
+                  "value": 0.2738612787525827
+                },
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.12247448713915875
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 9.826869308335256
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 10.373130691664743
+                },
+                "sdLower": {
+                  "status": "defined",
+                  "value": 9.826138721247418
+                },
+                "sdUpper": {
+                  "status": "defined",
+                  "value": 10.373861278752582
+                },
+                "seLower": {
+                  "status": "defined",
+                  "value": 9.977525512860842
+                },
+                "seUpper": {
+                  "status": "defined",
+                  "value": 10.222474487139158
+                },
+                "boxplot": {
+                  "min": 9.8,
+                  "q1": 9.9,
+                  "median": 10.1,
+                  "q3": 10.2,
+                  "max": 10.5,
+                  "whiskerLow": 9.8,
+                  "whiskerHigh": 10.5,
+                  "outliers": []
+                }
+              },
+              {
+                "label": "pH 5",
+                "n": 5,
+                "mean": {
+                  "status": "defined",
+                  "value": 12.52
+                },
+                "sd": {
+                  "status": "defined",
+                  "value": 0.3033150177620621
+                },
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.1356465996625054
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 12.246869308335256
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 12.793130691664743
+                },
+                "sdLower": {
+                  "status": "defined",
+                  "value": 12.216684982237938
+                },
+                "sdUpper": {
+                  "status": "defined",
+                  "value": 12.823315017762061
+                },
+                "seLower": {
+                  "status": "defined",
+                  "value": 12.384353400337494
+                },
+                "seUpper": {
+                  "status": "defined",
+                  "value": 12.655646599662505
+                },
+                "boxplot": {
+                  "min": 12.1,
+                  "q1": 12.4,
+                  "median": 12.5,
+                  "q3": 12.7,
+                  "max": 12.9,
+                  "whiskerLow": 12.1,
+                  "whiskerHigh": 12.9,
+                  "outliers": []
+                }
+              },
+              {
+                "label": "pH 7",
+                "n": 5,
+                "mean": {
+                  "status": "defined",
+                  "value": 15.920000000000002
+                },
+                "sd": {
+                  "status": "defined",
+                  "value": 0.3033150177620624
+                },
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.1356465996625055
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 15.646869308335258
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 16.193130691664745
+                },
+                "sdLower": {
+                  "status": "defined",
+                  "value": 15.61668498223794
+                },
+                "sdUpper": {
+                  "status": "defined",
+                  "value": 16.223315017762065
+                },
+                "seLower": {
+                  "status": "defined",
+                  "value": 15.784353400337496
+                },
+                "seUpper": {
+                  "status": "defined",
+                  "value": 16.055646599662506
+                },
+                "boxplot": {
+                  "min": 15.5,
+                  "q1": 15.8,
+                  "median": 15.9,
+                  "q3": 16.1,
+                  "max": 16.3,
+                  "whiskerLow": 15.5,
+                  "whiskerHigh": 16.3,
+                  "outliers": []
+                }
+              },
+              {
+                "label": "pH 9",
+                "n": 5,
+                "mean": {
+                  "status": "defined",
+                  "value": 12.940000000000001
+                },
+                "sd": {
+                  "status": "defined",
+                  "value": 0.2701851217221261
+                },
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.1208304597359458
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 12.666869308335258
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 13.213130691664745
+                },
+                "sdLower": {
+                  "status": "defined",
+                  "value": 12.669814878277876
+                },
+                "sdUpper": {
+                  "status": "defined",
+                  "value": 13.210185121722127
+                },
+                "seLower": {
+                  "status": "defined",
+                  "value": 12.819169540264056
+                },
+                "seUpper": {
+                  "status": "defined",
+                  "value": 13.060830459735946
+                },
+                "boxplot": {
+                  "min": 12.6,
+                  "q1": 12.8,
+                  "median": 12.9,
+                  "q3": 13.1,
+                  "max": 13.3,
+                  "whiskerLow": 12.6,
+                  "whiskerHigh": 13.3,
+                  "outliers": []
+                }
+              }
+            ],
+            "grandMean": {
+              "status": "defined",
+              "value": 12.870000000000001
+            },
+            "anova": {
+              "between": {
+                "df": 3,
+                "sumSquares": {
+                  "status": "defined",
+                  "value": 85.51400000000002
+                },
+                "meanSquare": {
+                  "status": "defined",
+                  "value": 28.504666666666676
+                }
+              },
+              "within": {
+                "df": 16,
+                "sumSquares": {
+                  "status": "defined",
+                  "value": 1.3280000000000007
+                },
+                "meanSquare": {
+                  "status": "defined",
+                  "value": 0.08300000000000005
+                }
+              },
+              "total": {
+                "df": 19,
+                "sumSquares": {
+                  "status": "defined",
+                  "value": 86.84200000000001
+                },
+                "meanSquare": {
+                  "status": "defined",
+                  "value": 4.570631578947369
+                }
+              },
+              "f": {
+                "status": "defined",
+                "value": 343.4297188755019
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 9.915658118584595e-15
+              }
+            },
+            "effectSizes": {
+              "etaSquared": {
+                "status": "defined",
+                "value": 0.984707860251952
+              },
+              "omegaSquared": {
+                "status": "defined",
+                "value": 0.9809030773655452
+              },
+              "cvPercent": {
+                "status": "defined",
+                "value": 2.2385175277215135
+              }
+            },
+            "tukey": {
+              "variant": "tukey",
+              "alpha": 0.05,
+              "groups": 4,
+              "comparisonsCount": 6,
+              "dfError": 16,
+              "criticalValue": {
+                "status": "defined",
+                "value": 4.046093060626199
+              },
+              "comparisons": [
+                {
+                  "groupA": 0,
+                  "groupB": 1,
+                  "difference": {
+                    "status": "defined",
+                    "value": -2.42
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1288409872672513
+                  },
+                  "qStatistic": {
+                    "status": "defined",
+                    "value": 18.78284272209325
+                  },
+                  "pAdjusted": {
+                    "status": "defined",
+                    "value": 2.61677024493423e-09
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": -2.941302624506254
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": -1.898697375493746
+                  },
+                  "significant": true
+                },
+                {
+                  "groupA": 0,
+                  "groupB": 2,
+                  "difference": {
+                    "status": "defined",
+                    "value": -5.820000000000002
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1288409872672513
+                  },
+                  "qStatistic": {
+                    "status": "defined",
+                    "value": 45.171960596108576
+                  },
+                  "pAdjusted": {
+                    "status": "defined",
+                    "value": 5.551115123125783e-15
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": -6.341302624506256
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": -5.298697375493748
+                  },
+                  "significant": true
+                },
+                {
+                  "groupA": 0,
+                  "groupB": 3,
+                  "difference": {
+                    "status": "defined",
+                    "value": -2.8400000000000016
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1288409872672513
+                  },
+                  "qStatistic": {
+                    "status": "defined",
+                    "value": 22.04267493005986
+                  },
+                  "pAdjusted": {
+                    "status": "defined",
+                    "value": 2.413910182852419e-10
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": -3.361302624506256
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": -2.3186973754937474
+                  },
+                  "significant": true
+                },
+                {
+                  "groupA": 1,
+                  "groupB": 2,
+                  "difference": {
+                    "status": "defined",
+                    "value": -3.400000000000002
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1288409872672513
+                  },
+                  "qStatistic": {
+                    "status": "defined",
+                    "value": 26.389117874015326
+                  },
+                  "pAdjusted": {
+                    "status": "defined",
+                    "value": 1.5673351505540722e-11
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": -3.9213026245062563
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": -2.878697375493748
+                  },
+                  "significant": true
+                },
+                {
+                  "groupA": 1,
+                  "groupB": 3,
+                  "difference": {
+                    "status": "defined",
+                    "value": -0.4200000000000017
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1288409872672513
+                  },
+                  "qStatistic": {
+                    "status": "defined",
+                    "value": 3.2598322079666104
+                  },
+                  "pAdjusted": {
+                    "status": "defined",
+                    "value": 0.13836920546969667
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": -0.9413026245062557
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 0.10130262450625227
+                  },
+                  "significant": false
+                },
+                {
+                  "groupA": 2,
+                  "groupB": 3,
+                  "difference": {
+                    "status": "defined",
+                    "value": 2.9800000000000004
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1288409872672513
+                  },
+                  "qStatistic": {
+                    "status": "defined",
+                    "value": 23.129285666048716
+                  },
+                  "pAdjusted": {
+                    "status": "defined",
+                    "value": 1.1677470102000598e-10
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 2.4586973754937462
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 3.5013026245062546
+                  },
+                  "significant": true
+                }
+              ]
+            },
+            "letters": {
+              "letters": [
+                "c",
+                "b",
+                "a",
+                "b"
+              ],
+              "memberships": [
+                [
+                  2
+                ],
+                [
+                  1
+                ],
+                [
+                  0
+                ],
+                [
+                  1
+                ]
+              ],
+              "nLetters": 3,
+              "hasUnknownPairs": false
+            },
+            "diagnostics": {
+              "residuals": [
+                {
+                  "observationId": "o1",
+                  "group": 0,
+                  "fitted": 10.1,
+                  "residual": 0.09999999999999964,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 0.38807526285316496
+                  }
+                },
+                {
+                  "observationId": "o2",
+                  "group": 0,
+                  "fitted": 10.1,
+                  "residual": -0.29999999999999893,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -1.1642257885594949
+                  }
+                },
+                {
+                  "observationId": "o3",
+                  "group": 0,
+                  "fitted": 10.1,
+                  "residual": 0.40000000000000036,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 1.5523010514126667
+                  }
+                },
+                {
+                  "observationId": "o4",
+                  "group": 0,
+                  "fitted": 10.1,
+                  "residual": 0,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 0
+                  }
+                },
+                {
+                  "observationId": "o5",
+                  "group": 0,
+                  "fitted": 10.1,
+                  "residual": -0.1999999999999993,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.7761505257063299
+                  }
+                },
+                {
+                  "observationId": "o6",
+                  "group": 1,
+                  "fitted": 12.52,
+                  "residual": -0.11999999999999922,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.4656903154237965
+                  }
+                },
+                {
+                  "observationId": "o7",
+                  "group": 1,
+                  "fitted": 12.52,
+                  "residual": 0.3800000000000008,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 1.474685998842035
+                  }
+                },
+                {
+                  "observationId": "o8",
+                  "group": 1,
+                  "fitted": 12.52,
+                  "residual": -0.41999999999999993,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -1.6299161039832983
+                  }
+                },
+                {
+                  "observationId": "o9",
+                  "group": 1,
+                  "fitted": 12.52,
+                  "residual": 0.17999999999999972,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 0.6985354731356983
+                  }
+                },
+                {
+                  "observationId": "o10",
+                  "group": 1,
+                  "fitted": 12.52,
+                  "residual": -0.019999999999999574,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.0776150525706316
+                  }
+                },
+                {
+                  "observationId": "o11",
+                  "group": 2,
+                  "fitted": 15.920000000000002,
+                  "residual": -0.120000000000001,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.46569031542380346
+                  }
+                },
+                {
+                  "observationId": "o12",
+                  "group": 2,
+                  "fitted": 15.920000000000002,
+                  "residual": 0.379999999999999,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 1.4746859988420282
+                  }
+                },
+                {
+                  "observationId": "o13",
+                  "group": 2,
+                  "fitted": 15.920000000000002,
+                  "residual": -0.4200000000000017,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -1.6299161039833052
+                  }
+                },
+                {
+                  "observationId": "o14",
+                  "group": 2,
+                  "fitted": 15.920000000000002,
+                  "residual": 0.17999999999999972,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 0.6985354731356983
+                  }
+                },
+                {
+                  "observationId": "o15",
+                  "group": 2,
+                  "fitted": 15.920000000000002,
+                  "residual": -0.02000000000000135,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.0776150525706385
+                  }
+                },
+                {
+                  "observationId": "o16",
+                  "group": 3,
+                  "fitted": 12.940000000000001,
+                  "residual": -0.14000000000000057,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.5433053679944351
+                  }
+                },
+                {
+                  "observationId": "o17",
+                  "group": 3,
+                  "fitted": 12.940000000000001,
+                  "residual": 0.15999999999999837,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 0.6209204205650598
+                  }
+                },
+                {
+                  "observationId": "o18",
+                  "group": 3,
+                  "fitted": 12.940000000000001,
+                  "residual": -0.34000000000000163,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -1.3194558937007719
+                  }
+                },
+                {
+                  "observationId": "o19",
+                  "group": 3,
+                  "fitted": 12.940000000000001,
+                  "residual": 0.35999999999999943,
+                  "standardized": {
+                    "status": "defined",
+                    "value": 1.3970709462713966
+                  }
+                },
+                {
+                  "observationId": "o20",
+                  "group": 3,
+                  "fitted": 12.940000000000001,
+                  "residual": -0.040000000000000924,
+                  "standardized": {
+                    "status": "defined",
+                    "value": -0.1552301051412701
+                  }
+                }
+              ],
+              "qq": [
+                {
+                  "theoretical": -1.8682416548639285,
+                  "sample": -1.6299161039833052
+                },
+                {
+                  "theoretical": -1.403412635851402,
+                  "sample": -1.6299161039832983
+                },
+                {
+                  "theoretical": -1.1281436452787637,
+                  "sample": -1.3194558937007719
+                },
+                {
+                  "theoretical": -0.9191355220462103,
+                  "sample": -1.1642257885594949
+                },
+                {
+                  "theoretical": -0.744142742220168,
+                  "sample": -0.7761505257063299
+                },
+                {
+                  "theoretical": -0.5894557978497786,
+                  "sample": -0.5433053679944351
+                },
+                {
+                  "theoretical": -0.44776751848294877,
+                  "sample": -0.46569031542380346
+                },
+                {
+                  "theoretical": -0.3145722918388852,
+                  "sample": -0.4656903154237965
+                },
+                {
+                  "theoretical": -0.18675612106373715,
+                  "sample": -0.1552301051412701
+                },
+                {
+                  "theoretical": -0.06193162345531731,
+                  "sample": -0.0776150525706385
+                },
+                {
+                  "theoretical": 0.06193162345531731,
+                  "sample": -0.0776150525706316
+                },
+                {
+                  "theoretical": 0.18675612106373715,
+                  "sample": 0
+                },
+                {
+                  "theoretical": 0.3145722918388852,
+                  "sample": 0.38807526285316496
+                },
+                {
+                  "theoretical": 0.44776751848294877,
+                  "sample": 0.6209204205650598
+                },
+                {
+                  "theoretical": 0.5894557978497786,
+                  "sample": 0.6985354731356983
+                },
+                {
+                  "theoretical": 0.7441427422201677,
+                  "sample": 0.6985354731356983
+                },
+                {
+                  "theoretical": 0.9191355220462102,
+                  "sample": 1.3970709462713966
+                },
+                {
+                  "theoretical": 1.1281436452787637,
+                  "sample": 1.4746859988420282
+                },
+                {
+                  "theoretical": 1.4034126358514019,
+                  "sample": 1.474685998842035
+                },
+                {
+                  "theoretical": 1.868241654863928,
+                  "sample": 1.5523010514126667
+                }
+              ],
+              "brownForsythe": {
+                "f": {
+                  "status": "defined",
+                  "value": 0.023391812865497682
+                },
+                "dfBetween": 3,
+                "dfWithin": 16,
+                "pValue": {
+                  "status": "defined",
+                  "value": 0.9949553695315291
+                }
+              },
+              "sdRatio": {
+                "status": "defined",
+                "value": 1.1226192464957747
+              }
+            },
+            "excluded": [],
+            "issues": [],
+            "facts": [
+              {
+                "key": "anova.significant",
+                "params": {
+                  "alpha": "0.05",
+                  "df1": "3",
+                  "df2": "16",
+                  "f": "343.4297188755019",
+                  "p": "0.000000000000009915658118584595"
+                }
+              },
+              {
+                "key": "tukey.pairs_different",
+                "params": {
+                  "alpha": "0.05",
+                  "count": "5",
+                  "total": "6"
+                }
+              },
+              {
+                "key": "letters.meaning",
+                "params": {}
+              },
+              {
+                "key": "diagnostics.homogeneity_not_detected",
+                "params": {
+                  "p": "0.9949553695315291"
+                }
+              },
+              {
+                "key": "diagnostics.normality_visual",
+                "params": {}
+              },
+              {
+                "key": "diagnostics.independence_not_assessed",
+                "params": {}
+              }
+            ],
+            "provenance": {
+              "methodId": "one_way_comparison",
+              "methodVersion": 1,
+              "engineVersion": "0.1.0"
+            }
+          }
+        },
+        "showUnitColumn": false,
+        "counters": {
+          "factor": 1,
+          "response": 1,
+          "row": 20,
+          "revision": 2,
+          "analysis": 1
+        },
+        "revisions": [
+          {
+            "id": "v1",
+            "parent": null,
+            "createdAt": "1970-01-01T00:00:00.000Z",
+            "reason": "created",
+            "data": {
+              "factors": [],
+              "responses": [],
+              "rows": []
+            },
+            "contentHash": "85195020d52211eadbe7771b9cc8d8afe00bf870e82737106e519599bc66af6b"
+          },
+          {
+            "id": "v2",
+            "parent": "v1",
+            "createdAt": "2026-11-01T17:10:55.242Z",
+            "reason": "analysis",
+            "data": {
+              "factors": [
+                {
+                  "id": "f1",
+                  "name": "Condição",
+                  "kind": "categorical",
+                  "unit": "",
+                  "levelsText": "controle; pH 5; pH 7; pH 9"
+                }
+              ],
+              "responses": [
+                {
+                  "id": "r1",
+                  "name": "Atividade",
+                  "unit": "U/mL"
+                }
+              ],
+              "rows": [
+                {
+                  "id": "o1",
+                  "unitId": "",
+                  "factors": [
+                    "controle"
+                  ],
+                  "responses": [
+                    "10,2"
+                  ]
+                },
+                {
+                  "id": "o2",
+                  "unitId": "",
+                  "factors": [
+                    "controle"
+                  ],
+                  "responses": [
+                    "9,8"
+                  ]
+                },
+                {
+                  "id": "o3",
+                  "unitId": "",
+                  "factors": [
+                    "controle"
+                  ],
+                  "responses": [
+                    "10,5"
+                  ]
+                },
+                {
+                  "id": "o4",
+                  "unitId": "",
+                  "factors": [
+                    "controle"
+                  ],
+                  "responses": [
+                    "10,1"
+                  ]
+                },
+                {
+                  "id": "o5",
+                  "unitId": "",
+                  "factors": [
+                    "controle"
+                  ],
+                  "responses": [
+                    "9,9"
+                  ]
+                },
+                {
+                  "id": "o6",
+                  "unitId": "",
+                  "factors": [
+                    "pH 5"
+                  ],
+                  "responses": [
+                    "12,4"
+                  ]
+                },
+                {
+                  "id": "o7",
+                  "unitId": "",
+                  "factors": [
+                    "pH 5"
+                  ],
+                  "responses": [
+                    "12,9"
+                  ]
+                },
+                {
+                  "id": "o8",
+                  "unitId": "",
+                  "factors": [
+                    "pH 5"
+                  ],
+                  "responses": [
+                    "12,1"
+                  ]
+                },
+                {
+                  "id": "o9",
+                  "unitId": "",
+                  "factors": [
+                    "pH 5"
+                  ],
+                  "responses": [
+                    "12,7"
+                  ]
+                },
+                {
+                  "id": "o10",
+                  "unitId": "",
+                  "factors": [
+                    "pH 5"
+                  ],
+                  "responses": [
+                    "12,5"
+                  ]
+                },
+                {
+                  "id": "o11",
+                  "unitId": "",
+                  "factors": [
+                    "pH 7"
+                  ],
+                  "responses": [
+                    "15,8"
+                  ]
+                },
+                {
+                  "id": "o12",
+                  "unitId": "",
+                  "factors": [
+                    "pH 7"
+                  ],
+                  "responses": [
+                    "16,3"
+                  ]
+                },
+                {
+                  "id": "o13",
+                  "unitId": "",
+                  "factors": [
+                    "pH 7"
+                  ],
+                  "responses": [
+                    "15,5"
+                  ]
+                },
+                {
+                  "id": "o14",
+                  "unitId": "",
+                  "factors": [
+                    "pH 7"
+                  ],
+                  "responses": [
+                    "16,1"
+                  ]
+                },
+                {
+                  "id": "o15",
+                  "unitId": "",
+                  "factors": [
+                    "pH 7"
+                  ],
+                  "responses": [
+                    "15,9"
+                  ]
+                },
+                {
+                  "id": "o16",
+                  "unitId": "",
+                  "factors": [
+                    "pH 9"
+                  ],
+                  "responses": [
+                    "12,8"
+                  ]
+                },
+                {
+                  "id": "o17",
+                  "unitId": "",
+                  "factors": [
+                    "pH 9"
+                  ],
+                  "responses": [
+                    "13,1"
+                  ]
+                },
+                {
+                  "id": "o18",
+                  "unitId": "",
+                  "factors": [
+                    "pH 9"
+                  ],
+                  "responses": [
+                    "12,6"
+                  ]
+                },
+                {
+                  "id": "o19",
+                  "unitId": "",
+                  "factors": [
+                    "pH 9"
+                  ],
+                  "responses": [
+                    "13,3"
+                  ]
+                },
+                {
+                  "id": "o20",
+                  "unitId": "",
+                  "factors": [
+                    "pH 9"
+                  ],
+                  "responses": [
+                    "12,9"
+                  ]
+                }
+              ]
+            },
+            "contentHash": "60db5b695eb1eef4f9fc4a09b5e4b66c4a8926773848638f94f4a5a975dad77f"
+          }
+        ],
+        "analyses": [
+          {
+            "id": "a1",
+            "createdAt": "2026-11-01T17:10:55.242Z",
+            "revisionId": "v2",
+            "signature": "[\"oneWay\",{\"factors\":[{\"id\":\"f1\",\"name\":\"Condição\",\"kind\":\"categorical\",\"unit\":null,\"levels\":[\"controle\",\"pH 5\",\"pH 7\",\"pH 9\"]}],\"responses\":[{\"id\":\"r1\",\"name\":\"Atividade\",\"unit\":\"U/mL\"}],\"observations\":[{\"id\":\"o1\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[10.2]},{\"id\":\"o2\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[9.8]},{\"id\":\"o3\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[10.5]},{\"id\":\"o4\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[10.1]},{\"id\":\"o5\",\"unitId\":null,\"factors\":[\"controle\"],\"responses\":[9.9]},{\"id\":\"o6\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.4]},{\"id\":\"o7\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.9]},{\"id\":\"o8\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.1]},{\"id\":\"o9\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.7]},{\"id\":\"o10\",\"unitId\":null,\"factors\":[\"pH 5\"],\"responses\":[12.5]},{\"id\":\"o11\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[15.8]},{\"id\":\"o12\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[16.3]},{\"id\":\"o13\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[15.5]},{\"id\":\"o14\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[16.1]},{\"id\":\"o15\",\"unitId\":null,\"factors\":[\"pH 7\"],\"responses\":[15.9]},{\"id\":\"o16\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[12.8]},{\"id\":\"o17\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[13.1]},{\"id\":\"o18\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[12.6]},{\"id\":\"o19\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[13.3]},{\"id\":\"o20\",\"unitId\":null,\"factors\":[\"pH 9\"],\"responses\":[12.9]}]},\"r1\",\"f1\",0.05]",
+            "methodId": "one_way_comparison",
+            "methodVersion": 1,
+            "engineVersion": "0.1.0",
+            "options": {
+              "responseId": "r1",
+              "groupBy": [],
+              "factorId": "f1",
+              "alpha": 0.05
+            },
+            "result": {
+              "type": "oneWayComparison",
+              "responseId": "r1",
+              "factorId": "f1",
+              "alpha": 0.05,
+              "groups": [
+                {
+                  "label": "controle",
+                  "n": 5,
+                  "mean": {
+                    "status": "defined",
+                    "value": 10.1
+                  },
+                  "sd": {
+                    "status": "defined",
+                    "value": 0.2738612787525827
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.12247448713915875
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 9.826869308335256
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 10.373130691664743
+                  },
+                  "sdLower": {
+                    "status": "defined",
+                    "value": 9.826138721247418
+                  },
+                  "sdUpper": {
+                    "status": "defined",
+                    "value": 10.373861278752582
+                  },
+                  "seLower": {
+                    "status": "defined",
+                    "value": 9.977525512860842
+                  },
+                  "seUpper": {
+                    "status": "defined",
+                    "value": 10.222474487139158
+                  },
+                  "boxplot": {
+                    "min": 9.8,
+                    "q1": 9.9,
+                    "median": 10.1,
+                    "q3": 10.2,
+                    "max": 10.5,
+                    "whiskerLow": 9.8,
+                    "whiskerHigh": 10.5,
+                    "outliers": []
+                  }
+                },
+                {
+                  "label": "pH 5",
+                  "n": 5,
+                  "mean": {
+                    "status": "defined",
+                    "value": 12.52
+                  },
+                  "sd": {
+                    "status": "defined",
+                    "value": 0.3033150177620621
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1356465996625054
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 12.246869308335256
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 12.793130691664743
+                  },
+                  "sdLower": {
+                    "status": "defined",
+                    "value": 12.216684982237938
+                  },
+                  "sdUpper": {
+                    "status": "defined",
+                    "value": 12.823315017762061
+                  },
+                  "seLower": {
+                    "status": "defined",
+                    "value": 12.384353400337494
+                  },
+                  "seUpper": {
+                    "status": "defined",
+                    "value": 12.655646599662505
+                  },
+                  "boxplot": {
+                    "min": 12.1,
+                    "q1": 12.4,
+                    "median": 12.5,
+                    "q3": 12.7,
+                    "max": 12.9,
+                    "whiskerLow": 12.1,
+                    "whiskerHigh": 12.9,
+                    "outliers": []
+                  }
+                },
+                {
+                  "label": "pH 7",
+                  "n": 5,
+                  "mean": {
+                    "status": "defined",
+                    "value": 15.920000000000002
+                  },
+                  "sd": {
+                    "status": "defined",
+                    "value": 0.3033150177620624
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1356465996625055
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 15.646869308335258
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 16.193130691664745
+                  },
+                  "sdLower": {
+                    "status": "defined",
+                    "value": 15.61668498223794
+                  },
+                  "sdUpper": {
+                    "status": "defined",
+                    "value": 16.223315017762065
+                  },
+                  "seLower": {
+                    "status": "defined",
+                    "value": 15.784353400337496
+                  },
+                  "seUpper": {
+                    "status": "defined",
+                    "value": 16.055646599662506
+                  },
+                  "boxplot": {
+                    "min": 15.5,
+                    "q1": 15.8,
+                    "median": 15.9,
+                    "q3": 16.1,
+                    "max": 16.3,
+                    "whiskerLow": 15.5,
+                    "whiskerHigh": 16.3,
+                    "outliers": []
+                  }
+                },
+                {
+                  "label": "pH 9",
+                  "n": 5,
+                  "mean": {
+                    "status": "defined",
+                    "value": 12.940000000000001
+                  },
+                  "sd": {
+                    "status": "defined",
+                    "value": 0.2701851217221261
+                  },
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.1208304597359458
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 12.666869308335258
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 13.213130691664745
+                  },
+                  "sdLower": {
+                    "status": "defined",
+                    "value": 12.669814878277876
+                  },
+                  "sdUpper": {
+                    "status": "defined",
+                    "value": 13.210185121722127
+                  },
+                  "seLower": {
+                    "status": "defined",
+                    "value": 12.819169540264056
+                  },
+                  "seUpper": {
+                    "status": "defined",
+                    "value": 13.060830459735946
+                  },
+                  "boxplot": {
+                    "min": 12.6,
+                    "q1": 12.8,
+                    "median": 12.9,
+                    "q3": 13.1,
+                    "max": 13.3,
+                    "whiskerLow": 12.6,
+                    "whiskerHigh": 13.3,
+                    "outliers": []
+                  }
+                }
+              ],
+              "grandMean": {
+                "status": "defined",
+                "value": 12.870000000000001
+              },
+              "anova": {
+                "between": {
+                  "df": 3,
+                  "sumSquares": {
+                    "status": "defined",
+                    "value": 85.51400000000002
+                  },
+                  "meanSquare": {
+                    "status": "defined",
+                    "value": 28.504666666666676
+                  }
+                },
+                "within": {
+                  "df": 16,
+                  "sumSquares": {
+                    "status": "defined",
+                    "value": 1.3280000000000007
+                  },
+                  "meanSquare": {
+                    "status": "defined",
+                    "value": 0.08300000000000005
+                  }
+                },
+                "total": {
+                  "df": 19,
+                  "sumSquares": {
+                    "status": "defined",
+                    "value": 86.84200000000001
+                  },
+                  "meanSquare": {
+                    "status": "defined",
+                    "value": 4.570631578947369
+                  }
+                },
+                "f": {
+                  "status": "defined",
+                  "value": 343.4297188755019
+                },
+                "pValue": {
+                  "status": "defined",
+                  "value": 9.915658118584595e-15
+                }
+              },
+              "effectSizes": {
+                "etaSquared": {
+                  "status": "defined",
+                  "value": 0.984707860251952
+                },
+                "omegaSquared": {
+                  "status": "defined",
+                  "value": 0.9809030773655452
+                },
+                "cvPercent": {
+                  "status": "defined",
+                  "value": 2.2385175277215135
+                }
+              },
+              "tukey": {
+                "variant": "tukey",
+                "alpha": 0.05,
+                "groups": 4,
+                "comparisonsCount": 6,
+                "dfError": 16,
+                "criticalValue": {
+                  "status": "defined",
+                  "value": 4.046093060626199
+                },
+                "comparisons": [
+                  {
+                    "groupA": 0,
+                    "groupB": 1,
+                    "difference": {
+                      "status": "defined",
+                      "value": -2.42
+                    },
+                    "stdError": {
+                      "status": "defined",
+                      "value": 0.1288409872672513
+                    },
+                    "qStatistic": {
+                      "status": "defined",
+                      "value": 18.78284272209325
+                    },
+                    "pAdjusted": {
+                      "status": "defined",
+                      "value": 2.61677024493423e-09
+                    },
+                    "ciLower": {
+                      "status": "defined",
+                      "value": -2.941302624506254
+                    },
+                    "ciUpper": {
+                      "status": "defined",
+                      "value": -1.898697375493746
+                    },
+                    "significant": true
+                  },
+                  {
+                    "groupA": 0,
+                    "groupB": 2,
+                    "difference": {
+                      "status": "defined",
+                      "value": -5.820000000000002
+                    },
+                    "stdError": {
+                      "status": "defined",
+                      "value": 0.1288409872672513
+                    },
+                    "qStatistic": {
+                      "status": "defined",
+                      "value": 45.171960596108576
+                    },
+                    "pAdjusted": {
+                      "status": "defined",
+                      "value": 5.551115123125783e-15
+                    },
+                    "ciLower": {
+                      "status": "defined",
+                      "value": -6.341302624506256
+                    },
+                    "ciUpper": {
+                      "status": "defined",
+                      "value": -5.298697375493748
+                    },
+                    "significant": true
+                  },
+                  {
+                    "groupA": 0,
+                    "groupB": 3,
+                    "difference": {
+                      "status": "defined",
+                      "value": -2.8400000000000016
+                    },
+                    "stdError": {
+                      "status": "defined",
+                      "value": 0.1288409872672513
+                    },
+                    "qStatistic": {
+                      "status": "defined",
+                      "value": 22.04267493005986
+                    },
+                    "pAdjusted": {
+                      "status": "defined",
+                      "value": 2.413910182852419e-10
+                    },
+                    "ciLower": {
+                      "status": "defined",
+                      "value": -3.361302624506256
+                    },
+                    "ciUpper": {
+                      "status": "defined",
+                      "value": -2.3186973754937474
+                    },
+                    "significant": true
+                  },
+                  {
+                    "groupA": 1,
+                    "groupB": 2,
+                    "difference": {
+                      "status": "defined",
+                      "value": -3.400000000000002
+                    },
+                    "stdError": {
+                      "status": "defined",
+                      "value": 0.1288409872672513
+                    },
+                    "qStatistic": {
+                      "status": "defined",
+                      "value": 26.389117874015326
+                    },
+                    "pAdjusted": {
+                      "status": "defined",
+                      "value": 1.5673351505540722e-11
+                    },
+                    "ciLower": {
+                      "status": "defined",
+                      "value": -3.9213026245062563
+                    },
+                    "ciUpper": {
+                      "status": "defined",
+                      "value": -2.878697375493748
+                    },
+                    "significant": true
+                  },
+                  {
+                    "groupA": 1,
+                    "groupB": 3,
+                    "difference": {
+                      "status": "defined",
+                      "value": -0.4200000000000017
+                    },
+                    "stdError": {
+                      "status": "defined",
+                      "value": 0.1288409872672513
+                    },
+                    "qStatistic": {
+                      "status": "defined",
+                      "value": 3.2598322079666104
+                    },
+                    "pAdjusted": {
+                      "status": "defined",
+                      "value": 0.13836920546969667
+                    },
+                    "ciLower": {
+                      "status": "defined",
+                      "value": -0.9413026245062557
+                    },
+                    "ciUpper": {
+                      "status": "defined",
+                      "value": 0.10130262450625227
+                    },
+                    "significant": false
+                  },
+                  {
+                    "groupA": 2,
+                    "groupB": 3,
+                    "difference": {
+                      "status": "defined",
+                      "value": 2.9800000000000004
+                    },
+                    "stdError": {
+                      "status": "defined",
+                      "value": 0.1288409872672513
+                    },
+                    "qStatistic": {
+                      "status": "defined",
+                      "value": 23.129285666048716
+                    },
+                    "pAdjusted": {
+                      "status": "defined",
+                      "value": 1.1677470102000598e-10
+                    },
+                    "ciLower": {
+                      "status": "defined",
+                      "value": 2.4586973754937462
+                    },
+                    "ciUpper": {
+                      "status": "defined",
+                      "value": 3.5013026245062546
+                    },
+                    "significant": true
+                  }
+                ]
+              },
+              "letters": {
+                "letters": [
+                  "c",
+                  "b",
+                  "a",
+                  "b"
+                ],
+                "memberships": [
+                  [
+                    2
+                  ],
+                  [
+                    1
+                  ],
+                  [
+                    0
+                  ],
+                  [
+                    1
+                  ]
+                ],
+                "nLetters": 3,
+                "hasUnknownPairs": false
+              },
+              "diagnostics": {
+                "residuals": [
+                  {
+                    "observationId": "o1",
+                    "group": 0,
+                    "fitted": 10.1,
+                    "residual": 0.09999999999999964,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 0.38807526285316496
+                    }
+                  },
+                  {
+                    "observationId": "o2",
+                    "group": 0,
+                    "fitted": 10.1,
+                    "residual": -0.29999999999999893,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -1.1642257885594949
+                    }
+                  },
+                  {
+                    "observationId": "o3",
+                    "group": 0,
+                    "fitted": 10.1,
+                    "residual": 0.40000000000000036,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 1.5523010514126667
+                    }
+                  },
+                  {
+                    "observationId": "o4",
+                    "group": 0,
+                    "fitted": 10.1,
+                    "residual": 0,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 0
+                    }
+                  },
+                  {
+                    "observationId": "o5",
+                    "group": 0,
+                    "fitted": 10.1,
+                    "residual": -0.1999999999999993,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.7761505257063299
+                    }
+                  },
+                  {
+                    "observationId": "o6",
+                    "group": 1,
+                    "fitted": 12.52,
+                    "residual": -0.11999999999999922,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.4656903154237965
+                    }
+                  },
+                  {
+                    "observationId": "o7",
+                    "group": 1,
+                    "fitted": 12.52,
+                    "residual": 0.3800000000000008,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 1.474685998842035
+                    }
+                  },
+                  {
+                    "observationId": "o8",
+                    "group": 1,
+                    "fitted": 12.52,
+                    "residual": -0.41999999999999993,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -1.6299161039832983
+                    }
+                  },
+                  {
+                    "observationId": "o9",
+                    "group": 1,
+                    "fitted": 12.52,
+                    "residual": 0.17999999999999972,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 0.6985354731356983
+                    }
+                  },
+                  {
+                    "observationId": "o10",
+                    "group": 1,
+                    "fitted": 12.52,
+                    "residual": -0.019999999999999574,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.0776150525706316
+                    }
+                  },
+                  {
+                    "observationId": "o11",
+                    "group": 2,
+                    "fitted": 15.920000000000002,
+                    "residual": -0.120000000000001,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.46569031542380346
+                    }
+                  },
+                  {
+                    "observationId": "o12",
+                    "group": 2,
+                    "fitted": 15.920000000000002,
+                    "residual": 0.379999999999999,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 1.4746859988420282
+                    }
+                  },
+                  {
+                    "observationId": "o13",
+                    "group": 2,
+                    "fitted": 15.920000000000002,
+                    "residual": -0.4200000000000017,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -1.6299161039833052
+                    }
+                  },
+                  {
+                    "observationId": "o14",
+                    "group": 2,
+                    "fitted": 15.920000000000002,
+                    "residual": 0.17999999999999972,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 0.6985354731356983
+                    }
+                  },
+                  {
+                    "observationId": "o15",
+                    "group": 2,
+                    "fitted": 15.920000000000002,
+                    "residual": -0.02000000000000135,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.0776150525706385
+                    }
+                  },
+                  {
+                    "observationId": "o16",
+                    "group": 3,
+                    "fitted": 12.940000000000001,
+                    "residual": -0.14000000000000057,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.5433053679944351
+                    }
+                  },
+                  {
+                    "observationId": "o17",
+                    "group": 3,
+                    "fitted": 12.940000000000001,
+                    "residual": 0.15999999999999837,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 0.6209204205650598
+                    }
+                  },
+                  {
+                    "observationId": "o18",
+                    "group": 3,
+                    "fitted": 12.940000000000001,
+                    "residual": -0.34000000000000163,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -1.3194558937007719
+                    }
+                  },
+                  {
+                    "observationId": "o19",
+                    "group": 3,
+                    "fitted": 12.940000000000001,
+                    "residual": 0.35999999999999943,
+                    "standardized": {
+                      "status": "defined",
+                      "value": 1.3970709462713966
+                    }
+                  },
+                  {
+                    "observationId": "o20",
+                    "group": 3,
+                    "fitted": 12.940000000000001,
+                    "residual": -0.040000000000000924,
+                    "standardized": {
+                      "status": "defined",
+                      "value": -0.1552301051412701
+                    }
+                  }
+                ],
+                "qq": [
+                  {
+                    "theoretical": -1.8682416548639285,
+                    "sample": -1.6299161039833052
+                  },
+                  {
+                    "theoretical": -1.403412635851402,
+                    "sample": -1.6299161039832983
+                  },
+                  {
+                    "theoretical": -1.1281436452787637,
+                    "sample": -1.3194558937007719
+                  },
+                  {
+                    "theoretical": -0.9191355220462103,
+                    "sample": -1.1642257885594949
+                  },
+                  {
+                    "theoretical": -0.744142742220168,
+                    "sample": -0.7761505257063299
+                  },
+                  {
+                    "theoretical": -0.5894557978497786,
+                    "sample": -0.5433053679944351
+                  },
+                  {
+                    "theoretical": -0.44776751848294877,
+                    "sample": -0.46569031542380346
+                  },
+                  {
+                    "theoretical": -0.3145722918388852,
+                    "sample": -0.4656903154237965
+                  },
+                  {
+                    "theoretical": -0.18675612106373715,
+                    "sample": -0.1552301051412701
+                  },
+                  {
+                    "theoretical": -0.06193162345531731,
+                    "sample": -0.0776150525706385
+                  },
+                  {
+                    "theoretical": 0.06193162345531731,
+                    "sample": -0.0776150525706316
+                  },
+                  {
+                    "theoretical": 0.18675612106373715,
+                    "sample": 0
+                  },
+                  {
+                    "theoretical": 0.3145722918388852,
+                    "sample": 0.38807526285316496
+                  },
+                  {
+                    "theoretical": 0.44776751848294877,
+                    "sample": 0.6209204205650598
+                  },
+                  {
+                    "theoretical": 0.5894557978497786,
+                    "sample": 0.6985354731356983
+                  },
+                  {
+                    "theoretical": 0.7441427422201677,
+                    "sample": 0.6985354731356983
+                  },
+                  {
+                    "theoretical": 0.9191355220462102,
+                    "sample": 1.3970709462713966
+                  },
+                  {
+                    "theoretical": 1.1281436452787637,
+                    "sample": 1.4746859988420282
+                  },
+                  {
+                    "theoretical": 1.4034126358514019,
+                    "sample": 1.474685998842035
+                  },
+                  {
+                    "theoretical": 1.868241654863928,
+                    "sample": 1.5523010514126667
+                  }
+                ],
+                "brownForsythe": {
+                  "f": {
+                    "status": "defined",
+                    "value": 0.023391812865497682
+                  },
+                  "dfBetween": 3,
+                  "dfWithin": 16,
+                  "pValue": {
+                    "status": "defined",
+                    "value": 0.9949553695315291
+                  }
+                },
+                "sdRatio": {
+                  "status": "defined",
+                  "value": 1.1226192464957747
+                }
+              },
+              "excluded": [],
+              "issues": [],
+              "facts": [
+                {
+                  "key": "anova.significant",
+                  "params": {
+                    "alpha": "0.05",
+                    "df1": "3",
+                    "df2": "16",
+                    "f": "343.4297188755019",
+                    "p": "0.000000000000009915658118584595"
+                  }
+                },
+                {
+                  "key": "tukey.pairs_different",
+                  "params": {
+                    "alpha": "0.05",
+                    "count": "5",
+                    "total": "6"
+                  }
+                },
+                {
+                  "key": "letters.meaning",
+                  "params": {}
+                },
+                {
+                  "key": "diagnostics.homogeneity_not_detected",
+                  "params": {
+                    "p": "0.9949553695315291"
+                  }
+                },
+                {
+                  "key": "diagnostics.normality_visual",
+                  "params": {}
+                },
+                {
+                  "key": "diagnostics.independence_not_assessed",
+                  "params": {}
+                }
+              ],
+              "provenance": {
+                "methodId": "one_way_comparison",
+                "methodVersion": 1,
+                "engineVersion": "0.1.0"
+              }
+            }
+          }
+        ],
+        "notes": ""
+      }
+    ],
+    "currentId": "e1",
+    "counters": {
+      "experiment": 1
+    },
+    "changeSeq": 1,
+    "savedSeq": 0,
+    "fileName": "analise-v03.enzitag",
+    "lastSavedAt": null,
+    "epoch": 1
+  }
+}

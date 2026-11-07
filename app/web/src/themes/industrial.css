@@ -34,3 +34,20 @@
   --motion-duration: 140ms;
   --motion-ease: cubic-bezier(0.3, 0.7, 0.4, 1.25);
 }
+
+/* ET27: optical compensation for this font family. */
+:root[data-theme="industrial"] {
+  --heading-weight: 600;
+  --font-label: "Host Grotesk", Arial, sans-serif;
+  --text-subheading: 1.1875rem;
+}
+
+/* ET27 T04: work surfaces and scientific roles. */
+:root[data-theme="industrial"] {
+  --color-input: #f1f3f4;
+  --shadow-panel: inset 1px 1px 0 rgb(255 255 255 / 70%), 1px 2px 3px rgb(24 30 34 / 16%);
+  --chart-series: #1d5975;
+  --chart-reference: #862f12;
+  --chart-uncertainty: #645478;
+  --chart-grid: #b9c1c5;
+}

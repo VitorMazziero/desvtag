@@ -12,6 +12,7 @@ import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch, useWorkspace } from "../../state/ProjectContext";
 import { freshId } from "../../state/project";
 import { splitLevels } from "../analysis/buildRequest";
+import { FillResponsesButton, FlowBlock } from "../blocks";
 import { TableExportButtons } from "../results/TableExportButtons";
 import { collectionColumns } from "./collectionColumns";
 
@@ -22,7 +23,7 @@ export function RcbdPanel() {
   const workspace = useWorkspace();
   const { client } = useEngine();
 
-  const categorical = state.factors.filter((f) => f.kind === "categorical" && f.name.trim() !== "");
+  const categorical = state.factors.filter((f) => f.name.trim() !== "");
   const [treatmentId, setTreatmentId] = useState(state.rcbd?.factorId ?? categorical[0]?.id ?? "");
   const treatment = categorical.find((f) => f.id === treatmentId) ?? categorical[0];
   const blockCandidates = categorical.filter((f) => f.id !== treatment?.id);
@@ -144,183 +145,212 @@ export function RcbdPanel() {
 
   return (
     <section aria-labelledby="rcbd-title" data-testid="rcbd-panel">
-      <h2 id="rcbd-title">{t("design.title")}</h2>
-      <p className="muted">{t("design.rcbd.intro")}</p>
-      {(!treatment || !block) && (
-        <p role="status" className="error">
-          {t("design.rcbd.needFactors")}
-        </p>
-      )}
-      {treatment && block && (
-        <>
-          <div className="row">
-            <label className="field">
-              <span>{t("design.rcbd.treatmentFactor")}</span>
-              <select value={treatment.id} onChange={(e) => setTreatmentId(e.target.value)}>
-                {categorical.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="field">
-              <span>{t("design.rcbd.blockFactor")}</span>
-              <select value={block.id} onChange={(e) => setBlockId(e.target.value)}>
-                {blockCandidates.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          {[treatment, block].map((f, i) => (
-            <label className="field" key={f.id}>
-              <span>{t(i === 0 ? "design.rcbd.treatments" : "design.rcbd.blocks")}</span>
-              <textarea
-                rows={3}
-                value={f.levelsText}
-                onChange={(e) =>
-                  dispatch({
-                    type: "updateFactor",
-                    id: f.id,
-                    patch: { levelsText: e.target.value },
-                  })
-                }
-              />
-              <small className="muted">{t("design.crd.levelsHelp")}</small>
-            </label>
-          ))}
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={randomize}
-              onChange={(e) => setRandomize(e.target.checked)}
-            />
-            <span>{t("design.rcbd.randomize")}</span>
-          </label>
-          {randomize && (
+      <FlowBlock
+        id="rcbd-config"
+        ready={total !== null}
+        title={t("design.blocks.levels")}
+        order={1}
+      >
+        <h2 id="rcbd-title">{t("design.title")}</h2>
+        <p className="muted">{t("design.rcbd.intro")}</p>
+        {(!treatment || !block) && (
+          <p role="status" className="error">
+            {t("design.rcbd.needFactors")}
+          </p>
+        )}
+        {treatment && block && (
+          <>
             <div className="row">
               <label className="field">
-                <span>{t("design.seed")}</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={MAX_SEED}
-                  value={seed}
-                  onChange={(e) => setSeed(clampSeed(e.target.value))}
-                />
+                <span>{t("design.rcbd.treatmentFactor")}</span>
+                <select value={treatment.id} onChange={(e) => setTreatmentId(e.target.value)}>
+                  {categorical.map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.name}
+                    </option>
+                  ))}
+                </select>
               </label>
-              <button
-                type="button"
-                className="button secondary small"
-                onClick={() => setSeed(randomSeed())}
-              >
-                {t("design.newSeed")}
-              </button>
+              <label className="field">
+                <span>{t("design.rcbd.blockFactor")}</span>
+                <select value={block.id} onChange={(e) => setBlockId(e.target.value)}>
+                  {blockCandidates.map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
-          )}
-          {total !== null && (
-            <p data-testid="rcbd-count" role="status">
-              {t("design.rcbd.count", { total, levels, blocks })}
-            </p>
-          )}
-          {problems.length > 0 && (
-            <div role="alert" className="error">
-              {problems.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          )}
-          <button
-            type="button"
-            className="button"
-            disabled={!spec || total === null || busy || shownKey !== specKey}
-            onClick={generate}
-          >
-            {state.rcbd ? t("design.regenerate") : t("design.generate")}
-          </button>
-          {message && (
-            <p role="status" className="muted" data-testid="rcbd-generated">
-              {message}
-            </p>
-          )}
-        </>
-      )}
-      {state.rcbd && shown && (
-        <section aria-labelledby="rcbd-matrix-title" data-testid="rcbd-matrix">
-          <h3 id="rcbd-matrix-title">{t("design.rcbd.matrix")}</h3>
-          <TableExportButtons
-            label={t("design.rcbd.exportCsv")}
-            suffix="do-dbc"
-            sheet={t("design.rcbd.matrix")}
-            header={[
-              "run",
-              "unit_id",
-              "block",
-              "position",
-              state.rcbd.factorName,
-              ...collection.header,
-            ]}
-            rows={shown.runs.map((r, i) => [
-              r.run,
-              `B${r.blockIndex + 1}-T${r.levelIndex + 1}`,
-              r.block,
-              r.position,
-              r.level,
-              ...(collection.cells[i] ?? []),
-            ])}
-            metadata={{
-              app: "EnziTAG Optima",
-              project: workspace.name,
-              method: `${shown.provenance.methodId} v${shown.provenance.methodVersion}`,
-              engine: shown.provenance.engineVersion,
-              seed: String(state.rcbd.seed),
-              randomization: shown.randomizationAlgorithm,
-            }}
-            fileBase="matriz-dbc"
-            onDone={setNotice}
-          />
-          <p className="muted small" data-testid="collection-note">
-            {t("design.collectionNote")}
-          </p>
-          {notice && (
-            <p role="status" className="muted small">
-              {notice}
-            </p>
-          )}
-          <div className="grid-scroll">
-            <table className="results-table" data-testid="rcbd-table">
-              <thead>
-                <tr>
-                  <th scope="col">{t("design.crd.matrix.run")}</th>
-                  <th scope="col">{state.rcbd.blockName}</th>
-                  <th scope="col">{t("design.rcbd.position")}</th>
-                  <th scope="col">{state.rcbd.factorName}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {shown.runs.slice(0, 200).map((r) => (
-                  <tr key={r.run}>
-                    <th scope="row">{r.run}</th>
-                    <td>{r.block}</td>
-                    <td className="num">{r.position}</td>
-                    <td>{r.level}</td>
-                  </tr>
+            {[treatment, block].map((f, i) => (
+              <label className="field" key={f.id}>
+                <span>{t(i === 0 ? "design.rcbd.treatments" : "design.rcbd.blocks")}</span>
+                <textarea
+                  rows={3}
+                  value={f.levelsText}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "updateFactor",
+                      id: f.id,
+                      patch: { levelsText: e.target.value },
+                    })
+                  }
+                />
+                <small className="muted">{t("design.crd.levelsHelp")}</small>
+              </label>
+            ))}
+          </>
+        )}
+      </FlowBlock>
+      <FlowBlock
+        id="rcbd-generate"
+        title={t("design.blocks.generate")}
+        order={2}
+        ready={state.rcbd !== null}
+      >
+        {treatment && block && (
+          <>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={randomize}
+                onChange={(e) => setRandomize(e.target.checked)}
+              />
+              <span>{t("design.rcbd.randomize")}</span>
+            </label>
+            {randomize && (
+              <details className="advanced">
+                <summary>{t("design.reproducibility")}</summary>
+                <div className="row">
+                  <label className="field">
+                    <span>{t("design.seed")}</span>
+                    <input
+                      type="number"
+                      min={0}
+                      max={MAX_SEED}
+                      value={seed}
+                      onChange={(e) => setSeed(clampSeed(e.target.value))}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className="button secondary small"
+                    onClick={() => setSeed(randomSeed())}
+                  >
+                    {t("design.newSeed")}
+                  </button>
+                </div>
+              </details>
+            )}
+            {total !== null && (
+              <p data-testid="rcbd-count" role="status">
+                {t("design.rcbd.count", { total, levels, blocks })}
+              </p>
+            )}
+            {problems.length > 0 && (
+              <div role="alert" className="error">
+                {problems.map((p) => (
+                  <p key={p}>{p}</p>
                 ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="muted small">{t("design.rcbd.unitNote")}</p>
-          <p className="muted small">
-            {t("design.crd.algorithm", {
-              algorithm: shown.randomizationAlgorithm,
-              seed: String(state.rcbd.seed),
-            })}
-          </p>
-        </section>
-      )}
+              </div>
+            )}
+            <button
+              type="button"
+              className="button"
+              disabled={!spec || total === null || busy || shownKey !== specKey}
+              onClick={generate}
+            >
+              {state.rcbd ? t("design.regenerate") : t("design.generate")}
+            </button>
+            {message && (
+              <p role="status" className="muted" data-testid="rcbd-generated">
+                {message}
+              </p>
+            )}
+          </>
+        )}
+      </FlowBlock>
+      <FlowBlock
+        id="rcbd-matrix"
+        title={t("data.blocks.matrix")}
+        order={3}
+        focus={message !== null}
+      >
+        {state.rcbd && shown && (
+          <section aria-labelledby="rcbd-matrix-title" data-testid="rcbd-matrix">
+            <h3 id="rcbd-matrix-title">{t("design.rcbd.matrix")}</h3>
+            <TableExportButtons
+              label={t("design.rcbd.exportCsv")}
+              suffix="do-dbc"
+              sheet={t("design.rcbd.matrix")}
+              header={[
+                "run",
+                "unit_id",
+                "block",
+                "position",
+                state.rcbd.factorName,
+                ...collection.header,
+              ]}
+              rows={shown.runs.map((r, i) => [
+                r.run,
+                `B${r.blockIndex + 1}-T${r.levelIndex + 1}`,
+                r.block,
+                r.position,
+                r.level,
+                ...(collection.cells[i] ?? []),
+              ])}
+              metadata={{
+                app: "DesvTAG",
+                project: workspace.name,
+                method: `${shown.provenance.methodId} v${shown.provenance.methodVersion}`,
+                engine: shown.provenance.engineVersion,
+                seed: String(state.rcbd.seed),
+                randomization: shown.randomizationAlgorithm,
+              }}
+              fileBase="matriz-dbc"
+              onDone={setNotice}
+            />
+            <p className="muted small" data-testid="collection-note">
+              {t("design.collectionNote")}
+            </p>
+            {notice && (
+              <p role="status" className="muted small">
+                {notice}
+              </p>
+            )}
+            <div className="grid-scroll">
+              <table className="results-table" data-testid="rcbd-table">
+                <thead>
+                  <tr>
+                    <th scope="col">{t("design.crd.matrix.run")}</th>
+                    <th scope="col">{state.rcbd.blockName}</th>
+                    <th scope="col">{t("design.rcbd.position")}</th>
+                    <th scope="col">{state.rcbd.factorName}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shown.runs.slice(0, 200).map((r) => (
+                    <tr key={r.run}>
+                      <th scope="row">{r.run}</th>
+                      <td>{r.block}</td>
+                      <td className="num">{r.position}</td>
+                      <td>{r.level}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="muted small">{t("design.rcbd.unitNote")}</p>
+            <p className="muted small">
+              {t("design.crd.algorithm", {
+                algorithm: shown.randomizationAlgorithm,
+                seed: String(state.rcbd.seed),
+              })}
+            </p>
+          </section>
+        )}
+        {state.rcbd && <FillResponsesButton />}
+      </FlowBlock>
     </section>
   );
 }

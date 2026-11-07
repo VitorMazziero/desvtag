@@ -3,7 +3,7 @@
 
 import { useMemo } from "react";
 import { APP_VERSION } from "../../lib/version";
-import type { AnalysisRecord } from "../../services/engine";
+import type { AnalysisRecord, Revision } from "../../services/engine";
 import { type ExportMetadata, exportMetadata, flat } from "../../services/export/metadata";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
 
@@ -19,6 +19,8 @@ export function slug(text: string): string {
 }
 
 export function useResultMetadata(signature: string): {
+  record: AnalysisRecord | undefined;
+  revision: Revision | undefined;
   metadata: ExportMetadata | null;
   metadataText: string;
   exportMeta: Record<string, string> | null;
@@ -44,6 +46,8 @@ export function useResultMetadata(signature: string): {
     [record, revision, workspace.name, state.name],
   );
   return {
+    record,
+    revision,
     metadata,
     metadataText: metadata ? JSON.stringify(metadata) : "",
     exportMeta: metadata ? flat(metadata) : null,

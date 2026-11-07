@@ -1,0 +1,227 @@
+{
+  "request": {
+    "alpha": 0.05,
+    "design": {
+      "allocation": [
+        1,
+        2,
+        1
+      ],
+      "means": [
+        10.0,
+        11.2,
+        12.0
+      ],
+      "type": "contrast",
+      "weights": [
+        -2.0,
+        1.0,
+        1.0
+      ]
+    },
+    "goal": {
+      "halfWidth": 0.5,
+      "type": "precisionFor"
+    },
+    "sigma": 1.2,
+    "simulation": {
+      "replications": 50000,
+      "seed": 20261108
+    },
+    "twoSided": true
+  },
+  "result": {
+    "critical": 1.9648270804771357,
+    "curve": [
+      {
+        "n": 1,
+        "power": 0.07908425634408445
+      },
+      {
+        "n": 7,
+        "power": 0.8241052060776438
+      },
+      {
+        "n": 13,
+        "power": 0.9802150925501205
+      },
+      {
+        "n": 19,
+        "power": 0.9983066946129991
+      },
+      {
+        "n": 26,
+        "power": 0.9999222536278259
+      },
+      {
+        "n": 32,
+        "power": 0.9999951161762882
+      },
+      {
+        "n": 38,
+        "power": 0.9999997188117278
+      },
+      {
+        "n": 44,
+        "power": 0.9999999848918791
+      },
+      {
+        "n": 51,
+        "power": 0.9999999995354655
+      },
+      {
+        "n": 57,
+        "power": 0.9999999999776689
+      },
+      {
+        "n": 63,
+        "power": 0.9999999999989682
+      },
+      {
+        "n": 70,
+        "power": 0.9999999999999727
+      },
+      {
+        "n": 76,
+        "power": 0.9999999999999988
+      },
+      {
+        "n": 82,
+        "power": 1.0
+      },
+      {
+        "n": 88,
+        "power": 1.0
+      },
+      {
+        "n": 95,
+        "power": 1.0
+      },
+      {
+        "n": 101,
+        "power": 1.0
+      },
+      {
+        "n": 107,
+        "power": 1.0
+      },
+      {
+        "n": 114,
+        "power": 1.0
+      },
+      {
+        "n": 120,
+        "power": 1.0
+      },
+      {
+        "n": 126,
+        "power": 1.0
+      },
+      {
+        "n": 132,
+        "power": 1.0
+      },
+      {
+        "n": 139,
+        "power": 1.0
+      },
+      {
+        "n": 145,
+        "power": 1.0
+      },
+      {
+        "n": 151,
+        "power": 1.0
+      },
+      {
+        "n": 158,
+        "power": 1.0
+      },
+      {
+        "n": 164,
+        "power": 1.0
+      },
+      {
+        "n": 170,
+        "power": 1.0
+      },
+      {
+        "n": 176,
+        "power": 1.0
+      },
+      {
+        "n": 183,
+        "power": 1.0
+      },
+      {
+        "n": 189,
+        "power": 1.0
+      },
+      {
+        "n": 195,
+        "power": 1.0
+      },
+      {
+        "n": 202,
+        "power": 1.0
+      },
+      {
+        "n": 208,
+        "power": 1.0
+      },
+      {
+        "n": 214,
+        "power": 1.0
+      },
+      {
+        "n": 220,
+        "power": 1.0
+      },
+      {
+        "n": 227,
+        "power": 1.0
+      },
+      {
+        "n": 233,
+        "power": 1.0
+      },
+      {
+        "n": 239,
+        "power": 1.0
+      },
+      {
+        "n": 246,
+        "power": 1.0
+      }
+    ],
+    "df1": 489.0,
+    "df2": 0.0,
+    "halfWidth": {
+      "status": "defined",
+      "value": 0.4985794455446845
+    },
+    "issues": [],
+    "n": 123,
+    "noncentrality": 12.610721748984194,
+    "power": {
+      "status": "defined",
+      "value": 1.0
+    },
+    "provenance": {
+      "engineVersion": "0.4.0-dev",
+      "methodId": "power_analysis",
+      "methodVersion": 2
+    },
+    "simulation": {
+      "algorithm": "pcg32-stream54/u32-midpoint/box-muller/marsaglia-tsang/gaussian-statistics-v1",
+      "ciLower": 0.9999231767258548,
+      "ciUpper": 1.0,
+      "estimate": 1.0,
+      "rejections": 50000,
+      "replications": 50000,
+      "seed": 20261108,
+      "standardError": 0.0
+    },
+    "total": 492
+  }
+}

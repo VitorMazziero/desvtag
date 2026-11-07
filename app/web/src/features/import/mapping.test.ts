@@ -117,3 +117,50 @@ describe("buildExperimentData", () => {
     expect(buildExperimentData([["x"], ["1"]], true, m).issues[0]?.code).toBe("import.no_columns");
   });
 });
+
+describe("dedicated unit and time roles", () => {
+  it("does not choose the last numeric time column as the response", () => {
+    const rows = [
+      ["unit_id", "Condição", "Resposta", "time"],
+      ["A B", "Antes", "1,5", "0,50"],
+      ["A B", "Depois", "2,5", "1"],
+    ];
+    const mapping = guessMapping(rows, true);
+    expect(mapping.map((m) => m.role)).toEqual(["unit", "factor", "response", "time"]);
+    const result = buildExperimentData(rows, true, mapping);
+    expect(result.issues).toEqual([]);
+    expect(result.data.factors.map((f) => f.name)).toEqual(["Condição"]);
+    expect(result.data.rows.map((r) => [r.unitId, r.responses[0], r.timeText])).toEqual([
+      ["A B", "1,5", "0,50"],
+      ["A B", "2,5", "1"],
+    ]);
+  });
+  it("keeps an existing time factor in its registered role and rejects duplicate identity columns", () => {
+    const rows = [
+      ["Tempo", "Resposta"],
+      ["0", "1"],
+    ];
+    const mapping = guessMapping(rows, true, {
+      factors: [{ name: "Tempo", kind: "numeric" }],
+      responses: [{ name: "Resposta" }],
+    });
+    expect(mapping.map((m) => m.role)).toEqual(["factor", "response"]);
+    const result = buildExperimentData(
+      [
+        ["A", "B", "Y"],
+        ["0", "1", "2"],
+      ],
+      true,
+      [
+        { role: "time", kind: "numeric", name: "A" },
+        { role: "time", kind: "numeric", name: "B" },
+        { role: "response", kind: "numeric", name: "Y" },
+      ],
+    );
+    expect(result.issues).toContainEqual({
+      code: "import.multiple_identifier_columns",
+      columns: [1, 2],
+      rows: [],
+    });
+  });
+});

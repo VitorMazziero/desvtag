@@ -6,6 +6,7 @@ import type {
   ProjectDocument,
   RevisionReason,
 } from "../services/engine";
+import { familyRecordIds } from "./familyActions";
 import {
   commitRevision,
   DEFAULT_ALPHA,
@@ -31,6 +32,7 @@ export interface Workspace {
   /** Nome do arquivo ligado ao projeto (sem caminho), se houver. */
   fileName: string | null;
   lastSavedAt: string | null;
+  lastSavedDestination?: "computer" | "drive";
   /** Incrementa quando o projeto é substituído (novo, aberto, restaurado): a interface remonta o fluxo. */
   epoch: number;
 }
@@ -43,10 +45,24 @@ export type WorkspaceAction =
   | { type: "addExperiment"; name: string; now: string }
   | { type: "selectExperiment"; id: string }
   | { type: "commitAll"; reason: RevisionReason; now: string }
-  | { type: "markSaved"; fileName: string | null; now: string; seq: number }
+  | {
+      type: "markSaved";
+      fileName: string | null;
+      now: string;
+      seq: number;
+      destination?: "computer" | "drive";
+    }
   | { type: "restoreWorkspace"; workspace: Workspace }
   | {
       type: "addConfirmation";
+      source?: {
+        projectId: string;
+        epoch: number;
+        experimentId: string;
+        analysisId: string;
+        factors: ProjectState["factors"];
+        responses: ProjectState["responses"];
+      };
       name: string;
       now: string;
       rows: ProjectState["rows"];
@@ -54,6 +70,8 @@ export type WorkspaceAction =
     };
 
 const PROJECT_ACTIONS = new Set<string>([
+  "setFamilySelection",
+  "selectFamily",
   "choosePath",
   "addFactor",
   "updateFactor",
@@ -72,18 +90,24 @@ const PROJECT_ACTIONS = new Set<string>([
   "applyOptimal",
   "setFigureStyle",
   "addComment",
+  "editComment",
   "replyComment",
   "setCommentResolved",
   "deleteComment",
   "addRow",
   "removeRow",
   "setUnitColumn",
+  "setTimeColumn",
   "setAnalysis",
   "setNotes",
   "rename",
   "storeResult",
   "setOptimizationSetup",
   "storeOptimization",
+  "storeOptimalVariance",
+  "selectOptimalDesign",
+  "selectOptimalVariance",
+  "setOptimalVarianceView",
   "applyImport",
   "applyResponses",
   "restoreRevision",
@@ -136,6 +160,39 @@ export function hasUnsavedChanges(ws: Workspace): boolean {
 }
 
 export function workspaceReducer(ws: Workspace, action: WorkspaceAction): Workspace {
+  if (action.type === "storeFamily") {
+    if (action.projectId !== ws.projectId || action.epoch !== ws.epoch) return ws;
+    const target = ws.experiments.find((e) => e.id === action.experimentId);
+    if (!target) return ws;
+    const next = projectReducer(target, action);
+    if (next === target) return ws;
+    return {
+      ...ws,
+      experiments: ws.experiments.map((e) => (e.id === target.id ? next : e)),
+      changeSeq: ws.changeSeq + 1,
+    };
+  }
+  if (
+    (action.type === "storeResult" ||
+      action.type === "storeOptimization" ||
+      action.type === "storeOptimalVariance") &&
+    action.source
+  ) {
+    if (action.source.projectId !== ws.projectId || action.source.epoch !== ws.epoch) return ws;
+    const target = ws.experiments.find(
+      (experiment) => experiment.id === action.source?.experimentId,
+    );
+    if (!target) return ws;
+    const next = projectReducer(target, action);
+    if (next === target) return ws;
+    return {
+      ...ws,
+      experiments: ws.experiments.map((experiment) =>
+        experiment.id === target.id ? next : experiment,
+      ),
+      changeSeq: ws.changeSeq + 1,
+    };
+  }
   if (PROJECT_ACTIONS.has(action.type)) {
     const current = currentExperiment(ws);
     const next = projectReducer(current, action as ProjectAction);
@@ -160,7 +217,8 @@ export function workspaceReducer(ws: Workspace, action: WorkspaceAction): Worksp
         name: action.document.name,
         createdAt: action.document.createdAt,
         experiments: experiments.length > 0 ? experiments : [first],
-        currentId: first.id,
+        currentId:
+          experiments.find((e) => e.id === action.document.currentExperimentId)?.id ?? first.id,
         counters: {
           experiment: maxSuffix(
             experiments.map((e) => e.id),
@@ -192,20 +250,55 @@ export function workspaceReducer(ws: Workspace, action: WorkspaceAction): Worksp
       };
     }
     case "selectExperiment":
-      return ws.experiments.some((e) => e.id === action.id) ? { ...ws, currentId: action.id } : ws;
+      return ws.experiments.some((e) => e.id === action.id)
+        ? action.id === ws.currentId
+          ? ws
+          : { ...ws, currentId: action.id, changeSeq: ws.changeSeq + 1 }
+        : ws;
     case "commitAll":
       return commitWorkspace(ws, action.reason, action.now);
     case "markSaved":
-      return { ...ws, savedSeq: action.seq, fileName: action.fileName, lastSavedAt: action.now };
+      return {
+        ...ws,
+        savedSeq: action.seq,
+        fileName: action.fileName,
+        lastSavedAt: action.now,
+        lastSavedDestination: action.destination ?? "computer",
+      };
     case "restoreWorkspace":
-      return { ...action.workspace, epoch: ws.epoch + 1 };
+      // IndexedDB stores the editing state directly. v0.3 snapshots predate these fields.
+      return {
+        ...action.workspace,
+        epoch: ws.epoch + 1,
+        experiments: action.workspace.experiments.map((experiment) => ({
+          ...experiment,
+          activeFamily: experiment.activeFamily ?? "legacy",
+          optimalDesigns: experiment.optimalDesigns ?? [],
+          optimalVariances: experiment.optimalVariances ?? [],
+          mixtureResult: experiment.mixtureResult ?? null,
+          mixedModelResult: experiment.mixedModelResult ?? null,
+          nonlinearResult: experiment.nonlinearResult ?? null,
+          powerResult: experiment.powerResult ?? null,
+          showTimeColumn: experiment.showTimeColumn ?? false,
+        })),
+      };
     case "addConfirmation": {
       // Experimento novo, vinculado ao atual: mesmos fatores e respostas, ensaios propostos e as
       // previsões gravadas; a origem aponta para a última otimização do experimento atual.
-      const source = currentExperiment(ws);
-      const origin = source.analyses
-        .filter((a) => a.methodId === "desirability_optimization")
-        .at(-1);
+      const capture = action.source;
+      if (capture && (capture.projectId !== ws.projectId || capture.epoch !== ws.epoch)) return ws;
+      const source = capture
+        ? ws.experiments.find((experiment) => experiment.id === capture.experimentId)
+        : currentExperiment(ws);
+      if (!source) return ws;
+      const origin = capture
+        ? source.analyses.find(
+            (record) =>
+              record.id === capture.analysisId && record.methodId === "desirability_optimization",
+          )
+        : source.analyses
+            .filter((record) => record.methodId === "desirability_optimization")
+            .at(-1);
       if (!origin) return ws;
       const { id, counter } = freshId(
         "e",
@@ -216,8 +309,8 @@ export function workspaceReducer(ws: Workspace, action: WorkspaceAction): Worksp
       const filled: ProjectState = {
         ...base,
         path: "analyze",
-        factors: source.factors.map((f) => ({ ...f })),
-        responses: source.responses.map((r) => ({ ...r })),
+        factors: (capture?.factors ?? source.factors).map((f) => ({ ...f })),
+        responses: (capture?.responses ?? source.responses).map((r) => ({ ...r })),
         rows: action.rows,
         counters: {
           ...base.counters,
@@ -225,7 +318,10 @@ export function workspaceReducer(ws: Workspace, action: WorkspaceAction): Worksp
           response: source.counters.response,
           row: action.rows.length,
         },
-        analysis: { ...base.analysis, responseId: source.responses[0]?.id ?? null },
+        analysis: {
+          ...base.analysis,
+          responseId: (capture?.responses ?? source.responses)[0]?.id ?? null,
+        },
         origin: { experimentId: source.id, analysisId: origin.id },
         confirmation: action.plan,
       };
@@ -277,15 +373,25 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
       ),
       includeCurvature: doc.analysisSelection.includeCurvature ?? true,
       surface: doc.analysisSelection.surface ?? false,
+      surfaceBlock: doc.analysisSelection.surfaceBlock ?? null,
+      optimalDesignId: doc.analysisSelection.optimalDesignId ?? null,
       procedure: doc.analysisSelection.procedure ?? null,
       factorial: doc.analysisSelection.factorial ?? null,
     },
     design: doc.design ?? null,
+    optimalDesigns: doc.optimalDesigns ?? [],
+    optimalVariances: doc.optimalVariances ?? [],
+    optimalArtifactSelection: doc.optimalArtifactSelection,
     crd: doc.crd ?? null,
     rcbd: doc.rcbd ?? null,
     mixed: doc.mixed ?? null,
     mixture: doc.mixture ?? null,
     mixtureModel: doc.mixtureModel ?? "quadratic",
+    mixtureResult: doc.mixtureResult ?? null,
+    mixedModelResult: doc.mixedModelResult ?? null,
+    nonlinearResult: doc.nonlinearResult ?? null,
+    powerResult: doc.powerResult ?? null,
+    activeFamily: doc.activeFamily ?? "legacy",
     figureStyles: doc.figureStyles ?? {},
     comments: doc.comments ?? [],
     origin: doc.origin ?? null,
@@ -301,6 +407,7 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
     // Reabrir NÃO recalcula: o resultado exibido é o guardado; a assinatura decide se está atual.
     result: storedResultOf(last),
     showUnitColumn: doc.showUnitColumn,
+    showTimeColumn: doc.showTimeColumn ?? data.rows.some((r) => Boolean(r.timeText)),
     counters: {
       factor: maxSuffix(
         data.factors.map((f) => f.id),
@@ -318,10 +425,7 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
         doc.revisions.map((r) => r.id),
         "v",
       ),
-      analysis: maxSuffix(
-        doc.analyses.map((a) => a.id),
-        "a",
-      ),
+      analysis: maxSuffix([...doc.analyses.map((a) => a.id), ...familyRecordIds(doc)], "a"),
     },
     revisions: doc.revisions,
     analyses: doc.analyses,
@@ -331,6 +435,8 @@ function fromExperiment(doc: ProjectDocument["experiments"][number]): ProjectSta
 
 function storedResultOf(last: AnalysisRecord | undefined): StoredResult | null {
   if (!last) return null;
+  if (last.result.type === "optimalModel")
+    return { signature: last.signature, kind: "optimal", result: stripType(last.result) };
   if (last.result.type === "descriptive")
     return { signature: last.signature, kind: "descriptive", result: stripType(last.result) };
   if (last.result.type === "twoLevelDesign")
@@ -359,12 +465,20 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
     createdAt: ws.createdAt,
     modifiedAt: now,
     appVersion,
+    currentExperimentId: ws.currentId,
     experiments: ws.experiments.map((e) => ({
       id: e.id,
       name: e.name,
       entryPath: e.path,
       showUnitColumn: e.showUnitColumn,
+      showTimeColumn:
+        e.showTimeColumn || e.rows.some((r) => r.timeText !== undefined)
+          ? e.showTimeColumn
+          : undefined,
       analysisSelection: {
+        ...(e.analysis.optimalDesignId
+          ? { optimalDesignId: e.analysis.optimalDesignId, alpha: e.analysis.alpha }
+          : {}),
         responseId: e.analysis.responseId,
         groupBy: e.analysis.groupBy,
         ...(e.analysis.factorId !== null
@@ -390,16 +504,27 @@ export function toDocument(ws: Workspace, now: string, appVersion: string): Proj
         ...(e.analysis.surface
           ? {
               surface: true,
+              surfaceBlock: e.analysis.surfaceBlock ?? undefined,
               alpha: e.analysis.alpha,
               ...(e.analysis.designTerms ? { terms: e.analysis.designTerms } : {}),
             }
           : {}),
       },
       ...(e.design !== null ? { design: e.design } : {}),
+      ...(e.optimalDesigns.length ? { optimalDesigns: e.optimalDesigns } : {}),
+      ...(e.optimalVariances.length ? { optimalVariances: e.optimalVariances } : {}),
+      ...(e.optimalArtifactSelection
+        ? { optimalArtifactSelection: e.optimalArtifactSelection }
+        : {}),
       ...(e.crd !== null ? { crd: e.crd } : {}),
       ...(e.rcbd !== null ? { rcbd: e.rcbd } : {}),
       ...(e.mixed !== null ? { mixed: e.mixed } : {}),
       ...(e.mixture !== null ? { mixture: e.mixture, mixtureModel: e.mixtureModel } : {}),
+      ...(e.mixtureResult ? { mixtureResult: e.mixtureResult } : {}),
+      ...(e.mixedModelResult ? { mixedModelResult: e.mixedModelResult } : {}),
+      ...(e.nonlinearResult ? { nonlinearResult: e.nonlinearResult } : {}),
+      ...(e.powerResult ? { powerResult: e.powerResult } : {}),
+      ...(e.activeFamily !== "legacy" ? { activeFamily: e.activeFamily } : {}),
       ...(Object.keys(e.figureStyles).length > 0 ? { figureStyles: e.figureStyles } : {}),
       ...(e.comments.length > 0 ? { comments: e.comments } : {}),
       ...(e.origin ? { origin: e.origin } : {}),

@@ -4,16 +4,19 @@
 
 import type { ProjectState } from "../../state/project";
 import { analysisKind, inputSignature } from "../analysis/buildRequest";
+import { resultFamilies, savedFamily } from "../results/savedFamily";
 import { STEPS, type StepId } from "./steps";
 
 export interface GuardContext {
   /** Quantidade de células ilegíveis na grade. */
   cellErrorCount: number;
+  mixtureResultCurrent?: boolean;
 }
 
 export function resultIsCurrent(state: ProjectState): boolean {
-  // Misturas: a análise é calculada na própria etapa e não é guardada (ver MixtureAnalysis).
-  if (state.mixture !== null) return true;
+  const saved = savedFamily(state);
+  if (saved) return saved.current;
+  if (state.mixture !== null) return false;
   return (
     state.result !== null &&
     state.result.kind === analysisKind(state) &&
@@ -37,6 +40,8 @@ export function stepSatisfied(step: StepId, state: ProjectState, ctx: GuardConte
         state.rows.some((row) => row.responses.some((cell) => cell.trim() !== ""))
       );
     case "analysis":
+      if (savedFamily(state)) return resultIsCurrent(state);
+      if (state.mixture !== null) return Boolean(ctx.mixtureResultCurrent);
       return (
         state.analysis.responseId !== null &&
         (!["oneWay", "procedure"].includes(analysisKind(state)) ||
@@ -47,7 +52,11 @@ export function stepSatisfied(step: StepId, state: ProjectState, ctx: GuardConte
         resultIsCurrent(state)
       );
     case "results":
-      return resultIsCurrent(state);
+      return (
+        resultFamilies(state).some((family) => family !== "legacy") ||
+        resultIsCurrent(state) ||
+        (state.mixture !== null && Boolean(ctx.mixtureResultCurrent))
+      );
   }
 }
 
@@ -58,6 +67,8 @@ export function firstUnsatisfied(state: ProjectState, ctx: GuardContext): StepId
 
 /** Pode-se abrir `step`? Todas as etapas anteriores precisam estar satisfeitas. */
 export function canEnter(step: StepId, state: ProjectState, ctx: GuardContext): boolean {
+  if (step === "results" && resultFamilies(state).some((family) => family !== "legacy"))
+    return true;
   const index = STEPS.indexOf(step);
   return STEPS.slice(0, index).every((s) => stepSatisfied(s, state, ctx));
 }

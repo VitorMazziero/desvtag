@@ -1,0 +1,59 @@
+
+Running 36 tests using 3 workers
+
+(node:14332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (10.0s)
+  ok  1 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (14.1s)
+  ok  3 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (14.3s)
+  ok  4 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (9.5s)
+  ok  5 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (10.0s)
+  ok  6 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (10.0s)
+  ok  7 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (9.4s)
+  ok  8 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (9.6s)
+  ok  9 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (10.0s)
+  ok 10 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (9.9s)
+(node:29152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (9.7s)
+  ok 12 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (9.4s)
+(node:16264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (19.8s)
+  ok 15 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (15.2s)
+  ok 14 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (19.4s)
+  ok 16 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (13.1s)
+  ok 17 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (13.0s)
+  ok 18 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (13.0s)
+  ok 19 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (13.9s)
+  ok 20 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (13.7s)
+  ok 21 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (14.1s)
+  ok 22 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (13.0s)
+  ok 23 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (13.0s)
+(node:25520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 24 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (13.0s)
+(node:2580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 27 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (18.2s)
+  ok 25 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (23.9s)
+  ok 26 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (24.3s)
+  ok 28 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (15.6s)
+  ok 29 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (15.8s)
+  ok 30 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (16.0s)
+  ok 31 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (15.1s)
+  ok 32 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (15.4s)
+  ok 33 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (16.2s)
+  ok 34 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (16.2s)
+  ok 35 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (15.4s)
+  ok 36 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (14.6s)
+
+  36 passed (2.9m)

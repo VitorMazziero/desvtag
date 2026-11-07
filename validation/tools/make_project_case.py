@@ -195,7 +195,7 @@ Nenhuma.
 
 ## Execução
 
-`app/crates/optima-project/tests/project_file_validation.rs` (nativo), `app/web/src/services/engine/project.parity.test.ts` (WebAssembly), `app/desktop/tests/native-smoke.mjs` (IPC do Tauri) e o E2E `app/web/tests/e2e/project.spec.ts` (abrir pelo navegador).
+`app/crates/desvtag-project/tests/project_file_validation.rs` (nativo), `app/web/src/services/engine/project.parity.test.ts` (WebAssembly), `app/desktop/tests/native-smoke.mjs` (IPC do Tauri) e o E2E `app/web/tests/e2e/project.spec.ts` (abrir pelo navegador).
 """,
         encoding="utf-8",
     )

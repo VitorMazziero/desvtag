@@ -1,0 +1,14 @@
+
+Running 3 tests using 3 workers
+
+(node:19768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\et22-families.spec.ts:145:1 › T04: paired and mixed models retain separate immutable records (5.5s)
+  ok 2 [firefox] › tests\e2e\et22-families.spec.ts:145:1 › T04: paired and mixed models retain separate immutable records (6.1s)
+  ok 1 [webkit] › tests\e2e\et22-families.spec.ts:145:1 › T04: paired and mixed models retain separate immutable records (7.5s)
+
+  3 passed (8.2s)

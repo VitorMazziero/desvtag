@@ -2,11 +2,11 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-Registro dos requisitos e da fundamentação do produto. As decisões de produto estão consolidadas em [decisões aprovadas](decisoes-aprovadas.md), após aprovação explícita dos 14 pontos. A execução segue o [roteiro do produto](../planos-execucao/roteiro-produto.md) e o [plano da primeira versão](../planos-execucao/plano-v0.1.md); ainda não há aplicativo publicado.
+Registro dos requisitos e da fundamentação do produto. As decisões de produto estão consolidadas em [decisões aprovadas](decisoes-aprovadas.md), após aprovação explícita dos 14 pontos. A execução segue o [roteiro do produto](../planos-execucao/roteiro-produto.md) e o [plano da primeira versão](../planos-execucao/plano-v0.1.md).
 
 ## Direção confirmada pelo usuário
 
-- **Nome escolhido:** EnziTAG Optima.
+- **Nome:** DesvTAG a partir da v0.4. As primeiras versões saíram como EnziTAG Optima. O [plano de migração](../planos-execucao/plano-v0.4.md#10-mudança-de-identidade-para-desvtag--implementação-final-da-v04) registra a identidade e a compatibilidade.
 - **Público inicial:** colegas e alunos do laboratório, incluindo pessoas sem experiência em estatística.
 - **Experiência desejada:** intuitiva e guiada, mais próxima do Protimiza do que de uma ferramenta generalista como o Minitab.
 - **Casos típicos:** planejamento Plackett–Burman (PB) e otimização de parâmetros de cultivos ou reações enzimáticas.
@@ -51,7 +51,7 @@ As instruções e recomendações nas telas pertencem ao produto de referência.
 - Tela inicial com projetos recentes, abrir e três caminhos: planejar experimento, analisar dados existentes e comparar tratamentos.
 - Fluxo guiado de objetivo, fatores/respostas, planejamento/dados, análise e resultados, com opções avançadas e explicações curtas.
 - Digitação, colagem, CSV, XLSX e matrizes externas; papéis das colunas, réplicas, unidades experimentais, blocos e tempos explícitos.
-- Vários experimentos no mesmo `.enzitag`, com dados originais, revisões, análises, modelos, gráficos e observações preservados.
+- Vários experimentos no mesmo arquivo de projeto, com dados originais, revisões, análises, modelos, gráficos e observações preservados.
 - Recuperação após dois segundos de pausa e versões em operações relevantes; estados distintos de recuperação, arquivo e Drive.
 - Google Drive opcional, pasta visível e preservação de versões em conflitos; uso local sem login permanece completo.
 - Compartilhamento inicial por arquivo/Drive, leitura e cópia; comentários posteriores, edição simultânea a especificar.
@@ -121,8 +121,8 @@ O aplicativo deve oferecer uso local sem login, com abertura e salvamento de pro
 ### Experiência aprovada
 
 - Acesso inicial com **Novo projeto**, **Abrir do computador** e **Abrir do Google Drive**. A autorização Google é solicitada quando o usuário escolhe utilizar o Drive.
-- Formato `.enzitag` para arquivos locais, navegador, Windows e Drive, com vários experimentos, dados, revisões, configurações, resultados e opções de apresentação.
-- Pasta visível com o nome do aplicativo no Drive de cada usuário, criada no primeiro salvamento autorizado na nuvem. Um arquivo representa um projeto, podendo reunir vários experimentos.
+- O navegador, o Windows e o Drive usam arquivos `.desvtag` e abrem arquivos legados `.enzitag`. Cada projeto guarda experimentos, dados, revisões, configurações, resultados e opções de apresentação.
+- Pasta «EnziTAG Optima» visível no Drive de cada usuário. O DesvTAG reutiliza essa pasta e a cria no primeiro salvamento autorizado se ainda estiver ausente. Um arquivo representa um projeto, podendo reunir vários experimentos.
 - Ações explícitas **Salvar no computador**, **Salvar no Drive** e **Salvar uma cópia**. No navegador, o salvamento em arquivo pode ser oferecido como download.
 - Salvamento automático no Drive como opção para projetos vinculados, com indicação de alterações locais, sincronização pendente e salvamento concluído.
 - Preservar o trabalho local quando faltar conexão ou autorização. Se houver alterações concorrentes, preservar as versões e oferecer uma escolha; a estratégia de detecção e resolução ainda será definida.

@@ -1,0 +1,213 @@
+
+Running 65 tests using 2 workers
+
+(node:11200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema professional (2.9s)
+  ok  1 [chromium] › tests\e2e\accessibility.spec.ts:25:3 › axe: fluxo completo sem violações no tema modern-dark (3.5s)
+  ok  4 [chromium] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar (1.1s)
+  ok  3 [chromium] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema industrial (2.8s)
+  ok  5 [chromium] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF (1.3s)
+  ok  7 [chromium] › tests\e2e\et29-review.spec.ts:76:3 › Avaliação dos componentes no tema modern-dark (554ms)
+  ok  6 [chromium] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF (1.3s)
+  ok  8 [chromium] › tests\e2e\guided-flow.spec.ts:76:1 › «Mostrar tudo» exibe todos os blocos e a preferência é lembrada (952ms)
+  ok 10 [chromium] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título (538ms)
+  ok 11 [chromium] › tests\e2e\layout-flow.spec.ts:131:3 › resultados e exportação do exemplo 01: botões espaçados em 375 px (590ms)
+  ok  9 [chromium] › tests\e2e\layout-flow.spec.ts:85:3 › distância e altura dos botões, nos seis temas, em 375 px (3.3s)
+  ok 12 [chromium] › tests\e2e\methods-flow.spec.ts:279:1 › planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados (2.4s)
+(node:15692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [chromium] › tests\e2e\methods-flow.spec.ts:411:1 › ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico (1.6s)
+(node:7860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [firefox] › tests\e2e\accessibility.spec.ts:25:3 › axe: fluxo completo sem violações no tema modern-dark (7.4s)
+  ok 15 [firefox] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema professional (6.5s)
+  ok 16 [firefox] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema industrial (4.4s)
+  x  18 [firefox] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF (1.0s)
+(node:21268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  19 [firefox] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF (1.9s)
+(node:23972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 20 [firefox] › tests\e2e\et29-review.spec.ts:76:3 › Avaliação dos componentes no tema modern-dark (1.7s)
+  ok 21 [firefox] › tests\e2e\guided-flow.spec.ts:76:1 › «Mostrar tudo» exibe todos os blocos e a preferência é lembrada (1.4s)
+  ok 22 [firefox] › tests\e2e\layout-flow.spec.ts:85:3 › distância e altura dos botões, nos seis temas, em 375 px (5.5s)
+  ok 23 [firefox] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título (790ms)
+  ok 24 [firefox] › tests\e2e\layout-flow.spec.ts:131:3 › resultados e exportação do exemplo 01: botões espaçados em 375 px (1.0s)
+  ok 25 [firefox] › tests\e2e\methods-flow.spec.ts:279:1 › planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados (1.8s)
+  ok 26 [firefox] › tests\e2e\methods-flow.spec.ts:411:1 › ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico (1.5s)
+(node:2324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 27 [webkit] › tests\e2e\accessibility.spec.ts:25:3 › axe: fluxo completo sem violações no tema modern-dark (5.2s)
+  ok 28 [webkit] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema professional (3.7s)
+  ok 29 [webkit] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema industrial (4.0s)
+  ok 30 [webkit] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar (2.7s)
+  ok 31 [webkit] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF (2.7s)
+  ok 32 [webkit] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF (2.1s)
+  ok 33 [webkit] › tests\e2e\et29-review.spec.ts:76:3 › Avaliação dos componentes no tema modern-dark (1.1s)
+  ok 34 [webkit] › tests\e2e\guided-flow.spec.ts:76:1 › «Mostrar tudo» exibe todos os blocos e a preferência é lembrada (2.0s)
+  ok 35 [webkit] › tests\e2e\layout-flow.spec.ts:85:3 › distância e altura dos botões, nos seis temas, em 375 px (5.3s)
+  x  36 [webkit] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título (4.7s)
+(node:28580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 37 [webkit] › tests\e2e\layout-flow.spec.ts:131:3 › resultados e exportação do exemplo 01: botões espaçados em 375 px (1.1s)
+  x  17 [firefox] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar (1.0m)
+(node:26656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 38 [webkit] › tests\e2e\methods-flow.spec.ts:279:1 › planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados (3.7s)
+(node:21268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 39 [webkit] › tests\e2e\methods-flow.spec.ts:411:1 › ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico (3.5s)
+(node:30752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 40 [chrome] › tests\e2e\accessibility.spec.ts:25:3 › axe: fluxo completo sem violações no tema modern-dark (4.3s)
+  ok 41 [chrome] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema professional (4.1s)
+  ok 43 [chrome] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar (1.7s)
+  ok 42 [chrome] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema industrial (4.2s)
+  ok 44 [chrome] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF (1.5s)
+  ok 46 [chrome] › tests\e2e\et29-review.spec.ts:76:3 › Avaliação dos componentes no tema modern-dark (721ms)
+  ok 45 [chrome] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF (1.5s)
+  ok 47 [chrome] › tests\e2e\guided-flow.spec.ts:76:1 › «Mostrar tudo» exibe todos os blocos e a preferência é lembrada (1.4s)
+  ok 49 [chrome] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título (950ms)
+  ok 50 [chrome] › tests\e2e\layout-flow.spec.ts:131:3 › resultados e exportação do exemplo 01: botões espaçados em 375 px (1.4s)
+  ok 48 [chrome] › tests\e2e\layout-flow.spec.ts:85:3 › distância e altura dos botões, nos seis temas, em 375 px (4.1s)
+  ok 52 [chrome] › tests\e2e\methods-flow.spec.ts:411:1 › ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico (2.6s)
+  ok 51 [chrome] › tests\e2e\methods-flow.spec.ts:279:1 › planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados (3.7s)
+(node:4352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 53 [msedge] › tests\e2e\accessibility.spec.ts:25:3 › axe: fluxo completo sem violações no tema modern-dark (6.2s)
+  ok 54 [msedge] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema professional (6.1s)
+  ok 56 [msedge] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar (2.1s)
+  ok 57 [msedge] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF (2.6s)
+  ok 55 [msedge] › tests\e2e\accessibility.spec.ts:207:3 › axe: otimização, candidatos e conferência da confirmação sem violações no tema industrial (6.4s)
+  ok 58 [msedge] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF (2.8s)
+  ok 59 [msedge] › tests\e2e\et29-review.spec.ts:76:3 › Avaliação dos componentes no tema modern-dark (1.6s)
+  ok 60 [msedge] › tests\e2e\guided-flow.spec.ts:76:1 › «Mostrar tudo» exibe todos os blocos e a preferência é lembrada (1.4s)
+  ok 62 [msedge] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título (990ms)
+  ok 63 [msedge] › tests\e2e\layout-flow.spec.ts:131:3 › resultados e exportação do exemplo 01: botões espaçados em 375 px (983ms)
+  ok 61 [msedge] › tests\e2e\layout-flow.spec.ts:85:3 › distância e altura dos botões, nos seis temas, em 375 px (4.0s)
+  ok 65 [msedge] › tests\e2e\methods-flow.spec.ts:411:1 › ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico (1.8s)
+  ok 64 [msedge] › tests\e2e\methods-flow.spec.ts:279:1 › planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados (2.7s)
+
+
+  1) [firefox] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Adicionar fator' })
+
+
+      18 |
+      19 | async function addNumericFactor(page: Page, index: number, name: string, unit: string) {
+    > 20 |   await page.getByRole("button", { name: "Adicionar fator" }).click();
+         |                                                               ^
+      21 |   await page.getByLabel("Nome", { exact: true }).nth(index).fill(name);
+      22 |   await page.getByLabel("Tipo").nth(index).selectOption("numeric");
+      23 |   await page
+        at addNumericFactor (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\design-flow.spec.ts:20:63)
+        at startPlanning (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\design-flow.spec.ts:32:60)
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\design-flow.spec.ts:290:5
+
+    Error Context: test-results-et29-retry\design-flow-fracionário-e--20aa8-do-com-explicação-sem-gerar-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et29-retry\design-flow-fracionário-e--20aa8-do-com-explicação-sem-gerar-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et29-retry\design-flow-fracionário-e--20aa8-do-com-explicação-sem-gerar-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      191 |         .some(Boolean);
+      192 |     });
+    > 193 |     expect(overflow).toBe(false);
+          |                      ^
+      194 |     if (id === "pareto-chart")
+      195 |       expect(
+      196 |         await figure.locator(".chart-canvas svg").evaluate((svg) => {
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et29-audit.spec.ts:193:22
+
+    Error Context: test-results-et29-retry\et29-audit-T15-pareto-chart-cabe-a-1-2-e-exporta-PNG-PDF-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et29-retry\et29-audit-T15-pareto-chart-cabe-a-1-2-e-exporta-PNG-PDF-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et29-retry\et29-audit-T15-pareto-chart-cabe-a-1-2-e-exporta-PNG-PDF-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [firefox] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      191 |         .some(Boolean);
+      192 |     });
+    > 193 |     expect(overflow).toBe(false);
+          |                      ^
+      194 |     if (id === "pareto-chart")
+      195 |       expect(
+      196 |         await figure.locator(".chart-canvas svg").evaluate((svg) => {
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et29-audit.spec.ts:193:22
+
+    Error Context: test-results-et29-retry\et29-audit-T15-qq-chart-cabe-a-1-2-e-exporta-PNG-PDF-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et29-retry\et29-audit-T15-qq-chart-cabe-a-1-2-e-exporta-PNG-PDF-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et29-retry\et29-audit-T15-qq-chart-cabe-a-1-2-e-exporta-PNG-PDF-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+       98 |   await page.goto("/");
+       99 |   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    > 100 |   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+          |                                                                ^
+      101 |   const before = await page.evaluate(() => window.scrollY);
+      102 |   await page.getByRole("button", { name: "Começar: Planejar experimento" }).click();
+      103 |   await expect(page.getByRole("heading", { name: /Fatores e respostas|variáveis/i })).toBeVisible();
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\layout-flow.spec.ts:100:64
+
+    Error Context: test-results-et29-retry\layout-flow-ao-avançar-de--8a9b4-topo-e-o-foco-vai-ao-título-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et29-retry\layout-flow-ao-avançar-de--8a9b4-topo-e-o-foco-vai-ao-título-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et29-retry\layout-flow-ao-avançar-de--8a9b4-topo-e-o-foco-vai-ao-título-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [firefox] › tests\e2e\design-flow.spec.ts:287:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar
+    [firefox] › tests\e2e\et29-audit.spec.ts:170:3 › T15: pareto-chart cabe a 1,2 e exporta PNG/PDF
+    [firefox] › tests\e2e\et29-audit.spec.ts:170:3 › T15: qq-chart cabe a 1,2 e exporta PNG/PDF ────
+    [webkit] › tests\e2e\layout-flow.spec.ts:96:1 › ao avançar de etapa, a página volta ao topo e o foco vai ao título
+  61 passed (2.1m)

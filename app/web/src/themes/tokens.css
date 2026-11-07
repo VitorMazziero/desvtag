@@ -18,7 +18,12 @@
   --focus-offset: 2px;
   --text-body: 1rem;
   --text-small: 0.875rem;
-  --text-label: 0.8125rem;
+  --text-label: 0.875rem;
+  --text-heading: 1.5rem;
+  --text-subheading: 1.125rem;
+  --heading-weight: 600;
+  --reading-width: 70ch;
+  --space-field: 6px;
   --leading-body: 1.6;
   /* Profundidade (relevo e rebaixo): os temas da v0.1 não usam; os novos definem. */
   --radius-button: var(--radius-control);

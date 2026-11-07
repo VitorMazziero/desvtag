@@ -1,0 +1,9 @@
+
+> @enzitag/optima-web@0.4.0-dev build:wasm
+> node scripts/build-wasm.mjs
+
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+   Compiling optima-engine v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-engine)
+   Compiling optima-wasm v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-wasm)
+    Finished `release` profile [optimized] target(s) in 2m 11s
+WASM (release) gerado em D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\src\services\engine\wasm

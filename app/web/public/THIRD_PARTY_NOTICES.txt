@@ -1,4 +1,4 @@
-EnziTAG Optima — avisos de software de terceiros
+DesvTAG — avisos de software de terceiros
 
 O aplicativo (MIT) inclui os componentes abaixo, sob as licenças indicadas.
 
@@ -38,16 +38,29 @@ O aplicativo (MIT) inclui os componentes abaixo, sob as licenças indicadas.
 @typescript/typescript-win32-arm64 7.0.2 — Apache-2.0
 @typescript/typescript-win32-x64 7.0.2 — Apache-2.0 — "Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
 base64-js 0.0.8 — MIT
+boolbase 2.0.0 — ISC — Copyright (c) 2014-2015, Felix Boehm <me@feedic.com>
 brotli 1.3.3 — MIT
 clone 2.1.2 — MIT — Copyright © 2011-2015 Paul Vorbach <paul@vorba.ch>
+css-select 7.0.0 — BSD-2-Clause — Copyright (c) Felix Böhm
+css-what 8.0.0 — BSD-2-Clause — Copyright (c) Felix Böhm
+cssomnom 0.1.11 — Apache-2.0 — "Licensor" shall mean the copyright owner or entity authorized by
 dfa 1.2.0 — MIT
 docx 9.15.1 — MIT — Copyright (c) 2016 Dolan
+dom-serializer 3.1.1 — MIT — Copyright © 2022 The Cheerio contributors
+domelementtype 3.0.0 — BSD-2-Clause — Copyright (c) Felix Böhm
+domhandler 6.0.1 — BSD-2-Clause — Copyright (c) Felix Böhm
+domutils 4.0.2 — BSD-2-Clause — Copyright (c) Felix Böhm
+entities 8.1.0 — BSD-2-Clause — Copyright (c) Felix Böhm
 fast-deep-equal 3.1.3 — MIT — Copyright (c) 2017 Evgeny Poberezkin
 fflate 0.8.3 — MIT — Copyright (c) 2026 Arjun Barrett
 fontkit 2.0.4 — MIT
+html-escaper 3.0.3 — MIT — Copyright (C) 2017-present by Andrea Giammarchi - @WebReflection
 html-parse-stringify 4.0.1 — MIT — Copyright (c) 2025 Henrik Joreteg <henrik@joreteg.com>
+htmlparser2 10.1.0 — MIT — Copyright 2010, 2011, Chris Winberry <chris@winberry.net>. All rights reserved.
 i18next 26.6.0 — MIT — Copyright (c) 2011-present i18next
 linebreak 1.1.0 — MIT — Copyright (c) 2014-present Devon Govett
+linkedom 0.18.15 — ISC — Copyright (c) 2021, Andrea Giammarchi, @WebReflection
+nth-check 3.0.1 — BSD-2-Clause — Copyright (c) Felix Böhm
 pako 0.2.9 — MIT — Copyright (C) 2014-2016 by Vitaly Puzrin
 pdfkit 0.20.2 — MIT — Copyright (c) 2014 Devon Govett
 pdfmake 0.3.13 — MIT — Copyright (c) 2014-2015 bpampuch
@@ -60,6 +73,7 @@ sax 1.6.1 — BlueOak-1.0.0 — ## Copyright
 scheduler 0.28.0 — MIT — Copyright (c) Meta Platforms, Inc. and affiliates.
 tiny-inflate 1.0.3 — MIT — Copyright (c) 2015-present Devon Govett
 tslib 2.9.1 — 0BSD — Copyright (c) Microsoft Corporation.
+uhyphen 0.2.0 — ISC — Copyright (c) 2020, Andrea Giammarchi, @WebReflection
 undici-types 8.9.0 — MIT — Copyright (c) Matteo Collina and Undici contributors
 unicode-properties 1.4.1 — MIT — Copyright 2018
 unicode-trie 2.0.0 — MIT — Copyright 2018

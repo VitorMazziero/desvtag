@@ -1,5 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
+import { openFigureMenu } from "./figureTools";
+import { startObjective } from "./startObjective";
 
 // PDF da figura de médias (comparação de um fator): o conversor de SVG só funciona se houver uma
 // fonte corrente no documento (regressão encontrada na verificação nativa).
@@ -9,8 +11,7 @@ test("PDF da figura de médias de um fator: válido, com uma página e texto vet
 }) => {
   test.setTimeout(90000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "compare");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Condição");
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
@@ -40,6 +41,7 @@ test("PDF da figura de médias de um fator: válido, com uma página e texto vet
   await page.getByRole("button", { name: "Comparar tratamentos" }).click();
   await page.getByTestId("section-charts").click();
   const d = page.waitForEvent("download", { timeout: 30000 });
+  await openFigureMenu(page.getByTestId("means-chart"));
   await page
     .getByTestId("means-chart")
     .getByRole("button", { name: /Figura — PDF/ })

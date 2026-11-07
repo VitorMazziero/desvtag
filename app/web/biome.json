@@ -7,11 +7,26 @@
       "!dist",
       "!test-results",
       "!playwright-report",
+      "!test-results-*",
       "!src/services/engine/wasm",
       "!src/services/engine/contracts.generated.ts"
     ]
   },
-  "formatter": { "indentStyle": "space", "indentWidth": 2, "lineWidth": 100 },
-  "linter": { "rules": { "preset": "recommended" } },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } }
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "rules": {
+      "preset": "recommended"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
 }

@@ -1,6 +1,14 @@
+import { embedFigureFonts } from "./figureFonts";
+
 // SVG → PNG no navegador (U16) e inserção de metadados em um chunk `tEXt`.
 
 const PNG_SIGNATURE = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+
+/** Dimensions in a locally generated PNG's IHDR. */
+export function pngSize(bytes: Uint8Array): { width: number; height: number } {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  return { width: view.getUint32(16), height: view.getUint32(20) };
+}
 
 let crcTable: Uint32Array | null = null;
 
@@ -49,7 +57,9 @@ export async function svgToPng(
   height: number,
   scale = 2,
 ): Promise<Uint8Array> {
-  const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+  const url = URL.createObjectURL(
+    new Blob([await embedFigureFonts(svg)], { type: "image/svg+xml;charset=utf-8" }),
+  );
   try {
     const image = new Image();
     image.decoding = "sync";

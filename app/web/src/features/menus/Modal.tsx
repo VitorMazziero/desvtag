@@ -18,7 +18,19 @@ export function Modal({ open, title, onClose, testId, children }: Props) {
     const el = dialog.current;
     if (!el) return;
     if (open && !el.open) el.showModal();
-    if (!open && el.open) el.close();
+    if (!open) {
+      if (el.open) el.close();
+      return;
+    }
+    const overflow = document.body.style.overflow;
+    const padding = document.body.style.paddingRight;
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    if (scrollbar > 0) document.body.style.paddingRight = `${scrollbar}px`;
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.paddingRight = padding;
+    };
   }, [open]);
   return (
     <dialog

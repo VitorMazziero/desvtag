@@ -33,8 +33,9 @@ const NIVEIS = {
     "app/web/dist",
     "app/web/src/services/engine/wasm",
     "app/desktop/src-tauri/target/release/bundle",
-    "app/desktop/src-tauri/target/release/optima-desktop.exe",
+    "app/desktop/src-tauri/target/release/desvtag-desktop.exe",
     "app/target/wasm32-unknown-unknown",
+    "app/target/desvtag-wasm",
   ],
   3: ["app/target", "app/desktop/src-tauri/target", "app/web/node_modules"],
 };

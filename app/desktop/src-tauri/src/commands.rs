@@ -16,7 +16,7 @@ use crate::jobs;
 /// O cálculo roda em uma thread de trabalho, fora da thread da interface.
 #[tauri::command]
 pub async fn engine_request(request_json: String) -> Result<String, String> {
-    jobs::run_blocking(move || optima_engine::handle_json(&request_json)).await
+    jobs::run_engine(request_json).await
 }
 
 /// Arquivo aberto: nome e conteúdo (o caminho fica no Rust).
@@ -87,7 +87,7 @@ pub async fn project_open(
         dialog_app
             .dialog()
             .file()
-            .add_filter("EnziTAG", &["enzitag"])
+            .add_filter("DesvTAG", &["desvtag", "enzitag"])
             .blocking_pick_file()
     })
     .await?;
@@ -179,7 +179,16 @@ async fn pick_save_path(
     app: &AppHandle,
     suggested_name: String,
 ) -> Result<Option<PathBuf>, String> {
-    pick_save_path_with(app, suggested_name, "EnziTAG", "enzitag").await
+    let path = pick_save_path_with(app, suggested_name, "DesvTAG", "desvtag").await?;
+    if path.as_ref().is_some_and(|path| {
+        !path
+            .extension()
+            .and_then(|extension| extension.to_str())
+            .is_some_and(|extension| extension.eq_ignore_ascii_case("desvtag"))
+    }) {
+        return Err("project.invalidExtension".into());
+    }
+    Ok(path)
 }
 
 async fn pick_save_path_with(

@@ -46,7 +46,12 @@
       "duplicate_comment_id": "Comment {{id}} appears more than once.",
       "invalid_comment": "Comment {{id}} is empty, too long or missing the analysis it refers to.",
       "comment_unknown_revision": "Comment {{id}} points to a revision that does not exist.",
-      "comment_unknown_analysis": "Comment {{id}} points to an analysis that does not exist."
+      "comment_unknown_analysis": "Comment {{id}} points to an analysis that does not exist.",
+      "invalid_family_result": "A saved mixture, repeated-measures, saturation or power result has inconsistent inputs or references ({{id}}).",
+      "invalid_optimal_design": "Optimal-design record {{id}} is inconsistent with its revisions or saved values.",
+      "invalid_block_context": "The block or reference of analysis {{id}} is inconsistent with its saved result and revision.",
+      "invalid_optimal_variance": "Variance supplement {{id}} does not match its design, revision or saved values.",
+      "invalid_optimal_model": "The saved optimal model does not match its design, response or data revision."
     },
     "import": {
       "not_xlsx": "The file is not a readable XLSX spreadsheet.",
@@ -69,7 +74,10 @@
       "zero_within_variance": "There is no variation within groups: pairwise comparisons are undefined.",
       "letters_unavailable": "Letters could not be assigned (pair pattern too complex).",
       "singleton_groups": "Some groups have a single observation.",
-      "excluded_observations": "Some observations are outside the analysis."
+      "excluded_observations": "Some observations are outside the analysis.",
+      "no_error_degrees_of_freedom": "There is insufficient residual variance information for this procedure.",
+      "procedure_needs_variance": "This procedure requires positive variance and at least two observations in group {{level}}.",
+      "unknown_control": "Control {{level}} is not among the observed groups."
     },
     "model": {
       "invalid_dimensions": "The model matrix dimensions do not match.",
@@ -85,14 +93,19 @@
       "no_complete_rows": "No row has all the values required by the model.",
       "no_columns": "The model has no columns.",
       "invalid_interaction": "Term {{term}} is an invalid interaction.",
-      "invalid_power": "Term {{term}} is an invalid power (quantitative factors only, degree ≥ 2).",
-      "duplicate_term": "Term {{term}} is repeated."
+      "invalid_power": "Term {{term}} must be a numeric-factor power with an integer degree from 2 to 2,147,483,647.",
+      "duplicate_term": "Term {{term}} is repeated.",
+      "matrix_budget": "The model exceeds the limit of {{maxColumns}} fixed columns or the matrix materialization budget. Review the configured terms and levels."
     },
     "distribution": {
       "invalid_parameter": "Invalid distribution parameter.",
       "unsupported_function": "Function not available for this distribution."
     },
     "design": {
+      "mixture_invalid_upper_bounds": "Upper bounds require one value per component, between its lower bound and 1, and a sum of at least 1.",
+      "mixture_upper_bounds_need_vertices": "Choose vertices and edges to use upper bounds that cut the simplex.",
+      "mixture_unresolved_region": "The mixture region could not be resolved numerically. Check the bounds.",
+      "mixture_reduced_dimension": "The region has dimension {{dimension}}. Some model effects may not be estimable.",
       "too_few_factors": "At least two factors are required.",
       "invalid_levels": "The low level must be smaller than the high level for every factor.",
       "empty_factor_name": "Every design factor needs a name.",
@@ -145,8 +158,10 @@
       "optimal_invalid_constraint": "The constraint entered is invalid.",
       "optimal_invalid_factor_count": "The number of factors must be between 1 and {{max}}.",
       "optimal_invalid_fixed_run": "A fixed run is invalid (outside the factor ranges or with the wrong number of values).",
+      "optimal_invalid_evaluation_run": "Run {{row}} is invalid for evaluation. Check the number of values, factor ranges, constraints and numeric values.",
       "optimal_invalid_levels": "The factor levels are invalid.",
       "optimal_invalid_range": "A factor range is invalid: the minimum must be below the maximum.",
+      "optimal_unresolved_grid": "The range for {{factor}} cannot represent the requested grid levels.",
       "optimal_invalid_runs": "The number of runs is invalid; the maximum is {{max}}.",
       "optimal_invalid_starts": "The number of starts is invalid; the maximum is {{max}}.",
       "optimal_more_fixed_than_runs": "There are more fixed runs than runs in the design.",
@@ -156,11 +171,32 @@
       "rcbd_empty_level": "A {{kind}} level has no name.",
       "rcbd_empty_name": "Name the factor and the block.",
       "rcbd_too_few_levels": "Enter at least two {{kind}} levels; received: {{count}}.",
-      "rcbd_too_many_levels": "Too many {{kind}} levels; the maximum is {{max}}."
+      "rcbd_too_many_levels": "Too many {{kind}} levels; the maximum is {{max}}.",
+      "mixed_single_replicate": "There is only one replicate per combination. No replication is available to estimate pure error.",
+      "mixture_no_pure_error": "Without replicates or repeated center points, this design cannot estimate pure error.",
+      "optimal_empty_region": "No candidate point satisfies the bounds and constraints. Review the experimental region or candidate grid.",
+      "optimal_nothing_to_choose": "All runs are already fixed; there are no free runs to select in this search.",
+      "optimal_single_best_start": "Only one start reached the best criterion. Check search stability with more starts; a global optimum is not guaranteed.",
+      "optimal_singular": "The admissible points cannot estimate every model term. Review the region, constraints or requested model.",
+      "optimal_invalid_blocks": "Invalid block configuration: check labels, completed-run assignments and new-run counts.",
+      "optimal_block_association_required": "Provide each run’s block to evaluate this design.",
+      "optimal_invalid_evaluation_block": "Run-to-block assignments are missing or invalid.",
+      "optimal_variance_block_association": "Variance evaluation needs the correct block assignment for every run.",
+      "optimal_variance_singular": "This design does not identify all model parameters. Variance cannot be evaluated using the full information matrix.",
+      "optimal_variance_unrepresentable_region": "The numeric range cannot faithfully represent the candidate levels. Check the factor scale and bounds.",
+      "optimal_variance_numerical": "Variance evaluation did not produce finite positive values. Check the design scale and identifiability.",
+      "optimal_invalid_categories": "Check categorical factors: names, distinct identifiers and 2 to 60 unique levels without surrounding whitespace.",
+      "optimal_invalid_category_combinations": "Check permitted combinations: a nonempty list without duplicates, using declared levels only.",
+      "optimal_invalid_fixed_categories": "Every completed run requires its valid categorical tuple, in the same order as the fixed numeric rows.",
+      "optimal_category_association_required": "Provide explicit categories for every run. They are never inferred from row position.",
+      "optimal_pass_limit": "The search reached its pass limit. The design is usable, but an improving exchange may remain.",
+      "optimal_work_limit": "The work budget ended the search after {{attempted}} of {{requested}} starts. The best available design was kept.",
+      "optimal_model_factor_mismatch": "Data columns do not match the identifiers or types of factors and the block in the saved model.",
+      "optimal_model_budget": "The fit matrix exceeds the 262,144-cell budget. Reduce the rows or model dimension."
     },
     "surface": {
       "invalid_alpha": "The significance level must be between 0 and 1.",
-      "too_few_factors": "The surface needs at least two quantitative factors.",
+      "too_few_factors": "The polynomial fit requires at least one quantitative factor.",
       "factor_not_numeric": "Surface factors must be quantitative.",
       "invalid_levels": "Each factor needs distinct values (low level below the high one).",
       "unsupported_term": "Term {{term}} is not supported: use main effects, quadratic terms and two-factor interactions.",
@@ -171,11 +207,14 @@
       "saturated": "Saturated model: no error degrees of freedom.",
       "not_estimable_terms": "{{count}} model term(s) are not estimable with these runs.",
       "invalid_axes": "Choose two different factors for the axes.",
+      "grid_fit_mismatch": "The coefficients and geometry of the saved revision do not match. Check the analysis revision before generating the grid.",
       "invalid_steps": "Grid resolution must be between {{min}} and {{max}} steps per axis.",
       "invalid_fixed_value": "Invalid fixed value for factor {{id}}.",
-      "grid_extrapolation": "Part of the grid lies outside the region run (extrapolation)."
+      "grid_extrapolation": "Part of the grid lies outside the region run (extrapolation).",
+      "invalid_block": "Choose a categorical block column and an existing reference level."
     },
     "optimization": {
+      "grid_fit_mismatch": "The saved fits do not match the optimization objectives.",
       "invalid_goal": "Invalid goal: check the order of the limits (lowest < target < highest) and the exponents (greater than 0 and at most {{max_shape}}).",
       "invalid_search": "Invalid search options: use 1 to {{max_starts}} starts and 1 to {{max_candidates}} candidates.",
       "no_responses": "Include at least one response in the optimization.",
@@ -187,10 +226,24 @@
       "no_region": "There is no experimental region: factor values are missing.",
       "invalid_bounds": "Invalid limits for factor {{id}} (minimum below maximum).",
       "invalid_points": "Invalid conditions: give 1 to 200 points with every factor numeric.",
-      "infeasible": "No point of the region satisfies the mandatory limits."
+      "infeasible": "The search found no candidate satisfying the mandatory limits.",
+      "invalid_confirmation": "Invalid confirmation comparison: check finite values, ordered bounds and unique observation/response identifiers."
     },
     "anova": {
-      "empty_cells": "Some level combinations have no observations; some sums of squares may not be estimable."
+      "empty_cells": "Some level combinations have no observations; some sums of squares may not be estimable.",
+      "resource_limit": "The request exceeds the per-operation budget ({{matrixCells}} matrix cells, {{pairs}} accumulated pairs or {{work}} work units). Reduce comparison families, levels, terms or rows and try again.",
+      "invalid_contrast": "Provide a name and finite weights, not all zero, that sum to zero.",
+      "invalid_interaction_order": "Interaction order must be an integer from 1 to 4.",
+      "no_residual_df": "There are no residual degrees of freedom. Geometry and identifiable estimates can be shown, but tests, standard errors and intervals require additional error information.",
+      "contrast_length": "The contrast has {{got}} weights, but the selected family requires {{expected}}.",
+      "design_failed": "The model matrix could not be built. Check complete rows and factor levels.",
+      "duplicate_factor": "A factor was selected more than once.",
+      "factor_needs_two_levels": "Factor {{factor}} requires at least two levels.",
+      "marginal_no_factors": "Choose the factors defining the means or contrast.",
+      "marginal_unknown_factor": "Mean or contrast factor {{id}} is not in the model.",
+      "no_factors": "Choose at least one treatment factor.",
+      "too_many_columns": "The model has {{columns}} columns; the limit is {{max}}. Reduce levels or interactions.",
+      "too_many_factors": "The model supports up to {{max}} factors, including the block."
     },
     "data": {
       "too_few_observations": "There are fewer valid observations than required (minimum: {{n}})."
@@ -213,9 +266,38 @@
       "missing_unit": "{{count}} observations have no experimental unit.",
       "too_few_observations": "{{observations}} observations are not enough for {{parameters}} parameters.",
       "too_few_units": "Too few units ({{count}}) to estimate the between-unit variance.",
-      "unbalanced": "The data are unbalanced: units have different numbers of observations."
+      "unbalanced": "The data are unbalanced: units have different numbers of observations.",
+      "invalid_time_values": "Provide a numeric time index for each observation (empty means missing).",
+      "duplicate_unit_time": "More than one observation has the same unit and occasion. Review unit and time.",
+      "noninteger_time_lag": "AR(1) requires integer differences between time indices within a unit. Set the scale or occasion order.",
+      "unstructured_not_identifiable": "The unstructured matrix is not identifiable from these observations: each pair of occasions needs at least two units and sufficient residual information is required.",
+      "no_residual_variation": "There is no residual variation to estimate this model’s covariance.",
+      "invalid_reference_grid": "Review marginal-mean factors and covariate reference values; they must belong to the model.",
+      "reference_grid_too_large": "The reference grid exceeds 100,000 cells. Reduce its factors or levels; the weighting has not been replaced.",
+      "reml_not_converged": "REML did not converge for the requested structure. Review model and data; no other structure was substituted.",
+      "inference_unavailable": "Observed covariance information does not support degrees of freedom and intervals. Estimates are shown with undefined inference.",
+      "no_repeated_units": "Repeated measurements are required: every unit has only one observation.",
+      "ar1_not_identifiable": "AR(1) with a random intercept requires at least two distinct within-unit time lags and at least one odd lag. One lag confounds the three parameters; exclusively even lags leave the sign of ρ unidentified.",
+      "random_intercept_not_identifiable": "Fixed effects already represent every individual unit. The random-intercept variance is not identifiable by REML; review fixed effects.",
+      "row_budget": "The repeated-measures extension accepts up to {{maxRows}} input observations. This fit was not started.",
+      "occasion_budget": "UN covariance accepts up to {{maxOccasions}} occasions in this version. Choose another structure or review the time configuration.",
+      "work_budget": "Fitting reached its execution budget before completing REML estimation. No new completed fit is available.",
+      "inference_budget": "The REML fit was preserved. Its execution budget did not allow covariance inference to finish; dependent degrees of freedom, intervals and tests remain unavailable."
     },
     "mixture": {
+      "invalid_upper_bounds": "The analysis upper bounds are invalid or define an infeasible region.",
+      "optimization_responses": "Include one to eight distinct responses with complete data and goals.",
+      "optimization_configuration": "Check the mixture configuration: use the declared domain, at most 128 starts and the analysis α. Terms come from the selected Scheffe model.",
+      "optimization_fit_budget": "The goal data exceed the mixture fit budget (up to 4096 observations per response and 10 million work units). Reduce responses or model size before calculating.",
+      "optimization_region_unresolved": "The numerical dimension of the region could not be resolved. Check component bounds and interval widths.",
+      "optimization_non_finite": "The scale of the data or constraints prevents finite optimization calculations. Review units and bounds.",
+      "optimization_starts_limited": "{{count}} starts reached their evaluation allocation before the step tolerance. Available candidates are retained; this is not convergence.",
+      "optimization_search_budget": "The search reached its combined evaluation budget. Available candidates are retained as a partial result; this is not convergence.",
+      "invalid_cox_reference": "The Cox reference needs one fraction per component, must sum to 1 and respect the mixture bounds.",
+      "cox_direction_undefined": "The Cox direction of {{component}} is undefined at this pure reference. Ratios between the other components cannot be calculated.",
+      "cox_predictions_not_estimable": "The trace has {{count}} non-estimable predictions. They remain gaps in the figure and undefined states in the data.",
+      "predictions_not_estimable": "{{count}} non-estimable predictions were omitted. Check the model rank and terms.",
+      "prediction_grid_empty": "The grid contains no valid predictions in this region. Check the region width and model estimability.",
       "invalid_component_count": "Invalid number of components ({{count}}).",
       "invalid_dimensions": "The proportions and the response have different numbers of rows.",
       "invalid_lower_bounds": "The lower bounds are invalid.",
@@ -236,7 +318,12 @@
       "not_converged": "The fit did not fully converge; use the estimates with caution.",
       "parameter_at_bound": "A parameter ended at its allowed limit.",
       "single_start_best": "Only one start reached the best fit; check for another minimum.",
-      "too_few_observations": "{{observations}} observations are not enough for {{parameters}} parameters."
+      "too_few_observations": "{{observations}} observations are not enough for {{parameters}} parameters.",
+      "profile_cutoff_unavailable": "The profile cutoff could not be calculated at this confidence level. Choose a less extreme level.",
+      "inference_unavailable": "Inference and confidence band unavailable: the fit did not converge or its estimated residual variance is zero. Fitted values were retained.",
+      "row_budget": "Fitting was not started: the current limit is {{maxRows}} input pairs.",
+      "work_budget": "Fitting reached its execution budget before completing all starts. No new completed fit is available.",
+      "profile_budget": "The fitted result was preserved. Likelihood profiling reached its execution budget; parameters with incomplete profiles have no reported profile confidence limits."
     },
     "paired": {
       "few_pairs": "Few pairs: the result is unreliable.",
@@ -248,17 +335,35 @@
       "invalid_difference": "The expected difference must be a number other than zero.",
       "invalid_half_width": "The desired half-width must be positive.",
       "invalid_means": "Enter at least two numeric means.",
-      "invalid_n": "The sample size must be an integer of at least 2.",
+      "invalid_n": "Enter an integer sample size from 2 through 100,000 (in the design’s stated unit).",
       "invalid_sigma": "The expected standard deviation (σ) must be positive.",
       "invalid_target": "The desired power must be between 0 and 1.",
       "no_effect": "There is no effect to detect: the difference is zero or all means are equal.",
       "precision_needs_t": "Precision only applies to t tests, not to ANOVA.",
       "small_n": "Very small sample: power is sensitive to the assumptions.",
-      "unreachable": "The requested power is not reached with up to {{max}} units per group."
+      "unreachable": "The requested power is not reached with up to {{max}} units per group.",
+      "numerical_failure": "The distribution could not be calculated accurately for this combination of effect, alpha and sample size. No substitute power estimate was used.",
+      "invalid_simulation": "Enter an integer from 1,000 through 1,000,000 simulated studies.",
+      "invalid_seed": "The seed must be an integer from 0 through 4,294,967,295.",
+      "total_budget": "The design exceeds 100,000 total observations. Reduce replication or the base design.",
+      "simulation_failed": "Simulation could not produce finite statistics. No substitute result was used.",
+      "invalid_design": "Choose an available power design.",
+      "invalid_regression": "Enter a rectangular numeric matrix with up to 32 predictors, more conditions than predictors, and one slope per column.",
+      "rank_deficient": "Predictors and the intercept are not independent. Check constant or dependent columns.",
+      "invalid_contrast": "Means, weights and allocations must have equal lengths; finite weights sum to zero and allocations are positive integers.",
+      "invalid_two_level": "Enter one to eight factors, distinct terms without repeated factors, one effect per term, and a valid target.",
+      "insufficient_df": "There are no residual degrees of freedom. Increase replication or reduce the fitted terms.",
+      "invalid_replications": "Enter an integer replication count from 1 through 100,000. The total limit also depends on the base design.",
+      "analytical_unavailable": "Precision was calculated, but power for the assumed effect is outside the available numerical range. It was not replaced by zero or one.",
+      "simulation_unavailable": "Precision was preserved. Monte Carlo verification could not be calculated for these assumptions; no simulation was recorded.",
+      "simulation_total_budget": "Precision was preserved. Simulation was not run because the total number of observations exceeds {{max}}.",
+      "curve_incomplete": "Some curve points could not be calculated accurately; no substitute estimates were used."
     },
     "selection": {
-      "step_failed": "A model-selection step failed and was skipped."
-    }
+      "step_failed": "A model-selection step failed and was skipped.",
+      "full_model_unavailable": "The full model could not be fitted. The reference summary uses the current model; review estimable terms."
+    },
+    "import.multiple_identifier_columns": "Choose only one column for each observation, unit or time role (columns: {{columns}})."
   },
   "cellErrors": {
     "notANumber": "Not a number. Use a dot or comma as the decimal separator, with no thousands separator.",

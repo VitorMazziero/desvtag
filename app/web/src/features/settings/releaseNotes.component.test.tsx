@@ -74,7 +74,7 @@ describe("notas geradas a partir do CHANGELOG", () => {
   it("usa só a seção da versão", () => {
     expect(sectionOf(changelog, "0.2.0")).toBe("Texto antigo.");
     expect(sectionOf(changelog, "9.9.9")).toBeNull();
-    expect(notesFor(changelog, "9.9.9")).toBe("EnziTAG Optima 9.9.9 (canal experimental).");
+    expect(notesFor(changelog, "9.9.9")).toBe("DesvTAG 9.9.9 (canal experimental).");
   });
 
   it("não corta no meio de uma frase e indica o CHANGELOG completo", () => {
@@ -86,9 +86,7 @@ describe("notas geradas a partir do CHANGELOG", () => {
 
   it("links relativos viram links absolutos da etiqueta", () => {
     const out = notesFor(changelog, "0.3.0", 100000) as string;
-    expect(out).toContain(
-      "(https://github.com/VitorMazziero/enzitag-optima/blob/v0.3.0/docs/guias/x.md)",
-    );
+    expect(out).toContain("(https://github.com/VitorMazziero/desvtag/blob/v0.3.0/docs/guias/x.md)");
   });
 
   it("não corta quando cabe no limite", () => {

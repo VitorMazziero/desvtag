@@ -1,0 +1,9 @@
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3.06s
+     Running tests\mixed_model_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixed_model_validation-b4633344621d7580.exe)
+
+running 1 test
+test advanced_cs_boundary_equals_independent_ols_without_a_df_fallback ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+

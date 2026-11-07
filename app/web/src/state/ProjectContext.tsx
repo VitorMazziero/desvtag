@@ -1,6 +1,8 @@
 import { createContext, type Dispatch, type ReactNode, useContext, useReducer } from "react";
+import { nowIso } from "../lib/ids";
 import type { ProjectState } from "./project";
 import {
+  createWorkspace,
   currentExperiment,
   initialWorkspace,
   type Workspace,
@@ -13,12 +15,23 @@ const DispatchContext = createContext<Dispatch<WorkspaceAction>>(() => {});
 
 export function ProjectProvider({
   children,
-  initial = initialWorkspace,
+  initial,
 }: {
   children: ReactNode;
   initial?: Workspace;
 }) {
-  const [workspace, dispatch] = useReducer(workspaceReducer, initial);
+  const [workspace, dispatch] = useReducer(
+    workspaceReducer,
+    initial,
+    (provided) =>
+      provided ??
+      createWorkspace(
+        initialWorkspace.projectId,
+        initialWorkspace.name,
+        currentExperiment(initialWorkspace).name,
+        nowIso(),
+      ),
+  );
   return (
     <WorkspaceContext.Provider value={workspace}>
       <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>

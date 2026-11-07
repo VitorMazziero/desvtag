@@ -35,14 +35,15 @@ export function parseClipboard(text: string): string[][] {
  * quando necessário. Colunas além da última são ignoradas e contadas em `ignoredColumns`.
  */
 export function applyPaste(
-  state: Pick<ProjectState, "rows" | "factors" | "responses" | "counters">,
+  state: Pick<ProjectState, "rows" | "factors" | "responses" | "counters"> &
+    Partial<Pick<ProjectState, "showTimeColumn">>,
   startRow: number,
   startColumn: number,
   matrix: string[][],
 ): { rows: RowDraft[]; counters: ProjectState["counters"]; ignoredColumns: number } {
   const factorCount = state.factors.length;
-  const lastColumn = factorCount + state.responses.length;
-  let rows = state.rows.slice();
+  const lastColumn = factorCount + state.responses.length + (state.showTimeColumn ? 1 : 0);
+  const rows = state.rows.slice();
   let counters = state.counters;
   let ignoredColumns = 0;
   matrix.forEach((cells, r) => {
@@ -53,7 +54,7 @@ export function applyPaste(
         responses: state.responses,
         counters,
       });
-      rows = [...rows, row];
+      rows.push(row);
       counters = next;
     }
     cells.forEach((value, c) => {

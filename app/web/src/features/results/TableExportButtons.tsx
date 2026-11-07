@@ -4,8 +4,11 @@ import { useProject } from "../../state/ProjectContext";
 import { CommentThread } from "../comments";
 import { ExportButton } from "./ExportButton";
 import { useTableExport } from "./useTableExport";
+import { useViewedFamily } from "./ViewedFamily";
 
 interface Props {
+  /** Explicit saved calculation for planning supplements. */
+  recordId?: string | null;
   /** Rótulo do botão CSV (termina em "(CSV)"); o do XLSX troca o sufixo. */
   label: string;
   suffix: string;
@@ -19,6 +22,7 @@ interface Props {
 
 /** Par de botões CSV e XLSX para uma tabela. */
 export function TableExportButtons({
+  recordId,
   label,
   suffix,
   sheet,
@@ -37,29 +41,37 @@ export function TableExportButtons({
     );
   const failed = () => onDone(t("comparison.export.failed"));
   // A análise vigente fixa a revisão dos dados em que o comentário foi escrito.
-  const analysisId = [...project.analyses]
-    .reverse()
-    .find((a) => a.signature === project.result?.signature)?.id;
+  const { saved: family } = useViewedFamily();
+  const analysisId =
+    recordId === null
+      ? undefined
+      : (recordId ??
+        family?.record.id ??
+        [...project.analyses].reverse().find((a) => a.signature === project.result?.signature)?.id);
   return (
-    <>
-      <ExportButton
-        label={label}
-        onExport={async () => finish((await exportCsv(suffix, header, rows))?.name ?? null)}
-        onError={failed}
-      />
-      <ExportButton
-        label={label.replace(/\(CSV\)/, "(XLSX)")}
-        onExport={async () => finish((await exportXlsx(suffix, sheet, header, rows))?.name ?? null)}
-        onError={failed}
-      />
+    <div className="table-tools" data-report-skip>
+      <div className="row table-export-actions">
+        <ExportButton
+          label={label}
+          onExport={async () => finish((await exportCsv(suffix, header, rows))?.name ?? null)}
+          onError={failed}
+        />
+        <ExportButton
+          label={label.replace(/\(CSV\)/, "(XLSX)")}
+          onExport={async () =>
+            finish((await exportXlsx(suffix, sheet, header, rows))?.name ?? null)
+          }
+          onError={failed}
+        />
+      </div>
       <CommentThread
         target={{
           kind: "table",
-          key: `${project.result?.kind ?? "plan"}/${suffix}`,
+          key: `${family?.family ?? project.result?.kind ?? "plan"}/${suffix}`,
           ...(analysisId ? { analysisId } : {}),
         }}
         testId={`table-${suffix}`}
       />
-    </>
+    </div>
   );
 }

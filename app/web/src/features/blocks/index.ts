@@ -1,1 +1,8 @@
-export { type Block, GuidedBlocks } from "./GuidedBlocks";
+export {
+  type Block,
+  FillResponsesButton,
+  FlowBlock,
+  GuidedBlocks,
+  GuidedFlow,
+  useGuidedBlockFocus,
+} from "./GuidedBlocks";

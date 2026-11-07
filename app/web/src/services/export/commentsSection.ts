@@ -5,6 +5,7 @@ import type { Comment, CommentTarget } from "../engine";
 export interface CommentsLabels {
   title: string;
   resolved: string;
+  edited?: (iso: string) => string;
   revision: (id: string) => string;
   target: (target: CommentTarget) => string;
   /** Formata uma data RFC 3339 para leitura (por exemplo, no idioma da exportação). */
@@ -53,6 +54,7 @@ export function commentsSection(
       ...(c.author ? [c.author] : []),
       labels.date(c.createdAt),
       labels.revision(c.revisionId),
+      ...(c.editedAt ? [labels.edited?.(c.editedAt) ?? labels.date(c.editedAt)] : []),
       ...(c.resolvedAt === undefined ? [] : [labels.resolved]),
     ];
     const children: Node[] = [

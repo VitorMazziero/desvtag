@@ -1,7 +1,9 @@
 // Pareto dos efeitos (U09): barras horizontais em ordem decrescente e linha de referência.
+import { textWidth } from "./layout";
 import {
   close,
   DEFAULT_FRAME,
+  dataMarks,
   type Frame,
   legend,
   line,
@@ -42,7 +44,14 @@ export function paretoChart(
   const rowHeight = 24;
   const frame: Frame = {
     ...DEFAULT_FRAME,
-    left: 150,
+    width: Math.max(
+      DEFAULT_FRAME.width,
+      Math.ceil(Math.max(0, ...spec.bars.map((bar) => textWidth(bar.label, 14.4)))) + 400,
+    ),
+    left: Math.max(
+      150,
+      Math.ceil(Math.max(0, ...spec.bars.map((bar) => textWidth(bar.label, 14.4)))) + 24,
+    ),
     height: Math.max(220, 90 + spec.bars.length * rowHeight + 40),
     top: 40,
     bottom: 76,
@@ -75,8 +84,11 @@ export function paretoChart(
     const y = frame.top + 8 + i * rowHeight;
     const active = b.significant === true;
     parts.push(
-      `<rect x="${n(frame.left)}" y="${n(y)}" width="${n(Math.max(1, x(b.value) - frame.left))}" height="${rowHeight - 8}" ` +
-        `fill="${paint(active ? "action" : "inkSecondary", mode)}" fill-opacity="${active ? 0.85 : 0.45}"/>`,
+      dataMarks(
+        spec.id,
+        `<rect x="${n(frame.left)}" y="${n(y)}" width="${n(Math.max(1, x(b.value) - frame.left))}" height="${rowHeight - 8}" ` +
+          `fill="${paint(active ? "action" : "inkSecondary", mode)}" fill-opacity="${active ? 0.85 : 0.45}"/>`,
+      ),
     );
     parts.push(
       text(frame.left - 8, y + rowHeight / 2 - 1, b.label, mode, { anchor: "end", size: 12 }),
@@ -84,17 +96,20 @@ export function paretoChart(
   });
   if (spec.reference !== null && spec.referenceLabel) {
     parts.push(
-      line(x(spec.reference), frame.top, x(spec.reference), plotBottom, mode, {
-        role: "alert",
-        width: 1.5,
-        dash: "5 3",
-      }),
+      dataMarks(
+        spec.id,
+        line(x(spec.reference), frame.top, x(spec.reference), plotBottom, mode, {
+          role: "reference",
+          width: 1.5,
+          dash: "5 3",
+        }),
+      ),
     );
     parts.push(
       text(x(spec.reference) + 4, frame.top + 2, spec.referenceLabel, mode, {
         anchor: "start",
         size: 11,
-        role: "alert",
+        role: "reference",
       }),
     );
   }

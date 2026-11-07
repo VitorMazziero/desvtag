@@ -35,3 +35,7 @@ Ler um arquivo para uma **grade de texto**, mostrar a prévia, deixar o usuário
 ## Testes
 
 `csv.test.ts` (aspas, escapes, quebras de linha, delimitadores, codificações), `mapping.test.ts` (papéis, ids, matriz externa), `project.parity.test.ts` e `import_xlsx_validation.rs` (XLSX contra caso `openpyxl`), E2E `project.spec.ts` (CSV UTF-8 e Windows-1252, XLSX com troca de planilha, ids repetidos) e varredura axe do assistente.
+
+### Extensão ET23 (em conferência)
+
+Tempo/ocasião tem papel próprio, texto bruto e visibilidade opcionais, entra na revisão/hash quando presente e pode ser importado/exportado. Unidade e tempo podem vir da coluna dedicada ou de fator; o mapeamento conserva identidades/rótulos sem colisões. A configuração v2 registra estrutura, tempo, interações, codificação, referências e ajustes; resultados guardam covariância/inferência, EMM e perfis sem recálculo na abertura. Figuras/tabelas e nomes dos comentários usam a origem histórica. [Ficha C14 e proprietários](c14-medidas-repetidas-avancadas.md), [evidências e limites](../../validation/reports/et23/README.md).

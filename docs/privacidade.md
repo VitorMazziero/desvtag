@@ -6,7 +6,7 @@ O EnziTAG Optima é um aplicativo de planejamento experimental, estatística e o
 
 ## O que o aplicativo faz com os seus dados
 
-- Os projetos (`.enzitag`), os dados dos experimentos e os resultados ficam **no seu dispositivo**. Não há servidor do EnziTAG Optima: o desenvolvedor **não recebe, não armazena e não vê** os seus dados.
+- Os projetos (`.desvtag` e `.enzitag`), os dados dos experimentos e os resultados ficam **no seu dispositivo**. Não há servidor do DesvTAG: o desenvolvedor **não recebe, não armazena e não vê** os seus dados.
 - Não há contas, anúncios, rastreamento nem ferramentas de análise de uso.
 - As preferências (idioma, tema, opções de exportação) e a cópia de recuperação automática ficam no armazenamento local do navegador ou do aplicativo.
 

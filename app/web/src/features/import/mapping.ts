@@ -3,7 +3,7 @@
 import type { ExperimentData } from "../../services/engine";
 import { parseNumberCell } from "../data/editing";
 
-export type ColumnRole = "ignore" | "observation" | "unit" | "factor" | "response";
+export type ColumnRole = "ignore" | "observation" | "unit" | "time" | "factor" | "response";
 export type FactorKindChoice = "numeric" | "categorical";
 
 export interface ColumnMapping {
@@ -14,7 +14,12 @@ export interface ColumnMapping {
 }
 
 export interface ImportIssue {
-  code: "import.invalid_observation_id" | "import.duplicate_observation_id" | "import.no_columns";
+  code:
+    | "import.invalid_observation_id"
+    | "import.duplicate_observation_id"
+    | "import.no_columns"
+    | "import.multiple_identifier_columns";
+  columns?: number[];
   /** Linhas do arquivo (1 = primeira linha de dados) envolvidas, no máximo 5. */
   rows: number[];
 }
@@ -80,10 +85,22 @@ export function guessMapping(
   const knownFactor = new Map((known?.factors ?? []).map((f) => [comparableName(f.name), f.kind]));
   const matchesResponse = names.map((n) => hasHeader && knownResponse.has(comparableName(n)));
   const matchesFactor = names.map((n) => hasHeader && knownFactor.has(comparableName(n)));
+  const identifier = names.map((name, i): ColumnRole | null => {
+    if (!hasHeader || matchesResponse[i] || matchesFactor[i]) return null;
+    const key = comparableName(name);
+    if (["observation_id", "observation id", "obs."].includes(key)) return "observation";
+    if (["unit_id", "unit", "unidade", "unidade experimental", "experimental unit"].includes(key))
+      return "unit";
+    if (["time", "tempo", "time / occasion", "tempo / ocasiao"].includes(key)) return "time";
+    return null;
+  });
   const hasKnownResponse = matchesResponse.some(Boolean);
   const lastNumeric = hasKnownResponse
     ? -1
-    : numeric.reduce((last, isNumeric, i) => (isNumeric && !matchesFactor[i] ? i : last), -1);
+    : numeric.reduce(
+        (last, isNumeric, i) => (isNumeric && !matchesFactor[i] && !identifier[i] ? i : last),
+        -1,
+      );
   return names.map((name, i): ColumnMapping => {
     if (matchesResponse[i]) return { role: "response", kind: "numeric", name };
     if (matchesFactor[i])
@@ -92,6 +109,7 @@ export function guessMapping(
         kind: knownFactor.get(comparableName(name)) ?? (numeric[i] ? "numeric" : "categorical"),
         name,
       };
+    if (identifier[i]) return { role: identifier[i], kind: "numeric", name };
     if (width >= 2 && i === lastNumeric) return { role: "response", kind: "numeric", name };
     return { role: "factor", kind: numeric[i] ? "numeric" : "categorical", name };
   });
@@ -108,7 +126,13 @@ export function buildExperimentData(
   const responseColumns = mapping.flatMap((m, i) => (m.role === "response" ? [i] : []));
   const observationColumn = mapping.findIndex((m) => m.role === "observation");
   const unitColumn = mapping.findIndex((m) => m.role === "unit");
+  const timeColumn = mapping.findIndex((m) => m.role === "time");
   const issues: ImportIssue[] = [];
+  for (const role of ["observation", "unit", "time"]) {
+    const columns = mapping.flatMap((m, i) => (m.role === role ? [i + 1] : []));
+    if (columns.length > 1)
+      issues.push({ code: "import.multiple_identifier_columns", rows: [], columns });
+  }
   if (factorColumns.length + responseColumns.length === 0) {
     return {
       data: { factors: [], responses: [], rows: [] },
@@ -122,6 +146,7 @@ export function buildExperimentData(
     ...factorColumns,
     ...responseColumns,
     ...(unitColumn >= 0 ? [unitColumn] : []),
+    ...(timeColumn >= 0 ? [timeColumn] : []),
   ];
   const kept: Array<{ row: string[]; number: number }> = [];
   let skipped = 0;
@@ -145,6 +170,7 @@ export function buildExperimentData(
     return {
       id,
       unitId: unitColumn >= 0 ? cell(row, unitColumn) : "",
+      ...(timeColumn >= 0 ? { timeText: cell(row, timeColumn) } : {}),
       factors: factorColumns.map((c) => cell(row, c)),
       responses: responseColumns.map((c) => cell(row, c)),
     };

@@ -1,11 +1,12 @@
 // Comentários de revisão (ET20): lista, resposta, resolução e novo comentário. Tudo é texto livre
 // guardado no projeto; nenhum resultado depende dele. Cada comentário registra a revisão dos dados
 // em que foi escrito. O nome de quem comenta é opcional e fica só neste dispositivo.
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { nowIso } from "../../lib/ids";
 import type { Comment, CommentTarget } from "../../services/engine";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
+import { commentTargetLabel } from "./targetLabels";
 
 const AUTHOR_KEY = "optima.commentAuthor";
 const MAX_TEXT = 2000;
@@ -39,15 +40,9 @@ export function sameTarget(a: CommentTarget, b: CommentTarget): boolean {
 
 /** Rótulo legível do alvo: experimento, análise ou figura. */
 export function useTargetLabel(): (target: CommentTarget) => string {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const project = useProject();
-  return (target) => {
-    if (target.kind === "experiment") return t("comments.target.experiment");
-    const analysis = project.analyses.find((a) => a.id === target.analysisId);
-    const method = analysis ? `${analysis.id} (${analysis.methodId})` : (target.analysisId ?? "");
-    if (target.kind === "analysis") return t("comments.target.analysis", { analysis: method });
-    return t(`comments.target.${target.kind}`, { key: target.key ?? "" });
-  };
+  return (target) => commentTargetLabel(t, project, target, i18n.language);
 }
 
 export function CommentForm({ target, onAdded }: { target: CommentTarget; onAdded?: () => void }) {
@@ -108,6 +103,9 @@ export function CommentItem({ comment, label }: { comment: Comment; label?: stri
   const { t, i18n } = useTranslation("common");
   const dispatch = useProjectDispatch();
   const id = useId();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(comment.text);
+  const editButton = useRef<HTMLButtonElement>(null);
   const [replying, setReplying] = useState(false);
   const [reply, setReply] = useState("");
   const resolved = comment.resolvedAt !== undefined;
@@ -133,9 +131,58 @@ export function CommentItem({ comment, label }: { comment: Comment; label?: stri
         {comment.author ? `${comment.author} · ` : ""}
         {when(comment.createdAt, i18n.language)} ·{" "}
         {t("comments.revision", { id: comment.revisionId })}
+        {comment.editedAt
+          ? ` · ${t("comments.edited", { date: when(comment.editedAt, i18n.language) })}`
+          : ""}
         {resolved ? ` · ${t("comments.resolved")}` : ""}
       </p>
-      <p className="comment-text">{comment.text}</p>
+      {editing ? (
+        <form
+          className="comment-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!draft.trim()) return;
+            dispatch({ type: "editComment", id: comment.id, text: draft, now: nowIso() });
+            setEditing(false);
+            editButton.current?.focus();
+          }}
+        >
+          <label className="field">
+            <span>{t("comments.editText")}</span>
+            <textarea
+              rows={3}
+              maxLength={MAX_TEXT}
+              value={draft}
+              ref={(element) => element?.focus()}
+              onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  event.stopPropagation();
+                  setEditing(false);
+                  editButton.current?.focus();
+                }
+              }}
+            />
+          </label>
+          <div className="row">
+            <button type="submit" className="button small" disabled={!draft.trim()}>
+              {t("comments.saveEdit")}
+            </button>
+            <button
+              type="button"
+              className="button secondary small"
+              onClick={() => {
+                setEditing(false);
+                editButton.current?.focus();
+              }}
+            >
+              {t("comments.cancelEdit")}
+            </button>
+          </div>
+        </form>
+      ) : (
+        <p className="comment-text">{comment.text}</p>
+      )}
       {(comment.replies ?? []).length > 0 && (
         <ul className="comment-replies">
           {(comment.replies ?? []).map((r) => (
@@ -150,6 +197,18 @@ export function CommentItem({ comment, label }: { comment: Comment; label?: stri
         </ul>
       )}
       <div className="row">
+        <button
+          type="button"
+          className="button quiet small"
+          ref={editButton}
+          aria-expanded={editing}
+          onClick={() => {
+            setDraft(comment.text);
+            setEditing(true);
+          }}
+        >
+          {t("comments.edit")}
+        </button>
         <button
           type="button"
           className="button secondary small"
@@ -174,7 +233,7 @@ export function CommentItem({ comment, label }: { comment: Comment; label?: stri
         </button>
         <button
           type="button"
-          className="button secondary small"
+          className="button danger-quiet small"
           onClick={() => {
             if (window.confirm(t("comments.confirmDelete"))) {
               dispatch({ type: "deleteComment", id: comment.id });

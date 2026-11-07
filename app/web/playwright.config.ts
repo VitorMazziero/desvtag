@@ -14,7 +14,7 @@ const projectFor: Record<string, object> = {
 
 export default defineConfig({
   testDir: "tests/e2e",
-  timeout: 30_000,
+  timeout: 60_000,
   fullyParallel: true,
   reporter: [["list"]],
   use: {

@@ -1,6 +1,6 @@
 // @vitest-environment node
 // Otimização por desejabilidade no WebAssembly: os mesmos casos do teste nativo
-// (app/crates/optima-core/tests/optimization_validation.rs), pelo protocolo JSON. O melhor `D` do
+// (app/crates/desvtag-core/tests/optimization_validation.rs), pelo protocolo JSON. O melhor `D` do
 // motor deve ser ao menos o da busca exaustiva independente e as sondagens (previsões, intervalos e
 // desejabilidades) devem coincidir com o NumPy.
 import { readdirSync, readFileSync } from "node:fs";
@@ -11,12 +11,12 @@ import {
   type OptimizationResult,
   PROTOCOL_VERSION,
 } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases/desirability_optimization");
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: arquivos JSON de referência com formatos heterogêneos

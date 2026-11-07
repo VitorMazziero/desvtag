@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p1",
+  "name": "Saved families",
+  "createdAt": "2026-11-03T10:00:00Z",
+  "modifiedAt": "2026-11-03T10:00:00Z",
+  "appVersion": "0.4.0-dev",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Historical experiment",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "powerResult": {
+        "selection": {
+          "kind": "twoSampleT",
+          "goal": "sampleSizeFor",
+          "means": "10; 12",
+          "difference": "1",
+          "sigma": "1,5",
+          "alpha": "2",
+          "target": "0,8",
+          "n": "10",
+          "halfWidth": "",
+          "twoSided": true
+        },
+        "records": [
+          {
+            "id": "power-1",
+            "createdAt": "2026-11-03T10:00:00Z",
+            "revisionId": "v1",
+            "signature": "power:v1:original-assumptions",
+            "input": {
+              "design": {
+                "type": "twoSampleT",
+                "difference": 1.0
+              },
+              "sigma": 1.5,
+              "alpha": 0.05,
+              "twoSided": true,
+              "goal": {
+                "type": "sampleSizeFor",
+                "power": 0.8
+              }
+            },
+            "result": {
+              "n": 37,
+              "total": 74,
+              "power": {
+                "status": "defined",
+                "value": 0.8075867665756948
+              },
+              "noncentrality": 2.8674417556808756,
+              "df1": 72.0,
+              "df2": 0.0,
+              "critical": 1.9934635666618714,
+              "halfWidth": {
+                "status": "defined",
+                "value": 0.6952062976388242
+              },
+              "curve": [
+                {
+                  "n": 2,
+                  "power": 0.07036194899185721
+                },
+                {
+                  "n": 3,
+                  "power": 0.09796432760218643
+                },
+                {
+                  "n": 5,
+                  "power": 0.15387152934851822
+                },
+                {
+                  "n": 7,
+                  "power": 0.2096433711601019
+                },
+                {
+                  "n": 9,
+                  "power": 0.26487270028165244
+                },
+                {
+                  "n": 11,
+                  "power": 0.3190059776010754
+                },
+                {
+                  "n": 13,
+                  "power": 0.371538218307884
+                },
+                {
+                  "n": 14,
+                  "power": 0.39707251919997
+                },
+                {
+                  "n": 16,
+                  "power": 0.4464703275334879
+                },
+                {
+                  "n": 18,
+                  "power": 0.4934333691112731
+                },
+                {
+                  "n": 20,
+                  "power": 0.537786846675991
+                },
+                {
+                  "n": 22,
+                  "power": 0.579428740898682
+                },
+                {
+                  "n": 24,
+                  "power": 0.6183175870042693
+                },
+                {
+                  "n": 26,
+                  "power": 0.6544612680206083
+                },
+                {
+                  "n": 27,
+                  "power": 0.671517147107217
+                },
+                {
+                  "n": 29,
+                  "power": 0.7036415665350928
+                },
+                {
+                  "n": 31,
+                  "power": 0.7331940436123755
+                },
+                {
+                  "n": 33,
+                  "power": 0.7602847648761973
+                },
+                {
+                  "n": 35,
+                  "power": 0.7850379076901285
+                },
+                {
+                  "n": 37,
+                  "power": 0.8075867665756948
+                },
+                {
+                  "n": 38,
+                  "power": 0.8180777338583114
+                },
+                {
+                  "n": 40,
+                  "power": 0.8375803536118999
+                },
+                {
+                  "n": 42,
+                  "power": 0.8552273230236357
+                },
+                {
+                  "n": 44,
+                  "power": 0.8711569734465165
+                },
+                {
+                  "n": 46,
+                  "power": 0.8855040194914862
+                },
+                {
+                  "n": 48,
+                  "power": 0.89839821542891
+                },
+                {
+                  "n": 50,
+                  "power": 0.9099633819286664
+                },
+                {
+                  "n": 51,
+                  "power": 0.9152844813926198
+                },
+                {
+                  "n": 53,
+                  "power": 0.9250737124888233
+                },
+                {
+                  "n": 55,
+                  "power": 0.9338137467430367
+                },
+                {
+                  "n": 57,
+                  "power": 0.9416039355087702
+                },
+                {
+                  "n": 59,
+                  "power": 0.948536391927534
+                },
+                {
+                  "n": 61,
+                  "power": 0.9546961275344361
+                },
+                {
+                  "n": 62,
+                  "power": 0.9575109026647468
+                },
+                {
+                  "n": 64,
+                  "power": 0.9626559824112806
+                },
+                {
+                  "n": 66,
+                  "power": 0.9672114114726905
+                },
+                {
+                  "n": 68,
+                  "power": 0.9712394667819378
+                },
+                {
+                  "n": 70,
+                  "power": 0.9747967067853768
+                },
+                {
+                  "n": 72,
+                  "power": 0.9779343509272289
+                },
+                {
+                  "n": 74,
+                  "power": 0.9806986613370704
+                }
+              ],
+              "issues": [],
+              "provenance": {
+                "methodId": "power_analysis",
+                "methodVersion": 1,
+                "engineVersion": "0.4.0-dev"
+              }
+            }
+          }
+        ]
+      },
+      "activeFamily": "power",
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-03T10:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [],
+            "responses": [
+              {
+                "id": "y",
+                "name": "Activity",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": []
+          },
+          "contentHash": "fad783d94fea755f287b78bec076fc589b7401cc078cae01fcb1c5cc94b8e266"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

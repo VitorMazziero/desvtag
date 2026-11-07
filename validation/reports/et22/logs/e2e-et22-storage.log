@@ -1,0 +1,17 @@
+
+Running 6 tests using 1 worker
+
+(node:33524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\et22-storage.spec.ts:10:1 › T02: browser loads and saves every optional family without losing recorded inputs (2.3s)
+  ok 2 [chromium] › tests\e2e\et22-storage.spec.ts:30:1 › T02: first project and initial revision use the actual creation time (408ms)
+(node:27116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [firefox] › tests\e2e\et22-storage.spec.ts:10:1 › T02: browser loads and saves every optional family without losing recorded inputs (5.9s)
+  ok 4 [firefox] › tests\e2e\et22-storage.spec.ts:30:1 › T02: first project and initial revision use the actual creation time (739ms)
+(node:29132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [webkit] › tests\e2e\et22-storage.spec.ts:10:1 › T02: browser loads and saves every optional family without losing recorded inputs (4.9s)
+  ok 6 [webkit] › tests\e2e\et22-storage.spec.ts:30:1 › T02: first project and initial revision use the actual creation time (727ms)
+
+  6 passed (17.2s)

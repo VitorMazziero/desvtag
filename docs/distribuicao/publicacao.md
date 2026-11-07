@@ -1,10 +1,46 @@
 # Publicação
 
-**Estado:** **v0.3.0 publicada (versão web e release do instalador) e atualização 0.2.0 → 0.3.0 verificada pelo usuário**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-02
+**Estado:** **v0.3.0 publicada (versão web e release do instalador) e atualização 0.2.0 → 0.3.0 verificada pelo usuário**; **v0.2.0 publicada (versão web e release do instalador); v0.1.0 publicada como pré-lançamento; atualização v0.1.0 → v0.2.0 verificada pelo usuário** · **Atualizado em:** 2026-11-07
 
 > **v0.3.0 (2026-11-02):** PR 6 fundido, etiqueta `v0.3.0`, Pages publicado e **release publicado** pelo usuário; o canal experimental foi criado automaticamente e a **atualização a partir da 0.2.0 foi verificada** pelo usuário. Registro em [Publicação da v0.3.0](#registro-da-publicação-da-v030-2026-11-02).
 >
 > **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
+
+## Preparação da publicação da v0.4.0 (nada foi publicado)
+
+Estado em 2026-11-07. A candidata local é `7097c6e`, com versão `0.4.0`. A matriz integral cobriu 1.560 cenários, com quatro aprovações em segunda tentativa no Firefox. Após ajustar o posicionamento dos cliques na suíte, passaram 48 repetições no Firefox e os 201 testes dos arquivos afetados nos três navegadores, sobre o mesmo build. Os passos de publicação e de migração do repositório aguardam a decisão expressa do usuário.
+
+O pacote local `DesvTAG_0.4.0_x64-setup.exe` tem 20.364.535 bytes e SHA-256 `ac70050cf08638fad7761e226c50ac37c7ae28c8ffdadb5bb34e063843ca1e66`. Em chaves e diretórios isolados, o NSIS instalou, atualizou uma cópia da v0.3.0 e desinstalou, com preservação da instalação e dos dados originais. O aceite da distribuição ainda inclui o SmartScreen, o diálogo nativo «Salvar como» e o instalador produzido pelo fluxo oficial. [Candidata e evidências](../planos-execucao/plano-v0.4.md#125-candidata-corrigida-040).
+
+**Correção de distribuição.** O fluxo `release.yml` não passava `GOOGLE_DESKTOP_CLIENT_SECRET` à compilação (DT-0036): o instalador publicado sairia com o Drive do Windows «indisponível». O fluxo agora injeta o segredo do GitHub (já cadastrado pelo usuário) como variável de ambiente de compilação e avisa, sem falhar, quando ele falta. O segredo nunca é impresso nem versionado.
+
+| Passo | Quem | Resultado esperado / o que registrar |
+|---|---|---|
+| 1. Fechar a matriz da candidata, o aceite local do instalador e os percursos web da ET26 T08 | Agente e usuário | Registrar a revisão testada, os resultados da matriz e os percursos reais do Drive web na origem local autorizada |
+| 2. Selecionar a revisão, abrir o PR, conferir o CI e obter autorização de fusão | Usuário autoriza e o agente prepara | Registrar o SHA enviado, o número do PR e a execução do CI. Conferir a árvore aprovada depois da fusão |
+| 3. Renomear o repositório e publicar a versão web no novo endereço | Usuário autoriza | Conferir o Picker em `/desvtag/`, o Pages antigo e os redirecionamentos dos manifestos do atualizador |
+| 4. Etiquetar `v0.4.0` para o fluxo criar o **rascunho** com instalador assinado e `latest.json` | Usuário autoriza | Conferir a assinatura, o manifesto, a presença da credencial de compilação do Drive e a revisão usada no build |
+| 5. Concluir a ET26 T08 no Windows e testar o instalador do rascunho | Agente e usuário | Verificar OAuth pelo navegador padrão, Picker no novo Pages, os demais percursos com contas reais, SmartScreen, instalação para o usuário atual e preservação de dados na desinstalação |
+| 6. Publicar o rascunho como pré-lançamento ou release | Usuário | Conferir a execução de `channels.yml` e o manifesto distribuído só em `channel-experimental` |
+| 7. Instalar a v0.3.0, selecionar o canal **experimental** e clicar em *Verificar atualizações* | Usuário | Oferece **0.4.0**. Instalar e abrir um `.enzitag` antigo |
+| 8. Repetir no canal **estável** | Usuário | O canal não oferece a v0.4.0. Se estiver vazio, registrar o HTTP 404 do manifesto estável, a resposta HTTP do experimental e a mensagem apresentada pelo app |
+
+O Picker do executável de produção abre `https://vitormazziero.github.io/desvtag/drive-picker.html`. Por isso o aceite nativo com contas reais usa o instalador do rascunho após a publicação autorizada do Pages, antes de disponibilizar o atualizador experimental. [Roteiro da ET26 T08](../planos-execucao/ativos/et26-google-drive-completo-e-verificado.md#10-roteiro-de-aceite-com-contas-reais-t07--t08).
+
+Na simulação local do fluxo, `check-versions.mjs` aceitou a etiqueta `v0.4.0` e recusou `v0.3.0` para a mesma candidata. Os quatro testes de canais passaram. A v0.4.0 foi destinada apenas ao experimental com e sem a marca de pré-lançamento. O gerador produziu a URL do pacote no endereço novo, com a versão e a assinatura esperadas. A verificação da assinatura com uma chave descartável aceitou o instalador e rejeitou a alteração de um byte. A chave pública de produção também verificou o pacote publicado da v0.3.0 indicado pelos manifestos legado e experimental. A assinatura oficial da v0.4.0 e a atualização pela rede serão conferidas nos passos 4 a 8.
+
+As referências locais `review/desvtag-0.4.0-0077712` e `review/v0.4.0-tree-7097c6e` têm a mesma árvore de código e documentação da candidata. A segunda é a opção de revisão compacta e evita enviar os blobs de evidências removidos durante o desenvolvimento que ainda estão nos commits intermediários locais. O inventário do histórico e a escolha da referência a enviar fazem parte do bloco 11. [Inventário no plano da v0.4](../planos-execucao/plano-v0.4.md#117-acervo-final-das-evidências-v04).
+
+**Revisão de lançamento.** A candidata já sincroniza a versão `0.4.0` no workspace Rust, no Tauri, no pacote web e nos lockfiles. No commit autorizado para a etiqueta, repetir `node scripts/check-versions.mjs` com `GITHUB_REF_TYPE=tag` e `GITHUB_REF_NAME=v0.4.0`. Conferir a data da seção `[0.4.0]` e revisar a saída de `node scripts/release-notes.mjs v0.4.0`. Se o conteúdo da candidata mudar, registrar o novo SHA e repetir as verificações afetadas.
+
+### Troca do endereço para DesvTAG
+
+Antes da janela aprovada de publicação, registrar a revisão aprovada, os ativos atuais do atualizador, as regras de Pages e o estado dos canais. A candidata usa `VitorMazziero/desvtag` nos manifestos novos e `/desvtag/drive-picker.html` no Windows. O artefato web tem base relativa e passou no ensaio local sob `/desvtag/`.
+
+1. Coordenar a renomeação do repositório com a publicação manual de Pages. Atualizar `origin` e confirmar a identidade, permissões, etiquetas, releases e ambientes do mesmo repositório. O GitHub trata o endereço do site de projeto separadamente dos redirecionamentos Git. [Documentação da renomeação](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository).
+2. Conferir `https://vitormazziero.github.io/desvtag/` e o Picker em navegação direta. Os caminhos antigo e novo compartilham a origem `https://vitormazziero.github.io`. Verificar os projetos e preferências existentes no mesmo perfil e as restrições de OAuth/Picker com as contas da ET26 T08. Manter `http://127.0.0.1:4173` para o preview.
+3. Conferir a URL antiga do Pages e comunicar o novo caminho se a anterior deixar de responder. O slug antigo do repositório fica reservado ao redirecionamento Git. Verificar por HTTP os manifestos e ativos antigos antes de atualizar os canais.
+4. Testar a instalação e a atualização 0.3.0 → 0.4.0, incluindo o reconhecimento da instalação anterior pelo NSIS. Conferir que a v0.4 só aparece no canal experimental.
 
 ## Publicação da v0.3.0
 

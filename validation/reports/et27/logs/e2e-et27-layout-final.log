@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:9960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [webkit] › tests\e2e\layout-flow.spec.ts:137:3 › resultados e exportação do exemplo 01: botões espaçados em 1200 px (1.4s)
+
+  1 passed (2.0s)

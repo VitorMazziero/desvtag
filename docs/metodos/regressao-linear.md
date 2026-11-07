@@ -53,6 +53,7 @@ QR de Householder com pivoteamento, colunas normalizadas (ver [fundamentos](fund
 | Resposta constante | R² e F `undefined(constantResponse)`; aviso `model.constant_response` |
 | Só intercepto | F e valor-p `undefined(noModelTerms)` |
 | Ajuste perfeito (SQE = 0) | erros-padrão 0; t e p `undefined(nonFiniteResult)` |
+| Réplicas (erro puro e falta de ajuste) | duas condições são réplicas só se todas as coordenadas codificadas (e o bloco, quando há) são **exatamente iguais** (−0 = +0); não há arredondamento, então valores próximos mas distintos formam condições distintas. Resultados guardados antes de 2026-11-05 agrupavam por nove casas decimais e não são recalculados ao abrir (AU-B19) |
 | Mau condicionamento (≥ 1e8) | aviso `model.ill_conditioned` com o número |
 | Observações excluídas | aviso `model.excluded_observations` com a contagem |
 | Estouro por escala extrema | erro `model.non_finite_result` |

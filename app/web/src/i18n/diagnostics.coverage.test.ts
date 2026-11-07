@@ -7,7 +7,7 @@ import { resources } from "./index";
 
 const CRATES = join(__dirname, "../../../crates");
 const CODE =
-  /(?:error|warning|info|Issue::new|Issue::error|Issue::warning)\("([a-z_]+\.[a-z_0-9.]+)"/g;
+  /(?:invalid|error|warning|info|Issue::new|Issue::error|Issue::warning)\(\s*"([a-z_]+\.[a-z_0-9.]+)"/g;
 
 function rustSources(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {

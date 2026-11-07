@@ -1,5 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { formatNumber } from "./format";
+import { formatFull, formatNumber, formatSignificant } from "./format";
+
+it("keeps tooltip precision and locale after changing display precision and notation repeatedly", () => {
+  for (let digits = 1; digits <= 21; digits++)
+    for (const language of ["pt-BR", "en"] as const)
+      for (const value of [1.23456789, 1.23456789e100]) formatSignificant(value, language, digits);
+  expect(formatFull(0.1 + 0.2, "en")).toBe("0.30000000000000004");
+  expect(formatFull(0.1 + 0.2, "pt-BR")).toBe("0,30000000000000004");
+  expect(formatSignificant(1.23456789, "en", 4)).toBe("1.235");
+  expect(formatSignificant(1.23456789e100, "pt-BR", 4)).toBe("1,235e100");
+});
 
 describe("formatNumber", () => {
   it("uses the decimal separator of the language", () => {
@@ -29,4 +39,14 @@ describe("formatSignificant and formatP", () => {
     expect(formatP(1.2345e-9, "pt-BR")).toBe("1,235e-9");
     expect(formatP(0, "en")).toBe("0");
   });
+});
+
+it("keeps extreme presentation compact and nonzero while retaining language and significant precision", async () => {
+  const { formatSignificant } = await import("./format");
+  expect(formatSignificant(1.23456789e100, "en")).toBe("1.23457e100");
+  expect(formatSignificant(-1.23456789e-100, "pt-BR")).toBe("-1,23457e-100");
+  expect(formatSignificant(0, "en")).toBe("0");
+  expect(formatSignificant(1e-6, "en")).toBe("0.000001");
+  expect(formatSignificant(1e6, "pt-BR")).toBe("1000000");
+  expect(formatSignificant(Number.MIN_VALUE, "en")).not.toBe("0");
 });

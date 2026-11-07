@@ -75,7 +75,7 @@ Medida de ponta a ponta no Chromium e no Firefox (exemplo 04, otimização com 4
 |---|---|
 | Planilhas importadas | Até 2 000 000 de células por planilha (`import.xlsx`); acima disso recusa com mensagem localizada |
 | XLSX exportado | Até 1 048 576 linhas × 16 384 colunas por planilha; acima disso `export.too_large` |
-| Arquivo `.enzitag` | Limites do contêiner em [formato `.enzitag`](formato-enzitag.md) |
+| Arquivo de projeto | Limites do contêiner para [`.desvtag` e `.enzitag`](formato-enzitag.md) |
 | Fatores em superfície | Medido de 2 a 5 fatores; o limite de fatores do planejamento é o de ensaios (5 000) |
 | Otimização | Cancelável; sem progresso incremental (ver [DT-0013](../decisoes-tecnicas/dt-0013-otimizacao-por-desejabilidade.md), item 9) |
 
@@ -87,7 +87,7 @@ Medida de ponta a ponta no Chromium e no Firefox (exemplo 04, otimização com 4
 
 ## Planejamento ótimo (v0.3)
 
-Limites do aplicativo: 5 fatores, 60 ensaios, 50 inícios e 1 500 candidatos depois das restrições. Medições nativas (`release`, 10 inícios, critério I, quadrático, Windows 10): 5 fatores × 3 níveis × 40 ensaios ≈ 1,6 s; 4 × 5 níveis × 30 ensaios ≈ 2,2 s ([`worst_cases_timing`](../../app/crates/optima-core/tests/optimal_validation.rs)). O WebAssembly não foi medido separadamente; a busca pode ser cancelada.
+Limites do aplicativo: 5 fatores, 60 ensaios, 50 inícios e 1 500 candidatos depois das restrições. Medições nativas (`release`, 10 inícios, critério I, quadrático, Windows 10): 5 fatores × 3 níveis × 40 ensaios ≈ 1,6 s; 4 × 5 níveis × 30 ensaios ≈ 2,2 s ([`worst_cases_timing`](../../app/crates/desvtag-core/tests/optimal_validation.rs)). O WebAssembly não foi medido separadamente; a busca pode ser cancelada.
 
 ## Ajuste não linear e potência (v0.3)
 

@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG Optima/app/web
+
+
+ Test Files  3 passed (3)
+      Tests  21 passed (21)
+   Start at  09:56:48
+   Duration  1.56s (environment 71%, setup 24%, transform 3%, import 1%, worker 1%)
+

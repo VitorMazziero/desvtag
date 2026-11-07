@@ -1,0 +1,1528 @@
+{
+ "id": "blocked_optimal",
+ "environment": {
+  "python": "3.14.2",
+  "numpy": "2.4.0"
+ },
+ "predictionMeasure": "uniform spatial candidates x uniform declared blocks; sum contrasts",
+ "cases": [
+  {
+   "name": "saturated-d",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 3,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      0.25
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2"
+     ],
+     "fixedBlocks": [
+      0
+     ],
+     "newRuns": [
+      0,
+      2
+     ]
+    }
+   },
+   "enumerated": 6,
+   "fullRank": 3,
+   "best": 2.7725887222397816,
+   "stationary": [
+    2.7725887222397816
+   ],
+   "bestRuns": [
+    [
+     0.25
+    ],
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    1,
+    1
+   ],
+   "metrics": {
+    "parameters": 3,
+    "logDet": 2.7725887222397816,
+    "dEfficiency": 0.8399473665965823,
+    "aEfficiency": 0.7901234567901234,
+    "gEfficiency": 0.5614035087719298,
+    "iAverage": 3.296875
+   },
+   "candidateReal": [
+    [
+     -1.0
+    ],
+    [
+     0.0
+    ],
+    [
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "three-blocks-d",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 5,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0
+     ],
+     [
+      1.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2",
+      "Block 3"
+     ],
+     "fixedBlocks": [
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      2,
+      1
+     ]
+    }
+   },
+   "enumerated": 18,
+   "fullRank": 18,
+   "best": 4.969813299576,
+   "stationary": [
+    4.969813299576
+   ],
+   "bestRuns": [
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ],
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ],
+    [
+     -1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    1,
+    1,
+    2
+   ],
+   "metrics": {
+    "parameters": 4,
+    "logDet": 4.969813299576,
+    "dEfficiency": 0.6928203230275508,
+    "aEfficiency": 0.5999999999999999,
+    "gEfficiency": 0.4,
+    "iAverage": 4.583333333333333
+   },
+   "candidateReal": [
+    [
+     -1.0
+    ],
+    [
+     0.0
+    ],
+    [
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "quadratic-augmentation-d",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "d",
+    "runs": 8,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0,
+      -1.0
+     ],
+     [
+      1.0,
+      -1.0
+     ],
+     [
+      -1.0,
+      1.0
+     ],
+     [
+      1.0,
+      1.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      4
+     ]
+    }
+   },
+   "enumerated": 495,
+   "fullRank": 200,
+   "best": 8.764053269347762,
+   "stationary": [
+    8.764053269347762
+   ],
+   "bestRuns": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1
+   ],
+   "metrics": {
+    "parameters": 7,
+    "logDet": 8.764053269347762,
+    "dEfficiency": 0.43716965539753494,
+    "aEfficiency": 0.17658930373360232,
+    "gEfficiency": 0.3181818181818179,
+    "iAverage": 11.053333333333336
+   },
+   "candidateReal": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "two-new-blocks-quadratic-d",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "d",
+    "runs": 10,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0,
+      -1.0
+     ],
+     [
+      1.0,
+      -1.0
+     ],
+     [
+      -1.0,
+      1.0
+     ],
+     [
+      1.0,
+      1.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2",
+      "Block 3"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      4,
+      2
+     ]
+    }
+   },
+   "enumerated": 22275,
+   "fullRank": 13836,
+   "best": 11.613603032723674,
+   "stationary": [
+    11.543493466536647,
+    11.61360303272367,
+    11.613603032723672,
+    11.613603032723674
+   ],
+   "bestRuns": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2
+   ],
+   "metrics": {
+    "parameters": 8,
+    "logDet": 11.613603032723674,
+    "dEfficiency": 0.4270369592393406,
+    "aEfficiency": 0.20869565217391295,
+    "gEfficiency": 0.41739130434782584,
+    "iAverage": 11.57407407407408
+   },
+   "candidateReal": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "restricted-off-grid-d",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 6,
+    "levels": 3,
+    "constraints": [
+     {
+      "coefficients": [
+       1.0,
+       1.0
+      ],
+      "upper": 1.0
+     }
+    ],
+    "fixedRuns": [
+     [
+      -0.4,
+      -0.2
+     ],
+     [
+      0.6,
+      -0.5
+     ],
+     [
+      -0.3,
+      0.6
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2",
+      "Block 3"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      2,
+      1
+     ]
+    }
+   },
+   "enumerated": 288,
+   "fullRank": 288,
+   "best": 4.9570952671679525,
+   "stationary": [
+    4.957095267167952,
+    4.9570952671679525
+   ],
+   "bestRuns": [
+    [
+     -0.4,
+     -0.2
+    ],
+    [
+     0.6,
+     -0.5
+    ],
+    [
+     -0.3,
+     0.6
+    ],
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     -1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    2
+   ],
+   "metrics": {
+    "parameters": 5,
+    "logDet": 4.9570952671679525,
+    "dEfficiency": 0.44917603147274643,
+    "aEfficiency": 0.29807259795501273,
+    "gEfficiency": 0.16800922605450044,
+    "iAverage": 11.100811505399486
+   },
+   "candidateReal": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "saturated-i",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "i",
+    "runs": 3,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      0.25
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2"
+     ],
+     "fixedBlocks": [
+      0
+     ],
+     "newRuns": [
+      0,
+      2
+     ]
+    }
+   },
+   "enumerated": 6,
+   "fullRank": 3,
+   "best": -1.0989583333333333,
+   "stationary": [
+    -1.0989583333333333
+   ],
+   "bestRuns": [
+    [
+     0.25
+    ],
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    1,
+    1
+   ],
+   "metrics": {
+    "parameters": 3,
+    "logDet": 2.7725887222397816,
+    "dEfficiency": 0.8399473665965823,
+    "aEfficiency": 0.7901234567901234,
+    "gEfficiency": 0.5614035087719298,
+    "iAverage": 3.296875
+   },
+   "candidateReal": [
+    [
+     -1.0
+    ],
+    [
+     0.0
+    ],
+    [
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "three-blocks-i",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "i",
+    "runs": 5,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0
+     ],
+     [
+      1.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2",
+      "Block 3"
+     ],
+     "fixedBlocks": [
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      2,
+      1
+     ]
+    }
+   },
+   "enumerated": 18,
+   "fullRank": 18,
+   "best": -0.8333333333333334,
+   "stationary": [
+    -0.8333333333333334
+   ],
+   "bestRuns": [
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ],
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ],
+    [
+     0.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    1,
+    1,
+    2
+   ],
+   "metrics": {
+    "parameters": 4,
+    "logDet": 4.969813299576,
+    "dEfficiency": 0.6928203230275508,
+    "aEfficiency": 0.64,
+    "gEfficiency": 0.64,
+    "iAverage": 4.166666666666667
+   },
+   "candidateReal": [
+    [
+     -1.0
+    ],
+    [
+     0.0
+    ],
+    [
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "quadratic-augmentation-i",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "i",
+    "runs": 8,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0,
+      -1.0
+     ],
+     [
+      1.0,
+      -1.0
+     ],
+     [
+      -1.0,
+      1.0
+     ],
+     [
+      1.0,
+      1.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      4
+     ]
+    }
+   },
+   "enumerated": 495,
+   "fullRank": 200,
+   "best": -1.381666666666667,
+   "stationary": [
+    -1.381666666666667
+   ],
+   "bestRuns": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1
+   ],
+   "metrics": {
+    "parameters": 7,
+    "logDet": 8.764053269347762,
+    "dEfficiency": 0.43716965539753494,
+    "aEfficiency": 0.17658930373360232,
+    "gEfficiency": 0.3181818181818179,
+    "iAverage": 11.053333333333336
+   },
+   "candidateReal": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "two-new-blocks-quadratic-i",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "i",
+    "runs": 10,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0,
+      -1.0
+     ],
+     [
+      1.0,
+      -1.0
+     ],
+     [
+      -1.0,
+      1.0
+     ],
+     [
+      1.0,
+      1.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2",
+      "Block 3"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      4,
+      2
+     ]
+    }
+   },
+   "enumerated": 22275,
+   "fullRank": 13836,
+   "best": -1.143518518518519,
+   "stationary": [
+    -1.1795392953929542,
+    -1.1532976827094474,
+    -1.1532976827094472,
+    -1.143518518518519
+   ],
+   "bestRuns": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2
+   ],
+   "metrics": {
+    "parameters": 8,
+    "logDet": 11.613603032723672,
+    "dEfficiency": 0.4270369592393405,
+    "aEfficiency": 0.21098901098901093,
+    "gEfficiency": 0.47999999999999976,
+    "iAverage": 11.43518518518519
+   },
+   "candidateReal": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "restricted-off-grid-i",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "i",
+    "runs": 6,
+    "levels": 3,
+    "constraints": [
+     {
+      "coefficients": [
+       1.0,
+       1.0
+      ],
+      "upper": 1.0
+     }
+    ],
+    "fixedRuns": [
+     [
+      -0.4,
+      -0.2
+     ],
+     [
+      0.6,
+      -0.5
+     ],
+     [
+      -0.3,
+      0.6
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2",
+      "Block 3"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      2,
+      1
+     ]
+    }
+   },
+   "enumerated": 288,
+   "fullRank": 288,
+   "best": -1.6070634307730611,
+   "stationary": [
+    -1.6070634307730611
+   ],
+   "bestRuns": [
+    [
+     -0.4,
+     -0.2
+    ],
+    [
+     0.6,
+     -0.5
+    ],
+    [
+     -0.3,
+     0.6
+    ],
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    2
+   ],
+   "metrics": {
+    "parameters": 5,
+    "logDet": 4.9570952671679525,
+    "dEfficiency": 0.44917603147274643,
+    "aEfficiency": 0.3371575453561392,
+    "gEfficiency": 0.21685178504854036,
+    "iAverage": 9.642380584638367
+   },
+   "candidateReal": [
+    [
+     -1.0,
+     -1.0
+    ],
+    [
+     0.0,
+     -1.0
+    ],
+    [
+     1.0,
+     -1.0
+    ],
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     1.0
+    ],
+    [
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "only-fixed",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 4,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      -1.0
+     ],
+     [
+      1.0
+     ],
+     [
+      -0.5
+     ],
+     [
+      0.5
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "newRuns": [
+      0,
+      0
+     ]
+    }
+   },
+   "enumerated": 1,
+   "fullRank": 1,
+   "best": 3.6888794541139367,
+   "stationary": [
+    3.6888794541139367
+   ],
+   "bestRuns": [
+    [
+     -1.0
+    ],
+    [
+     1.0
+    ],
+    [
+     -0.5
+    ],
+    [
+     0.5
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "metrics": {
+    "parameters": 3,
+    "logDet": 3.6888794541139367,
+    "dEfficiency": 0.8549879733383486,
+    "aEfficiency": 0.8333333333333333,
+    "gEfficiency": 0.8333333333333333,
+    "iAverage": 3.0666666666666664
+   },
+   "candidateReal": [
+    [
+     -1.0
+    ],
+    [
+     0.0
+    ],
+    [
+     1.0
+    ]
+   ]
+  },
+  {
+   "name": "unidentifiable-block",
+   "spec": {
+    "factors": [
+     {
+      "id": "x1",
+      "name": "X1",
+      "low": -1.0,
+      "high": 1.0
+     },
+     {
+      "id": "x2",
+      "name": "X2",
+      "low": -1.0,
+      "high": 1.0
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "i",
+    "runs": 7,
+    "levels": 3,
+    "constraints": [
+     {
+      "coefficients": [
+       0.0,
+       1.0
+      ],
+      "upper": 0.0
+     },
+     {
+      "coefficients": [
+       0.0,
+       -1.0
+      ],
+      "upper": 0.0
+     }
+    ],
+    "fixedRuns": [
+     [
+      -1.0,
+      0.0
+     ],
+     [
+      -0.5,
+      0.0
+     ],
+     [
+      0.5,
+      0.0
+     ],
+     [
+      1.0,
+      0.0
+     ]
+    ],
+    "starts": 10,
+    "randomize": false,
+    "seed": 17,
+    "blocks": {
+     "labels": [
+      "Block 1",
+      "Block 2"
+     ],
+     "fixedBlocks": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "newRuns": [
+      0,
+      3
+     ]
+    }
+   },
+   "enumerated": 10,
+   "fullRank": 0,
+   "best": null,
+   "stationary": [],
+   "bestRuns": [
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ],
+   "bestBlocks": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "metrics": null,
+   "candidateReal": [
+    [
+     -1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ]
+  }
+ ]
+}

@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import type { RecoveryStatus } from "../../services/storage/autosave";
 import { hasUnsavedChanges, type Workspace } from "../../state/workspace";
+import { saveLabel } from "./saveLabel";
 
 function clock(iso: string, language: string): string {
   return new Date(iso).toLocaleTimeString(language, {
@@ -33,10 +34,17 @@ export function SaveStatus({ workspace, recovery, downloads }: Props) {
           : t("status.recoveryIdle");
   const fileText =
     workspace.fileName && workspace.lastSavedAt
-      ? t(downloads ? "status.fileDownloaded" : "status.fileSaved", {
-          name: workspace.fileName,
-          time: clock(workspace.lastSavedAt, lang),
-        })
+      ? t(
+          workspace.lastSavedDestination === "drive"
+            ? "status.fileDriveSaved"
+            : downloads
+              ? "status.fileDownloaded"
+              : "status.fileSaved",
+          {
+            name: workspace.fileName,
+            time: clock(workspace.lastSavedAt, lang),
+          },
+        )
       : workspace.fileName
         ? workspace.fileName
         : t("status.fileNone");
@@ -48,7 +56,7 @@ export function SaveStatus({ workspace, recovery, downloads }: Props) {
       data-testid="save-status"
     >
       <p data-testid="status-changes" data-unsaved={unsaved}>
-        <strong>{unsaved ? t("status.unsaved") : t("status.clean")}</strong>
+        <strong>{saveLabel(t, workspace, downloads, lang)}</strong>
       </p>
       <p data-testid="status-recovery" data-state={recovery.state}>
         {t("status.recovery")}: {recoveryText}

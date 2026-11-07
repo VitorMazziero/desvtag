@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import type { Goal, OptimizationSetup, ResponseGoal } from "../../services/engine";
 import { useProject } from "../../state/ProjectContext";
+import { GoalSummary } from "./GoalSummary";
 import { NumberField } from "./NumberField";
 import { defaultGoal, GOAL_TYPES, type GoalType, observedRange } from "./optimizationSetup";
 
@@ -18,92 +19,46 @@ function GoalFields({
 }: {
   name: string;
   goal: Goal;
-  onChange: (goal: Goal) => void;
+  onChange: (g: Goal) => void;
 }) {
   const { t } = useTranslation();
-  const field = (key: string, value: number, set: (v: number) => void, help?: string) => (
+  const field = (key: string, value: number, property = key) => (
     <NumberField
+      key={key}
       label={`${name} — ${t(`optimization.goal.${key}`)}`}
+      visibleLabel={t(`optimization.goal.${key}`)}
       value={value}
-      onChange={(v) => v !== null && set(v)}
-      help={help}
+      onChange={(v) => v !== null && onChange({ ...goal, [property]: v } as Goal)}
     />
   );
-  switch (goal.type) {
-    case "maximize":
-      return (
-        <div className="row">
-          {field(
-            "low",
-            goal.low,
-            (v) => onChange({ ...goal, low: v }),
-            t("optimization.goal.lowHelp"),
-          )}
-          {field(
-            "target",
-            goal.target,
-            (v) => onChange({ ...goal, target: v }),
-            t("optimization.goal.targetHelp"),
-          )}
-          {field(
-            "shape",
-            goal.shape,
-            (v) => onChange({ ...goal, shape: v }),
-            t("optimization.goal.shapeHelp"),
-          )}
-        </div>
-      );
-    case "minimize":
-      return (
-        <div className="row">
-          {field(
-            "target",
-            goal.target,
-            (v) => onChange({ ...goal, target: v }),
-            t("optimization.goal.targetHelp"),
-          )}
-          {field(
-            "high",
-            goal.high,
-            (v) => onChange({ ...goal, high: v }),
-            t("optimization.goal.highHelp"),
-          )}
-          {field(
-            "shape",
-            goal.shape,
-            (v) => onChange({ ...goal, shape: v }),
-            t("optimization.goal.shapeHelp"),
-          )}
-        </div>
-      );
-    case "target":
-      return (
-        <div className="row">
-          {field(
-            "low",
-            goal.low,
-            (v) => onChange({ ...goal, low: v }),
-            t("optimization.goal.lowHelp"),
-          )}
-          {field("target", goal.target, (v) => onChange({ ...goal, target: v }))}
-          {field(
-            "high",
-            goal.high,
-            (v) => onChange({ ...goal, high: v }),
-            t("optimization.goal.highHelp"),
-          )}
-          {field("shapeLow", goal.shapeLow, (v) => onChange({ ...goal, shapeLow: v }))}
-          {field("shapeHigh", goal.shapeHigh, (v) => onChange({ ...goal, shapeHigh: v }))}
-        </div>
-      );
-    case "range":
-      return (
-        <div className="row">
-          {field("rangeLow", goal.low, (v) => onChange({ ...goal, low: v }))}
-          {field("rangeHigh", goal.high, (v) => onChange({ ...goal, high: v }))}
-        </div>
-      );
-  }
+  const thresholds =
+    goal.type === "maximize"
+      ? [field("low", goal.low), field("target", goal.target)]
+      : goal.type === "minimize"
+        ? [field("target", goal.target), field("high", goal.high)]
+        : goal.type === "target"
+          ? [field("low", goal.low), field("target", goal.target), field("high", goal.high)]
+          : [field("rangeLow", goal.low, "low"), field("rangeHigh", goal.high, "high")];
+  return (
+    <fieldset className="goal-decision">
+      <legend>{t("optimization.decision.thresholds")}</legend>
+      <div className="row">{thresholds}</div>
+      <p className="muted small">
+        <GoalSummary goal={goal} />
+      </p>
+      {goal.type !== "range" && (
+        <details className="advanced">
+          <summary>{t("optimization.decision.shape")}</summary>
+          <p className="muted small">{t("optimization.goal.shapeHelp")}</p>
+          <div className="row">
+            {goal.type === "target"
+              ? [field("shapeLow", goal.shapeLow), field("shapeHigh", goal.shapeHigh)]
+              : field("shape", goal.shape)}
+          </div>
+        </details>
+      )}
+    </fieldset>
+  );
 }
 
 export function GoalsEditor({ setup, onChange }: Props) {
@@ -138,82 +93,103 @@ export function GoalsEditor({ setup, onChange }: Props) {
         const goal = setup.responses.find((g) => g.responseId === r.id);
         const limit = setup.limits.find((l) => l.responseId === r.id);
         return (
-          <fieldset key={r.id}>
-            <legend>{name}</legend>
-            <label className="check">
-              <input
-                type="checkbox"
-                checked={goal !== undefined}
-                onChange={(e) =>
-                  onChange({
-                    ...setup,
-                    responses: e.target.checked
-                      ? [
-                          ...setup.responses,
-                          {
-                            responseId: r.id,
-                            terms: [],
-                            goal: defaultGoal("maximize", observedRange(state, r.id)),
-                            importance: 1,
-                          },
-                        ]
-                      : setup.responses.filter((g) => g.responseId !== r.id),
-                    limits: e.target.checked
-                      ? setup.limits
-                      : setup.limits.filter((l) => l.responseId !== r.id),
-                  })
-                }
-              />
-              <span>{`${name} — ${t("optimization.goals.include")}`}</span>
-            </label>
+          <fieldset key={r.id} className="goal-response">
+            <legend>
+              {name}
+              {r.unit ? ` [${r.unit}]` : ""}
+            </legend>
+            <fieldset className="goal-decision">
+              <legend>{t("optimization.decision.objective")}</legend>
+              <label className="check">
+                <input
+                  aria-label={`${name} — ${t("optimization.goals.include")}`}
+                  type="checkbox"
+                  checked={goal !== undefined}
+                  onChange={(e) =>
+                    onChange({
+                      ...setup,
+                      responses: e.target.checked
+                        ? [
+                            ...setup.responses,
+                            {
+                              responseId: r.id,
+                              terms: [],
+                              goal: defaultGoal("maximize", observedRange(state, r.id)),
+                              importance: 1,
+                            },
+                          ]
+                        : setup.responses.filter((g) => g.responseId !== r.id),
+                      limits: e.target.checked
+                        ? setup.limits
+                        : setup.limits.filter((l) => l.responseId !== r.id),
+                    })
+                  }
+                />
+                <span>{t("optimization.goals.include")}</span>
+              </label>
+              {goal && (
+                <>
+                  <label className="field">
+                    <span>{t("optimization.goals.type")}</span>
+                    <select
+                      aria-label={`${name} — ${t("optimization.goals.type")}`}
+                      value={goal.goal.type}
+                      onChange={(e) =>
+                        patchGoal(r.id, (g) => ({
+                          ...g,
+                          goal: defaultGoal(e.target.value as GoalType, observedRange(state, r.id)),
+                        }))
+                      }
+                    >
+                      {GOAL_TYPES.map((type) => (
+                        <option key={type} value={type}>
+                          {t(`optimization.goal.type_${type}`)}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </>
+              )}
+            </fieldset>
             {goal && (
               <>
-                <label className="field">
-                  <span>{`${name} — ${t("optimization.goals.type")}`}</span>
-                  <select
-                    value={goal.goal.type}
-                    onChange={(e) =>
-                      patchGoal(r.id, (g) => ({
-                        ...g,
-                        goal: defaultGoal(e.target.value as GoalType, observedRange(state, r.id)),
-                      }))
-                    }
-                  >
-                    {GOAL_TYPES.map((type) => (
-                      <option key={type} value={type}>
-                        {t(`optimization.goal.type_${type}`)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
                 <GoalFields
                   name={name}
                   goal={goal.goal}
                   onChange={(g) => patchGoal(r.id, (x) => ({ ...x, goal: g }))}
                 />
-                <div className="row">
+                <fieldset className="goal-decision">
+                  <legend>{t("optimization.decision.importance")}</legend>
                   <NumberField
                     label={`${name} — ${t("optimization.goals.importance")}`}
+                    visibleLabel={t("optimization.goals.importance")}
                     value={goal.importance}
                     onChange={(v) =>
                       v !== null && patchGoal(r.id, (x) => ({ ...x, importance: v }))
                     }
                     help={t("optimization.goals.importanceHelp")}
                   />
-                  <NumberField
-                    label={`${name} — ${t("optimization.goals.limitMin")}`}
-                    value={limit?.min ?? null}
-                    optional
-                    onChange={(v) => setLimit(r.id, "min", v)}
-                    help={t("optimization.goals.limitHelp")}
-                  />
-                  <NumberField
-                    label={`${name} — ${t("optimization.goals.limitMax")}`}
-                    value={limit?.max ?? null}
-                    optional
-                    onChange={(v) => setLimit(r.id, "max", v)}
-                  />
-                </div>
+                </fieldset>
+                <fieldset className="goal-decision">
+                  <legend>{t("optimization.decision.limits")}</legend>
+                  <p className="muted small">{t("optimization.goals.limitHelp")}</p>
+                  <div className="row">
+                    <NumberField
+                      label={`${name} — ${t("optimization.goals.limitMin")}`}
+                      visibleLabel={t("optimization.goals.limitMin")}
+                      value={limit?.min ?? null}
+                      optional
+                      onChange={(v) => setLimit(r.id, "min", v)}
+                    />
+                    <NumberField
+                      label={`${name} — ${t("optimization.goals.limitMax")}`}
+                      visibleLabel={t("optimization.goals.limitMax")}
+                      value={limit?.max ?? null}
+                      optional
+                      onChange={(v) => setLimit(r.id, "max", v)}
+                    />
+                  </div>
+                </fieldset>
               </>
             )}
           </fieldset>

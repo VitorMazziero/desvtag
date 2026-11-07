@@ -60,7 +60,7 @@ export function RunMatrix({ spec, language }: { spec: DesignSpec; language: Lang
       }),
     })),
   );
-  const table = matrixTable(design, { app: "EnziTAG Optima", project: workspace.name }, collection);
+  const table = matrixTable(design, { app: "DesvTAG", project: workspace.name }, collection);
 
   return (
     <section aria-labelledby="matrix-title" data-testid="run-matrix">

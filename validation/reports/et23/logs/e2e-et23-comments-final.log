@@ -1,0 +1,44 @@
+
+Running 21 tests using 3 workers
+
+(node:5356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (3.0s)
+  ok  4 [chromium] › tests\e2e\et22-families.spec.ts:223:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (2.1s)
+  ok  2 [chromium] › tests\e2e\et22-families.spec.ts:161:1 › T04: paired and mixed models retain separate immutable records (5.9s)
+  ok  3 [chromium] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (7.5s)
+  ok  6 [chromium] › tests\e2e\et22-families.spec.ts:325:1 › T09: reload offers recovery of coexisting saved results (4.1s)
+  ok  5 [chromium] › tests\e2e\et22-families.spec.ts:258:1 › T09: a late family operation remains bound to its original experiment (5.0s)
+(node:19104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [firefox] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (5.5s)
+  ok  8 [firefox] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (11.2s)
+  ok  7 [chromium] › tests\e2e\et23-configuration.spec.ts:7:1 › T02/T04/T05: categorical time source, interaction, covariate reference and Holm (15.2s)
+(node:13336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [firefox] › tests\e2e\et22-families.spec.ts:161:1 › T04: paired and mixed models retain separate immutable records (7.7s)
+  ok 11 [firefox] › tests\e2e\et22-families.spec.ts:223:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (3.2s)
+  ok 13 [firefox] › tests\e2e\et22-families.spec.ts:325:1 › T09: reload offers recovery of coexisting saved results (4.3s)
+(node:11624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [firefox] › tests\e2e\et22-families.spec.ts:258:1 › T09: a late family operation remains bound to its original experiment (7.6s)
+(node:16940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [webkit] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (6.3s)
+  ok 15 [webkit] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (13.3s)
+  ok 14 [firefox] › tests\e2e\et23-configuration.spec.ts:7:1 › T02/T04/T05: categorical time source, interaction, covariate reference and Holm (18.6s)
+(node:26984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 17 [webkit] › tests\e2e\et22-families.spec.ts:161:1 › T04: paired and mixed models retain separate immutable records (9.4s)
+  ok 18 [webkit] › tests\e2e\et22-families.spec.ts:223:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (6.0s)
+  ok 19 [webkit] › tests\e2e\et22-families.spec.ts:258:1 › T09: a late family operation remains bound to its original experiment (7.2s)
+  ok 20 [webkit] › tests\e2e\et22-families.spec.ts:325:1 › T09: reload offers recovery of coexisting saved results (4.9s)
+  ok 21 [webkit] › tests\e2e\et23-configuration.spec.ts:7:1 › T02/T04/T05: categorical time source, interaction, covariate reference and Holm (13.8s)
+
+  21 passed (1.1m)

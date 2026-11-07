@@ -1,0 +1,16 @@
+
+Running 7 tests using 2 workers
+
+(node:26876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\optimization-flow.spec.ts:29:3 › otimização por desejabilidade › exemplo 04: candidato, previsões com intervalo, compromisso e gráfico (conferidos de forma independente) (1.3s)
+  ok 3 [chromium] › tests\e2e\optimization-flow.spec.ts:50:3 › otimização por desejabilidade › limite obrigatório inatingível: região inviável sem candidatos; estender o domínio marca extrapolação (2.4s)
+  ok 2 [chromium] › tests\e2e\et27-polish.spec.ts:271:1 › T07: decision criteria, candidate selection and original confirmation with engine difference (4.5s)
+  ok 4 [chromium] › tests\e2e\optimization-flow.spec.ts:76:3 › otimização por desejabilidade › objetivos inválidos são recusados pelo motor com mensagem localizada (1.2s)
+  ok 6 [chromium] › tests\e2e\optimization-flow.spec.ts:106:3 › otimização por desejabilidade › experimento de confirmação vinculado: previsões gravadas e conferência com o observado (1.1s)
+  ok 5 [chromium] › tests\e2e\optimization-flow.spec.ts:83:3 › otimização por desejabilidade › cancelar uma busca longa mantém o resultado anterior e a interface volta a funcionar (2.5s)
+  ok 7 [chromium] › tests\e2e\optimization-flow.spec.ts:123:3 › otimização por desejabilidade › percurso completo: propor confirmação cria um experimento vinculado e salva/reabre (1.8s)
+
+  7 passed (9.0s)

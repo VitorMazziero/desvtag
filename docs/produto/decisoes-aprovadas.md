@@ -2,13 +2,13 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-Requisitos aprovados pelo usuário; implementação ainda não iniciada.
+Registro dos requisitos aprovados pelo usuário e das decisões posteriores.
 
 Este registro consolida as escolhas anteriores e a aprovação explícita do usuário dos 14 itens enviados no anexo desta conversa. Substitui o estado de proposta desses itens nos documentos anteriores. A correção sobre aprendizagem permanece válida: a prioridade é separar o aplicativo em módulos com arquivos, responsabilidades e interfaces definidos, facilitando compreensão e manutenção. Os exemplos e cálculos documentados são apoio, não um curso obrigatório nem uma etapa adicional de aprovação.
 
 ## 1. Identidade
 
-- Produto: **EnziTAG Optima**; repositório: **enzitag-optima**, conta **VitorMazziero**.
+- Produto inicial: **EnziTAG Optima**. A v0.4 adota **DesvTAG** e prepara o repositório **desvtag** na conta **VitorMazziero**. Novos arquivos usam `.desvtag`. O aplicativo conserva o formato do contêiner, a leitura de `.enzitag` e as chaves internas necessárias para preservar os dados existentes.
 - Três temas desde o início: **Soft Light** (padrão), **Modern Dark** e **Professional**.
 - Soft Light usa o prompt Software como base, adaptado à paleta do logo EnziTAG. Preservar os [prompts originais](../temas/README.md).
 - **v0.2 (decisão de 2026-11-01):** três temas adicionais, **Industrial**, **Organic** e **Clay** (prompt *Claymorphism*), mantendo o Soft Light como padrão e a preferência por dispositivo; descrições e prompts originais preservados em [temas](../temas/README.md); plano na [ET12](../planos-execucao/concluidos/et12-temas-adicionais-e-identidade-do-grupo.md). Os temas novos só mudam a aparência: nenhum cálculo, texto científico nem exportação é alterado.
@@ -39,7 +39,7 @@ Digitação, colagem do Excel, CSV, XLSX e matrizes externas. Prévia de importa
 
 ## 7. Projetos
 
-Vários experimentos por projeto e arquivo **`.enzitag`** com formato aberto e documentado. Preservar dados importados, alterações, planejamento, análises, modelos alternativos, configurações gráficas, observações e versões do aplicativo/motor. Cada resultado aponta para a revisão dos dados e configurações que o geraram. Reabrir não recalcula silenciosamente; recalcular cria nova análise identificada. Projetos e experimentos têm identificadores estáveis.
+Vários experimentos por projeto e arquivo **`.desvtag`** com formato aberto e documentado. Preservar dados importados, alterações, planejamento, análises, modelos alternativos, configurações gráficas, observações e versões do aplicativo/motor. Cada resultado aponta para a revisão dos dados e configurações que o geraram. Reabrir não recalcula silenciosamente; recalcular cria nova análise identificada. Projetos e experimentos têm identificadores estáveis.
 
 ## 8. Salvamento
 

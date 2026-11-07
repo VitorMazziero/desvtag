@@ -47,8 +47,9 @@ export interface ReportInput {
 const STYLE = `
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#16191f;background:#fff;max-width:960px;margin:0 auto;padding:24px;line-height:1.5}
 h1{font-size:1.6rem;margin:0 0 4px}h2{font-size:1.25rem;margin-top:28px;border-bottom:1px solid #dde0e6;padding-bottom:4px}h3{font-size:1.05rem;margin-top:20px}
+.grid-scroll{overflow-x:auto;max-width:100%}
 table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}th,td{border:1px solid #dde0e6;padding:4px 8px;text-align:left;vertical-align:top}
-td.num{text-align:right;font-variant-numeric:tabular-nums}caption{text-align:left;font-weight:600;padding:4px 0}thead th{background:#f3f4f7}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}p{max-width:75ch;hyphens:auto}caption{text-align:left;font-weight:600;padding:4px 0}thead th{background:#f3f4f7}
 .credit{margin:0 0 8px}figure{margin:16px 0;break-inside:avoid}svg{max-width:100%;height:auto}.muted,.small{color:#454c58}.small{font-size:.85rem}
 dl.interpretation dt{font-weight:600;margin-top:8px}dl.interpretation dd{margin:0 0 4px}.sr-only{position:absolute;left:-9999px}
 ul.facts-list{padding-left:20px}.provenance td:first-child{width:28%;font-family:ui-monospace,monospace;font-size:.82rem}

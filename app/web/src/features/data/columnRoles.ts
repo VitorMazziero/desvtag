@@ -1,7 +1,7 @@
 // Papéis das colunas da grade (U04): unidade experimental, fator ou resposta.
 import type { ProjectState } from "../../state/project";
 
-export type ColumnRole = "unit" | "factor" | "response";
+export type ColumnRole = "unit" | "time" | "factor" | "response";
 
 export interface GridColumn {
   /** Índice da coluna conforme `setCellText`: 0 unidade, depois fatores, depois respostas. */
@@ -14,7 +14,8 @@ export interface GridColumn {
 }
 
 export function gridColumns(
-  state: Pick<ProjectState, "factors" | "responses" | "showUnitColumn">,
+  state: Pick<ProjectState, "factors" | "responses" | "showUnitColumn"> &
+    Partial<Pick<ProjectState, "showTimeColumn">>,
 ): GridColumn[] {
   const columns: GridColumn[] = [];
   if (state.showUnitColumn) columns.push({ index: 0, role: "unit", id: "", name: "", unit: "" });
@@ -30,5 +31,13 @@ export function gridColumns(
       unit: r.unit,
     });
   }
+  if (state.showTimeColumn)
+    columns.push({
+      index: state.factors.length + state.responses.length + 1,
+      role: "time",
+      id: "",
+      name: "",
+      unit: "",
+    });
   return columns;
 }

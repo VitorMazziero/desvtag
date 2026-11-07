@@ -1,36 +1,9 @@
 // Tabelas da comparação de um fator: grupos (com letras), ANOVA e pares (U08).
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { formatP, formatSignificant } from "../../i18n/format";
-import type { OneWayResult, Stat } from "../../services/engine";
-
-function Cell({
-  stat,
-  language,
-  p = false,
-  digits = 6,
-}: {
-  stat: Stat;
-  language: Language;
-  p?: boolean;
-  digits?: number;
-}) {
-  const { t } = useTranslation("results");
-  if (stat.status === "defined")
-    return (
-      <td className="num">
-        {p ? formatP(stat.value, language) : formatSignificant(stat.value, language, digits)}
-      </td>
-    );
-  return (
-    <td className="num undefined" title={t(`undefinedReason.${stat.reason}`)}>
-      <span aria-hidden="true">—</span>
-      <span className="sr-only">
-        {t("table.undefined")}: {t(`undefinedReason.${stat.reason}`)}
-      </span>
-    </td>
-  );
-}
+import { formatSignificant } from "../../i18n/format";
+import type { OneWayResult } from "../../services/engine";
+import { StatCell as Cell, StatNumber } from "./StatCell";
 
 export function GroupTable({
   result,
@@ -67,9 +40,8 @@ export function GroupTable({
               <Cell stat={g.sd} language={language} />
               <Cell stat={g.stdError} language={language} />
               <td className="num">
-                {g.ciLower.status === "defined" && g.ciUpper.status === "defined"
-                  ? `${formatSignificant(g.ciLower.value, language)} – ${formatSignificant(g.ciUpper.value, language)}`
-                  : "—"}
+                <StatNumber stat={g.ciLower} language={language} /> –{" "}
+                <StatNumber stat={g.ciUpper} language={language} />
               </td>
               {result.letters && (
                 <td data-testid={`letters-${i}`}>
@@ -128,8 +100,12 @@ export function AnovaTable({
                 </>
               ) : (
                 <>
-                  <td />
-                  <td />
+                  <td className="num" title={t("number.notApplicable")}>
+                    {t("number.na")}
+                  </td>
+                  <td className="num" title={t("number.notApplicable")}>
+                    {t("number.na")}
+                  </td>
                 </>
               )}
             </tr>

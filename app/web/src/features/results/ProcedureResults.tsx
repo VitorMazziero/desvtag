@@ -9,6 +9,7 @@ import type { ProcedureResult, Stat } from "../../services/engine";
 import { issueMessage } from "../../services/errors/presentation";
 import { useProject } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
+import { StatNumber } from "./StatCell";
 import { TableExportButtons } from "./TableExportButtons";
 import { useFigureFormat } from "./useFigureFormat";
 import { slug, useResultMetadata } from "./useResultMetadata";
@@ -27,20 +28,25 @@ export function ProcedureResults({
   const { t } = useTranslation("results");
   const tc = useTranslation("diagnostics").t;
   const state = useProject();
-  const { metadataText, exportMeta } = useResultMetadata(signature);
+  const { record, revision, metadataText, exportMeta } = useResultMetadata(signature);
   const fmt = useFigureFormat(language);
   const [notice, setNotice] = useState<string | null>(null);
-  const response = state.responses.find((r) => r.id === state.analysis.responseId);
+  const responseId = record?.options.responseId ?? (record ? null : state.analysis.responseId);
+  const response = (revision?.data.responses ?? (record ? [] : state.responses)).find(
+    (r) => r.id === responseId,
+  );
+  const knownAffected =
+    result.provenance.methodVersion < 2 &&
+    result.pairs.some((p) => p.pValue.status !== "defined" && p.pAdjusted.status === "defined");
   const responseName = response?.name || "";
   const kind = result.procedure.type;
-  const num = (s: Stat, digits = 4) => {
-    const v = val(s);
-    return v === null ? "—" : formatSignificant(v, language, digits);
-  };
-  const pText = (s: Stat) => {
-    const v = val(s);
-    return v === null ? "—" : formatP(v, language);
-  };
+  const text = (s: Stat, digits = 4) =>
+    s.status === "defined"
+      ? formatSignificant(s.value, language, digits)
+      : t(`undefinedReason.${s.reason}`);
+  const num = (s: Stat, digits = 4) => <StatNumber stat={s} language={language} digits={digits} />;
+  const pText = (s: Stat) => <StatNumber stat={s} language={language} p />;
+
   const name = (i: number) => result.groups[i]?.label ?? String(i);
   const letters = result.letters?.letters ?? [];
   const isRank = kind === "kruskalDunn";
@@ -96,19 +102,20 @@ export function ProcedureResults({
     id: "procedure-means",
     title: t("procedure.chart.title", { response: responseName }),
     description: t("procedure.chart.description"),
-    yLabel: responseName,
+    yLabel: `${responseName}${response?.unit ? ` [${response.unit}]` : ""}`,
     uncertaintyName: t("procedure.chart.sd"),
     lettersLegend: letters.length
       ? t("procedure.chart.letters", { alpha: formatSignificant(result.alpha, language, 4) })
       : "",
     groups: result.groups.map((grp, i) => {
-      const mean = val(grp.mean) ?? 0;
+      const mean = val(grp.mean);
       const sd = val(grp.sd);
       return {
         label: grp.label,
+        n: grp.n,
         mean,
-        lower: sd === null ? null : mean - sd,
-        upper: sd === null ? null : mean + sd,
+        lower: sd === null || mean === null ? null : mean - sd,
+        upper: sd === null || mean === null ? null : mean + sd,
         letters: letters[i] ?? "",
       };
     }),
@@ -118,6 +125,11 @@ export function ProcedureResults({
   return (
     <>
       <div data-section="summary">
+        {knownAffected && (
+          <p role="note" className="validation-warning">
+            {t("factorial.geometry.legacyWarning")}
+          </p>
+        )}
         <section
           className="panel"
           aria-labelledby="procedure-title"
@@ -127,10 +139,10 @@ export function ProcedureResults({
           <p>{t(`procedure.explain.${kind}`)}</p>
           <p data-testid="procedure-global">
             {t(`procedure.global.${g.name}`, {
-              stat: num(g.statistic, 5),
-              df1: num(g.df1, 4),
-              df2: num(g.df2, 4),
-              p: pText(g.pValue),
+              stat: text(g.statistic, 5),
+              df1: text(g.df1, 4),
+              df2: text(g.df2, 4),
+              p: g.pValue.status === "defined" ? formatP(g.pValue.value, language) : text(g.pValue),
             })}
           </p>
           {result.control !== null && (
@@ -151,7 +163,12 @@ export function ProcedureResults({
       </div>
 
       <div data-section="tables">
-        <div className="grid-scroll">
+        <section
+          className="grid-scroll procedure-table-scroll"
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: Permite rolar a tabela pelo teclado.
+          tabIndex={0}
+          aria-label={t("procedure.groups")}
+        >
           <table className="results-table" data-testid="procedure-groups">
             <caption>{t("procedure.groups")}</caption>
             <thead>
@@ -181,8 +198,13 @@ export function ProcedureResults({
               ))}
             </tbody>
           </table>
-        </div>
-        <div className="grid-scroll">
+        </section>
+        <section
+          className="grid-scroll procedure-table-scroll"
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: Permite rolar a tabela pelo teclado.
+          tabIndex={0}
+          aria-label={t("procedure.pairs")}
+        >
           <table className="results-table" data-testid="procedure-pairs">
             <caption>{t("procedure.pairs")}</caption>
             <thead>
@@ -218,8 +240,10 @@ export function ProcedureResults({
               ))}
             </tbody>
           </table>
-        </div>
-        <p className="muted small">{t("procedure.pairsHelp")}</p>
+        </section>
+        <p className="muted small" data-report-skip>
+          {t("procedure.pairsHelp")}
+        </p>
         <div className="row">
           <TableExportButtons
             label={t("procedure.export.groupsCsv")}

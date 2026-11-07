@@ -1,0 +1,74 @@
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+warning: method `inverse` is never used
+  --> crates\optima-core\src\models\mixed\linalg.rs:57:12
+   |
+ 8 | impl Cholesky {
+   | ------------- method in this implementation
+...
+57 |     pub fn inverse(&self) -> Option<Vec<f64>> {
+   |            ^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `Data` is never constructed
+ --> crates\optima-core\src\models\mixed\estimation.rs:6:19
+  |
+6 | pub(super) struct Data {
+  |                   ^^^^
+
+warning: struct `Solution` is never constructed
+  --> crates\optima-core\src\models\mixed\estimation.rs:15:19
+   |
+15 | pub(super) struct Solution {
+   |                   ^^^^^^^^
+
+warning: struct `Fit` is never constructed
+  --> crates\optima-core\src\models\mixed\estimation.rs:22:19
+   |
+22 | pub(super) struct Fit {
+   |                   ^^^
+
+warning: function `evaluate` is never used
+  --> crates\optima-core\src\models\mixed\estimation.rs:27:15
+   |
+27 | pub(super) fn evaluate(
+   |               ^^^^^^^^
+
+warning: function `fit` is never used
+  --> crates\optima-core\src\models\mixed\estimation.rs:91:15
+   |
+91 | pub(super) fn fit(data: &Data, structure: Structure) -> Option<Fit> {
+   |               ^^^
+
+warning: fields `theta`, `iterations`, and `gradient_norm` are never read
+ --> crates\optima-core\src\models\mixed\optimizer.rs:6:9
+  |
+5 | pub(super) struct Optimum {
+  |                   ------- fields in this struct
+6 |     pub theta: Vec<f64>,
+  |         ^^^^^
+7 |     pub value: f64,
+8 |     pub iterations: usize,
+  |         ^^^^^^^^^^
+9 |     pub gradient_norm: f64,
+  |         ^^^^^^^^^^^^^
+  |
+  = note: `Optimum` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: `optima-core` (lib test) generated 7 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 52.98s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_core-144d256b6bfbf868.exe)
+
+running 9 tests
+test models::mixed::linalg::tests::factor_solve_and_reject_non_positive_covariance ... ok
+test models::mixed::optimizer::tests::curved_valley_and_failed_budget_are_distinguished ... ok
+test models::mixed::covariance::tests::rejects_noninteger_and_duplicate_ar1_lags ... ok
+test models::mixed::covariance::tests::ar1_markov_precision_handles_negative_rho_and_missing_occasions ... ok
+test models::mixed::covariance::tests::cs_and_unstructured_use_the_requested_submatrix ... ok
+test models::mixed::types::export_bindings_randomeffect ... ok
+test models::mixed::types::export_bindings_mixedcoefficient ... ok
+test models::mixed::types::export_bindings_mixedmodelresult ... ok
+test models::mixed::types::export_bindings_mixedmodelrequest ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 386 filtered out; finished in 0.06s
+

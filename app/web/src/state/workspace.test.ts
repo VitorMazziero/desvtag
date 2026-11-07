@@ -119,7 +119,7 @@ describe("change tracking", () => {
     expect(ws.fileName).toBe("a.enzitag");
   });
 
-  it("selecting an experiment is not a change; renaming the project is", () => {
+  it("active experiment is persisted as an edit; selecting it again is a no-op", () => {
     let ws = run(createWorkspace("p", "x", "E1", T0), {
       type: "addExperiment",
       name: "E2",
@@ -127,9 +127,19 @@ describe("change tracking", () => {
     });
     const seq = ws.changeSeq;
     ws = run(ws, { type: "selectExperiment", id: "e1" });
-    expect(ws.changeSeq).toBe(seq);
-    ws = run(ws, { type: "renameProject", name: "novo" });
     expect(ws.changeSeq).toBe(seq + 1);
+    const document = toDocument(ws, T1, "0.4.0-dev");
+    expect(document.currentExperimentId).toBe("e1");
+    expect(run(ws, { type: "selectExperiment", id: "e1" })).toBe(ws);
+    const reopened = run(ws, { type: "loadDocument", document, fileName: "p.enzitag", now: T1 });
+    expect(reopened.currentId).toBe("e1");
+    const older = { ...document, currentExperimentId: undefined };
+    expect(
+      run(ws, { type: "loadDocument", document: older, fileName: "old.enzitag", now: T1 })
+        .currentId,
+    ).toBe("e1");
+    ws = run(ws, { type: "renameProject", name: "novo" });
+    expect(ws.changeSeq).toBe(seq + 2);
   });
 });
 

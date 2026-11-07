@@ -1,0 +1,11 @@
+Página: about:blank
+FALHA: locator.textContent: Timeout 2000ms exceeded.
+Call log:
+  - waiting for locator('[data-testid="engine-environment"]')
+
+    at text (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\desktop\tests\native-cdp.mjs:72:78)
+    at runChecks (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\desktop\tests\native-checks.mjs:21:29)
+    at async file:///D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG%20Optima/app/desktop/tests/native-cdp.mjs:71:3 {
+  log: [ `  - waiting for locator('[data-testid="engine-environment"]')` ],
+  name: 'TimeoutError'
+}

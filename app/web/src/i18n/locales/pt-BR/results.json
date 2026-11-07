@@ -1,4 +1,10 @@
 {
+  "optimalVarianceReport": {
+    "scope": "O perfil descreve a precisão relativa da média prevista pelo modelo usado para planejar os ensaios.",
+    "source": "Planejamento {{design}} · perfil {{profile}} · revisão {{revision}} · método v{{version}}.",
+    "summary": "Resumo da variância de predição em escala {{scale}}",
+    "sourceData": "Os dados fonte completos estão nas exportações CSV e XLSX do perfil de precisão."
+  },
   "title": "Resultados",
   "table": {
     "caption": "Resumo descritivo de {{response}}",
@@ -22,7 +28,9 @@
     "constantResponse": "A resposta é constante: não há variação a explicar.",
     "noModelTerms": "O modelo não tem termos além do intercepto.",
     "outOfDomain": "Argumento fora do domínio.",
-    "zeroMean": "A média é zero: o coeficiente de variação não existe."
+    "zeroMean": "A média é zero: o coeficiente de variação não existe.",
+    "notApplicable": "Componente não aplicável à estrutura escolhida.",
+    "covarianceInformationUnavailable": "A informação observada da covariância não sustenta a aproximação inferencial."
   },
   "summary": {
     "conclusion": "Foram resumidas {{valid}} de {{total}} observações de «{{response}}».",
@@ -113,8 +121,8 @@
     },
     "optimization": {
       "no_global_claim": "A busca é local, com vários inícios: ela não prova que o melhor candidato seja o ótimo global.",
-      "infeasible": "Nenhum candidato satisfaz os limites obrigatórios na região pesquisada.",
-      "zero_desirability": "A desejabilidade global é zero em todos os pontos viáveis encontrados: ao menos um objetivo não é atingível junto com os demais.",
+      "infeasible": "A busca não encontrou candidato que satisfaça os limites obrigatórios.",
+      "zero_desirability": "A desejabilidade global é zero nos candidatos viáveis encontrados. A busca local não prova a impossibilidade de atingir os objetivos em outras condições.",
       "single_start": "A melhor solução veio de um só início: aumente o número de inícios para verificar se há soluções melhores.",
       "boundary": "A melhor solução está no limite do domínio em: {{factors}}. O ótimo pode estar além, fora da região experimental.",
       "extrapolated": "{{count}} candidato(s) fora da região experimental (extrapolação): trate-os com cautela.",
@@ -291,7 +299,7 @@
       "paretoEffect": "|efeito| de cada termo",
       "referenceT": "t crítico (α = {{alpha}})",
       "referenceLenth": "margem de Lenth",
-      "paretoLegendT": "Barras acima da linha: termos com p < α. Termos não estimáveis não aparecem.",
+      "paretoLegendT": "Barras que ultrapassam a linha crítica: termos com p < α. Termos não estimáveis não aparecem.",
       "paretoLegendLenth": "Sem graus de liberdade do erro: a linha é a margem de erro de Lenth (indicativa).",
       "paretoLegendEffect": "Sem erro estimável: só a magnitude dos efeitos, sem linha de referência.",
       "mainTitle": "Efeitos principais sobre «{{response}}»",
@@ -387,7 +395,7 @@
       "readingSurface": "Cor mais intensa = resposta predita maior.",
       "extrapolated": "Hachurado: extrapolação (fora da região ensaiada).",
       "points": "Círculos: ensaios, projetados nos dois eixos.",
-      "needTwo": "A superfície exige ao menos dois fatores quantitativos.",
+      "needTwo": "O ajuste de um fator está nas tabelas e na equação. Contornos e superfícies 3D exigem dois fatores quantitativos.",
       "gridCsv": "Malha de predições (CSV)"
     },
     "export": {
@@ -417,11 +425,11 @@
       "button": "Exportar relatório (HTML)",
       "building": "Montando relatório…",
       "title": "Relatório",
-      "subtitle": "Relatório gerado pelo EnziTAG Optima: método, configuração, tabelas, figuras e interpretação.",
+      "subtitle": "Relatório gerado pelo DesvTAG: método, configuração, tabelas, figuras e interpretação.",
       "provenance": "Proveniência",
-      "footer": "EnziTAG Optima {{version}} — arquivo autocontido, gerado localmente.",
+      "footer": "DesvTAG {{version}} — arquivo autocontido, gerado localmente.",
       "buttonPdf": "Exportar relatório (PDF)",
-      "footerPdf": "EnziTAG Optima {{version}} — PDF gerado localmente; as figuras são vetoriais.",
+      "footerPdf": "DesvTAG {{version}} — PDF gerado localmente; as figuras são vetoriais.",
       "page": "Página {{page}} de {{total}}",
       "buttonDocx": "Exportar relatório (Word)",
       "commentsTitle": "Comentários",
@@ -430,10 +438,15 @@
       "commentsExperiment": "Experimento",
       "commentsAnalysis": "Análise {{analysis}}",
       "commentsFigure": "Figura «{{key}}»",
-      "commentsTable": "Tabela «{{key}}»"
+      "commentsTable": "Tabela «{{key}}»",
+      "cancel": "Cancelar relatório",
+      "sourceChanged": "Relatório cancelado porque os dados ou o resultado consultado mudaram. Gere novamente o relatório."
     },
     "logo": "Incluir o logotipo do grupo nos relatórios",
-    "comments": "Incluir os comentários do experimento no fim dos relatórios"
+    "comments": "Incluir os comentários do experimento no fim dos relatórios",
+    "filePreferences": "Preferências dos arquivos",
+    "figurePreferences": "Aparência das figuras neste dispositivo",
+    "summary": "Arquivos em {{language}}; paleta {{palette}}; escala de fonte {{scale}}."
   },
   "figure": {
     "customize": "Personalizar figura",
@@ -476,7 +489,13 @@
     "exportScale": "Resolução do PNG",
     "scaleValue": "{{n}}×",
     "showGrid": "Mostrar linhas de grade",
-    "showLegend": "Mostrar legenda"
+    "showLegend": "Mostrar legenda",
+    "menu": "Figura",
+    "preview": "Prévia da exportação",
+    "previewHelp": "A exportação usa aparência neutra. Textos, fonte, escala e personalizações desta figura são preservados.",
+    "readableView": "Figura: use as setas para percorrer a área ampliada",
+    "rawPoints": "Círculos: observações individuais (exibidas quando n ≤ 30).",
+    "nInModel": "observações no modelo"
   },
   "sections": {
     "label": "Seções dos resultados",
@@ -493,6 +512,8 @@
   },
   "model": {
     "title": "Modelo: termos e comparação",
+    "compareAction": "Comparar modelos e editar termos",
+    "comparing": "Comparando os modelos desta análise…",
     "intro": "Desmarque um termo para retirá-lo do modelo (por exemplo, o efeito quadrático de um fator); o aplicativo recalcula e compara os modelos.",
     "terms": "Termos do modelo",
     "notSignificant": "não significativo",
@@ -531,7 +552,8 @@
     "warnOverfit": "O R² predito está bem abaixo do R² ajustado: sinal de sobreajuste. Prefira um modelo mais simples.",
     "optimism": "Valores-p calculados depois de escolher termos pelos próprios dados são otimistas. Confirme o modelo final com ensaios novos.",
     "response": "Resposta analisada",
-    "responseHelp": "Cada resposta guarda o seu modelo; a otimização usa o modelo escolhido de cada uma."
+    "responseHelp": "Cada resposta guarda o seu modelo; a otimização usa o modelo escolhido de cada uma.",
+    "finalTerms": "Modelo final: {{terms}}. Termos retirados: {{removed}}."
   },
   "procedure": {
     "title": "Comparação de tratamentos",
@@ -630,6 +652,91 @@
       "anovaCsv": "ANOVA (CSV)",
       "marginalCsv": "Médias marginais de {{factors}} (CSV)",
       "pairsCsv": "Comparações de {{factors}} (CSV)"
+    },
+    "geometry": {
+      "title": "Estimabilidade do modelo",
+      "summary": "Posto {{rank}} de {{parameters}} parâmetros; {{used}} de {{total}} linhas usadas.",
+      "conditions": "Diagnóstico das condições: inclui linhas completas dos fatores, mesmo sem resposta coletada. Não estima a variância do erro.",
+      "completeResponse": "Diagnóstico dos casos completos para a resposta escolhida e todos os fatores do modelo.",
+      "deficient": "Há confundimento: algumas combinações de coeficientes não são identificáveis. Cada média e cada comparação é verificada separadamente; uma diferença pode ser estimável mesmo quando as duas médias não são.",
+      "fullRank": "A matriz identifica todos os parâmetros deste modelo. Isso não comprova os pressupostos nem a adequação científica do modelo.",
+      "coding": "Níveis são categorias nomeadas. A codificação usa soma zero: uma coluna por nível, exceto o último, que recebe −1 em todas as colunas do fator. Interações multiplicam essas colunas.",
+      "terms": "Dimensões identificáveis por termo",
+      "nominal": "gl nominais",
+      "identified": "gl após os demais termos",
+      "projection": "A última coluna mede a contribuição identificável depois de todos os outros termos. Nos tipos I e II, a tabela ANOVA testa projeções condicionais diferentes; significância não separa efeitos confundidos.",
+      "columns": "Coeficientes e identificação individual",
+      "column": "Coluna do modelo",
+      "unique": "Coeficiente único?",
+      "yes": "Sim",
+      "no": "Não",
+      "relations": "Direções de confundimento ({{count}})",
+      "nullHelp": "Cada direção descreve uma mudança simultânea dos coeficientes que mantém as previsões nas linhas observadas (X·Δβ = 0); t pode assumir qualquer valor. Não são estimativas dos coeficientes. A exibição arredonda valores e omite módulos menores que 1e-10; a exportação contém os vetores completos.",
+      "export": "Exportar estimabilidade (CSV)",
+      "previous": "Anterior",
+      "next": "Próxima",
+      "check": "Conferir estimabilidade antes da análise",
+      "beforeCollection": "Confira a matriz real, inclusive frações personalizadas ou importadas. Escolha explicitamente os fatores, o bloco e a ordem do modelo. Nenhum catálogo de frações é presumido. O diagnóstico só é calculado ao clicar.",
+      "scope": "Linhas do diagnóstico",
+      "conditionsOption": "Condições, com ou sem resposta",
+      "responseOption": "Casos completos: {{response}}",
+      "calculate": "Diagnosticar modelo",
+      "busy": "Diagnosticando…",
+      "failed": "Não foi possível concluir o diagnóstico. Tente novamente.",
+      "fixCells": "Corrija as células inválidas da grade antes de diagnosticar.",
+      "stale": "O diagnóstico exibido é de outros dados ou outro modelo. Clique em Diagnosticar modelo para atualizar.",
+      "useModel": "Usar este modelo na análise",
+      "modelUsed": "Modelo selecionado para a ANOVA. Os dados e resultados anteriores foram preservados.",
+      "legacyWarning": "Este resultado histórico foi produzido por uma versão que podia tratar testes indefinidos como p ajustado = 1 ou confundir ausência de identificação com soma de quadrados nula. Os valores guardados foram preservados. Refaça a análise explicitamente antes de usá-los para inferência.",
+      "partialTests": "Há termos parcial ou totalmente confundidos. Os testes disponíveis referem-se às projeções definidas pelo tipo de soma de quadrados, não ao efeito isolado de cada fator.",
+      "significantProjections": "Projeções com p < α: {{terms}}. Interprete-as junto ao diagnóstico de confundimento.",
+      "noInference": "Não há graus de liberdade residuais: sem testes de significância ou intervalos de confiança.",
+      "families": "Famílias de médias e comparações",
+      "familiesHelp": "Ative apenas as famílias que pretende comparar. Desativar uma família dispensa suas médias e pares; não muda o modelo ANOVA. Ajustes usam a família completa declarada, preservando testes não estimáveis como indisponíveis.",
+      "familySize": "{{cells}} células; {{pairs}} pares planejados",
+      "noMeans": "Esta família não tem médias individuais estimáveis. Consulte as comparações: algumas diferenças ainda podem ser identificáveis."
+    }
+  },
+  "number": {
+    "notEstimable": "n.e.",
+    "missing": "s/d",
+    "noDf": "s/gl",
+    "notApplicable": "Não aplicável a esta linha.",
+    "na": "n/a",
+    "nearZero": "Numericamente próximo de zero"
+  },
+  "optimalModel": {
+    "title": "Modelo do planejamento ótimo",
+    "summaryTitle": "Resumo do ajuste",
+    "model": "Modelo",
+    "residual": "Resíduo",
+    "total": "Total",
+    "summary": "{{n}} observações; posto {{rank}} de {{parameters}} parâmetros; {{df}} graus de liberdade residuais.",
+    "scope": "Ajuste do modelo completo declarado, com todos os fatores e blocos. Coeficientes não identificáveis permanecem indisponíveis. A tabela ANOVA avalia o modelo conjunto, sem atribuir seu efeito a um fator isolado.",
+    "confounded": "Os dados usados não identificam todos os coeficientes. As previsões nas linhas observadas são conservadas; nenhum coeficiente dependente de uma escolha arbitrária de pivô é apresentado como estimativa única.",
+    "coding": "Codificação usada no ajuste",
+    "codingHelp": "Os fatores numéricos usam z = (valor − centro) / semiamplitude. Nas categorias e blocos, o nível indicado recebe −1 em todas as colunas; cada outro nível recebe 1 na própria coluna e 0 nas demais. Interações multiplicam colunas de fatores distintos. Não há termo quadrático de uma categoria.",
+    "sumBaseline": "último nível: {{baseline}}",
+    "blockCoding": "Blocos: {{labels}}; último nível: {{baseline}}. Efeito somente aditivo.",
+    "coefficients": "Coeficientes e incerteza",
+    "observations": "Diagnósticos das observações",
+    "fitChart": "Observado e ajustado — modelo do ótimo",
+    "residualChart": "Resíduos — modelo do ótimo",
+    "chartDescription": "Diagnóstico do ajuste do modelo completo, incluindo categorias e blocos declarados.",
+    "fitted": "Ajustado",
+    "observed": "Observado",
+    "residualLegend": "Resíduos versus ajustados. Procure padrões ou variação de dispersão; a linha marca resíduo zero.",
+    "fitLegend": "Observado versus ajustado. A linha é a identidade; proximidade à linha não confirma os pressupostos do modelo.",
+    "excluded": "Linhas excluídas por resposta ou fator ausente: {{ids}}.",
+    "columns": {
+      "observation": "Observação",
+      "observed": "Observado",
+      "fitted": "Ajustado",
+      "residual": "Resíduo",
+      "leverage": "Alavancagem",
+      "standardized_residual": "Resíduo padronizado",
+      "studentized_residual": "Resíduo studentizado",
+      "cooks_distance": "Distância de Cook"
     }
   }
 }

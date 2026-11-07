@@ -50,7 +50,7 @@ Operações de ponto flutuante (`+ − × ÷`, `powf`, `ln`, `exp`). A **mesma s
 
 ## 7. Casos sem resultado válido
 
-- **Região inviável:** nenhum início termina em ponto que satisfaça os limites obrigatórios → `infeasible`, **sem candidatos**.
+- **Sem candidato viável encontrado:** nenhum início termina em ponto que satisfaça os limites obrigatórios → `infeasible`, **sem candidatos**.
 - **Desejabilidade zero:** pontos viáveis existem, mas `D = 0` em todos → `onlyZeroDesirability`, candidatos mais próximos e fato `optimization.zero_desirability`.
 - Modelo não estimável, objetivos ou opções inválidos, limites de domínio inválidos: recusa com `optimization.*`.
 - **Cancelamento:** no navegador, o Worker é encerrado e recriado (a busca é interrompida) e o resultado atual permanece; no Windows o comando nativo termina sozinho e o resultado é **descartado** (não há interrupção cooperativa do cálculo).
@@ -72,3 +72,10 @@ Seis casos: um ótimo interior, dois conflitantes com limite obrigatório e peso
 - Nelder, J. A.; Mead, R. (1965). A simplex method for function minimization. *The Computer Journal* 7, 308–313.
 - McKay, M. D.; Beckman, R. J.; Conover, W. J. (1979). A comparison of three methods for selecting values of input variables in the analysis of output from a computer code. *Technometrics* 21, 239–245.
 - Derringer, G.; Suich, R. (1980), citado em [desejabilidade](desejabilidade.md).
+
+## Conferência dos ensaios propostos (ET27)
+
+O motor calcula a diferença `observado − previsto` usando a previsão gravada na proposta, sem ajustar um modelo aos ensaios de confirmação. Para um intervalo válido [L,U], valores exatamente em L ou U pertencem ao intervalo. Sem observação, a diferença é indefinida por ausência; sem os dois limites não se declara compatibilidade com o intervalo. Um limite conhecido ainda permite afirmar abaixo/acima dele. A classificação não constitui teste de equivalência nem prova a adequação do modelo. Erros de entrada e overflow permanecem explícitos. [DT-0029](../decisoes-tecnicas/dt-0029-conferencia-de-confirmacao-no-motor.md).
+
+
+A apresentação de `infeasible` e `OnlyZeroDesirability` se refere aos candidatos encontrados pela busca local. A falta de candidato não prova inviabilidade em toda a região; desejabilidade zero nos candidatos não prova que os objetivos sejam globalmente incompatíveis. A conferência T05 da ET25 corrigiu esses textos também no fluxo RSM (AU-B12), preservando os códigos e resultados históricos.

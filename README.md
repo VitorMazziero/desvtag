@@ -1,12 +1,12 @@
-# EnziTAG Optima
+# DesvTAG
 
 [Português](README.md) | [English](README.en.md)
 
 **Planejamento experimental, estatística e otimização.**
 
-EnziTAG Optima é um projeto de aplicativo para pesquisadores e estudantes, com fluxo guiado de planejamento e análise de experimentos, comparações de tratamentos e otimização de processos. O desenvolvimento está ligado às atividades do grupo de pesquisa EnziTAG.
+DesvTAG é a continuação do EnziTAG Optima, desenvolvido junto ao grupo de pesquisa EnziTAG. O aplicativo orienta pesquisadores e estudantes no planejamento e na análise de experimentos, na comparação de tratamentos e na otimização de processos.
 
-**Estado atual:** **v0.2.0** (experimental) com a versão web publicada em 2026-11-02 (https://vitormazziero.github.io/enzitag-optima/); os releases do instalador do Windows (v0.1.0, como pré-lançamento, e v0.2.0, mais recente) foram publicados em 2026-11-02 e a atualização v0.1.0 → v0.2.0 foi verificada. Implementados e validados contra referências independentes: estatística descritiva, DIC e DBC aleatorizados, ANOVA de um fator e multifatorial (com blocos, médias marginais e contrastes), comparações de tratamentos (Tukey/Tukey–Kramer, Games–Howell, Dunnett, Bonferroni, Holm, Kruskal–Wallis/Dunn) com letras, planejamentos de dois níveis (fatorial, fracionário, Plackett–Burman), compostos centrais e Box–Behnken, superfície de resposta com seleção e comparação de modelos, contornos e 3D, otimização por desejabilidade com ensaios de confirmação, projetos `.enzitag` e exportação (SVG/PNG/PDF, CSV/XLSX, relatórios HTML e PDF) com personalização completa por figura; resultados em seções com barra lateral, seis temas e o logotipo do grupo. Verificada no navegador (Chromium, Firefox, Chrome e Edge) e no **Windows 10** e em `windows-latest` (ver o [relatório de validação da v0.2](validation/reports/v0.2.0/README.md)); **Windows 11 não foi verificado** (e não será, por decisão do usuário). Em desenvolvimento: a [v0.3](docs/planos-execucao/plano-v0.3.md) (planilha de coleta já entregue; ver o [CHANGELOG](CHANGELOG.md)); cobertura por método na [matriz](docs/produto/matriz-cobertura.md) e histórico em [publicação](docs/distribuicao/publicacao.md).
+**Versão em desenvolvimento.** A v0.4 salva novos arquivos de projeto com a extensão `.desvtag` e abre os projetos históricos `.enzitag`. Consulte o [plano da v0.4](docs/planos-execucao/plano-v0.4.md), a [matriz de métodos](docs/produto/matriz-cobertura.md) e o [histórico de versões](CHANGELOG.md).
 
 ## Executar localmente (navegador)
 
@@ -31,7 +31,7 @@ Abra `http://localhost:4173`. Os exemplos reproduzíveis estão em [`examples/`]
 - Interface intuitiva para usuários iniciantes, com fatores e respostas definidos pelo usuário.
 - Português e inglês desde o início, no Windows e no navegador.
 - Seis temas (Soft Light, Modern Dark, Professional, Industrial, Organic e Clay), com paleta EnziTAG no Soft Light.
-- Catálogo completo do Protimiza, acrescido dos métodos discutidos para o EnziTAG Optima.
+- Catálogo completo do Protimiza, acrescido dos métodos discutidos para o DesvTAG.
 - Planejamento de experimentos e análise de dados já coletados.
 - Comparações de tratamentos, incluindo Tukey e letras nos gráficos.
 - Superfícies 3D, contornos, efeitos, interações e diagnóstico de resíduos.
@@ -57,11 +57,11 @@ O aplicativo será organizado em módulos com arquivos, responsabilidades e inte
 ## Estrutura
 
 ```text
-enzitag-optima/
+DesvTAG/
 ├── app/                      # Código do aplicativo (áreas reservadas até a ET01)
 │   ├── crates/
-│   │   ├── optima-core/      # Núcleo científico Rust
-│   │   └── optima-wasm/      # Integração com WebAssembly
+│   │   ├── desvtag-core/      # Núcleo científico Rust
+│   │   └── desvtag-wasm/      # Integração com WebAssembly
 │   ├── desktop/              # Aplicativo Windows/Tauri
 │   └── web/                  # Interface compartilhada
 ├── docs/                     # Documentação (português)

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import exampleUrl from "../../../../../examples/01-enzimas-quatro-condicoes/projeto.enzitag?url";
 import type { RecentItem } from "../../services/storage";
 import { useStorage } from "../../services/storage/context";
 import { useProjectActions } from "../project";
@@ -12,7 +13,7 @@ import { useProjectActions } from "../project";
 export function RecentProjects() {
   const { t } = useTranslation();
   const storage = useStorage();
-  const { open, openRecent, busy } = useProjectActions();
+  const { open, openRecent, busy, loadOpened, confirmDiscard } = useProjectActions();
   const [recents, setRecents] = useState<RecentItem[]>([]);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export function RecentProjects() {
   return (
     <section className="panel home-recent" aria-labelledby="recent-title">
       <h2 id="recent-title">{t("home.recentTitle")}</h2>
-      <p className="muted small">{t("home.recentHint")}</p>
+
       {recents.length === 0 ? (
         <p className="muted">{t("home.recentEmpty")}</p>
       ) : (
@@ -49,14 +50,28 @@ export function RecentProjects() {
           ))}
         </ul>
       )}
-      <button
-        type="button"
-        className="button secondary"
-        disabled={busy}
-        onClick={() => void open()}
-      >
-        {t("home.open")}
-      </button>
+      <div className="row">
+        <button
+          type="button"
+          className="button secondary"
+          disabled={busy}
+          onClick={async () => {
+            if (!confirmDiscard()) return;
+            const bytes = new Uint8Array(await (await fetch(exampleUrl)).arrayBuffer());
+            await loadOpened({ name: "exemplo-quatro-condicoes.enzitag", bytes });
+          }}
+        >
+          {t("home.openExample")}
+        </button>
+        <button
+          type="button"
+          className="button secondary"
+          disabled={busy}
+          onClick={() => void open()}
+        >
+          {t("home.open")}
+        </button>
+      </div>
     </section>
   );
 }

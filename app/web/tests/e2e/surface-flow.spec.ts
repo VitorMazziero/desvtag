@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
+import { openFigureMenu } from "./figureTools";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 
 // Superfície de resposta com o motor Rust real (WebAssembly): planejar (CCD e Box–Behnken) →
 // preencher → ajustar → equação, falta de ajuste, malha, extrapolação e exportação; e matriz
@@ -31,8 +33,7 @@ test.beforeEach(async ({ page }) => {
 test.describe("planejamento de superfície de resposta", () => {
   test("DCCR e Box–Behnken: contagem antes de gerar, α, axiais e restrições", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     for (const [i, name] of ["A", "B", "C"].entries()) await addNumericFactor(page, i, name);
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(3).fill("y");
@@ -77,8 +78,7 @@ test.describe("planejamento de superfície de resposta", () => {
 
   test("Box–Behnken exige de 3 a 5 fatores", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     for (const [i, name] of ["A", "B"].entries()) await addNumericFactor(page, i, name);
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(2).fill("y");
@@ -99,16 +99,16 @@ test.describe("análise da superfície", () => {
   }) => {
     test.setTimeout(120_000);
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     for (const [i, name] of ["Temperatura", "pH"].entries()) await addNumericFactor(page, i, name);
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(2).fill("Rendimento");
     await page.getByRole("button", { name: "Avançar" }).click();
     await page.getByLabel("Temperatura — Nível baixo").fill("30");
     await page.getByLabel("Temperatura — Nível alto").fill("40");
-    await page.getByLabel("pH — Nível baixo").fill("5");
-    await page.getByLabel("pH — Nível alto").fill("7");
+    // Estes limites não recuperam a meia-amplitude exata por centro ± meia-amplitude.
+    await page.getByLabel("pH — Nível baixo").fill("5,01");
+    await page.getByLabel("pH — Nível alto").fill("6,3");
     await page.getByRole("radio", { name: /Superfície de resposta \(segunda ordem\)/ }).check();
     await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
     await expect(page.getByTestId("run-count")).toContainText("Total: 13 ensaios");
@@ -179,6 +179,7 @@ test.describe("análise da superfície", () => {
     const gridCsv = readFileSync((await (await gridDownload).path()) as string, "utf8");
     expect(gridCsv).toContain("extrapolation");
     const svgDownload = page.waitForEvent("download");
+    await openFigureMenu(page.getByTestId("contour-chart"));
     await page
       .getByTestId("contour-chart")
       .getByRole("button", { name: /Figura — SVG/ })
@@ -189,13 +190,14 @@ test.describe("análise da superfície", () => {
 
     // Salvar e reabrir: o resultado volta sem recálculo e atual.
     const save = page.waitForEvent("download");
-    await page.getByRole("button", { name: "Salvar", exact: true }).click();
+    await page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
     const file = (await (await save).path()) as string;
     await page.goto("/");
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: "Abrir…" }).click();
     await (await chooser).setFiles(file);
     await expect(page.getByTestId("surface-terms")).toBeVisible();
+    await expect(page.getByTestId("contour-chart")).toBeVisible();
     await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
   });
 
@@ -203,8 +205,7 @@ test.describe("análise da superfície", () => {
     page,
   }) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "analyze");
     for (const [i, name] of ["X1", "X2"].entries()) await addNumericFactor(page, i, name);
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(2).fill("y");

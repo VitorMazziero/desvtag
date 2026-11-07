@@ -4,8 +4,42 @@ import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatSignificant } from "../../i18n/format";
 import type { OptimizationResult, Stat } from "../../services/engine";
+import { useProject } from "../../state/ProjectContext";
+import type { ProjectState } from "../../state/project";
+import { StatNumber } from "../results/StatCell";
 
 const val = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
+
+export function CandidateSummary({
+  result,
+  language,
+}: {
+  result: OptimizationResult;
+  language: Language;
+}) {
+  const { t } = useTranslation();
+  const best = result.candidates[0]?.globalDesirability;
+  const ties = result.candidates.filter((c) => c.globalDesirability === best).length;
+  return (
+    <div className="candidate-summary" data-testid="candidate-summary">
+      <p>
+        {t("optimization.decision.shown", {
+          shown: result.candidates.length,
+          total: result.convergence.distinctOptima,
+        })}
+      </p>
+      <p className="muted small">{t("optimization.decision.order")}</p>
+      {ties > 1 && (
+        <p role="status" className="candidate-ties" data-testid="candidate-ties">
+          {t("optimization.decision.ties", {
+            count: ties,
+            value: formatSignificant(best ?? 0, language, 5),
+          })}
+        </p>
+      )}
+    </div>
+  );
+}
 
 /** Tabela dos candidatos para exportação (valores numéricos completos; indefinidos ficam vazios). */
 export function candidatesTable(result: OptimizationResult): {
@@ -50,13 +84,17 @@ export function CandidateTable({
   language,
   selected,
   onToggle,
+  variables,
 }: {
   result: OptimizationResult;
   language: Language;
   selected?: Set<number>;
   onToggle?: (rank: number, on: boolean) => void;
+  variables?: Pick<ProjectState, "factors" | "responses">;
 }) {
   const { t } = useTranslation();
+  const active = useProject();
+  const context = variables ?? active;
   const fmt = (v: number | null, digits = 5) =>
     v === null ? "—" : formatSignificant(v, language, digits);
   const names = result.factorNames;
@@ -69,9 +107,12 @@ export function CandidateTable({
           <tr>
             {onToggle && <th scope="col">{t("optimization.candidates.select")}</th>}
             <th scope="col">{t("optimization.candidates.rank")}</th>
-            {names.map((n) => (
+            {names.map((n, j) => (
               <th scope="col" key={n}>
                 {n}
+                {context.factors.find((f) => f.id === result.domain[j]?.factorId)?.unit
+                  ? ` [${context.factors.find((f) => f.id === result.domain[j]?.factorId)?.unit}]`
+                  : ""}
               </th>
             ))}
             <th scope="col">{t("optimization.candidates.global")}</th>
@@ -99,18 +140,34 @@ export function CandidateTable({
               <th scope="row">{c.rank}</th>
               {c.real.map((v, j) => (
                 <td className="num" key={names[j] ?? j}>
-                  {fmt(v)}
+                  <StatNumber
+                    stat={{ status: "defined", value: v }}
+                    language={language}
+                    digits={5}
+                  />
                   <br />
-                  <span className="muted small">{`(${fmt(c.coded[j] ?? 0, 3)})`}</span>
+                  <span
+                    className="muted small"
+                    title={String(c.coded[j])}
+                  >{`(${fmt(c.coded[j] ?? 0, 3)})`}</span>
                 </td>
               ))}
-              <td className="num">{fmt(c.globalDesirability, 4)}</td>
+              <td className="num">
+                <StatNumber
+                  stat={{ status: "defined", value: c.globalDesirability }}
+                  language={language}
+                  digits={4}
+                />
+              </td>
               {c.predictions.map((p) => {
                 const lo = val(p.prediction.predictionLower);
                 const hi = val(p.prediction.predictionUpper);
                 return (
                   <td className="num" key={p.responseId}>
-                    {fmt(val(p.prediction.fitted))}
+                    <StatNumber stat={p.prediction.fitted} language={language} digits={5} />
+                    {context.responses.find((r) => r.id === p.responseId)?.unit
+                      ? ` ${context.responses.find((r) => r.id === p.responseId)?.unit}`
+                      : ""}
                     <br />
                     <span className="muted small">
                       {lo === null || hi === null ? "—" : `[${fmt(lo, 4)}; ${fmt(hi, 4)}]`}

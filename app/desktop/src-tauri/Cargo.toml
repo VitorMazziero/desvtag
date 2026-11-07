@@ -3,17 +3,17 @@
 [workspace]
 
 [package]
-name = "optima-desktop"
-description = "Aplicativo Windows do EnziTAG Optima (Tauri)"
-version = "0.3.0"
+name = "desvtag-desktop"
+description = "Aplicativo Windows do DesvTAG (Tauri)"
+version = "0.4.0"
 edition = "2024"
 rust-version = "1.97"
 license = "MIT"
-repository = "https://github.com/VitorMazziero/enzitag-optima"
-authors = ["EnziTAG Optima contributors"]
+repository = "https://github.com/VitorMazziero/desvtag"
+authors = ["DesvTAG contributors"]
 
 [lib]
-name = "optima_desktop_lib"
+name = "desvtag_desktop_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
@@ -21,12 +21,17 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 base64 = "0.23"
-optima-engine = { path = "../../crates/optima-engine" }
+getrandom = "0.3"
+keyring = { version = "3", features = ["windows-native"] }
+opener = "0.8"
+desvtag-engine = { path = "../../crates/desvtag-engine" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
+sha2 = "0.10"
 tauri = { version = "2", features = [] }
 tauri-plugin-dialog = "2"
 tauri-plugin-updater = "2"
+ureq = { version = "2", default-features = false, features = ["tls"] }
 
 [features]
 # Só para a verificação automatizada (nunca no instalador): `export_file` grava na pasta de

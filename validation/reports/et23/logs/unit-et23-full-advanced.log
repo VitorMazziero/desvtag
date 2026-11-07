@@ -1,0 +1,17 @@
+
+> @enzitag/optima-web@0.4.0-dev test
+> vitest run
+
+
+ RUN  v5.0.5 D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG Optima/app/web
+
+
+ Test Files  55 passed (55)
+      Tests  459 passed (459)
+   Start at  11:50:03
+   Duration  39.93s (environment 69%, setup 21%, tests 7%, import 2%, transform 1%, worker 1%)
+
+Environment  jsdom was created 55 times · 97.41s total, 69% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

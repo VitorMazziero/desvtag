@@ -1,27 +1,27 @@
 [workspace]
 resolver = "3"
 members = [
-    "crates/optima-core",
-    "crates/optima-project",
-    "crates/optima-engine",
-    "crates/optima-wasm",
+    "crates/desvtag-core",
+    "crates/desvtag-project",
+    "crates/desvtag-engine",
+    "crates/desvtag-wasm",
 ]
 # O pacote Tauri depende de bibliotecas do sistema (WebView) e fica em um
-# workspace próprio; consome optima-engine por caminho relativo (DT-0004).
+# workspace próprio; consome desvtag-engine por caminho relativo (DT-0004).
 exclude = ["desktop/src-tauri"]
 
 [workspace.package]
-version = "0.3.0"
+version = "0.4.0"
 edition = "2024"
 rust-version = "1.97"
 license = "MIT"
-repository = "https://github.com/VitorMazziero/enzitag-optima"
-authors = ["EnziTAG Optima contributors"]
+repository = "https://github.com/VitorMazziero/desvtag"
+authors = ["DesvTAG contributors"]
 
 [workspace.dependencies]
-optima-core = { path = "crates/optima-core" }
-optima-project = { path = "crates/optima-project" }
-optima-engine = { path = "crates/optima-engine" }
+desvtag-core = { path = "crates/desvtag-core" }
+desvtag-project = { path = "crates/desvtag-project" }
+desvtag-engine = { path = "crates/desvtag-engine" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 ts-rs = { version = "12", default-features = false, features = ["serde-compat"] }

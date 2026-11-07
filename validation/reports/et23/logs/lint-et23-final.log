@@ -1,0 +1,476 @@
+
+> @enzitag/optima-web@0.4.0-dev lint
+> biome check .
+
+scripts\save-example-repeated.mjs:7:11 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    5 │ const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+    6 │ const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+  > 7 │ const csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+      │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ const browser=await chromium.launch();try{
+    9 │  const page=await browser.newPage({locale:"pt-BR",acceptDownloads:true});await page.addInitScript(()=>localStorage.setItem("optima.showAllSections","1"));await page.goto("http://127.0.0.1:4173/");
+  
+  i Template literals are easier to read than a chain of + operators and quotes, and they avoid mistakes with spaces and escaped quotes.
+  
+  i Unsafe fix: Use a template literal.
+  
+     5  5 │   const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+     6  6 │   const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+     7    │ - const·csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+        7 │ + const·csv=`unit_id;Resposta;time\n${reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")}\n`;writeFileSync(resolve(folder,"ensaios.csv"),csv);
+     8  8 │   const browser=await chromium.launch();try{
+     9  9 │    const page=await browser.newPage({locale:"pt-BR",acceptDownloads:true});await page.addInitScript(()=>localStorage.setItem("optima.showAllSections","1"));await page.goto("http://127.0.0.1:4173/");
+  
+
+src\app\app.css:291:17 lint/complexity/noImportantStyles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of the !important style.
+  
+    289 │ }
+    290 │ [hidden] {
+  > 291 │   display: none !important;
+        │                 ^^^^^^^^^^
+    292 │ }
+    293 │ /* Percurso no computador (ET29): barra lateral das etapas à esquerda e o conteúdo ao lado, em vez
+  
+  i This style reverses the cascade logic, and precedence is reversed. This could lead to having styles with higher specificity being overridden by styles with lower specificity.
+  
+  i Unsafe fix: Remove the style.
+  
+    291 │ ··display:·none·!important;
+        │                ----------- 
+
+src\app\app.css:208:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    206 │   border-color: var(--color-ink-secondary);
+    207 │ }
+  > 208 │ .panel {
+        │ ^^^^^^
+    209 │   padding: var(--space-4);
+    210 │   background: var(--color-panel);
+  
+  i This selector specificity is (0, 2, 0)
+  
+    146 │   min-width: min(30rem, 88vw);
+    147 │ }
+  > 148 │ .about-panel .panel {
+        │ ^^^^^^^^^^^^^^^^^^^
+    149 │   margin: 0;
+    150 │   box-shadow: none;
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\app\app.css:439:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    437 │   }
+    438 │ }
+  > 439 │ .step {
+        │ ^^^^^
+    440 │   display: inline-flex;
+    441 │   align-items: center;
+  
+  i This selector specificity is (0, 2, 0)
+  
+    324 │   list-style: none;
+    325 │ }
+  > 326 │ .steps .step {
+        │ ^^^^^^^^^^^^
+    327 │   width: 100%;
+    328 │   justify-content: flex-start;
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\features\analysis\AnalysisSetup.tsx:43:9 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    41 │   const onlyFactor =
+    42 │     eligible.length === 1
+  > 43 │       ? eligible[0]!.id
+       │         ^^^^^^^^^^^^
+    44 │       : state.factors.length === 1
+    45 │         ? state.factors[0]!.id
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     41  41 │     const onlyFactor =
+     42  42 │       eligible.length === 1
+     43     │ - ······?·eligible[0]!.id
+         43 │ + ······?·eligible[0]?.id
+     44  44 │         : state.factors.length === 1
+     45  45 │           ? state.factors[0]!.id
+  
+
+src\features\analysis\AnalysisSetup.tsx:45:11 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    43 │       ? eligible[0]!.id
+    44 │       : state.factors.length === 1
+  > 45 │         ? state.factors[0]!.id
+       │           ^^^^^^^^^^^^^^^^^
+    46 │         : null;
+    47 │   const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     43  43 │         ? eligible[0]!.id
+     44  44 │         : state.factors.length === 1
+     45     │ - ········?·state.factors[0]!.id
+         45 │ + ········?·state.factors[0]?.id
+     46  46 │           : null;
+     47  47 │     const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+
+src\features\analysis\MethodChoice.tsx:120:68 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    118 │   };
+    119 │ 
+  > 120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+        │                                                                    ^^^^^^^^^^^^^^^^^^
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+    122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MethodChoice.tsx:122:33 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+  > 122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+        │                                 ^^^^^^^^^^^^^^^^^^
+    123 │   );
+    124 │   const averaged =
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MixtureAnalysis.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function MixtureAnalysis({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   onCurrent,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\RepeatedMeasures.tsx:20:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    19 │ export function RepeatedMeasures({
+  > 20 │   language,
+       │   ^^^^^^^^
+    21 │   embedded = false,
+    22 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\SaturationFit.tsx:96:30 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                              ^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:96:53 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                                                     ^^^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function SaturationFit({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   embedded = false,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\mixedRequest.test.ts:44:41 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    42 │   });
+    43 │   it("blocks unmapped or invalid values instead of turning them into missing", () => {
+  > 44 │     const bad = { ...state, rows: [{ ...state.rows[0]!, timeText: "unknown" }] };
+       │                                         ^^^^^^^^^^^^^^
+    45 │     for (const occasionOrder of ["", "Antes; Depois", "Antes; Antes"]) {
+    46 │       const got = mixedAdvancedRequest(
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\blocks\GuidedBlocks.tsx:200:48 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    198 │               disabled={(showAll || current === 0) && !onPrevious}
+    199 │               onClick={() =>
+  > 200 │                 !showAll && current > 0 ? move(blocks[current - 1]!.id) : onPrevious?.()
+        │                                                ^^^^^^^^^^^^^^^^^^^^
+    201 │               }
+    202 │               data-testid={`${testId}-prev`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    198 198 │                 disabled={(showAll || current === 0) && !onPrevious}
+    199 199 │                 onClick={() =>
+    200     │ - ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]!.id)·:·onPrevious?.()
+        200 │ + ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]?.id)·:·onPrevious?.()
+    201 201 │                 }
+    202 202 │                 data-testid={`${testId}-prev`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:218:54 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    216 │                 }
+    217 │                 onClick={() =>
+  > 218 │                   current < blocks.length - 1 ? move(blocks[current + 1]!.id) : onNext?.()
+        │                                                      ^^^^^^^^^^^^^^^^^^^^
+    219 │                 }
+    220 │                 data-testid={`${testId}-next`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    216 216 │                   }
+    217 217 │                   onClick={() =>
+    218     │ - ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]!.id)·:·onNext?.()
+        218 │ + ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]?.id)·:·onNext?.()
+    219 219 │                   }
+    220 220 │                   data-testid={`${testId}-next`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:233:16 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    232 │ function BlockSource({ blocks, testId, focusId, order = 1 }: Props) {
+  > 233 │   const flow = useContext(FlowContext)!;
+        │                ^^^^^^^^^^^^^^^^^^^^^^^^
+    234 │   const entries = JSON.stringify(
+    235 │     blocks.map((b, i) => ({
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\home\PowerCalculator.tsx:25:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    24 │ export function PowerCalculator({
+  > 25 │   language,
+       │   ^^^^^^^^
+    26 │   embedded = false,
+    27 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+scripts\save-example-repeated.mjs:2:1 assist/source/organizeImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some imports or exports are not organized.
+  
+    1 │ // Create a synthetic advanced example through the real app and WASM.
+  > 2 │ import {mkdirSync,readFileSync,writeFileSync,copyFileSync} from "node:fs";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 3 │ import {resolve} from "node:path";
+  > 4 │ import {chromium} from "playwright-core";
+  > 5 │ const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+    7 │ const csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+  
+  i Sort the imported names.
+  
+    1 │ // Create a synthetic advanced example through the real app and WASM.
+  > 2 │ import {mkdirSync,readFileSync,writeFileSync,copyFileSync} from "node:fs";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ import {resolve} from "node:path";
+    4 │ import {chromium} from "playwright-core";
+  
+  i This statement must be preceded by a blank line. Add a newline before this statement.
+  
+    3 │ import {resolve} from "node:path";
+    4 │ import {chromium} from "playwright-core";
+  > 5 │ const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+    7 │ const csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+  
+  i Safe fix: Organize imports and exports (Biome)
+  
+     1  1 │   // Create a synthetic advanced example through the real app and WASM.
+     2    │ - import·{mkdirSync,readFileSync,writeFileSync,copyFileSync}·from·"node:fs";
+        2 │ + import·{copyFileSync,·mkdirSync,readFileSync,writeFileSync}·from·"node:fs";
+     3  3 │   import {resolve} from "node:path";
+     4  4 │   import {chromium} from "playwright-core";
+        5 │ + 
+     5  6 │   const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+     6  7 │   const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+  
+
+scripts\save-example-repeated.mjs format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+     1  1 │   // Create a synthetic advanced example through the real app and WASM.
+     2    │ - import·{mkdirSync,readFileSync,writeFileSync,copyFileSync}·from·"node:fs";
+     3    │ - import·{resolve}·from·"node:path";
+     4    │ - import·{chromium}·from·"playwright-core";
+     5    │ - const·root=resolve(import.meta.dirname,"../../..");const·folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+     6    │ - const·reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+     7    │ - const·csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+     8    │ - const·browser=await·chromium.launch();try{
+     9    │ - ·const·page=await·browser.newPage({locale:"pt-BR",acceptDownloads:true});await·page.addInitScript(()=>localStorage.setItem("optima.showAllSections","1"));await·page.goto("http://127.0.0.1:4173/");
+    10    │ - ·await·page.getByLabel("Nome·do·projeto",{exact:true}).fill("Perfis·temporais·—·AR(1)");await·page.getByRole("button",{name:"Começar:·Analisar·dados·existentes",exact:true}).click();
+    11    │ - ·const·chooser=page.waitForEvent("filechooser");await·page.getByRole("button",{name:"Importar·arquivo·(CSV·ou·XLSX)…",exact:true}).click();await(await·chooser).setFiles(resolve(folder,"ensaios.csv"));await·page.getByRole("button",{name:"Importar",exact:true}).click();await·page.getByTestId("variables-blocks-next").click();await·page.getByTestId("data-blocks-next").click();
+    12    │ - ·await·page.getByRole("combobox",{name:"Estrutura·das·observações",exact:true}).selectOption("repeat...
+    13    │ - ·const·event=page.waitForEvent("download");await·page.getByRole("button",{name:"Salvar·(baixar·.enzitag)",exact:true}).click();const·file=await(await·event).path();if(!file)throw·new·Error("No·example·archive");copyFileSync(file,resolve(folder,"projeto.enzitag"));
+    14    │ - ·const·evidence=resolve(root,"docs/imagens/evidencias-v0.4-et23/acceptance");await·page.getByTestId("mixed-profile-chart").screenshot({path:resolve(evidence,"example-15-profiles.png")});
+    15    │ - ·console.log("Saved·example·15·from·real·UI·with·stored·AR1,·joint·test,·EMM,·comparisons·and·profiles.");
+    16    │ - }finally{await·browser.close();}
+        2 │ + import·{·mkdirSync,·readFileSync,·writeFileSync,·copyFileSync·}·from·"node:fs";
+        3 │ + import·{·resolve·}·from·"node:path";
+        4 │ + import·{·chromium·}·from·"playwright-core";
+        5 │ + const·root·=·resolve(import.meta.dirname,·"../../..");
+        6 │ + const·folder·=·resolve(root,·"examples/15-medidas-repetidas-ar1");
+        7 │ + mkdirSync(folder,·{·recursive:·true·});
+        8 │ + const·reference·=·JSON.parse(
+        9 │ + ··readFileSync(resolve(root,·"validation/cases/repeated_covariance/reml.json"),·"utf8"),
+       10 │ + ).cases.find((c)·=>·c.name·===·"ar1_positive");
+       11 │ + const·csv·=
+       12 │ + ··"unit_id;Resposta;time\n"·+
+       13 │ + ··reference.rows.map((row)·=>·`${row.unit};${row.y};${row.time}`).join("\n")·+
+       14 │ + ··"\n";
+       15 │ + writeFileSync(resolve(folder,·"ensaios.csv"),·csv);
+       16 │ + const·browser·=·await·chromium.launch();
+       17 │ + try·{
+       18 │ + ··const·page·=·await·browser.newPage({·locale:·"pt-BR",·acceptDownloads:·true·});
+       19 │ + ··await·page.addInitScript(()·=>·localStorage.setItem("optima.showAllSections",·"1"));
+       20 │ + ··await·page.goto("http://127.0.0.1:4173/");
+       21 │ + ··await·page.getByLabel("Nome·do·projeto",·{·exact:·true·}).fill("Perfis·temporais·—·AR(1)");
+       22 │ + ··await·page
+       23 │ + ····.getByRole("button",·{·name:·"Começar:·Analisar·dados·existentes",·exact:·true·})
+       24 │ + ····.click();
+       25 │ + ··const·chooser·=·page.waitForEvent("filechooser");
+       26 │ + ··await·page.getByRole("button",·{·name:·"Importar·arquivo·(CSV·ou·XLSX)…",·exact:·true·}).click();
+       27 │ + ··await·(await·chooser).setFiles(resolve(folder,·"ensaios.csv"));
+       28 │ + ··await·page.getByRole("button",·{·name:·"Importar",·exact:·true·}).click();
+       29 │ + ··await·page.getByTestId("variables-blocks-next").click();
+       30 │ + ··await·page.getByTestId("data-blocks-next").click();
+       31 │ + ··await·page
+       32 │ + ····.getByRole("combobox",·{·name:·"Estrutura·das·observações",·exact:·true·})
+       33 │ + ····.selectOption("repeated");
+       34 │ + ··await·page.getByTestId("repeated-method").selectOption("mixed");
+       35 │ + ··await·page
+       36 │ + ····.getByRole("checkbox",·{·name:·"Usar·inferência·e·covariâncias·avançadas",·exact:·true·})
+       37 │ + ····.check();
+       38 │ + ··await·page.getByTestId("mixed-covariance").selectOption("ar1");
+       39 │ + ··await·page
+       40 │ + ····.getByRole("combobox",·{·name:·"Codificação·dos·fatores·categóricos",·exact:·true·})
+       41 │ + ····.selectOption("treatment");
+       42 │ + ··await·page.getByTestId("mixed-time-effect").selectOption("categorical");
+       43 │ + ··await·page
+       44 │ + ····.getByRole("checkbox",·{·name:·"Comparar·ocasiões·do·tempo·categórico",·exact:·true·})
+       45 │ + ····.check();
+       46 │ + ··await·page.getByRole("button",·{·name:·"Ajustar·modelo·misto",·exact:·true·}).click();
+       47 │ + ··await·page.getByTestId("mixed-profile-chart").waitFor();
+       48 │ + ··const·event·=·page.waitForEvent("download");
+       49 │ + ··await·page.getByRole("button",·{·name:·"Salvar·(baixar·.enzitag)",·exact:·true·}).click();
+       50 │ + ··const·file·=·await·(await·event).path();
+       51 │ + ··if·(!file)·throw·new·Error("No·example·archive");
+       52 │ + ··copyFileSync(file,·resolve(folder,·"projeto.enzitag"));
+       53 │ + ··const·evidence·=·resolve(root,·"docs/imagens/evidencias-v0.4-et23/acceptance");
+       54 │ + ··await·page
+       55 │ + ····.getByTestId("mixed-profile-chart")
+       56 │ + ····.screenshot({·path:·resolve(evidence,·"example-15-profiles.png")·});
+       57 │ + ··console.log(
+       58 │ + ····"Saved·example·15·from·real·UI·with·stored·AR1,·joint·test,·EMM,·comparisons·and·profiles.",
+       59 │ + ··);
+       60 │ + }·finally·{
+       61 │ + ··await·browser.close();
+       62 │ + }
+    17 63 │   
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 138.
+Checked 344 files in 534ms. No fixes applied.
+Found 2 errors.
+Found 151 warnings.
+Found 5 infos.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+

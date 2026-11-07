@@ -1,0 +1,32 @@
+    Blocking waiting for file lock on build directory
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 35s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_project-a4cf74ae66c2bab4.exe)
+
+running 11 tests
+test comment::tests::analysis_target_requires_the_analysis_id ... ok
+test comment::tests::accepts_a_normal_comment_and_rejects_empty_or_long_text ... ok
+test comment::tests::optional_fields_stay_out_of_the_json ... ok
+test comment::tests::replies_are_checked_too ... ok
+test comment::tests::old_comments_default_to_unedited_and_edits_round_trip ... ok
+test document::tests::a_project_without_comments_keeps_the_same_json ... ok
+test document::tests::comments_must_point_to_existing_revisions_and_analyses ... ok
+test comment::export_bindings_commenttargetkind ... ok
+test comment::export_bindings_commentreply ... ok
+test comment::export_bindings_commenttarget ... ok
+test comment::export_bindings_comment ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 0.02s
+
+     Running tests\import_xlsx_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\import_xlsx_validation-c0641169d28412b5.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests\project_file_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\project_file_validation-8ad13d78ddaed2fe.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s

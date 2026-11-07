@@ -1,0 +1,8 @@
+
+> @enzitag/optima-web@0.4.0-dev typecheck
+> tsc --noEmit
+
+src/features/results/MixedAdvancedResults.tsx(281,11): error TS2304: Cannot find name 'MixedModelRequest'.
+src/features/results/MixedAdvancedResults.tsx(288,28): error TS7006: Parameter 'term' implicitly has an 'any' type.
+src/features/results/RepeatedResults.tsx(64,17): error TS2322: Type '{ result: AdvancedMixedResult; confidenceLevel: number | undefined; language: "en" | "pt-BR"; }' is not assignable to type 'IntrinsicAttributes & { result: AdvancedMixedResult; input?: any; data: ExperimentData; language: "en" | "pt-BR"; }'.
+  Property 'confidenceLevel' does not exist on type 'IntrinsicAttributes & { result: AdvancedMixedResult; input?: any; data: ExperimentData; language: "en" | "pt-BR"; }'.

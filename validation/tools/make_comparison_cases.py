@@ -126,7 +126,7 @@ Somente a conversão decimal→binário e a tolerância em dígitos.
 
 ## Execução
 
-`app/crates/optima-core/tests/comparison_validation.rs` (nativo) e `app/web/src/services/engine/comparison.parity.test.ts` (WebAssembly).
+`app/crates/desvtag-core/tests/comparison_validation.rs` (nativo) e `app/web/src/services/engine/comparison.parity.test.ts` (WebAssembly).
 """)
         print(folder.name, {k: round(v, 1) for k, v in cert_lre.items()})
 
@@ -273,7 +273,7 @@ A ordem de atribuição das letras segue as médias decrescentes (a letra `a` é
 
 ## Execução
 
-`app/crates/optima-core/tests/comparison_validation.rs` (nativo) e `app/web/src/services/engine/comparison.parity.test.ts` (WebAssembly).
+`app/crates/desvtag-core/tests/comparison_validation.rs` (nativo) e `app/web/src/services/engine/comparison.parity.test.ts` (WebAssembly).
 """)
     print(folder.name, "n =", n, "k =", k, "letters:", exp["letters"], exp["tukey"]["variant"])
 

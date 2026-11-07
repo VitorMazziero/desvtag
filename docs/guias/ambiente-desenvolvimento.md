@@ -56,7 +56,7 @@ npm test
 npm run build
 ```
 
-`npm run dev` compila o WASM e abre o servidor de desenvolvimento do Vite. `npm run preview` serve o build em `http://127.0.0.1:4173`.
+`npm run dev` compila o WASM e abre o servidor de desenvolvimento do Vite. O script do WASM separa as saídas por checkout e versão, inclusive quando `CARGO_TARGET_DIR` aponta para um diretório compartilhado. `npm run preview` serve o build em `http://127.0.0.1:4173`.
 
 ### Testes E2E (motor WASM real)
 
@@ -72,7 +72,7 @@ E2E_BROWSERS=chromium,firefox npm run test:e2e
 
 ## Validação numérica (referências independentes)
 
-Os casos em `validation/cases/` são executados pelos testes: nativo em `cargo test -p optima-core` (`descriptive_validation`) e WebAssembly em `npm test` em `app/web` (`descriptive.parity.test.ts`, que exige `npm run build:wasm` antes). Para regenerar os casos (Python 3.13; `make_project_case.py` e `make_import_cases.py` dispensam os dados do NIST):
+Os casos em `validation/cases/` são executados pelos testes: nativo em `cargo test -p desvtag-core` (`descriptive_validation`) e WebAssembly em `npm test` em `app/web` (`descriptive.parity.test.ts`, que exige `npm run build:wasm` antes). Para regenerar os casos (Python 3.13; `make_project_case.py` e `make_import_cases.py` dispensam os dados do NIST):
 
 ```bash
 python3 -m venv .venv
@@ -97,13 +97,13 @@ cargo build --features tauri/custom-protocol
 Verificação nativa, em `app/desktop/`. Confere `engine.info`, a estatística descritiva, a leitura do `.enzitag` escrito em Python, a recusa de arquivo adulterado e a leitura de XLSX pelo IPC, além do cálculo dos métodos e da exportação de XLSX pelo motor. No Linux (compilar antes com `cargo build --features tauri/custom-protocol` em `src-tauri/`, para embutir a interface) usa WebDriver sob Xvfb:
 
 ```bash
-xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop
+xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/desvtag-desktop
 ```
 
 No Windows, a mesma verificação usa o WebView2 por CDP (exige `npm ci` em `app/web`):
 
 ```bash
-node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
+node tests/native-cdp.mjs src-tauri/target/release/desvtag-desktop.exe
 ```
 
 Instalador Windows (NSIS), em `app/desktop/`, executado em Windows:

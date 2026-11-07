@@ -30,3 +30,11 @@ Os CSV exportados começam por linhas `# chave: valor` (aplicativo, projeto, mé
 
 - Só valores numéricos são aceitos nas respostas; texto como «n.d.» deve ficar em branco.
 - Arquivos que não trazem os fatores do experimento (nem `unit_id`) são tratados como dados novos e **substituem** os dados atuais, como antes.
+
+## Grade e importação na ET29
+
+Depois de gerar, use **Preencher respostas na grade** para ir direto à coleta. A numeração da matriz e da grade corresponde à ordem de execução. As condições geradas ficam somente para leitura; **Editar condições…** pede confirmação, e **Proteger condições** encerra a edição. As respostas têm borda de destaque. O menu «⋯» contém a remoção de uma linha e é anunciado com seu número para tecnologias assistivas.
+
+Vazio significa dado ausente; número ilegível é erro. A lista de erros permite **Ir à linha/coluna**, focando a célula. A tabela ocupa a largura útil e rola horizontalmente quando necessário, com a primeira coluna fixa.
+
+No caminho **Analisar dados existentes**, também é possível importar já em **Fatores e respostas**, sem criar variáveis provisórias. Confira os papéis sugeridos pelo nome das variáveis existentes e escolha **Unidade experimental** para identificadores de medidas repetidas. Um fator com doses discretas pode continuar numérico e ter níveis declarados; não é necessário convertê-lo em texto para planejar níveis mistos.

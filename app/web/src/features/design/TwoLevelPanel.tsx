@@ -17,7 +17,7 @@ import type {
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
-import { GuidedBlocks } from "../blocks";
+import { FillResponsesButton, GuidedBlocks } from "../blocks";
 import { rowsFromDesign } from "./designRows";
 import { RunMatrix } from "./RunMatrix";
 
@@ -83,6 +83,7 @@ export function TwoLevelPanel({ language }: { language: Language }) {
   const [count, setCount] = useState<RunCount | null>(null);
   const [problems, setProblems] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  const [preview, setPreview] = useState<GeneratedDesign | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
   const parsed = factors.map((f) => ({
@@ -196,6 +197,25 @@ export function TwoLevelPanel({ language }: { language: Language }) {
     };
   }, [client, spec, t]);
 
+  useEffect(() => {
+    setPreview(null);
+    if (!spec || goal !== "surface") return;
+    let live = true;
+    client
+      .request(
+        { type: "designGenerate", ...spec, replicates: 1, centerPoints: 0, randomize: false },
+        { channel: "design-extremes-preview" },
+      )
+      .then((r) => {
+        if (live && r.outcome.status === "ok" && r.outcome.result.type === "designGenerate")
+          setPreview(r.outcome.result as unknown as GeneratedDesign);
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [client, spec, goal]);
+
   const generate = async () => {
     if (!spec) return;
     if (state.design !== null || state.rows.some((r) => r.responses.some((c) => c.trim() !== ""))) {
@@ -233,7 +253,7 @@ export function TwoLevelPanel({ language }: { language: Language }) {
   return (
     <section aria-labelledby="design-title" data-testid="design-panel">
       <h2 id="design-title">{t("design.title")}</h2>
-      <p className="muted">{t("design.intro")}</p>
+      <p className="muted">{t(goal === "surface" ? "design.surface.intro" : "design.intro")}</p>
       {k < 2 && (
         <p role="status" className="error">
           {t("design.needFactors")}
@@ -249,7 +269,6 @@ export function TwoLevelPanel({ language }: { language: Language }) {
         <GuidedBlocks
           testId="twolevel-blocks"
           label={t("design.blocks.nav")}
-          primary={false}
           focusId={state.design ? "matrix" : undefined}
           blocks={[
             {
@@ -409,6 +428,29 @@ export function TwoLevelPanel({ language }: { language: Language }) {
                     </fieldset>
                   )}
 
+                  {goal === "screening" && k === 2 && (
+                    <p className="muted small">{t("design.pbTwoFactors")}</p>
+                  )}
+                  {preview && (
+                    <section data-testid="design-real-extremes">
+                      {preview.axialDistance !== null && (
+                        <p>{t("design.surface.axialPreview", { alpha: preview.axialDistance })}</p>
+                      )}
+                      <h3>{t("design.surface.previewTitle")}</h3>
+                      <ul>
+                        {preview.spec.factors.map((f, i) => (
+                          <li key={f.id}>
+                            {t("design.surface.range", {
+                              name: f.name,
+                              low: Math.min(...preview.runs.map((r) => r.real[i] ?? 0)),
+                              high: Math.max(...preview.runs.map((r) => r.real[i] ?? 0)),
+                              unit: f.unit ?? "",
+                            })}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
                   {goal === "screening" && (
                     <fieldset className="editor-card">
                       <legend>{t("design.optionsTitle", { count: k })}</legend>
@@ -478,25 +520,28 @@ export function TwoLevelPanel({ language }: { language: Language }) {
                     <span>{t("design.randomize")}</span>
                   </label>
                   {randomize && (
-                    <div className="row">
-                      <label className="field">
-                        <span>{t("design.seed")}</span>
-                        <input
-                          type="number"
-                          min={0}
-                          max={MAX_SEED}
-                          value={seed}
-                          onChange={(e) => setSeed(clampSeed(e.target.value))}
-                        />
-                      </label>
-                      <button
-                        type="button"
-                        className="button secondary small"
-                        onClick={() => setSeed(randomSeed())}
-                      >
-                        {t("design.newSeed")}
-                      </button>
-                    </div>
+                    <details className="advanced">
+                      <summary>{t("design.reproducibility")}</summary>
+                      <div className="row">
+                        <label className="field">
+                          <span>{t("design.seed")}</span>
+                          <input
+                            type="number"
+                            min={0}
+                            max={MAX_SEED}
+                            value={seed}
+                            onChange={(e) => setSeed(clampSeed(e.target.value))}
+                          />
+                        </label>
+                        <button
+                          type="button"
+                          className="button secondary small"
+                          onClick={() => setSeed(randomSeed())}
+                        >
+                          {t("design.newSeed")}
+                        </button>
+                      </div>
+                    </details>
                   )}
                   {randomize && <p className="muted small">{t("design.seedHelp")}</p>}
 
@@ -538,7 +583,12 @@ export function TwoLevelPanel({ language }: { language: Language }) {
                   {
                     id: "matrix",
                     title: t("design.blocks.matrix"),
-                    content: <RunMatrix spec={state.design} language={language} />,
+                    content: (
+                      <>
+                        <RunMatrix spec={state.design} language={language} />
+                        <FillResponsesButton />
+                      </>
+                    ),
                   },
                 ]
               : []),

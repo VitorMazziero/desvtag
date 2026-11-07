@@ -11,6 +11,7 @@ import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages, issueMessage } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { splitLevels } from "../analysis/buildRequest";
+import { FillResponsesButton, FlowBlock } from "../blocks";
 import { CrdMatrix } from "./CrdMatrix";
 import { rowsFromCrd } from "./crdRows";
 
@@ -20,7 +21,7 @@ export function CrdPanel() {
   const dispatch = useProjectDispatch();
   const { client } = useEngine();
 
-  const categorical = state.factors.filter((f) => f.kind === "categorical" && f.name.trim() !== "");
+  const categorical = state.factors.filter((f) => f.name.trim() !== "");
   const [factorId, setFactorId] = useState<string>(state.crd?.factorId ?? categorical[0]?.id ?? "");
   const factor = categorical.find((f) => f.id === factorId) ?? categorical[0];
   const [replicates, setReplicates] = useState(state.crd?.replicates ?? 5);
@@ -109,120 +110,139 @@ export function CrdPanel() {
 
   return (
     <section aria-labelledby="crd-title" data-testid="crd-panel">
-      <h2 id="crd-title">{t("design.title")}</h2>
-      <p className="muted">{t("design.crd.intro")}</p>
-      {!factor && (
-        <p role="status" className="error">
-          {t("design.crd.needFactor")}
-        </p>
-      )}
-      {factor && (
-        <>
-          {categorical.length > 1 && (
+      <FlowBlock id="crd-config" ready={total !== null} title={t("design.blocks.levels")} order={1}>
+        <h2 id="crd-title">{t("design.title")}</h2>
+        <p className="muted">{t("design.crd.intro")}</p>
+        {!factor && (
+          <p role="status" className="error">
+            {t("design.crd.needFactor")}
+          </p>
+        )}
+        {factor && (
+          <>
+            {categorical.length > 1 && (
+              <label className="field">
+                <span>{t("design.crd.factor")}</span>
+                <select value={factor.id} onChange={(e) => setFactorId(e.target.value)}>
+                  {categorical.map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <label className="field">
-              <span>{t("design.crd.factor")}</span>
-              <select value={factor.id} onChange={(e) => setFactorId(e.target.value)}>
-                {categorical.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          <label className="field">
-            <span>{t("design.crd.levels")}</span>
-            <textarea
-              rows={4}
-              value={factor.levelsText}
-              onChange={(e) =>
-                dispatch({
-                  type: "updateFactor",
-                  id: factor.id,
-                  patch: { levelsText: e.target.value },
-                })
-              }
-            />
-            <small className="muted">{t("design.crd.levelsHelp")}</small>
-          </label>
-          <div className="row">
-            <label className="field">
-              <span>{t("design.crd.replicates")}</span>
-              <input
-                type="number"
-                min={1}
-                max={500}
-                value={replicates}
+              <span>{t("design.crd.levels")}</span>
+              <textarea
+                rows={4}
+                value={factor.levelsText}
                 onChange={(e) =>
-                  setReplicates(Math.max(1, Math.floor(Number(e.target.value) || 1)))
+                  dispatch({
+                    type: "updateFactor",
+                    id: factor.id,
+                    patch: { levelsText: e.target.value },
+                  })
                 }
               />
+              <small className="muted">{t("design.crd.levelsHelp")}</small>
             </label>
-          </div>
-          <p className="muted small">{t("design.crd.replicatesHelp")}</p>
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={randomize}
-              onChange={(e) => setRandomize(e.target.checked)}
-            />
-            <span>{t("design.randomize")}</span>
-          </label>
-          {randomize && (
             <div className="row">
               <label className="field">
-                <span>{t("design.seed")}</span>
+                <span>{t("design.crd.replicates")}</span>
                 <input
                   type="number"
-                  min={0}
-                  max={MAX_SEED}
-                  value={seed}
-                  onChange={(e) => setSeed(clampSeed(e.target.value))}
+                  min={1}
+                  max={500}
+                  value={replicates}
+                  onChange={(e) =>
+                    setReplicates(Math.max(1, Math.floor(Number(e.target.value) || 1)))
+                  }
                 />
               </label>
-              <button
-                type="button"
-                className="button secondary small"
-                onClick={() => setSeed(randomSeed())}
-              >
-                {t("design.newSeed")}
-              </button>
             </div>
-          )}
-          {randomize && <p className="muted small">{t("design.seedHelp")}</p>}
-          {total !== null && (
-            <p data-testid="crd-count" role="status">
-              {t("design.crd.count", { total, levels: levels.length, replicates })}
-            </p>
-          )}
-          {notices.map((n) => (
-            <p key={n} className="muted small" role="status">
-              {n}
-            </p>
-          ))}
-          {problems.length > 0 && (
-            <div role="alert" className="error">
-              {problems.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          )}
-          <button
-            type="button"
-            className="button"
-            disabled={!spec || total === null || busy}
-            onClick={generate}
-          >
-            {state.crd ? t("design.regenerate") : t("design.generate")}
-          </button>
-          {message && (
-            <p role="status" className="muted" data-testid="crd-generated">
-              {message}
-            </p>
-          )}
-        </>
-      )}
-      {state.crd && <CrdMatrix spec={state.crd} />}
+            <p className="muted small">{t("design.crd.replicatesHelp")}</p>
+          </>
+        )}
+      </FlowBlock>
+      <FlowBlock
+        id="crd-generate"
+        title={t("design.blocks.generate")}
+        order={2}
+        ready={state.crd !== null}
+      >
+        {factor && (
+          <>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={randomize}
+                onChange={(e) => setRandomize(e.target.checked)}
+              />
+              <span>{t("design.randomize")}</span>
+            </label>
+            {randomize && (
+              <details className="advanced">
+                <summary>{t("design.reproducibility")}</summary>
+                <div className="row">
+                  <label className="field">
+                    <span>{t("design.seed")}</span>
+                    <input
+                      type="number"
+                      min={0}
+                      max={MAX_SEED}
+                      value={seed}
+                      onChange={(e) => setSeed(clampSeed(e.target.value))}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className="button secondary small"
+                    onClick={() => setSeed(randomSeed())}
+                  >
+                    {t("design.newSeed")}
+                  </button>
+                </div>
+              </details>
+            )}
+            {randomize && <p className="muted small">{t("design.seedHelp")}</p>}
+            {total !== null && (
+              <p data-testid="crd-count" role="status">
+                {t("design.crd.count", { total, levels: levels.length, replicates })}
+              </p>
+            )}
+            {notices.map((n) => (
+              <p key={n} className="muted small" role="status">
+                {n}
+              </p>
+            ))}
+            {problems.length > 0 && (
+              <div role="alert" className="error">
+                {problems.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            )}
+            <button
+              type="button"
+              className="button"
+              disabled={!spec || total === null || busy}
+              onClick={generate}
+            >
+              {state.crd ? t("design.regenerate") : t("design.generate")}
+            </button>
+            {message && (
+              <p role="status" className="muted" data-testid="crd-generated">
+                {message}
+              </p>
+            )}
+          </>
+        )}
+      </FlowBlock>
+      <FlowBlock id="crd-matrix" title={t("data.blocks.matrix")} order={3} focus={message !== null}>
+        {state.crd && <CrdMatrix spec={state.crd} />}
+        {state.crd && <FillResponsesButton />}
+      </FlowBlock>
     </section>
   );
 }

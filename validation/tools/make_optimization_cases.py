@@ -227,7 +227,7 @@ Nenhuma além da tolerância; o motor refina além da malha.
 
 ## Execução
 
-`cargo test -p optima-core --test optimization_validation` e `npm test` (paridade WebAssembly). Regenerar: `python validation/tools/make_optimization_cases.py`.
+`cargo test -p desvtag-core --test optimization_validation` e `npm test` (paridade WebAssembly). Regenerar: `python validation/tools/make_optimization_cases.py`.
 """
 
 

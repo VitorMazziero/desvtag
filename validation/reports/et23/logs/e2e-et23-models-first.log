@@ -1,0 +1,52 @@
+
+Running 6 tests using 2 workers
+
+(node:19768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: cs_balanced from scratch, stored and exported (9.8s)
+  ok 1 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: ar1_positive from scratch, stored and exported (9.8s)
+  ok 4 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: un_heterogeneous from scratch, stored and exported (9.7s)
+  ok 3 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: ar1_negative_gaps from scratch, stored and exported (11.1s)
+  ok 5 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: un_missing from scratch, stored and exported (10.4s)
+  x  6 [chromium] › tests\e2e\et23-models.spec.ts:135:1 › T02/T07: invalid temporal index keeps the previous valid result (8.6s)
+
+
+  1) [chromium] › tests\e2e\et23-models.spec.ts:135:1 › T02/T07: invalid temporal index keeps the previous valid result 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('.stale-notice').first()
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" locator('.stale-notice').first() with timeout 5000ms
+      - waiting for locator('.stale-notice').first()
+        12 × locator resolved to <p role="status" class="stale-notice">Os dados ou as opções mudaram depois deste cálcul…</p>
+           - unexpected value "hidden"
+
+
+      143 |   await page.locator(".steps .step").nth(4).click();
+      144 |   await expect(page.getByTestId("mixed-advanced-summary")).toBeVisible();
+    > 145 |   await expect(page.locator(".stale-notice").first()).toBeVisible();
+          |                                                       ^
+      146 | });
+      147 |
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-models.spec.ts:145:55
+
+    Error Context: test-results-et23-models-first\et23-models-T02-T07-invali-bc590-s-the-previous-valid-result-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-models-first\et23-models-T02-T07-invali-bc590-s-the-previous-valid-result-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-models-first\et23-models-T02-T07-invali-bc590-s-the-previous-valid-result-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\et23-models.spec.ts:135:1 › T02/T07: invalid temporal index keeps the previous valid result 
+  5 passed (31.3s)

@@ -2,13 +2,13 @@
 // Comparação de um fator no WebAssembly: os mesmos casos de validation/cases/one_way_comparison
 // (NIST StRD de ANOVA contra a referência exata; casos aplicados contra SciPy/NumPy/cliques),
 // pelo protocolo JSON, com as mesmas exigências do teste nativo
-// (app/crates/optima-core/tests/comparison_validation.rs). Também confere pontos da amplitude
+// (app/crates/desvtag-core/tests/comparison_validation.rs). Também confere pontos da amplitude
 // studentizada contra o SciPy.
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { type EngineResponse, type OneWayResult, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases/one_way_comparison");
 const srFile = resolve(
@@ -17,7 +17,7 @@ const srFile = resolve(
 );
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: arquivos JSON de referência com formatos heterogêneos

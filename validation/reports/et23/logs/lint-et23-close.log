@@ -1,0 +1,389 @@
+
+> @enzitag/optima-web@0.4.0-dev lint
+> biome check .
+
+src\features\optimization\GoalsEditor.tsx:131:17 lint/complexity/noUselessFragments  FIXABLE  ━━━━━━━━━━
+
+  i This fragment is unnecessary.
+  
+    129 │               </label>
+    130 │               {goal && (
+  > 131 │                 <>
+        │                 ^^
+  > 132 │                   <label className="field">
+         ...
+  > 150 │                   </label>
+  > 151 │                 </>
+        │                 ^^^
+    152 │               )}
+    153 │             </fieldset>
+  
+  i A fragment is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.
+  
+  i Unsafe fix: Remove the Fragment
+  
+    129 129 │                 </label>
+    130 130 │                 {goal && (
+    131     │ - ················<>
+    132     │ - ··················<label·className="field">
+        131 │ + ················<label·className="field">
+    133 132 │                       <span>{t("optimization.goals.type")}</span>
+    134 133 │                       <select
+    ······· │ 
+    148 147 │                         ))}
+    149 148 │                       </select>
+    150     │ - ··················</label>
+    151     │ - ················</>
+        149 │ + ··················</label>
+    152 150 │                 )}
+    153 151 │               </fieldset>
+  
+
+src\features\results\NonlinearResults.tsx:42:14 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    40 │       <div data-section="summary">
+    41 │         <h3>
+  > 42 │           {t("saturation.modelNames." + result.model)} — {yLabel}
+       │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    43 │         </h3>
+    44 │         <dl className="facts">
+  
+  i Template literals are easier to read than a chain of + operators and quotes, and they avoid mistakes with spaces and escaped quotes.
+  
+  i Unsafe fix: Use a template literal.
+  
+     40  40 │         <div data-section="summary">
+     41  41 │           <h3>
+     42     │ - ··········{t("saturation.modelNames."·+·result.model)}·—·{yLabel}
+         42 │ + ··········{t(`saturation.modelNames.${result.model}`)}·—·{yLabel}
+     43  43 │           </h3>
+     44  44 │           <dl className="facts">
+  
+
+src\features\analysis\AnalysisSetup.tsx:43:9 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    41 │   const onlyFactor =
+    42 │     eligible.length === 1
+  > 43 │       ? eligible[0]!.id
+       │         ^^^^^^^^^^^^
+    44 │       : state.factors.length === 1
+    45 │         ? state.factors[0]!.id
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     41  41 │     const onlyFactor =
+     42  42 │       eligible.length === 1
+     43     │ - ······?·eligible[0]!.id
+         43 │ + ······?·eligible[0]?.id
+     44  44 │         : state.factors.length === 1
+     45  45 │           ? state.factors[0]!.id
+  
+
+src\features\analysis\AnalysisSetup.tsx:45:11 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    43 │       ? eligible[0]!.id
+    44 │       : state.factors.length === 1
+  > 45 │         ? state.factors[0]!.id
+       │           ^^^^^^^^^^^^^^^^^
+    46 │         : null;
+    47 │   const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     43  43 │         ? eligible[0]!.id
+     44  44 │         : state.factors.length === 1
+     45     │ - ········?·state.factors[0]!.id
+         45 │ + ········?·state.factors[0]?.id
+     46  46 │           : null;
+     47  47 │     const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+
+src\features\analysis\MethodChoice.tsx:120:68 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    118 │   };
+    119 │ 
+  > 120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+        │                                                                    ^^^^^^^^^^^^^^^^^^
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+    122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MethodChoice.tsx:122:33 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+  > 122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+        │                                 ^^^^^^^^^^^^^^^^^^
+    123 │   );
+    124 │   const averaged =
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MixtureAnalysis.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function MixtureAnalysis({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   onCurrent,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\RepeatedMeasures.tsx:20:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    19 │ export function RepeatedMeasures({
+  > 20 │   language,
+       │   ^^^^^^^^
+    21 │   embedded = false,
+    22 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\SaturationFit.tsx:96:30 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                              ^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:96:53 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                                                     ^^^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function SaturationFit({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   embedded = false,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\mixedRequest.test.ts:44:41 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    42 │   });
+    43 │   it("blocks unmapped or invalid values instead of turning them into missing", () => {
+  > 44 │     const bad = { ...state, rows: [{ ...state.rows[0]!, timeText: "unknown" }] };
+       │                                         ^^^^^^^^^^^^^^
+    45 │     for (const occasionOrder of ["", "Antes; Depois", "Antes; Antes"]) {
+    46 │       const got = mixedAdvancedRequest(
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\blocks\GuidedBlocks.tsx:200:48 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    198 │               disabled={(showAll || current === 0) && !onPrevious}
+    199 │               onClick={() =>
+  > 200 │                 !showAll && current > 0 ? move(blocks[current - 1]!.id) : onPrevious?.()
+        │                                                ^^^^^^^^^^^^^^^^^^^^
+    201 │               }
+    202 │               data-testid={`${testId}-prev`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    198 198 │                 disabled={(showAll || current === 0) && !onPrevious}
+    199 199 │                 onClick={() =>
+    200     │ - ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]!.id)·:·onPrevious?.()
+        200 │ + ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]?.id)·:·onPrevious?.()
+    201 201 │                 }
+    202 202 │                 data-testid={`${testId}-prev`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:218:54 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    216 │                 }
+    217 │                 onClick={() =>
+  > 218 │                   current < blocks.length - 1 ? move(blocks[current + 1]!.id) : onNext?.()
+        │                                                      ^^^^^^^^^^^^^^^^^^^^
+    219 │                 }
+    220 │                 data-testid={`${testId}-next`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    216 216 │                   }
+    217 217 │                   onClick={() =>
+    218     │ - ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]!.id)·:·onNext?.()
+        218 │ + ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]?.id)·:·onNext?.()
+    219 219 │                   }
+    220 220 │                   data-testid={`${testId}-next`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:233:16 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    232 │ function BlockSource({ blocks, testId, focusId, order = 1 }: Props) {
+  > 233 │   const flow = useContext(FlowContext)!;
+        │                ^^^^^^^^^^^^^^^^^^^^^^^^
+    234 │   const entries = JSON.stringify(
+    235 │     blocks.map((b, i) => ({
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\home\PowerCalculator.tsx:25:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    24 │ export function PowerCalculator({
+  > 25 │   language,
+       │   ^^^^^^^^
+    26 │   embedded = false,
+    27 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\project\ProjectBar.tsx:176:76 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    174 │           onChange={(e) => dispatch({ type: "selectExperiment", id: e.target.value })}
+    175 │         >
+  > 176 │           {(matches.some((e) => e.id === workspace.currentId) ? matches : [current!, ...matches])
+        │                                                                            ^^^^^^^^
+    177 │             .filter(Boolean)
+    178 │             .map((e) => (
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\project\ProjectBar.tsx:221:67 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    219 │           type="button"
+    220 │           className="button secondary small"
+  > 221 │           onClick={() => dispatch({ type: "selectExperiment", id: current.origin!.experimentId })}
+        │                                                                   ^^^^^^^^^^^^^^^
+    222 │         >
+    223 │           {t("experiments.source", {
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    219 219 │             type="button"
+    220 220 │             className="button secondary small"
+    221     │ - ··········onClick={()·=>·dispatch({·type:·"selectExperiment",·id:·current.origin!.experimentId·})}
+        221 │ + ··········onClick={()·=>·dispatch({·type:·"selectExperiment",·id:·current.origin?.experimentId·})}
+    222 222 │           >
+    223 223 │             {t("experiments.source", {
+  
+
+src\features\results\NonlinearResults.tsx:130:13 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    128 │             i + 1,
+    129 │             x,
+  > 130 │             record.input.request.y[i]!,
+        │             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    131 │             result.residuals[i]!,
+    132 │           ])}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\results\NonlinearResults.tsx:131:13 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    129 │             x,
+    130 │             record.input.request.y[i]!,
+  > 131 │             result.residuals[i]!,
+        │             ^^^^^^^^^^^^^^^^^^^^
+    132 │           ])}
+    133 │           metadata={metadata}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 136.
+Checked 345 files in 432ms. No fixes applied.
+Found 152 warnings.
+Found 4 infos.

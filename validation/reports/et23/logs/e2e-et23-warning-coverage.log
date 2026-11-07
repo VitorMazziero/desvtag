@@ -1,0 +1,23 @@
+
+Running 6 tests using 3 workers
+
+(node:30024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\et23-warning-coverage.spec.ts:7:3 › T14 follow-up: 09-niveis-mistos warnings are visible and localized (3.2s)
+  ok 2 [chromium] › tests\e2e\et23-warning-coverage.spec.ts:7:3 › T14 follow-up: 07-misturas-scheffe warnings are visible and localized (3.6s)
+(node:17156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [firefox] › tests\e2e\et23-warning-coverage.spec.ts:7:3 › T14 follow-up: 09-niveis-mistos warnings are visible and localized (6.0s)
+(node:27952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [webkit] › tests\e2e\et23-warning-coverage.spec.ts:7:3 › T14 follow-up: 09-niveis-mistos warnings are visible and localized (5.1s)
+  ok 4 [firefox] › tests\e2e\et23-warning-coverage.spec.ts:7:3 › T14 follow-up: 07-misturas-scheffe warnings are visible and localized (6.1s)
+  ok 6 [webkit] › tests\e2e\et23-warning-coverage.spec.ts:7:3 › T14 follow-up: 07-misturas-scheffe warnings are visible and localized (4.6s)
+
+  6 passed (13.1s)

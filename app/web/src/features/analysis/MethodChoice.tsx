@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { Adjustment, FactorialSetup, Procedure } from "../../services/engine";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import type { AnalysisDraft } from "../../state/project";
+import { FlowBlock } from "../blocks";
 import { splitLevels } from "./buildRequest";
 
 type ProcedureKey = "tukey" | Procedure["type"];
@@ -43,15 +44,24 @@ function marginalsFor(factorIds: string[]): FactorialSetup["marginals"] {
 
 export function MethodChoice() {
   const { t } = useTranslation();
+  const tr = useTranslation("results").t;
   const state = useProject();
   const dispatch = useProjectDispatch();
   const setup = state.analysis.factorial;
   const mode = setup === null ? "oneWay" : "factorial";
-  const categorical = state.factors.filter((f) => f.kind === "categorical" && f.name.trim() !== "");
+  const categorical = state.factors.filter(
+    (f) =>
+      (f.kind === "categorical" || splitLevels(f.levelsText).length >= 2) && f.name.trim() !== "",
+  );
   const patch = (p: Partial<AnalysisDraft>) => dispatch({ type: "setAnalysis", patch: p });
   const [contrastName, setContrastName] = useState("");
   const [contrastFactor, setContrastFactor] = useState("");
-  const [contrastText, setContrastText] = useState("");
+  const [weights, setWeights] = useState<Record<string, string>>({});
+  const contrastLevels = levelsOf(state, contrastFactor || setup?.factorIds[0]);
+  const coefficientsDraft = contrastLevels.map((level) =>
+    Number((weights[level] ?? "").replace(",", ".")),
+  );
+  const weightSum = coefficientsDraft.reduce((a, b) => a + b, 0);
   const [contrastError, setContrastError] = useState<string | null>(null);
 
   const procedure = state.analysis.procedure;
@@ -80,17 +90,24 @@ export function MethodChoice() {
     if (setup === null) return;
     const factorId = contrastFactor || setup.factorIds[0] || "";
     const levels = levelsOf(state, factorId);
-    const coefficients = contrastText
-      .split(/[;\n]|\s+/)
-      .map((c) => c.trim().replace(",", "."))
-      .filter((c) => c !== "")
-      .map(Number);
+    const coefficients = levels.map((level) => Number((weights[level] ?? "").replace(",", ".")));
     if (
       contrastName.trim() === "" ||
       coefficients.length !== levels.length ||
-      coefficients.some((c) => !Number.isFinite(c))
+      coefficients.some((c) => !Number.isFinite(c)) ||
+      levels.some((level) => (weights[level] ?? "").trim() === "")
     ) {
       setContrastError(t("analysis.method.contrastInvalid", { count: levels.length }));
+      return;
+    }
+    const scale = Math.max(...coefficients.map(Math.abs));
+    const normalized = coefficients.map((c) => (scale === 0 ? 0 : c / scale));
+    if (
+      scale === 0 ||
+      Math.abs(normalized.reduce((a, b) => a + b, 0)) >
+        1e-10 * normalized.reduce((a, b) => a + Math.abs(b), 0)
+    ) {
+      setContrastError(t("analysis.method.contrastWeightsInvalid"));
       return;
     }
     setContrastError(null);
@@ -101,94 +118,121 @@ export function MethodChoice() {
       ],
     });
     setContrastName("");
-    setContrastText("");
+    setWeights({});
   };
 
+  const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+  const negative = coefficientsDraft.flatMap((v, i) =>
+    v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+  );
+  const averaged =
+    positive.length === 1 &&
+    negative.length === contrastLevels.length - 1 &&
+    negative.length > 0 &&
+    negative.every((v) => Math.abs(v.value + 1 / negative.length) < 1e-10);
+  const expression = averaged
+    ? `${positive[0]} − ${t("analysis.method.averageOf", { levels: negative.map((v) => v.level).join(", ") })}`
+    : contrastLevels.map((level) => `${weights[level] || "0"} × μ(${level})`).join(" + ");
   return (
-    <fieldset className="editor-card" data-testid="method-choice">
-      <legend>{t("analysis.method.legend")}</legend>
-      <label className="check">
-        <input
-          type="radio"
-          name="analysis-mode"
-          checked={mode === "oneWay"}
-          onChange={() => patch({ factorial: null })}
-        />
-        <span>{t("analysis.method.oneWay")}</span>
-      </label>
-      <label className="check">
-        <input
-          type="radio"
-          name="analysis-mode"
-          checked={mode === "factorial"}
-          disabled={categorical.length === 0}
-          onChange={() =>
-            patch({
-              factorial: defaultSetup(
-                [state.analysis.factorId ?? categorical[0]?.id ?? ""].filter((x) => x !== ""),
-              ),
-              procedure: null,
-            })
-          }
-        />
-        <span>{t("analysis.method.factorial")}</span>
-      </label>
-
-      {mode === "oneWay" && (
-        <>
-          <label className="field">
-            <span>{t("analysis.method.procedure")}</span>
-            <select
-              value={key}
-              onChange={(e) => chooseProcedure(e.target.value as ProcedureKey)}
-              data-testid="procedure-select"
-            >
-              {(
-                ["tukey", "gamesHowell", "dunnett", "bonferroni", "holm", "kruskalDunn"] as const
-              ).map((k) => (
-                <option key={k} value={k}>
-                  {t(`analysis.method.procedures.${k}`)}
-                </option>
-              ))}
-            </select>
-            <small className="muted">{t(`analysis.method.help.${key}`)}</small>
+    <div data-testid="method-choice">
+      <FlowBlock id="analysis-method" title={t("analysis.method.legend")} order={1}>
+        <fieldset className="editor-card">
+          <legend>{t("analysis.method.legend")}</legend>
+          <label className="check">
+            <input
+              type="radio"
+              name="analysis-mode"
+              checked={mode === "oneWay"}
+              onChange={() => patch({ factorial: null })}
+            />
+            <span>{t("analysis.method.oneWay")}</span>
           </label>
-          {procedure?.type === "dunnett" && (
-            <label className="field">
-              <span>{t("analysis.method.control")}</span>
-              <select
-                value={procedure.control}
-                onChange={(e) => patch({ procedure: { type: "dunnett", control: e.target.value } })}
-              >
-                {levelsOf(state, state.analysis.factorId).map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          {procedure?.type === "kruskalDunn" && (
-            <label className="field">
-              <span>{t("analysis.method.adjustment")}</span>
-              <select
-                value={procedure.adjustment}
-                onChange={(e) =>
-                  patch({
-                    procedure: { type: "kruskalDunn", adjustment: e.target.value as Adjustment },
-                  })
-                }
-              >
-                <option value="holm">Holm</option>
-                <option value="bonferroni">Bonferroni</option>
-              </select>
-            </label>
-          )}
-        </>
-      )}
+          <label className="check">
+            <input
+              type="radio"
+              name="analysis-mode"
+              checked={mode === "factorial"}
+              disabled={categorical.length === 0}
+              onChange={() =>
+                patch({
+                  factorial: defaultSetup(
+                    [state.analysis.factorId ?? categorical[0]?.id ?? ""].filter((x) => x !== ""),
+                  ),
+                  procedure: null,
+                })
+              }
+            />
+            <span>{t("analysis.method.factorial")}</span>
+          </label>
 
+          {mode === "oneWay" && (
+            <>
+              <label className="field">
+                <span>{t("analysis.method.procedure")}</span>
+                <select
+                  value={key}
+                  onChange={(e) => chooseProcedure(e.target.value as ProcedureKey)}
+                  data-testid="procedure-select"
+                >
+                  {(
+                    [
+                      "tukey",
+                      "gamesHowell",
+                      "dunnett",
+                      "bonferroni",
+                      "holm",
+                      "kruskalDunn",
+                    ] as const
+                  ).map((k) => (
+                    <option key={k} value={k}>
+                      {t(`analysis.method.procedures.${k}`)}
+                    </option>
+                  ))}
+                </select>
+                <small className="muted">{t(`analysis.method.help.${key}`)}</small>
+              </label>
+              {procedure?.type === "dunnett" && (
+                <label className="field">
+                  <span>{t("analysis.method.control")}</span>
+                  <select
+                    value={procedure.control}
+                    onChange={(e) =>
+                      patch({ procedure: { type: "dunnett", control: e.target.value } })
+                    }
+                  >
+                    {levelsOf(state, state.analysis.factorId).map((l) => (
+                      <option key={l} value={l}>
+                        {l}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              )}
+              {procedure?.type === "kruskalDunn" && (
+                <label className="field">
+                  <span>{t("analysis.method.adjustment")}</span>
+                  <select
+                    value={procedure.adjustment}
+                    onChange={(e) =>
+                      patch({
+                        procedure: {
+                          type: "kruskalDunn",
+                          adjustment: e.target.value as Adjustment,
+                        },
+                      })
+                    }
+                  >
+                    <option value="holm">Holm</option>
+                    <option value="bonferroni">Bonferroni</option>
+                  </select>
+                </label>
+              )}
+            </>
+          )}
+        </fieldset>
+      </FlowBlock>
       {setup !== null && (
-        <>
+        <FlowBlock id="analysis-model" title={t("analysis.method.factorial")} order={2}>
           <fieldset>
             <legend>{t("analysis.method.treatments")}</legend>
             {categorical.map((f) => (
@@ -258,7 +302,75 @@ export function MethodChoice() {
             </label>
           </div>
           <p className="muted small">{t("analysis.method.ssHelp")}</p>
-
+          <fieldset className="factorial-families">
+            <legend>{tr("factorial.geometry.families")}</legend>
+            <p className="muted small">{tr("factorial.geometry.familiesHelp")}</p>
+            {marginalsFor(setup.factorIds).map((family) => {
+              const chosen = setup.marginals.find(
+                (m) => m.factors.join("|") === family.factors.join("|"),
+              );
+              const cells = family.factors.reduce((n, id) => n * levelsOf(state, id).length, 1);
+              return (
+                <div className="factorial-family" key={family.factors.join("|")}>
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={!!chosen}
+                      onChange={(e) =>
+                        update({
+                          marginals: e.target.checked
+                            ? [...setup.marginals, family]
+                            : setup.marginals.filter((m) => m !== chosen),
+                        })
+                      }
+                    />
+                    <span>
+                      {family.factors
+                        .map((id) => state.factors.find((f) => f.id === id)?.name ?? id)
+                        .join(" × ")}
+                    </span>
+                  </label>
+                  <span className="muted small">
+                    {tr("factorial.geometry.familySize", {
+                      cells,
+                      pairs: (cells * (cells - 1)) / 2,
+                    })}
+                  </span>
+                  {chosen && (
+                    <label className="field">
+                      <span>
+                        {tr("factorial.marginalCaption", {
+                          adjustment: tr(`factorial.adjustment.${chosen.adjustment}`),
+                        })}
+                      </span>
+                      <select
+                        value={chosen.adjustment}
+                        onChange={(e) =>
+                          update({
+                            marginals: setup.marginals.map((m) =>
+                              m === chosen
+                                ? { ...m, adjustment: e.target.value as typeof m.adjustment }
+                                : m,
+                            ),
+                          })
+                        }
+                      >
+                        {(["none", "bonferroni", "holm", "tukey"] as const).map((adjustment) => (
+                          <option key={adjustment} value={adjustment}>
+                            {tr(`factorial.adjustment.${adjustment}`)}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
+                </div>
+              );
+            })}
+          </fieldset>
+        </FlowBlock>
+      )}
+      {setup !== null && (
+        <FlowBlock id="analysis-contrasts" title={t("analysis.method.contrasts")} order={3}>
           <fieldset>
             <legend>{t("analysis.method.contrasts")}</legend>
             <p className="muted small">{t("analysis.method.contrastsHelp")}</p>
@@ -298,14 +410,21 @@ export function MethodChoice() {
                   ))}
                 </select>
               </label>
-              <label className="field">
-                <span>{t("analysis.method.contrastCoefficients")}</span>
-                <input
-                  type="text"
-                  value={contrastText}
-                  onChange={(e) => setContrastText(e.target.value)}
-                />
-              </label>
+              {contrastLevels.map((level) => (
+                <label className="field" key={level}>
+                  <span>{t("analysis.method.weightFor", { level })}</span>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={weights[level] ?? ""}
+                    onChange={(e) => setWeights({ ...weights, [level]: e.target.value })}
+                  />
+                </label>
+              ))}
+              <p role="status" data-testid="contrast-expression">
+                {expression}
+                {" = 0; "} {t("analysis.method.weightSum", { sum: weightSum })}
+              </p>
               <button type="button" className="button secondary small" onClick={addContrast}>
                 {t("analysis.method.addContrast")}
               </button>
@@ -316,8 +435,8 @@ export function MethodChoice() {
               </p>
             )}
           </fieldset>
-        </>
+        </FlowBlock>
       )}
-    </fieldset>
+    </div>
   );
 }

@@ -1,0 +1,2276 @@
+{
+  "operation": {
+    "type": "modelMixed",
+    "dataset": {
+      "factors": [],
+      "responses": [
+        {
+          "id": "y",
+          "name": "Response",
+          "unit": null
+        }
+      ],
+      "observations": [
+        {
+          "id": "o1",
+          "unitId": "u1",
+          "factors": [],
+          "responses": [
+            12.246810337304517
+          ]
+        },
+        {
+          "id": "o2",
+          "unitId": "u1",
+          "factors": [],
+          "responses": [
+            13.332224433332353
+          ]
+        },
+        {
+          "id": "o3",
+          "unitId": "u1",
+          "factors": [],
+          "responses": [
+            14.285072574427575
+          ]
+        },
+        {
+          "id": "o4",
+          "unitId": "u1",
+          "factors": [],
+          "responses": [
+            13.516709374254647
+          ]
+        },
+        {
+          "id": "o5",
+          "unitId": "u2",
+          "factors": [],
+          "responses": [
+            8.189806455814978
+          ]
+        },
+        {
+          "id": "o6",
+          "unitId": "u2",
+          "factors": [],
+          "responses": [
+            10.254321996044553
+          ]
+        },
+        {
+          "id": "o7",
+          "unitId": "u2",
+          "factors": [],
+          "responses": [
+            10.119916808345053
+          ]
+        },
+        {
+          "id": "o8",
+          "unitId": "u2",
+          "factors": [],
+          "responses": [
+            11.05805220868932
+          ]
+        },
+        {
+          "id": "o9",
+          "unitId": "u3",
+          "factors": [],
+          "responses": [
+            9.194890001836127
+          ]
+        },
+        {
+          "id": "o10",
+          "unitId": "u3",
+          "factors": [],
+          "responses": [
+            10.811069969743635
+          ]
+        },
+        {
+          "id": "o11",
+          "unitId": "u3",
+          "factors": [],
+          "responses": [
+            12.45563316913939
+          ]
+        },
+        {
+          "id": "o12",
+          "unitId": "u3",
+          "factors": [],
+          "responses": [
+            11.847180819601455
+          ]
+        },
+        {
+          "id": "o13",
+          "unitId": "u4",
+          "factors": [],
+          "responses": [
+            11.5263957343362
+          ]
+        },
+        {
+          "id": "o14",
+          "unitId": "u4",
+          "factors": [],
+          "responses": [
+            11.602798163594437
+          ]
+        },
+        {
+          "id": "o15",
+          "unitId": "u4",
+          "factors": [],
+          "responses": [
+            11.55697861105748
+          ]
+        },
+        {
+          "id": "o16",
+          "unitId": "u4",
+          "factors": [],
+          "responses": [
+            13.302996334437285
+          ]
+        },
+        {
+          "id": "o17",
+          "unitId": "u5",
+          "factors": [],
+          "responses": [
+            11.777384308881249
+          ]
+        },
+        {
+          "id": "o18",
+          "unitId": "u5",
+          "factors": [],
+          "responses": [
+            11.707138837241589
+          ]
+        },
+        {
+          "id": "o19",
+          "unitId": "u5",
+          "factors": [],
+          "responses": [
+            14.109867214511311
+          ]
+        },
+        {
+          "id": "o20",
+          "unitId": "u5",
+          "factors": [],
+          "responses": [
+            13.188855847111418
+          ]
+        },
+        {
+          "id": "o21",
+          "unitId": "u6",
+          "factors": [],
+          "responses": [
+            11.309513732491299
+          ]
+        },
+        {
+          "id": "o22",
+          "unitId": "u6",
+          "factors": [],
+          "responses": [
+            12.188141271844485
+          ]
+        },
+        {
+          "id": "o23",
+          "unitId": "u6",
+          "factors": [],
+          "responses": [
+            13.141067969140602
+          ]
+        },
+        {
+          "id": "o24",
+          "unitId": "u6",
+          "factors": [],
+          "responses": [
+            12.036527965927837
+          ]
+        },
+        {
+          "id": "o25",
+          "unitId": "u7",
+          "factors": [],
+          "responses": [
+            11.580580081459429
+          ]
+        },
+        {
+          "id": "o26",
+          "unitId": "u7",
+          "factors": [],
+          "responses": [
+            12.356102410436929
+          ]
+        },
+        {
+          "id": "o27",
+          "unitId": "u7",
+          "factors": [],
+          "responses": [
+            13.265551371053373
+          ]
+        },
+        {
+          "id": "o28",
+          "unitId": "u7",
+          "factors": [],
+          "responses": [
+            13.885096100076817
+          ]
+        },
+        {
+          "id": "o29",
+          "unitId": "u8",
+          "factors": [],
+          "responses": [
+            11.509052321677212
+          ]
+        },
+        {
+          "id": "o30",
+          "unitId": "u8",
+          "factors": [],
+          "responses": [
+            11.401886764924633
+          ]
+        },
+        {
+          "id": "o31",
+          "unitId": "u8",
+          "factors": [],
+          "responses": [
+            11.542854570014734
+          ]
+        },
+        {
+          "id": "o32",
+          "unitId": "u8",
+          "factors": [],
+          "responses": [
+            12.103116061279945
+          ]
+        },
+        {
+          "id": "o33",
+          "unitId": "u9",
+          "factors": [],
+          "responses": [
+            7.827517746376366
+          ]
+        },
+        {
+          "id": "o34",
+          "unitId": "u9",
+          "factors": [],
+          "responses": [
+            8.88905519204449
+          ]
+        },
+        {
+          "id": "o35",
+          "unitId": "u9",
+          "factors": [],
+          "responses": [
+            9.23353466417356
+          ]
+        },
+        {
+          "id": "o36",
+          "unitId": "u9",
+          "factors": [],
+          "responses": [
+            10.715976083624659
+          ]
+        },
+        {
+          "id": "o37",
+          "unitId": "u10",
+          "factors": [],
+          "responses": [
+            10.38133888206931
+          ]
+        },
+        {
+          "id": "o38",
+          "unitId": "u10",
+          "factors": [],
+          "responses": [
+            10.861572246187642
+          ]
+        },
+        {
+          "id": "o39",
+          "unitId": "u10",
+          "factors": [],
+          "responses": [
+            12.878882170083712
+          ]
+        },
+        {
+          "id": "o40",
+          "unitId": "u10",
+          "factors": [],
+          "responses": [
+            11.171430973888384
+          ]
+        },
+        {
+          "id": "o41",
+          "unitId": "u11",
+          "factors": [],
+          "responses": [
+            9.281192933185906
+          ]
+        },
+        {
+          "id": "o42",
+          "unitId": "u11",
+          "factors": [],
+          "responses": [
+            8.75412835501127
+          ]
+        },
+        {
+          "id": "o43",
+          "unitId": "u11",
+          "factors": [],
+          "responses": [
+            9.797128949872738
+          ]
+        },
+        {
+          "id": "o44",
+          "unitId": "u11",
+          "factors": [],
+          "responses": [
+            11.476022746765672
+          ]
+        },
+        {
+          "id": "o45",
+          "unitId": "u12",
+          "factors": [],
+          "responses": [
+            10.93295471440614
+          ]
+        },
+        {
+          "id": "o46",
+          "unitId": "u12",
+          "factors": [],
+          "responses": [
+            10.820760896137712
+          ]
+        },
+        {
+          "id": "o47",
+          "unitId": "u12",
+          "factors": [],
+          "responses": [
+            11.227647773289975
+          ]
+        },
+        {
+          "id": "o48",
+          "unitId": "u12",
+          "factors": [],
+          "responses": [
+            10.876307741750821
+          ]
+        },
+        {
+          "id": "o49",
+          "unitId": "u13",
+          "factors": [],
+          "responses": [
+            9.373540121743556
+          ]
+        },
+        {
+          "id": "o50",
+          "unitId": "u13",
+          "factors": [],
+          "responses": [
+            9.06616523927148
+          ]
+        },
+        {
+          "id": "o51",
+          "unitId": "u13",
+          "factors": [],
+          "responses": [
+            10.563155523696752
+          ]
+        },
+        {
+          "id": "o52",
+          "unitId": "u13",
+          "factors": [],
+          "responses": [
+            13.523849687116826
+          ]
+        },
+        {
+          "id": "o53",
+          "unitId": "u14",
+          "factors": [],
+          "responses": [
+            10.700066998287374
+          ]
+        },
+        {
+          "id": "o54",
+          "unitId": "u14",
+          "factors": [],
+          "responses": [
+            13.292798154678346
+          ]
+        },
+        {
+          "id": "o55",
+          "unitId": "u14",
+          "factors": [],
+          "responses": [
+            12.928023685171171
+          ]
+        },
+        {
+          "id": "o56",
+          "unitId": "u14",
+          "factors": [],
+          "responses": [
+            14.264438340068919
+          ]
+        },
+        {
+          "id": "o57",
+          "unitId": "u15",
+          "factors": [],
+          "responses": [
+            10.864425405398553
+          ]
+        },
+        {
+          "id": "o58",
+          "unitId": "u15",
+          "factors": [],
+          "responses": [
+            11.000623162209429
+          ]
+        },
+        {
+          "id": "o59",
+          "unitId": "u15",
+          "factors": [],
+          "responses": [
+            12.12020769128774
+          ]
+        },
+        {
+          "id": "o60",
+          "unitId": "u15",
+          "factors": [],
+          "responses": [
+            14.01772779526739
+          ]
+        },
+        {
+          "id": "o61",
+          "unitId": "u16",
+          "factors": [],
+          "responses": [
+            10.933224997963913
+          ]
+        },
+        {
+          "id": "o62",
+          "unitId": "u16",
+          "factors": [],
+          "responses": [
+            11.6663469681798
+          ]
+        },
+        {
+          "id": "o63",
+          "unitId": "u16",
+          "factors": [],
+          "responses": [
+            13.820852725097645
+          ]
+        },
+        {
+          "id": "o64",
+          "unitId": "u16",
+          "factors": [],
+          "responses": [
+            14.484160287757225
+          ]
+        },
+        {
+          "id": "o65",
+          "unitId": "u17",
+          "factors": [],
+          "responses": [
+            12.12839740822099
+          ]
+        },
+        {
+          "id": "o66",
+          "unitId": "u17",
+          "factors": [],
+          "responses": [
+            12.549640433999308
+          ]
+        },
+        {
+          "id": "o67",
+          "unitId": "u17",
+          "factors": [],
+          "responses": [
+            12.964808707677903
+          ]
+        },
+        {
+          "id": "o68",
+          "unitId": "u17",
+          "factors": [],
+          "responses": [
+            13.160762765522193
+          ]
+        },
+        {
+          "id": "o69",
+          "unitId": "u18",
+          "factors": [],
+          "responses": [
+            9.946083957974437
+          ]
+        },
+        {
+          "id": "o70",
+          "unitId": "u18",
+          "factors": [],
+          "responses": [
+            11.476681665319385
+          ]
+        },
+        {
+          "id": "o71",
+          "unitId": "u18",
+          "factors": [],
+          "responses": [
+            10.807263342269708
+          ]
+        },
+        {
+          "id": "o72",
+          "unitId": "u18",
+          "factors": [],
+          "responses": [
+            12.529833936826256
+          ]
+        }
+      ]
+    },
+    "spec": {
+      "responseId": "y",
+      "intercept": true,
+      "terms": [],
+      "coding": "treatment",
+      "confidenceLevel": 0.95
+    },
+    "advanced": {
+      "covariance": "ar1",
+      "times": [
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3
+      ],
+      "timeLabels": [],
+      "timeEffect": "categorical",
+      "marginalFactors": [],
+      "marginalTime": true,
+      "adjustment": "bonferroni",
+      "references": []
+    }
+  },
+  "response": {
+    "protocolVersion": 1,
+    "taskId": "et24-benchmark",
+    "outcome": {
+      "status": "ok",
+      "result": {
+        "type": "modelMixed",
+        "nObservations": 72,
+        "nGroups": 18,
+        "coefficients": [
+          {
+            "label": "(Intercept)",
+            "estimate": 10.539065341079311,
+            "stdError": {
+              "status": "defined",
+              "value": 0.31755758530662
+            },
+            "df": {
+              "status": "defined",
+              "value": 28.686607266508055
+            },
+            "tValue": {
+              "status": "defined",
+              "value": 33.18788726429961
+            },
+            "pValue": {
+              "status": "defined",
+              "value": 1.9523634245152324e-24
+            },
+            "ciLower": {
+              "status": "defined",
+              "value": 9.88927881509829
+            },
+            "ciUpper": {
+              "status": "defined",
+              "value": 11.188851867060333
+            }
+          },
+          {
+            "label": "Time[1]",
+            "estimate": 0.6849044455985528,
+            "stdError": {
+              "status": "defined",
+              "value": 0.24060292248167792
+            },
+            "df": {
+              "status": "defined",
+              "value": 42.508806156601196
+            },
+            "tValue": {
+              "status": "defined",
+              "value": 2.8466173167564444
+            },
+            "pValue": {
+              "status": "defined",
+              "value": 0.006776003751166742
+            },
+            "ciLower": {
+              "status": "defined",
+              "value": 0.19952021446177948
+            },
+            "ciUpper": {
+              "status": "defined",
+              "value": 1.1702886767353262
+            }
+          },
+          {
+            "label": "Time[2]",
+            "estimate": 1.5064039656046053,
+            "stdError": {
+              "status": "defined",
+              "value": 0.2670768480788542
+            },
+            "df": {
+              "status": "defined",
+              "value": 33.7359391814726
+            },
+            "tValue": {
+              "status": "defined",
+              "value": 5.640339012686869
+            },
+            "pValue": {
+              "status": "defined",
+              "value": 0.000002591580168621745
+            },
+            "ciLower": {
+              "status": "defined",
+              "value": 0.9634819791581936
+            },
+            "ciUpper": {
+              "status": "defined",
+              "value": 2.049325952051017
+            }
+          },
+          {
+            "label": "Time[3]",
+            "estimate": 2.0808816072521963,
+            "stdError": {
+              "status": "defined",
+              "value": 0.2728561415063645
+            },
+            "df": {
+              "status": "defined",
+              "value": 21.239332827036083
+            },
+            "tValue": {
+              "status": "defined",
+              "value": 7.626295658086401
+            },
+            "pValue": {
+              "status": "defined",
+              "value": 1.631581228573318e-7
+            },
+            "ciLower": {
+              "status": "defined",
+              "value": 1.513835279871734
+            },
+            "ciUpper": {
+              "status": "defined",
+              "value": 2.6479279346326585
+            }
+          }
+        ],
+        "varianceUnit": {
+          "status": "defined",
+          "value": 1.1366247179274838
+        },
+        "varianceResidual": {
+          "status": "defined",
+          "value": 0.6785460418163983
+        },
+        "icc": {
+          "status": "defined",
+          "value": 0.6261806013710025
+        },
+        "boundary": false,
+        "remlProfile": -102.62175455855791,
+        "randomEffects": [
+          {
+            "unit": "u1",
+            "observations": 4,
+            "blup": 1.3913795146097268
+          },
+          {
+            "unit": "u2",
+            "observations": 4,
+            "blup": -1.436156235622727
+          },
+          {
+            "unit": "u3",
+            "observations": 4,
+            "blup": -0.49611818946580455
+          },
+          {
+            "unit": "u4",
+            "observations": 4,
+            "blup": 0.37136194936277195
+          },
+          {
+            "unit": "u5",
+            "observations": 4,
+            "blup": 0.8810840875785116
+          },
+          {
+            "unit": "u6",
+            "observations": 4,
+            "blup": 0.4140672067959425
+          },
+          {
+            "unit": "u7",
+            "observations": 4,
+            "blup": 0.9628960050859457
+          },
+          {
+            "unit": "u8",
+            "observations": 4,
+            "blup": 0.04772460446502289
+          },
+          {
+            "unit": "u9",
+            "observations": 4,
+            "blup": -2.005837492075695
+          },
+          {
+            "unit": "u10",
+            "observations": 4,
+            "blup": -0.29138644252046275
+          },
+          {
+            "unit": "u11",
+            "observations": 4,
+            "blup": -1.4104921882854862
+          },
+          {
+            "unit": "u12",
+            "observations": 4,
+            "blup": -0.5355097998512169
+          },
+          {
+            "unit": "u13",
+            "observations": 4,
+            "blup": -0.7156260339458459
+          },
+          {
+            "unit": "u14",
+            "observations": 4,
+            "blup": 0.9532707710219893
+          },
+          {
+            "unit": "u15",
+            "observations": 4,
+            "blup": 0.37671338504442997
+          },
+          {
+            "unit": "u16",
+            "observations": 4,
+            "blup": 0.9274195186988864
+          },
+          {
+            "unit": "u17",
+            "observations": 4,
+            "blup": 0.9022975276718719
+          },
+          {
+            "unit": "u18",
+            "observations": 4,
+            "blup": -0.3370881885679169
+          }
+        ],
+        "excluded": [],
+        "issues": [],
+        "provenance": {
+          "methodId": "linear_mixed_model",
+          "methodVersion": 2,
+          "engineVersion": "0.4.0-dev"
+        },
+        "advanced": {
+          "covariance": "ar1",
+          "timeEffect": "categorical",
+          "coding": "treatment",
+          "timeFactorId": "optima-time",
+          "parameters": [
+            {
+              "name": "unitVariance",
+              "value": 1.1366247179274838
+            },
+            {
+              "name": "residualVariance",
+              "value": 0.6785460418163983
+            },
+            {
+              "name": "rho",
+              "value": 0.23217016288852918
+            }
+          ],
+          "occasions": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "timeLabels": [],
+          "covarianceMatrix": [],
+          "fixedCovariance": [
+            0.10084281998577123,
+            -0.028944883153362147,
+            -0.03566502138986768,
+            -0.037225236978870604,
+            -0.028944883153362144,
+            0.05788976630672431,
+            0.03566502138986769,
+            0.030505098742365084,
+            -0.03566502138986768,
+            0.0356650213898677,
+            0.07133004277973536,
+            0.04394537521537615,
+            -0.037225236978870604,
+            0.030505098742365084,
+            0.04394537521537614,
+            0.07445047395774121
+          ],
+          "remlLogLikelihood": -102.62175455855791,
+          "iterations": 18,
+          "gradientNorm": 0.0000012074964685917971,
+          "inferenceAvailable": true,
+          "termTests": [
+            {
+              "term": {
+                "type": "main",
+                "factorId": "optima-time"
+              },
+              "columns": [
+                "Time[1]",
+                "Time[2]",
+                "Time[3]"
+              ],
+              "numeratorDf": 3,
+              "fValue": {
+                "status": "defined",
+                "value": 20.613678944278504
+              },
+              "denominatorDf": {
+                "status": "defined",
+                "value": 28.936619310895043
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 2.414241805832666e-7
+              }
+            }
+          ],
+          "referenceGrid": {
+            "numeric": [],
+            "categorical": [
+              {
+                "factorId": "optima-time",
+                "levels": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ]
+              }
+            ],
+            "cells": 4
+          },
+          "marginalMeans": [
+            {
+              "factorId": "optima-time",
+              "level": "0",
+              "inference": {
+                "estimate": 10.539065341079311,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.686607266508055
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 9.88927881509829
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 11.188851867060333
+                }
+              }
+            },
+            {
+              "factorId": "optima-time",
+              "level": "1",
+              "inference": {
+                "estimate": 11.223969786677864,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.686607266551793
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 10.574183260696886
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 11.873756312658843
+                }
+              }
+            },
+            {
+              "factorId": "optima-time",
+              "level": "2",
+              "inference": {
+                "estimate": 12.045469306683916,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.68660726655852
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 11.395682780702945
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 12.695255832664888
+                }
+              }
+            },
+            {
+              "factorId": "optima-time",
+              "level": "3",
+              "inference": {
+                "estimate": 12.619946948331508,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.686607266578186
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 11.970160422350556
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 13.26973347431246
+                }
+              }
+            }
+          ],
+          "comparisons": [
+            {
+              "factorId": "optima-time",
+              "first": "0",
+              "second": "1",
+              "inference": {
+                "estimate": -0.6849044455985528,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.24060292248167792
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 42.508806156601196
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -1.350744256650453
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": -0.019064634546652637
+                }
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 0.006776003751166742
+              },
+              "adjustedPValue": {
+                "status": "defined",
+                "value": 0.04065602250700045
+              },
+              "familySize": 6
+            },
+            {
+              "factorId": "optima-time",
+              "first": "0",
+              "second": "2",
+              "inference": {
+                "estimate": -1.5064039656046053,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.2670768480788542
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 33.7359391814726
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -2.2549872179220634
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": -0.7578207132871473
+                }
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 0.000002591580168621745
+              },
+              "adjustedPValue": {
+                "status": "defined",
+                "value": 0.00001554948101173047
+              },
+              "familySize": 6
+            },
+            {
+              "factorId": "optima-time",
+              "first": "0",
+              "second": "3",
+              "inference": {
+                "estimate": -2.0808816072521963,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.2728561415063645
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 21.239332827036083
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -2.87454273445936
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": -1.2872204800450329
+                }
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 1.631581228573318e-7
+              },
+              "adjustedPValue": {
+                "status": "defined",
+                "value": 9.789487371439909e-7
+              },
+              "familySize": 6
+            },
+            {
+              "factorId": "optima-time",
+              "first": "1",
+              "second": "2",
+              "inference": {
+                "estimate": -0.8214995200060525,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.24060292248167783
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 42.508806156603015
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -1.4873393310579508
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": -0.15565970895415437
+                }
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 0.0014165980581615004
+              },
+              "adjustedPValue": {
+                "status": "defined",
+                "value": 0.008499588348969002
+              },
+              "familySize": 6
+            },
+            {
+              "factorId": "optima-time",
+              "first": "1",
+              "second": "3",
+              "inference": {
+                "estimate": -1.3959771616536436,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.2670768480788542
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 33.73593918143413
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -2.1445604139711545
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": -0.6473939093361327
+                }
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 0.000008903181832272984
+              },
+              "adjustedPValue": {
+                "status": "defined",
+                "value": 0.0000534190909936379
+              },
+              "familySize": 6
+            },
+            {
+              "factorId": "optima-time",
+              "first": "2",
+              "second": "3",
+              "inference": {
+                "estimate": -0.574477641647591,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.24060292248167783
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 42.50880615659246
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -1.2403174526994971
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 0.0913621694043153
+                }
+              },
+              "pValue": {
+                "status": "defined",
+                "value": 0.02147512460815572
+              },
+              "adjustedPValue": {
+                "status": "defined",
+                "value": 0.1288507476489343
+              },
+              "familySize": 6
+            }
+          ],
+          "adjustment": "bonferroni",
+          "profiles": [
+            {
+              "observationId": "o1",
+              "unit": "u1",
+              "time": 0,
+              "observed": 12.246810337304517,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 11.930444855689037
+              },
+              "residual": 1.7077449962252054
+            },
+            {
+              "observationId": "o2",
+              "unit": "u1",
+              "time": 1,
+              "observed": 13.332224433332353,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 12.61534930128759
+              },
+              "residual": 2.1082546466544887
+            },
+            {
+              "observationId": "o3",
+              "unit": "u1",
+              "time": 2,
+              "observed": 14.285072574427575,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 13.436848821293642
+              },
+              "residual": 2.239603267743659
+            },
+            {
+              "observationId": "o4",
+              "unit": "u1",
+              "time": 3,
+              "observed": 13.516709374254647,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 14.011326462941234
+              },
+              "residual": 0.8967624259231393
+            },
+            {
+              "observationId": "o5",
+              "unit": "u2",
+              "time": 0,
+              "observed": 8.189806455814978,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 9.102909105456584
+              },
+              "residual": -2.3492588852643337
+            },
+            {
+              "observationId": "o6",
+              "unit": "u2",
+              "time": 1,
+              "observed": 10.254321996044553,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 9.787813551055137
+              },
+              "residual": -0.9696477906333119
+            },
+            {
+              "observationId": "o7",
+              "unit": "u2",
+              "time": 2,
+              "observed": 10.119916808345053,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 10.60931307106119
+              },
+              "residual": -1.9255524983388632
+            },
+            {
+              "observationId": "o8",
+              "unit": "u2",
+              "time": 3,
+              "observed": 11.05805220868932,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 11.183790712708781
+              },
+              "residual": -1.561894739642188
+            },
+            {
+              "observationId": "o9",
+              "unit": "u3",
+              "time": 0,
+              "observed": 9.194890001836127,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.042947151613507
+              },
+              "residual": -1.3441753392431846
+            },
+            {
+              "observationId": "o10",
+              "unit": "u3",
+              "time": 1,
+              "observed": 10.811069969743635,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 10.72785159721206
+              },
+              "residual": -0.41289981693422995
+            },
+            {
+              "observationId": "o11",
+              "unit": "u3",
+              "time": 2,
+              "observed": 12.45563316913939,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 11.549351117218112
+              },
+              "residual": 0.4101638624554731
+            },
+            {
+              "observationId": "o12",
+              "unit": "u3",
+              "time": 3,
+              "observed": 11.847180819601455,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.123828758865704
+              },
+              "residual": -0.7727661287300531
+            },
+            {
+              "observationId": "o13",
+              "unit": "u4",
+              "time": 0,
+              "observed": 11.5263957343362,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.910427290442083
+              },
+              "residual": 0.9873303932568884
+            },
+            {
+              "observationId": "o14",
+              "unit": "u4",
+              "time": 1,
+              "observed": 11.602798163594437,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 11.595331736040636
+              },
+              "residual": 0.378828376916573
+            },
+            {
+              "observationId": "o15",
+              "unit": "u4",
+              "time": 2,
+              "observed": 11.55697861105748,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.416831256046688
+              },
+              "residual": -0.488490695626437
+            },
+            {
+              "observationId": "o16",
+              "unit": "u4",
+              "time": 3,
+              "observed": 13.302996334437285,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.99130889769428
+              },
+              "residual": 0.6830493861057771
+            },
+            {
+              "observationId": "o17",
+              "unit": "u5",
+              "time": 0,
+              "observed": 11.777384308881249,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 11.420149428657822
+              },
+              "residual": 1.2383189678019377
+            },
+            {
+              "observationId": "o18",
+              "unit": "u5",
+              "time": 1,
+              "observed": 11.707138837241589,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 12.105053874256376
+              },
+              "residual": 0.48316905056372406
+            },
+            {
+              "observationId": "o19",
+              "unit": "u5",
+              "time": 2,
+              "observed": 14.109867214511311,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.926553394262427
+              },
+              "residual": 2.064397907827395
+            },
+            {
+              "observationId": "o20",
+              "unit": "u5",
+              "time": 3,
+              "observed": 13.188855847111418,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 13.50103103591002
+              },
+              "residual": 0.5689088987799096
+            },
+            {
+              "observationId": "o21",
+              "unit": "u6",
+              "time": 0,
+              "observed": 11.309513732491299,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.953132547875255
+              },
+              "residual": 0.7704483914119873
+            },
+            {
+              "observationId": "o22",
+              "unit": "u6",
+              "time": 1,
+              "observed": 12.188141271844485,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 11.638036993473808
+              },
+              "residual": 0.9641714851666201
+            },
+            {
+              "observationId": "o23",
+              "unit": "u6",
+              "time": 2,
+              "observed": 13.141067969140602,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.45953651347986
+              },
+              "residual": 1.0955986624566858
+            },
+            {
+              "observationId": "o24",
+              "unit": "u6",
+              "time": 3,
+              "observed": 12.036527965927837,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 13.034014155127451
+              },
+              "residual": -0.5834189824036713
+            },
+            {
+              "observationId": "o25",
+              "unit": "u7",
+              "time": 0,
+              "observed": 11.580580081459429,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 11.501961346165258
+              },
+              "residual": 1.0415147403801175
+            },
+            {
+              "observationId": "o26",
+              "unit": "u7",
+              "time": 1,
+              "observed": 12.356102410436929,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 12.186865791763811
+              },
+              "residual": 1.1321326237590643
+            },
+            {
+              "observationId": "o27",
+              "unit": "u7",
+              "time": 2,
+              "observed": 13.265551371053373,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 13.008365311769863
+              },
+              "residual": 1.220082064369457
+            },
+            {
+              "observationId": "o28",
+              "unit": "u7",
+              "time": 3,
+              "observed": 13.885096100076817,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 13.582842953417455
+              },
+              "residual": 1.2651491517453088
+            },
+            {
+              "observationId": "o29",
+              "unit": "u8",
+              "time": 0,
+              "observed": 11.509052321677212,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.586789945544334
+              },
+              "residual": 0.9699869805979002
+            },
+            {
+              "observationId": "o30",
+              "unit": "u8",
+              "time": 1,
+              "observed": 11.401886764924633,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 11.271694391142887
+              },
+              "residual": 0.17791697824676866
+            },
+            {
+              "observationId": "o31",
+              "unit": "u8",
+              "time": 2,
+              "observed": 11.542854570014734,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.093193911148939
+              },
+              "residual": -0.502614736669182
+            },
+            {
+              "observationId": "o32",
+              "unit": "u8",
+              "time": 3,
+              "observed": 12.103116061279945,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.66767155279653
+              },
+              "residual": -0.5168308870515634
+            },
+            {
+              "observationId": "o33",
+              "unit": "u9",
+              "time": 0,
+              "observed": 7.827517746376366,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 8.533227849003616
+              },
+              "residual": -2.711547594702945
+            },
+            {
+              "observationId": "o34",
+              "unit": "u9",
+              "time": 1,
+              "observed": 8.88905519204449,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 9.218132294602169
+              },
+              "residual": -2.334914594633375
+            },
+            {
+              "observationId": "o35",
+              "unit": "u9",
+              "time": 2,
+              "observed": 9.23353466417356,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 10.03963181460822
+              },
+              "residual": -2.811934642510357
+            },
+            {
+              "observationId": "o36",
+              "unit": "u9",
+              "time": 3,
+              "observed": 10.715976083624659,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 10.614109456255813
+              },
+              "residual": -1.9039708647068494
+            },
+            {
+              "observationId": "o37",
+              "unit": "u10",
+              "time": 0,
+              "observed": 10.38133888206931,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.24767889855885
+              },
+              "residual": -0.15772645901000182
+            },
+            {
+              "observationId": "o38",
+              "unit": "u10",
+              "time": 1,
+              "observed": 10.861572246187642,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 10.932583344157402
+              },
+              "residual": -0.3623975404902229
+            },
+            {
+              "observationId": "o39",
+              "unit": "u10",
+              "time": 2,
+              "observed": 12.878882170083712,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 11.754082864163454
+              },
+              "residual": 0.8334128633997953
+            },
+            {
+              "observationId": "o40",
+              "unit": "u10",
+              "time": 3,
+              "observed": 11.171430973888384,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.328560505811046
+              },
+              "residual": -1.448515974443124
+            },
+            {
+              "observationId": "o41",
+              "unit": "u11",
+              "time": 0,
+              "observed": 9.281192933185906,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 9.128573152793825
+              },
+              "residual": -1.2578724078934052
+            },
+            {
+              "observationId": "o42",
+              "unit": "u11",
+              "time": 1,
+              "observed": 8.75412835501127,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 9.813477598392378
+              },
+              "residual": -2.4698414316665946
+            },
+            {
+              "observationId": "o43",
+              "unit": "u11",
+              "time": 2,
+              "observed": 9.797128949872738,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 10.63497711839843
+              },
+              "residual": -2.2483403568111786
+            },
+            {
+              "observationId": "o44",
+              "unit": "u11",
+              "time": 3,
+              "observed": 11.476022746765672,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 11.209454760046022
+              },
+              "residual": -1.1439242015658362
+            },
+            {
+              "observationId": "o45",
+              "unit": "u12",
+              "time": 0,
+              "observed": 10.93295471440614,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.003555541228094
+              },
+              "residual": 0.3938893733268287
+            },
+            {
+              "observationId": "o46",
+              "unit": "u12",
+              "time": 1,
+              "observed": 10.820760896137712,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 10.688459986826647
+              },
+              "residual": -0.40320889054015296
+            },
+            {
+              "observationId": "o47",
+              "unit": "u12",
+              "time": 2,
+              "observed": 11.227647773289975,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 11.509959506832699
+              },
+              "residual": -0.8178215333939409
+            },
+            {
+              "observationId": "o48",
+              "unit": "u12",
+              "time": 3,
+              "observed": 10.876307741750821,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.08443714848029
+              },
+              "residual": -1.7436392065806867
+            },
+            {
+              "observationId": "o49",
+              "unit": "u13",
+              "time": 0,
+              "observed": 9.373540121743556,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 9.823439307133466
+              },
+              "residual": -1.1655252193357555
+            },
+            {
+              "observationId": "o50",
+              "unit": "u13",
+              "time": 1,
+              "observed": 9.06616523927148,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 10.508343752732019
+              },
+              "residual": -2.157804547406384
+            },
+            {
+              "observationId": "o51",
+              "unit": "u13",
+              "time": 2,
+              "observed": 10.563155523696752,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 11.32984327273807
+              },
+              "residual": -1.4823137829871644
+            },
+            {
+              "observationId": "o52",
+              "unit": "u13",
+              "time": 3,
+              "observed": 13.523849687116826,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 11.904320914385663
+              },
+              "residual": 0.9039027387853178
+            },
+            {
+              "observationId": "o53",
+              "unit": "u14",
+              "time": 0,
+              "observed": 10.700066998287374,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 11.4923361121013
+              },
+              "residual": 0.1610016572080628
+            },
+            {
+              "observationId": "o54",
+              "unit": "u14",
+              "time": 1,
+              "observed": 13.292798154678346,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 12.177240557699854
+              },
+              "residual": 2.0688283680004815
+            },
+            {
+              "observationId": "o55",
+              "unit": "u14",
+              "time": 2,
+              "observed": 12.928023685171171,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.998740077705905
+              },
+              "residual": 0.8825543784872547
+            },
+            {
+              "observationId": "o56",
+              "unit": "u14",
+              "time": 3,
+              "observed": 14.264438340068919,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 13.573217719353497
+              },
+              "residual": 1.6444913917374109
+            },
+            {
+              "observationId": "o57",
+              "unit": "u15",
+              "time": 0,
+              "observed": 10.864425405398553,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.915778726123742
+              },
+              "residual": 0.32536006431924136
+            },
+            {
+              "observationId": "o58",
+              "unit": "u15",
+              "time": 1,
+              "observed": 11.000623162209429,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 11.600683171722295
+              },
+              "residual": -0.22334662446843545
+            },
+            {
+              "observationId": "o59",
+              "unit": "u15",
+              "time": 2,
+              "observed": 12.12020769128774,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.422182691728347
+              },
+              "residual": 0.07473838460382431
+            },
+            {
+              "observationId": "o60",
+              "unit": "u15",
+              "time": 3,
+              "observed": 14.01772779526739,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.996660333375939
+              },
+              "residual": 1.3977808469358823
+            },
+            {
+              "observationId": "o61",
+              "unit": "u16",
+              "time": 0,
+              "observed": 10.933224997963913,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 11.466484859778198
+              },
+              "residual": 0.39415965688460197
+            },
+            {
+              "observationId": "o62",
+              "unit": "u16",
+              "time": 1,
+              "observed": 11.6663469681798,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 12.151389305376751
+              },
+              "residual": 0.4423771815019357
+            },
+            {
+              "observationId": "o63",
+              "unit": "u16",
+              "time": 2,
+              "observed": 13.820852725097645,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.972888825382803
+              },
+              "residual": 1.7753834184137283
+            },
+            {
+              "observationId": "o64",
+              "unit": "u16",
+              "time": 3,
+              "observed": 14.484160287757225,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 13.547366467030395
+              },
+              "residual": 1.8642133394257172
+            },
+            {
+              "observationId": "o65",
+              "unit": "u17",
+              "time": 0,
+              "observed": 12.12839740822099,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 11.441362868751183
+              },
+              "residual": 1.5893320671416795
+            },
+            {
+              "observationId": "o66",
+              "unit": "u17",
+              "time": 1,
+              "observed": 12.549640433999308,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 12.126267314349736
+              },
+              "residual": 1.3256706473214432
+            },
+            {
+              "observationId": "o67",
+              "unit": "u17",
+              "time": 2,
+              "observed": 12.964808707677903,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 12.947766834355788
+              },
+              "residual": 0.9193394009939873
+            },
+            {
+              "observationId": "o68",
+              "unit": "u17",
+              "time": 3,
+              "observed": 13.160762765522193,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 13.52224447600338
+              },
+              "residual": 0.5408158171906852
+            },
+            {
+              "observationId": "o69",
+              "unit": "u18",
+              "time": 0,
+              "observed": 9.946083957974437,
+              "population": 10.539065341079311,
+              "conditional": {
+                "status": "defined",
+                "value": 10.201977152511395
+              },
+              "residual": -0.592981383104874
+            },
+            {
+              "observationId": "o70",
+              "unit": "u18",
+              "time": 1,
+              "observed": 11.476681665319385,
+              "population": 11.223969786677864,
+              "conditional": {
+                "status": "defined",
+                "value": 10.886881598109948
+              },
+              "residual": 0.2527118786415201
+            },
+            {
+              "observationId": "o71",
+              "unit": "u18",
+              "time": 2,
+              "observed": 10.807263342269708,
+              "population": 12.045469306683916,
+              "conditional": {
+                "status": "defined",
+                "value": 11.708381118116
+              },
+              "residual": -1.2382059644142078
+            },
+            {
+              "observationId": "o72",
+              "unit": "u18",
+              "time": 3,
+              "observed": 12.529833936826256,
+              "population": 12.619946948331508,
+              "conditional": {
+                "status": "defined",
+                "value": 12.282858759763592
+              },
+              "residual": -0.09011301150525242
+            }
+          ],
+          "meanProfiles": [
+            {
+              "time": 0,
+              "n": 18,
+              "units": 18,
+              "observedMean": 10.53906534107931,
+              "inference": {
+                "estimate": 10.539065341079311,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.686607266508055
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 9.88927881509829
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 11.188851867060333
+                }
+              }
+            },
+            {
+              "time": 1,
+              "n": 18,
+              "units": 18,
+              "observedMean": 11.223969786677857,
+              "inference": {
+                "estimate": 11.223969786677864,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.686607266551793
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 10.574183260696886
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 11.873756312658843
+                }
+              }
+            },
+            {
+              "time": 2,
+              "n": 18,
+              "units": 18,
+              "observedMean": 12.045469306683916,
+              "inference": {
+                "estimate": 12.045469306683916,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.68660726655852
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 11.395682780702945
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 12.695255832664888
+                }
+              }
+            },
+            {
+              "time": 3,
+              "n": 18,
+              "units": 18,
+              "observedMean": 12.619946948331505,
+              "inference": {
+                "estimate": 12.619946948331508,
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.31755758530662
+                },
+                "df": {
+                  "status": "defined",
+                  "value": 28.686607266578186
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": 11.970160422350556
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": 13.26973347431246
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

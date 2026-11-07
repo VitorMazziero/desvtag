@@ -34,6 +34,18 @@ Registro das escolhas técnicas (DT) com contexto, alternativas e consequências
 | [DT-0024](dt-0024-sementes-no-navegador-e-pdf-sem-novas-fontes.md) | Sementes no navegador e limitações do PDF mantidas (ET14) | Aceita | 2026-11-02 |
 | [DT-0025](dt-0025-google-drive-opcional-na-versao-web.md) | Google Drive opcional na versão web (ET19) | Aceita (parcial) | 2026-11-02 |
 | [DT-0026](dt-0026-docx-comentarios-canais-e-webkit.md) | Relatório em Word, comentários, canais de atualização e WebKit (ET20) | Aceita (parcial) | 2026-11-02 |
+| [DT-0027](dt-0027-percurso-unificado-e-composicao-das-figuras.md) | Percurso unificado, composição das figuras e memória da interface (ET29) | Aceita | 2026-11-02 |
+| [DT-0028](dt-0028-papeis-visuais-e-figuras-cientificas.md) | Papéis visuais, apresentação numérica e gramática científica (ET27) | Aceita | 2026-11-02 |
+| [DT-0029](dt-0029-conferencia-de-confirmacao-no-motor.md) | Conferência observado−previsto no motor e origem histórica da confirmação (ET27) | Aceita | 2026-11-03 |
+| [DT-0030](dt-0030-resultados-persistidos-das-familias.md) | Persistência aditiva, entradas históricas e relatórios das famílias novas (ET22) | Aceita | 2026-11-03 |
+| [DT-0031](dt-0031-covariancias-e-inferencia-das-medidas-repetidas.md) | Covariâncias, inferência e papéis de unidade/tempo (ET23) | Aceita | 2026-11-03 |
+| [DT-0032](dt-0032-limite-explicito-da-grade-de-medias-marginais.md) | Limite explícito da grade de médias marginais (ET23) | Aceita | 2026-11-03 |
+
+| [DT-0033](dt-0033-perfil-de-verossimilhanca-e-dominio-nao-linear.md) | Perfil de verossimilhança e domínio não linear (ET24) | Aceita | 2026-11-03 |
+
+| [DT-0034](dt-0034-potencia-linear-e-simulacao-gaussiana.md) | Potência de regressão, contrastes, efeitos e simulação (ET24) | Aceita | 2026-11-03 |
+
+| [DT-0035](dt-0035-caudas-nao-centrais-com-orcamento-numerico.md) | Caudas não centrais e orçamento numérico (achado ET24) | Aceita | 2026-11-03 |
 
 ## Regras
 

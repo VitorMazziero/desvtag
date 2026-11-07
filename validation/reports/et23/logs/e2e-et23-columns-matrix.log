@@ -1,0 +1,25 @@
+
+Running 14 tests using 3 workers
+
+(node:31036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\et23-columns.spec.ts:98:1 › T02: a factor used as unit cannot merge distinct original labels (3.1s)
+  ok  3 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation soft-light pt-BR (3.9s)
+  ok  2 [chromium] › tests\e2e\et23-columns.spec.ts:39:1 › T02: unit/time roles survive grid editing, table export and project reopening (5.0s)
+  ok  4 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation soft-light en (3.8s)
+  ok  5 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation modern-dark pt-BR (3.9s)
+  ok  6 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation modern-dark en (3.9s)
+  ok  7 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation professional pt-BR (3.9s)
+  ok  8 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation professional en (4.0s)
+  ok  9 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation industrial pt-BR (3.9s)
+  ok 10 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation industrial en (3.9s)
+  ok 11 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation organic pt-BR (4.0s)
+  ok 12 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation organic en (3.9s)
+  ok 13 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation clay pt-BR (3.5s)
+  ok 14 [chromium] › tests\e2e\et23-columns.spec.ts:126:5 › T02: column presentation clay en (3.2s)
+
+  14 passed (19.9s)

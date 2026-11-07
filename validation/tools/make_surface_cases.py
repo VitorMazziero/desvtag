@@ -301,7 +301,7 @@ Nenhuma além da tolerância.
 
 ## Execução
 
-`cargo test -p optima-core --test surface_validation` e `npm test` (paridade WebAssembly). Regenerar: `python validation/tools/make_surface_cases.py`.
+`cargo test -p desvtag-core --test surface_validation` e `npm test` (paridade WebAssembly). Regenerar: `python validation/tools/make_surface_cases.py`.
 """
 
 

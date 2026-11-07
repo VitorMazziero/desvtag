@@ -9,7 +9,7 @@ Marcação usada abaixo: **existe** — presente no repositório; **ETnn** — c
 ## Árvore de referência
 
 ```text
-enzitag-optima/
+DesvTAG/
 ├── .github/
 │   ├── workflows/ci.yml              # existe (ET01); ET10 acrescenta publicação web e Releases
 │   └── pull_request_template.md      # existe (ET01)
@@ -19,15 +19,15 @@ enzitag-optima/
 │   ├── Cargo.lock                    # existe (ET01)
 │   ├── .cargo/config.toml            # existe (ET01) destino dos tipos gerados pelo ts-rs
 │   ├── crates/
-│   │   ├── optima-core/              # existe (ET01: ids, issues, registro; ET02: dados, descritiva, soma, fatos; ET04: numeric, distributions, models, inference, diagnostics; ET05: comparisons, visualization)
+│   │   ├── desvtag-core/              # existe (ET01: ids, issues, registro; ET02: dados, descritiva, soma, fatos; ET04: numeric, distributions, models, inference, diagnostics; ET05: comparisons, visualization)
 │   │   │   ├── Cargo.toml
 │   │   │   ├── README.md
 │   │   │   ├── src/lib.rs            # API pública pequena
 │   │   │   ├── src/<módulo>/mod.rs   # um diretório por módulo C01–C19
 │   │   │   └── tests/<módulo>_tests.rs
-│   │   ├── optima-project/           # existe (ET01 documento mínimo); ET03 conteúdo (P01–P03)
-│   │   ├── optima-engine/            # existe (ET01: E01); E02 na ET08
-│   │   └── optima-wasm/              # existe (ET01: E03)
+│   │   ├── desvtag-project/           # existe (ET01 documento mínimo); ET03 conteúdo (P01–P03)
+│   │   ├── desvtag-engine/            # existe (ET01: E01); E02 na ET08
+│   │   └── desvtag-wasm/              # existe (ET01: E03)
 │   ├── desktop/                      # existe (README)
 │   │   ├── tests/native-smoke.mjs    # existe (ET01) verificação nativa via WebDriver
 │   │   └── src-tauri/                # existe (ET01: E04), workspace Cargo próprio
@@ -116,10 +116,10 @@ docs/
 
 | Conteúdo | Local | Não colocar em |
 |---|---|---|
-| Cálculo científico | `app/crates/optima-core` | Interface, adaptadores, scripts |
-| Documento do projeto e formato `.enzitag` | `app/crates/optima-project` | Serviços da interface |
-| Contratos e despacho comuns | `app/crates/optima-engine` | Adaptadores WASM/Tauri |
-| Transporte navegador | `app/crates/optima-wasm`, `app/web/src/workers` | Core |
+| Cálculo científico | `app/crates/desvtag-core` | Interface, adaptadores, scripts |
+| Documento do projeto e formato `.enzitag` | `app/crates/desvtag-project` | Serviços da interface |
+| Contratos e despacho comuns | `app/crates/desvtag-engine` | Adaptadores WASM/Tauri |
+| Transporte navegador | `app/crates/desvtag-wasm`, `app/web/src/workers` | Core |
 | Transporte e recursos Windows | `app/desktop/src-tauri` | Core |
 | Telas, gráficos, idiomas e temas | `app/web/src` | Rust |
 | Requisitos e escopo | `docs/produto` | Planos de etapa |

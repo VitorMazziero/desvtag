@@ -1,10 +1,10 @@
 {
-  "name": "@enzitag/optima-web",
-  "version": "0.3.0",
+  "name": "@desvtag/web",
+  "version": "0.4.0",
   "private": true,
   "license": "MIT",
   "type": "module",
-  "description": "Interface compartilhada do EnziTAG Optima (navegador e Windows/Tauri)",
+  "description": "Interface compartilhada do DesvTAG (navegador e Windows/Tauri)",
   "engines": {
     "node": ">=26"
   },
@@ -33,6 +33,7 @@
     "@tauri-apps/api": "2.12.4",
     "docx": "9.15.1",
     "i18next": "26.6.0",
+    "linkedom": "0.18.15",
     "pdfmake": "0.3.13",
     "react": "19.3.1",
     "react-dom": "19.3.1",

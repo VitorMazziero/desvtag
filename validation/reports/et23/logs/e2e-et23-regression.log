@@ -1,0 +1,120 @@
+
+Running 12 tests using 3 workers
+
+(node:21880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium] › tests\e2e\et23-columns.spec.ts:98:1 › T02: a factor used as unit cannot merge distinct original labels (3.0s)
+  ok  2 [chromium] › tests\e2e\et23-columns.spec.ts:39:1 › T02: unit/time roles survive grid editing, table export and project reopening (4.2s)
+(node:18340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 [chromium] › tests\e2e\et29-priorities.spec.ts:139:1 › UX25: mostrar unidade volta à grade e foca a primeira célula (1.6s)
+(node:1292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [firefox] › tests\e2e\et23-columns.spec.ts:98:1 › T02: a factor used as unit cannot merge distinct original labels (5.1s)
+  ok  5 [firefox] › tests\e2e\et23-columns.spec.ts:39:1 › T02: unit/time roles survive grid editing, table export and project reopening (6.5s)
+  ok  8 [firefox] › tests\e2e\et29-priorities.spec.ts:139:1 › UX25: mostrar unidade volta à grade e foca a primeira célula (2.3s)
+(node:6552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [webkit] › tests\e2e\et23-columns.spec.ts:39:1 › T02: unit/time roles survive grid editing, table export and project reopening (6.4s)
+  ok 10 [webkit] › tests\e2e\et23-columns.spec.ts:98:1 › T02: a factor used as unit cannot merge distinct original labels (3.9s)
+  x   1 [chromium] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos (1.0m)
+(node:30832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [webkit] › tests\e2e\et29-priorities.spec.ts:139:1 › UX25: mostrar unidade volta à grade e foca a primeira célula (2.2s)
+  x   7 [firefox] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos (1.0m)
+  x  11 [webkit] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos (1.0m)
+
+
+  1) [chromium] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Tipo 2', { exact: true })
+
+
+      36 |   );
+      37 |   await page.getByLabel("Papel 2", { exact: true }).selectOption("factor");
+    > 38 |   await page.getByLabel("Tipo 2", { exact: true }).selectOption("categorical");
+         |                                                    ^
+      39 |   await page.getByRole("button", { name: "Importar", exact: true }).click();
+      40 |   await page.getByTestId("variables-blocks-next").click();
+      41 |   await page.getByTestId("data-blocks-next").click();
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et29-priorities.spec.ts:38:52
+
+    Error Context: test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Tipo 2', { exact: true })
+
+
+      36 |   );
+      37 |   await page.getByLabel("Papel 2", { exact: true }).selectOption("factor");
+    > 38 |   await page.getByLabel("Tipo 2", { exact: true }).selectOption("categorical");
+         |                                                    ^
+      39 |   await page.getByRole("button", { name: "Importar", exact: true }).click();
+      40 |   await page.getByTestId("variables-blocks-next").click();
+      41 |   await page.getByTestId("data-blocks-next").click();
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et29-priorities.spec.ts:38:52
+
+    Error Context: test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Tipo 2', { exact: true })
+
+
+      36 |   );
+      37 |   await page.getByLabel("Papel 2", { exact: true }).selectOption("factor");
+    > 38 |   await page.getByLabel("Tipo 2", { exact: true }).selectOption("categorical");
+         |                                                    ^
+      39 |   await page.getByRole("button", { name: "Importar", exact: true }).click();
+      40 |   await page.getByTestId("variables-blocks-next").click();
+      41 |   await page.getByTestId("data-blocks-next").click();
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et29-priorities.spec.ts:38:52
+
+    Error Context: test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-regression\et29-priorities-UX25-fator-963b2-res-e-sai-dos-efeitos-fixos-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos 
+    [firefox] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos 
+    [webkit] › tests\e2e\et29-priorities.spec.ts:30:1 › UX25: fator Unidade forma pares e sai dos efeitos fixos 
+  9 passed (1.4m)

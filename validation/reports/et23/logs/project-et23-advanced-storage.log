@@ -1,0 +1,18 @@
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+    Finished `test` profile [optimized + debuginfo] target(s) in 45.06s
+     Running tests\family_storage.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\family_storage-929fed74c68c82df.exe)
+
+running 10 tests
+test selecting_a_family_without_a_result_is_not_a_valid_saved_state ... ok
+test older_documents_omit_every_new_field ... ok
+test power_preserves_edited_assumptions_separately_from_the_successful_request ... ok
+test missing_revisions_variables_duplicates_and_nonfinite_values_are_refused ... ok
+test repeated_storage_distinguishes_paired_and_mixed_results ... ok
+test nonlinear_keeps_its_fitted_model_and_previous_engine_even_after_selection_changes ... ok
+test historical_variable_references_survive_deletion_from_the_latest_revision ... ok
+test mixture_keeps_the_request_and_all_immutable_records ... ok
+test advanced_covariance_inference_profiles_and_options_round_trip_without_refit ... ok
+test stored_advanced_results_reject_inconsistent_dimensions_and_structure ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+

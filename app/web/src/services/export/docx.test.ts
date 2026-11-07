@@ -57,13 +57,12 @@ describe("reportDocx", () => {
     expect(out.text("docProps/core.xml")).toContain("Subtítulo");
   });
 
-  it("puts the short provenance after the results, not before", async () => {
+  it("places the short provenance after the results", async () => {
     const out = await build("<h2>Resultados</h2><p>Texto do resultado.</p>");
     const at = (text: string) => out.document.indexOf(text);
     expect(at("Texto do resultado.")).toBeGreaterThan(at("Subtítulo"));
     expect(at("Proveniência")).toBeGreaterThan(at("Texto do resultado."));
     expect(at("EnziTAG Optima 0.3.0")).toBeGreaterThan(at("Proveniência"));
-    expect(at("Gerado pelo EnziTAG Optima")).toBeGreaterThan(at("EnziTAG Optima 0.3.0"));
   });
 
   it("keeps the table header row, numeric alignment and caption", async () => {
@@ -122,6 +121,8 @@ describe("reportDocx", () => {
     expect(footer).toContain("Página");
     expect(footer).toContain("PAGE");
     expect(footer).toContain("NUMPAGES");
+    expect(footer).toContain("Gerado pelo EnziTAG Optima");
+    expect(withLogo.document).not.toContain("Gerado pelo EnziTAG Optima");
   });
 });
 
@@ -129,4 +130,14 @@ describe("pngSize", () => {
   it("reads the size from the IHDR chunk", () => {
     expect(pngSize(png())).toEqual({ width: 1, height: 1 });
   });
+});
+
+it("writes all rows and columns of a 33-column table in readable repeated-reference bands", async () => {
+  const html = `<table><thead><tr>${Array.from({ length: 33 }, (_, c) => `<th>C${c}</th>`).join("")}</tr></thead><tbody>${Array.from({ length: 41 }, (_, r) => `<tr>${Array.from({ length: 33 }, (_, c) => `<td>value-${r}-${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  const out = await build(html);
+  for (let r = 0; r < 41; r++)
+    for (let c = 1; c < 33; c++) expect(out.document).toContain(`value-${r}-${c}</w:t>`);
+  expect(out.document.match(/value-0-0<\/w:t>/g)).toHaveLength(7);
+  expect(out.document).toContain('w:sz w:val="18"');
+  expect(out.document).not.toContain('w:sz w:val="14"');
 });

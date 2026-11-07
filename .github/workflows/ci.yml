@@ -50,7 +50,7 @@ jobs:
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - run: cargo test --workspace
       - name: Compilar para WebAssembly
-        run: cargo build -p optima-wasm --target wasm32-unknown-unknown --release
+        run: cargo build -p desvtag-wasm --target wasm32-unknown-unknown --release
 
   web:
     name: Web (contratos, lint, tipos, testes, build, E2E)
@@ -83,11 +83,19 @@ jobs:
       - run: npm run build:wasm
       - run: npm run typecheck
       - run: npm test
-      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npx playwright install --with-deps chromium firefox webkit chrome msedge
       - name: E2E com o motor WASM real (Chromium, Firefox e WebKit)
         run: E2E_BROWSERS=chromium,firefox,webkit npm run test:e2e
         env:
           CI: "true"
+      - name: Percurso de comparação no Chrome e no Edge
+        run: |
+          export EXPECTED_VERSION=$(node -p 'require("./package.json").version')
+          npx playwright test -c playwright.public.config.ts
+        env:
+          CI: "true"
+          E2E_BROWSERS: chrome,msedge
+          PUBLIC_URL: http://127.0.0.1:4173/
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -141,7 +149,7 @@ jobs:
         run: cargo build --features tauri/custom-protocol
         working-directory: app/desktop/src-tauri
       - name: Verificação nativa (WebDriver sob Xvfb)
-        run: xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/optima-desktop
+        run: xvfb-run -a node tests/native-smoke.mjs src-tauri/target/debug/desvtag-desktop
         working-directory: app/desktop
 
   desktop-windows:
@@ -181,13 +189,13 @@ jobs:
         working-directory: app/desktop
       - uses: actions/upload-artifact@v4
         with:
-          name: enzitag-optima-windows-nsis
+          name: desvtag-windows-nsis
           path: app/desktop/src-tauri/target/release/bundle/nsis/*.exe
       - name: Diagnóstico — o executável permanece em execução por 10 s?
         # Falha (visível no status do passo) se o aplicativo encerrar sozinho ao iniciar.
         shell: pwsh
         run: |
-          $p = Start-Process -FilePath "src-tauri/target/release/optima-desktop.exe" -PassThru
+          $p = Start-Process -FilePath "src-tauri/target/release/desvtag-desktop.exe" -PassThru
           Start-Sleep -Seconds 10
           if ($p.HasExited) { Write-Error "ENCERROU com código $($p.ExitCode)"; exit 1 }
           "EM EXECUÇÃO após 10 s"
@@ -200,7 +208,7 @@ jobs:
         # binário de teste, via TAURI_CONFIG; a característica `automation` faz o comando de exportação gravar em ENZITAG_EXPORT_DIR (verificação dos PDFs). O instalador publicado é o do passo anterior.
         shell: pwsh
         env:
-          TAURI_CONFIG: '{"app":{"windows":[{"title":"EnziTAG Optima","width":1200,"height":800,"minWidth":800,"minHeight":560,"additionalBrowserArgs":"--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --remote-debugging-port=9333"}]}}'
+          TAURI_CONFIG: '{"app":{"windows":[{"title":"DesvTAG","width":1200,"height":800,"minWidth":800,"minHeight":560,"additionalBrowserArgs":"--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --remote-debugging-port=9333"}]}}'
         run: cargo build --release --features "tauri/custom-protocol,automation"
         working-directory: app/desktop/src-tauri
       - name: Verificação nativa no Windows (WebView2 por CDP)
@@ -208,6 +216,6 @@ jobs:
         run: |
           # Registra o sistema em que a verificação foi feita (a imagem da CI não é um Windows 11 de usuário).
           (Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber, OSArchitecture | Format-List | Out-String).Trim()
-          node tests/native-cdp.mjs src-tauri/target/release/optima-desktop.exe
+          node tests/native-cdp.mjs src-tauri/target/release/desvtag-desktop.exe
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
         working-directory: app/desktop

@@ -32,4 +32,13 @@ describe("scrollToStep", () => {
     const heading = document.createElement("h2");
     expect(() => scrollToStep({ querySelector: () => heading }, false)).not.toThrow();
   });
+  it("ignores headings in preserved but hidden stages", () => {
+    const root = document.createElement("div");
+    root.innerHTML =
+      "<section hidden><h2>Variáveis</h2></section><section><h2>Dados</h2></section>";
+    document.body.append(root);
+    scrollToStep(root, true);
+    expect(document.activeElement?.textContent).toBe("Dados");
+    root.remove();
+  });
 });

@@ -48,19 +48,19 @@ export function ExtrasMenu({ language }: { language: Language }) {
       </Menu>
       <Modal
         open={tool === "power"}
-        title={t("menus.power")}
+        title={t("menus.powerShort")}
         onClose={() => setTool(null)}
         testId="power-dialog"
       >
-        <PowerCalculator language={language} embedded />
+        <PowerCalculator language={language} embedded onCalculated={() => setTool(null)} />
       </Modal>
       <Modal
         open={tool === "saturation"}
-        title={t("menus.saturation")}
+        title={t("menus.saturationShort")}
         onClose={() => setTool(null)}
         testId="saturation-dialog"
       >
-        <SaturationFit language={language} embedded />
+        <SaturationFit language={language} embedded onCalculated={() => setTool(null)} />
       </Modal>
     </>
   );

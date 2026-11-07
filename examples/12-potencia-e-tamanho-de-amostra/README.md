@@ -1,10 +1,10 @@
 # Exemplo 12 — Potência e tamanho de amostra
 
-A calculadora da tela inicial **não grava dados no projeto**; por isso este exemplo não tem arquivo `.enzitag`. Ele descreve um cálculo que se repete em poucos passos e o resultado esperado.
+O arquivo [`projeto.enzitag`](projeto.enzitag) guarda as hipóteses e o resultado da calculadora. Abra-o para consultar o resultado sem calcular novamente. As hipóteses são prospectivas e independem de uma tabela de observações.
 
 ## Como reproduzir
 
-1. Na tela inicial, abra **Calculadora de potência e tamanho de amostra**.
+1. Para reproduzir do zero, abra **Extras → Calculadora de potência e tamanho de amostra**.
 2. Teste **t de duas amostras**, objetivo **tamanho de amostra**: diferença esperada **1**, desvio-padrão esperado **1,5**, α = 0,05, potência desejada 0,80.
 3. Use **Calcular**.
 

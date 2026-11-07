@@ -38,13 +38,9 @@ export function App({ language, theme, onLanguageChange, onThemeChange }: Props)
         {t("app.skipToContent")}
       </a>
       <header className="app-header">
-        <div className="brand">
+        <h1 className="brand">
           <GroupLogo />
-          <div>
-            <h1>{t("app.name")}</h1>
-            <p className="muted">{t("app.tagline")}</p>
-          </div>
-        </div>
+        </h1>
         <div className="settings">
           <LanguageSelector value={language} onChange={onLanguageChange} />
           <ThemeSelector value={theme} onChange={onThemeChange} />

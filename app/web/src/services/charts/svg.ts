@@ -1,7 +1,15 @@
 // Utilidades de desenho SVG (U09/U16). Os números dos gráficos vêm do motor; aqui só há geometria.
 // O mesmo SVG serve à tela (cores por variáveis CSS dos temas) e à exportação (cores literais).
 
-export type Paint = "ink" | "inkSecondary" | "rule" | "action" | "panel" | "alert";
+export type Paint =
+  | "ink"
+  | "inkSecondary"
+  | "rule"
+  | "action"
+  | "panel"
+  | "alert"
+  | "reference"
+  | "uncertainty";
 export type PaintMode = "css" | "static";
 
 /** Textos que a personalização por figura pode trocar ou ocultar. */
@@ -14,14 +22,18 @@ const STATIC: Record<Paint, string> = {
   action: "#005a99",
   panel: "#ffffff",
   alert: "#9a3412",
+  reference: "#9a3412",
+  uncertainty: "#5b708b",
 };
 const CSS_VARIABLE: Record<Paint, string> = {
   ink: "--color-ink",
   inkSecondary: "--color-ink-secondary",
-  rule: "--color-rule",
-  action: "--color-action",
+  rule: "--chart-grid",
+  action: "--chart-series",
   panel: "--color-panel",
   alert: "--color-alert",
+  reference: "--chart-reference",
+  uncertainty: "--chart-uncertainty",
 };
 
 /** Cor do papel semântico: variável CSS com a cor literal como reserva (tela) ou só a literal (exportação). */
@@ -102,9 +114,10 @@ export function open(
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${frame.width} ${frame.height}" ` +
     `width="${mode === "static" ? frame.width : "100%"}" role="img" aria-labelledby="${id}-t ${id}-d" ` +
-    `font-family="${mode === "css" ? "inherit" : "sans-serif"}" font-size="12">` +
+    `data-plot="${frame.left} ${frame.top} ${frame.width - frame.right} ${frame.height - frame.bottom}" font-family="${mode === "css" ? "inherit" : "sans-serif"}" font-size="12">` +
     `<title id="${id}-t">${esc(title)}</title><desc id="${id}-d">${esc(description)}</desc>` +
     (metadata === undefined ? "" : `<metadata>${esc(metadata)}</metadata>`) +
+    `<defs><clipPath id="${esc(id)}-plot"><rect x="${frame.left}" y="${frame.top}" width="${frame.width - frame.left - frame.right}" height="${frame.height - frame.top - frame.bottom}"/></clipPath></defs>` +
     background
   );
 }
@@ -169,8 +182,8 @@ export function yAxis(
   label: string,
   mode: PaintMode,
   format: (v: number) => string,
-): { svg: string; scale: (v: number) => number } {
-  const ticks = niceTicks(domain[0], domain[1]);
+  ticks: readonly number[] = niceTicks(domain[0], domain[1]),
+): { svg: string; scale: (v: number) => number; domain: [number, number] } {
   const lo = Math.min(domain[0], ticks[0] ?? domain[0]);
   const hi = Math.max(domain[1], ticks[ticks.length - 1] ?? domain[1]);
   const scale = linear([lo, hi], [frame.height - frame.bottom, frame.top]);
@@ -189,7 +202,7 @@ export function yAxis(
       figure: "yLabel",
     }),
   );
-  return { svg: parts.join(""), scale };
+  return { svg: parts.join(""), scale, domain: [lo, hi] };
 }
 
 /** Quebra o texto em linhas de até `maxChars` caracteres (sem cortar palavras). */
@@ -215,10 +228,10 @@ export function legend(
   mode: PaintMode,
 ): string {
   const lines = contents.flatMap(
-    (c): Array<{ content: string; figure?: FigureText }> =>
+    (c, group): Array<{ content: string; figure?: FigureText; group: number }> =>
       typeof c === "string"
-        ? wrapText(c).map((content) => ({ content, figure: "legend" as const }))
-        : wrapText(c.text).map((content) => ({ content, figure: c.figure })),
+        ? wrapText(c).map((content) => ({ content, figure: "legend" as const, group }))
+        : wrapText(c.text).map((content) => ({ content, figure: c.figure, group })),
   );
   return lines
     .map((line, i) =>
@@ -226,11 +239,16 @@ export function legend(
         anchor: "start",
         role: "inkSecondary",
         figure: line.figure,
-      }),
+      }).replace("<text ", `<text data-note-group="${line.group}" `),
     )
     .join("");
 }
 
 export function close(): string {
   return "</svg>";
+}
+
+/** Marcas recortadas; títulos, eixos, chaves e notas ficam fora deste grupo. */
+export function dataMarks(id: string, svg: string): string {
+  return `<g data-chart-data="true" clip-path="url(#${esc(id)}-plot)">${svg}</g>`;
 }

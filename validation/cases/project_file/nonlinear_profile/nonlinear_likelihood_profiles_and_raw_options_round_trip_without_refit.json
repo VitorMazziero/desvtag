@@ -1,0 +1,1969 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p1",
+  "name": "Saved families",
+  "createdAt": "2026-11-03T10:00:00Z",
+  "modifiedAt": "2026-11-03T10:00:00Z",
+  "appVersion": "0.4.0-dev",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Historical experiment",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "nonlinearResult": {
+        "selection": {
+          "factorId": "substrate",
+          "responseId": "y",
+          "model": "hill",
+          "lower": [
+            "0,001",
+            ""
+          ],
+          "profile": true
+        },
+        "records": [
+          {
+            "id": "nonlinear-1",
+            "createdAt": "2026-11-03T10:00:00Z",
+            "revisionId": "v1",
+            "signature": "nonlinear:v1:monod",
+            "input": {
+              "factorId": "substrate",
+              "responseId": "y",
+              "request": {
+                "x": [
+                  0.1,
+                  0.5,
+                  1.0,
+                  2.0,
+                  4.0,
+                  8.0,
+                  12.0,
+                  16.0
+                ],
+                "y": [
+                  0.15285714285714289,
+                  0.59,
+                  1.01,
+                  1.49,
+                  2.01,
+                  2.39,
+                  2.5814285714285714,
+                  2.6566666666666667
+                ],
+                "model": "monod",
+                "initial": null,
+                "lower": null,
+                "upper": null,
+                "alpha": 0.05,
+                "profile": true
+              }
+            },
+            "result": {
+              "model": "monod",
+              "n": 8,
+              "parameters": [
+                {
+                  "name": "a",
+                  "estimate": 2.9966619252988207,
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.011728303023174099
+                  },
+                  "tValue": {
+                    "status": "defined",
+                    "value": 255.50686398344922
+                  },
+                  "pValue": {
+                    "status": "defined",
+                    "value": 2.4254011126303183e-13
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 2.9679638016375964
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 3.025360048960045
+                  },
+                  "atBound": false
+                },
+                {
+                  "name": "b",
+                  "estimate": 1.9950469239744477,
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.027727099547263958
+                  },
+                  "tValue": {
+                    "status": "defined",
+                    "value": 71.9529614186174
+                  },
+                  "pValue": {
+                    "status": "defined",
+                    "value": 4.849436563976504e-10
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 1.927201155494371
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 2.062892692454524
+                  },
+                  "atBound": false
+                }
+              ],
+              "sse": 0.0007880335114277961,
+              "sigma": {
+                "status": "defined",
+                "value": 0.011460319304945187
+              },
+              "rSquared": {
+                "status": "defined",
+                "value": 0.9998758151584806
+              },
+              "correlation": [
+                [
+                  1.0,
+                  0.8266963404035548
+                ],
+                [
+                  0.8266963404035548,
+                  1.0
+                ]
+              ],
+              "conditionNumber": {
+                "status": "defined",
+                "value": 3.246603948652489
+              },
+              "converged": true,
+              "iterations": 10,
+              "startsRun": 12,
+              "startsReachingBest": 12,
+              "residuals": [
+                0.009821591194464713,
+                -0.01052215782085042,
+                0.00946077595264172,
+                -0.010188599696150824,
+                0.010574832323635208,
+                -0.00851754421356743,
+                0.011952148881957836,
+                -0.00776599679601242
+              ],
+              "curve": [
+                {
+                  "x": 0.1,
+                  "y": 0.14303555166267817,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.139452056879825
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.14661904644553134
+                  }
+                },
+                {
+                  "x": 0.3012658227848102,
+                  "y": 0.3931484602030605,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.3843853390977952
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.40191158130832577
+                  }
+                },
+                {
+                  "x": 0.5025316455696203,
+                  "y": 0.6029509809619913,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.5908994412129661
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.6150025207110165
+                  }
+                },
+                {
+                  "x": 0.7037974683544304,
+                  "y": 0.7814615331414103,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.7673600092416052
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.7955630570412154
+                  }
+                },
+                {
+                  "x": 0.9050632911392406,
+                  "y": 0.9351950454877049,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.9198687676458692
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.9505213233295406
+                  }
+                },
+                {
+                  "x": 1.1063291139240508,
+                  "y": 1.068975284529585,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.052980341232945
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.084970227826225
+                  }
+                },
+                {
+                  "x": 1.3075949367088608,
+                  "y": 1.1864501589458607,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.1701630808007617
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.2027372370909597
+                  }
+                },
+                {
+                  "x": 1.508860759493671,
+                  "y": 1.2904294282310493,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.2741045128676758
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.3067543435944229
+                  }
+                },
+                {
+                  "x": 1.7101265822784812,
+                  "y": 1.3831123449163238,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.3669192584607777
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.39930543137187
+                  }
+                },
+                {
+                  "x": 1.9113924050632911,
+                  "y": 1.466244925905304,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.4502939072176053
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.4821959445930029
+                  }
+                },
+                {
+                  "x": 2.1126582278481014,
+                  "y": 1.5412309887316806,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.5255900720982325
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.5568719053651288
+                  }
+                },
+                {
+                  "x": 2.3139240506329117,
+                  "y": 1.6092120697556356,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.5939190605259226
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.6245050789853486
+                  }
+                },
+                {
+                  "x": 2.5151898734177216,
+                  "y": 1.6711259446346722,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.6561968820546162
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.6860550072147282
+                  }
+                },
+                {
+                  "x": 2.716455696202532,
+                  "y": 1.7277501495404988,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.71318537992865
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.7423149191523475
+                  }
+                },
+                {
+                  "x": 2.9177215189873418,
+                  "y": 1.779734804537868,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.7655234054598643
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.7939462036158718
+                  }
+                },
+                {
+                  "x": 3.118987341772152,
+                  "y": 1.8276276862632794,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.8137507375851265
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.8415046349414324
+                  }
+                },
+                {
+                  "x": 3.3202531645569624,
+                  "y": 1.8718936042856262,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.858326642115808
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.8854605664554445
+                  }
+                },
+                {
+                  "x": 3.5215189873417723,
+                  "y": 1.9129295359159613,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.8996444191065431
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.9262146527253794
+                  }
+                },
+                {
+                  "x": 3.722784810126582,
+                  "y": 1.9510765645748909,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.9380429116396645
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.9641102175101173
+                  }
+                },
+                {
+                  "x": 3.924050632911393,
+                  "y": 1.9866293825332713,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.9738156878389477
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.9994430772275948
+                  }
+                },
+                {
+                  "x": 4.125316455696202,
+                  "y": 2.0198439186888155,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.0072184232172807
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.0324694141603503
+                  }
+                },
+                {
+                  "x": 4.326582278481013,
+                  "y": 2.0509435092397794,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.0384748783566398
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.063412140122919
+                  }
+                },
+                {
+                  "x": 4.527848101265823,
+                  "y": 2.0801239259710544,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.0677817712960196
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.0924660806460893
+                  }
+                },
+                {
+                  "x": 4.729113924050632,
+                  "y": 2.107557501508205,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.095312773949186
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.1198022290672243
+                  }
+                },
+                {
+                  "x": 4.930379746835443,
+                  "y": 2.1333965352460216,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.121221809908991
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.1455712605830524
+                  }
+                },
+                {
+                  "x": 5.131645569620253,
+                  "y": 2.1577761221535225,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.145645791950127
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.1699064523569183
+                  }
+                },
+                {
+                  "x": 5.332911392405063,
+                  "y": 2.180816515412194,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.168706907830698
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.19292612299369
+                  }
+                },
+                {
+                  "x": 5.534177215189874,
+                  "y": 2.2026251101161187,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.190514540119024
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.2147356801132134
+                  }
+                },
+                {
+                  "x": 5.735443037974683,
+                  "y": 2.223298117094435,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2111668879918356
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.235429346197034
+                  }
+                },
+                {
+                  "x": 5.936708860759493,
+                  "y": 2.242921981897462,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2307523450326867
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.255091618762237
+                  }
+                },
+                {
+                  "x": 6.137974683544304,
+                  "y": 2.2615745930910935,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2493506761205557
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.2737985100616314
+                  }
+                },
+                {
+                  "x": 6.339240506329114,
+                  "y": 2.2793263154756063,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.267034027885279
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.2916186030659333
+                  }
+                },
+                {
+                  "x": 6.540506329113924,
+                  "y": 2.2962408771265075,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2838678004225312
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3086139538304837
+                  }
+                },
+                {
+                  "x": 6.741772151898735,
+                  "y": 2.3123761338294293,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2999114026193035
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.324840865039555
+                  }
+                },
+                {
+                  "x": 6.943037974683544,
+                  "y": 2.327784730234764,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.31521890923394
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.340350551235588
+                  }
+                },
+                {
+                  "x": 7.144303797468354,
+                  "y": 2.3425146736530325,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3298396345572256
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3551897127488393
+                  }
+                },
+                {
+                  "x": 7.345569620253164,
+                  "y": 2.3566098336675263,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3438186348569237
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.369401032478129
+                  }
+                },
+                {
+                  "x": 7.546835443037975,
+                  "y": 2.37011037851732,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3571971497227024
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3830236073119377
+                  }
+                },
+                {
+                  "x": 7.748101265822785,
+                  "y": 2.383053157393672,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.370012990760294
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3960933240270506
+                  }
+                },
+                {
+                  "x": 7.949367088607595,
+                  "y": 2.395472036312445,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3823008847391005
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4086431878857892
+                  }
+                },
+                {
+                  "x": 8.150632911392405,
+                  "y": 2.4073981940091387,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.394092777204395
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.420703610813882
+                  }
+                },
+                {
+                  "x": 8.351898734177215,
+                  "y": 2.41886038329993,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4054181016687495
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4323026649311106
+                  }
+                },
+                {
+                  "x": 8.553164556962026,
+                  "y": 2.429885162521214,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.416304018755771
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.443466306286657
+                  }
+                },
+                {
+                  "x": 8.754430379746836,
+                  "y": 2.4404971009692593,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.426775629050921
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.454218572887598
+                  }
+                },
+                {
+                  "x": 8.955696202531646,
+                  "y": 2.4507189616849687,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.43685616289488
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4645817604750575
+                  }
+                },
+                {
+                  "x": 9.156962025316455,
+                  "y": 2.460571864445803,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4465671499161368
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.474576578975469
+                  }
+                },
+                {
+                  "x": 9.358227848101265,
+                  "y": 2.470075431421009,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.455928570726599
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4842222921154193
+                  }
+                },
+                {
+                  "x": 9.559493670886077,
+                  "y": 2.479247917604045,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4649589928858644
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.493536842322226
+                  }
+                },
+                {
+                  "x": 9.760759493670886,
+                  "y": 2.488106327846559,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4736756929672192
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5025369627258987
+                  }
+                },
+                {
+                  "x": 9.962025316455696,
+                  "y": 2.4966665220726134,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4820947663241673
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5112382778210596
+                  }
+                },
+                {
+                  "x": 10.163291139240506,
+                  "y": 2.504943310042789,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4902312259545045
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5196553941310738
+                  }
+                },
+                {
+                  "x": 10.364556962025317,
+                  "y": 2.512950536859355,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.498099091684621
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5278019820340893
+                  }
+                },
+                {
+                  "x": 10.565822784810127,
+                  "y": 2.5207011602510274,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.505711470745929
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5356908497561257
+                  }
+                },
+                {
+                  "x": 10.767088607594937,
+                  "y": 2.5282073205447864,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.513080630684534
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.543334010405039
+                  }
+                },
+                {
+                  "x": 10.968354430379748,
+                  "y": 2.5354804041195287,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.520218065431764
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5507427428072935
+                  }
+                },
+                {
+                  "x": 11.169620253164556,
+                  "y": 2.5425311010391205,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.527134555264444
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.557927646813797
+                  }
+                },
+                {
+                  "x": 11.370886075949366,
+                  "y": 2.5493694574783676,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5338402212978024
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.564898693658933
+                  }
+                },
+                {
+                  "x": 11.572151898734178,
+                  "y": 2.556004923482643,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.540344575078925
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.571665271886361
+                  }
+                },
+                {
+                  "x": 11.773417721518987,
+                  "y": 2.5624463965386424,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.546656563783163
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.578236229294122
+                  }
+                },
+                {
+                  "x": 11.974683544303797,
+                  "y": 2.568702261378719,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5527846114586015
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.584619911298837
+                  }
+                },
+                {
+                  "x": 12.175949367088608,
+                  "y": 2.5747804263932648,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5587366567135565
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.590824196072973
+                  }
+                },
+                {
+                  "x": 12.377215189873418,
+                  "y": 2.580688356983613,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5645201871979983
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.596856526769228
+                  }
+                },
+                {
+                  "x": 12.578481012658228,
+                  "y": 2.5864331061512638,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.570142271191224
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6027239411113037
+                  }
+                },
+                {
+                  "x": 12.779746835443039,
+                  "y": 2.5920213425869263,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5756095865740307
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.608433098599822
+                  }
+                },
+                {
+                  "x": 12.981012658227849,
+                  "y": 2.597459376494618,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5809284474337586
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.613990305555477
+                  }
+                },
+                {
+                  "x": 13.182278481012657,
+                  "y": 2.602753183361042,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5861048285241273
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.619401538197957
+                  }
+                },
+                {
+                  "x": 13.38354430379747,
+                  "y": 2.6079084258584864,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5911443877784697
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.624672463938503
+                  }
+                },
+                {
+                  "x": 13.584810126582278,
+                  "y": 2.612930474050035,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.596052487054367
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6298084610457035
+                  }
+                },
+                {
+                  "x": 13.786075949367088,
+                  "y": 2.6178244240486417,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6008342112693654
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.634814636827918
+                  }
+                },
+                {
+                  "x": 13.9873417721519,
+                  "y": 2.6225951152663654,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6054943860713076
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.639695844461423
+                  }
+                },
+                {
+                  "x": 14.188607594936709,
+                  "y": 2.6272471463765013,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6100375941723692
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6444566985806333
+                  }
+                },
+                {
+                  "x": 14.38987341772152,
+                  "y": 2.6317848900992744,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6144681904631355
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6491015897354133
+                  }
+                },
+                {
+                  "x": 14.591139240506328,
+                  "y": 2.6362125069110274,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6187903160116206
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.653634697810434
+                  }
+                },
+                {
+                  "x": 14.79240506329114,
+                  "y": 2.6405339577672478,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6230079110419977
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.658060004492498
+                  }
+                },
+                {
+                  "x": 14.99367088607595,
+                  "y": 2.644753015921214,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6271247269787183
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6623813048637093
+                  }
+                },
+                {
+                  "x": 15.194936708860759,
+                  "y": 2.648873277912383,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.631144337633592
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6666022181911737
+                  }
+                },
+                {
+                  "x": 15.39620253164557,
+                  "y": 2.6528981737917774,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6350701496061393
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6707261979774155
+                  }
+                },
+                {
+                  "x": 15.59746835443038,
+                  "y": 2.6568309766454767,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6389054119610167
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.674756541329937
+                  }
+                },
+                {
+                  "x": 15.79873417721519,
+                  "y": 2.660674811471785,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6426532252404824
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6786963977030878
+                  }
+                },
+                {
+                  "x": 16.000000000000004,
+                  "y": 2.6644326634626787,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6463165498646153
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.682548777060742
+                  }
+                }
+              ],
+              "issues": [],
+              "provenance": {
+                "methodId": "nonlinear_saturation_fit",
+                "methodVersion": 2,
+                "engineVersion": "0.4.0-dev"
+              },
+              "profiles": [
+                {
+                  "parameter": "a",
+                  "cutoff": 3.841458820694131,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.974251064776423
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 3.0193410895561827
+                  },
+                  "lowerStatus": "crossing",
+                  "upperStatus": "crossing",
+                  "unimodalInExaminedRange": true,
+                  "points": [
+                    {
+                      "value": 2.9114142111655457,
+                      "likelihoodRatio": 18.591599595713614
+                    },
+                    {
+                      "value": 2.9413821872771115,
+                      "likelihoodRatio": 12.57445016257584
+                    },
+                    {
+                      "value": 2.9608798701684393,
+                      "likelihoodRatio": 7.589594276995273
+                    },
+                    {
+                      "value": 2.973527556847721,
+                      "likelihoodRatio": 4.040353739722312
+                    },
+                    {
+                      "value": 2.9740386758195827,
+                      "likelihoodRatio": 3.8996894613194057
+                    },
+                    {
+                      "value": 2.9741664692894774,
+                      "likelihoodRatio": 3.864636134716101
+                    },
+                    {
+                      "value": 2.974230368083626,
+                      "likelihoodRatio": 3.847127252617341
+                    },
+                    {
+                      "value": 2.9742463429966683,
+                      "likelihoodRatio": 3.8427519114607858
+                    },
+                    {
+                      "value": 2.974250336738336,
+                      "likelihoodRatio": 3.8416581943206114
+                    },
+                    {
+                      "value": 2.9742508359564215,
+                      "likelihoodRatio": 3.8415214830057476
+                    },
+                    {
+                      "value": 2.9742509607609557,
+                      "likelihoodRatio": 3.84148730529255
+                    },
+                    {
+                      "value": 2.9742510231632253,
+                      "likelihoodRatio": 3.84147021645327
+                    },
+                    {
+                      "value": 2.9742510543643603,
+                      "likelihoodRatio": 3.841461672038061
+                    },
+                    {
+                      "value": 2.974251062164644,
+                      "likelihoodRatio": 3.8414595359347588
+                    },
+                    {
+                      "value": 2.974251064114715,
+                      "likelihoodRatio": 3.8414590019087833
+                    },
+                    {
+                      "value": 2.974251064602233,
+                      "likelihoodRatio": 3.841458868402373
+                    },
+                    {
+                      "value": 2.974251064724112,
+                      "likelihoodRatio": 3.841458835025759
+                    },
+                    {
+                      "value": 2.974251064754582,
+                      "likelihoodRatio": 3.841458826681814
+                    },
+                    {
+                      "value": 2.974251064769817,
+                      "likelihoodRatio": 3.8414588225096176
+                    },
+                    {
+                      "value": 2.9742510647736258,
+                      "likelihoodRatio": 3.8414588214665595
+                    },
+                    {
+                      "value": 2.9742510647755305,
+                      "likelihoodRatio": 3.841458820944884
+                    },
+                    {
+                      "value": 2.9742510647760065,
+                      "likelihoodRatio": 3.8414588208145326
+                    },
+                    {
+                      "value": 2.974251064776245,
+                      "likelihoodRatio": 3.8414588207493225
+                    },
+                    {
+                      "value": 2.9742510647763636,
+                      "likelihoodRatio": 3.841458820716872
+                    },
+                    {
+                      "value": 2.9742510647764826,
+                      "likelihoodRatio": 3.841458820684118
+                    },
+                    {
+                      "value": 2.9742510647774347,
+                      "likelihoodRatio": 3.8414588204233775
+                    },
+                    {
+                      "value": 2.974251064785052,
+                      "likelihoodRatio": 3.8414588183374567
+                    },
+                    {
+                      "value": 2.9742510648459914,
+                      "likelihoodRatio": 3.8414588016491886
+                    },
+                    {
+                      "value": 2.9742510650897507,
+                      "likelihoodRatio": 3.841458734895967
+                    },
+                    {
+                      "value": 2.974251066064786,
+                      "likelihoodRatio": 3.841458467883198
+                    },
+                    {
+                      "value": 2.974251069964928,
+                      "likelihoodRatio": 3.8414573998316057
+                    },
+                    {
+                      "value": 2.9742510855654953,
+                      "likelihoodRatio": 3.841453127625729
+                    },
+                    {
+                      "value": 2.9742513351745905,
+                      "likelihoodRatio": 3.84138477243068
+                    },
+                    {
+                      "value": 2.9742523336111804,
+                      "likelihoodRatio": 3.8411113534999526
+                    },
+                    {
+                      "value": 2.9742543304853655,
+                      "likelihoodRatio": 3.8405645245189732
+                    },
+                    {
+                      "value": 2.974262317995514,
+                      "likelihoodRatio": 3.838377327088204
+                    },
+                    {
+                      "value": 2.974294268250616,
+                      "likelihoodRatio": 3.8296304387936697
+                    },
+                    {
+                      "value": 2.9745498826475676,
+                      "likelihoodRatio": 3.7597671114163833
+                    },
+                    {
+                      "value": 2.9755725599323153,
+                      "likelihoodRatio": 3.4824834988775732
+                    },
+                    {
+                      "value": 2.9776189694399333,
+                      "likelihoodRatio": 2.9406993762628963
+                    },
+                    {
+                      "value": 2.9817160115938965,
+                      "likelihoodRatio": 1.931409684659607
+                    },
+                    {
+                      "value": 2.9966619252988207,
+                      "likelihoodRatio": 0.0
+                    },
+                    {
+                      "value": 3.0116827557079535,
+                      "likelihoodRatio": 1.9214481991185102
+                    },
+                    {
+                      "value": 3.0158266677837218,
+                      "likelihoodRatio": 2.9224904975578982
+                    },
+                    {
+                      "value": 3.0179007615058464,
+                      "likelihoodRatio": 3.4593395347459546
+                    },
+                    {
+                      "value": 3.018938343216753,
+                      "likelihoodRatio": 3.7339816458107924
+                    },
+                    {
+                      "value": 3.0191977943787554,
+                      "likelihoodRatio": 3.803167921160049
+                    },
+                    {
+                      "value": 3.0193275283212158,
+                      "likelihoodRatio": 3.8378326804863407
+                    },
+                    {
+                      "value": 3.0193356368777122,
+                      "likelihoodRatio": 3.840000769941256
+                    },
+                    {
+                      "value": 3.019339691164126,
+                      "likelihoodRatio": 3.8410848820199015
+                    },
+                    {
+                      "value": 3.01934070473658,
+                      "likelihoodRatio": 3.841355917048785
+                    },
+                    {
+                      "value": 3.0193409581297463,
+                      "likelihoodRatio": 3.8414236762438176
+                    },
+                    {
+                      "value": 3.019341084826338,
+                      "likelihoodRatio": 3.841457555907115
+                    },
+                    {
+                      "value": 3.019341088785607,
+                      "likelihoodRatio": 3.8414586146475074
+                    },
+                    {
+                      "value": 3.019341089280516,
+                      "likelihoodRatio": 3.8414587469901265
+                    },
+                    {
+                      "value": 3.0193410895279698,
+                      "likelihoodRatio": 3.8414588131611636
+                    },
+                    {
+                      "value": 3.0193410895434356,
+                      "likelihoodRatio": 3.841458817296977
+                    },
+                    {
+                      "value": 3.0193410895511694,
+                      "likelihoodRatio": 3.8414588193649872
+                    },
+                    {
+                      "value": 3.0193410895550357,
+                      "likelihoodRatio": 3.8414588203989117
+                    },
+                    {
+                      "value": 3.0193410895560016,
+                      "likelihoodRatio": 3.841458820657192
+                    },
+                    {
+                      "value": 3.0193410895561223,
+                      "likelihoodRatio": 3.8414588206893665
+                    },
+                    {
+                      "value": 3.019341089556243,
+                      "likelihoodRatio": 3.8414588207217637
+                    },
+                    {
+                      "value": 3.019341089556485,
+                      "likelihoodRatio": 3.8414588207864866
+                    },
+                    {
+                      "value": 3.0193410895569683,
+                      "likelihoodRatio": 3.841458820915632
+                    },
+                    {
+                      "value": 3.019341089558902,
+                      "likelihoodRatio": 3.8414588214326737
+                    },
+                    {
+                      "value": 3.0193410895898336,
+                      "likelihoodRatio": 3.8414588297041288
+                    },
+                    {
+                      "value": 3.0193410896516975,
+                      "likelihoodRatio": 3.841458846246967
+                    },
+                    {
+                      "value": 3.0193410897754243,
+                      "likelihoodRatio": 3.8414588793325195
+                    },
+                    {
+                      "value": 3.0193410907652414,
+                      "likelihoodRatio": 3.8414591440175494
+                    },
+                    {
+                      "value": 3.0193410927448756,
+                      "likelihoodRatio": 3.8414596733877495
+                    },
+                    {
+                      "value": 3.0193411006634125,
+                      "likelihoodRatio": 3.8414617908681565
+                    },
+                    {
+                      "value": 3.019341116500487,
+                      "likelihoodRatio": 3.841466025829812
+                    },
+                    {
+                      "value": 3.019341148174636,
+                      "likelihoodRatio": 3.8414744957551874
+                    },
+                    {
+                      "value": 3.0193412115229346,
+                      "likelihoodRatio": 3.8414914356140955
+                    },
+                    {
+                      "value": 3.019341718309374,
+                      "likelihoodRatio": 3.841626954880064
+                    },
+                    {
+                      "value": 3.019343745455984,
+                      "likelihoodRatio": 3.8421690389479752
+                    },
+                    {
+                      "value": 3.0193599626778562,
+                      "likelihoodRatio": 3.846506114380922
+                    },
+                    {
+                      "value": 3.019392397382915,
+                      "likelihoodRatio": 3.855182406287198
+                    },
+                    {
+                      "value": 3.0194572678383005,
+                      "likelihoodRatio": 3.8725434853178173
+                    },
+                    {
+                      "value": 3.0199762816576827,
+                      "likelihoodRatio": 4.011822151057607
+                    },
+                    {
+                      "value": 3.032876404413117,
+                      "likelihoodRatio": 7.521250102310574
+                    },
+                    {
+                      "value": 3.052980579463072,
+                      "likelihoodRatio": 12.437395922837046
+                    },
+                    {
+                      "value": 3.0844057365992654,
+                      "likelihoodRatio": 18.349526269390118
+                    }
+                  ]
+                },
+                {
+                  "parameter": "b",
+                  "cutoff": 3.841458820694131,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.9424702867079153
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.049053484734391
+                  },
+                  "lowerStatus": "crossing",
+                  "upperStatus": "crossing",
+                  "unimodalInExaminedRange": true,
+                  "points": [
+                    {
+                      "value": 1.7182468631057206,
+                      "likelihoodRatio": 24.067684335350823
+                    },
+                    {
+                      "value": 1.8117700630721834,
+                      "likelihoodRatio": 17.596852368026074
+                    },
+                    {
+                      "value": 1.8747920010636243,
+                      "likelihoodRatio": 11.742478831591566
+                    },
+                    {
+                      "value": 1.9166099798673821,
+                      "likelihoodRatio": 6.971053286920883
+                    },
+                    {
+                      "value": 1.9302976347891894,
+                      "likelihoodRatio": 5.304303223709169
+                    },
+                    {
+                      "value": 1.9371780756252137,
+                      "likelihoodRatio": 4.47111208184891
+                    },
+                    {
+                      "value": 1.9406274874456977,
+                      "likelihoodRatio": 4.0591559403078845
+                    },
+                    {
+                      "value": 1.9423544959797816,
+                      "likelihoodRatio": 3.855080895985635
+                    },
+                    {
+                      "value": 1.9424624850289975,
+                      "likelihoodRatio": 3.8423763895109553
+                    },
+                    {
+                      "value": 1.9424692345439172,
+                      "likelihoodRatio": 3.841582565379032
+                    },
+                    {
+                      "value": 1.9424700782349313,
+                      "likelihoodRatio": 3.8414833390851264
+                    },
+                    {
+                      "value": 1.9424701836963338,
+                      "likelihoodRatio": 3.8414709358253907
+                    },
+                    {
+                      "value": 1.9424702364270372,
+                      "likelihoodRatio": 3.8414647341976655
+                    },
+                    {
+                      "value": 1.9424702627923893,
+                      "likelihoodRatio": 3.841461633384437
+                    },
+                    {
+                      "value": 1.9424702759750656,
+                      "likelihoodRatio": 3.8414600829779415
+                    },
+                    {
+                      "value": 1.9424702825664037,
+                      "likelihoodRatio": 3.8414593077747625
+                    },
+                    {
+                      "value": 1.9424702858620728,
+                      "likelihoodRatio": 3.8414589201730993
+                    },
+                    {
+                      "value": 1.9424702866859902,
+                      "likelihoodRatio": 3.84145882327276
+                    },
+                    {
+                      "value": 1.942470286698864,
+                      "likelihoodRatio": 3.8414588217586796
+                    },
+                    {
+                      "value": 1.9424702867053005,
+                      "likelihoodRatio": 3.8414588210016616
+                    },
+                    {
+                      "value": 1.9424702867069097,
+                      "likelihoodRatio": 3.8414588208124236
+                    },
+                    {
+                      "value": 1.9424702867077144,
+                      "likelihoodRatio": 3.8414588207177656
+                    },
+                    {
+                      "value": 1.9424702867081165,
+                      "likelihoodRatio": 3.841458820670472
+                    },
+                    {
+                      "value": 1.942470286708519,
+                      "likelihoodRatio": 3.8414588206230764
+                    },
+                    {
+                      "value": 1.9424702867117376,
+                      "likelihoodRatio": 3.8414588202446063
+                    },
+                    {
+                      "value": 1.9424702867374848,
+                      "likelihoodRatio": 3.8414588172165876
+                    },
+                    {
+                      "value": 1.9424702867889798,
+                      "likelihoodRatio": 3.8414588111601575
+                    },
+                    {
+                      "value": 1.9424702868919694,
+                      "likelihoodRatio": 3.8414587990476905
+                    },
+                    {
+                      "value": 1.9424702870979487,
+                      "likelihoodRatio": 3.8414587748226072
+                    },
+                    {
+                      "value": 1.9424702875099074,
+                      "likelihoodRatio": 3.8414587263723257
+                    },
+                    {
+                      "value": 1.942470289157742,
+                      "likelihoodRatio": 3.841458532571552
+                    },
+                    {
+                      "value": 1.9424705000805755,
+                      "likelihoodRatio": 3.841433726081871
+                    },
+                    {
+                      "value": 1.9424709219263117,
+                      "likelihoodRatio": 3.8413841131743123
+                    },
+                    {
+                      "value": 1.9424726093101718,
+                      "likelihoodRatio": 3.8411856625014646
+                    },
+                    {
+                      "value": 1.9424759840822894,
+                      "likelihoodRatio": 3.8407887657520825
+                    },
+                    {
+                      "value": 1.9424894832293926,
+                      "likelihoodRatio": 3.8392012400736286
+                    },
+                    {
+                      "value": 1.9425164818050342,
+                      "likelihoodRatio": 3.836026483442669
+                    },
+                    {
+                      "value": 1.942570480082079,
+                      "likelihoodRatio": 3.829678152474526
+                    },
+                    {
+                      "value": 1.942786488201173,
+                      "likelihoodRatio": 3.8043007349945483
+                    },
+                    {
+                      "value": 1.9432185765004326,
+                      "likelihoodRatio": 3.7536238774107233
+                    },
+                    {
+                      "value": 1.9440830414180348,
+                      "likelihoodRatio": 3.6525962761805175
+                    },
+                    {
+                      "value": 1.9620162354307813,
+                      "likelihoodRatio": 1.7263953635001523
+                    },
+                    {
+                      "value": 1.9736737329811829,
+                      "likelihoodRatio": 0.7642973667692627
+                    },
+                    {
+                      "value": 1.9812314316145792,
+                      "likelihoodRatio": 0.32703724500615267
+                    },
+                    {
+                      "value": 1.9950469239744477,
+                      "likelihoodRatio": 0.0
+                    },
+                    {
+                      "value": 2.008958754311849,
+                      "likelihoodRatio": 0.3270164178405851
+                    },
+                    {
+                      "value": 2.016651568264983,
+                      "likelihoodRatio": 0.7642239353723631
+                    },
+                    {
+                      "value": 2.0286336866045396,
+                      "likelihoodRatio": 1.7261528926894496
+                    },
+                    {
+                      "value": 2.0473468180436867,
+                      "likelihoodRatio": 3.6518864896687835
+                    },
+                    {
+                      "value": 2.048257605702762,
+                      "likelihoodRatio": 3.7528862300298265
+                    },
+                    {
+                      "value": 2.048713151461737,
+                      "likelihoodRatio": 3.8035490078990852
+                    },
+                    {
+                      "value": 2.048940962333439,
+                      "likelihoodRatio": 3.828919348838966
+                    },
+                    {
+                      "value": 2.0489979190093637,
+                      "likelihoodRatio": 3.835265906881795
+                    },
+                    {
+                      "value": 2.049026397941056,
+                      "likelihoodRatio": 3.8384397764833844
+                    },
+                    {
+                      "value": 2.0490406375553376,
+                      "likelihoodRatio": 3.840026858505682
+                    },
+                    {
+                      "value": 2.049047757399587,
+                      "likelihoodRatio": 3.8408204362690332
+                    },
+                    {
+                      "value": 2.049051317330989,
+                      "likelihoodRatio": 3.8412172343323436
+                    },
+                    {
+                      "value": 2.0490530972990095,
+                      "likelihoodRatio": 3.8414156356585982
+                    },
+                    {
+                      "value": 2.049053319795121,
+                      "likelihoodRatio": 3.841440435931855
+                    },
+                    {
+                      "value": 2.0490534310431854,
+                      "likelihoodRatio": 3.8414528360775284
+                    },
+                    {
+                      "value": 2.0490534588552025,
+                      "likelihoodRatio": 3.8414559361148504
+                    },
+                    {
+                      "value": 2.0490534727612113,
+                      "likelihoodRatio": 3.841457486133572
+                    },
+                    {
+                      "value": 2.0490534797142157,
+                      "likelihoodRatio": 3.8414582611430435
+                    },
+                    {
+                      "value": 2.049053483190718,
+                      "likelihoodRatio": 3.8414586486477944
+                    },
+                    {
+                      "value": 2.049053484059843,
+                      "likelihoodRatio": 3.8414587455239304
+                    },
+                    {
+                      "value": 2.0490534844944057,
+                      "likelihoodRatio": 3.841458793962054
+                    },
+                    {
+                      "value": 2.049053484711687,
+                      "likelihoodRatio": 3.8414588181809686
+                    },
+                    {
+                      "value": 2.049053484725267,
+                      "likelihoodRatio": 3.841458819694709
+                    },
+                    {
+                      "value": 2.049053484732057,
+                      "likelihoodRatio": 3.8414588204516407
+                    },
+                    {
+                      "value": 2.0490534847337547,
+                      "likelihoodRatio": 3.841458820640804
+                    },
+                    {
+                      "value": 2.049053484734179,
+                      "likelihoodRatio": 3.841458820687983
+                    },
+                    {
+                      "value": 2.0490534847346034,
+                      "likelihoodRatio": 3.8414588207353666
+                    },
+                    {
+                      "value": 2.049053484735452,
+                      "likelihoodRatio": 3.8414588208300153
+                    },
+                    {
+                      "value": 2.049053484738847,
+                      "likelihoodRatio": 3.8414588212083522
+                    },
+                    {
+                      "value": 2.049053484766007,
+                      "likelihoodRatio": 3.8414588242358105
+                    },
+                    {
+                      "value": 2.0490534848203277,
+                      "likelihoodRatio": 3.841458830290608
+                    },
+                    {
+                      "value": 2.0490534849289688,
+                      "likelihoodRatio": 3.84145884240014
+                    },
+                    {
+                      "value": 2.04905348666722,
+                      "likelihoodRatio": 3.8414590361525445
+                    },
+                    {
+                      "value": 2.049053542291256,
+                      "likelihoodRatio": 3.841465236229107
+                    },
+                    {
+                      "value": 2.0490539872835996,
+                      "likelihoodRatio": 3.8415148368951226
+                    },
+                    {
+                      "value": 2.049054877268576,
+                      "likelihoodRatio": 3.8416140385141393
+                    },
+                    {
+                      "value": 2.0491687985370395,
+                      "likelihoodRatio": 3.8543149915966115
+                    },
+                    {
+                      "value": 2.0509924004522686,
+                      "likelihoodRatio": 4.058332379826971
+                    },
+                    {
+                      "value": 2.0546444743213987,
+                      "likelihoodRatio": 4.470168958658559
+                    },
+                    {
+                      "value": 2.061968142697637,
+                      "likelihoodRatio": 5.30310638079158
+                    },
+                    {
+                      "value": 2.076693886951018,
+                      "likelihoodRatio": 6.969307168655772
+                    },
+                    {
+                      "value": 2.123015367359054,
+                      "likelihoodRatio": 11.738895674867234
+                    },
+                    {
+                      "value": 2.1968638901730926,
+                      "likelihoodRatio": 17.590426406781187
+                    },
+                    {
+                      "value": 2.3164379428376765,
+                      "likelihoodRatio": 24.056999582346535
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "activeFamily": "nonlinear",
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-03T10:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [
+              {
+                "id": "substrate",
+                "name": "substrate",
+                "kind": "numeric",
+                "unit": "g/L",
+                "levelsText": ""
+              }
+            ],
+            "responses": [
+              {
+                "id": "y",
+                "name": "Activity",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": [
+              {
+                "id": "o0",
+                "unitId": "",
+                "factors": [
+                  "0.1"
+                ],
+                "responses": [
+                  "0.15285714285714289"
+                ]
+              },
+              {
+                "id": "o1",
+                "unitId": "",
+                "factors": [
+                  "0.5"
+                ],
+                "responses": [
+                  "0.59"
+                ]
+              },
+              {
+                "id": "o2",
+                "unitId": "",
+                "factors": [
+                  "1"
+                ],
+                "responses": [
+                  "1.01"
+                ]
+              },
+              {
+                "id": "o3",
+                "unitId": "",
+                "factors": [
+                  "2"
+                ],
+                "responses": [
+                  "1.49"
+                ]
+              },
+              {
+                "id": "o4",
+                "unitId": "",
+                "factors": [
+                  "4"
+                ],
+                "responses": [
+                  "2.01"
+                ]
+              },
+              {
+                "id": "o5",
+                "unitId": "",
+                "factors": [
+                  "8"
+                ],
+                "responses": [
+                  "2.39"
+                ]
+              },
+              {
+                "id": "o6",
+                "unitId": "",
+                "factors": [
+                  "12"
+                ],
+                "responses": [
+                  "2.5814285714285714"
+                ]
+              },
+              {
+                "id": "o7",
+                "unitId": "",
+                "factors": [
+                  "16"
+                ],
+                "responses": [
+                  "2.6566666666666667"
+                ]
+              }
+            ]
+          },
+          "contentHash": "075c61bcab5873fdff5514b74c1e5f82a0f6aae04809cdaf2d004ed8f1b9fc84"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

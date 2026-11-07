@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p1",
+  "name": "Saved families",
+  "createdAt": "2026-11-03T10:00:00Z",
+  "modifiedAt": "2026-11-03T10:00:00Z",
+  "appVersion": "0.4.0-dev",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Historical experiment",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-03T10:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [],
+            "responses": [
+              {
+                "id": "y",
+                "name": "Activity",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": []
+          },
+          "contentHash": "fad783d94fea755f287b78bec076fc589b7401cc078cae01fcb1c5cc94b8e266"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

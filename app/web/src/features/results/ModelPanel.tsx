@@ -6,17 +6,17 @@ import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { formatP, formatSignificant } from "../../i18n/format";
 import { nowIso } from "../../lib/ids";
-import type { ModelMetrics, SelectionResult, Stat, SurfaceResult } from "../../services/engine";
+import type {
+  ModelMetrics,
+  SelectionResult,
+  Stat,
+  SurfaceRequest,
+  SurfaceResult,
+} from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
-import {
-  buildDataset,
-  buildOperation,
-  buildSurfaceRequest,
-  inputSignature,
-  surfaceFactors,
-} from "../analysis/buildRequest";
+import { buildDataset, buildOperation, inputSignature } from "../analysis/buildRequest";
 import {
   allSurfaceTerms,
   breaksHierarchy,
@@ -24,50 +24,84 @@ import {
   termKey,
   termLabel,
 } from "../analysis/surfaceTerms";
+import { resultIsCurrent } from "../workflow/guards";
 
 const num = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
 
-export function ModelPanel({ result, language }: { result: SurfaceResult; language: Language }) {
+interface Props {
+  result: SurfaceResult;
+  request: SurfaceRequest;
+  signature: string;
+  language: Language;
+  report?: boolean;
+}
+
+export function ModelPanel(props: Props) {
+  const { t } = useTranslation("results");
+  const [opened, setOpened] = useState(false);
+  if (opened || props.report) return <ModelComparison {...props} />;
+  return (
+    <section
+      className="panel"
+      aria-labelledby="model-panel-title"
+      data-testid="model-panel"
+      data-report-skip
+    >
+      <h3 id="model-panel-title">{t("model.title")}</h3>
+      <button
+        type="button"
+        className="button secondary"
+        onClick={() => setOpened(true)}
+        data-testid="model-compare-action"
+      >
+        {t("model.compareAction")}
+      </button>
+    </section>
+  );
+}
+
+function ModelComparison({ result, request, signature, language, report }: Props) {
   const { t } = useTranslation("results");
   const state = useProject();
   const dispatch = useProjectDispatch();
   const { client } = useEngine();
-  const [selection, setSelection] = useState<SelectionResult | null>(null);
+  const [comparison, setComparison] = useState<{
+    signature: string;
+    result: SelectionResult;
+  } | null>(null);
   const [busy, setBusy] = useState(false);
   // Seleção mostrada enquanto o motor recalcula (a caixa muda na hora e é confirmada depois).
   const [optimistic, setOptimistic] = useState<Set<string> | null>(null);
   const [problems, setProblems] = useState<string[]>([]);
 
-  const factors = surfaceFactors(state);
+  const factors = request.factors;
   const ids = factors.map((f) => f.id);
   const nameOf = (id: string) => factors.find((f) => f.id === id)?.name ?? id;
   const idsKey = ids.join("|");
   const all = useMemo(() => allSurfaceTerms(idsKey === "" ? [] : idsKey.split("|")), [idsKey]);
-  const stateRef = useRef(state);
-  stateRef.current = state;
-  const signature = state.result?.signature ?? "";
+  const requestRef = useRef(request);
+  requestRef.current = request;
+  const translationRef = useRef(t);
+  translationRef.current = t;
+  const selection = comparison?.signature === signature ? comparison.result : null;
+  const canEdit = state.result?.signature === signature && resultIsCurrent(state);
 
   // Métricas e sequência de eliminação para o modelo atual.
   useEffect(() => {
-    void signature; // recalcula quando dados, termos ou α mudam
-    const current = stateRef.current;
-    const responseId = current.analysis.responseId;
-    if (responseId === null) return;
     let live = true;
-    const { dataset } = buildDataset(current);
     client
       .request(
-        { type: "surfaceSelectModel", ...buildSurfaceRequest(current, dataset, responseId) },
-        { channel: "model-selection" },
+        { type: "surfaceSelectModel", ...requestRef.current },
+        { channel: report ? "report-model-selection" : "model-selection" },
       )
       .then((r) => {
         if (!live) return;
         if (r.outcome.status === "ok" && r.outcome.result.type === "surfaceSelectModel") {
-          setSelection(r.outcome.result as unknown as SelectionResult);
+          setComparison({ signature, result: r.outcome.result });
           setOptimistic(null);
           setProblems([]);
         } else if (r.outcome.status === "error") {
-          setProblems(engineErrorMessages(t, r.outcome.error));
+          setProblems(engineErrorMessages(translationRef.current, r.outcome.error));
         }
       })
       .catch(() => {});
@@ -75,7 +109,7 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
       live = false;
     };
     // `signature` (resultado guardado) muda quando dados, termos ou α mudam.
-  }, [client, signature, t]);
+  }, [client, report, signature]);
 
   const applyTerms = async (next: string[][] | null) => {
     const nextState = { ...state, analysis: { ...state.analysis, designTerms: next } };
@@ -141,7 +175,14 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
     }
   };
 
-  if (!selection) return problems.length > 0 ? <ProblemList problems={problems} /> : null;
+  if (!selection)
+    return problems.length > 0 ? (
+      <ProblemList problems={problems} />
+    ) : (
+      <p role="status" data-report-skip data-loading>
+        {t("model.comparing")}
+      </p>
+    );
   const current = selection.steps[0]?.metrics;
   const recommended = selection.steps[selection.steps.length - 1]?.metrics;
   if (!current || !recommended) return null;
@@ -202,14 +243,16 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
   return (
     <section className="panel" aria-labelledby="model-panel-title" data-testid="model-panel">
       <h3 id="model-panel-title">{t("model.title")}</h3>
-      <p className="muted small">{t("model.intro")}</p>
+      <p className="muted small" data-report-skip>
+        {t("model.intro")}
+      </p>
       {state.responses.length > 1 && (
         <label className="field">
           <span>{t("model.response")}</span>
           <select
             data-testid="model-response"
-            disabled={busy}
-            value={state.analysis.responseId ?? ""}
+            disabled={busy || !canEdit}
+            value={request.responseId}
             onChange={(e) => void switchResponse(e.target.value)}
           >
             {state.responses.map((r) => (
@@ -221,7 +264,7 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
           <small className="muted">{t("model.responseHelp")}</small>
         </label>
       )}
-      <fieldset disabled={busy} className="editor-card">
+      <fieldset data-report-skip disabled={busy || !canEdit} className="editor-card">
         <legend>{t("model.terms")}</legend>
         <ul className="facts-list term-toggles">
           {all.map((term) => {
@@ -276,6 +319,16 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
       </fieldset>
       {problems.length > 0 && <ProblemList problems={problems} />}
 
+      <p data-testid="final-model">
+        {t("model.finalTerms", {
+          terms: currentTerms.map((term) => termLabel(term, nameOf)).join(" + "),
+          removed:
+            all
+              .filter((term) => !currentTerms.some((current) => termKey(current) === termKey(term)))
+              .map((term) => termLabel(term, nameOf))
+              .join(", ") || "—",
+        })}
+      </p>
       <div className="grid-scroll">
         <table className="results-table" data-testid="model-compare">
           <caption>{t("model.compareCaption")}</caption>
@@ -317,7 +370,7 @@ export function ModelPanel({ result, language }: { result: SurfaceResult; langua
               <button
                 type="button"
                 className="button secondary small"
-                disabled={busy}
+                disabled={busy || !canEdit}
                 onClick={() => {
                   const terms = termIdsFromSpecs(step.metrics.terms);
                   void applyTerms(terms.length === all.length ? null : terms);

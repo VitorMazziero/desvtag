@@ -1,5 +1,6 @@
 import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
+import { startObjective } from "./startObjective";
 
 // Planilha de coleta (ET13), com o motor Rust real (WebAssembly): gerar o planejamento → baixar a
 // matriz (já com a coluna da resposta) → preencher o arquivo fora do aplicativo → importar o MESMO
@@ -35,8 +36,7 @@ test.describe("planilha de coleta", () => {
   }, testInfo) => {
     test.setTimeout(120_000);
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     for (const [i, [name, unit]] of [
       ["Temperatura", "°C"],
       ["pH", ""],
@@ -44,11 +44,17 @@ test.describe("planilha de coleta", () => {
       await page.getByRole("button", { name: "Adicionar fator" }).click();
       await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
       await page.getByLabel("Tipo").nth(i).selectOption("numeric");
-      await page.getByLabel("Unidade (opcional)").nth(i).fill(unit);
+      await page
+        .getByLabel(/^Unidade de /)
+        .nth(i)
+        .fill(unit);
     }
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
-    await page.getByLabel("Unidade (opcional)").nth(2).fill("U/mL");
+    await page
+      .getByLabel(/^Unidade de /)
+      .nth(2)
+      .fill("U/mL");
     await page.getByRole("button", { name: "Avançar" }).click();
 
     await page.getByLabel("Temperatura — Nível baixo").fill("20");
@@ -77,7 +83,7 @@ test.describe("planilha de coleta", () => {
     await importFile(page, path);
     await expect(page.getByTestId("fill-responses")).toBeVisible();
     await expect(page.getByTestId("fill-summary")).toContainText("6 valor(es)");
-    await page.getByRole("button", { name: "Preencher respostas" }).click();
+    await page.getByRole("button", { name: "Preencher respostas", exact: true }).click();
     await expect(page.getByTestId("import-wizard")).toHaveCount(0);
 
     // Cada ensaio recebeu o valor da sua linha (os níveis conferem, inclusive as réplicas centrais).
@@ -98,15 +104,17 @@ test.describe("planilha de coleta", () => {
   }, testInfo) => {
     test.setTimeout(120_000);
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
+    await page.getByLabel("Tipo").first().selectOption("categorical");
     await page.getByLabel("Níveis (opcional)").fill("Controle; pH 5; pH 7");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
     await page.getByRole("button", { name: "Avançar" }).click();
     await page.getByLabel("Unidades experimentais por nível").fill("2");
+    if (!(await page.getByLabel("Semente da aleatorização").isVisible()))
+      await page.getByText("Reprodutibilidade (semente do sorteio)", { exact: true }).click();
     await page.getByLabel("Semente da aleatorização").fill("7");
     await page.getByRole("button", { name: "Gerar planejamento" }).click();
     await expect(page.getByTestId("crd-generated")).toContainText("6 ensaios");
@@ -132,7 +140,7 @@ test.describe("planilha de coleta", () => {
 
     await importFile(page, path);
     await expect(page.getByTestId("fill-summary")).toContainText("6 valor(es)");
-    await page.getByRole("button", { name: "Preencher respostas" }).click();
+    await page.getByRole("button", { name: "Preencher respostas", exact: true }).click();
     await expect(page.getByTestId("import-wizard")).toHaveCount(0);
     for (const l of sheet.lines) {
       const run = Number(l[0]);
@@ -147,10 +155,10 @@ test.describe("planilha de coleta", () => {
   }, testInfo) => {
     test.setTimeout(120_000);
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
+    await page.getByLabel("Tipo").first().selectOption("categorical");
     await page.getByLabel("Níveis (opcional)").fill("A; B");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
@@ -170,7 +178,9 @@ test.describe("planilha de coleta", () => {
     await expect(page.getByTestId("fill-responses")).toBeVisible();
     await expect(page.getByTestId("fill-summary")).toContainText("0 valor(es)");
     await expect(page.getByTestId("fill-summary")).toContainText("4 célula(s) em branco");
-    await expect(page.getByRole("button", { name: "Preencher respostas" })).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: "Preencher respostas", exact: true }),
+    ).toBeDisabled();
     await expect(page.getByTestId("fill-unmatched")).toHaveCount(0);
   });
 
@@ -178,10 +188,10 @@ test.describe("planilha de coleta", () => {
     page,
   }, testInfo) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
+    await page.getByLabel("Tipo").first().selectOption("categorical");
     await page.getByLabel("Níveis (opcional)").fill("A; B");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
@@ -195,6 +205,8 @@ test.describe("planilha de coleta", () => {
     await importFile(page, path);
     await expect(page.getByTestId("fill-unmatched")).toContainText("Linhas: 1");
     await expect(page.getByTestId("fill-invalid")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Preencher respostas" })).toBeDisabled();
+    await expect(
+      page.getByRole("button", { name: "Preencher respostas", exact: true }),
+    ).toBeDisabled();
   });
 });

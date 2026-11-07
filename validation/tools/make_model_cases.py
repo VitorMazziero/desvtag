@@ -178,7 +178,7 @@ Nenhuma além da tolerância.{" Em modelos com aliasing só as quantidades invar
 
 ## Execução
 
-`app/crates/optima-core/tests/linear_model_validation.rs` (nativo) e `app/web/src/services/engine/linear.parity.test.ts` (WebAssembly).
+`app/crates/desvtag-core/tests/linear_model_validation.rs` (nativo) e `app/web/src/services/engine/linear.parity.test.ts` (WebAssembly).
 """)
     print(folder.name, "n =", len(used), "p =", x.shape[1], "rank =", expected["reference"]["rank"])
 

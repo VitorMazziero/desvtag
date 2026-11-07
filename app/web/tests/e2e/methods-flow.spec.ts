@@ -1,6 +1,9 @@
 import { readFileSync } from "node:fs";
 import { expect, type Page, test } from "@playwright/test";
+import { clickAfterFocus } from "./clickAfterFocus";
+import { openFigureMenu } from "./figureTools";
 import { openPowerTool, openSaturationTool } from "./menus";
+import { startObjective } from "./startObjective";
 
 // Procedimentos de comparação múltipla e ANOVA multifatorial com o motor Rust real (WebAssembly).
 
@@ -16,8 +19,7 @@ async function paste(page: Page, label: string, text: string) {
 
 async function startCompare(page: Page, factors: string[]) {
   await page.goto("/");
-  await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "compare");
   for (const [i, name] of factors.entries()) {
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
@@ -25,7 +27,7 @@ async function startCompare(page: Page, factors: string[]) {
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(factors.length).fill("Atividade");
   await page.getByRole("button", { name: "Avançar" }).click();
-  await page.getByRole("button", { name: "Adicionar linha" }).click();
+  await clickAfterFocus(page.getByRole("button", { name: "Adicionar linha" }));
 }
 
 test.use({ locale: "pt-BR", acceptDownloads: true });
@@ -94,6 +96,48 @@ test("Dunnett e Kruskal–Wallis/Dunn: comparações com o controle e por postos
   await expect(pairs.filter({ hasText: "T2" })).toContainText("diferença não detectada");
 });
 
+test("Dunnett mantém as colunas identificáveis em tabelas longas", async ({ page }) => {
+  await page.setViewportSize({ width: 1064, height: 892 });
+  await startCompare(page, ["Condição"]);
+  const rows = Array.from({ length: 49 }, (_, group) =>
+    Array.from(
+      { length: 4 },
+      (_, replicate) => `${group === 0 ? "controle" : `T${group}`}\t${group + replicate}`,
+    ),
+  ).flat();
+  await paste(page, "Condição — Obs. 1", rows.join("\n"));
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByLabel("Fator que define os grupos").selectOption({ label: "Condição" });
+  await page.getByTestId("procedure-select").selectOption("dunnett");
+  await page.getByLabel("Nível de controle").selectOption("controle");
+  await page.getByRole("button", { name: "Comparar tratamentos" }).click();
+  await expect(page.getByTestId("procedure-summary")).toContainText("controle");
+  await page.getByTestId("section-tables").click();
+  await expect(page.getByTestId("procedure-pairs").locator("tbody tr")).toHaveCount(48);
+
+  for (const width of [1064, 375]) {
+    await page.setViewportSize({ width, height: 892 });
+    const region = page.getByRole("region", { name: "Comparações", exact: true });
+    await region.focus();
+    await expect(region).toBeFocused();
+    const geometry = await region.evaluate((el) => {
+      el.scrollTop = el.scrollHeight;
+      const top = el.getBoundingClientRect().top;
+      return {
+        scrollTop: el.scrollTop,
+        headerOffsets: Array.from(el.querySelectorAll("thead th"), (cell) =>
+          Math.abs(cell.getBoundingClientRect().top - top),
+        ),
+        pageOverflow: document.documentElement.scrollWidth - window.innerWidth,
+      };
+    });
+    expect(geometry.scrollTop).toBeGreaterThan(0);
+    expect(geometry.headerOffsets).toHaveLength(7);
+    expect(Math.max(...geometry.headerOffsets)).toBeLessThanOrEqual(2);
+    expect(geometry.pageOverflow).toBeLessThanOrEqual(1);
+  }
+});
+
 test("ANOVA multifatorial com dois fatores: tabela, médias marginais e contraste", async ({
   page,
 }) => {
@@ -128,13 +172,14 @@ test("DBC aleatorizado: gerar blocos, preencher respostas e analisar com bloco",
 }) => {
   test.setTimeout(120_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "plan");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Tratamento");
+  await page.getByLabel("Tipo", { exact: true }).nth(0).selectOption("categorical");
   await page.getByLabel("Níveis (opcional)").nth(0).fill("A; B; C");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(1).fill("Dia");
+  await page.getByLabel("Tipo", { exact: true }).nth(1).selectOption("categorical");
   await page.getByLabel("Níveis (opcional)").nth(1).fill("d1; d2; d3; d4");
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
@@ -170,10 +215,10 @@ test("níveis mistos: 3 cepas × 2 pH × 2 repetições, ANOVA multifatorial e p
 }) => {
   test.setTimeout(120_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "plan");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Cepa");
+  await page.getByLabel("Tipo", { exact: true }).nth(0).selectOption("categorical");
   await page.getByLabel("Níveis (opcional)").nth(0).fill("A; B; C");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(1).fill("pH");
@@ -217,8 +262,7 @@ test("misturas: simplex-lattice {3,2}, resposta, modelo quadrático de Scheffé 
 }, testInfo) => {
   test.setTimeout(120_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "plan");
   for (const [i, name] of ["Água", "Etanol", "Glicerol"].entries()) {
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
@@ -280,8 +324,7 @@ test("misturas: simplex-lattice {3,2}, resposta, modelo quadrático de Scheffé 
 test("planejamento ótimo: D-ótimo quadrático com restrição, e uso nos dados", async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "plan");
   for (const [i, name] of ["Temperatura", "pH"].entries()) {
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
@@ -344,7 +387,7 @@ test("medidas repetidas: unidades, t pareado, Wilcoxon e modelo misto com interc
   await page.getByRole("button", { name: "Avançar" }).click();
 
   const panel = page.getByTestId("repeated-measures");
-  await panel.getByText("Medidas repetidas, pareados e modelos mistos").click();
+  await page.getByLabel("Estrutura das observações").selectOption("repeated");
   await expect(panel.getByTestId("repeated-need-units")).toHaveCount(0);
   await panel.getByRole("button", { name: "Comparar pares" }).click();
   const paired = page.getByTestId("paired-result");
@@ -353,6 +396,8 @@ test("medidas repetidas: unidades, t pareado, Wilcoxon e modelo misto com interc
   await expect(page.getByTestId("paired-p")).not.toHaveText("—");
   await expect(page.getByTestId("wilcoxon-p")).toContainText("0,03125"); // 2/64, exato
 
+  await page.locator(".steps .step").nth(3).click();
+  await panel.getByTestId("repeated-method").selectOption("mixed");
   await panel.getByRole("button", { name: "Ajustar modelo misto" }).click();
   const coefficients = page.getByTestId("mixed-coefficients");
   await expect(coefficients.locator("tbody tr")).toHaveCount(2); // intercepto e Depois
@@ -377,11 +422,13 @@ test("calculadora de potência: tamanho de amostra de duas amostras igual ao Sci
   await expect(page.getByTestId("power-summary")).toContainText("0,8076");
   await expect(page.getByTestId("power-curve").locator("tbody tr").first()).toBeVisible();
 
+  await openPowerTool(page);
   await page.getByTestId("power-goal").selectOption("precisionFor");
   await page.getByLabel("Semiamplitude desejada do intervalo").fill("0,5");
   await page.getByRole("button", { name: "Calcular" }).click();
   await expect(page.getByTestId("power-result")).toContainText("Semiamplitude do intervalo em n");
 
+  await openPowerTool(page);
   await page.getByTestId("power-design").selectOption("anova");
   await page.getByTestId("power-goal").selectOption("powerAt");
   await page.getByLabel("Tamanho da amostra").fill("8");
@@ -391,11 +438,13 @@ test("calculadora de potência: tamanho de amostra de duas amostras igual ao Sci
   // UX44: mudar uma entrada deixa o resultado marcado como desatualizado; α inválido é recusado
   // junto do campo, sem chamar o motor e sem «erro desconhecido».
   await expect(page.getByTestId("power-stale")).toHaveCount(0);
+  await openPowerTool(page);
   await page.getByLabel("Tamanho da amostra").fill("9");
   await expect(page.getByTestId("power-stale")).toBeVisible();
   await page.getByRole("button", { name: "Calcular" }).click();
   await expect(page.getByTestId("power-stale")).toHaveCount(0);
   await expect(page.getByTestId("power-summary")).toContainText("9 por grupo");
+  await openPowerTool(page);
   await page.getByLabel("Nível de significância (α)").fill("2");
   await page.getByRole("button", { name: "Calcular" }).click();
   await expect(
@@ -413,8 +462,7 @@ test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico
 }) => {
   test.setTimeout(120_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "analyze");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Substrato");
   await page.getByLabel("Tipo").nth(0).selectOption("numeric");
@@ -446,6 +494,7 @@ test("ajuste de saturação: Monod com dados simulados, tabela, faixa e gráfico
 
   // UX42: trocar o modelo não pode deixar o resultado de Monod passar por ajuste de Hill.
   await expect(page.getByTestId("saturation-stale")).toHaveCount(0);
+  await openSaturationTool(page);
   await page.getByTestId("saturation-model").selectOption("hill");
   await expect(page.getByTestId("saturation-stale")).toBeVisible();
   await panel.getByRole("button", { name: "Ajustar curva" }).click();
@@ -474,6 +523,7 @@ test("figura: letras manuais, anotação livre e aparência completa vão para o
   await page.getByTestId("section-charts").click();
 
   const chart = page.getByTestId("procedure-chart");
+  await openFigureMenu(chart);
   await chart.getByText("Personalizar figura").click();
   await chart.getByTestId("manual-letters").fill("a b -");
   await chart.getByRole("button", { name: "Adicionar anotação" }).click();
@@ -490,6 +540,7 @@ test("figura: letras manuais, anotação livre e aparência completa vão para o
   await expect(chart.locator('svg line[data-figure="grid"]')).toHaveCount(0);
 
   const download = page.waitForEvent("download");
+  await openFigureMenu(chart);
   await chart.getByRole("button", { name: /Figura — SVG/ }).click();
   const svg = readFileSync((await (await download).path()) as string, "utf8");
   expect(svg).toContain("#aa3377");

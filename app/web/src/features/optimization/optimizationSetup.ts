@@ -77,6 +77,7 @@ export function buildOptimizationRequest(
 ): OptimizationRequest {
   return {
     dataset: buildDataset(state).dataset,
+    block: state.analysis.surfaceBlock ?? undefined,
     factors: surfaceFactors(state),
     setup: effectiveSetup(state, setup),
   };
@@ -90,6 +91,7 @@ export function optimizationSignature(state: ProjectState, setup: OptimizationSe
     dataset,
     surfaceFactors(state),
     effectiveSetup(state, setup),
+    ...(state.analysis.surfaceBlock ? [state.analysis.surfaceBlock] : []),
   ]);
 }
 
@@ -103,6 +105,9 @@ export function confirmationRows(
   state: ProjectState,
   points: number[][],
   replicates: number,
+  factorIds: string[] = state.factors
+    .filter((factor) => factor.kind === "numeric")
+    .map((factor) => factor.id),
 ): RowDraft[] {
   const rows: RowDraft[] = [];
   for (const point of points) {
@@ -110,7 +115,12 @@ export function confirmationRows(
       rows.push({
         id: `o${rows.length + 1}`,
         unitId: "",
-        factors: point.map((v) => String(v)),
+        factors: state.factors.map((factor) => {
+          if (factor.id === state.analysis.surfaceBlock?.factorId)
+            return state.analysis.surfaceBlock.reference;
+          const index = factorIds.indexOf(factor.id);
+          return index >= 0 && point[index] !== undefined ? String(point[index]) : "";
+        }),
         responses: state.responses.map(() => ""),
       });
     }
@@ -146,5 +156,9 @@ export function confirmationPlan(
       });
     }
   });
-  return { confidenceLevel: 1 - alpha, predictions };
+  return {
+    confidenceLevel: 1 - alpha,
+    predictions,
+    ...(evaluation.block ? { block: evaluation.block } : {}),
+  };
 }

@@ -1,0 +1,102 @@
+
+Running 2 tests using 2 workers
+
+(node:13324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\et23-columns.spec.ts:75:1 › T02: a factor used as unit cannot merge distinct original labels (1.0m)
+  x  2 [chromium] › tests\e2e\et23-columns.spec.ts:30:1 › T02: unit/time roles survive grid editing, table export and project reopening (1.0m)
+
+
+  1) [chromium] › tests\e2e\et23-columns.spec.ts:30:1 › T02: unit/time roles survive grid editing, table export and project reopening 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForEvent: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for event "filechooser"
+    ============================================================
+
+      12 |
+      13 | async function importCsv(page: Page, text: string) {
+    > 14 |   const chooser = page.waitForEvent("filechooser");
+         |                        ^
+      15 |   await page.getByRole("button", { name: "Importar arquivo (CSV ou XLSX)…", exact: true }).click();
+      16 |   await (await chooser).setFiles({ name: "occasions.csv", mimeType: "text/csv", buffer: Buffer.from(text) });
+      17 |   await page.getByTestId("import-wizard").waitFor();
+        at importCsv (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:14:24)
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:34:9
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Importar arquivo (CSV ou XLSX)…', exact: true })
+
+
+      13 | async function importCsv(page: Page, text: string) {
+      14 |   const chooser = page.waitForEvent("filechooser");
+    > 15 |   await page.getByRole("button", { name: "Importar arquivo (CSV ou XLSX)…", exact: true }).click();
+         |                                                                                            ^
+      16 |   await (await chooser).setFiles({ name: "occasions.csv", mimeType: "text/csv", buffer: Buffer.from(text) });
+      17 |   await page.getByTestId("import-wizard").waitFor();
+      18 | }
+        at importCsv (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:15:92)
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:34:9
+
+    Error Context: test-results-et23-columns-first\et23-columns-T02-unit-time-b5a7d-xport-and-project-reopening-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-columns-first\et23-columns-T02-unit-time-b5a7d-xport-and-project-reopening-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-columns-first\et23-columns-T02-unit-time-b5a7d-xport-and-project-reopening-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\et23-columns.spec.ts:75:1 › T02: a factor used as unit cannot merge distinct original labels 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForEvent: Test timeout of 60000ms exceeded.
+    =========================== logs ===========================
+    waiting for event "filechooser"
+    ============================================================
+
+      12 |
+      13 | async function importCsv(page: Page, text: string) {
+    > 14 |   const chooser = page.waitForEvent("filechooser");
+         |                        ^
+      15 |   await page.getByRole("button", { name: "Importar arquivo (CSV ou XLSX)…", exact: true }).click();
+      16 |   await (await chooser).setFiles({ name: "occasions.csv", mimeType: "text/csv", buffer: Buffer.from(text) });
+      17 |   await page.getByTestId("import-wizard").waitFor();
+        at importCsv (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:14:24)
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:78:9
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Importar arquivo (CSV ou XLSX)…', exact: true })
+
+
+      13 | async function importCsv(page: Page, text: string) {
+      14 |   const chooser = page.waitForEvent("filechooser");
+    > 15 |   await page.getByRole("button", { name: "Importar arquivo (CSV ou XLSX)…", exact: true }).click();
+         |                                                                                            ^
+      16 |   await (await chooser).setFiles({ name: "occasions.csv", mimeType: "text/csv", buffer: Buffer.from(text) });
+      17 |   await page.getByTestId("import-wizard").waitFor();
+      18 | }
+        at importCsv (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:15:92)
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:78:9
+
+    Error Context: test-results-et23-columns-first\et23-columns-T02-a-factor--1756c-ge-distinct-original-labels-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-columns-first\et23-columns-T02-a-factor--1756c-ge-distinct-original-labels-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-columns-first\et23-columns-T02-a-factor--1756c-ge-distinct-original-labels-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\et23-columns.spec.ts:30:1 › T02: unit/time roles survive grid editing, table export and project reopening 
+    [chromium] › tests\e2e\et23-columns.spec.ts:75:1 › T02: a factor used as unit cannot merge distinct original labels 

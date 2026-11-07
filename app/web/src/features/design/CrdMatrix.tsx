@@ -66,7 +66,7 @@ export function CrdMatrix({ spec }: { spec: CrdSpec }) {
     ...(collection.cells[i] ?? []),
   ]);
   const meta = {
-    app: "EnziTAG Optima",
+    app: "DesvTAG",
     project: workspace.name,
     method: `${crd.provenance.methodId} v${crd.provenance.methodVersion}`,
     engine: crd.provenance.engineVersion,

@@ -2,7 +2,7 @@
 import type { AnalysisRecord, ProjectDocument } from "../engine";
 
 export interface ExportMetadata {
-  app: "EnziTAG Optima";
+  app: "DesvTAG";
   appVersion: string;
   engineVersion: string;
   methodId: string;
@@ -27,7 +27,7 @@ export function exportMetadata(args: {
 }): ExportMetadata {
   const { record } = args;
   return {
-    app: "EnziTAG Optima",
+    app: "DesvTAG",
     appVersion: args.appVersion,
     engineVersion: record.engineVersion,
     methodId: record.methodId,

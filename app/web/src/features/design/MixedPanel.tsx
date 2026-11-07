@@ -7,10 +7,11 @@ import { nowIso } from "../../lib/ids";
 import { clampSeed, MAX_SEED, randomSeed } from "../../lib/seed";
 import type { GeneratedMixed, MixedSpec } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
-import { engineErrorMessages } from "../../services/errors/presentation";
+import { engineErrorMessages, issueMessage } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch, useWorkspace } from "../../state/ProjectContext";
 import { freshId } from "../../state/project";
 import { splitLevels } from "../analysis/buildRequest";
+import { FillResponsesButton, FlowBlock } from "../blocks";
 import { TableExportButtons } from "../results/TableExportButtons";
 import { collectionColumns } from "./collectionColumns";
 
@@ -149,195 +150,229 @@ export function MixedPanel() {
 
   return (
     <section aria-labelledby="mixed-title" data-testid="mixed-panel" className="editor-card">
-      <h2 id="mixed-title">{t("design.mixed.title")}</h2>
-      <p className="muted">{t("design.mixed.intro")}</p>
-      {candidates.length < 2 && (
-        <p role="status" className="error">
-          {t("design.mixed.needFactors")}
-        </p>
-      )}
-      {candidates.length >= 2 && (
-        <>
-          <fieldset className="editor-card">
-            <legend>{t("design.mixed.factors")}</legend>
-            {candidates.map((f) => (
-              <label className="check" key={f.id}>
-                <input
-                  type="checkbox"
-                  checked={selected.some((s) => s.id === f.id)}
-                  onChange={(e) =>
-                    setChosen(
-                      e.target.checked
-                        ? [...selected.map((s) => s.id), f.id]
-                        : selected.filter((s) => s.id !== f.id).map((s) => s.id),
-                    )
-                  }
-                />
-                <span>
-                  {f.name} (
-                  {t("design.mixed.levelCount", { count: splitLevels(f.levelsText).length })})
-                </span>
-              </label>
-            ))}
-            <p className="muted small">{t("design.mixed.levelsHelp")}</p>
-          </fieldset>
-          <div className="row">
-            <label className="field">
-              <span>{t("design.mixed.replicates")}</span>
-              <input
-                type="number"
-                min={1}
-                value={replicates}
-                onChange={(e) =>
-                  setReplicates(Math.max(1, Math.floor(Number(e.target.value) || 1)))
-                }
-              />
-            </label>
-          </div>
-          <label className="check">
-            <input
-              type="checkbox"
-              checked={randomize}
-              onChange={(e) => setRandomize(e.target.checked)}
-            />
-            <span>{t("design.mixed.randomize")}</span>
-          </label>
-          {randomize && (
+      <FlowBlock
+        id="mixed-config"
+        ready={spec !== null && shown !== null && shownKey === specKey}
+        title={t("design.blocks.levels")}
+        order={1}
+      >
+        <h2 id="mixed-title">{t("design.mixed.title")}</h2>
+        <p className="muted">{t("design.mixed.intro")}</p>
+        {candidates.length < 2 && (
+          <p role="status" className="error">
+            {t("design.mixed.needFactors")}
+          </p>
+        )}
+        {candidates.length >= 2 && (
+          <>
+            <fieldset className="editor-card">
+              <legend>{t("design.mixed.factors")}</legend>
+              {candidates.map((f) => (
+                <label className="check" key={f.id}>
+                  <input
+                    type="checkbox"
+                    checked={selected.some((s) => s.id === f.id)}
+                    onChange={(e) =>
+                      setChosen(
+                        e.target.checked
+                          ? [...selected.map((s) => s.id), f.id]
+                          : selected.filter((s) => s.id !== f.id).map((s) => s.id),
+                      )
+                    }
+                  />
+                  <span>
+                    {f.name} (
+                    {t("design.mixed.levelCount", { count: splitLevels(f.levelsText).length })})
+                  </span>
+                </label>
+              ))}
+              <p className="muted small">{t("design.mixed.levelsHelp")}</p>
+            </fieldset>
             <div className="row">
               <label className="field">
-                <span>{t("design.seed")}</span>
+                <span>{t("design.mixed.replicates")}</span>
                 <input
                   type="number"
-                  min={0}
-                  max={MAX_SEED}
-                  value={seed}
-                  onChange={(e) => setSeed(clampSeed(e.target.value))}
+                  min={1}
+                  value={replicates}
+                  onChange={(e) =>
+                    setReplicates(Math.max(1, Math.floor(Number(e.target.value) || 1)))
+                  }
                 />
               </label>
-              <button
-                type="button"
-                className="button secondary small"
-                onClick={() => setSeed(randomSeed())}
-              >
-                {t("design.newSeed")}
-              </button>
             </div>
-          )}
-          {shown && (
-            <p data-testid="mixed-count" role="status">
-              {t("design.mixed.count", {
-                total: shown.total,
-                combinations: shown.combinations,
-                replicates: shown.spec.replicates,
+          </>
+        )}
+      </FlowBlock>
+      <FlowBlock
+        id="mixed-generate"
+        title={t("design.blocks.generate")}
+        order={2}
+        ready={state.mixed !== null}
+      >
+        {candidates.length >= 2 && (
+          <>
+            <label className="check">
+              <input
+                type="checkbox"
+                checked={randomize}
+                onChange={(e) => setRandomize(e.target.checked)}
+              />
+              <span>{t("design.mixed.randomize")}</span>
+            </label>
+            {randomize && (
+              <details className="advanced">
+                <summary>{t("design.reproducibility")}</summary>
+                <div className="row">
+                  <label className="field">
+                    <span>{t("design.seed")}</span>
+                    <input
+                      type="number"
+                      min={0}
+                      max={MAX_SEED}
+                      value={seed}
+                      onChange={(e) => setSeed(clampSeed(e.target.value))}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className="button secondary small"
+                    onClick={() => setSeed(randomSeed())}
+                  >
+                    {t("design.newSeed")}
+                  </button>
+                </div>
+              </details>
+            )}
+            {shown && (
+              <p data-testid="mixed-count" role="status">
+                {t("design.mixed.count", {
+                  total: shown.total,
+                  combinations: shown.combinations,
+                  replicates: shown.spec.replicates,
+                })}
+              </p>
+            )}
+            {shown?.issues.map((issue) => (
+              <p key={issue.code} role="status" className="muted" data-testid="mixed-warning">
+                {issueMessage(t, issue)}
+              </p>
+            ))}
+            {problems.length > 0 && (
+              <div role="alert" className="error">
+                {problems.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            )}
+            <button
+              type="button"
+              className="button"
+              disabled={!spec || !shown || busy || shownKey !== specKey}
+              onClick={generate}
+            >
+              {state.mixed ? t("design.regenerate") : t("design.generate")}
+            </button>
+            {message && (
+              <p role="status" className="muted" data-testid="mixed-generated">
+                {message}
+              </p>
+            )}
+          </>
+        )}
+      </FlowBlock>
+      <FlowBlock
+        id="mixed-matrix"
+        title={t("data.blocks.matrix")}
+        order={3}
+        focus={message !== null}
+      >
+        {state.mixed && shown && (
+          <section aria-labelledby="mixed-matrix-title" data-testid="mixed-matrix">
+            <h3 id="mixed-matrix-title">{t("design.mixed.matrix")}</h3>
+            <TableExportButtons
+              label={t("design.mixed.exportCsv")}
+              suffix="de-niveis-mistos"
+              sheet={t("design.mixed.matrix")}
+              header={[
+                "run",
+                "standard_order",
+                "unit_id",
+                ...state.mixed.factors.map((f) => f.name),
+                "replicate",
+                ...collection.header,
+              ]}
+              rows={shown.runs.map((r, i) => [
+                r.run,
+                r.standardOrder,
+                mixedUnitId(r),
+                ...r.levels,
+                r.replicate,
+                ...(collection.cells[i] ?? []),
+              ])}
+              metadata={{
+                app: "DesvTAG",
+                project: workspace.name,
+                method: `${shown.provenance.methodId} v${shown.provenance.methodVersion}`,
+                engine: shown.provenance.engineVersion,
+                design: "mixed-levels full factorial",
+                replicates: String(state.mixed.replicates),
+                randomized: String(state.mixed.randomize),
+                seed: String(state.mixed.seed),
+                randomization: shown.randomizationAlgorithm,
+              }}
+              fileBase="matriz-niveis-mistos"
+              onDone={setNotice}
+            />
+            <p className="muted small" data-testid="collection-note">
+              {t("design.collectionNote")}
+            </p>
+            {notice && (
+              <p role="status" className="muted small">
+                {notice}
+              </p>
+            )}
+            <div className="grid-scroll">
+              <table className="results-table" data-testid="mixed-table">
+                <thead>
+                  <tr>
+                    <th scope="col">{t("design.crd.matrix.run")}</th>
+                    <th scope="col">{t("design.crd.matrix.standard")}</th>
+                    <th scope="col">{t("design.crd.matrix.unit")}</th>
+                    {state.mixed.factors.map((f) => (
+                      <th scope="col" key={f.id}>
+                        {f.name}
+                      </th>
+                    ))}
+                    <th scope="col">{t("design.crd.matrix.replicate")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shown.runs.slice(0, 200).map((r) => (
+                    <tr key={r.run}>
+                      <th scope="row">{r.run}</th>
+                      <td>{r.standardOrder}</td>
+                      <td>{mixedUnitId(r)}</td>
+                      {r.levels.map((l, k) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: colunas fixas, uma por fator.
+                        <td key={k}>{l}</td>
+                      ))}
+                      <td>{r.replicate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="muted small">
+              {t("design.crd.algorithm", {
+                algorithm: shown.randomizationAlgorithm,
+                seed: state.mixed.seed,
               })}
             </p>
-          )}
-          {problems.length > 0 && (
-            <div role="alert" className="error">
-              {problems.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          )}
-          <button
-            type="button"
-            className="button"
-            disabled={!spec || !shown || busy || shownKey !== specKey}
-            onClick={generate}
-          >
-            {state.mixed ? t("design.regenerate") : t("design.generate")}
-          </button>
-          {message && (
-            <p role="status" className="muted" data-testid="mixed-generated">
-              {message}
-            </p>
-          )}
-        </>
-      )}
-      {state.mixed && shown && (
-        <section aria-labelledby="mixed-matrix-title" data-testid="mixed-matrix">
-          <h3 id="mixed-matrix-title">{t("design.mixed.matrix")}</h3>
-          <TableExportButtons
-            label={t("design.mixed.exportCsv")}
-            suffix="de-niveis-mistos"
-            sheet={t("design.mixed.matrix")}
-            header={[
-              "run",
-              "standard_order",
-              "unit_id",
-              ...state.mixed.factors.map((f) => f.name),
-              "replicate",
-              ...collection.header,
-            ]}
-            rows={shown.runs.map((r, i) => [
-              r.run,
-              r.standardOrder,
-              mixedUnitId(r),
-              ...r.levels,
-              r.replicate,
-              ...(collection.cells[i] ?? []),
-            ])}
-            metadata={{
-              app: "EnziTAG Optima",
-              project: workspace.name,
-              method: `${shown.provenance.methodId} v${shown.provenance.methodVersion}`,
-              engine: shown.provenance.engineVersion,
-              design: "mixed-levels full factorial",
-              replicates: String(state.mixed.replicates),
-              randomized: String(state.mixed.randomize),
-              seed: String(state.mixed.seed),
-              randomization: shown.randomizationAlgorithm,
-            }}
-            fileBase="matriz-niveis-mistos"
-            onDone={setNotice}
-          />
-          <p className="muted small" data-testid="collection-note">
-            {t("design.collectionNote")}
-          </p>
-          {notice && (
-            <p role="status" className="muted small">
-              {notice}
-            </p>
-          )}
-          <div className="grid-scroll">
-            <table className="results-table" data-testid="mixed-table">
-              <thead>
-                <tr>
-                  <th scope="col">{t("design.crd.matrix.run")}</th>
-                  <th scope="col">{t("design.crd.matrix.standard")}</th>
-                  <th scope="col">{t("design.crd.matrix.unit")}</th>
-                  {state.mixed.factors.map((f) => (
-                    <th scope="col" key={f.id}>
-                      {f.name}
-                    </th>
-                  ))}
-                  <th scope="col">{t("design.crd.matrix.replicate")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {shown.runs.slice(0, 200).map((r) => (
-                  <tr key={r.run}>
-                    <th scope="row">{r.run}</th>
-                    <td>{r.standardOrder}</td>
-                    <td>{mixedUnitId(r)}</td>
-                    {r.levels.map((l, k) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: colunas fixas, uma por fator.
-                      <td key={k}>{l}</td>
-                    ))}
-                    <td>{r.replicate}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="muted small">
-            {t("design.crd.algorithm", {
-              algorithm: shown.randomizationAlgorithm,
-              seed: state.mixed.seed,
-            })}
-          </p>
-        </section>
-      )}
+          </section>
+        )}
+        {state.mixed && <FillResponsesButton />}
+      </FlowBlock>
     </section>
   );
 }

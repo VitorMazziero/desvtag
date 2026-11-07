@@ -1,0 +1,54 @@
+Página: http://tauri.localhost/
+{
+  version: '0.4.0-dev',
+  protocol: '1',
+  environment: 'Aplicativo desktop (Tauri, motor nativo)'
+}
+OK: interface obteve engine.info do motor nativo via comando Tauri.
+{
+  taskId: 'native-descriptive',
+  mean: { status: 'defined', value: 5 },
+  variance: { status: 'defined', value: 4.571428571428571 }
+}
+OK: estatística descritiva calculada pelo motor nativo via IPC do Tauri.
+OK: arquivo .enzitag escrito em Python lido pelo motor nativo ( Projeto de referência — açúcar, ß, 日本 ).
+OK: ET22 optional families and historical references round-trip with identical native/WASM archive SHA-256.
+OK: arquivo adulterado recusado com project.integrity_failed.
+OK: planilha XLSX lida pelo motor nativo.
+OK: regressão linear (NIST Norris) calculada pelo motor nativo via IPC do Tauri.
+OK: distribuição t avaliada pelo motor nativo via IPC do Tauri.
+OK: ANOVA, Tukey e letras calculados pelo motor nativo via IPC do Tauri. c,b,a,b
+OK: planejamento aleatorizado igual à referência independente via IPC do Tauri. 19 ensaios
+OK: efeitos e valores-p do planejamento 2³ calculados pelo motor nativo via IPC do Tauri.
+OK: composto central, ajuste de superfície, falta de ajuste e malha calculados pelo motor nativo via IPC do Tauri.
+OK: otimização por desejabilidade (busca com semente) calculada pelo motor nativo via IPC do Tauri. D = 0.538089
+OK: XLSX exportado pelo motor nativo via IPC do Tauri e relido (texto de fórmula preservado como texto).
+OK: DIC aleatorizado (6 casos) idêntico à implementação independente no motor nativo via IPC do Tauri.
+OK: projeto com DIC e personalização por figura codificado e relido pelo motor nativo; bytes idênticos aos do WebAssembly.
+OK: 6 procedimentos de comparação múltipla (Games–Howell, Bonferroni, Holm, Dunnett, Kruskal–Wallis/Dunn) iguais às referências independentes no motor nativo.
+OK: ANOVA multifatorial com blocos (6 casos, tipos I, II e III) igual ao statsmodels no motor nativo.
+OK: DBC aleatorizado (4 casos com semente representável em JavaScript) idêntico à implementação independente no motor nativo.
+OK: níveis mistos (5 casos) idênticos à implementação independente no motor nativo.
+OK: planejamento D e I-ótimo iguais ao ótimo conhecido e à busca exaustiva no motor nativo.
+OK: t pareado e Wilcoxon iguais ao SciPy no motor nativo.
+OK: potência (F e t não centrais) e ajuste não linear iguais ao SciPy no motor nativo.
+OK: seleção de modelos de dois níveis igual ao statsmodels no motor nativo.
+OK: confirmação no motor nativo: diferença 1,5, limites inclusivos e observação ausente explícita.
+OK: 12 projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo; os de 01 a 06 e 07/08/11/12 com análises guardadas.
+OK: PDF da figura gerado no aplicativo nativo (experimento-1-atividade-medias.pdf, 22348 bytes).
+OK: PDF do relatório gerado no aplicativo nativo (experimento-1-relatorio.pdf, 90339 bytes).
+OK: relatório em Word gerado no aplicativo nativo (355076 bytes, 5 figura(s)).
+OK: comentário escrito no aplicativo nativo e incluído no relatório em Word.
+OK: o comando nativo de atualização respondeu no canal estável: «Não foi possível verificar agora (sem internet ou serviço indisponível).».
+OK: ET23 seven independent native references and advanced archive exact SHA-256.
+FALHA: locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('details.advanced').filter({ has: getByRole('checkbox', { name: 'Mostrar a coluna de unidade experimental', exact: true }) }).locator(':scope > summary')
+
+    at runRepeatedCheck (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\desktop\tests\native-repeated-check.mjs:40:45)
+    at async file:///D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG%20Optima/app/desktop/tests/native-cdp.mjs:81:41 {
+  log: [
+    "  - waiting for locator('details.advanced').filter({ has: getByRole('checkbox', { name: 'Mostrar a coluna de unidade experimental', exact: true }) }).locator(':scope > summary')"
+  ],
+  name: 'TimeoutError'
+}

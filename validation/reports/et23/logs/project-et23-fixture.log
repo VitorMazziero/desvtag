@@ -1,0 +1,8 @@
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.31s
+     Running tests\family_storage.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\family_storage-929fed74c68c82df.exe)
+
+running 1 test
+test advanced_covariance_inference_profiles_and_options_round_trip_without_refit ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.20s
+

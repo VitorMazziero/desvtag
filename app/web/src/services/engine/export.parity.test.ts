@@ -6,10 +6,10 @@ import { resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { buildWorkbook } from "../export/xlsx";
 import { type EngineResponse, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 function run(operation: unknown): EngineResponse {

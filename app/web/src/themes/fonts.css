@@ -13,3 +13,29 @@
 @import "@fontsource/ibm-plex-mono/latin-500.css";
 @import "@fontsource/source-serif-4/latin-400.css";
 @import "@fontsource/source-serif-4/latin-600.css";
+
+/* The selected scientific font is also embedded in the exported file. */
+@font-face {
+  font-family: "DejaVu Serif";
+  src: url("../services/export/fonts/DejaVuSerif.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DejaVu Serif";
+  src: url("../services/export/fonts/DejaVuSerif-Bold.ttf") format("truetype");
+  font-weight: 600 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DejaVu Sans Mono";
+  src: url("../services/export/fonts/DejaVuSansMono.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DejaVu Sans Mono";
+  src: url("../services/export/fonts/DejaVuSansMono-Bold.ttf") format("truetype");
+  font-weight: 600 700;
+  font-display: swap;
+}

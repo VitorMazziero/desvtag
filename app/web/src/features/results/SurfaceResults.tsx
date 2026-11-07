@@ -1,3 +1,6 @@
+import { buildDataset, buildSurfaceRequest } from "../analysis";
+import { BlockContextNote } from "./BlockContextNote";
+import { StatCell } from "./StatCell";
 // Resultados da superfície de resposta (U08/U09/U16): explicação curta, coeficientes (escala
 // codificada), ANOVA, falta de ajuste, equação nas duas escalas, região experimental, gráficos e
 // exportação com proveniência.
@@ -14,6 +17,7 @@ import { exportMetadata, flat } from "../../services/export";
 import { useStorage } from "../../services/storage/context";
 import { useExportSettings } from "../../state/ExportSettingsContext";
 import { useProject, useWorkspace } from "../../state/ProjectContext";
+import { resultIsCurrent } from "../workflow/guards";
 import { ChartFigure } from "./ChartFigure";
 import { formatFactParams } from "./ComparisonInterpretation";
 import { CopyText } from "./CopyText";
@@ -24,24 +28,6 @@ import { TableExportButtons } from "./TableExportButtons";
 import { useFigureFormat } from "./useFigureFormat";
 
 const val = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
-
-function StatCell({ stat, language, p = false }: { stat: Stat; language: Language; p?: boolean }) {
-  const { t } = useTranslation("results");
-  if (stat.status === "defined")
-    return (
-      <td className="num">
-        {p ? formatP(stat.value, language) : formatSignificant(stat.value, language, 5)}
-      </td>
-    );
-  return (
-    <td className="num undefined" title={t(`undefinedReason.${stat.reason}`)}>
-      <span aria-hidden="true">—</span>
-      <span className="sr-only">
-        {t("table.undefined")}: {t(`undefinedReason.${stat.reason}`)}
-      </span>
-    </td>
-  );
-}
 
 function slug(text: string): string {
   return (
@@ -58,9 +44,10 @@ interface Props {
   result: SurfaceResult;
   signature: string;
   language: Language;
+  report?: boolean;
 }
 
-export function SurfaceResults({ result, signature, language }: Props) {
+export function SurfaceResults({ result, signature, language, report = false }: Props) {
   const { t } = useTranslation("results");
   const { t: tc } = useTranslation();
   const state = useProject();
@@ -68,12 +55,48 @@ export function SurfaceResults({ result, signature, language }: Props) {
   const _storage = useStorage();
   const [notice, setNotice] = useState<string | null>(null);
 
-  const response = state.responses.find((r) => r.id === result.responseId);
-  const responseName = response?.name || result.responseId;
   const record: AnalysisRecord | undefined = [...state.analyses]
     .reverse()
     .find((a) => a.signature === signature);
   const revision = state.revisions.find((r) => r.id === record?.revisionId);
+  const variables = revision?.data ?? state;
+  const response = variables.responses.find((item) => item.id === result.responseId);
+  const responseName = response?.name || result.responseId;
+  const surfaceRequest = useMemo(() => {
+    const snapshot = {
+      ...state,
+      ...variables,
+      analysis: {
+        ...state.analysis,
+        designTerms: record ? (record.options.terms ?? null) : state.analysis.designTerms,
+      },
+    };
+    const request = buildSurfaceRequest(
+      snapshot,
+      buildDataset(snapshot).dataset,
+      result.responseId,
+    );
+    const sourceFactors = request.factors;
+    request.factors = result.ranges.map((range) => {
+      const source = sourceFactors.find((factor) => factor.id === range.id);
+      const matchingCoding =
+        source &&
+        (source.low + source.high) / 2 === range.center &&
+        (source.high - source.low) / 2 === range.halfRange;
+      return {
+        id: range.id,
+        name: range.name,
+        low: matchingCoding ? source.low : range.center - range.halfRange,
+        high: matchingCoding ? source.high : range.center + range.halfRange,
+        unit: variables.factors.find((factor) => factor.id === range.id)?.unit ?? "",
+      };
+    });
+    request.block = result.block
+      ? { factorId: result.block.context.factorId, reference: result.block.context.reference }
+      : undefined;
+    request.alpha = result.alpha;
+    return request;
+  }, [state, variables, record, result]);
   const metadata = useMemo(
     () =>
       record
@@ -127,9 +150,13 @@ export function SurfaceResults({ result, signature, language }: Props) {
     id: "surface-observed-predicted",
     title: t("design.charts.opTitle", { response: responseName }),
     description: t("design.charts.opDescription"),
-    xLabel: t("design.charts.opX"),
-    yLabel: t("design.charts.opY"),
-    points: result.fitPoints.map((p) => ({ x: p.predicted, y: p.observed })),
+    xLabel: `${t("design.charts.opX")} — ${responseName}${response?.unit ? ` [${response.unit}]` : ""}`,
+    yLabel: `${t("design.charts.opY")} — ${responseName}${response?.unit ? ` [${response.unit}]` : ""}`,
+    points: result.fitPoints.map((p) => ({
+      x: p.predicted,
+      y: p.observed,
+      label: p.observationId,
+    })),
     reference: "identity" as const,
     legend: t("design.charts.opLegend"),
     metadata: withMetadata ? metadataText : undefined,
@@ -137,15 +164,17 @@ export function SurfaceResults({ result, signature, language }: Props) {
 
   const coefficientsTable = () => {
     const header = ["term", "estimate", "std_error", "t", "p_value", "ci_lower", "ci_upper"];
-    const rows = [result.intercept, ...result.terms].map((row) => [
-      row.label,
-      val(row.estimate),
-      val(row.stdError),
-      val(row.tValue),
-      val(row.pValue),
-      val(row.ciLower),
-      val(row.ciUpper),
-    ]);
+    const rows = [result.intercept, ...result.terms, ...(result.block?.coefficients ?? [])].map(
+      (row) => [
+        row.label,
+        val(row.estimate),
+        val(row.stdError),
+        val(row.tValue),
+        val(row.pValue),
+        val(row.ciLower),
+        val(row.ciUpper),
+      ],
+    );
     return { header, rows };
   };
   const lof = result.lackOfFit;
@@ -153,6 +182,7 @@ export function SurfaceResults({ result, signature, language }: Props) {
   return (
     <>
       <div data-section="summary">
+        <BlockContextNote block={result.block?.context} />
         <section
           className="panel"
           aria-labelledby="interpretation-title"
@@ -201,7 +231,15 @@ export function SurfaceResults({ result, signature, language }: Props) {
       </div>
 
       <div data-section="model">
-        <ModelPanel result={result} language={language} />
+        {revision || resultIsCurrent(state) ? (
+          <ModelPanel
+            result={result}
+            request={surfaceRequest}
+            signature={signature}
+            language={language}
+            report={report}
+          />
+        ) : null}
         <div className="grid-scroll">
           <table className="results-table" data-testid="surface-terms">
             <caption>{t("surface.terms.caption", { response: responseName })}</caption>
@@ -216,24 +254,28 @@ export function SurfaceResults({ result, signature, language }: Props) {
               </tr>
             </thead>
             <tbody>
-              {[result.intercept, ...result.terms].map((row, i) => (
-                <tr key={row.label}>
-                  <th scope="row">{i === 0 ? t("surface.terms.intercept") : row.label}</th>
-                  <StatCell stat={row.estimate} language={language} />
-                  <StatCell stat={row.stdError} language={language} />
-                  <StatCell stat={row.tValue} language={language} />
-                  <StatCell stat={row.pValue} language={language} p />
-                  <td className="num">
-                    {row.ciLower.status === "defined" && row.ciUpper.status === "defined"
-                      ? `${fmt(row.ciLower.value)} – ${fmt(row.ciUpper.value)}`
-                      : "—"}
-                  </td>
-                </tr>
-              ))}
+              {[result.intercept, ...result.terms, ...(result.block?.coefficients ?? [])].map(
+                (row, i) => (
+                  <tr key={row.label}>
+                    <th scope="row">{i === 0 ? t("surface.terms.intercept") : row.label}</th>
+                    <StatCell stat={row.estimate} language={language} />
+                    <StatCell stat={row.stdError} language={language} />
+                    <StatCell stat={row.tValue} language={language} />
+                    <StatCell stat={row.pValue} language={language} p />
+                    <td className="num">
+                      {row.ciLower.status === "defined" && row.ciUpper.status === "defined"
+                        ? `${fmt(row.ciLower.value)} – ${fmt(row.ciUpper.value)}`
+                        : "—"}
+                    </td>
+                  </tr>
+                ),
+              )}
             </tbody>
           </table>
         </div>
-        <p className="muted small">{t("surface.terms.help")}</p>
+        <p className="muted small" data-report-skip>
+          {t("surface.terms.help")}
+        </p>
 
         <div className="grid-scroll">
           <table className="results-table" data-testid="design-anova">
@@ -307,8 +349,11 @@ export function SurfaceResults({ result, signature, language }: Props) {
         </p>
 
         <section aria-labelledby="equation-title" data-testid="equation">
+          <BlockContextNote block={result.block?.context} />
           <h3 id="equation-title">{t("surface.equation.title")}</h3>
-          <p className="muted small">{t("surface.equation.help")}</p>
+          <p className="muted small" data-report-skip>
+            {t("surface.equation.help")}
+          </p>
           <label className="field">
             <span>{t("surface.equation.style")}</span>
             <select
@@ -371,12 +416,15 @@ export function SurfaceResults({ result, signature, language }: Props) {
               </tbody>
             </table>
           </div>
-          <p className="muted small">{t("surface.region.help")}</p>
+          <p className="muted small" data-report-skip>
+            {t("surface.region.help")}
+          </p>
         </section>
       </div>
 
       <div data-section="charts">
         <SurfaceView
+          surfaceRequest={surfaceRequest}
           result={result}
           responseName={responseName}
           responseUnit={response?.unit ?? ""}

@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { CommentTarget } from "../../services/engine";
+import { familyRecordIds } from "../../state/familyActions";
 import { useProject } from "../../state/ProjectContext";
 import { CommentForm, CommentItem, useTargetLabel } from "./CommentThread";
 
@@ -39,11 +40,15 @@ export function CommentsPanel() {
           )}
           <label className="field">
             <span>{t("comments.about")}</span>
-            <select value={choice} onChange={(e) => setChoice(e.target.value)}>
+            <select
+              aria-label={t("comments.about")}
+              value={choice}
+              onChange={(e) => setChoice(e.target.value)}
+            >
               <option value="experiment">{t("comments.target.experiment")}</option>
-              {project.analyses.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {t("comments.target.analysis", { analysis: `${a.id} (${a.methodId})` })}
+              {[...project.analyses.map((a) => a.id), ...familyRecordIds(project)].map((id) => (
+                <option key={id} value={id} title={id}>
+                  {label({ kind: "analysis", analysisId: id })}
                 </option>
               ))}
             </select>

@@ -143,7 +143,39 @@ def main():
     add_exhaustive("D-ampliacao-2f", f2, "interactions", "d", 6, 3, [], [[10, 10], [30, 10], [20, 20]])
     add_exhaustive("I-interacoes-2f-6", f2, "interactions", "i", 6, 3, [], [])
 
-    out = {"id": "optimal_design", "metricCases": metric_cases, "exhaustiveCases": exhaustive_cases}
+    # Saturated and almost saturated cases. Enumerate every admissible design and
+    # identify those with no improving one-row exchange, independently of Rust.
+    exchange_cases = []
+    unit1, unit2 = fx(1, -1, 1), fx(2, -1, 1)
+    configurations = [
+        ("saturated-linear", unit1, "linear", 2, 3, [], []),
+        ("near-saturated-linear-fixed", unit1, "linear", 3, 3, [], [[0.0]]),
+        ("saturated-interactions", unit2, "interactions", 4, 3, [], []),
+        ("saturated-interactions-off-grid", unit2, "interactions", 4, 3, [], [[0.25, -0.25]]),
+        ("saturated-quadratic-restricted", unit1, "quadratic", 3, 5,
+         [{"coefficients": [1.0], "upper": 0.6}], [[-1.0]]),
+        ("near-saturated-quadratic", unit1, "quadratic", 4, 5, [], []),
+    ]
+    for name, factors, model, runs, levels, constraints, fixed in configurations:
+        pts = candidates(factors, levels, constraints)
+        for criterion in ("d", "i"):
+            values = {}
+            for combo in itertools.combinations_with_replacement(range(len(pts)), runs - len(fixed)):
+                result = metrics(factors, model, levels, constraints, fixed + [pts[i][1] for i in combo])
+                if result is not None:
+                    values[combo] = result["logDet"] if criterion == "d" else -result["iAverage"] / runs
+            stationary = []
+            for combo, value in values.items():
+                neighbors = (tuple(sorted(combo[:slot] + combo[slot + 1:] + (incoming,)))
+                             for slot in range(len(combo)) for incoming in range(len(pts)))
+                if all(values.get(other, -np.inf) <= value + 1e-10 * (1 + abs(value)) for other in neighbors):
+                    stationary.append({"freeRuns": [pts[i][1] for i in combo], "value": value})
+            exchange_cases.append({"name": name + "-" + criterion,
+                                   "spec": spec_dict(factors, model, criterion, runs, levels, constraints, fixed, starts=1),
+                                   "stationary": stationary, "best": max(values.values())})
+
+    out = {"id": "optimal_design", "metricCases": metric_cases, "exhaustiveCases": exhaustive_cases,
+           "exchangeCases": exchange_cases}
     (ROOT / "optimal.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print("métricas:", len(metric_cases), "exaustivas:", len(exhaustive_cases), [c["expected"]["evaluated"] for c in exhaustive_cases])
 

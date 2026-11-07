@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { clickAfterFocus } from "../e2e/clickAfterFocus";
 
 // Percurso mínimo na URL publicada, com o motor WebAssembly real servido pelo GitHub Pages:
 // versão do motor, comparação de tratamentos (ANOVA e letras) e nenhuma requisição externa.
@@ -16,22 +17,29 @@ test("a versão publicada abre, calcula e não usa rede externa", async ({ page,
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(String(e)));
 
-  // A versão 0.2 mostra os resultados em seções; «mostrar todas» reúne tabelas e letras numa página.
+  // Exibe os blocos e as seções para exercitar a comparação em um percurso curto.
   await page.addInitScript(() => localStorage.setItem("optima.showAllSections", "1"));
   await page.goto("./");
+  await expect(page).toHaveTitle("DesvTAG");
+  const about = page.getByTestId("about-menu").locator(":scope > summary");
+  await about.click();
+  await expect(page.getByTestId("developer-credit")).toHaveText(
+    "Desenvolvido por Vítor Teixeira Mazziero",
+  );
   await expect(page.getByTestId("engine-version")).toHaveText(
-    process.env.EXPECTED_VERSION ?? "0.3.0",
+    process.env.EXPECTED_VERSION ?? "0.4.0",
   );
   await expect(page.getByTestId("engine-methods")).toContainText("descriptive_summary");
 
-  await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await about.click();
+  await page.getByRole("radio", { name: "Comparar tratamentos" }).check();
+  await page.getByRole("button", { name: "Começar", exact: true }).click();
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Condição");
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
   await page.getByRole("button", { name: "Avançar" }).click();
-  await page.getByRole("button", { name: "Adicionar linha" }).click();
+  await clickAfterFocus(page.getByRole("button", { name: "Adicionar linha" }));
   const rows = [
     ...[10.1, 10.3, 9.9, 10.2].map((v) => ["A", v]),
     ...[12.0, 12.4, 11.8, 12.1].map((v) => ["B", v]),

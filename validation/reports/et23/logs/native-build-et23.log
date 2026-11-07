@@ -1,0 +1,15 @@
+   Compiling tauri v2.12.5
+   Compiling tauri-macros v2.7.4
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+   Compiling tauri-plugin-fs v2.7.1
+   Compiling tauri-plugin-updater v2.14.1
+   Compiling tauri-plugin-dialog v2.8.4
+   Compiling optima-desktop v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\desktop\src-tauri)
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+   Compiling optima-engine v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-engine)
+warning: linker stdout: Criando biblioteca D:/Arquivos_de_Programas/Rust/target\release\deps\optima_desktop_lib.dll.lib e objeto D:/Arquivos_de_Programas/Rust/target\release\deps\optima_desktop_lib.dll.exp
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `optima-desktop` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 8m 50s

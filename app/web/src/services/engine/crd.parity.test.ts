@@ -1,13 +1,13 @@
 // @vitest-environment node
 // DIC aleatorizado no WebAssembly: as mesmas ordens de execução da reimplementação independente
 // em Python (validation/tools/make_crd_cases.py), verificadas também no teste nativo
-// (app/crates/optima-core/tests/crd_validation.rs). Igualdade exata entre Python, Rust nativo e
+// (app/crates/desvtag-core/tests/crd_validation.rs). Igualdade exata entre Python, Rust nativo e
 // WebAssembly = a mesma semente produz a mesma ordem de execução nos dois alvos.
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { type EngineResponse, type GeneratedCrd, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesFile = resolve(
   __dirname,
@@ -15,7 +15,7 @@ const casesFile = resolve(
 );
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 function run(operation: unknown): EngineResponse {

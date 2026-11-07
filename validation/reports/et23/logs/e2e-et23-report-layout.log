@@ -1,0 +1,15 @@
+
+Running 6 tests using 2 workers
+
+(node:13516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: cs_balanced from scratch, stored and exported (10.2s)
+  ok 2 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: ar1_positive from scratch, stored and exported (10.2s)
+  ok 4 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: un_heterogeneous from scratch, stored and exported (8.2s)
+  ok 3 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: ar1_negative_gaps from scratch, stored and exported (9.6s)
+  ok 6 [chromium] › tests\e2e\et23-models.spec.ts:135:1 › T02/T07: invalid temporal index keeps the previous valid result (3.1s)
+  ok 5 [chromium] › tests\e2e\et23-models.spec.ts:74:3 › T03–T07: un_missing from scratch, stored and exported (8.6s)
+
+  6 passed (28.3s)

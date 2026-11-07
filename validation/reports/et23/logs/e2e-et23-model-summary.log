@@ -1,0 +1,44 @@
+
+Running 21 tests using 3 workers
+
+(node:25268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: ar1_positive from scratch, stored and exported (10.6s)
+  ok  3 [chromium] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: cs_balanced from scratch, stored and exported (10.7s)
+  ok  1 [chromium] › tests\e2e\et23-configuration.spec.ts:7:1 › T02/T04/T05: categorical time source, interaction, covariate reference and Holm (14.2s)
+  ok  5 [chromium] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: un_heterogeneous from scratch, stored and exported (9.7s)
+  ok  4 [chromium] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: ar1_negative_gaps from scratch, stored and exported (11.4s)
+(node:25804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium] › tests\e2e\et23-models.spec.ts:80:1 › T02/T07: invalid temporal index keeps the previous valid result (3.4s)
+(node:31984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [chromium] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: un_missing from scratch, stored and exported (11.2s)
+(node:10000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [firefox] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: cs_balanced from scratch, stored and exported (15.0s)
+  ok  8 [firefox] › tests\e2e\et23-configuration.spec.ts:7:1 › T02/T04/T05: categorical time source, interaction, covariate reference and Holm (18.8s)
+  ok 10 [firefox] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: ar1_positive from scratch, stored and exported (15.8s)
+  ok 12 [firefox] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: un_heterogeneous from scratch, stored and exported (11.7s)
+  ok 13 [firefox] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: un_missing from scratch, stored and exported (14.2s)
+  ok 11 [firefox] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: ar1_negative_gaps from scratch, stored and exported (16.9s)
+(node:17888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [firefox] › tests\e2e\et23-models.spec.ts:80:1 › T02/T07: invalid temporal index keeps the previous valid result (4.7s)
+(node:25532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [webkit] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: cs_balanced from scratch, stored and exported (15.0s)
+  ok 15 [webkit] › tests\e2e\et23-configuration.spec.ts:7:1 › T02/T04/T05: categorical time source, interaction, covariate reference and Holm (15.3s)
+  ok 17 [webkit] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: ar1_positive from scratch, stored and exported (15.4s)
+  ok 19 [webkit] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: un_heterogeneous from scratch, stored and exported (13.7s)
+  ok 18 [webkit] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: ar1_negative_gaps from scratch, stored and exported (15.2s)
+  ok 20 [webkit] › tests\e2e\et23-models.spec.ts:19:3 › T03–T07: un_missing from scratch, stored and exported (14.8s)
+  ok 21 [webkit] › tests\e2e\et23-models.spec.ts:80:1 › T02/T07: invalid temporal index keeps the previous valid result (4.8s)
+
+  21 passed (1.5m)

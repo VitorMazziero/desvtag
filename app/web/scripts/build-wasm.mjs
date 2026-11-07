@@ -1,7 +1,8 @@
-// Compila optima-wasm para WebAssembly e gera a cola JS em src/services/engine/wasm/.
+// Compila desvtag-wasm para WebAssembly e gera a cola JS em src/services/engine/wasm/.
 // Requer: alvo wasm32-unknown-unknown e wasm-bindgen-cli na MESMA versão da crate
 // `wasm-bindgen` do Cargo.lock (DT-0003).
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,7 +21,7 @@ function run(cmd, args, options = {}) {
 }
 
 const lock = readFileSync(join(appDir, "Cargo.lock"), "utf8");
-const locked = /name = "wasm-bindgen"\nversion = "([^"]+)"/.exec(lock)?.[1];
+const locked = /name = "wasm-bindgen"\r?\nversion = "([^"]+)"/.exec(lock)?.[1];
 const cli = spawnSync("wasm-bindgen", ["--version"], { encoding: "utf8" });
 if (cli.status !== 0) {
   console.error(
@@ -51,13 +52,28 @@ if (meta.status !== 0) {
   console.error("Falha: cargo metadata");
   process.exit(meta.status ?? 1);
 }
-const targetDir = JSON.parse(meta.stdout).target_directory;
+const metadata = JSON.parse(meta.stdout);
+const version = metadata.packages.find((pkg) => pkg.name === "desvtag-wasm")?.version;
+if (!version) {
+  console.error("O workspace não informou a versão do pacote desvtag-wasm.");
+  process.exit(1);
+}
+// O arquivo final do Cargo tem nome fixo. Separe-o entre worktrees e versões
+// mesmo quando os checkouts usam o mesmo diretório externo de compilação.
+const checkout = createHash("sha256")
+  .update(`${metadata.workspace_root}\n${version}`)
+  .digest("hex")
+  .slice(0, 16);
+const targetDir = join(metadata.target_directory, "desvtag-wasm", checkout);
 run(
   "cargo",
   [
     "build",
     "-p",
-    "optima-wasm",
+    "desvtag-wasm",
+    "--locked",
+    "--target-dir",
+    targetDir,
     "--target",
     "wasm32-unknown-unknown",
     ...(release ? ["--release"] : []),
@@ -67,13 +83,13 @@ run(
 rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 run("wasm-bindgen", [
-  join(targetDir, "wasm32-unknown-unknown", profile, "optima_wasm.wasm"),
+  join(targetDir, "wasm32-unknown-unknown", profile, "desvtag_wasm.wasm"),
   "--target",
   "web",
   "--out-dir",
   outDir,
   "--out-name",
-  "optima_wasm",
+  "desvtag_wasm",
   "--typescript",
 ]);
 console.log(`WASM (${profile}) gerado em ${outDir}`);

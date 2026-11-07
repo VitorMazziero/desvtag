@@ -1,8 +1,9 @@
 // @vitest-environment node
 // Formato `.enzitag` e importação de XLSX no WebAssembly, contra arquivos escritos por
 // software independente (Python: zipfile, hashlib, openpyxl). Espelha os testes nativos em
-// app/crates/optima-project/tests/.
-import { readFileSync } from "node:fs";
+// app/crates/desvtag-project/tests/.
+import { createHash } from "node:crypto";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
@@ -13,12 +14,12 @@ import {
 } from "../../state/workspace";
 import { bytesToBase64 } from "../storage/bytes";
 import { type EngineResponse, type Operation, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const cases = resolve(__dirname, "../../../../../validation/cases");
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 function call(operation: Operation): EngineResponse {
@@ -177,4 +178,84 @@ describe("project with CRD and figure styles: same bytes in WebAssembly and nati
     );
     expect(first.outcome.result.sha256).toBe(EXPECTED_SHA256);
   });
+});
+
+describe("ET22 saved families: byte-identical Rust-native and WebAssembly archives", () => {
+  const directory = join(cases, "project_file/families");
+  for (const file of readdirSync(directory).filter((name) => name.endsWith(".enzitag"))) {
+    it(`preserves every optional record and matches the native SHA-256: ${file}`, () => {
+      const bytes = readFileSync(join(directory, file));
+      const expected = JSON.parse(
+        readFileSync(join(directory, file.replace(".enzitag", ".json")), "utf8"),
+      );
+      const decoded = decode(bytes);
+      if (decoded.outcome.status !== "ok" || decoded.outcome.result.type !== "projectDecode")
+        throw new Error(JSON.stringify(decoded));
+      expect(decoded.outcome.result.document).toEqual(expected);
+      const encoded = call({ type: "projectEncode", document: decoded.outcome.result.document });
+      if (encoded.outcome.status !== "ok" || encoded.outcome.result.type !== "projectEncode")
+        throw new Error(JSON.stringify(encoded));
+      expect(encoded.outcome.result.sha256).toBe(createHash("sha256").update(bytes).digest("hex"));
+      expect(Buffer.from(encoded.outcome.result.bytesBase64, "base64")).toEqual(bytes);
+    });
+  }
+});
+
+for (const family of ["nonlinear_profile", "power_advanced"])
+  describe(`ET24 ${family}: frozen native archives`, () => {
+    const directory = join(cases, "project_file", family);
+    for (const file of readdirSync(directory).filter((name) => name.endsWith(".enzitag")))
+      it(`preserves historical results and exact archive bytes: ${file}`, () => {
+        const bytes = readFileSync(join(directory, file));
+        const expected = JSON.parse(
+          readFileSync(join(directory, file.replace(".enzitag", ".json")), "utf8"),
+        );
+        const decoded = decode(bytes);
+        if (decoded.outcome.status !== "ok" || decoded.outcome.result.type !== "projectDecode")
+          throw new Error(JSON.stringify(decoded));
+        expect(decoded.outcome.result.document).toEqual(expected);
+        const encoded = call({ type: "projectEncode", document: decoded.outcome.result.document });
+        if (encoded.outcome.status !== "ok" || encoded.outcome.result.type !== "projectEncode")
+          throw new Error(JSON.stringify(encoded));
+        expect(encoded.outcome.result.sha256).toBe(
+          createHash("sha256").update(bytes).digest("hex"),
+        );
+        expect(Buffer.from(encoded.outcome.result.bytesBase64, "base64")).toEqual(bytes);
+      });
+  });
+
+it("rejects inconsistent stored Monte Carlo summaries and degrees of freedom without refitting", () => {
+  const path = join(
+    cases,
+    "project_file/power_advanced/regression_power_and_simulation_round_trip_without_recalculation.json",
+  );
+  const original = JSON.parse(readFileSync(path, "utf8"));
+  const mutations = [
+    (r: typeof original) => {
+      r.simulation.rejections = 0;
+    },
+    (r: typeof original) => {
+      r.simulation.estimate = (r.simulation.ciLower + r.simulation.ciUpper) / 2;
+    },
+    (r: typeof original) => {
+      r.simulation.standardError *= 1.1;
+    },
+    (r: typeof original) => {
+      r.simulation.ciUpper *= 0.9;
+    },
+    (r: typeof original) => {
+      r.df2 += 100;
+    },
+  ];
+  expect(call({ type: "projectEncode", document: original }).outcome.status).toBe("ok");
+  for (const mutate of mutations) {
+    const doc = structuredClone(original);
+    mutate(doc.experiments[0].powerResult.records.at(-1).result);
+    const outcome = call({ type: "projectEncode", document: doc }).outcome;
+    expect(outcome.status).toBe("error");
+    if (outcome.status === "error")
+      expect(outcome.error.issues.some((i) => i.code === "project.invalid_family_result")).toBe(
+        true,
+      );
+  }
 });

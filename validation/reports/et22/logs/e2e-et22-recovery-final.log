@@ -1,0 +1,23 @@
+
+Running 6 tests using 3 workers
+
+(node:16900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results (4.3s)
+(node:15612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (5.2s)
+(node:11280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [firefox] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (6.7s)
+(node:17888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [firefox] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results (6.0s)
+  ok 6 [webkit] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results (4.4s)
+  ok 5 [webkit] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (6.8s)
+
+  6 passed (13.4s)

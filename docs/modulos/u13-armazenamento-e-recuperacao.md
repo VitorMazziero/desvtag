@@ -11,7 +11,7 @@
 
 ## Responsabilidade
 
-Mover **bytes** de projeto entre o aplicativo e o armazenamento (`StorageProvider`) e guardar a **recuperação** da sessão. A serialização `.enzitag` pertence ao Rust (P02).
+Mover **bytes** de projeto entre o aplicativo e o armazenamento (`StorageProvider`) e guardar a **recuperação** da sessão. A serialização do contêiner de projeto pertence ao Rust (P02).
 
 ## Arquivos
 

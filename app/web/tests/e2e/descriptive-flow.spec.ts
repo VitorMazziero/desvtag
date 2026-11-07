@@ -1,4 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
+import { startObjective } from "./startObjective";
 
 // Percurso completo com o motor Rust real (WebAssembly em Worker):
 // Objetivo → Fatores e respostas → Dados (colagem do Excel) → Análise → Resultados.
@@ -24,12 +25,10 @@ test.describe("fluxo guiado em português", () => {
 
     // Objetivo: o aviso de disponibilidade vem do registro de métodos do motor.
     await expect(page.getByRole("group", { name: "O que você quer fazer?" })).toBeVisible();
-    await expect(page.getByText("Disponível nesta versão")).toHaveCount(3); // planejar, analisar e comparar
+    await expect(page.getByText("Disponível nesta versão")).toHaveCount(0); // planejar, analisar e comparar
     await expect(page.getByText(/Parcial/)).toHaveCount(0);
     // Comparação (ET05) e planejamento (ET06) estão registrados no motor: o aviso de parcial some sozinho.
-    await expect(page.getByRole("button", { name: "Avançar" })).toBeDisabled();
-    await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "analyze");
 
     // Fatores e respostas definidos pelo usuário.
     await page.getByRole("button", { name: "Adicionar fator" }).click();
@@ -37,7 +36,10 @@ test.describe("fluxo guiado em português", () => {
     await page.getByLabel("Níveis (opcional)").fill("A; B; C");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
-    await page.getByLabel("Unidade (opcional)").nth(1).fill("U/mL");
+    await page
+      .getByLabel(/^Unidade de /)
+      .nth(1)
+      .fill("U/mL");
     await page.getByRole("button", { name: "Avançar" }).click();
 
     // Dados: uma linha criada, depois colagem estilo Excel (tabulação), com vírgula decimal e célula vazia.
@@ -48,14 +50,14 @@ test.describe("fluxo guiado em português", () => {
 
     // Erro por célula bloqueia o avanço e é corrigível.
     await page.getByLabel("Atividade — Obs. 2").fill("onze");
-    await expect(page.getByText("Não é um número")).toBeVisible();
+    await expect(page.locator(".cell-error").filter({ hasText: "Não é um número" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Avançar" })).toBeDisabled();
     await page.getByLabel("Atividade — Obs. 2").fill("11,5");
     await expect(page.getByText("Não é um número")).toHaveCount(0);
     await page.getByRole("button", { name: "Avançar" }).click();
 
     // Análise agrupada por Condição.
-    await page.getByLabel("Condição").check();
+    await page.getByRole("checkbox", { name: "Condição", exact: true }).check();
     await page.getByRole("button", { name: "Calcular resumo" }).click();
 
     // Resultados: conferência numérica (A: 10,5 e 11,5; B: 20 e ausente; C: 5 e 7).
@@ -63,11 +65,21 @@ test.describe("fluxo guiado em português", () => {
     const rowA = table.getByRole("row", { name: /Condição: A/ });
     await expect(rowA).toContainText("11"); // média
     await expect(rowA).toContainText("0,5"); // variância
-    await expect(rowA).toContainText("0,7071067812"); // desvio-padrão, 10 algarismos significativos
+    await expect(rowA).toContainText("0,7071"); // apresentação compacta; valor completo preservado
+    expect(
+      Number(
+        await rowA
+          .locator("td")
+          .nth(4)
+          .locator("[data-full-value]")
+          .getAttribute("data-full-value"),
+      ),
+    ).toBeCloseTo(Math.sqrt(0.5), 12);
     const rowB = table.getByRole("row", { name: /Condição: B/ });
     await expect(rowB).toContainText("20");
-    await expect(rowB).toContainText(
-      "A variância amostral exige ao menos duas observações válidas",
+    await expect(rowB.getByRole("note").first()).toHaveAttribute(
+      "title",
+      /A variância amostral exige ao menos duas observações válidas/,
     );
     const rowC = table.getByRole("row", { name: /Condição: C/ });
     await expect(rowC).toContainText("6");
@@ -85,13 +97,13 @@ test.describe("fluxo guiado em português", () => {
     // Trocar o idioma preserva o resultado e muda rótulos e separador decimal.
     await page.locator("header.app-header").getByLabel("Idioma").selectOption("en");
     await expect(page.getByRole("heading", { name: "Results" })).toBeVisible();
-    await expect(rowA).toContainText("0.7071067812");
+    await expect(rowA).toContainText("0.7071");
     await expect(page.getByTestId("interpretation")).toContainText("5 of 6 observations");
 
     // O mesmo vale para o tema: dados, resultado e idioma permanecem.
     await page.getByLabel("Theme").selectOption("modern-dark");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "modern-dark");
-    await expect(rowA).toContainText("0.7071067812");
+    await expect(rowA).toContainText("0.7071");
     await expect(page.getByRole("heading", { name: "Results" })).toBeVisible();
 
     // Alterar um dado invalida o resultado: a etapa de resultados fica bloqueada.
@@ -106,8 +118,7 @@ test.describe("guided flow in English", () => {
 
   test("summarizes a response without factors", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Analyze existing data/ }).check();
-    await page.getByRole("button", { name: "Next" }).click();
+    await startObjective(page, "analyze");
     await page.getByRole("button", { name: "Add response" }).click();
     await page.getByLabel("Name", { exact: true }).first().fill("Yield");
     await page.getByRole("button", { name: "Next" }).click();
@@ -120,17 +131,27 @@ test.describe("guided flow in English", () => {
       .getByTestId("descriptive-table")
       .getByRole("row", { name: /All observations/ });
     await expect(overall).toContainText("5"); // mean
-    await expect(overall).toContainText("4.571428571"); // 32/7 with 10 significant digits
+    await expect(overall).toContainText("4.571");
+    expect(
+      Number(
+        await overall
+          .locator("td")
+          .nth(3)
+          .locator("[data-full-value]")
+          .getAttribute("data-full-value"),
+      ),
+    ).toBeCloseTo(32 / 7, 12);
     await expect(page.getByTestId("interpretation")).toContainText("8 of 8 observations");
   });
 
   test("is operable by keyboard from the first step", async ({ page }) => {
     await page.goto("/");
-    const analyze = page.getByRole("radio", { name: /Analyze existing data/ });
+    const analyze = page.getByRole("radio", { name: "Analyze existing data" });
     await analyze.focus();
     await page.keyboard.press("Space");
     await expect(analyze).toBeChecked();
-    await page.getByRole("button", { name: "Next" }).focus();
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("button", { name: "Start", exact: true })).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(page.getByRole("heading", { name: "Factors and responses" })).toBeVisible();
   });

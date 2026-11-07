@@ -9,3 +9,14 @@
 
 # Preservar os bytes e as quebras de linha dos prompts originais.
 docs/temas/prompts/*.txt -text
+
+# Evidências exportadas e logs são artefatos: preservar os bytes usados nos hashes.
+docs/imagens/evidencias-v0.4-*/** -text
+docs/imagens/evidencias-v0.4-*/**/*.csv -whitespace
+docs/imagens/evidencias-v0.4-*/**/*.md text eol=lf
+docs/imagens/evidencias-v0.4-*/README.md text eol=lf
+docs/imagens/evidencias-v0.4-*/SHA256SUMS.txt text eol=lf
+validation/reports/**/logs/*.log -text -whitespace
+
+# Preserve the certified public reference file exactly as downloaded.
+validation/sources/nist-strd/*.dat -text -whitespace

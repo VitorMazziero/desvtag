@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { formatP, formatSignificant } from "../../i18n/format";
+import { formatSignificant } from "../../i18n/format";
 import { meansChart } from "../../services/charts";
 import type { FactorialResult, Stat } from "../../services/engine";
 import { issueMessage } from "../../services/errors/presentation";
 import { useProject } from "../../state/ProjectContext";
 import { ChartFigure } from "./ChartFigure";
+import { FactorialGeometryDetails } from "./FactorialGeometryDetails";
+import { StatNumber } from "./StatCell";
 import { TableExportButtons } from "./TableExportButtons";
 import { useFigureFormat } from "./useFigureFormat";
 import { slug, useResultMetadata } from "./useResultMetadata";
@@ -27,20 +29,22 @@ export function FactorialResults({
   const { t } = useTranslation("results");
   const tc = useTranslation("diagnostics").t;
   const state = useProject();
-  const { metadataText, exportMeta } = useResultMetadata(signature);
+  const { record, revision, metadataText, exportMeta } = useResultMetadata(signature);
   const fmt = useFigureFormat(language);
   const [notice, setNotice] = useState<string | null>(null);
-  const response = state.responses.find((r) => r.id === state.analysis.responseId);
+  const responseId = record?.options.responseId ?? (record ? null : state.analysis.responseId);
+  const response = (revision?.data.responses ?? (record ? [] : state.responses)).find(
+    (r) => r.id === responseId,
+  );
   const responseName = response?.name || "";
   const base = `${slug(state.name)}-${slug(responseName)}-anova`;
-  const num = (s: Stat, digits = 4) => {
-    const v = val(s);
-    return v === null ? "—" : formatSignificant(v, language, digits);
-  };
-  const pText = (s: Stat) => {
-    const v = val(s);
-    return v === null ? "—" : formatP(v, language);
-  };
+  const text = (s: Stat, digits = 4) =>
+    s.status === "defined"
+      ? formatSignificant(s.value, language, digits)
+      : t(`undefinedReason.${s.reason}`);
+  const num = (s: Stat, digits = 4) => <StatNumber stat={s} language={language} digits={digits} />;
+  const pText = (s: Stat) => <StatNumber stat={s} language={language} p />;
+
   const rows = [...result.terms, result.residual, result.total];
   const anovaHeader = ["term", "df", "sum_squares", "mean_square", "f_value", "p_value"];
   const anovaRows = rows.map((r) => [
@@ -51,7 +55,19 @@ export function FactorialResults({
     val(r.fValue),
     val(r.pValue),
   ]);
+  const partial =
+    result.estimability?.terms.some((term) => term.estimableDf < term.nominalDf) ??
+    result.issues.some((issue) => issue.code === "anova.empty_cells");
   const significant = result.terms.filter((r) => (val(r.pValue) ?? 1) < result.alpha);
+  const knownAffected =
+    result.provenance.methodVersion < 2 &&
+    (partial ||
+      result.marginals.some((m) =>
+        m.pairs.some((p) => p.pValue.status !== "defined" && p.pAdjusted.status === "defined"),
+      ) ||
+      result.contrasts.some(
+        (c) => c.pValue.status !== "defined" && c.pAdjusted.status === "defined",
+      ));
   const first = result.marginals[0];
 
   const chartSpec = (withMetadata: boolean) => {
@@ -63,16 +79,17 @@ export function FactorialResults({
         factors: m?.factorNames.join(" × ") ?? "",
       }),
       description: t("factorial.chart.description"),
-      yLabel: responseName,
-      uncertaintyName: t("factorial.chart.ci", {
-        level: formatSignificant((1 - result.alpha) * 100, language, 4),
-      }),
+      yLabel: `${responseName}${response?.unit ? ` [${response.unit}]` : ""}`,
+      uncertaintyName:
+        t("factorial.chart.ci", {
+          level: formatSignificant((1 - result.alpha) * 100, language, 4),
+        }) + `; n = ${result.n} (${t("figure.nInModel")})`,
       lettersLegend: m?.letters
         ? t("factorial.chart.letters", { alpha: formatSignificant(result.alpha, language, 4) })
         : "",
       groups: (m?.cells ?? []).map((c, i) => ({
         label: c.levels.join(" · "),
-        mean: val(c.estimate) ?? 0,
+        mean: val(c.estimate),
         lower: val(c.ciLower),
         upper: val(c.ciUpper),
         letters: m?.letters?.letters[i] ?? "",
@@ -94,14 +111,26 @@ export function FactorialResults({
             {t("factorial.summary", {
               type: t(`factorial.ssType.${result.ssType}`),
               n: result.n,
-              r2: num(result.rSquared),
-              adj: num(result.adjustedRSquared),
+              r2: text(result.rSquared),
+              adj: text(result.adjustedRSquared),
             })}
           </p>
+          {knownAffected && (
+            <p role="note" className="validation-warning">
+              {t("factorial.geometry.legacyWarning")}
+            </p>
+          )}
+          {partial && <p role="note">{t("factorial.geometry.partialTests")}</p>}
           <p data-testid="factorial-significant">
             {significant.length > 0
-              ? t("factorial.significant", { terms: significant.map((s) => s.term).join(", ") })
-              : t("factorial.noneSignificant")}
+              ? t(partial ? "factorial.geometry.significantProjections" : "factorial.significant", {
+                  terms: significant.map((s) => s.term).join(", "),
+                })
+              : t(
+                  result.residual.df === 0
+                    ? "factorial.geometry.noInference"
+                    : "factorial.noneSignificant",
+                )}
           </p>
           {result.issues.filter((i) => i.severity !== "info").length > 0 && (
             <ul className="facts-list" role="note">
@@ -116,6 +145,15 @@ export function FactorialResults({
       </div>
 
       <div data-section="tables">
+        {result.estimability && (
+          <FactorialGeometryDetails
+            key={signature}
+            geometry={result.estimability}
+            language={language}
+            recordId={record?.id ?? null}
+            metadata={exportMeta}
+          />
+        )}
         <div className="grid-scroll">
           <table className="results-table" data-testid="factorial-anova">
             <caption>{t("factorial.anova")}</caption>
@@ -183,6 +221,9 @@ export function FactorialResults({
               data-testid={`marginal-${m.factors.join("-")}`}
             >
               <h4>{t("factorial.marginal", { factors: names })}</h4>
+              {!m.cells.some((cell) => cell.estimate.status === "defined") && (
+                <p role="note">{t("factorial.geometry.noMeans")}</p>
+              )}
               <div className="grid-scroll">
                 <table className="results-table">
                   <caption>
@@ -205,7 +246,9 @@ export function FactorialResults({
                         <th scope="row">{c.levels.join(" · ")}</th>
                         <td className="num">{num(c.estimate)}</td>
                         <td className="num">{num(c.stdError)}</td>
-                        <td className="num">{`${num(c.ciLower)} – ${num(c.ciUpper)}`}</td>
+                        <td className="num">
+                          {num(c.ciLower)} – {num(c.ciUpper)}
+                        </td>
                         {m.letters && <td>{m.letters.letters[i]}</td>}
                       </tr>
                     ))}
@@ -298,7 +341,9 @@ export function FactorialResults({
                     <td className="num">{num(c.tValue)}</td>
                     <td className="num">{pText(c.pValue)}</td>
                     <td className="num">{pText(c.pAdjusted)}</td>
-                    <td className="num">{`${num(c.ciLower)} – ${num(c.ciUpper)}`}</td>
+                    <td className="num">
+                      {num(c.ciLower)} – {num(c.ciUpper)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -312,7 +357,7 @@ export function FactorialResults({
         )}
       </div>
 
-      {first && (
+      {first?.cells.some((cell) => cell.estimate.status === "defined") && (
         <div data-section="charts">
           <ChartFigure
             testId="factorial-chart"

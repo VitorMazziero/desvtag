@@ -10,6 +10,8 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useProject, useWorkspace } from "../../state/ProjectContext";
+import { useViewedFamily } from "./ViewedFamily";
 
 /** Ordem de apresentação; ids desconhecidos vão antes da exportação. */
 const ORDER = [
@@ -28,9 +30,9 @@ const STORAGE_KEY = "optima.showAllSections";
 const ACTIVE_KEY = "optima.activeSection";
 
 /** Seção ativa lembrada ao navegar e ao recarregar (estado da interface, não do projeto). */
-function readActive(): string | null {
+function readActive(key: string): string | null {
   try {
-    return localStorage.getItem(ACTIVE_KEY);
+    return sessionStorage.getItem(key);
   } catch {
     return null;
   }
@@ -51,8 +53,12 @@ const rank = (id: string): number => {
 
 export function SectionedResults({ children }: { children: ReactNode }) {
   const { t } = useTranslation("results");
+  const project = useProject();
+  const workspace = useWorkspace();
+  const { saved: family } = useViewedFamily();
+  const activeKey = `${ACTIVE_KEY}.${workspace.projectId}.${workspace.createdAt}.${project.id}.${family?.record.signature ?? project.result?.signature ?? "none"}.${family?.record.id ?? project.analyses.at(-1)?.id ?? "none"}`;
   const host = useRef<HTMLDivElement>(null);
-  const initialActive = useRef(readActive());
+  const initialActive = useRef(readActive(activeKey));
   const activeRef = useRef<string | null>(initialActive.current);
   const showAllRef = useRef(readShowAll());
   const [showAll, setShowAll] = useState(showAllRef.current);
@@ -61,11 +67,19 @@ export function SectionedResults({ children }: { children: ReactNode }) {
   const setActive = (id: string) => {
     setActiveState(id);
     try {
-      localStorage.setItem(ACTIVE_KEY, id);
+      sessionStorage.setItem(activeKey, id);
     } catch {
       // sem armazenamento: vale só nesta sessão
     }
   };
+
+  const previousKey = useRef(activeKey);
+  useLayoutEffect(() => {
+    if (previousKey.current === activeKey) return;
+    previousKey.current = activeKey;
+    activeRef.current = null;
+    setActiveState(null);
+  }, [activeKey]);
 
   const apply = useCallback(() => {
     const el = host.current;

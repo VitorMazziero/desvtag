@@ -61,5 +61,23 @@ Cohen, *Statistical Power Analysis for the Behavioral Sciences*; Lenth, R. V. (1
 
 ## Limitações desta versão
 
-- Sem potência por **simulação** (a incerteza de Monte Carlo não é necessária enquanto as fórmulas forem exatas), sem regressão, contrastes nem efeitos de planejamentos de dois níveis, sem desenhos desbalanceados e sem correção para comparações múltiplas.
-- O resultado é calculado ao pedir e **não é guardado no projeto**.
+- A versão 1 descrita acima não tinha simulação, regressão, contrastes ou efeitos de dois níveis. Essas variantes e o contraste com alocações desiguais estão implementados na extensão ET24 descrita abaixo; correção para comparações múltiplas continua fora do escopo da calculadora.
+- A ET22 guarda configuração em edição e resultado calculado, com entradas/revisão/proveniência. Abrir não recalcula; HTML/PDF/Word e CSV/XLSX usam o registro consultado. As variantes avançadas desta especificação continuam na ET24.
+
+## ET24 em execução — correção numérica das caudas
+
+A [DT-0035](../decisoes-tecnicas/dt-0035-caudas-nao-centrais-com-orcamento-numerico.md) corrige o custo sem orçamento da soma F e pesos iniciais zerados na série t. F usa agora a moda de Poisson e recorrências para ambos os lados; peso estável por Stirling, janela 14√(λ/2)+60 e soma compensada. Para λ/2>2.000.000, retorna SF=1 somente se um limite probabilístico certificar erro absoluto ≤1e−12 (df1≥1); caso contrário o cálculo é explicitamente indisponível. Para |δ|>8, t usa quadratura condicional normal/qui-quadrado, truncamento da normal a ±12 e Gauss–Legendre 12/24 adaptativo (até 20 subdivisões), exigindo concordância absoluta distribuída de 1e−12. Não há aproximação normal indiscriminada.
+
+[54 pontos F, 120 t e potência de uma amostra pequena](../../validation/cases/noncentral_extreme/tails.json) conferidos contra SciPy; erro absoluto aceito 2e−9 nos extremos e casos legados mantêm tolerância 1e−10. Com duas observações, δ=40, α=0,01 bilateral, a potência continua abaixo de 0,6; a série antiga podia devolver 1 por underflow. Fora do orçamento não se apresenta n inválido nem um número de potência substituto. Meta por busca propaga falha numérica, em vez de declarar artificialmente a meta inalcançável.
+
+O registro deste incremento antecedeu a implementação das variantes de regressão/contrastes/efeitos e simulação. O estado atual está na seção seguinte, com fórmulas na [DT-0034](../decisoes-tecnicas/dt-0034-potencia-linear-e-simulacao-gaussiana.md) e [progresso/evidências](../../validation/reports/et24/README.md).
+
+## Incremento ET24 e integridade
+
+Regressão com desenho fixo, contraste planejado, efeito de fatorial completo de dois níveis e simulação estão implementados localmente conforme a [DT-0034](../decisoes-tecnicas/dt-0034-potencia-linear-e-simulacao-gaussiana.md); o aceite integral da ET24 permanece aberto. A referência independente inclui dez desenhos NumPy/SciPy e simulação de dados gaussianos com OLS, em `validation/cases/power_advanced`.
+
+AU-B04: a preparação usa coeficientes/σ antes dos quadrados na regressão, efeito/σ no fatorial e pesos normalizados no contraste. Não centralidade e erro-padrão são preparados separadamente. Produtos de escala do erro-padrão combinam primeiro o menor e o maior fator; respostas/pesos recíprocos representáveis não transbordam por um produto intermediário. Testes cobrem unidades entre 10^-160 e 10^160 nos dez desenhos e objetivos, sinal/escala dos pesos e escalas recíprocas 10^±308. Valores fora do orçamento/domínio continuam produzindo erro explícito.
+
+AU-B03: arquivos conferem total, dimensões, graus de liberdade e compatibilidade de precisão/hipótese; resumo Monte Carlo confere contagem/B, erro-padrão e Wilson na rotina compartilhada do core. Tolerância estrutural: 10^-14 + 10^-10 |esperado|, sem repetir a simulação ou avaliar potência ao abrir. Algoritmo deve ser a versão reconhecida. Isso detecta contradições redundantes; não autentica o resultado nem prova que as observações produziram o número salvo. Testes preservam arquivos históricos e recusam mutações isoladas no Rust e WASM.
+
+Apresentação: resultados principais e incerteza precedem as suposições; texto corrido usa a fonte de leitura. `formatSignificant` usa notação científica para |x| ≥ 10^12 ou 0 < |x| < 10^-6, respeitando idioma e algarismos significativos; `formatNumber`, valores armazenados e CSV/XLSX completos não mudam. A prévia de 20 linhas vale apenas na tela. HTML/PDF/Word incluem a matriz inteira; PDF/Word dividem mais de seis colunas em partes, com referência repetida e ordinal quando a referência não é única. Fonte de tabela mínima de 9 pt, títulos/legendas/cabeçalho com a primeira linha no PDF. Simulação não repete no relatório a tabela de campos que já estão no resumo; semente/B/algoritmo continuam no arquivo e na proveniência. [Aceite de interface/exportação](../planos-execucao/plano-v0.4.md#99-execução-do-bloco-04--interface-e-documentos-2026-11-03).

@@ -1,0 +1,97 @@
+src\features\analysis\RepeatedMeasures.tsx:20:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    19 │ export function RepeatedMeasures({
+  > 20 │   language,
+       │   ^^^^^^^^
+    21 │   embedded = false,
+    22 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\mixedRequest.test.ts:44:41 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    42 │   });
+    43 │   it("blocks unmapped or invalid values instead of turning them into missing", () => {
+  > 44 │     const bad = { ...state, rows: [{ ...state.rows[0]!, timeText: "unknown" }] };
+       │                                         ^^^^^^^^^^^^^^
+    45 │     for (const occasionOrder of ["", "Antes; Depois", "Antes; Antes"]) {
+    46 │       const got = mixedAdvancedRequest(
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+tests\e2e\et23-models.spec.ts:103:17 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    101 │     await download.saveAs(path);
+    102 │     const doc = JSON.parse(
+  > 103 │       strFromU8(unzipSync(new Uint8Array(readFileSync(path)))["project.json"]!),
+        │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    104 │     );
+    105 │     const record = doc.experiments[0].mixedModelResult.records.at(-1);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+tests\e2e\et23-models.spec.ts:123:30 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    121 │     ]) {
+    122 │       const event = page.waitForEvent("download");
+  > 123 │       await page.getByTestId(id!).click();
+        │                              ^^^
+    124 │       await (await event).saveAs(info.outputPath(`${name}.${extension}`));
+    125 │     }
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\results\MixedResultTable.tsx:42:27 lint/suspicious/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid using the index of an array as key property in an element.
+  
+    40 │           <tbody>
+    41 │             {rows.map((row, i) => (
+  > 42 │               <tr key={`${i}:${String(row[0])}`}>
+       │                           ^
+    43 │                 {row.map((cell, j) => (
+    44 │                   <td
+  
+  i This is the source of the key value.
+  
+    39 │           </thead>
+    40 │           <tbody>
+  > 41 │             {rows.map((row, i) => (
+       │                             ^
+    42 │               <tr key={`${i}:${String(row[0])}`}>
+    43 │                 {row.map((cell, j) => (
+  
+  i The order of the items may change, and this also affects performances and component state.
+  
+  i Check the React documentation. 
+  
+
+Skipped 2 suggested fixes.
+If you wish to apply the suggested (unsafe) fixes, use the command biome check --write --unsafe
+
+Checked 10 files in 39ms. Fixed 10 files.
+Found 1 error.
+Found 4 warnings.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while applying fixes.
+  
+

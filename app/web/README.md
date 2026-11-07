@@ -1,6 +1,6 @@
 # Interface compartilhada
 
-Área reservada à interface TypeScript/React do EnziTAG Optima, utilizada no navegador e no aplicativo Windows.
+Área reservada à interface TypeScript/React do DesvTAG, utilizada no navegador e no aplicativo Windows.
 
 Responsabilidades previstas: navegação guiada, cadastro de fatores e respostas, edição e importação de dados, configuração das análises, tabelas, gráficos e explicações curtas.
 
