@@ -527,7 +527,6 @@
   box-shadow: var(--shadow-control);
   cursor: pointer;
   transition:
-    background-color var(--motion-duration) var(--motion-ease),
     border-color var(--motion-duration) var(--motion-ease),
     box-shadow var(--motion-duration) var(--motion-ease);
 }

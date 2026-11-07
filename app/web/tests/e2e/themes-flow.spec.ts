@@ -45,6 +45,29 @@ test("o seletor oferece os seis temas, aplica e lembra a escolha; valor desconhe
   await expect(html(page)).toHaveAttribute("data-theme", "soft-light");
 });
 
+test("a troca de tema aplica o texto e o fundo do botão Salvar juntos", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("optima.theme", "organic"));
+  await page.goto("/");
+  const save = page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true });
+  await expect(save).toHaveCSS("background-color", "rgb(53, 66, 45)");
+  await save.evaluate((button) => {
+    const observer = new MutationObserver(() => {
+      const { color, backgroundColor } = getComputedStyle(button);
+      button.setAttribute("data-theme-switch-colors", `${color} / ${backgroundColor}`);
+      observer.disconnect();
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  });
+  await page.getByLabel("Tema").selectOption("clay");
+  await expect(save).toHaveAttribute(
+    "data-theme-switch-colors",
+    "rgb(56, 49, 57) / rgb(246, 163, 202)",
+  );
+});
+
 test("DesvTAG aparece somente no logotipo do cabeçalho, sem rede, nos seis temas", async ({
   page,
 }) => {
