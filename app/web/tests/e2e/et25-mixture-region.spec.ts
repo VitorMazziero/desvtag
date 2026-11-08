@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
+import { clickAfterFocus } from "./clickAfterFocus";
 import { openFigureMenu } from "./figureTools";
 import { startObjective } from "./startObjective";
 import { THEME_LIST } from "./themes";
@@ -32,7 +33,7 @@ async function configureComponents(page: Page) {
   await page.goto("/");
   await startObjective(page, "plan");
   for (const [index, name] of ["Água", "Etanol", "Glicerol"].entries()) {
-    await page.getByRole("button", { name: "Adicionar fator", exact: true }).click();
+    await clickAfterFocus(page.getByRole("button", { name: "Adicionar fator", exact: true }));
     await page.getByLabel("Nome", { exact: true }).nth(index).fill(name);
     await page.getByLabel("Tipo").nth(index).selectOption("numeric");
   }
