@@ -1,21 +1,14 @@
-// Logo do grupo de pesquisa (marca EnziTAG), empacotado localmente (funciona offline). O arquivo
-// não é alterado nem recolorido: uma base clara neutra o mantém legível em todos os temas.
-import { useTranslation } from "react-i18next";
-import logo from "../../assets/enzitag-logo.png";
+import logo from "../../assets/desvtag-logo.png";
 
-const SIZES = { header: [108, 30] } as const;
-
-export function GroupLogo({ size = "header" }: { size?: keyof typeof SIZES }) {
-  const { t } = useTranslation();
-  const [width, height] = SIZES[size];
+export function GroupLogo() {
   return (
     <img
-      className={`group-logo group-logo-${size}`}
+      className="group-logo"
       src={logo}
-      width={width}
-      height={height}
-      alt={t("app.logoAlt")}
-      data-testid={`group-logo-${size}`}
+      width={144}
+      height={48}
+      alt="DesvTAG"
+      data-testid="group-logo-header"
     />
   );
 }

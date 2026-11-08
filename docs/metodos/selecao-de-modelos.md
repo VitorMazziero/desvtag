@@ -51,6 +51,8 @@ Caso `ccf-3-fatores-quadratico-so-em-x2` (composto central de face centrada, 3 f
 
 ## 9. Interpretação apresentada ao usuário
 
+Para superfícies, «Comparar modelos» solicita o cálculo com a revisão de dados vinculada ao resultado. A abertura do projeto já mostra os coeficientes e o diagnóstico arquivados. A exportação do relatório inclui a comparação da mesma revisão. Alterar termos ou trocar de resposta pelo painel exige que o ajuste exibido corresponda aos dados e à configuração atuais.
+
 Lista de termos que se liga e desliga (com confirmação quando a remoção quebra a hierarquia), com os termos de valor-p alto marcados como «não significativo»; comparação lado a lado de **completo, atual e recomendado** (parâmetros, graus de liberdade do resíduo, `R²`, `R²` ajustado, `R²` predito, RMSE, valor-p do modelo e da falta de ajuste, `AICc`, `BIC`); a sequência sugerida de remoções, com «usar este modelo» em cada passo; botões «aplicar a recomendação» e «voltar ao modelo completo»; avisos de falta de ajuste, poucos graus de liberdade e sobreajuste (`R²` predito muito abaixo do ajustado). Texto fixo: «valores-p calculados depois de escolher termos pelos próprios dados são otimistas; confirme o modelo final com ensaios novos».
 
 ## 10. Validação
@@ -69,6 +71,8 @@ O mesmo painel existe na seção **Modelo** da análise de planejamentos de dois
 - Se o modelo completo não puder ser ajustado (por exemplo, saturado), o atual faz o papel de completo e um aviso é emitido.
 
 **Validação:** 4 casos fatoriais completos (2², 2³ e 2⁴, com repetições, pontos centrais e com ou sem curvatura) contra o `statsmodels`, com a mesma estrutura de tolerâncias da seleção de superfícies (`design_selection_validation.rs`, gerados por `validation/tools/make_design_selection_cases.py`); paridade no WebAssembly (`v02.parity.test.ts`); E2E em Chromium (completo → recomendado → completo). **Não validado:** planejamentos fracionários e de Plackett–Burman (a mecânica é a mesma, mas não há caso independente), nem o aplicativo Windows.
+
+**Fracionários e Plackett–Burman (ET28 T03).** Cinco casos novos contra o `statsmodels` (`make_design_selection_cases.py`): 2^(4−1) de resolução IV, 2^(5−1) de resolução V, 2^(5−2) de resolução III, Plackett–Burman de 12 ensaios com 4 fatores e Plackett–Burman de 12 ensaios com 5 fatores partindo do modelo só de efeitos principais. Em desenhos regulares o aliasing é exato; as colunas aliasadas têm valor-p indefinido e nunca são candidatas à remoção, e o ajuste usa só as colunas independentes (parâmetros = posto). Limites conhecidos, registrados e não alterados: (1) como as interações aliasadas **permanecem** no modelo, a hierarquia pode impedir a remoção de efeitos principais cujos pares estão confundidos (no 2^(4−1), C e D ficam por causa de C×D); (2) com colinearidade **parcial** entre muitas colunas (Plackett–Burman com todas as interações) qual coluna é tratada como aliasada é convenção do pivô do QR e muda os valores-p individuais, não as métricas do modelo — por isso a validação usa PB sem aliasing exato ou partindo dos efeitos principais. PRESS e R² predito são **indefinidos** quando algum ensaio tem alavanca 1 (antes saía um número de arredondamento).
 
 ## 11. Referências
 

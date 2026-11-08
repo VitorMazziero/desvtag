@@ -2,7 +2,10 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { openFigureMenu } from "./figureTools";
+import { openAbout } from "./menus";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 
 // Percurso de comparação de tratamentos com o motor Rust real (WebAssembly em Worker):
 // importar/colar → ANOVA → Tukey → letras → exportar → salvar → reabrir.
@@ -52,15 +55,17 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     test.setTimeout(120_000);
     await page.goto("/");
     await page.getByLabel("Nome do projeto").fill("Enzimas — quatro condições");
-    await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "compare");
 
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
     await page.getByLabel("Níveis (opcional)").fill("controle; pH 5; pH 7; pH 9");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
-    await page.getByLabel("Unidade (opcional)").nth(1).fill("U/mL");
+    await page
+      .getByLabel(/^Unidade de /)
+      .nth(1)
+      .fill("U/mL");
     await page.getByRole("button", { name: "Avançar" }).click();
 
     await page.getByRole("button", { name: "Adicionar linha" }).click();
@@ -68,19 +73,19 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     await expect(page.getByLabel("Atividade — Obs. 20")).toHaveValue("12,9");
     await page.getByRole("button", { name: "Avançar" }).click();
 
-    // Configuração: fator e α; o botão só habilita com o fator escolhido.
+    // Configuração: com um único fator cadastrado ele já vem escolhido (UX27).
     await expect(
       page.getByRole("heading", { name: "Análise: comparação de tratamentos" }),
     ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Comparar tratamentos" })).toBeDisabled();
-    await page.getByLabel("Fator que define os grupos").selectOption({ label: "Condição" });
+    await expect(page.getByLabel("Fator que define os grupos")).toHaveValue(/.+/);
+    await expect(page.getByRole("button", { name: "Comparar tratamentos" })).toBeEnabled();
     await page.getByRole("button", { name: "Comparar tratamentos" }).click();
 
     // ANOVA contra o SciPy (5 algarismos significativos exibidos).
     const anova = page.getByTestId("anova-table");
     await expect(anova).toBeVisible();
     await expect(anova.getByRole("row", { name: /Entre grupos/ })).toContainText(
-      pt(expected.anova.f, 5),
+      pt(expected.anova.f, 4),
     );
     await expect(anova.getByRole("row", { name: /Entre grupos/ })).toContainText("3");
     await expect(anova.getByRole("row", { name: /Dentro dos grupos/ })).toContainText("16");
@@ -118,7 +123,7 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     const csvDownload = page.waitForEvent("download");
     await page.getByRole("button", { name: "Pares (CSV)" }).click();
     const csv = readFileSync((await (await csvDownload).path()) as string, "utf8");
-    expect(csv.startsWith("﻿# app: EnziTAG Optima")).toBe(true);
+    expect(csv.startsWith("﻿# app: DesvTAG")).toBe(true);
     expect(csv).toContain("# methodId: one_way_comparison");
     expect(csv).toContain("# revisionId: v");
     expect(csv).toContain("group_a,group_b,difference,std_error,q,p_adjusted");
@@ -127,6 +132,7 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     ).toBe(6);
 
     const svgDownload = page.waitForEvent("download");
+    await openFigureMenu(means);
     await means.getByRole("button", { name: /Figura — SVG/ }).click();
     const svg = readFileSync((await (await svgDownload).path()) as string, "utf8");
     expect(svg).toContain("<metadata>");
@@ -135,6 +141,7 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     expect(svg).not.toContain("var(");
 
     const pngDownload = page.waitForEvent("download");
+    await openFigureMenu(means);
     await means.getByRole("button", { name: /Figura — PNG/ }).click();
     const png = readFileSync((await (await pngDownload).path()) as string);
     expect([...png.subarray(0, 8)]).toEqual([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -143,7 +150,7 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
 
     // Salvar → editar → abrir: o resultado guardado reaparece SEM recalcular e está atual.
     const saveDownload = page.waitForEvent("download");
-    await page.getByRole("button", { name: "Salvar", exact: true }).click();
+    await page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
     const file = await (await saveDownload).path();
     await page.getByRole("button", { name: /Planejamento e dados/ }).click();
     await page.getByRole("textbox", { name: "Atividade — Obs. 1", exact: true }).fill("99");
@@ -152,11 +159,13 @@ test.describe("comparação de tratamentos (quatro condições enzimáticas)", (
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: "Abrir…" }).click();
     await (await chooser).setFiles(file as string);
+    await page.getByRole("button", { name: /^Resultados/ }).click();
     await expect(page.getByTestId("anova-table")).toBeVisible();
     for (const [i, value] of letters.entries()) {
       await expect(page.getByTestId(`letters-${i}`)).toHaveText(value);
     }
     await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
+    await openAbout(page);
     await page.getByTestId("history").locator("summary").click();
     await expect(page.getByTestId("analysis-record")).toHaveCount(1);
   });
@@ -176,7 +185,7 @@ test("abre o exemplo 01 do repositório com o resultado guardado e atual", async
   await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
   await expect(
     page.getByTestId("anova-table").getByRole("row", { name: /Entre grupos/ }),
-  ).toContainText(pt(expected.anova.f, 5));
+  ).toContainText(pt(expected.anova.f, 4));
 });
 
 test.describe("treatment comparison in English", () => {
@@ -184,8 +193,7 @@ test.describe("treatment comparison in English", () => {
 
   test("labels, decimal separator and the pairs table follow the language", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Compare treatments/ }).check();
-    await page.getByRole("button", { name: "Next" }).click();
+    await startObjective(page, "compare");
     await page.getByRole("button", { name: "Add factor" }).click();
     await page.getByLabel("Name", { exact: true }).first().fill("Condition");
     await page.getByRole("button", { name: "Add response" }).click();

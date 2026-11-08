@@ -1,0 +1,15 @@
+src\features\analysis\RepeatedMeasures.tsx:18:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    17 │ export function RepeatedMeasures({
+  > 18 │   language,
+       │   ^^^^^^^^
+    19 │   embedded = false,
+    20 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+Checked 14 files in 33ms. Fixed 3 files.
+Found 1 warning.

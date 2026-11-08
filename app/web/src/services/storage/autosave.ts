@@ -21,15 +21,19 @@ export function useAutosave(workspace: Workspace, delayMs = AUTOSAVE_DELAY_MS): 
   const latest = useRef(workspace);
   latest.current = workspace;
   const dirty = hasUnsavedChanges(workspace);
+  const wasDirty = useRef(false);
   const { changeSeq } = workspace;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: changeSeq dispara a regravação; o espaço de trabalho vem de `latest`.
   useEffect(() => {
     if (!dirty) {
       setStatus({ state: "idle" });
-      void clearRecovery();
+      // Initial clean state must not erase the previous session before RecoveryBanner reads it.
+      if (wasDirty.current) void clearRecovery();
+      wasDirty.current = false;
       return;
     }
+    wasDirty.current = true;
     setStatus({ state: "pending" });
     const timer = setTimeout(() => {
       const at = nowIso();

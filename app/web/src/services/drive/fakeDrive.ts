@@ -15,11 +15,14 @@ interface Stored {
 }
 
 export class FakeDrive {
+  accountId = "test-drive-account";
+  grants: Array<{ fileId: string; type: string; role: string; emailAddress: string }> = [];
   files = new Map<string, Stored>();
   private nextId = 1;
   private clock = Date.parse("2026-11-02T12:00:00Z");
   /** Próximas respostas de erro (consumidas em ordem) — `status` ou `"network"`. */
   failures: Array<{ status: number; reason?: string } | "network"> = [];
+  uploadFailures: Array<{ status: number; reason: string }> = [];
   requests: string[] = [];
 
   /** Alteração feita por outra pessoa: grava bytes novos e sobe a versão. */
@@ -65,6 +68,28 @@ export class FakeDrive {
     const method = init.method ?? "GET";
     const path = url.pathname;
     const isUpload = path.startsWith("/upload/drive/v3/files");
+    const uploadFailure = isUpload ? this.uploadFailures.shift() : undefined;
+    if (uploadFailure) {
+      return this.json(
+        { error: { errors: [{ reason: uploadFailure.reason }] } },
+        uploadFailure.status,
+      );
+    }
+    const permission = /^\/drive\/v3\/files\/([^/]+)\/permissions$/.exec(path);
+    if (method === "POST" && permission?.[1]) {
+      const fileId = decodeURIComponent(permission[1]);
+      if (!this.files.has(fileId)) return this.json({ error: {} }, 404);
+      const data = JSON.parse(new TextDecoder().decode(init.body as Uint8Array));
+      this.grants.push({ fileId, ...data });
+      return this.json({ id: "permission" });
+    }
+    if (method === "GET" && path === "/drive/v3/files/generateIds") {
+      return this.json({ ids: [`id${this.nextId++}`] });
+    }
+
+    if (method === "GET" && path === "/drive/v3/about") {
+      return this.json({ user: { permissionId: this.accountId } });
+    }
 
     if (!isUpload && method === "GET" && path === "/drive/v3/files") {
       const q = url.searchParams.get("q") ?? "";
@@ -124,7 +149,7 @@ export class FakeDrive {
             body.slice(jsonMatch.index + 4, jsonMatch.index + 4 + (jsonMatch[1]?.length ?? 0)),
           )
         : "{}";
-      const meta = JSON.parse(json) as { name?: string; parents?: string[] };
+      const meta = JSON.parse(json) as { id?: string; name?: string; parents?: string[] };
       const marker = `Content-Type: application/octet-stream\r\n\r\n`;
       const start = text.indexOf(marker) + marker.length;
       const end = text.lastIndexOf(`\r\n--${boundary}--`);
@@ -140,7 +165,8 @@ export class FakeDrive {
         return this.json(this.info(f));
       }
       if (method === "POST") {
-        const id = `id${this.nextId++}`;
+        const id = meta.id ?? `id${this.nextId++}`;
+        if (this.files.has(id)) return this.json({ error: {} }, 409);
         const f: Stored = {
           id,
           name: meta.name ?? "sem-nome",

@@ -248,7 +248,7 @@ Somente as de conversão decimal→binário descritas acima e a tolerância em d
 
 ## Execução
 
-`app/crates/optima-core/tests/linear_model_validation.rs` (nativo) e `app/web/src/services/engine/linear.parity.test.ts` (WebAssembly). Valores medidos: [regressão linear](../../../../docs/metodos/regressao-linear.md#10-validação).
+`app/crates/desvtag-core/tests/linear_model_validation.rs` (nativo) e `app/web/src/services/engine/linear.parity.test.ts` (WebAssembly). Valores medidos: [regressão linear](../../../../docs/metodos/regressao-linear.md#10-validação).
 """)
         print(f"{folder.name}: n={r['n']} p={r['p']} LRE(ref vs NIST)={r['certifiedLre']} numpy-vs-exact={r['numpyCrossLre']:.1f}")
 

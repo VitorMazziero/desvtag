@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { GroupLogo } from "../features/branding";
-import { EngineStatus } from "../features/engine-status";
-import { ExperimentBar, HistoryView, ProjectBar, RecoveryBanner } from "../features/project";
-import { LanguageSelector, ThemeSelector, UpdateCheck } from "../features/settings";
+import { AboutMenu, ExtrasMenu } from "../features/menus";
+import { ExperimentBar, ProjectBar, RecoveryBanner } from "../features/project";
+import { LanguageSelector, ThemeSelector } from "../features/settings";
 import { Workflow } from "../features/workflow";
 import type { Language } from "../i18n";
 import { useAutosave } from "../services/storage/autosave";
@@ -38,16 +38,16 @@ export function App({ language, theme, onLanguageChange, onThemeChange }: Props)
         {t("app.skipToContent")}
       </a>
       <header className="app-header">
-        <div className="brand">
+        <h1 className="brand">
           <GroupLogo />
-          <div>
-            <h1>{t("app.name")}</h1>
-            <p className="muted">{t("app.tagline")}</p>
-          </div>
-        </div>
+        </h1>
         <div className="settings">
           <LanguageSelector value={language} onChange={onLanguageChange} />
           <ThemeSelector value={theme} onChange={onThemeChange} />
+          <div className="header-menus">
+            <ExtrasMenu language={language} />
+            <AboutMenu />
+          </div>
         </div>
       </header>
       <main id="main" className="app-main">
@@ -55,12 +55,7 @@ export function App({ language, theme, onLanguageChange, onThemeChange }: Props)
         <ProjectBar recovery={recovery} />
         <ExperimentBar />
         <Workflow key={`${workspace.epoch}:${workspace.currentId}`} language={language} />
-        <HistoryView />
       </main>
-      <footer className="app-footer">
-        <EngineStatus />
-        <UpdateCheck />
-      </footer>
     </>
   );
 }

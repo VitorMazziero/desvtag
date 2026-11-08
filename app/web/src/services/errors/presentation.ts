@@ -4,9 +4,13 @@ import type { EngineError, Issue } from "../engine";
 import { engineErrorKey, issueKey } from "./codes";
 
 export function issueMessage(t: TFunction, issue: Issue): string {
+  const params: Record<string, unknown> = { ...issue.params };
+  // `kind` (tratamento/bloco) vem do motor como identificador; o texto é do idioma ativo.
+  if (typeof params.kind === "string")
+    params.kind = t(`issues.kind.${params.kind}`, { ns: "diagnostics", defaultValue: params.kind });
   return t(issueKey(issue), {
     ns: "diagnostics",
-    ...issue.params,
+    ...params,
     defaultValue: t("engine.unknown", { ns: "diagnostics" }),
   });
 }

@@ -5,6 +5,9 @@ declare module "pdfmake/build/pdfmake" {
   }
   const pdfMake: {
     addVirtualFileSystem(vfs: Record<string, string>): void;
+    addFonts(
+      fonts: Record<string, { normal: string; bold: string; italics: string; bolditalics: string }>,
+    ): void;
     setUrlAccessPolicy(policy: (url: string) => boolean): void;
     createPdf(definition: object): PdfDocument;
   };

@@ -94,7 +94,7 @@ Nenhuma.
 
 ## Execução
 
-`app/crates/optima-project/tests/import_xlsx_validation.rs` (nativo) e o mesmo arquivo pelo WebAssembly em `app/web/src/services/engine/import.parity.test.ts`.
+`app/crates/desvtag-project/tests/import_xlsx_validation.rs` (nativo) e o mesmo arquivo pelo WebAssembly em `app/web/src/services/engine/import.parity.test.ts`.
 """,
     encoding="utf-8",
 )

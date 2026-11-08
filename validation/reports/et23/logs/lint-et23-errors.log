@@ -1,0 +1,134 @@
+scripts\save-example-repeated.mjs:2:1 assist/source/organizeImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some imports or exports are not organized.
+  
+    1 │ // Create a synthetic advanced example through the real app and WASM.
+  > 2 │ import {mkdirSync,readFileSync,writeFileSync,copyFileSync} from "node:fs";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 3 │ import {resolve} from "node:path";
+  > 4 │ import {chromium} from "playwright-core";
+  > 5 │ const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+    7 │ const csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+  
+  i Sort the imported names.
+  
+    1 │ // Create a synthetic advanced example through the real app and WASM.
+  > 2 │ import {mkdirSync,readFileSync,writeFileSync,copyFileSync} from "node:fs";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ import {resolve} from "node:path";
+    4 │ import {chromium} from "playwright-core";
+  
+  i This statement must be preceded by a blank line. Add a newline before this statement.
+  
+    3 │ import {resolve} from "node:path";
+    4 │ import {chromium} from "playwright-core";
+  > 5 │ const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+    7 │ const csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+  
+  i Safe fix: Organize imports and exports (Biome)
+  
+     1  1 │   // Create a synthetic advanced example through the real app and WASM.
+     2    │ - import·{mkdirSync,readFileSync,writeFileSync,copyFileSync}·from·"node:fs";
+        2 │ + import·{copyFileSync,·mkdirSync,readFileSync,writeFileSync}·from·"node:fs";
+     3  3 │   import {resolve} from "node:path";
+     4  4 │   import {chromium} from "playwright-core";
+        5 │ + 
+     5  6 │   const root=resolve(import.meta.dirname,"../../..");const folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+     6  7 │   const reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+  
+
+scripts\save-example-repeated.mjs format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+     1  1 │   // Create a synthetic advanced example through the real app and WASM.
+     2    │ - import·{mkdirSync,readFileSync,writeFileSync,copyFileSync}·from·"node:fs";
+     3    │ - import·{resolve}·from·"node:path";
+     4    │ - import·{chromium}·from·"playwright-core";
+     5    │ - const·root=resolve(import.meta.dirname,"../../..");const·folder=resolve(root,"examples/15-medidas-repetidas-ar1");mkdirSync(folder,{recursive:true});
+     6    │ - const·reference=JSON.parse(readFileSync(resolve(root,"validation/cases/repeated_covariance/reml.json"),"utf8")).cases.find(c=>c.name==="ar1_positive");
+     7    │ - const·csv="unit_id;Resposta;time\n"+reference.rows.map(row=>`${row.unit};${row.y};${row.time}`).join("\n")+"\n";writeFileSync(resolve(folder,"ensaios.csv"),csv);
+     8    │ - const·browser=await·chromium.launch();try{
+     9    │ - ·const·page=await·browser.newPage({locale:"pt-BR",acceptDownloads:true});await·page.addInitScript(()=>localStorage.setItem("optima.showAllSections","1"));await·page.goto("http://127.0.0.1:4173/");
+    10    │ - ·await·page.getByLabel("Nome·do·projeto",{exact:true}).fill("Perfis·temporais·—·AR(1)");await·page.getByRole("button",{name:"Começar:·Analisar·dados·existentes",exact:true}).click();
+    11    │ - ·const·chooser=page.waitForEvent("filechooser");await·page.getByRole("button",{name:"Importar·arquivo·(CSV·ou·XLSX)…",exact:true}).click();await(await·chooser).setFiles(resolve(folder,"ensaios.csv"));await·page.getByRole("button",{name:"Importar",exact:true}).click();await·page.getByTestId("variables-blocks-next").click();await·page.getByTestId("data-blocks-next").click();
+    12    │ - ·await·page.getByRole("combobox",{name:"Estrutura·das·observações",exact:true}).selectOption("repeat...
+    13    │ - ·const·event=page.waitForEvent("download");await·page.getByRole("button",{name:"Salvar·(baixar·.enzitag)",exact:true}).click();const·file=await(await·event).path();if(!file)throw·new·Error("No·example·archive");copyFileSync(file,resolve(folder,"projeto.enzitag"));
+    14    │ - ·const·evidence=resolve(root,"docs/imagens/evidencias-v0.4-et23/acceptance");await·page.getByTestId("mixed-profile-chart").screenshot({path:resolve(evidence,"example-15-profiles.png")});
+    15    │ - ·console.log("Saved·example·15·from·real·UI·with·stored·AR1,·joint·test,·EMM,·comparisons·and·profiles.");
+    16    │ - }finally{await·browser.close();}
+        2 │ + import·{·mkdirSync,·readFileSync,·writeFileSync,·copyFileSync·}·from·"node:fs";
+        3 │ + import·{·resolve·}·from·"node:path";
+        4 │ + import·{·chromium·}·from·"playwright-core";
+        5 │ + const·root·=·resolve(import.meta.dirname,·"../../..");
+        6 │ + const·folder·=·resolve(root,·"examples/15-medidas-repetidas-ar1");
+        7 │ + mkdirSync(folder,·{·recursive:·true·});
+        8 │ + const·reference·=·JSON.parse(
+        9 │ + ··readFileSync(resolve(root,·"validation/cases/repeated_covariance/reml.json"),·"utf8"),
+       10 │ + ).cases.find((c)·=>·c.name·===·"ar1_positive");
+       11 │ + const·csv·=
+       12 │ + ··"unit_id;Resposta;time\n"·+
+       13 │ + ··reference.rows.map((row)·=>·`${row.unit};${row.y};${row.time}`).join("\n")·+
+       14 │ + ··"\n";
+       15 │ + writeFileSync(resolve(folder,·"ensaios.csv"),·csv);
+       16 │ + const·browser·=·await·chromium.launch();
+       17 │ + try·{
+       18 │ + ··const·page·=·await·browser.newPage({·locale:·"pt-BR",·acceptDownloads:·true·});
+       19 │ + ··await·page.addInitScript(()·=>·localStorage.setItem("optima.showAllSections",·"1"));
+       20 │ + ··await·page.goto("http://127.0.0.1:4173/");
+       21 │ + ··await·page.getByLabel("Nome·do·projeto",·{·exact:·true·}).fill("Perfis·temporais·—·AR(1)");
+       22 │ + ··await·page
+       23 │ + ····.getByRole("button",·{·name:·"Começar:·Analisar·dados·existentes",·exact:·true·})
+       24 │ + ····.click();
+       25 │ + ··const·chooser·=·page.waitForEvent("filechooser");
+       26 │ + ··await·page.getByRole("button",·{·name:·"Importar·arquivo·(CSV·ou·XLSX)…",·exact:·true·}).click();
+       27 │ + ··await·(await·chooser).setFiles(resolve(folder,·"ensaios.csv"));
+       28 │ + ··await·page.getByRole("button",·{·name:·"Importar",·exact:·true·}).click();
+       29 │ + ··await·page.getByTestId("variables-blocks-next").click();
+       30 │ + ··await·page.getByTestId("data-blocks-next").click();
+       31 │ + ··await·page
+       32 │ + ····.getByRole("combobox",·{·name:·"Estrutura·das·observações",·exact:·true·})
+       33 │ + ····.selectOption("repeated");
+       34 │ + ··await·page.getByTestId("repeated-method").selectOption("mixed");
+       35 │ + ··await·page
+       36 │ + ····.getByRole("checkbox",·{·name:·"Usar·inferência·e·covariâncias·avançadas",·exact:·true·})
+       37 │ + ····.check();
+       38 │ + ··await·page.getByTestId("mixed-covariance").selectOption("ar1");
+       39 │ + ··await·page
+       40 │ + ····.getByRole("combobox",·{·name:·"Codificação·dos·fatores·categóricos",·exact:·true·})
+       41 │ + ····.selectOption("treatment");
+       42 │ + ··await·page.getByTestId("mixed-time-effect").selectOption("categorical");
+       43 │ + ··await·page
+       44 │ + ····.getByRole("checkbox",·{·name:·"Comparar·ocasiões·do·tempo·categórico",·exact:·true·})
+       45 │ + ····.check();
+       46 │ + ··await·page.getByRole("button",·{·name:·"Ajustar·modelo·misto",·exact:·true·}).click();
+       47 │ + ··await·page.getByTestId("mixed-profile-chart").waitFor();
+       48 │ + ··const·event·=·page.waitForEvent("download");
+       49 │ + ··await·page.getByRole("button",·{·name:·"Salvar·(baixar·.enzitag)",·exact:·true·}).click();
+       50 │ + ··const·file·=·await·(await·event).path();
+       51 │ + ··if·(!file)·throw·new·Error("No·example·archive");
+       52 │ + ··copyFileSync(file,·resolve(folder,·"projeto.enzitag"));
+       53 │ + ··const·evidence·=·resolve(root,·"docs/imagens/evidencias-v0.4-et23/acceptance");
+       54 │ + ··await·page
+       55 │ + ····.getByTestId("mixed-profile-chart")
+       56 │ + ····.screenshot({·path:·resolve(evidence,·"example-15-profiles.png")·});
+       57 │ + ··console.log(
+       58 │ + ····"Saved·example·15·from·real·UI·with·stored·AR1,·joint·test,·EMM,·comparisons·and·profiles.",
+       59 │ + ··);
+       60 │ + }·finally·{
+       61 │ + ··await·browser.close();
+       62 │ + }
+    17 63 │   
+  
+
+Checked 344 files in 383ms. No fixes applied.
+Found 2 errors.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+

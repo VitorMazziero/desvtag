@@ -1,6 +1,6 @@
 // Importação de CSV e XLSX com prévia, papéis de coluna e confirmação (U05).
 // Não presume o planejamento pelo nome do arquivo: o usuário mapeia as colunas.
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { nowIso } from "../../lib/ids";
 import type { Issue, SheetData } from "../../services/engine";
@@ -25,6 +25,7 @@ import {
   type ColumnRole,
   type FactorKindChoice,
   guessMapping,
+  type KnownVariables,
   looksLikeHeader,
 } from "./mapping";
 
@@ -33,7 +34,7 @@ export interface ImportFile {
   bytes: Uint8Array;
 }
 
-const ROLES: ColumnRole[] = ["factor", "response", "unit", "observation", "ignore"];
+const ROLES: ColumnRole[] = ["factor", "response", "unit", "time", "observation", "ignore"];
 const PREVIEW_ROWS = 8;
 
 type Source =
@@ -122,9 +123,25 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
   const header = hasHeader ?? looksLikeHeader(rows);
   const [mapping, setMapping] = useState<ColumnMapping[]>([]);
   // Nova grade ou nova opção de cabeçalho: recomeça a sugestão de mapeamento.
+  const known = useMemo<KnownVariables>(
+    () => ({
+      factors: experiment.factors
+        .filter((f) => f.name.trim() !== "")
+        .map((f) => ({ name: f.name, kind: f.kind })),
+      responses: experiment.responses
+        .filter((r) => r.name.trim() !== "")
+        .map((r) => ({ name: r.name })),
+    }),
+    [experiment.factors, experiment.responses],
+  );
+  const mappingSource = useRef("");
   useEffect(() => {
-    setMapping(rows.length > 0 ? guessMapping(rows, header) : []);
-  }, [rows, header]);
+    const key = JSON.stringify([rows, header, known]);
+    // A locale change can rebuild the preview without changing any imported data.
+    if (mappingSource.current === key) return;
+    mappingSource.current = key;
+    setMapping(rows.length > 0 ? guessMapping(rows, header, known) : []);
+  }, [rows, header, known]);
 
   const result = useMemo(
     () => (rows.length > 0 ? buildExperimentData(rows, header, mapping) : null),
@@ -168,6 +185,8 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
     }
     if (!result || result.issues.length > 0) return;
     dispatch({ type: "applyImport", data: result.data, now: nowIso() });
+    dispatch({ type: "setUnitColumn", visible: mapping.some((m) => m.role === "unit") });
+    dispatch({ type: "setTimeColumn", visible: mapping.some((m) => m.role === "time") });
     onClose();
   };
 
@@ -417,6 +436,7 @@ export function ImportWizard({ file, onClose }: { file: ImportFile; onClose: () 
                       {t(`issues.${issue.code}`, {
                         ns: "diagnostics",
                         rows: issue.rows.join(", "),
+                        columns: issue.columns?.join(", ") ?? "",
                       })}
                     </p>
                   ))}

@@ -1,28 +1,14 @@
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { formatNumber } from "../../i18n/format";
-import type { DescriptiveResult, Stat, Summary } from "../../services/engine";
+import type { DescriptiveResult, Summary } from "../../services/engine";
 import type { FactorDraft } from "../../state/project";
+import { StatCell } from "./StatCell";
 
 interface Props {
   result: DescriptiveResult;
   responseName: string;
   factors: FactorDraft[];
   language: Language;
-}
-
-function StatCell({ stat, language }: { stat: Stat; language: Language }) {
-  const { t } = useTranslation("results");
-  if (stat.status === "defined")
-    return <td className="num">{formatNumber(stat.value, language)}</td>;
-  return (
-    <td className="num undefined" title={t(`undefinedReason.${stat.reason}`)}>
-      <span aria-hidden="true">—</span>
-      <span className="sr-only">
-        {t("table.undefined")}: {t(`undefinedReason.${stat.reason}`)}
-      </span>
-    </td>
-  );
 }
 
 function Row({

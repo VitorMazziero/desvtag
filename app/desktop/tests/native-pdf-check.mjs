@@ -44,10 +44,13 @@ export async function runPdfCheck(page, exportDir) {
 }
 
 async function runPdfSteps(page, exportDir) {
+  await page.evaluate(()=>{localStorage.setItem("optima.showAllSections","1");localStorage.removeItem("optima.updateChannel");});
+  await page.reload();
+  await page.getByTestId("engine-version").waitFor({state:"attached"});
   // Interface em português, para usar os mesmos rótulos dos testes E2E.
   await page.locator("header.app-header select").first().selectOption("pt-BR");
-  await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByTestId("objective-compare").check();
+  await page.getByTestId("objective-start").click();
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Condição");
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
@@ -69,6 +72,7 @@ async function runPdfSteps(page, exportDir) {
   await page.getByRole("button", { name: "Comparar tratamentos" }).click();
   await page.getByTestId("section-charts").click();
 
+  await page.getByTestId("means-chart").getByTestId("figure-menu").locator(":scope > summary").click();
   await page.getByTestId("means-chart").getByRole("button", { name: /Figura — PDF/ }).click();
   const figure = await waitForFiles(exportDir, 1, 60000);
   await page.getByTestId("section-export").click();

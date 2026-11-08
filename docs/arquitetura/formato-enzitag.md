@@ -1,8 +1,8 @@
-# Formato do arquivo `.enzitag`
+# Formato dos arquivos de projeto DesvTAG
 
-**Estado:** vigente (contêiner 1, esquema 1) · **Atualizado em:** 2026-11-01
+**Estado:** vigente (contêiner 1, esquema 1) · **Atualizado em:** 2026-11-07
 
-Arquivo de projeto do EnziTAG Optima: aberto, documentado e legível por qualquer programa que leia ZIP e JSON. Decisões em [DT-0008](../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md). Implementação: [P01–P03](../modulos/p01-p03-projeto-e-arquivo.md) (`app/crates/optima-project`).
+O DesvTAG salva novos projetos com a extensão `.desvtag` e lê arquivos históricos `.enzitag` com o mesmo contêiner ZIP e esquema JSON. A implementação fica em `app/crates/desvtag-project`. [Decisão de formato](../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md) e [módulos P01–P03](../modulos/p01-p03-projeto-e-arquivo.md).
 
 ## 1. Contêiner
 
@@ -102,4 +102,8 @@ Regras:
 
 ## 7. Interoperabilidade
 
-Para ler um `.enzitag` fora do aplicativo: abra o ZIP, leia `project.json` e verifique o SHA-256 contra `manifest.json`. Os dados originais de cada versão estão em `experiments[].revisions[].data`.
+Para ler um projeto `.desvtag` ou `.enzitag` fora do aplicativo, abra o ZIP, leia `project.json` e verifique o SHA-256 contra `manifest.json`. Os dados originais de cada versão estão em `experiments[].revisions[].data`.
+
+## Seleção ativa opcional (ET29)
+
+O documento do esquema 1 pode conter `currentExperimentId`, identificador do experimento ativo ao salvar. O campo ausente preserva compatibilidade; a interface também recua para o primeiro experimento se o id não existir. A seleção não altera cálculos ou revisões de dados, mas conta como alteração do arquivo por ser persistida. Testes em Rust e TypeScript cobrem ausência, presença e reabertura.

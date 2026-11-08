@@ -1,0 +1,13 @@
+
+> @enzitag/optima-web@0.4.0-dev test
+> vitest run src/i18n/diagnostics.coverage.test.ts
+
+
+ RUN  v5.0.5 D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG Optima/app/web
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  12:40:50
+   Duration  1.69s (environment 72%, setup 18%, import 5%, transform 4%)
+

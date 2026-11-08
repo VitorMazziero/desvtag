@@ -1,0 +1,1239 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p1",
+  "name": "Saved families",
+  "createdAt": "2026-11-03T10:00:00Z",
+  "modifiedAt": "2026-11-03T10:00:00Z",
+  "appVersion": "0.4.0-dev",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Historical experiment",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "nonlinearResult": {
+        "selection": {
+          "factorId": "substrate",
+          "responseId": "y",
+          "model": "hill"
+        },
+        "records": [
+          {
+            "id": "nonlinear-1",
+            "createdAt": "2026-11-03T10:00:00Z",
+            "revisionId": "v1",
+            "signature": "nonlinear:v1:monod",
+            "input": {
+              "factorId": "substrate",
+              "responseId": "y",
+              "request": {
+                "x": [
+                  0.1,
+                  0.5,
+                  1.0,
+                  2.0,
+                  4.0,
+                  8.0,
+                  12.0,
+                  16.0
+                ],
+                "y": [
+                  0.15285714285714289,
+                  0.59,
+                  1.01,
+                  1.49,
+                  2.01,
+                  2.39,
+                  2.5814285714285714,
+                  2.6566666666666667
+                ],
+                "model": "monod",
+                "initial": null,
+                "lower": null,
+                "upper": null,
+                "alpha": 0.05
+              }
+            },
+            "result": {
+              "model": "monod",
+              "n": 8,
+              "parameters": [
+                {
+                  "name": "a",
+                  "estimate": 2.9966619252988207,
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.011728303023174099
+                  },
+                  "tValue": {
+                    "status": "defined",
+                    "value": 255.50686398344922
+                  },
+                  "pValue": {
+                    "status": "defined",
+                    "value": 2.4254011126303183e-13
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 2.9679638016375964
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 3.025360048960045
+                  },
+                  "atBound": false
+                },
+                {
+                  "name": "b",
+                  "estimate": 1.9950469239744477,
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.027727099547263958
+                  },
+                  "tValue": {
+                    "status": "defined",
+                    "value": 71.9529614186174
+                  },
+                  "pValue": {
+                    "status": "defined",
+                    "value": 4.849436563976504e-10
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 1.927201155494371
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 2.062892692454524
+                  },
+                  "atBound": false
+                }
+              ],
+              "sse": 0.0007880335114277961,
+              "sigma": {
+                "status": "defined",
+                "value": 0.011460319304945187
+              },
+              "rSquared": {
+                "status": "defined",
+                "value": 0.9998758151584806
+              },
+              "correlation": [
+                [
+                  1.0,
+                  0.8266963404035548
+                ],
+                [
+                  0.8266963404035548,
+                  1.0
+                ]
+              ],
+              "conditionNumber": {
+                "status": "defined",
+                "value": 3.246603948652489
+              },
+              "converged": true,
+              "iterations": 10,
+              "startsRun": 23,
+              "startsReachingBest": 12,
+              "residuals": [
+                0.009821591194464713,
+                -0.01052215782085042,
+                0.00946077595264172,
+                -0.010188599696150824,
+                0.010574832323635208,
+                -0.00851754421356743,
+                0.011952148881957836,
+                -0.00776599679601242
+              ],
+              "curve": [
+                {
+                  "x": 0.1,
+                  "y": 0.14303555166267817,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.139452056879825
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.14661904644553134
+                  }
+                },
+                {
+                  "x": 0.3012658227848102,
+                  "y": 0.3931484602030605,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.3843853390977952
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.40191158130832577
+                  }
+                },
+                {
+                  "x": 0.5025316455696203,
+                  "y": 0.6029509809619913,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.5908994412129661
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.6150025207110165
+                  }
+                },
+                {
+                  "x": 0.7037974683544304,
+                  "y": 0.7814615331414103,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.7673600092416052
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.7955630570412154
+                  }
+                },
+                {
+                  "x": 0.9050632911392406,
+                  "y": 0.9351950454877049,
+                  "lower": {
+                    "status": "defined",
+                    "value": 0.9198687676458692
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 0.9505213233295406
+                  }
+                },
+                {
+                  "x": 1.1063291139240508,
+                  "y": 1.068975284529585,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.052980341232945
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.084970227826225
+                  }
+                },
+                {
+                  "x": 1.3075949367088608,
+                  "y": 1.1864501589458607,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.1701630808007617
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.2027372370909597
+                  }
+                },
+                {
+                  "x": 1.508860759493671,
+                  "y": 1.2904294282310493,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.2741045128676758
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.3067543435944229
+                  }
+                },
+                {
+                  "x": 1.7101265822784812,
+                  "y": 1.3831123449163238,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.3669192584607777
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.39930543137187
+                  }
+                },
+                {
+                  "x": 1.9113924050632911,
+                  "y": 1.466244925905304,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.4502939072176053
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.4821959445930029
+                  }
+                },
+                {
+                  "x": 2.1126582278481014,
+                  "y": 1.5412309887316806,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.5255900720982325
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.5568719053651288
+                  }
+                },
+                {
+                  "x": 2.3139240506329117,
+                  "y": 1.6092120697556356,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.5939190605259226
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.6245050789853486
+                  }
+                },
+                {
+                  "x": 2.5151898734177216,
+                  "y": 1.6711259446346722,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.6561968820546162
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.6860550072147282
+                  }
+                },
+                {
+                  "x": 2.716455696202532,
+                  "y": 1.7277501495404988,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.71318537992865
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.7423149191523475
+                  }
+                },
+                {
+                  "x": 2.9177215189873418,
+                  "y": 1.779734804537868,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.7655234054598643
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.7939462036158718
+                  }
+                },
+                {
+                  "x": 3.118987341772152,
+                  "y": 1.8276276862632794,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.8137507375851265
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.8415046349414324
+                  }
+                },
+                {
+                  "x": 3.3202531645569624,
+                  "y": 1.8718936042856262,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.858326642115808
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.8854605664554445
+                  }
+                },
+                {
+                  "x": 3.5215189873417723,
+                  "y": 1.9129295359159613,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.8996444191065431
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.9262146527253794
+                  }
+                },
+                {
+                  "x": 3.722784810126582,
+                  "y": 1.9510765645748909,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.9380429116396645
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.9641102175101173
+                  }
+                },
+                {
+                  "x": 3.924050632911393,
+                  "y": 1.9866293825332713,
+                  "lower": {
+                    "status": "defined",
+                    "value": 1.9738156878389477
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 1.9994430772275948
+                  }
+                },
+                {
+                  "x": 4.125316455696202,
+                  "y": 2.0198439186888155,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.0072184232172807
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.0324694141603503
+                  }
+                },
+                {
+                  "x": 4.326582278481013,
+                  "y": 2.0509435092397794,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.0384748783566398
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.063412140122919
+                  }
+                },
+                {
+                  "x": 4.527848101265823,
+                  "y": 2.0801239259710544,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.0677817712960196
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.0924660806460893
+                  }
+                },
+                {
+                  "x": 4.729113924050632,
+                  "y": 2.107557501508205,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.095312773949186
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.1198022290672243
+                  }
+                },
+                {
+                  "x": 4.930379746835443,
+                  "y": 2.1333965352460216,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.121221809908991
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.1455712605830524
+                  }
+                },
+                {
+                  "x": 5.131645569620253,
+                  "y": 2.1577761221535225,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.145645791950127
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.1699064523569183
+                  }
+                },
+                {
+                  "x": 5.332911392405063,
+                  "y": 2.180816515412194,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.168706907830698
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.19292612299369
+                  }
+                },
+                {
+                  "x": 5.534177215189874,
+                  "y": 2.2026251101161187,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.190514540119024
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.2147356801132134
+                  }
+                },
+                {
+                  "x": 5.735443037974683,
+                  "y": 2.223298117094435,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2111668879918356
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.235429346197034
+                  }
+                },
+                {
+                  "x": 5.936708860759493,
+                  "y": 2.242921981897462,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2307523450326867
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.255091618762237
+                  }
+                },
+                {
+                  "x": 6.137974683544304,
+                  "y": 2.2615745930910935,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2493506761205557
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.2737985100616314
+                  }
+                },
+                {
+                  "x": 6.339240506329114,
+                  "y": 2.2793263154756063,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.267034027885279
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.2916186030659333
+                  }
+                },
+                {
+                  "x": 6.540506329113924,
+                  "y": 2.2962408771265075,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2838678004225312
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3086139538304837
+                  }
+                },
+                {
+                  "x": 6.741772151898735,
+                  "y": 2.3123761338294293,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.2999114026193035
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.324840865039555
+                  }
+                },
+                {
+                  "x": 6.943037974683544,
+                  "y": 2.327784730234764,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.31521890923394
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.340350551235588
+                  }
+                },
+                {
+                  "x": 7.144303797468354,
+                  "y": 2.3425146736530325,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3298396345572256
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3551897127488393
+                  }
+                },
+                {
+                  "x": 7.345569620253164,
+                  "y": 2.3566098336675263,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3438186348569237
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.369401032478129
+                  }
+                },
+                {
+                  "x": 7.546835443037975,
+                  "y": 2.37011037851732,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3571971497227024
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3830236073119377
+                  }
+                },
+                {
+                  "x": 7.748101265822785,
+                  "y": 2.383053157393672,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.370012990760294
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.3960933240270506
+                  }
+                },
+                {
+                  "x": 7.949367088607595,
+                  "y": 2.395472036312445,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.3823008847391005
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4086431878857892
+                  }
+                },
+                {
+                  "x": 8.150632911392405,
+                  "y": 2.4073981940091387,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.394092777204395
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.420703610813882
+                  }
+                },
+                {
+                  "x": 8.351898734177215,
+                  "y": 2.41886038329993,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4054181016687495
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4323026649311106
+                  }
+                },
+                {
+                  "x": 8.553164556962026,
+                  "y": 2.429885162521214,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.416304018755771
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.443466306286657
+                  }
+                },
+                {
+                  "x": 8.754430379746836,
+                  "y": 2.4404971009692593,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.426775629050921
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.454218572887598
+                  }
+                },
+                {
+                  "x": 8.955696202531646,
+                  "y": 2.4507189616849687,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.43685616289488
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4645817604750575
+                  }
+                },
+                {
+                  "x": 9.156962025316455,
+                  "y": 2.460571864445803,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4465671499161368
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.474576578975469
+                  }
+                },
+                {
+                  "x": 9.358227848101265,
+                  "y": 2.470075431421009,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.455928570726599
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.4842222921154193
+                  }
+                },
+                {
+                  "x": 9.559493670886077,
+                  "y": 2.479247917604045,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4649589928858644
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.493536842322226
+                  }
+                },
+                {
+                  "x": 9.760759493670886,
+                  "y": 2.488106327846559,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4736756929672192
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5025369627258987
+                  }
+                },
+                {
+                  "x": 9.962025316455696,
+                  "y": 2.4966665220726134,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4820947663241673
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5112382778210596
+                  }
+                },
+                {
+                  "x": 10.163291139240506,
+                  "y": 2.504943310042789,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.4902312259545045
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5196553941310738
+                  }
+                },
+                {
+                  "x": 10.364556962025317,
+                  "y": 2.512950536859355,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.498099091684621
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5278019820340893
+                  }
+                },
+                {
+                  "x": 10.565822784810127,
+                  "y": 2.5207011602510274,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.505711470745929
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5356908497561257
+                  }
+                },
+                {
+                  "x": 10.767088607594937,
+                  "y": 2.5282073205447864,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.513080630684534
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.543334010405039
+                  }
+                },
+                {
+                  "x": 10.968354430379748,
+                  "y": 2.5354804041195287,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.520218065431764
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.5507427428072935
+                  }
+                },
+                {
+                  "x": 11.169620253164556,
+                  "y": 2.5425311010391205,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.527134555264444
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.557927646813797
+                  }
+                },
+                {
+                  "x": 11.370886075949366,
+                  "y": 2.5493694574783676,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5338402212978024
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.564898693658933
+                  }
+                },
+                {
+                  "x": 11.572151898734178,
+                  "y": 2.556004923482643,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.540344575078925
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.571665271886361
+                  }
+                },
+                {
+                  "x": 11.773417721518987,
+                  "y": 2.5624463965386424,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.546656563783163
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.578236229294122
+                  }
+                },
+                {
+                  "x": 11.974683544303797,
+                  "y": 2.568702261378719,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5527846114586015
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.584619911298837
+                  }
+                },
+                {
+                  "x": 12.175949367088608,
+                  "y": 2.5747804263932648,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5587366567135565
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.590824196072973
+                  }
+                },
+                {
+                  "x": 12.377215189873418,
+                  "y": 2.580688356983613,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5645201871979983
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.596856526769228
+                  }
+                },
+                {
+                  "x": 12.578481012658228,
+                  "y": 2.5864331061512638,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.570142271191224
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6027239411113037
+                  }
+                },
+                {
+                  "x": 12.779746835443039,
+                  "y": 2.5920213425869263,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5756095865740307
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.608433098599822
+                  }
+                },
+                {
+                  "x": 12.981012658227849,
+                  "y": 2.597459376494618,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5809284474337586
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.613990305555477
+                  }
+                },
+                {
+                  "x": 13.182278481012657,
+                  "y": 2.602753183361042,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5861048285241273
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.619401538197957
+                  }
+                },
+                {
+                  "x": 13.38354430379747,
+                  "y": 2.6079084258584864,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.5911443877784697
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.624672463938503
+                  }
+                },
+                {
+                  "x": 13.584810126582278,
+                  "y": 2.612930474050035,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.596052487054367
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6298084610457035
+                  }
+                },
+                {
+                  "x": 13.786075949367088,
+                  "y": 2.6178244240486417,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6008342112693654
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.634814636827918
+                  }
+                },
+                {
+                  "x": 13.9873417721519,
+                  "y": 2.6225951152663654,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6054943860713076
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.639695844461423
+                  }
+                },
+                {
+                  "x": 14.188607594936709,
+                  "y": 2.6272471463765013,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6100375941723692
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6444566985806333
+                  }
+                },
+                {
+                  "x": 14.38987341772152,
+                  "y": 2.6317848900992744,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6144681904631355
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6491015897354133
+                  }
+                },
+                {
+                  "x": 14.591139240506328,
+                  "y": 2.6362125069110274,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6187903160116206
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.653634697810434
+                  }
+                },
+                {
+                  "x": 14.79240506329114,
+                  "y": 2.6405339577672478,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6230079110419977
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.658060004492498
+                  }
+                },
+                {
+                  "x": 14.99367088607595,
+                  "y": 2.644753015921214,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6271247269787183
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6623813048637093
+                  }
+                },
+                {
+                  "x": 15.194936708860759,
+                  "y": 2.648873277912383,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.631144337633592
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6666022181911737
+                  }
+                },
+                {
+                  "x": 15.39620253164557,
+                  "y": 2.6528981737917774,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6350701496061393
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6707261979774155
+                  }
+                },
+                {
+                  "x": 15.59746835443038,
+                  "y": 2.6568309766454767,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6389054119610167
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.674756541329937
+                  }
+                },
+                {
+                  "x": 15.79873417721519,
+                  "y": 2.660674811471785,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6426532252404824
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.6786963977030878
+                  }
+                },
+                {
+                  "x": 16.000000000000004,
+                  "y": 2.6644326634626787,
+                  "lower": {
+                    "status": "defined",
+                    "value": 2.6463165498646153
+                  },
+                  "upper": {
+                    "status": "defined",
+                    "value": 2.682548777060742
+                  }
+                }
+              ],
+              "issues": [],
+              "provenance": {
+                "methodId": "nonlinear_saturation_fit",
+                "methodVersion": 1,
+                "engineVersion": "0.3.0"
+              }
+            }
+          }
+        ]
+      },
+      "activeFamily": "nonlinear",
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-03T10:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [
+              {
+                "id": "substrate",
+                "name": "substrate",
+                "kind": "numeric",
+                "unit": "g/L",
+                "levelsText": ""
+              }
+            ],
+            "responses": [
+              {
+                "id": "y",
+                "name": "Activity",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": [
+              {
+                "id": "o0",
+                "unitId": "",
+                "factors": [
+                  "0.1"
+                ],
+                "responses": [
+                  "0.15285714285714289"
+                ]
+              },
+              {
+                "id": "o1",
+                "unitId": "",
+                "factors": [
+                  "0.5"
+                ],
+                "responses": [
+                  "0.59"
+                ]
+              },
+              {
+                "id": "o2",
+                "unitId": "",
+                "factors": [
+                  "1"
+                ],
+                "responses": [
+                  "1.01"
+                ]
+              },
+              {
+                "id": "o3",
+                "unitId": "",
+                "factors": [
+                  "2"
+                ],
+                "responses": [
+                  "1.49"
+                ]
+              },
+              {
+                "id": "o4",
+                "unitId": "",
+                "factors": [
+                  "4"
+                ],
+                "responses": [
+                  "2.01"
+                ]
+              },
+              {
+                "id": "o5",
+                "unitId": "",
+                "factors": [
+                  "8"
+                ],
+                "responses": [
+                  "2.39"
+                ]
+              },
+              {
+                "id": "o6",
+                "unitId": "",
+                "factors": [
+                  "12"
+                ],
+                "responses": [
+                  "2.5814285714285714"
+                ]
+              },
+              {
+                "id": "o7",
+                "unitId": "",
+                "factors": [
+                  "16"
+                ],
+                "responses": [
+                  "2.6566666666666667"
+                ]
+              }
+            ]
+          },
+          "contentHash": "075c61bcab5873fdff5514b74c1e5f82a0f6aae04809cdaf2d004ed8f1b9fc84"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

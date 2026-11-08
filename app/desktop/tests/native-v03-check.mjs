@@ -53,6 +53,11 @@ export async function runV03Check(page, exportDir) {
   await panel.getByLabel("Novo comentário").fill("Conferir a repetição do grupo C no aplicativo nativo.");
   await panel.getByRole("button", { name: "Comentar" }).click();
   await panel.getByTestId("comment-c1").waitFor();
+  const comment = panel.getByTestId("comment-c1");
+  await comment.getByRole("button", { name: "Editar", exact: true }).click();
+  await comment.getByLabel("Texto do comentário").fill("Conferir a repetição do grupo C no aplicativo nativo. Texto revisado.");
+  await comment.getByRole("button", { name: "Salvar edição", exact: true }).click();
+  if (!(await comment.textContent()).includes("editado em")) throw new Error("Native comment edit missing timestamp");
   await page.getByLabel("Incluir os comentários do experimento no fim dos relatórios").check();
   rmSync(resolve(exportDir, readdirSync(exportDir).find((f) => f.endsWith(".docx")) ?? "x"), { force: true });
   await page.getByTestId("report-docx-button").click();
@@ -62,6 +67,8 @@ export async function runV03Check(page, exportDir) {
   console.log("OK: comentário escrito no aplicativo nativo e incluído no relatório em Word.");
 
   // 3. Canal de atualização: a preferência chega ao comando nativo (sem instalar nada).
+  // «Sobre e atualizações» (v0.4, ET29): a verificação de atualizações fica nesse menu.
+  await page.getByTestId("about-menu").locator(":scope > summary").click();
   const update = page.getByTestId("update-check");
   await update.waitFor();
   const channel = update.getByLabel("Canal de atualização");

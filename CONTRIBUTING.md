@@ -1,6 +1,6 @@
-# Contribuindo com EnziTAG Optima
+# Contribuindo com DesvTAG
 
-O projeto está no início da implementação da primeira versão. Antes de contribuir, consulte o [plano ativo](docs/planos-execucao/README.md), o [plano da v0.1](docs/planos-execucao/plano-v0.1.md), as [decisões aprovadas](docs/produto/decisoes-aprovadas.md), o [mapa de módulos e arquivos](docs/arquitetura/mapa-modulos.md) e os [detalhes pendentes](docs/produto/decisoes-pendentes.md).
+Antes de contribuir, consulte o [plano da v0.4](docs/planos-execucao/plano-v0.4.md), as [decisões aprovadas](docs/produto/decisoes-aprovadas.md), o [mapa de módulos e arquivos](docs/arquitetura/mapa-modulos.md) e os [detalhes pendentes](docs/produto/decisoes-pendentes.md).
 
 ## Convenções
 

@@ -319,7 +319,7 @@ Nenhuma além da tolerância.
 
 ## Execução
 
-`app/crates/optima-core/tests/design_validation.rs` (nativo) e `app/web/src/services/engine/design.parity.test.ts` (WebAssembly).
+`app/crates/desvtag-core/tests/design_validation.rs` (nativo) e `app/web/src/services/engine/design.parity.test.ts` (WebAssembly).
 """)
     print(folder.name, "n", n, "rank", rank, "df", df, "estimable", estimable)
 

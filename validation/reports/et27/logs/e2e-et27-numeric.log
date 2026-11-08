@@ -1,0 +1,100 @@
+
+Running 22 tests using 1 worker
+
+(node:20364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\comparison-flow.spec.ts:53:3 › comparação de tratamentos (quatro condições enzimáticas) › ANOVA, Tukey, letras, gráficos, exportação e reabertura (6.9s)
+  ok  2 [chromium] › tests\e2e\comparison-flow.spec.ts:173:1 › abre o exemplo 01 do repositório com o resultado guardado e atual (1.2s)
+  ok  3 [chromium] › tests\e2e\comparison-flow.spec.ts:193:3 › treatment comparison in English › labels, decimal separator and the pairs table follow the language (2.0s)
+  ok  4 [chromium] › tests\e2e\crd-flow.spec.ts:33:3 › DIC aleatorizado (um fator categórico) › gerar, analisar, personalizar a figura, salvar e reabrir (8.6s)
+  ok  5 [chromium] › tests\e2e\crd-flow.spec.ts:149:3 › CRD in English › panel, units and count follow the language (1.9s)
+  ok  6 [chromium] › tests\e2e\descriptive-flow.spec.ts:22:3 › fluxo guiado em português › digitar, colar, agrupar e obter o resumo descritivo (4.6s)
+  ok  7 [chromium] › tests\e2e\descriptive-flow.spec.ts:120:3 › guided flow in English › summarizes a response without factors (4.8s)
+  ok  8 [chromium] › tests\e2e\descriptive-flow.spec.ts:148:3 › guided flow in English › is operable by keyboard from the first step (2.6s)
+  ok  9 [chromium] › tests\e2e\design-flow.spec.ts:51:3 › planejamento fatorial 2³ com pontos centrais › contar, gerar, preencher, analisar, exportar e reabrir (10.9s)
+  ok 10 [chromium] › tests\e2e\design-flow.spec.ts:194:3 › seleção de modelos de efeitos (ET14-T03) › o modelo completo tem as interações; a recomendação mantém só o que importa e é reversível (5.9s)
+  ok 11 [chromium] › tests\e2e\design-flow.spec.ts:256:3 › fracionário e Plackett–Burman › fracionário 2^(4−1): resolução IV e confundimento exibidos (3.4s)
+  ok 12 [chromium] › tests\e2e\design-flow.spec.ts:275:3 › fracionário e Plackett–Burman › Plackett–Burman de 12 ensaios com 5 fatores: colunas fictícias e aviso de triagem (4.2s)
+  ok 13 [chromium] › tests\e2e\design-flow.spec.ts:299:3 › fracionário e Plackett–Burman › limites: mais ensaios que o máximo é recusado com explicação, sem gerar (2.1s)
+  x  14 [chromium] › tests\e2e\design-flow.spec.ts:320:1 › abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de forma independente (6.4s)
+(node:33444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [chromium] › tests\e2e\design-flow.spec.ts:360:1 › abre o exemplo 03 (DCCR) com coeficientes, falta de ajuste e superfícies conferidos de forma independente (1.9s)
+  ok 16 [chromium] › tests\e2e\examples-v03.spec.ts:24:1 › exemplo 07: Scheffé quadrático recupera os coeficientes do README (1.1s)
+  ok 17 [chromium] › tests\e2e\examples-v03.spec.ts:45:1 › exemplo 08: Monod recupera Vmax e Km do README (1.2s)
+  x  18 [chromium] › tests\e2e\examples-v03.spec.ts:58:1 › exemplo 09: ANOVA de níveis mistos confere com o statsmodels (2.0m)
+(node:5644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 19 [chromium] › tests\e2e\examples-v03.spec.ts:70:1 › exemplo 10: superfície do D-ótimo confere com a regressão independente (1.6s)
+  ok 20 [chromium] › tests\e2e\examples-v03.spec.ts:94:1 › exemplo 11: pareado, Wilcoxon e modelo misto conferem com SciPy e statsmodels (887ms)
+  ok 21 [chromium] › tests\e2e\examples-v03.spec.ts:115:1 › exemplo 12: tamanho de amostra de duas amostras (SciPy: 37 por grupo, potência 0,8076) (936ms)
+  ok 22 [chromium] › tests\e2e\examples-v03.spec.ts:129:1 › exemplo 13: o projeto tem as respostas da planilha nos ensaios certos (934ms)
+
+
+  1) [chromium] › tests\e2e\design-flow.spec.ts:320:1 › abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de forma independente 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('effects-table').locator('tbody tr').nth(4)
+    Expected substring: "-2,6833"
+    Received string:    "NaCl-1,342-2,6831,201-2,2350,05587-5,452 – 0,08541—"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('effects-table').locator('tbody tr').nth(4) with timeout 5000ms
+      - waiting for getByTestId('effects-table').locator('tbody tr').nth(4)
+        14 × locator resolved to <tr>…</tr>
+           - unexpected value "NaCl-1,342-2,6831,201-2,2350,05587-5,452 – 0,08541—"
+
+
+      345 |     ),
+      346 |   ).toBeCloseTo(4.2833, 3);
+    > 347 |   await expect(effects.locator("tbody tr").nth(4)).toContainText("-2,6833");
+          |                                                    ^
+      348 |   await expect(page.getByTestId("curvature")).toContainText("5,5");
+      349 |   await expect(page.getByTestId("curvature")).toContainText("4,581");
+      350 |   await expect(page.getByTestId("interpretation")).toContainText(
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\design-flow.spec.ts:347:52
+
+    Error Context: test-results-et27-numeric\design-flow-abre-o-exemplo-2a767-ridos-de-forma-independente-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et27-numeric\design-flow-abre-o-exemplo-2a767-ridos-de-forma-independente-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et27-numeric\design-flow-abre-o-exemplo-2a767-ridos-de-forma-independente-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\examples-v03.spec.ts:58:1 › exemplo 09: ANOVA de níveis mistos confere com o statsmodels 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByTestId('section-tables')
+
+
+      60 |   await open(page, "09-niveis-mistos");
+      61 |   await page.getByRole("button", { name: /Analisar planejamento|Comparar tratamentos/ }).click();
+    > 62 |   await page.getByTestId("section-tables").click();
+         |                                            ^
+      63 |   const anova = page.getByTestId("factorial-anova");
+      64 |   await expect(anova).toContainText("Cepa × pH");
+      65 |   await expect(anova).toContainText("217,3");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\examples-v03.spec.ts:62:44
+
+    Error Context: test-results-et27-numeric\examples-v03-exemplo-09-AN-420f5-s-confere-com-o-statsmodels-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et27-numeric\examples-v03-exemplo-09-AN-420f5-s-confere-com-o-statsmodels-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et27-numeric\examples-v03-exemplo-09-AN-420f5-s-confere-com-o-statsmodels-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\design-flow.spec.ts:320:1 › abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de forma independente 
+    [chromium] › tests\e2e\examples-v03.spec.ts:58:1 › exemplo 09: ANOVA de níveis mistos confere com o statsmodels 
+  20 passed (3.3m)

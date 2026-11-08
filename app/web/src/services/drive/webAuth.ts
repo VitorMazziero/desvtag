@@ -3,16 +3,11 @@
 // usuário pede para conectar** (o aplicativo não faz nenhuma requisição externa antes disso). O token
 // fica na memória da página, nunca no armazenamento, e expira em cerca de uma hora: depois, um novo
 // pedido (que o navegador pode exibir como janela do Google) renova a autorização.
-import {
-  DRIVE_SCOPE,
-  GOOGLE_PICKER_API_KEY,
-  GOOGLE_PROJECT_NUMBER,
-  GOOGLE_WEB_CLIENT_ID,
-} from "./config";
-import { type DriveAuth, DriveError, type PickedFile } from "./types";
+import { DRIVE_SCOPE, GOOGLE_WEB_CLIENT_ID } from "./config";
+import { loadScript, type ScriptLoader } from "./picker";
+import { type DriveAuth, DriveError } from "./types";
 
 const GIS_URL = "https://accounts.google.com/gsi/client";
-const GAPI_URL = "https://apis.google.com/js/api.js";
 /** Folga antes do vencimento para pedir um token novo. */
 const EXPIRY_MARGIN_MS = 60_000;
 
@@ -36,24 +31,7 @@ interface GoogleGlobal {
       revoke(token: string, done?: () => void): void;
     };
   };
-  picker?: Record<string, unknown>;
 }
-
-export type ScriptLoader = (url: string) => Promise<void>;
-
-export const loadScript: ScriptLoader = (url) =>
-  new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${url}"]`)) {
-      resolve();
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = url;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new DriveError("network"));
-    document.head.append(script);
-  });
 
 const globalGoogle = (): GoogleGlobal | undefined =>
   (globalThis as unknown as { google?: GoogleGlobal }).google;
@@ -126,40 +104,5 @@ export class WebDriveAuth implements DriveAuth {
     this.token = null;
     this.expiresAt = 0;
     if (token) globalGoogle()?.accounts?.oauth2?.revoke(token);
-  }
-
-  /** Google Picker: o usuário escolhe um arquivo `.enzitag`; `null` se cancelar. */
-  async pick(): Promise<PickedFile | null> {
-    const token = await this.getToken();
-    await this.loader(GAPI_URL);
-    const gapi = (
-      globalThis as unknown as { gapi?: { load(name: string, done: () => void): void } }
-    ).gapi;
-    if (!gapi) throw new DriveError("network");
-    await new Promise<void>((resolve) => gapi.load("picker", resolve));
-    const picker = (globalGoogle() as unknown as { picker: Record<string, any> }).picker;
-    return new Promise<PickedFile | null>((resolve) => {
-      const view = new picker.DocsView(picker.ViewId.DOCS)
-        .setIncludeFolders(true)
-        .setMode(picker.DocsViewMode.LIST);
-      new picker.PickerBuilder()
-        .addView(view)
-        .setOAuthToken(token)
-        .setDeveloperKey(GOOGLE_PICKER_API_KEY)
-        .setAppId(GOOGLE_PROJECT_NUMBER)
-        .setCallback((data: Record<string, any>) => {
-          if (data[picker.Response.ACTION] === picker.Action.PICKED) {
-            const doc = data[picker.Response.DOCUMENTS][0];
-            resolve({
-              id: String(doc[picker.Document.ID]),
-              name: String(doc[picker.Document.NAME]),
-            });
-          } else if (data[picker.Response.ACTION] === picker.Action.CANCEL) {
-            resolve(null);
-          }
-        })
-        .build()
-        .setVisible(true);
-    });
   }
 }

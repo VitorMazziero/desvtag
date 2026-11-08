@@ -1,0 +1,46 @@
+
+> @enzitag/optima-web@0.4.0-dev test
+> vitest run
+
+
+ RUN  v5.0.5 D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG Optima/app/web
+
+ ❯ src/i18n/diagnostics.coverage.test.ts (3 tests | 2 failed) 11ms
+   ❯ diagnostics translations (3)
+     × cover every issue code the engine emits (pt-BR) 7ms
+     × cover every issue code the engine emits (en) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/i18n/diagnostics.coverage.test.ts > diagnostics translations > cover every issue code the engine emits (pt-BR)
+ FAIL  src/i18n/diagnostics.coverage.test.ts > diagnostics translations > cover every issue code the engine emits (en)
+AssertionError: expected [ 'mixed.no_repeated_units' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "mixed.no_repeated_units",
++ ]
+
+ ❯ src/i18n/diagnostics.coverage.test.ts:55:23
+     53|       const issues = (resources[lang].diagnostics as { issues: unknown…
+     54|       const missing = codes.filter((code) => typeof lookup(issues, cod…
+     55|       expect(missing).toEqual([]);
+       |                       ^
+     56|     });
+     57|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed | 53 passed (54)
+      Tests  2 failed | 455 passed (457)
+   Start at  11:30:42
+   Duration  26.81s (environment 68%, setup 20%, tests 8%, import 2%, transform 1%)
+
+Environment  jsdom was created 54 times · 65.65s total, 68% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

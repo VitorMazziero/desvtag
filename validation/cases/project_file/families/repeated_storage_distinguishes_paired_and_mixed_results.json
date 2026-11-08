@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p1",
+  "name": "Saved families",
+  "createdAt": "2026-11-03T10:00:00Z",
+  "modifiedAt": "2026-11-03T10:00:00Z",
+  "appVersion": "0.4.0-dev",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Historical experiment",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "mixedModelResult": {
+        "selection": {
+          "method": "mixed",
+          "responseId": "y",
+          "unitSource": null,
+          "pairFactor": "condition",
+          "fixed": null
+        },
+        "records": [
+          {
+            "id": "repeated-1",
+            "createdAt": "2026-11-03T10:00:00Z",
+            "revisionId": "v1",
+            "signature": "repeated:v1:paired",
+            "input": {
+              "type": "paired",
+              "responseId": "y",
+              "factorId": "condition",
+              "unitSource": null,
+              "pairing": {
+                "units": [
+                  "u0",
+                  "u1",
+                  "u2",
+                  "u3"
+                ],
+                "incomplete": [],
+                "duplicated": [],
+                "withoutUnit": 0
+              },
+              "request": {
+                "first": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "second": [
+                  2.1,
+                  3.2,
+                  4.1,
+                  5.4
+                ],
+                "alpha": 0.05
+              }
+            },
+            "result": {
+              "type": "paired",
+              "n": 4,
+              "meanFirst": 2.5,
+              "meanSecond": 3.7,
+              "tTest": {
+                "meanDifference": {
+                  "status": "defined",
+                  "value": -1.2000000000000002
+                },
+                "sdDifference": {
+                  "status": "defined",
+                  "value": 0.14142135623730973
+                },
+                "stdError": {
+                  "status": "defined",
+                  "value": 0.07071067811865486
+                },
+                "t": {
+                  "status": "defined",
+                  "value": -16.970562748477118
+                },
+                "df": 3,
+                "pValue": {
+                  "status": "defined",
+                  "value": 0.00044563553427994694
+                },
+                "ciLower": {
+                  "status": "defined",
+                  "value": -1.425032936322819
+                },
+                "ciUpper": {
+                  "status": "defined",
+                  "value": -0.9749670636771814
+                },
+                "effectSize": {
+                  "status": "defined",
+                  "value": -8.485281374238559
+                }
+              },
+              "wilcoxon": {
+                "nUsed": 4,
+                "nZero": 0,
+                "wPlus": 0.0,
+                "wMinus": 10.0,
+                "statistic": 0.0,
+                "pValue": {
+                  "status": "defined",
+                  "value": 0.125
+                },
+                "method": "exact",
+                "hasTies": false
+              },
+              "issues": [
+                {
+                  "code": "paired.few_pairs",
+                  "severity": "warning",
+                  "params": {}
+                }
+              ],
+              "provenance": {
+                "methodId": "paired_comparison",
+                "methodVersion": 1,
+                "engineVersion": "0.4.0-dev"
+              }
+            }
+          },
+          {
+            "id": "repeated-2",
+            "createdAt": "2026-11-03T10:00:00Z",
+            "revisionId": "v1",
+            "signature": "repeated:v1:mixed",
+            "input": {
+              "type": "mixed",
+              "unitSource": null,
+              "request": {
+                "dataset": {
+                  "factors": [
+                    {
+                      "id": "condition",
+                      "name": "condition",
+                      "kind": "categorical",
+                      "unit": null,
+                      "levels": [
+                        "A",
+                        "B"
+                      ]
+                    }
+                  ],
+                  "responses": [
+                    {
+                      "id": "y",
+                      "name": "Activity",
+                      "unit": "U/mL"
+                    }
+                  ],
+                  "observations": [
+                    {
+                      "id": "o0-0",
+                      "unitId": "u0",
+                      "factors": [
+                        "A"
+                      ],
+                      "responses": [
+                        1.0
+                      ]
+                    },
+                    {
+                      "id": "o0-1",
+                      "unitId": "u0",
+                      "factors": [
+                        "B"
+                      ],
+                      "responses": [
+                        2.1
+                      ]
+                    },
+                    {
+                      "id": "o1-0",
+                      "unitId": "u1",
+                      "factors": [
+                        "A"
+                      ],
+                      "responses": [
+                        2.0
+                      ]
+                    },
+                    {
+                      "id": "o1-1",
+                      "unitId": "u1",
+                      "factors": [
+                        "B"
+                      ],
+                      "responses": [
+                        3.2
+                      ]
+                    },
+                    {
+                      "id": "o2-0",
+                      "unitId": "u2",
+                      "factors": [
+                        "A"
+                      ],
+                      "responses": [
+                        3.0
+                      ]
+                    },
+                    {
+                      "id": "o2-1",
+                      "unitId": "u2",
+                      "factors": [
+                        "B"
+                      ],
+                      "responses": [
+                        4.1
+                      ]
+                    },
+                    {
+                      "id": "o3-0",
+                      "unitId": "u3",
+                      "factors": [
+                        "A"
+                      ],
+                      "responses": [
+                        4.0
+                      ]
+                    },
+                    {
+                      "id": "o3-1",
+                      "unitId": "u3",
+                      "factors": [
+                        "B"
+                      ],
+                      "responses": [
+                        5.4
+                      ]
+                    }
+                  ]
+                },
+                "spec": {
+                  "responseId": "y",
+                  "intercept": true,
+                  "terms": [
+                    {
+                      "type": "main",
+                      "factorId": "condition"
+                    }
+                  ],
+                  "coding": "treatment",
+                  "confidenceLevel": 0.95
+                }
+              }
+            },
+            "result": {
+              "type": "mixed",
+              "nObservations": 8,
+              "nGroups": 4,
+              "coefficients": [
+                {
+                  "label": "(Intercept)",
+                  "estimate": 2.5000000000001292,
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.6726810706429481
+                  },
+                  "df": {
+                    "status": "defined",
+                    "value": 3.0166289488861793
+                  },
+                  "tValue": {
+                    "status": "defined",
+                    "value": 3.716471458919798
+                  },
+                  "pValue": {
+                    "status": "defined",
+                    "value": 0.03357266390020612
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 0.3658891414237826
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 4.634110858576475
+                  }
+                },
+                {
+                  "label": "condition[B]",
+                  "estimate": 1.199999999999999,
+                  "stdError": {
+                    "status": "defined",
+                    "value": 0.07071069204069516
+                  },
+                  "df": {
+                    "status": "defined",
+                    "value": 3.000003335800663
+                  },
+                  "tValue": {
+                    "status": "defined",
+                    "value": 16.970559407188087
+                  },
+                  "pValue": {
+                    "status": "defined",
+                    "value": 0.00044563292442889656
+                  },
+                  "ciLower": {
+                    "status": "defined",
+                    "value": 0.9749671609265254
+                  },
+                  "ciUpper": {
+                    "status": "defined",
+                    "value": 1.4250328390734728
+                  }
+                }
+              ],
+              "varianceUnit": {
+                "status": "defined",
+                "value": 1.799999287267539
+              },
+              "varianceResidual": {
+                "status": "defined",
+                "value": 0.010000003937748062
+              },
+              "icc": {
+                "status": "defined",
+                "value": 0.9944751337824618
+              },
+              "boundary": false,
+              "remlProfile": 3.5958992593453676,
+              "randomEffects": [
+                {
+                  "unit": "u0",
+                  "observations": 2,
+                  "blup": -1.5457063678098169
+                },
+                {
+                  "unit": "u1",
+                  "observations": 2,
+                  "blup": -0.4986149573580923
+                },
+                {
+                  "unit": "u2",
+                  "observations": 2,
+                  "blup": 0.4487534616220392
+                },
+                {
+                  "unit": "u3",
+                  "observations": 2,
+                  "blup": 1.595567863545357
+                }
+              ],
+              "excluded": [],
+              "issues": [],
+              "provenance": {
+                "methodId": "linear_mixed_model",
+                "methodVersion": 1,
+                "engineVersion": "0.4.0-dev"
+              }
+            }
+          }
+        ]
+      },
+      "activeFamily": "repeated",
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-03T10:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [
+              {
+                "id": "condition",
+                "name": "condition",
+                "kind": "categorical",
+                "unit": "g/L",
+                "levelsText": "A;B"
+              }
+            ],
+            "responses": [
+              {
+                "id": "y",
+                "name": "Activity",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": [
+              {
+                "id": "o0-0",
+                "unitId": "u0",
+                "factors": [
+                  "A"
+                ],
+                "responses": [
+                  "1"
+                ]
+              },
+              {
+                "id": "o0-1",
+                "unitId": "u0",
+                "factors": [
+                  "B"
+                ],
+                "responses": [
+                  "2.1"
+                ]
+              },
+              {
+                "id": "o1-0",
+                "unitId": "u1",
+                "factors": [
+                  "A"
+                ],
+                "responses": [
+                  "2"
+                ]
+              },
+              {
+                "id": "o1-1",
+                "unitId": "u1",
+                "factors": [
+                  "B"
+                ],
+                "responses": [
+                  "3.2"
+                ]
+              },
+              {
+                "id": "o2-0",
+                "unitId": "u2",
+                "factors": [
+                  "A"
+                ],
+                "responses": [
+                  "3"
+                ]
+              },
+              {
+                "id": "o2-1",
+                "unitId": "u2",
+                "factors": [
+                  "B"
+                ],
+                "responses": [
+                  "4.1"
+                ]
+              },
+              {
+                "id": "o3-0",
+                "unitId": "u3",
+                "factors": [
+                  "A"
+                ],
+                "responses": [
+                  "4"
+                ]
+              },
+              {
+                "id": "o3-1",
+                "unitId": "u3",
+                "factors": [
+                  "B"
+                ],
+                "responses": [
+                  "5.4"
+                ]
+              }
+            ]
+          },
+          "contentHash": "11726f0d19344f45f32eb5d6b0dc983b14031e7f97d45621ec9a1438fdced0ac"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

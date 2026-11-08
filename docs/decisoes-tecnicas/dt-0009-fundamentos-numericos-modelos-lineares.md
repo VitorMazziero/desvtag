@@ -81,3 +81,7 @@ O número de condição das colunas retidas (normalizadas) é calculado por SVD 
 - ET05–ET08 usam `models::fit_model`, `inference`, `diagnostics` e `distributions` sem reimplementar álgebra.
 - A amplitude studentizada (ET05) exigirá integração numérica própria, a validar contra mpmath/R.
 - A tolerância para t com df ≥ 1e5 pode ser apertada com outra expansão assintótica, se algum método exigir.
+
+## Integridade do grau da potência — AU-B09 (2026-11-04)
+
+Antes do código dependente: o protocolo usa `u32`, mas `powi` recebe `i32`. O fallback `unwrap_or(2)` foi reproduzido em WASM: grau 2.147.483.648 vira uma coluna quadrática sob outro rótulo. Validar `2 <= grau <= i32::MAX` e fazer conversão verificada, nunca trocar o grau. Rejeitar a nova análise com `model.invalid_power`; resultados antigos íntegros continuam a ser lidos sem recálculo. Conferir a fronteira e os modelos usuais, com novo teste público e percurso normal da interface. Não introduzir expansão de grau arbitrária nem outra fórmula científica no adaptador.

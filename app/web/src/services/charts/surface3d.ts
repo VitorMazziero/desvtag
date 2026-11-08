@@ -2,7 +2,18 @@
 // azimute e elevação ajustáveis. É apenas geometria de desenho sobre a malha calculada no motor.
 
 import { cellExtrapolated, hatch, type SurfaceChartSpec, valueAt, zRange } from "./surfaceGeometry";
-import { close, type Frame, legend, line, n, open, type PaintMode, paint, text } from "./svg";
+import {
+  close,
+  dataMarks,
+  type Frame,
+  legend,
+  line,
+  n,
+  open,
+  type PaintMode,
+  paint,
+  text,
+} from "./svg";
 
 export interface View3d {
   /** Azimute em graus (rotação em torno do eixo vertical). */
@@ -24,6 +35,7 @@ export function surface3dChart(
   const [zLo, zHi] = zRange(grid);
   const nx = grid.x.length;
   const ny = grid.y.length;
+  const meshStep = Math.max(1, Math.ceil(Math.max(nx - 1, ny - 1) / 8));
   const a = (view.azimuth * Math.PI) / 180;
   const e = (view.elevation * Math.PI) / 180;
   // Coordenadas normalizadas: x, y em [−1, 1]; z em [−0,7; 0,7].
@@ -82,22 +94,33 @@ export function surface3dChart(
       const mean = values.reduce<number>((s, v) => s + (v ?? 0), 0) / 4;
       const points = pts.map((p) => `${n(p.px)},${n(p.py)}`).join(" ");
       const intensity = n(0.1 + 0.6 * ((mean - zLo) / (zHi - zLo)));
-      let svg = `<polygon points="${points}" fill="${paint("action", mode)}" fill-opacity="${intensity}" stroke="${paint("ink", mode)}" stroke-opacity="0.35" stroke-width="0.5"/>`;
+      let svg = `<polygon points="${points}" shape-rendering="crispEdges" fill="color-mix(in srgb, ${paint("action", mode)} ${Number(intensity) * 100}%, ${paint("panel", mode)})" stroke="none"/>`;
+      for (const [a, b, draw] of [
+        [0, 1, iy % meshStep === 0],
+        [0, 3, ix % meshStep === 0],
+        [1, 2, ix === nx - 2],
+        [3, 2, iy === ny - 2],
+      ] as const) {
+        if (draw)
+          svg += `<g opacity="0.45">${line(pts[a]!.px, pts[a]!.py, pts[b]!.px, pts[b]!.py, mode, { grid: true, width: 0.6 })}</g>`;
+      }
       if (cellExtrapolated(grid, iy, ix))
         svg += `<polygon points="${points}" fill="url(#${spec.id}-hatch)" fill-opacity="0.6"/>`;
       quads.push({ depth: pts.reduce((s, p) => s + p.depth, 0) / 4, svg });
     }
   }
   quads.sort((p, q) => q.depth - p.depth);
-  parts.push(...quads.map((q) => q.svg));
+  parts.push(dataMarks(spec.id, quads.map((q) => q.svg).join("")));
 
   // Eixos a partir do canto (x mín., y mín., z mín.).
   const origin = screen(-1, -1, -0.7);
   const ex = screen(1, -1, -0.7);
   const ey = screen(-1, 1, -0.7);
-  const ez = screen(-1, -1, 0.7);
-  for (const end of [ex, ey, ez])
+  const originZ = screen(-1, 1, -0.7);
+  const ez = screen(-1, 1, 0.7);
+  for (const end of [ex, ey])
     parts.push(line(origin.px, origin.py, end.px, end.py, mode, { role: "ink", width: 1.4 }));
+  parts.push(line(originZ.px, originZ.py, ez.px, ez.py, mode, { role: "ink", width: 1.5 }));
   const label = (
     p: { px: number; py: number },
     content: string,
@@ -107,19 +130,24 @@ export function surface3dChart(
   const x1 = grid.x[nx - 1] ?? 0;
   const y0 = grid.y[0] ?? 0;
   const y1 = grid.y[ny - 1] ?? 0;
+  for (const t of [0, 0.5, 1]) {
+    const px = screen(-1 + 2 * t, -1, -0.7),
+      py = screen(-1, -1 + 2 * t, -0.7),
+      pz = screen(-1, 1, -0.7 + 1.4 * t);
+    parts.push(label({ px: px.px + 5, py: px.py + 14 }, format(x0 + (x1 - x0) * t), "start"));
+    parts.push(label({ px: py.px - 5, py: py.py + 14 }, format(y0 + (y1 - y0) * t), "end"));
+    if (grid.zMax !== grid.zMin || t === 0)
+      parts.push(label({ px: pz.px - 8, py: pz.py }, format(zLo + (zHi - zLo) * t), "end"));
+  }
   // Cada eixo recebe o nome e o intervalo (do canto de origem até a ponta), uma vez.
+  parts.push(label({ px: ex.px, py: ex.py + 38 }, grid.xName, "middle"));
+  parts.push(label({ px: ey.px, py: ey.py + 38 }, grid.yName, "middle"));
   parts.push(
-    label({ px: ex.px, py: ex.py + 16 }, `${grid.xName}: ${format(x0)} → ${format(x1)}`, "middle"),
-  );
-  parts.push(
-    label({ px: ey.px, py: ey.py + 16 }, `${grid.yName}: ${format(y0)} → ${format(y1)}`, "middle"),
-  );
-  parts.push(
-    label(
-      { px: ez.px, py: ez.py - 10 },
-      `${spec.responseLabel}: ${format(zLo)} → ${format(zHi)}`,
-      "middle",
-    ),
+    text(ez.px - 52, (ez.py + originZ.py) / 2, spec.responseLabel, mode, {
+      rotate: -90,
+      role: "inkSecondary",
+      size: 12,
+    }),
   );
 
   const fixed = grid.fixed.map((f) => `${f.name} = ${format(f.value)}`).join("; ");

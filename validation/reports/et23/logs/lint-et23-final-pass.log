@@ -1,0 +1,399 @@
+
+> @enzitag/optima-web@0.4.0-dev lint
+> biome check .
+
+src\app\app.css:291:17 lint/complexity/noImportantStyles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of the !important style.
+  
+    289 │ }
+    290 │ [hidden] {
+  > 291 │   display: none !important;
+        │                 ^^^^^^^^^^
+    292 │ }
+    293 │ /* Percurso no computador (ET29): barra lateral das etapas à esquerda e o conteúdo ao lado, em vez
+  
+  i This style reverses the cascade logic, and precedence is reversed. This could lead to having styles with higher specificity being overridden by styles with lower specificity.
+  
+  i Unsafe fix: Remove the style.
+  
+    291 │ ··display:·none·!important;
+        │                ----------- 
+
+src\app\app.css:208:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    206 │   border-color: var(--color-ink-secondary);
+    207 │ }
+  > 208 │ .panel {
+        │ ^^^^^^
+    209 │   padding: var(--space-4);
+    210 │   background: var(--color-panel);
+  
+  i This selector specificity is (0, 2, 0)
+  
+    146 │   min-width: min(30rem, 88vw);
+    147 │ }
+  > 148 │ .about-panel .panel {
+        │ ^^^^^^^^^^^^^^^^^^^
+    149 │   margin: 0;
+    150 │   box-shadow: none;
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\app\app.css:439:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    437 │   }
+    438 │ }
+  > 439 │ .step {
+        │ ^^^^^
+    440 │   display: inline-flex;
+    441 │   align-items: center;
+  
+  i This selector specificity is (0, 2, 0)
+  
+    324 │   list-style: none;
+    325 │ }
+  > 326 │ .steps .step {
+        │ ^^^^^^^^^^^^
+    327 │   width: 100%;
+    328 │   justify-content: flex-start;
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\app\app.css:472:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    470 │   font-family: var(--font-mono);
+    471 │ }
+  > 472 │ .step-body {
+        │ ^^^^^^^^^^
+    473 │   display: grid;
+    474 │   gap: var(--space-block);
+  
+  i This selector specificity is (0, 2, 0)
+  
+    308 │   top: var(--space-3);
+    309 │ }
+  > 310 │ .workflow > .step-body {
+        │ ^^^^^^^^^^^^^^^^^^^^^^
+    311 │   grid-area: body;
+    312 │ }
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\app\app.css:480:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    478 │   margin-bottom: var(--space-2);
+    479 │ }
+  > 480 │ .step-actions {
+        │ ^^^^^^^^^^^^^
+    481 │   display: flex;
+    482 │   flex-wrap: wrap;
+  
+  i This selector specificity is (0, 2, 0)
+  
+    311 │   grid-area: body;
+    312 │ }
+  > 313 │ .workflow > .step-actions {
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    314 │   grid-area: actions;
+    315 │ }
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\app\app.css:489:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 0)
+  
+    487 │   flex: 1;
+    488 │ }
+  > 489 │ .button {
+        │ ^^^^^^^
+    490 │   min-height: var(--control-height);
+    491 │   padding: 0 var(--space-4);
+  
+  i This selector specificity is (0, 2, 0)
+  
+    136 │   gap: var(--space-2);
+    137 │ }
+  > 138 │ .menu-list .button {
+        │ ^^^^^^^^^^^^^^^^^^
+    139 │   width: 100%;
+    140 │   justify-content: flex-start;
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\app\app.css:777:1 lint/style/noDescendingSpecificity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Descending specificity selector found. This selector specificity is (0, 1, 1)
+  
+    775 │   padding: 0 var(--space-4) var(--space-5);
+    776 │ }
+  > 777 │ .engine-status summary {
+        │ ^^^^^^^^^^^^^^^^^^^^^^
+    778 │   cursor: pointer;
+    779 │   font-weight: 600;
+  
+  i This selector specificity is (0, 2, 1)
+  
+    181 │   max-height: calc(90vh - 5rem);
+    182 │ }
+  > 183 │ .advanced.embedded > summary {
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    184 │   display: none;
+    185 │ }
+  
+  i Descending specificity selector may not be applied. Consider rearranging the order of the selectors. See MDN web docs for more details.
+  
+
+src\features\analysis\AnalysisSetup.tsx:43:9 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    41 │   const onlyFactor =
+    42 │     eligible.length === 1
+  > 43 │       ? eligible[0]!.id
+       │         ^^^^^^^^^^^^
+    44 │       : state.factors.length === 1
+    45 │         ? state.factors[0]!.id
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     41  41 │     const onlyFactor =
+     42  42 │       eligible.length === 1
+     43     │ - ······?·eligible[0]!.id
+         43 │ + ······?·eligible[0]?.id
+     44  44 │         : state.factors.length === 1
+     45  45 │           ? state.factors[0]!.id
+  
+
+src\features\analysis\AnalysisSetup.tsx:45:11 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    43 │       ? eligible[0]!.id
+    44 │       : state.factors.length === 1
+  > 45 │         ? state.factors[0]!.id
+       │           ^^^^^^^^^^^^^^^^^
+    46 │         : null;
+    47 │   const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     43  43 │         ? eligible[0]!.id
+     44  44 │         : state.factors.length === 1
+     45     │ - ········?·state.factors[0]!.id
+         45 │ + ········?·state.factors[0]?.id
+     46  46 │           : null;
+     47  47 │     const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+
+src\features\analysis\MethodChoice.tsx:120:68 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    118 │   };
+    119 │ 
+  > 120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+        │                                                                    ^^^^^^^^^^^^^^^^^^
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+    122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MethodChoice.tsx:122:33 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+  > 122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+        │                                 ^^^^^^^^^^^^^^^^^^
+    123 │   );
+    124 │   const averaged =
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MixtureAnalysis.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function MixtureAnalysis({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   onCurrent,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\RepeatedMeasures.tsx:20:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    19 │ export function RepeatedMeasures({
+  > 20 │   language,
+       │   ^^^^^^^^
+    21 │   embedded = false,
+    22 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\SaturationFit.tsx:96:30 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                              ^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:96:53 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                                                     ^^^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function SaturationFit({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   embedded = false,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\mixedRequest.test.ts:44:41 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    42 │   });
+    43 │   it("blocks unmapped or invalid values instead of turning them into missing", () => {
+  > 44 │     const bad = { ...state, rows: [{ ...state.rows[0]!, timeText: "unknown" }] };
+       │                                         ^^^^^^^^^^^^^^
+    45 │     for (const occasionOrder of ["", "Antes; Depois", "Antes; Antes"]) {
+    46 │       const got = mixedAdvancedRequest(
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\blocks\GuidedBlocks.tsx:200:48 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    198 │               disabled={(showAll || current === 0) && !onPrevious}
+    199 │               onClick={() =>
+  > 200 │                 !showAll && current > 0 ? move(blocks[current - 1]!.id) : onPrevious?.()
+        │                                                ^^^^^^^^^^^^^^^^^^^^
+    201 │               }
+    202 │               data-testid={`${testId}-prev`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    198 198 │                 disabled={(showAll || current === 0) && !onPrevious}
+    199 199 │                 onClick={() =>
+    200     │ - ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]!.id)·:·onPrevious?.()
+        200 │ + ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]?.id)·:·onPrevious?.()
+    201 201 │                 }
+    202 202 │                 data-testid={`${testId}-prev`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:218:54 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    216 │                 }
+    217 │                 onClick={() =>
+  > 218 │                   current < blocks.length - 1 ? move(blocks[current + 1]!.id) : onNext?.()
+        │                                                      ^^^^^^^^^^^^^^^^^^^^
+    219 │                 }
+    220 │                 data-testid={`${testId}-next`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    216 216 │                   }
+    217 217 │                   onClick={() =>
+    218     │ - ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]!.id)·:·onNext?.()
+        218 │ + ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]?.id)·:·onNext?.()
+    219 219 │                   }
+    220 220 │                   data-testid={`${testId}-next`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:233:16 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    232 │ function BlockSource({ blocks, testId, focusId, order = 1 }: Props) {
+  > 233 │   const flow = useContext(FlowContext)!;
+        │                ^^^^^^^^^^^^^^^^^^^^^^^^
+    234 │   const entries = JSON.stringify(
+    235 │     blocks.map((b, i) => ({
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 135.
+Checked 344 files in 391ms. No fixes applied.
+Found 151 warnings.
+Found 4 infos.

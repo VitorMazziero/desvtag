@@ -6,12 +6,12 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { type EngineResponse, type Operation, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const cases = resolve(__dirname, "../../../../../validation/cases");
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: arquivos JSON de referência
@@ -183,21 +183,32 @@ describe("v0.2 operations in WebAssembly", () => {
         dataset,
         responseId: "y",
         spec: {
-          kind: { type: "fullFactorial" },
+          kind:
+            c.kind?.type === "fractional"
+              ? { type: "fractional", generators: c.kind.generators }
+              : c.kind?.type === "plackett_burman"
+                ? { type: "plackettBurman", runs: c.kind.runs }
+                : { type: "fullFactorial" },
           factors,
           replicates: 1,
           centerPoints: 0,
           randomize: false,
           seed: 1,
         },
-        terms: [],
+        terms: ((c.start ?? []) as [string, number, number?][]).map(([type, a, b]) =>
+          type === "main"
+            ? { type: "main", factorId: `f${a + 1}` }
+            : { type: "interaction", factorIds: [`f${a + 1}`, `f${(b as number) + 1}`] },
+        ),
         alpha: c.alpha,
         includeCurvature: c.curvature,
       });
       expect(result.steps.length).toBe(c.steps.length);
       result.steps.forEach((s: Json, i: number) => {
         close(val(s.metrics.aic), c.steps[i].metrics.aic, 1e-10, 1e-8);
-        close(val(s.metrics.press), c.steps[i].metrics.press, 1e-8, 1e-10);
+        // PRESS indefinido (alavanca 1) vem como `null` na referência e como estado indefinido no motor.
+        if (c.steps[i].metrics.press === null) expect(s.metrics.press.status).toBe("undefined");
+        else close(val(s.metrics.press), c.steps[i].metrics.press, 1e-8, 1e-10);
       });
       expect(result.stoppedBecause).toBe(c.stopped);
     }

@@ -1,6 +1,6 @@
 # Teste de Dunnett (vários tratamentos contra um controle)
 
-**Estado:** implementado; validado numericamente (nativo e WebAssembly); Windows 10 verificado · **Atualizado em:** 2026-11-01
+**Estado:** implementado e validado numericamente em Rust e WebAssembly. A execução no Windows 10 faz parte da verificação da versão. **Atualizado em 2026-11-07.**
 
 | Campo | Valor |
 |---|---|
@@ -29,6 +29,8 @@ Grupos, nível de controle, `α`, teste bilateral (única opção na v0.2).
 
 Condicionando em `S = s/σ ~ χ_ν/√ν` e no fator comum `Z₀`: `P(max|T| ≤ c) = E_S ∫ φ(z) ∏ᵢ [Φ((cS − λᵢz)/rᵢ) − Φ((−cS − λᵢz)/rᵢ)] dz`, `rᵢ = √(1 − λᵢ²)`. A integral em `S` usa os nós em cauda da amplitude studentizada; a de `z`, Gauss–Legendre composta. Exato (sem simulação) também para tamanhos desiguais. O quantil crítico sai por Brent.
 
+Para avaliar a integral, o motor calcula uma vez cada fator de tamanho amostral `nᵢ` e usa sua multiplicidade no produto. A simetria do teste bilateral permite integrar apenas os nós positivos de `z` e dobrar seus pesos. A quadratura reduz a largura dos painéis conforme a menor escala `rᵢ/λᵢ`. Quando uma malha uniforme custaria mais, o motor refina os painéis ao redor das transições em `±cS/λᵢ`. A tabela de Chebyshev compartilhada com Tukey interpola a integral normal em função de `cS`. Os trechos podem estreitar até a largura `2 min(rᵢ)`, e a avaliação direta é usada quando montar a tabela estreita exigiria mais avaliações que as comparações ou ultrapassaria seu orçamento. A distribuição de referência e os graus de liberdade continuam sendo os do teste de Dunnett.
+
 ## 6. Saídas
 
 As do [procedimento de comparação múltipla](procedimentos-comparacao-multipla.md#6-saídas), com `control` (índice do controle) e pares apenas tratamento × controle; sem letras (a família não compara os tratamentos entre si).
@@ -48,6 +50,8 @@ Exemplo do teste de interface: controle (6 réplicas), T1 (5) e T2 (4); T1, com 
 ## 10. Validação
 
 `scipy.stats.dunnett` (quase Monte Carlo, ≈ 1e-3) como conferência grosseira e uma **integração dupla própria** da distribuição de `max|T|` (`scipy.integrate.dblquad`, ≈ 1e-9) como referência exata. Tolerâncias registradas no teste `procedures_validation.rs`: valor-p ajustado 2e-7 (absoluto) e limites do intervalo 2e-6 em relação à integração dupla (~1e-9); diferença, erro-padrão e estatística 1e-10 relativo. Caso único: `dunnett-desbalanceado`; os testes unitários da distribuição conferem, entre outros, que com uma só comparação o resultado reduz-se ao *t* bilateral exato (`one_comparison_reduces_to_the_two_sided_t`).
+
+A regressão da v0.4 acrescenta uma integração independente com tamanhos de tratamento repetidos. A comparação interna entre interpolante e quadratura direta usa tolerância absoluta de `1e-12`. Outra integração adaptativa independente confere um controle de uma observação contra 64 tratamentos de tamanhos distintos e contra três tratamentos de 512, 1.024 e 2.048 observações. Esses casos exercitam os painéis uniformes mais finos com tabela e a quadratura direta refinada. Os testes exigem erro absoluto abaixo de `2e-7` nos pontos conferidos.
 
 ## 11. Referências
 

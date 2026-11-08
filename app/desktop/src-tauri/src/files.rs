@@ -11,7 +11,7 @@ use std::sync::Mutex;
 
 use serde::{Deserialize, Serialize};
 
-/// Tamanho máximo de arquivo de projeto lido (igual a `optima_project::archive::MAX_ARCHIVE_BYTES`).
+/// Tamanho máximo de arquivo de projeto lido (igual a `desvtag_project::archive::MAX_ARCHIVE_BYTES`).
 pub const MAX_PROJECT_BYTES: u64 = 256 * 1024 * 1024;
 /// Quantidade de projetos recentes guardados.
 pub const MAX_RECENT: usize = 10;

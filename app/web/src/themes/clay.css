@@ -41,5 +41,22 @@
 :root[data-theme="clay"] h1,
 :root[data-theme="clay"] h2,
 :root[data-theme="clay"] h3 {
-  font-weight: 700;
+  font-weight: var(--heading-weight);
+}
+
+/* ET27: optical compensation for this font family. */
+:root[data-theme="clay"] {
+  --heading-weight: 600;
+  --text-subheading: 1.1875rem;
+}
+
+/* ET27 T04: work surfaces and scientific roles. */
+:root[data-theme="clay"] {
+  --color-input: #ffffff;
+  --color-rule: #b1a0c9;
+  --shadow-panel: 4px 5px 12px rgb(120 90 140 / 13%), inset 2px 3px 5px rgb(255 255 255 / 70%);
+  --chart-series: #704176;
+  --chart-reference: #934022;
+  --chart-uncertainty: #476c79;
+  --chart-grid: #ddd3e8;
 }

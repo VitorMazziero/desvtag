@@ -1,7 +1,10 @@
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
+import { clickAfterFocus } from "./clickAfterFocus";
+import { expectedVersion } from "./expectedVersion";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 import { THEME_LIST } from "./themes";
 
 test.beforeEach(async ({ page }) => {
@@ -25,13 +28,10 @@ for (const theme of THEME_LIST) {
   test(`axe: fluxo completo sem violações no tema ${theme}`, async ({ page }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
+    await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
     await scan(page, `${theme}/objetivo`);
 
-    await page
-      .getByRole("radio", { name: /Analyze existing data|Analisar dados existentes/ })
-      .check();
-    await page.getByRole("button", { name: /Next|Avançar/ }).click();
+    await startObjective(page, "analyze");
     await page.getByRole("button", { name: /Add factor|Adicionar fator/ }).click();
     await page
       .getByLabel(/^(Name|Nome)$/)
@@ -45,7 +45,7 @@ for (const theme of THEME_LIST) {
     await scan(page, `${theme}/fatores-e-respostas`);
 
     await page.getByRole("button", { name: /Next|Avançar/ }).click();
-    await page.getByRole("button", { name: /Add row|Adicionar linha/ }).click();
+    await clickAfterFocus(page.getByRole("button", { name: /Add row|Adicionar linha/ }));
     await page
       .getByLabel(/Activity — /)
       .first()
@@ -66,7 +66,7 @@ for (const theme of THEME_LIST) {
 
 test("axe: controle negativo — o verificador detecta violações conhecidas", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
+  await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
   await page.evaluate(() => {
     const bad = document.createElement("div");
     bad.innerHTML = '<img src="x.png"><input type="text"><button></button>';
@@ -79,11 +79,8 @@ test("axe: controle negativo — o verificador detecta violações conhecidas", 
 
 test("axe: assistente de importação e aviso de recuperação sem violações", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
-  await page
-    .getByRole("radio", { name: /Analyze existing data|Analisar dados existentes/ })
-    .check();
-  await page.getByRole("button", { name: /Next|Avançar/ }).click();
+  await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
+  await startObjective(page, "analyze");
   await page.getByRole("button", { name: /Add response|Adicionar resposta/ }).click();
   await page
     .getByLabel(/^(Name|Nome)$/, { exact: true })
@@ -113,9 +110,8 @@ for (const theme of THEME_LIST) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
-    await page.getByRole("radio", { name: /Compare treatments|Comparar tratamentos/ }).check();
-    await page.getByRole("button", { name: /Next|Avançar/ }).click();
+    await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
+    await startObjective(page, "compare");
     await page.getByRole("button", { name: /Add factor|Adicionar fator/ }).click();
     await page
       .getByLabel(/^(Name|Nome)$/)
@@ -127,7 +123,7 @@ for (const theme of THEME_LIST) {
       .nth(1)
       .fill("Activity");
     await page.getByRole("button", { name: /Next|Avançar/ }).click();
-    await page.getByRole("button", { name: /Add row|Adicionar linha/ }).click();
+    await clickAfterFocus(page.getByRole("button", { name: /Add row|Adicionar linha/ }));
     await page
       .getByLabel(/Condition — Obs. 1/)
       .first()
@@ -158,7 +154,7 @@ for (const theme of THEME_LIST) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
+    await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -180,7 +176,7 @@ for (const theme of THEME_LIST) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
+    await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -204,7 +200,7 @@ for (const theme of THEME_LIST) {
   }) => {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await page.goto("/");
-    await expect(page.getByTestId("engine-version")).toHaveText("0.3.0");
+    await expect(page.getByTestId("engine-version")).toHaveText(expectedVersion);
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: /Open…|Abrir…/ }).click();
     await (await chooser).setFiles(
@@ -216,11 +212,10 @@ for (const theme of THEME_LIST) {
       ),
     );
     await page.getByTestId("candidate-table").first().waitFor();
+    await page.getByTestId("rebuild-desirability-grid").press("Enter");
     await page.getByTestId("desirability-chart").waitFor();
     await scan(page, `${theme}/otimizacao`);
-    await page
-      .getByRole("button", { name: /Experimento: Confirmação|Experiment: Confirmação/ })
-      .click();
+    await page.getByLabel(/Active experiment|Experimento ativo/).selectOption("e2");
     await page.getByTestId("confirmation-check").waitFor();
     await scan(page, `${theme}/conferencia-da-confirmacao`);
   });

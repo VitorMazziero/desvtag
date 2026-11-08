@@ -3,6 +3,8 @@ import type { BoxStats } from "../engine";
 import {
   close,
   DEFAULT_FRAME,
+  dataMarks,
+  esc,
   type Frame,
   legend,
   line,
@@ -17,6 +19,8 @@ import {
 export interface BoxGroup {
   label: string;
   box: BoxStats | null;
+  n?: number;
+  values?: Array<{ value: number; id: string }>;
 }
 
 export interface BoxChartSpec {
@@ -25,6 +29,7 @@ export interface BoxChartSpec {
   yLabel: string;
   /** Explica quartis e bigodes; sempre exibido. */
   legend: string;
+  rawPointsLabel?: string;
   groups: BoxGroup[];
   metadata?: string;
   /** Identificador único do gráfico na página (ids de título e descrição). */
@@ -63,30 +68,57 @@ export function boxChart(
         rotate: spec.groups.length > 6 ? -35 : undefined,
       }),
     );
+    if (g.n !== undefined)
+      parts.push(
+        text(cx, frame.height - frame.bottom + 36, `n = ${g.n}`, mode, {
+          role: "inkSecondary",
+          size: 11,
+        }),
+      );
     const b = g.box;
     if (!b) return;
+    const marks: string[] = [];
     const y = axis.scale;
-    parts.push(line(cx, y(b.whiskerHigh), cx, y(b.q3), mode, { role: "ink" }));
-    parts.push(line(cx, y(b.q1), cx, y(b.whiskerLow), mode, { role: "ink" }));
-    parts.push(line(cx - 8, y(b.whiskerHigh), cx + 8, y(b.whiskerHigh), mode, { role: "ink" }));
-    parts.push(line(cx - 8, y(b.whiskerLow), cx + 8, y(b.whiskerLow), mode, { role: "ink" }));
-    parts.push(
+    marks.push(line(cx, y(b.whiskerHigh), cx, y(b.q3), mode, { role: "ink" }));
+    marks.push(line(cx, y(b.q1), cx, y(b.whiskerLow), mode, { role: "ink" }));
+    marks.push(line(cx - 8, y(b.whiskerHigh), cx + 8, y(b.whiskerHigh), mode, { role: "ink" }));
+    marks.push(line(cx - 8, y(b.whiskerLow), cx + 8, y(b.whiskerLow), mode, { role: "ink" }));
+    marks.push(
       `<rect x="${n(cx - width / 2)}" y="${n(y(b.q3))}" width="${n(width)}" height="${n(
         Math.max(1, y(b.q1) - y(b.q3)),
       )}" fill="${paint("action", mode)}" fill-opacity="0.25" stroke="${paint("ink", mode)}"/>`,
     );
-    parts.push(
+    marks.push(
       line(cx - width / 2, y(b.median), cx + width / 2, y(b.median), mode, {
         role: "ink",
         width: 2.5,
       }),
     );
     for (const o of b.outliers)
-      parts.push(
+      marks.push(
         `<circle cx="${n(cx)}" cy="${n(y(o.value))}" r="3.5" fill="none" stroke="${paint("alert", mode)}" stroke-width="1.5"/>`,
       );
+    if (g.values && g.values.length <= 30)
+      g.values.forEach(
+        (p, j) =>
+          void marks.push(
+            `<circle data-raw-observation="true" cx="${n(cx + ((j % 7) - 3) * 4)}" cy="${n(y(p.value))}" r="3" fill="${paint("panel", mode)}" stroke="${paint("ink", mode)}"><title>${esc(`${p.id}: ${format(p.value)}`)}</title></circle>`,
+          ),
+      );
+    parts.push(dataMarks(spec.id, marks.join("")));
   });
-  parts.push(legend(frame, [spec.legend], mode));
+  parts.push(
+    legend(
+      frame,
+      [
+        spec.legend,
+        ...(spec.rawPointsLabel && spec.groups.some((g) => g.values && g.values.length <= 30)
+          ? [spec.rawPointsLabel]
+          : []),
+      ],
+      mode,
+    ),
+  );
   parts.push(close());
   return parts.join("");
 }

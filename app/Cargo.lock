@@ -129,6 +129,49 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7eed2c4702fa172d1ce21078faa7c5203e69f5394d48cc436d25928394a867a2"
 
 [[package]]
+name = "desvtag-core"
+version = "0.4.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "ts-rs",
+]
+
+[[package]]
+name = "desvtag-engine"
+version = "0.4.0"
+dependencies = [
+ "base64",
+ "desvtag-core",
+ "desvtag-project",
+ "serde",
+ "serde_json",
+ "ts-rs",
+]
+
+[[package]]
+name = "desvtag-project"
+version = "0.4.0"
+dependencies = [
+ "base64",
+ "calamine",
+ "desvtag-core",
+ "serde",
+ "serde_json",
+ "sha2",
+ "ts-rs",
+ "zip",
+]
+
+[[package]]
+name = "desvtag-wasm"
+version = "0.4.0"
+dependencies = [
+ "desvtag-engine",
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "digest"
 version = "0.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -262,49 +305,6 @@ dependencies = [
  "cfg-if",
  "cfg_aliases",
  "libc",
-]
-
-[[package]]
-name = "optima-core"
-version = "0.3.0"
-dependencies = [
- "serde",
- "serde_json",
- "ts-rs",
-]
-
-[[package]]
-name = "optima-engine"
-version = "0.3.0"
-dependencies = [
- "base64",
- "optima-core",
- "optima-project",
- "serde",
- "serde_json",
- "ts-rs",
-]
-
-[[package]]
-name = "optima-project"
-version = "0.3.0"
-dependencies = [
- "base64",
- "calamine",
- "optima-core",
- "serde",
- "serde_json",
- "sha2",
- "ts-rs",
- "zip",
-]
-
-[[package]]
-name = "optima-wasm"
-version = "0.3.0"
-dependencies = [
- "optima-engine",
- "wasm-bindgen",
 ]
 
 [[package]]

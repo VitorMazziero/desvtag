@@ -41,7 +41,7 @@ describe("charts", () => {
   });
 
   it("uses theme variables on screen and literal colours in the export", () => {
-    expect(meansChart(means, "css", fmt)).toContain("var(--color-action");
+    expect(meansChart(means, "css", fmt)).toContain("var(--chart-series");
     const exported = meansChart(means, "static", fmt);
     expect(exported).not.toContain("var(");
     expect(exported).toContain('fill="#ffffff"'); // fundo opaco para PNG

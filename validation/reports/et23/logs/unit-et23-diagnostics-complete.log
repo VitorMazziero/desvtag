@@ -1,0 +1,48 @@
+
+> @enzitag/optima-web@0.4.0-dev test
+> vitest run src/i18n/diagnostics.coverage.test.ts
+
+
+ RUN  v5.0.5 D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG Optima/app/web
+
+ ❯ src/i18n/diagnostics.coverage.test.ts (3 tests | 2 failed) 18ms
+   ❯ diagnostics translations (3)
+     × cover every issue code the engine emits (pt-BR) 14ms
+     × cover every issue code the engine emits (en) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/i18n/diagnostics.coverage.test.ts > diagnostics translations > cover every issue code the engine emits (pt-BR)
+ FAIL  src/i18n/diagnostics.coverage.test.ts > diagnostics translations > cover every issue code the engine emits (en)
+AssertionError: expected [ …(7) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "design.mixed_single_replicate",
++   "design.mixture_no_pure_error",
++   "design.optimal_empty_region",
++   "design.optimal_nothing_to_choose",
++   "design.optimal_single_best_start",
++   "design.optimal_singular",
++   "selection.full_model_unavailable",
++ ]
+
+ ❯ src/i18n/diagnostics.coverage.test.ts:55:23
+     53|       const issues = (resources[lang].diagnostics as { issues: unknown…
+     54|       const missing = codes.filter((code) => typeof lookup(issues, cod…
+     55|       expect(missing).toEqual([]);
+       |                       ^
+     56|     });
+     57|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  12:38:33
+   Duration  2.41s (environment 75%, setup 16%, import 4%, transform 3%, tests 1%, worker 1%)
+

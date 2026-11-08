@@ -1,0 +1,3 @@
+
+> @enzitag/optima-web@0.4.0-dev typecheck
+> tsc --noEmit

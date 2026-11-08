@@ -132,4 +132,40 @@ describe("comments", () => {
     });
     expect(currentExperiment(reopened).comments).toEqual(currentExperiment(ws).comments);
   });
+  it("edits only the text and edited timestamp, preserving history and rejecting empty/long edits", () => {
+    let ws = workspaceReducer(base(), {
+      type: "addComment",
+      target: figure,
+      text: "Original",
+      author: "Ana",
+      now: T0,
+    });
+    ws = workspaceReducer(ws, {
+      type: "replyComment",
+      id: "c1",
+      text: "Resposta",
+      author: "Bia",
+      now: T1,
+    });
+    ws = workspaceReducer(ws, { type: "setCommentResolved", id: "c1", resolved: true, now: T1 });
+    const before = currentExperiment(ws).comments[0]!;
+    for (const text of [" ", "x".repeat(2001), "Original"]) {
+      const invalid = workspaceReducer(ws, { type: "editComment", id: "c1", text, now: T2 });
+      expect(currentExperiment(invalid).comments[0]).toEqual(before);
+    }
+    ws = workspaceReducer(ws, { type: "editComment", id: "c1", text: "  Corrigido  ", now: T2 });
+    expect(currentExperiment(ws).comments[0]).toEqual({
+      ...before,
+      text: "Corrigido",
+      editedAt: T2,
+    });
+    const document = toDocument(ws, T2, "0.4.0-dev");
+    const reopened = workspaceReducer(base(), {
+      type: "loadDocument",
+      document,
+      fileName: "edit.enzitag",
+      now: T2,
+    });
+    expect(currentExperiment(reopened).comments).toEqual(currentExperiment(ws).comments);
+  });
 });

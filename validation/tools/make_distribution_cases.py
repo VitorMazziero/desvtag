@@ -130,7 +130,7 @@ Nenhuma além da tolerância relativa.
 
 ## Execução
 
-`app/crates/optima-core/tests/distributions_validation.rs` (nativo) e `app/web/src/services/engine/numeric.parity.test.ts` (WebAssembly).
+`app/crates/desvtag-core/tests/distributions_validation.rs` (nativo) e `app/web/src/services/engine/numeric.parity.test.ts` (WebAssembly).
 """
 
 

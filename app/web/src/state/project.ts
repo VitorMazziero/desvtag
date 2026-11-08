@@ -1,7 +1,14 @@
+import { type FamilyAction, familyRecordMetadata, reduceFamily } from "./familyActions";
+import { matchesOptimalVariance } from "./optimalVariance";
+import { commitRevision, freshId, sameData, snapshotData } from "./revisionOps";
+
+export { commitRevision, freshId, sameData, snapshotData } from "./revisionOps";
+
 // Estado em memória do projeto na ET02. O formato espelha os contratos C01 e
 // será substituído pelo documento persistido na ET03 (P01). Células guardam o
 // texto digitado; a conversão para números ocorre ao montar o conjunto de dados.
 import type {
+  AnalysisFamily,
   AnalysisRecord,
   Comment,
   CommentTarget,
@@ -18,10 +25,17 @@ import type {
   FactorKind,
   FactorSpec,
   FigureStyle,
+  GeneratedOptimal,
   MixedSpec,
   MixtureModel,
   MixtureSpec,
   OneWayResult,
+  OptimalArtifactSelection,
+  OptimalDesignRecord,
+  OptimalModelResult,
+  OptimalVariance,
+  OptimalVarianceRecord,
+  OptimalVarianceView,
   OptimizationResult,
   OptimizationSetup,
   Procedure,
@@ -31,6 +45,11 @@ import type {
   Revision,
   RevisionReason,
   RowRecord,
+  SavedMixture,
+  SavedNonlinear,
+  SavedPower,
+  SavedRepeated,
+  SurfaceBlockSpec,
   SurfaceResult,
 } from "../services/engine";
 
@@ -43,6 +62,8 @@ export type ResponseDraft = ResponseSpec;
 export type RowDraft = RowRecord;
 
 export interface AnalysisDraft {
+  optimalDesignId?: string | null;
+  surfaceBlock?: SurfaceBlockSpec | null;
   responseId: string | null;
   groupBy: string[];
   /** Fator que define os grupos da comparação de tratamentos. */
@@ -78,6 +99,7 @@ export const EMPTY_OPTIMIZATION: OptimizationState = { setup: null, result: null
 
 /** Resultado em exibição; `signature` identifica os dados e as opções que o geraram. */
 export type StoredResult =
+  | { signature: string; kind: "optimal"; result: OptimalModelResult }
   | { signature: string; kind: "descriptive"; result: DescriptiveResult }
   | { signature: string; kind: "oneWay"; result: OneWayResult }
   | { signature: string; kind: "procedure"; result: ProcedureResult }
@@ -87,6 +109,9 @@ export type StoredResult =
 
 /** Estado de trabalho de UM experimento (o que a interface edita) + seu histórico salvo. */
 export interface ProjectState {
+  optimalDesigns: OptimalDesignRecord[];
+  optimalVariances: OptimalVarianceRecord[];
+  optimalArtifactSelection?: OptimalArtifactSelection;
   id: string;
   name: string;
   path: EntryPath | null;
@@ -101,6 +126,12 @@ export interface ProjectState {
   mixture: MixtureSpec | null;
   /** Modelo de Scheffé escolhido na análise de misturas. */
   mixtureModel: MixtureModel;
+  /** Editable selections and immutable calculated records, absent in older documents. */
+  mixtureResult: SavedMixture | null;
+  mixedModelResult: SavedRepeated | null;
+  nonlinearResult: SavedNonlinear | null;
+  powerResult: SavedPower | null;
+  activeFamily: AnalysisFamily;
   /** Personalização gráfica por figura (chave estável da figura → ajustes). */
   figureStyles: Record<string, FigureStyle>;
   /** Comentários de revisão ligados a análises, figuras e tabelas (v0.3). */
@@ -117,6 +148,7 @@ export interface ProjectState {
   /** Previsões gravadas na proposta de confirmação. */
   confirmation: ConfirmationPlan | null;
   showUnitColumn: boolean;
+  showTimeColumn: boolean;
   counters: { factor: number; response: number; row: number; revision: number; analysis: number };
   /** Instantâneos imutáveis dos dados; a última é o estado já registrado (pode haver edições posteriores). */
   revisions: Revision[];
@@ -125,35 +157,11 @@ export interface ProjectState {
   notes: string;
 }
 
-/** Dados atuais em ordem canônica de campos (comparação estável entre revisões). */
-export function snapshotData(
-  state: Pick<ProjectState, "factors" | "responses" | "rows">,
-): ExperimentData {
-  return {
-    factors: state.factors.map((f) => ({
-      id: f.id,
-      name: f.name,
-      kind: f.kind,
-      unit: f.unit,
-      levelsText: f.levelsText,
-    })),
-    responses: state.responses.map((r) => ({ id: r.id, name: r.name, unit: r.unit })),
-    rows: state.rows.map((r) => ({
-      id: r.id,
-      unitId: r.unitId,
-      factors: [...r.factors],
-      responses: [...r.responses],
-    })),
-  };
-}
-
-export function sameData(a: ExperimentData, b: ExperimentData): boolean {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
-
 /** Cria um experimento vazio com a revisão inicial `created`. */
 export function newExperiment(id: string, name: string, now: string): ProjectState {
   const base: ProjectState = {
+    optimalDesigns: [],
+    optimalVariances: [],
     id,
     name,
     path: null,
@@ -163,6 +171,11 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     mixed: null,
     mixture: null,
     mixtureModel: "quadratic",
+    mixtureResult: null,
+    mixedModelResult: null,
+    nonlinearResult: null,
+    powerResult: null,
+    activeFamily: "legacy",
     figureStyles: {},
     comments: [],
     factors: [],
@@ -177,6 +190,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
       responseModels: {},
       includeCurvature: true,
       surface: false,
+      surfaceBlock: null,
       procedure: null,
       factorial: null,
     },
@@ -185,6 +199,7 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
     origin: null,
     confirmation: null,
     showUnitColumn: false,
+    showTimeColumn: false,
     counters: { factor: 0, response: 0, row: 0, revision: 1, analysis: 0 },
     revisions: [],
     analyses: [],
@@ -205,48 +220,54 @@ export function newExperiment(id: string, name: string, now: string): ProjectSta
   };
 }
 
-/** Registra uma revisão se os dados mudaram desde a última; devolve o mesmo estado se não mudaram. */
-export function commitRevision(
-  state: ProjectState,
-  reason: RevisionReason,
-  now: string,
-): ProjectState {
-  const data = snapshotData(state);
-  const head = state.revisions[state.revisions.length - 1];
-  if (head && sameData(head.data, data)) return state;
-  const n = state.counters.revision + 1;
-  const revision: Revision = {
-    id: `v${n}`,
-    parent: head?.id ?? null,
-    createdAt: now,
-    reason,
-    data,
-    contentHash: "",
-  };
-  return {
-    ...state,
-    revisions: [...state.revisions, revision],
-    counters: { ...state.counters, revision: n },
-  };
-}
-
-/** Primeiro identificador `prefixN` livre, a partir do contador. */
-export function freshId(
-  prefix: string,
-  counter: number,
-  used: Iterable<string>,
-): { id: string; counter: number } {
-  const taken = new Set(used);
-  let n = counter + 1;
-  while (taken.has(`${prefix}${n}`)) n += 1;
-  return { id: `${prefix}${n}`, counter: n };
-}
-
 export const initialProject: ProjectState = newExperiment(
   "e1",
   "Experimento 1",
   "1970-01-01T00:00:00.000Z",
 );
+
+export interface CalculationSource {
+  projectId: string;
+  epoch: number;
+  experimentId: string;
+  data: ExperimentData;
+  analysis: AnalysisDraft;
+  startedAt: string;
+}
+
+export function captureCalculationSource(
+  scope: { projectId: string; epoch: number },
+  state: ProjectState,
+  startedAt: string,
+): CalculationSource {
+  return {
+    projectId: scope.projectId,
+    epoch: scope.epoch,
+    experimentId: state.id,
+    data: snapshotData(state),
+    analysis: state.analysis,
+    startedAt,
+  };
+}
+
+function calculationRevision(
+  state: ProjectState,
+  source: CalculationSource | undefined,
+  now: string,
+) {
+  if (!source) {
+    const committed = commitRevision(state, "analysis", now);
+    return { state: committed, revisionId: committed.revisions.at(-1)?.id };
+  }
+  const known = state.revisions.find((revision) => sameData(revision.data, source.data));
+  if (known) return { state, revisionId: known.id };
+  const data = snapshotData(state);
+  const captured = commitRevision({ ...state, ...source.data }, "analysis", source.startedAt);
+  return {
+    state: commitRevision({ ...captured, ...data }, "edit", now),
+    revisionId: captured.revisions.at(-1)?.id,
+  };
+}
 
 export type ProjectAction =
   | { type: "choosePath"; path: EntryPath }
@@ -283,6 +304,15 @@ export type ProjectAction =
   /** Planejamento ótimo aplicado: as linhas viram a matriz personalizada, analisada como superfície. */
   | {
       type: "applyOptimal";
+      generated?: GeneratedOptimal;
+      variance?: OptimalVariance;
+      varianceView?: OptimalVarianceView;
+      signature?: string;
+      factors?: FactorDraft[];
+      terms?: string[][];
+      blockFactorId?: string;
+      rowIds?: string[];
+      augment?: boolean;
       rows: RowDraft[];
       counters: ProjectState["counters"];
       now: string;
@@ -305,24 +335,38 @@ export type ProjectAction =
     }
   | { type: "setFigureStyle"; key: string; style: FigureStyle | null }
   | { type: "addComment"; target: CommentTarget; text: string; author: string; now: string }
+  | { type: "editComment"; id: string; text: string; now: string }
   | { type: "replyComment"; id: string; text: string; author: string; now: string }
   | { type: "setCommentResolved"; id: string; resolved: boolean; now: string }
   | { type: "deleteComment"; id: string }
   | { type: "addRow" }
   | { type: "removeRow"; row: number }
   | { type: "setUnitColumn"; visible: boolean }
+  | { type: "setTimeColumn"; visible: boolean }
   | { type: "setAnalysis"; patch: Partial<AnalysisDraft> }
   | { type: "setNotes"; notes: string }
   | { type: "rename"; name: string }
-  | { type: "storeResult"; result: StoredResult; now: string }
+  | { type: "storeResult"; result: StoredResult; source?: CalculationSource; now: string }
   | { type: "setOptimizationSetup"; setup: OptimizationSetup }
   | {
       type: "storeOptimization";
+      source?: CalculationSource;
       setup: OptimizationSetup;
       result: OptimizationResult;
       signature: string;
       now: string;
     }
+  | {
+      type: "storeOptimalVariance";
+      source: CalculationSource;
+      designId: string;
+      result: OptimalVariance;
+      view?: OptimalVarianceView;
+      now: string;
+    }
+  | { type: "selectOptimalDesign"; designId?: string }
+  | { type: "selectOptimalVariance"; designId: string; varianceId?: string }
+  | { type: "setOptimalVarianceView"; varianceId: string; view: OptimalVarianceView }
   | { type: "applyImport"; data: ExperimentData; now: string }
   /** Planilha de coleta (ET13): grava só as respostas das linhas indicadas; o planejamento fica. */
   | {
@@ -330,7 +374,8 @@ export type ProjectAction =
       cells: Array<{ row: number; response: number; text: string }>;
       now: string;
     }
-  | { type: "restoreRevision"; revisionId: string; now: string };
+  | { type: "restoreRevision"; revisionId: string; now: string }
+  | FamilyAction;
 
 /** Nova linha em branco com identificador ainda não usado. */
 export function blankRow(
@@ -365,6 +410,8 @@ export function setCellText(
     factors[column - 1] = value;
     return { ...row, factors };
   }
+  if (column === factorCount + row.responses.length + 1)
+    return { ...row, timeText: value || undefined };
   const responses = row.responses.slice();
   responses[column - 1 - factorCount] = value;
   return { ...row, responses };
@@ -409,6 +456,7 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
     factors: data.factors.map((f) => ({ ...f })),
     responses: data.responses.map((r) => ({ ...r })),
     rows: data.rows.map((r) => ({ ...r, factors: [...r.factors], responses: [...r.responses] })),
+    showTimeColumn: data.rows.some((r) => r.timeText !== undefined && r.timeText !== null),
     counters,
     analysis: {
       responseId: data.responses.some((r) => r.id === state.analysis.responseId)
@@ -423,6 +471,8 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
       responseModels: state.analysis.responseModels,
       includeCurvature: state.analysis.includeCurvature,
       surface: state.analysis.surface,
+      surfaceBlock: state.analysis.surfaceBlock,
+      optimalDesignId: state.analysis.optimalDesignId,
       procedure: state.analysis.procedure,
       factorial: state.analysis.factorial,
     },
@@ -444,6 +494,12 @@ function withData(state: ProjectState, data: ExperimentData): ProjectState {
 }
 
 export function projectReducer(state: ProjectState, action: ProjectAction): ProjectState {
+  if (
+    action.type === "storeFamily" ||
+    action.type === "setFamilySelection" ||
+    action.type === "selectFamily"
+  )
+    return reduceFamily(state, action);
   switch (action.type) {
     case "choosePath":
       return { ...state, path: action.path };
@@ -453,7 +509,13 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         state.counters.factor,
         state.factors.map((f) => f.id),
       );
-      const factor: FactorDraft = { id, name: "", kind: "categorical", unit: "", levelsText: "" };
+      const factor: FactorDraft = {
+        id,
+        name: "",
+        kind: state.path === "plan" ? "numeric" : "categorical",
+        unit: "",
+        levelsText: "",
+      };
       return {
         ...state,
         factors: [...state.factors, factor],
@@ -604,6 +666,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           factorId: null,
           procedure: null,
           factorial: action.factorial,
+          optimalDesignId: null,
         },
         result: null,
       };
@@ -627,6 +690,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           factorId: null,
           procedure: null,
           factorial: null,
+          optimalDesignId: null,
         },
         result: null,
       };
@@ -637,7 +701,8 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       const next: ProjectState = {
         ...before,
         rows: action.rows,
-        counters: { ...before.counters, row: action.counters.row },
+        factors: action.factors ?? before.factors,
+        counters: { ...before.counters, row: action.counters.row, factor: action.counters.factor },
         design: null,
         crd: null,
         rcbd: null,
@@ -645,17 +710,99 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         mixture: null,
         analysis: {
           ...before.analysis,
-          designTerms: null,
-          responseModels: {},
+          designTerms: action.terms ?? null,
+          responseModels: action.terms
+            ? Object.fromEntries(
+                before.responses.map((response) => [response.id, action.terms ?? []]),
+              )
+            : {},
           factorId: null,
           procedure: null,
           factorial: null,
-          surface: true,
+          optimalDesignId: null,
+          surface: !action.generated?.spec.categories,
+          surfaceBlock:
+            action.blockFactorId && action.generated?.spec.blocks
+              ? {
+                  factorId: action.blockFactorId,
+                  reference: action.generated.spec.blocks.labels[0] ?? "",
+                }
+              : null,
         },
         result: null,
       };
-      return commitRevision(next, "design", action.now);
+      const applied = commitRevision(next, "design", action.now);
+      if (!action.generated) return applied;
+      const identity = freshId("a", applied.counters.analysis, [
+        ...applied.analyses.map((record) => record.id),
+        ...familyRecordMetadata(applied).map((record) => record.id),
+      ]);
+      const withDesign = {
+        ...applied,
+        optimalArtifactSelection: updateOptimalSelection(applied, { designId: undefined }),
+        analysis: {
+          ...applied.analysis,
+          optimalDesignId: action.generated.spec.categories ? identity.id : null,
+        },
+        counters: { ...applied.counters, analysis: identity.counter },
+        optimalDesigns: [
+          ...applied.optimalDesigns,
+          {
+            id: identity.id,
+            createdAt: action.now,
+            augment: action.augment ?? false,
+            sourceRevisionId: before.revisions.at(-1)?.id ?? "v1",
+            revisionId: applied.revisions.at(-1)?.id ?? "v1",
+            signature: action.signature ?? "",
+            rowIds: action.rowIds ?? [],
+            blockFactorId: action.blockFactorId,
+            result: action.generated,
+          },
+        ],
+      };
+      return action.variance
+        ? appendOptimalVariance(
+            withDesign,
+            identity.id,
+            action.variance,
+            action.now,
+            action.varianceView,
+          )
+        : withDesign;
     }
+    case "storeOptimalVariance":
+      return appendOptimalVariance(state, action.designId, action.result, action.now, action.view);
+    case "selectOptimalDesign":
+      if (action.designId === state.optimalArtifactSelection?.designId) return state;
+      if (action.designId && !state.optimalDesigns.some((record) => record.id === action.designId))
+        return state;
+      return {
+        ...state,
+        optimalArtifactSelection: updateOptimalSelection(state, { designId: action.designId }),
+      };
+    case "selectOptimalVariance":
+      if (!state.optimalDesigns.some((record) => record.id === action.designId)) return state;
+      if (action.varianceId === state.optimalArtifactSelection?.varianceByDesign[action.designId])
+        return state;
+      if (
+        action.varianceId &&
+        !state.optimalVariances.some(
+          (record) => record.id === action.varianceId && record.designId === action.designId,
+        )
+      )
+        return state;
+      return {
+        ...state,
+        optimalArtifactSelection: selectOptimalVariance(state, action.designId, action.varianceId),
+      };
+    case "setOptimalVarianceView":
+      if (!state.optimalVariances.some((record) => record.id === action.varianceId)) return state;
+      return {
+        ...state,
+        optimalVariances: state.optimalVariances.map((record) =>
+          record.id === action.varianceId ? { ...record, view: action.view } : record,
+        ),
+      };
     case "setMixtureModel":
       return { ...state, mixtureModel: action.model };
     case "applyMixed": {
@@ -676,6 +823,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           factorId: null,
           procedure: null,
           factorial: action.factorial,
+          optimalDesignId: null,
         },
         result: null,
       };
@@ -695,7 +843,10 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       if (text === "") return state;
       // A revisão do comentário é a da análise a que ele se refere; sem análise, a mais recente.
       const analysis = state.analyses.find((a) => a.id === action.target.analysisId);
-      const revisionId = analysis?.revisionId ?? state.revisions[state.revisions.length - 1]?.id;
+      const revisionId =
+        analysis?.revisionId ??
+        familyRecordMetadata(state).find((r) => r.id === action.target.analysisId)?.revisionId ??
+        state.revisions[state.revisions.length - 1]?.id;
       if (!revisionId) return state;
       const { id } = freshId(
         "c",
@@ -711,6 +862,18 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         createdAt: action.now,
       };
       return { ...state, comments: [...state.comments, comment] };
+    }
+    case "editComment": {
+      const text = action.text.trim();
+      if (text === "" || Array.from(text).length > 2000) return state;
+      const comment = state.comments.find((c) => c.id === action.id);
+      if (!comment || comment.text === text) return state;
+      return {
+        ...state,
+        comments: state.comments.map((c) =>
+          c.id === action.id ? { ...c, text, editedAt: action.now } : c,
+        ),
+      };
     }
     case "replyComment": {
       const text = action.text.trim();
@@ -757,10 +920,19 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
     }
     case "removeRow":
       return { ...state, rows: state.rows.filter((_, i) => i !== action.row) };
+    case "setTimeColumn":
+      return { ...state, showTimeColumn: action.visible };
     case "setUnitColumn":
       return { ...state, showUnitColumn: action.visible };
     case "setAnalysis": {
       const next = { ...state.analysis, ...action.patch };
+      if (
+        action.patch.optimalDesignId === undefined &&
+        (action.patch.factorial !== undefined ||
+          action.patch.surface !== undefined ||
+          action.patch.procedure !== undefined)
+      )
+        next.optimalDesignId = null;
       const changedResponse =
         action.patch.responseId !== undefined &&
         action.patch.responseId !== state.analysis.responseId;
@@ -783,89 +955,100 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       return { ...state, name: action.name };
     case "storeResult": {
       // A análise aponta para a revisão dos dados que a gerou: registra-se um instantâneo se houve edições.
-      const committed = commitRevision(state, "analysis", action.now);
-      const head = committed.revisions[committed.revisions.length - 1];
-      if (!head) return state;
+      const captured = calculationRevision(state, action.source, action.now);
+      const committed = captured.state;
+      if (!captured.revisionId) return state;
+      const computation = action.source?.analysis ?? committed.analysis;
       const n = committed.counters.analysis + 1;
       const record: AnalysisRecord = {
         id: `a${n}`,
         createdAt: action.now,
-        revisionId: head.id,
+        revisionId: captured.revisionId,
         signature: action.result.signature,
         methodId: action.result.result.provenance.methodId,
         methodVersion: action.result.result.provenance.methodVersion,
         engineVersion: action.result.result.provenance.engineVersion,
         options:
-          action.result.kind === "oneWay" || action.result.kind === "procedure"
+          action.result.kind === "optimal"
             ? {
-                responseId: committed.analysis.responseId,
+                responseId: computation.responseId,
                 groupBy: [],
-                factorId: committed.analysis.factorId ?? undefined,
-                alpha: committed.analysis.alpha,
-                ...(action.result.kind === "procedure" && committed.analysis.procedure
-                  ? { procedure: committed.analysis.procedure }
-                  : {}),
+                alpha: computation.alpha,
+                optimalDesignId: computation.optimalDesignId ?? undefined,
               }
-            : action.result.kind === "factorial"
+            : action.result.kind === "oneWay" || action.result.kind === "procedure"
               ? {
-                  responseId: committed.analysis.responseId,
+                  responseId: computation.responseId,
                   groupBy: [],
-                  alpha: committed.analysis.alpha,
-                  ...(committed.analysis.factorial
-                    ? { factorial: committed.analysis.factorial }
+                  factorId: computation.factorId ?? undefined,
+                  alpha: computation.alpha,
+                  ...(action.result.kind === "procedure" && computation.procedure
+                    ? { procedure: computation.procedure }
                     : {}),
                 }
-              : action.result.kind === "design"
-                ? {
-                    responseId: committed.analysis.responseId,
-                    groupBy: [],
-                    alpha: committed.analysis.alpha,
-                    terms: committed.analysis.designTerms ?? undefined,
-                    includeCurvature: committed.analysis.includeCurvature,
-                  }
-                : action.result.kind === "surface"
-                  ? {
-                      responseId: committed.analysis.responseId,
-                      groupBy: [],
-                      alpha: committed.analysis.alpha,
-                      terms: committed.analysis.designTerms ?? undefined,
-                      surface: committed.analysis.surface || undefined,
-                    }
-                  : {
-                      responseId: committed.analysis.responseId,
-                      groupBy: committed.analysis.groupBy,
-                    },
-        result:
-          action.result.kind === "oneWay"
-            ? { type: "oneWayComparison", ...action.result.result }
-            : action.result.kind === "procedure"
-              ? { type: "multipleComparison", ...action.result.result }
               : action.result.kind === "factorial"
-                ? { type: "factorialAnova", ...action.result.result }
+                ? {
+                    responseId: computation.responseId,
+                    groupBy: [],
+                    alpha: computation.alpha,
+                    ...(computation.factorial ? { factorial: computation.factorial } : {}),
+                  }
                 : action.result.kind === "design"
-                  ? { type: "twoLevelDesign", ...action.result.result }
+                  ? {
+                      responseId: computation.responseId,
+                      groupBy: [],
+                      alpha: computation.alpha,
+                      terms: computation.designTerms ?? undefined,
+                      includeCurvature: computation.includeCurvature,
+                    }
                   : action.result.kind === "surface"
-                    ? { type: "responseSurface", ...action.result.result }
-                    : { type: "descriptive", ...action.result.result },
+                    ? {
+                        responseId: computation.responseId,
+                        groupBy: [],
+                        alpha: computation.alpha,
+                        terms: computation.designTerms ?? undefined,
+                        surface: computation.surface || undefined,
+                        surfaceBlock: computation.surfaceBlock ?? undefined,
+                      }
+                    : {
+                        responseId: computation.responseId,
+                        groupBy: computation.groupBy,
+                      },
+        result:
+          action.result.kind === "optimal"
+            ? { type: "optimalModel", ...action.result.result }
+            : action.result.kind === "oneWay"
+              ? { type: "oneWayComparison", ...action.result.result }
+              : action.result.kind === "procedure"
+                ? { type: "multipleComparison", ...action.result.result }
+                : action.result.kind === "factorial"
+                  ? { type: "factorialAnova", ...action.result.result }
+                  : action.result.kind === "design"
+                    ? { type: "twoLevelDesign", ...action.result.result }
+                    : action.result.kind === "surface"
+                      ? { type: "responseSurface", ...action.result.result }
+                      : { type: "descriptive", ...action.result.result },
       };
       return {
         ...committed,
         analyses: [...committed.analyses, record],
         counters: { ...committed.counters, analysis: n },
         result: action.result,
+        activeFamily: "legacy",
       };
     }
     case "setOptimizationSetup":
       return { ...state, optimization: { ...state.optimization, setup: action.setup } };
     case "storeOptimization": {
-      const committed = commitRevision(state, "analysis", action.now);
-      const head = committed.revisions[committed.revisions.length - 1];
-      if (!head) return state;
+      const captured = calculationRevision(state, action.source, action.now);
+      const committed = captured.state;
+      if (!captured.revisionId) return state;
+      const computation = action.source?.analysis ?? committed.analysis;
       const n = committed.counters.analysis + 1;
       const record: AnalysisRecord = {
         id: `a${n}`,
         createdAt: action.now,
-        revisionId: head.id,
+        revisionId: captured.revisionId,
         signature: action.signature,
         methodId: action.result.provenance.methodId,
         methodVersion: action.result.provenance.methodVersion,
@@ -875,6 +1058,7 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
           groupBy: [],
           alpha: action.setup.alpha,
           optimization: action.setup,
+          surfaceBlock: computation.surfaceBlock ?? undefined,
         },
         result: { type: "optimization", ...action.result },
       };
@@ -882,7 +1066,12 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
         ...committed,
         analyses: [...committed.analyses, record],
         counters: { ...committed.counters, analysis: n },
-        optimization: { setup: action.setup, result: action.result, signature: action.signature },
+        optimization: {
+          setup: action.source ? (state.optimization.setup ?? action.setup) : action.setup,
+          result: action.result,
+          signature: action.signature,
+        },
+        activeFamily: "legacy",
       };
     }
     case "applyImport": {
@@ -927,4 +1116,48 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       };
     }
   }
+}
+
+function updateOptimalSelection(
+  state: ProjectState,
+  patch: Partial<OptimalArtifactSelection>,
+): OptimalArtifactSelection | undefined {
+  const next = { varianceByDesign: {}, ...state.optimalArtifactSelection, ...patch };
+  return next.designId || Object.keys(next.varianceByDesign).length ? next : undefined;
+}
+
+function selectOptimalVariance(
+  state: ProjectState,
+  designId: string,
+  varianceId?: string,
+): OptimalArtifactSelection | undefined {
+  const varianceByDesign = { ...state.optimalArtifactSelection?.varianceByDesign };
+  if (varianceId) varianceByDesign[designId] = varianceId;
+  else delete varianceByDesign[designId];
+  return updateOptimalSelection(state, { varianceByDesign });
+}
+
+/** A new supplement gets its own identity; original designs and older profiles remain intact. */
+function appendOptimalVariance(
+  state: ProjectState,
+  designId: string,
+  result: OptimalVariance,
+  now: string,
+  view?: OptimalVarianceView,
+): ProjectState {
+  const design = state.optimalDesigns.find((record) => record.id === designId);
+  if (!design || !matchesOptimalVariance(design.result, result)) return state;
+  const identity = freshId("a", state.counters.analysis, [
+    ...state.analyses.map((record) => record.id),
+    ...familyRecordMetadata(state).map((record) => record.id),
+  ]);
+  return {
+    ...state,
+    optimalArtifactSelection: selectOptimalVariance(state, designId),
+    counters: { ...state.counters, analysis: identity.counter },
+    optimalVariances: [
+      ...state.optimalVariances,
+      { id: identity.id, createdAt: now, designId, revisionId: design.revisionId, result, view },
+    ],
+  };
 }

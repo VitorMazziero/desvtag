@@ -1,3 +1,4 @@
+import { PROJECT_FILE_ACCEPT } from "../../lib/projectFileName";
 import type { OpenedFile, StorageProvider } from "./StorageProvider";
 
 /** Seleciona um arquivo do computador por um `<input type="file">` criado sob demanda. */
@@ -59,7 +60,7 @@ export function createBrowserFileProvider(): StorageProvider {
     kind: "browser",
     overwritesFile: false,
     async open() {
-      const file = await pickFile(".enzitag");
+      const file = await pickFile(PROJECT_FILE_ACCEPT);
       return file ? readFileBytes(file) : null;
     },
     async save(bytes, { suggestedName }) {

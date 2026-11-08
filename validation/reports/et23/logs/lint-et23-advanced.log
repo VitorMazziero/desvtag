@@ -1,0 +1,809 @@
+
+> @enzitag/optima-web@0.4.0-dev lint
+> biome check .
+
+src\app\app.css:291:17 lint/complexity/noImportantStyles  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the use of the !important style.
+  
+    289 │ }
+    290 │ [hidden] {
+  > 291 │   display: none !important;
+        │                 ^^^^^^^^^^
+    292 │ }
+    293 │ /* Percurso no computador (ET29): barra lateral das etapas à esquerda e o conteúdo ao lado, em vez
+  
+  i This style reverses the cascade logic, and precedence is reversed. This could lead to having styles with higher specificity being overridden by styles with lower specificity.
+  
+  i Unsafe fix: Remove the style.
+  
+    291 │ ··display:·none·!important;
+        │                ----------- 
+
+src\features\analysis\AnalysisSetup.tsx:43:9 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    41 │   const onlyFactor =
+    42 │     eligible.length === 1
+  > 43 │       ? eligible[0]!.id
+       │         ^^^^^^^^^^^^
+    44 │       : state.factors.length === 1
+    45 │         ? state.factors[0]!.id
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     41  41 │     const onlyFactor =
+     42  42 │       eligible.length === 1
+     43     │ - ······?·eligible[0]!.id
+         43 │ + ······?·eligible[0]?.id
+     44  44 │         : state.factors.length === 1
+     45  45 │           ? state.factors[0]!.id
+  
+
+src\features\analysis\AnalysisSetup.tsx:45:11 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    43 │       ? eligible[0]!.id
+    44 │       : state.factors.length === 1
+  > 45 │         ? state.factors[0]!.id
+       │           ^^^^^^^^^^^^^^^^^
+    46 │         : null;
+    47 │   const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+     43  43 │         ? eligible[0]!.id
+     44  44 │         : state.factors.length === 1
+     45     │ - ········?·state.factors[0]!.id
+         45 │ + ········?·state.factors[0]?.id
+     46  46 │           : null;
+     47  47 │     const needsFactor = analysisKind(state) === "oneWay" || analysisKind(state) === "procedure";
+  
+
+src\features\analysis\MethodChoice.tsx:120:68 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    118 │   };
+    119 │ 
+  > 120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+        │                                                                    ^^^^^^^^^^^^^^^^^^
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+    122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MethodChoice.tsx:122:33 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    120 │   const positive = coefficientsDraft.flatMap((v, i) => (v === 1 ? [contrastLevels[i]!] : []));
+    121 │   const negative = coefficientsDraft.flatMap((v, i) =>
+  > 122 │     v < 0 ? [{ value: v, level: contrastLevels[i]! }] : [],
+        │                                 ^^^^^^^^^^^^^^^^^^
+    123 │   );
+    124 │   const averaged =
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MixtureAnalysis.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function MixtureAnalysis({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   onCurrent,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\RepeatedMeasures.tsx:20:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    19 │ export function RepeatedMeasures({
+  > 20 │   language,
+       │   ^^^^^^^^
+    21 │   embedded = false,
+    22 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\SaturationFit.tsx:96:30 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                              ^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:96:53 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    94 │           family: "nonlinear",
+    95 │           selection,
+  > 96 │           input: { factorId: factorId!, responseId: responseId!, request },
+       │                                                     ^^^^^^^^^^^
+    97 │           result,
+    98 │         });
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\SaturationFit.tsx:16:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    15 │ export function SaturationFit({
+  > 16 │   language,
+       │   ^^^^^^^^
+    17 │   embedded = false,
+    18 │   onCalculated,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+src\features\analysis\mixedRequest.test.ts:20:33 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    18 │  });
+    19 │  it("blocks unmapped or invalid values instead of turning them into missing",()=>{
+  > 20 │   const bad={...state,rows:[{...state.rows[0]!,timeText:"unknown"}]};
+       │                                 ^^^^^^^^^^^^^^
+    21 │   for (const occasionOrder of ["","Antes; Depois","Antes; Antes"]) {
+    22 │    const got=mixedAdvancedRequest(bad,{...defaultMixedOptions,timeEnabled:true,occasionOrder},i18n.t);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\blocks\GuidedBlocks.tsx:200:48 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    198 │               disabled={(showAll || current === 0) && !onPrevious}
+    199 │               onClick={() =>
+  > 200 │                 !showAll && current > 0 ? move(blocks[current - 1]!.id) : onPrevious?.()
+        │                                                ^^^^^^^^^^^^^^^^^^^^
+    201 │               }
+    202 │               data-testid={`${testId}-prev`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    198 198 │                 disabled={(showAll || current === 0) && !onPrevious}
+    199 199 │                 onClick={() =>
+    200     │ - ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]!.id)·:·onPrevious?.()
+        200 │ + ················!showAll·&&·current·>·0·?·move(blocks[current·-·1]?.id)·:·onPrevious?.()
+    201 201 │                 }
+    202 202 │                 data-testid={`${testId}-prev`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:218:54 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    216 │                 }
+    217 │                 onClick={() =>
+  > 218 │                   current < blocks.length - 1 ? move(blocks[current + 1]!.id) : onNext?.()
+        │                                                      ^^^^^^^^^^^^^^^^^^^^
+    219 │                 }
+    220 │                 data-testid={`${testId}-next`}
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    216 216 │                   }
+    217 217 │                   onClick={() =>
+    218     │ - ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]!.id)·:·onNext?.()
+        218 │ + ··················current·<·blocks.length·-·1·?·move(blocks[current·+·1]?.id)·:·onNext?.()
+    219 219 │                   }
+    220 220 │                   data-testid={`${testId}-next`}
+  
+
+src\features\blocks\GuidedBlocks.tsx:233:16 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    232 │ function BlockSource({ blocks, testId, focusId, order = 1 }: Props) {
+  > 233 │   const flow = useContext(FlowContext)!;
+        │                ^^^^^^^^^^^^^^^^^^^^^^^^
+    234 │   const entries = JSON.stringify(
+    235 │     blocks.map((b, i) => ({
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\features\analysis\MixedOptions.tsx format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+     4   4 │   
+     5   5 │   export const defaultMixedOptions: MixedAdvancedSelection = {
+     6     │ - ··covariance:·"compoundSymmetry",·timeSource:·null,·timeEnabled:·false,
+     7     │ - ··occasionOrder:·"",·timeEffect:·"none",·coding:·"sum",·interactions:·[],
+     8     │ - ··marginalFactors:·[],·marginalTime:·false,·adjustment:·"bonferroni",·references:·[],
+         6 │ + ··covariance:·"compoundSymmetry",
+         7 │ + ··timeSource:·null,
+         8 │ + ··timeEnabled:·false,
+         9 │ + ··occasionOrder:·"",
+        10 │ + ··timeEffect:·"none",
+        11 │ + ··coding:·"sum",
+        12 │ + ··interactions:·[],
+        13 │ + ··marginalFactors:·[],
+        14 │ + ··marginalTime:·false,
+        15 │ + ··adjustment:·"bonferroni",
+        16 │ + ··references:·[],
+     9  17 │   };
+    10  18 │   
+    11     │ - export·function·MixedOptions({·selection,·factors,·fixed,·update·}:·{
+    12     │ - ··selection:·RepeatedSelection;·factors:·FactorDraft[];·fixed:·string[];
+        19 │ + export·function·MixedOptions({
+        20 │ + ··selection,
+        21 │ + ··factors,
+        22 │ + ··fixed,
+        23 │ + ··update,
+        24 │ + }:·{
+        25 │ + ··selection:·RepeatedSelection;
+        26 │ + ··factors:·FactorDraft[];
+        27 │ + ··fixed:·string[];
+    13  28 │     update: (patch: Partial<RepeatedSelection>) => void;
+    14  29 │   }) {
+    15     │ - ··const·{t}=useTranslation();
+    16     │ - ··const·options=selection.advanced;
+    17     │ - ··const·set=(patch:Partial<MixedAdvancedSelection>)=>update({advanced:{...(options??defaultMixedOptions),...patch}});
+    18     │ - ··const·selected=factors.filter(f=>fixed.includes(f.id)·&&·f.id!==selection.unitSource);
+    19     │ - ··const·categorical=selected.filter(f=>f.kind==="categorical");
+    20     │ - ··const·numeric=selected.filter(f=>f.kind==="numeric");
+    21     │ - ··return·<fieldset·className="editor-card"·data-testid="mixed-options">
+    22     │ - ····<legend>{t("mixedAdvanced.options")}</legend>
+    23     │ - ····<label·className="check"><input·type="checkbox"·checked={Boolean(options)}·onChange={e=>update({advanced:e.target.checked?defaultMixedOptions:undefined})}/><span>{t("mixedAdvanced.enable")}</span></label>
+    24     │ - ····{options·&&·<>
+    25     │ - ······<div·className="row">
+    26     │ - ········<label·className="field"><span>{t("mixedAdvanced.covariance")}</span>
+    27     │ - ··········<select·data-testid="mixed-covariance"·value={options.covariance}·onChange={e=>set({covariance:e.target.value·as·MixedAdvancedSelection["covariance"],...(e.target.value!=="compoundSymmetry"?{timeEnabled:true}:{})})}>
+    28     │ - ············{(["compoundSymmetry","ar1","unstructured"]·as·const).map(value=><option·key={value}·value={value}>{t(`mixedAdvanced.structures.${value}`)}</option>)}
+    29     │ - ··········</select>
+    30     │ - ········</label>
+    31     │ - ········<label·className="field"><span>{t("mixedAdvanced.coding")}</span>
+    32     │ - ··········<select·value={options.coding}·onChange={e=>set({coding:e.target.value·as·MixedAdvancedSelection["coding"]})}>
+    33     │ - ············<option·value="sum">{t("mixedAdvanced.sum")}</option><option·value="treatment">{t("mixedAdvanced.treatment")}</option>
+    34     │ - ··········</select>
+    35     │ - ········</label>
+    36     │ - ······</div>
+    37     │ - ······<p·className="muted">{t(`mixedAdvanced.structureHelp.${options.covariance}`)}</p>
+    38     │ - ······<label·className="check"><input·type="checkbox"·checked={options.timeEnabled}·disabled={options.covariance!=="compoundSymmetry"}·onChange={e=>set({timeEnabled:e.target.checked,...(!e.target.checked?{timeEffect:"none"·as·const,marginalTime:false}:{})})}/><span>{t("mixedAdvanced.useTime")}</span></label>
+    39     │ - ······{options.timeEnabled·&&·<>
+    40     │ - ········<div·className="row">
+    41     │ - ··········<label·className="field"><span>{t("mixedAdvanced.timeSource")}</span>
+    42     │ - ············<select·data-testid="mixed-time-source"·value={options.timeSource??""}·onChange={e=>set({timeSource:e.target.value||null})}>
+    43     │ - ··············<option·value="">{t("mixedAdvanced.timeColumn")}</option>
+    44     │ - ··············{factors.filter(f=>f.id!==selection.unitSource).map(f=><option·key={f.id}·value={f.id}>{f.name}</option>)}
+    45     │ - ············</select>
+    46     │ - ··········</label>
+    47     │ - ··········<label·className="field"><span>{t("mixedAdvanced.timeEffect")}</span>
+    48     │ - ············<select·data-testid="mixed-time-effect"·value={options.timeEffect}·onChange={e=>set({timeEffect:e.target.value·as·MixedAdvancedSelection["timeEffect"],...(e.target.value!=="categorical"?{marginalTime:false}:{})})}>
+    49     │ - ··············{(["none","numeric","categorical"]·as·const).map(value=><option·key={value}·value={value}>{t(`mixedAdvanced.timeEffects.${value}`)}</option>)}
+    50     │ - ············</select>
+    51     │ - ··········</label>
+    52     │ - ········</div>
+    53     │ - ········<label·className="field"><span>{t("mixedAdvanced.occasionOrder")}</span><input·data-testid="mixed-occasion-order"·value={options.occasionOrder}·onChange={e=>set({occasionOrder:e.target.value})}/><small·className="muted">{t("mixedAdvanced.orderHelp")}</small></label>
+    54     │ - ········<p·className="muted·small">{t("mixedAdvanced.timeHelp")}</p>
+    55     │ - ······</>}
+    56     │ - ······{selected.length>1·&&·<fieldset·className="editor-card"><legend>{t("mixedAdvanced.interactions")}</legend>
+    57     │ - ········{selected.flatMap((a,i)=>selected.slice(i+1).map(b=>{
+    58     │ - ··········const·checked=options.interactions.some(ids=>ids.length===2·&&·ids.includes(a.id)·&&·ids.includes(b.id));
+    59     │ - ··········return·<label·className="check"·key={`${a.id}:${b.id}`}><input·type="checkbox"·checked={checked}·onChange={e=>set({interactions:e.target.checked?[...options.interactions,[a.id,b.id]]:options.interactions.filter(ids=>!(ids.includes(a.id)&&ids.includes(b.id)))})}/><span>{a.name}·×·{b.name}</span></label>;
+    60     │ - ········}))}
+    61     │ - ······</fieldset>}
+    62     │ - ······<fieldset·className="editor-card"><legend>{t("mixedAdvanced.marginal")}</legend>
+    63     │ - ········<p·className="muted·small">{t("mixedAdvanced.marginalHelp")}</p>
+    64     │ - ········{categorical.map(f=><label·className="check"·key={f.id}><input·type="checkbox"·checked={options.marginalFactors.includes(f.id)}·onChange={e=>set({marginalFactors:e.target.checked?[...options.marginalFactors,f.id]:options.marginalFactors.filter(id=>id!==f.id)})}/><span>{f.name}</span></label>)}
+    65     │ - ········{options.timeEnabled·&&·options.timeEffect==="categorical"·&&·<label·className="check"><input·type="checkbox"·checked={options.marginalTime}·onChange={e=>set({marginalTime:e.target.checked})}/><span>{t("mixedAdvanced.timeMarginal")}</span></label>}
+    66     │ - ········{numeric.map(f=><label·className="field"·key={f.id}><span>{t("mixedAdvanced.reference",{name...
+    67     │ - ········<label·className="field"><span>{t("mixedAdvanced.adjustment")}</span><select·value={options.adjustment}·onChange={e=>set({adjustment:e.target.value·as·MixedAdvancedSelection["adjustment"]})}><option·value="bonferroni">Bonferroni</option><option·value="holm">Holm</option></select></label>
+    68     │ - ········<small·className="muted">{t("mixedAdvanced.intervalAdjustment")}</small>
+    69     │ - ······</fieldset>
+    70     │ - ····</>}
+    71     │ - ··</fieldset>;
+        30 │ + ··const·{·t·}·=·useTranslation();
+        31 │ + ··const·options·=·selection.advanced;
+        32 │ + ··const·set·=·(patch:·Partial<MixedAdvancedSelection>)·=>
+        33 │ + ····update({·advanced:·{·...(options·??·defaultMixedOptions),·...patch·}·});
+        34 │ + ··const·selected·=·factors.filter((f)·=>·fixed.includes(f.id)·&&·f.id·!==·selection.unitSource);
+        35 │ + ··const·categorical·=·selected.filter((f)·=>·f.kind·===·"categorical");
+        36 │ + ··const·numeric·=·selected.filter((f)·=>·f.kind·===·"numeric");
+        37 │ + ··return·(
+        38 │ + ····<fieldset·className="editor-card"·data-testid="mixed-options">
+        39 │ + ······<legend>{t("mixedAdvanced.options")}</legend>
+        40 │ + ······<label·className="check">
+        41 │ + ········<input
+        42 │ + ··········type="checkbox"
+        43 │ + ··········checked={Boolean(options)}
+        44 │ + ··········onChange={(e)·=>·update({·advanced:·e.target.checked·?·defaultMixedOptions·:·undefined·})}
+        45 │ + ········/>
+        46 │ + ········<span>{t("mixedAdvanced.enable")}</span>
+        47 │ + ······</label>
+        48 │ + ······{options·&&·(
+        49 │ + ········<>
+        50 │ + ··········<div·className="row">
+        51 │ + ············<label·className="field">
+        52 │ + ··············<span>{t("mixedAdvanced.covariance")}</span>
+        53 │ + ··············<select
+        54 │ + ················data-testid="mixed-covariance"
+        55 │ + ················value={options.covariance}
+        56 │ + ················onChange={(e)·=>
+        57 │ + ··················set({
+        58 │ + ····················covariance:·e.target.value·as·MixedAdvancedSelection["covariance"],
+        59 │ + ····················...(e.target.value·!==·"compoundSymmetry"·?·{·timeEnabled:·true·}·:·{}),
+        60 │ + ··················})
+        61 │ + ················}
+        62 │ + ··············>
+        63 │ + ················{(["compoundSymmetry",·"ar1",·"unstructured"]·as·const).map((value)·=>·(
+        64 │ + ··················<option·key={value}·value={value}>
+        65 │ + ····················{t(`mixedAdvanced.structures.${value}`)}
+        66 │ + ··················</option>
+        67 │ + ················))}
+        68 │ + ··············</select>
+        69 │ + ············</label>
+        70 │ + ············<label·className="field">
+        71 │ + ··············<span>{t("mixedAdvanced.coding")}</span>
+        72 │ + ··············<select
+        73 │ + ················value={options.coding}
+        74 │ + ················onChange={(e)·=>
+        75 │ + ··················set({·coding:·e.target.value·as·MixedAdvancedSelection["coding"]·})
+        76 │ + ················}
+        77 │ + ··············>
+        78 │ + ················<option·value="sum">{t("mixedAdvanced.sum")}</option>
+        79 │ + ················<option·value="treatment">{t("mixedAdvanced.treatment")}</option>
+        80 │ + ··············</select>
+        81 │ + ············</label>
+        82 │ + ··········</div>
+        83 │ + ··········<p·className="muted">{t(`mixedAdvanced.structureHelp.${options.covariance}`)}</p>
+        84 │ + ··········<label·className="check">
+        85 │ + ············<input
+        86 │ + ··············type="checkbox"
+        87 │ + ··············checked={options.timeEnabled}
+        88 │ + ··············disabled={options.covariance·!==·"compoundSymmetry"}
+        89 │ + ··············onChange={(e)·=>
+        90 │ + ················set({
+        91 │ + ··················timeEnabled:·e.target.checked,
+  159 more lines truncated
+  
+
+src\features\analysis\RepeatedMeasures.tsx:4:1 assist/source/organizeImports  FIXABLE  ━━━━━━━━━━━━━
+
+  × Sort these imports.
+  
+     2 │ // linear misto com intercepto aleatório por unidade experimental (REML, Satterthwaite). Os dois usam
+     3 │ // a coluna «Unidade» da grade de dados. Os resultados são calculados ao pedir e guardados com suas entradas e revisão.
+   > 4 │ import { useMemo, useState } from "react";
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   > 5 │ import { useTranslation } from "react-i18next";
+        ...
+  > 16 │ import { MixedOptions } from "./MixedOptions";
+  > 17 │ import { mixedAdvancedRequest } from "./mixedRequest";
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ 
+    19 │ export function RepeatedMeasures({
+  
+  i Safe fix: Organize imports and exports (Biome)
+  
+     11  11 │   import { buildDataset } from "./buildRequest";
+     12  12 │   import { repeatedSignature } from "./familySignatures";
+     13     │ - import·{·formPairs,·levelsOf·}·from·"./pairing";
+     14     │ - import·{·unitIdentities·}·from·"./unitIdentities";
+     15     │ - import·{·useFamilyRecorder·}·from·"./useFamilyRecorder";
+     16     │ - import·{·MixedOptions·}·from·"./MixedOptions";
+     17     │ - import·{·mixedAdvancedRequest·}·from·"./mixedRequest";
+         13 │ + import·{·MixedOptions·}·from·"./MixedOptions";
+         14 │ + import·{·mixedAdvancedRequest·}·from·"./mixedRequest";
+         15 │ + import·{·formPairs,·levelsOf·}·from·"./pairing";
+         16 │ + import·{·unitIdentities·}·from·"./unitIdentities";
+         17 │ + import·{·useFamilyRecorder·}·from·"./useFamilyRecorder";
+     18  18 │   
+     19  19 │   export function RepeatedMeasures({
+  
+
+src\features\analysis\RepeatedMeasures.tsx format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+     87  87 │       update({ method: method === "paired" ? "paired" : "mixed" });
+     88  88 │     const setPairFactor = (pairFactor: string) => update({ pairFactor });
+     89     │ - ··const·setFixed·=·(fixed:·string[])·=>·update({·fixed,·...(selection.advanced?{advanced:{...selection.advanced,
+     90     │ - ····marginalFactors:selection.advanced.marginalFactors.filter(id=>fixed.includes(id)),
+     91     │ - ····references:selection.advanced.references.filter(r=>fixed.includes(r.factorId)),
+     92     │ - ····interactions:selection.advanced.interactions.filter(ids=>ids.every(id=>fixed.includes(id))),
+     93     │ - ··}}:{})·});
+         89 │ + ··const·setFixed·=·(fixed:·string[])·=>
+         90 │ + ····update({
+         91 │ + ······fixed,
+         92 │ + ······...(selection.advanced
+         93 │ + ········?·{
+         94 │ + ············advanced:·{
+         95 │ + ··············...selection.advanced,
+         96 │ + ··············marginalFactors:·selection.advanced.marginalFactors.filter((id)·=>
+         97 │ + ················fixed.includes(id),
+         98 │ + ··············),
+         99 │ + ··············references:·selection.advanced.references.filter((r)·=>·fixed.includes(r.factorId)),
+        100 │ + ··············interactions:·selection.advanced.interactions.filter((ids)·=>
+        101 │ + ················ids.every((id)·=>·fixed.includes(id)),
+        102 │ + ··············),
+        103 │ + ············},
+        104 │ + ··········}
+        105 │ + ········:·{}),
+        106 │ + ····});
+     94 107 │     const named = state.factors.filter((f) => f.name.trim() !== "");
+     95 108 │     const chosenFixed = fixed ?? named.filter((f) => f.id !== unitSource).map((f) => f.id);
+    ······· │ 
+    196 209 │         .filter((id) => id !== unitSource)
+    197 210 │         .map((id) => ({ type: "main", factorId: id }));
+    198     │ - ····const·advanced·=·selection.advanced·?·mixedAdvancedRequest(state,selection.advanced,t)·:·null;
+    199     │ - ····if·(advanced?.problems.length)·{setProblems(advanced.problems);return;}
+    200     │ - ····if·(selection.advanced)·terms.push(...selection.advanced.interactions.map(factorIds=>({type:"interaction"·as·const,factorIds})));
+        211 │ + ····const·advanced·=·selection.advanced·?·mixedAdvancedRequest(state,·selection.advanced,·t)·:·null;
+        212 │ + ····if·(advanced?.problems.length)·{
+        213 │ + ······setProblems(advanced.problems);
+        214 │ + ······return;
+        215 │ + ····}
+        216 │ + ····if·(selection.advanced)
+        217 │ + ······terms.push(
+        218 │ + ········...selection.advanced.interactions.map((factorIds)·=>·({
+        219 │ + ··········type:·"interaction"·as·const,
+        220 │ + ··········factorIds,
+        221 │ + ········})),
+        222 │ + ······);
+    201 223 │       const request = {
+    202 224 │         dataset,
+    203     │ - ······...(advanced?.request?{advanced:advanced.request}:{}),
+        225 │ + ······...(advanced?.request·?·{·advanced:·advanced.request·}·:·{}),
+    204 226 │         spec: {
+    205 227 │           responseId,
+    ······· │ 
+    342 364 │                 <fieldset className="editor-card">
+    343 365 │                   <legend>{t("repeated.mixed.fixed")}</legend>
+    344     │ - ················{named.filter(f=>f.id!==unitSource).map((f)·=>·(
+    345     │ - ··················<label·className="check"·key={f.id}>
+    346     │ - ····················<input
+    347     │ - ······················type="checkbox"
+    348     │ - ······················checked={chosenFixed.includes(f.id)}
+    349     │ - ······················onChange={(e)·=>
+    350     │ - ························setFixed(
+    351     │ - ··························e.target.checked
+    352     │ - ····························?·[...chosenFixed,·f.id]
+    353     │ - ····························:·chosenFixed.filter((id)·=>·id·!==·f.id),
+    354     │ - ························)
+    355     │ - ······················}
+    356     │ - ····················/>
+    357     │ - ····················<span>{f.name}</span>
+    358     │ - ··················</label>
+    359     │ - ················))}
+        366 │ + ················{named
+        367 │ + ··················.filter((f)·=>·f.id·!==·unitSource)
+        368 │ + ··················.map((f)·=>·(
+        369 │ + ····················<label·className="check"·key={f.id}>
+        370 │ + ······················<input
+        371 │ + ························type="checkbox"
+        372 │ + ························checked={chosenFixed.includes(f.id)}
+        373 │ + ························onChange={(e)·=>
+        374 │ + ··························setFixed(
+        375 │ + ····························e.target.checked
+        376 │ + ······························?·[...chosenFixed,·f.id]
+        377 │ + ······························:·chosenFixed.filter((id)·=>·id·!==·f.id),
+        378 │ + ··························)
+        379 │ + ························}
+        380 │ + ······················/>
+        381 │ + ······················<span>{f.name}</span>
+        382 │ + ····················</label>
+        383 │ + ··················))}
+    360 384 │                 </fieldset>
+    361     │ - ··············<MixedOptions·selection={selection}·factors={named}·fixed={chosenFixed}·update={update}/>
+        385 │ + ··············<MixedOptions
+        386 │ + ················selection={selection}
+        387 │ + ················factors={named}
+        388 │ + ················fixed={chosenFixed}
+        389 │ + ················update={update}
+        390 │ + ··············/>
+    362 391 │                 <button type="button" className="button" disabled={busy} onClick={runMixed}>
+    363 392 │                   {t("repeated.mixed.run")}
+  
+
+src\features\analysis\mixedRequest.test.ts:1:1 assist/source/organizeImports  FIXABLE  ━━━━━━━━━━━━━
+
+  × Some imports or exports are not organized.
+  
+  > 1 │ import {describe,it,expect} from "vitest";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │ import {createI18n} from "../../i18n";
+  > 3 │ const i18n=createI18n("pt-BR");
+  > 4 │ import {initialProject,type ProjectState} from "../../state/project";
+  > 5 │ import {defaultMixedOptions} from "./MixedOptions";
+  > 6 │ import {mixedAdvancedRequest} from "./mixedRequest";
+  > 7 │ const state:ProjectState={...initialProject,rows:[{id:"o1",unitId:"A",factors:[],responses:[],timeText:"0,5"},{id:"o2",unitId:"A",factors:[],responses:[],timeText:"1,5"}]};
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ describe("advanced repeated input mapping",()=>{
+    9 │  it("parses raw time and preserves empty cells without scientific aggregation",()=>{
+  
+  i Sort the imported names.
+  
+  > 1 │ import {describe,it,expect} from "vitest";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ import {createI18n} from "../../i18n";
+    3 │ const i18n=createI18n("pt-BR");
+  
+  i This statement must be preceded by a blank line. Add a newline before this statement.
+  
+    1 │ import {describe,it,expect} from "vitest";
+    2 │ import {createI18n} from "../../i18n";
+  > 3 │ const i18n=createI18n("pt-BR");
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ import {initialProject,type ProjectState} from "../../state/project";
+    5 │ import {defaultMixedOptions} from "./MixedOptions";
+  
+  i This statement must be preceded by a blank line. Add a newline before this statement.
+  
+    2 │ import {createI18n} from "../../i18n";
+    3 │ const i18n=createI18n("pt-BR");
+  > 4 │ import {initialProject,type ProjectState} from "../../state/project";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ import {defaultMixedOptions} from "./MixedOptions";
+    6 │ import {mixedAdvancedRequest} from "./mixedRequest";
+  
+  i This statement must be preceded by a blank line. Add a newline before this statement.
+  
+    5 │ import {defaultMixedOptions} from "./MixedOptions";
+    6 │ import {mixedAdvancedRequest} from "./mixedRequest";
+  > 7 │ const state:ProjectState={...initialProject,rows:[{id:"o1",unitId:"A",factors:[],responses:[],timeText:"0,5"},{id:"o2",unitId:"A",factors:[],responses:[],timeText:"1,5"}]};
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ describe("advanced repeated input mapping",()=>{
+    9 │  it("parses raw time and preserves empty cells without scientific aggregation",()=>{
+  
+  i Safe fix: Organize imports and exports (Biome)
+  
+     1    │ - import·{describe,it,expect}·from·"vitest";
+        1 │ + import·{describe,expect,·it}·from·"vitest";
+     2  2 │   import {createI18n} from "../../i18n";
+        3 │ + 
+     3  4 │   const i18n=createI18n("pt-BR");
+        5 │ + 
+     4  6 │   import {initialProject,type ProjectState} from "../../state/project";
+     5  7 │   import {defaultMixedOptions} from "./MixedOptions";
+     6  8 │   import {mixedAdvancedRequest} from "./mixedRequest";
+        9 │ + 
+     7 10 │   const state:ProjectState={...initialProject,rows:[{id:"o1",unitId:"A",factors:[],responses:[],timeText:"0,5"},{id:"o2",unitId:"A",factors:[],responses:[],timeText:"1,5"}]};
+     8 11 │   describe("advanced repeated input mapping",()=>{
+  
+
+src\features\analysis\mixedRequest.test.ts format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+     1    │ - import·{describe,it,expect}·from·"vitest";
+     2    │ - import·{createI18n}·from·"../../i18n";
+     3    │ - const·i18n=createI18n("pt-BR");
+     4    │ - import·{initialProject,type·ProjectState}·from·"../../state/project";
+     5    │ - import·{defaultMixedOptions}·from·"./MixedOptions";
+     6    │ - import·{mixedAdvancedRequest}·from·"./mixedRequest";
+     7    │ - const·state:ProjectState={...initialProject,rows:[{id:"o1",unitId:"A",factors:[],responses:[],timeText:"0,5"},{id:"o2",unitId:"A",factors:[],responses:[],timeText:"1,5"}]};
+     8    │ - describe("advanced·repeated·input·mapping",()=>{
+     9    │ - ·it("parses·raw·time·and·preserves·empty·cells·without·scientific·aggregation",()=>{
+    10    │ - ··const·s={...state,rows:[...state.rows,{id:"o3",unitId:"B",factors:[],responses:[],timeText:""}]};
+    11    │ - ··const·got=mixedAdvancedRequest(s,{...defaultMixedOptions,timeEnabled:true},i18n.t);
+    12    │ - ··expect(got.problems).toEqual([]);expect(got.request?.times).toEqual([0.5,1.5,null]);
+    13    │ - ·});
+    14    │ - ·it("maps·explicit·ordered·labels·and·retains·historical·names",()=>{
+    15    │ - ··const·s={...state,rows:state.rows.map((r,i)=>({...r,timeText:["Depois","Antes"][i]}))};
+    16    │ - ··const·got=mixedAdvancedRequest(s,{...defaultMixedOptions,timeEnabled:true,occasionOrder:"Antes;·Depois"},i18n.t);
+    17    │ - ··expect(got.request?.times).toEqual([1,0]);expect(got.request?.timeLabels).toEqual([{index:0,label:"Antes"},{index:1,label:"Depois"}]);
+    18    │ - ·});
+    19    │ - ·it("blocks·unmapped·or·invalid·values·instead·of·turning·them·into·missing",()=>{
+    20    │ - ··const·bad={...state,rows:[{...state.rows[0]!,timeText:"unknown"}]};
+    21    │ - ··for·(const·occasionOrder·of·["","Antes;·Depois","Antes;·Antes"])·{
+    22    │ - ···const·got=mixedAdvancedRequest(bad,{...defaultMixedOptions,timeEnabled:true,occasionOrder},i18n.t);
+    23    │ - ···expect(got.problems.length).toBeGreaterThan(0);expect(got.request).toBeUndefined();
+    24    │ - ··}
+    25    │ - ·});
+        1 │ + import·{·describe,·it,·expect·}·from·"vitest";
+        2 │ + import·{·createI18n·}·from·"../../i18n";
+        3 │ + const·i18n·=·createI18n("pt-BR");
+        4 │ + import·{·initialProject,·type·ProjectState·}·from·"../../state/project";
+        5 │ + import·{·defaultMixedOptions·}·from·"./MixedOptions";
+        6 │ + import·{·mixedAdvancedRequest·}·from·"./mixedRequest";
+        7 │ + const·state:·ProjectState·=·{
+        8 │ + ··...initialProject,
+        9 │ + ··rows:·[
+       10 │ + ····{·id:·"o1",·unitId:·"A",·factors:·[],·responses:·[],·timeText:·"0,5"·},
+       11 │ + ····{·id:·"o2",·unitId:·"A",·factors:·[],·responses:·[],·timeText:·"1,5"·},
+       12 │ + ··],
+       13 │ + };
+       14 │ + describe("advanced·repeated·input·mapping",·()·=>·{
+       15 │ + ··it("parses·raw·time·and·preserves·empty·cells·without·scientific·aggregation",·()·=>·{
+       16 │ + ····const·s·=·{
+       17 │ + ······...state,
+       18 │ + ······rows:·[...state.rows,·{·id:·"o3",·unitId:·"B",·factors:·[],·responses:·[],·timeText:·""·}],
+       19 │ + ····};
+       20 │ + ····const·got·=·mixedAdvancedRequest(s,·{·...defaultMixedOptions,·timeEnabled:·true·},·i18n.t);
+       21 │ + ····expect(got.problems).toEqual([]);
+       22 │ + ····expect(got.request?.times).toEqual([0.5,·1.5,·null]);
+       23 │ + ··});
+       24 │ + ··it("maps·explicit·ordered·labels·and·retains·historical·names",·()·=>·{
+       25 │ + ····const·s·=·{
+       26 │ + ······...state,
+       27 │ + ······rows:·state.rows.map((r,·i)·=>·({·...r,·timeText:·["Depois",·"Antes"][i]·})),
+       28 │ + ····};
+       29 │ + ····const·got·=·mixedAdvancedRequest(
+       30 │ + ······s,
+       31 │ + ······{·...defaultMixedOptions,·timeEnabled:·true,·occasionOrder:·"Antes;·Depois"·},
+       32 │ + ······i18n.t,
+       33 │ + ····);
+       34 │ + ····expect(got.request?.times).toEqual([1,·0]);
+       35 │ + ····expect(got.request?.timeLabels).toEqual([
+       36 │ + ······{·index:·0,·label:·"Antes"·},
+       37 │ + ······{·index:·1,·label:·"Depois"·},
+       38 │ + ····]);
+       39 │ + ··});
+       40 │ + ··it("blocks·unmapped·or·invalid·values·instead·of·turning·them·into·missing",·()·=>·{
+       41 │ + ····const·bad·=·{·...state,·rows:·[{·...state.rows[0]!,·timeText:·"unknown"·}]·};
+       42 │ + ····for·(const·occasionOrder·of·["",·"Antes;·Depois",·"Antes;·Antes"])·{
+       43 │ + ······const·got·=·mixedAdvancedRequest(
+       44 │ + ········bad,
+       45 │ + ········{·...defaultMixedOptions,·timeEnabled:·true,·occasionOrder·},
+       46 │ + ········i18n.t,
+       47 │ + ······);
+       48 │ + ······expect(got.problems.length).toBeGreaterThan(0);
+       49 │ + ······expect(got.request).toBeUndefined();
+       50 │ + ····}
+       51 │ + ··});
+    26 52 │   });
+    27 53 │   
+  
+
+src\features\analysis\mixedRequest.ts format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Formatter would have printed the following content:
+  
+     5  5 │   import { parseNumberCell } from "../data";
+     6  6 │   
+     7    │ - export·function·mixedAdvancedRequest(state:ProjectState,options:MixedAdvancedSelection,t:TFunction):{request?:AdvancedMixedSpec;problems:string[]}·{
+     8    │ - ··const·problems:string[]=[];
+     9    │ - ··const·index=state.factors.findIndex(f=>f.id===options.timeSource);
+    10    │ - ··if·(options.timeSource·&&·index<0)·return·{problems:[t("mixedAdvanced.invalidSource")]};
+    11    │ - ··const·order=options.occasionOrder.split(";").map(v=>v.trim()).filter(Boolean);
+    12    │ - ··if·(order.length!==new·Set(order).size)·return·{problems:[t("mixedAdvanced.duplicateOrder")]};
+    13    │ - ··const·labels=new·Map(order.map((name,i)=>[name,i]));
+    14    │ - ··const·times=options.timeEnabled?state.rows.map((row,i)=>{
+    15    │ - ····const·raw=(index<0?row.timeText:row.factors[index])?.trim()??"";
+    16    │ - ····if·(!raw)·return·null;
+    17    │ - ····if·(order.length)·{
+    18    │ - ······const·value=labels.get(raw);
+    19    │ - ······if·(value===undefined)·{problems.push(t("mixedAdvanced.unknownOccasion",{row:i+1,value:raw}));return·null;}
+    20    │ - ······return·value;
+    21    │ - ····}
+    22    │ - ····const·parsed=parseNumberCell(raw);
+    23    │ - ····if·(!parsed.ok)·{problems.push(t("mixedAdvanced.invalidTime",{row:i+1,value:raw}));return·null;}
+    24    │ - ····return·parsed.value;
+    25    │ - ··}):undefined;
+    26    │ - ··const·references=options.references.flatMap(reference=>{
+        7 │ + export·function·mixedAdvancedRequest(
+        8 │ + ··state:·ProjectState,
+        9 │ + ··options:·MixedAdvancedSelection,
+       10 │ + ··t:·TFunction,
+       11 │ + ):·{·request?:·AdvancedMixedSpec;·problems:·string[]·}·{
+       12 │ + ··const·problems:·string[]·=·[];
+       13 │ + ··const·index·=·state.factors.findIndex((f)·=>·f.id·===·options.timeSource);
+       14 │ + ··if·(options.timeSource·&&·index·<·0)·return·{·problems:·[t("mixedAdvanced.invalidSource")]·};
+       15 │ + ··const·order·=·options.occasionOrder
+       16 │ + ····.split(";")
+       17 │ + ····.map((v)·=>·v.trim())
+       18 │ + ····.filter(Boolean);
+       19 │ + ··if·(order.length·!==·new·Set(order).size)
+       20 │ + ····return·{·problems:·[t("mixedAdvanced.duplicateOrder")]·};
+       21 │ + ··const·labels·=·new·Map(order.map((name,·i)·=>·[name,·i]));
+       22 │ + ··const·times·=·options.timeEnabled
+       23 │ + ····?·state.rows.map((row,·i)·=>·{
+       24 │ + ········const·raw·=·(index·<·0·?·row.timeText·:·row.factors[index])?.trim()·??·"";
+       25 │ + ········if·(!raw)·return·null;
+       26 │ + ········if·(order.length)·{
+       27 │ + ··········const·value·=·labels.get(raw);
+       28 │ + ··········if·(value·===·undefined)·{
+       29 │ + ············problems.push(t("mixedAdvanced.unknownOccasion",·{·row:·i·+·1,·value:·raw·}));
+       30 │ + ············return·null;
+       31 │ + ··········}
+       32 │ + ··········return·value;
+       33 │ + ········}
+       34 │ + ········const·parsed·=·parseNumberCell(raw);
+       35 │ + ········if·(!parsed.ok)·{
+       36 │ + ··········problems.push(t("mixedAdvanced.invalidTime",·{·row:·i·+·1,·value:·raw·}));
+       37 │ + ··········return·null;
+       38 │ + ········}
+       39 │ + ········return·parsed.value;
+       40 │ + ······})
+       41 │ + ····:·undefined;
+       42 │ + ··const·references·=·options.references.flatMap((reference)·=>·{
+    27 43 │       if (!reference.value.trim()) return [];
+    28    │ - ····const·parsed=parseNumberCell(reference.value);
+    29    │ - ····if·(!parsed.ok·||·parsed.value===null)·{problems.push(t("mixedAdvanced.invalidReference",{name:state.factors.find(f=>f.id===reference.factorId)?.name??reference.factorId}));return·[];}
+    30    │ - ····return·[{factorId:reference.factorId,value:parsed.value}];
+       44 │ + ····const·parsed·=·parseNumberCell(reference.value);
+       45 │ + ····if·(!parsed.ok·||·parsed.value·===·null)·{
+       46 │ + ······problems.push(
+       47 │ + ········t("mixedAdvanced.invalidReference",·{
+       48 │ + ··········name:·state.factors.find((f)·=>·f.id·===·reference.factorId)?.name·??·reference.factorId,
+       49 │ + ········}),
+       50 │ + ······);
+       51 │ + ······return·[];
+       52 │ + ····}
+       53 │ + ····return·[{·factorId:·reference.factorId,·value:·parsed.value·}];
+    31 54 │     });
+    32    │ - ··if·(problems.length)·return·{problems};
+    33    │ - ··return·{problems,request:{covariance:options.covariance,times,timeLabels:order.map((label,index)=>({label,index})),timeEffect:options.timeEffect,marginalFactors:options.marginalFactors,marginalTime:options.marginalTime,adjustment:options.adjustment,references}};
+       55 │ + ··if·(problems.length)·return·{·problems·};
+       56 │ + ··return·{
+       57 │ + ····problems,
+       58 │ + ····request:·{
+       59 │ + ······covariance:·options.covariance,
+       60 │ + ······times,
+       61 │ + ······timeLabels:·order.map((label,·index)·=>·({·label,·index·})),
+       62 │ + ······timeEffect:·options.timeEffect,
+       63 │ + ······marginalFactors:·options.marginalFactors,
+       64 │ + ······marginalTime:·options.marginalTime,
+       65 │ + ······adjustment:·options.adjustment,
+       66 │ + ······references,
+       67 │ + ····},
+       68 │ + ··};
+    34 69 │   }
+    35 70 │   
+  
+
+The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
+Diagnostics not shown: 150.
+Checked 337 files in 787ms. No fixes applied.
+Found 19 errors.
+Found 146 warnings.
+Found 5 infos.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  
+

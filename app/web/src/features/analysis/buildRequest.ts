@@ -9,14 +9,13 @@ import type {
 } from "../../services/engine";
 import type { ProjectState } from "../../state/project";
 import { parseNumberCell } from "../data/editing";
+import { unitIdentities } from "./unitIdentities";
 
 export interface CellError {
   row: number;
   column: number;
   code: "notANumber" | "notFinite" | "invalidUnitId";
 }
-
-const ID = /^[A-Za-z0-9_.:-]{1,64}$/;
 
 export function splitLevels(text: string): string[] {
   return text
@@ -29,6 +28,7 @@ export function splitLevels(text: string): string[] {
 export function buildDataset(state: ProjectState): { dataset: Dataset; cellErrors: CellError[] } {
   const cellErrors: CellError[] = [];
   const factorCount = state.factors.length;
+  const units = unitIdentities(state.rows.map((r) => r.unitId));
   const dataset: Dataset = {
     factors: state.factors.map((f) => ({
       id: f.id,
@@ -44,11 +44,9 @@ export function buildDataset(state: ProjectState): { dataset: Dataset; cellError
     })),
     observations: state.rows.map((row, rowIndex) => {
       const unit = row.unitId.trim();
-      if (unit !== "" && !ID.test(unit))
-        cellErrors.push({ row: rowIndex, column: 0, code: "invalidUnitId" });
       return {
         id: row.id,
-        unitId: unit !== "" && ID.test(unit) ? unit : null,
+        unitId: units.ids.get(unit) ?? null,
         factors: state.factors.map((factor, i) => {
           const text = row.factors[i] ?? "";
           if (factor.kind === "categorical") return text.trim() === "" ? null : text.trim();
@@ -74,6 +72,7 @@ export function buildDataset(state: ProjectState): { dataset: Dataset; cellError
 }
 
 export type AnalysisKind =
+  | "optimal"
   | "descriptive"
   | "oneWay"
   | "procedure"
@@ -92,6 +91,7 @@ export function isSurfaceDesign(state: ProjectState): boolean {
  * planejamento de dois níveis; "Analisar dados existentes", o resumo descritivo.
  */
 export function analysisKind(state: ProjectState): AnalysisKind {
+  if (state.analysis.optimalDesignId) return "optimal";
   // Um DIC gerado no caminho "Planejar" é analisado como comparação de tratamentos.
   if (
     state.path === "compare" ||
@@ -164,6 +164,7 @@ export function buildSurfaceRequest(
   responseId: string,
 ): SurfaceRequest {
   return {
+    block: state.analysis.surfaceBlock ?? undefined,
     dataset,
     responseId,
     factors: surfaceFactors(state),
@@ -175,6 +176,21 @@ export function buildSurfaceRequest(
 export function buildOperation(state: ProjectState, dataset: Dataset): Operation | null {
   const responseId = state.analysis.responseId;
   if (responseId === null) return null;
+  if (analysisKind(state) === "optimal") {
+    const design = state.optimalDesigns.find(
+      (design) => design.id === state.analysis.optimalDesignId,
+    );
+    return design
+      ? {
+          type: "designOptimalAnalyze",
+          dataset,
+          spec: design.result.spec,
+          responseId,
+          blockFactorId: design.blockFactorId ?? null,
+          alpha: state.analysis.alpha,
+        }
+      : null;
+  }
   if (analysisKind(state) === "surface")
     return { type: "surfaceAnalyze", ...buildSurfaceRequest(state, dataset, responseId) };
   if (analysisKind(state) === "design") {
@@ -228,6 +244,15 @@ export function buildOperation(state: ProjectState, dataset: Dataset): Operation
 /** Assinatura dos dados e opções: muda quando qualquer entrada do resultado muda. */
 export function inputSignature(state: ProjectState): string {
   const { dataset } = buildDataset(state);
+  if (analysisKind(state) === "optimal")
+    return JSON.stringify([
+      "optimal",
+      dataset,
+      state.analysis.responseId,
+      state.analysis.alpha,
+      state.analysis.optimalDesignId,
+      state.optimalDesigns.find((d) => d.id === state.analysis.optimalDesignId)?.result.spec,
+    ]);
   if (analysisKind(state) === "surface")
     return JSON.stringify([
       "surface",
@@ -236,6 +261,7 @@ export function inputSignature(state: ProjectState): string {
       surfaceFactors(state),
       state.analysis.designTerms,
       state.analysis.alpha,
+      ...(state.analysis.surfaceBlock ? [state.analysis.surfaceBlock] : []),
     ]);
   if (analysisKind(state) === "design")
     return JSON.stringify([

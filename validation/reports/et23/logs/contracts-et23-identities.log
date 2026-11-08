@@ -1,0 +1,429 @@
+
+> @enzitag/optima-web@0.4.0-dev gen:contracts
+> node scripts/gen-contracts.mjs
+
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+   Compiling optima-engine v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-engine)
+   Compiling optima-wasm v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-wasm)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 16s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_core-3811c66a0ec70be5.exe)
+
+running 180 tests
+test comparisons::paired::export_bindings_pairedrequest ... ok
+test comparisons::letters::export_bindings_letters ... ok
+test comparisons::procedures::export_bindings_adjustment ... ok
+test comparisons::procedures::export_bindings_procedure ... ok
+test comparisons::paired::export_bindings_wilcoxon ... ok
+test comparisons::procedures::export_bindings_globaltest ... ok
+test comparisons::paired::export_bindings_pairedt ... ok
+test comparisons::procedures::export_bindings_proceduregroup ... ok
+test comparisons::procedures::export_bindings_procedurepair ... ok
+test comparisons::export_bindings_residualpoint ... ok
+test comparisons::tukey::export_bindings_tukeyvariant ... ok
+test comparisons::tukey::export_bindings_paircomparison ... ok
+test comparisons::export_bindings_groupstats ... ok
+test comparisons::export_bindings_onewaydiagnostics ... ok
+test descriptive::grouped::export_bindings_grouplabel ... ok
+test comparisons::paired::export_bindings_pairedresult ... ok
+test descriptive::summary::export_bindings_undefinedreason ... ok
+test comparisons::export_bindings_onewayrequest ... ok
+test comparisons::tukey::export_bindings_tukeyresult ... ok
+test descriptive::summary::export_bindings_stat ... ok
+test designs::analysis::export_bindings_lenthresult ... ok
+test descriptive::summary::export_bindings_summary ... ok
+test designs::analysis::export_bindings_curvaturetest ... ok
+test designs::analysis::export_bindings_effectrow ... ok
+test designs::analysis::export_bindings_observedpredicted ... ok
+test descriptive::grouped::export_bindings_groupsummary ... ok
+test descriptive::export_bindings_descriptiverequest ... ok
+test designs::analysis::export_bindings_paretobar ... ok
+test designs::analysis::export_bindings_paretobasis ... ok
+test comparisons::procedures::export_bindings_procedurerequest ... ok
+test designs::completely_randomized::export_bindings_crdrun ... ok
+test descriptive::export_bindings_descriptiveresult ... ok
+test designs::analysis::export_bindings_pareto ... ok
+test designs::mixed_levels::export_bindings_mixedrun ... ok
+test designs::completely_randomized::export_bindings_crdspec ... ok
+test designs::mixed_levels::export_bindings_mixedfactor ... ok
+test designs::mixture::export_bindings_mixturekind ... ok
+test comparisons::procedures::export_bindings_procedureresult ... ok
+test designs::mixture::export_bindings_mixturerun ... ok
+test designs::mixture::export_bindings_mixturecomponent ... ok
+test designs::mixed_levels::export_bindings_mixedspec ... ok
+test designs::optimal::export_bindings_linearconstraint ... ok
+test designs::optimal::export_bindings_optimalcriterion ... ok
+test designs::optimal::export_bindings_optimalmetrics ... ok
+test designs::optimal::export_bindings_optimalmodel ... ok
+test designs::optimal::export_bindings_optimalfactor ... ok
+test designs::optimal::export_bindings_optimalrun ... ok
+test designs::mixture::export_bindings_mixturespec ... ok
+test designs::completely_randomized::export_bindings_generatedcrd ... ok
+test designs::randomized_block::export_bindings_rcbdrun ... ok
+test designs::mixed_levels::export_bindings_generatedmixed ... ok
+test designs::spec::export_bindings_aliasrow ... ok
+test designs::randomized_block::export_bindings_rcbdspec ... ok
+test designs::spec::export_bindings_axialkind ... ok
+test designs::analysis::export_bindings_designanalysisrequest ... ok
+test designs::recommend::export_bindings_candidate ... ok
+test designs::mixture::export_bindings_generatedmixture ... ok
+test designs::spec::export_bindings_pointtype ... ok
+test designs::recommend::export_bindings_designoptions ... ok
+test designs::optimal::export_bindings_optimalspec ... ok
+test designs::spec::export_bindings_designrun ... ok
+test designs::spec::export_bindings_designfactor ... ok
+test designs::spec::export_bindings_designkind ... ok
+test designs::spec::export_bindings_runcount ... ok
+test designs::randomized_block::export_bindings_generatedrcbd ... ok
+test comparisons::export_bindings_onewayresult ... ok
+test distributions::evaluate::export_bindings_distribution ... ok
+test distributions::evaluate::export_bindings_distributionfunction ... ok
+test domain::dataset::export_bindings_factorvalue ... ok
+test designs::spec::export_bindings_designspec ... ok
+test diagnostics::assumptions::export_bindings_brownforsythe ... ok
+test distributions::evaluate::export_bindings_distributionresult ... ok
+test domain::dataset::export_bindings_response ... ok
+test domain::factor::export_bindings_factorkind ... ok
+test distributions::evaluate::export_bindings_distributionrequest ... ok
+test domain::dataset::export_bindings_factor ... ok
+test designs::optimal::export_bindings_generatedoptimal ... ok
+test domain::dataset::export_bindings_observation ... ok
+test domain::ids::export_bindings_stableid ... ok
+test interpretation::facts::export_bindings_fact ... ok
+test models::design_matrix::export_bindings_exclusionreason ... ok
+test inference::lack_of_fit::export_bindings_lackoffit ... ok
+test inference::regression_anova::export_bindings_anovarow ... ok
+test inference::one_way_anova::export_bindings_effectsizes ... ok
+test models::design_matrix::export_bindings_excludedobservation ... ok
+test models::factorial_anova::export_bindings_contrastrequest ... ok
+test inference::regression_anova::export_bindings_regressionanova ... ok
+test inference::one_way_anova::export_bindings_onewayanova ... ok
+test domain::dataset::export_bindings_dataset ... ok
+test models::factorial_anova::export_bindings_contrastresult ... ok
+test models::factorial_anova::export_bindings_factorialanovarow ... ok
+test models::factorial_anova::export_bindings_pairwiseadjustment ... ok
+test models::factorial_anova::export_bindings_sumofsquarestype ... ok
+test models::factorial_anova::export_bindings_marginalmean ... ok
+test designs::analysis::export_bindings_designanalysisresult ... ok
+test models::factorial_anova::export_bindings_marginalrequest ... ok
+test models::factorial_anova::export_bindings_marginalpair ... ok
+test designs::spec::export_bindings_generateddesign ... ok
+test models::linear::export_bindings_coefficientrow ... ok
+test models::mixed::export_bindings_randomeffect ... ok
+test models::factorial_anova::export_bindings_factorialsetup ... ok
+test models::mixed::export_bindings_mixedcoefficient ... ok
+test models::linear::export_bindings_observationdiagnostics ... ok
+test models::mixture::export_bindings_mixturegridpoint ... ok
+test models::mixture::export_bindings_mixtureanalysisrequest ... ok
+test models::factorial_anova::export_bindings_marginalresult ... ok
+test models::mixture::export_bindings_mixturemodel ... ok
+test models::nonlinear::export_bindings_saturationmodel ... ok
+test models::nonlinear::export_bindings_nonlinearrequest ... ok
+test models::nonlinear::export_bindings_curvepoint ... ok
+test models::nonlinear::export_bindings_nonlinearparameter ... ok
+test models::terms::export_bindings_categoricalcoding ... ok
+test models::prediction::export_bindings_prediction ... ok
+test models::factorial_anova::export_bindings_factorialrequest ... ok
+test models::terms::export_bindings_termspec ... ok
+test models::linear::export_bindings_linearfit ... ok
+test models::mixed::export_bindings_mixedmodelresult ... ok
+test models::linear::export_bindings_linearmodelrequest ... ok
+test models::terms::export_bindings_modelspec ... ok
+test models::factorial_anova::export_bindings_factorialresult ... ok
+test models::mixed::export_bindings_mixedmodelrequest ... ok
+test optimization::confirmation::export_bindings_confirmationstatus ... ok
+test optimization::confirmation::export_bindings_confirmationcomparerequest ... ok
+test optimization::confirmation::export_bindings_confirmationobservation ... ok
+test optimization::candidates::export_bindings_optimumcandidate ... ok
+test models::nonlinear::export_bindings_nonlinearresult ... ok
+test optimization::candidates::export_bindings_responseprediction ... ok
+test optimization::objective::export_bindings_goal ... ok
+test optimization::confirmation::export_bindings_confirmationcomparison ... ok
+test optimization::objective::export_bindings_factorbounds ... ok
+test optimization::objective::export_bindings_domainspec ... ok
+test optimization::objective::export_bindings_searchoptions ... ok
+test optimization::confirmation::export_bindings_confirmationcomparisons ... ok
+test optimization::optimize::export_bindings_convergencereport ... ok
+test models::mixture::export_bindings_mixtureanalysis ... ok
+test optimization::objective::export_bindings_responselimit ... ok
+test optimization::optimize::export_bindings_optimizationstatus ... ok
+test optimization::optimize::export_bindings_domainrange ... ok
+test optimization::objective::export_bindings_responsegoal ... ok
+test power::export_bindings_powerdesign ... ok
+test power::export_bindings_powergoal ... ok
+test power::export_bindings_powerpoint ... ok
+test optimization::optimize::export_bindings_responsetradeoff ... ok
+test provenance::export_bindings_provenance ... ok
+test optimization::evaluate::export_bindings_evaluation ... ok
+test registry::status::export_bindings_validation ... ok
+test registry::status::export_bindings_implementation ... ok
+test power::export_bindings_powerrequest ... ok
+test surface::contour::export_bindings_segment ... ok
+test registry::methods::export_bindings_methodinfo ... ok
+test surface::contour::export_bindings_contourlevel ... ok
+test registry::capabilities::export_bindings_capabilities ... ok
+test optimization::objective::export_bindings_optimizationsetup ... ok
+test surface::equation::export_bindings_equationtermkind ... ok
+test surface::grid::export_bindings_fixedecho ... ok
+test surface::grid::export_bindings_fixedvalue ... ok
+test power::export_bindings_powerresult ... ok
+test surface::model::export_bindings_factorrange ... ok
+test surface::equation::export_bindings_equationterm ... ok
+test surface::equation::export_bindings_equation ... ok
+test surface::model::export_bindings_surfacefitpoint ... ok
+test surface::model::export_bindings_surfacetermrow ... ok
+test optimization::evaluate::export_bindings_evaluaterequest ... ok
+test validation::issues::export_bindings_severity ... ok
+test optimization::grid::export_bindings_optimizationgridrequest ... ok
+test surface::selection::export_bindings_modelmetrics ... ok
+test optimization::objective::export_bindings_optimizationrequest ... ok
+test validation::issues::export_bindings_issue ... ok
+test optimization::optimize::export_bindings_optimizationresult ... ok
+test surface::grid::export_bindings_surfacegrid ... ok
+test visualization::residuals::export_bindings_qqpoint ... ok
+test visualization::boxplot::export_bindings_boxstats ... ok
+test visualization::boxplot::export_bindings_outlier ... ok
+test surface::selection::export_bindings_selectionstep ... ok
+test visualization::effects::export_bindings_interactionseries ... ok
+test visualization::effects::export_bindings_maineffectseries ... ok
+test surface::grid::export_bindings_gridrequest ... ok
+test surface::model::export_bindings_surfacerequest ... ok
+test surface::selection::export_bindings_selectionresult ... ok
+test surface::model::export_bindings_surfaceresult ... ok
+
+test result: ok. 180 passed; 0 failed; 0 ignored; 0 measured; 210 filtered out; finished in 0.77s
+
+     Running tests\comparison_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\comparison_validation-027e6e2eb05277b9.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\crd_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\crd_validation-7c5b089752384c69.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests\descriptive_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\descriptive_validation-ea5180ff3c4b9fea.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\design_selection_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\design_selection_validation-29adc65c7d894d93.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\design_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\design_validation-c0e8412dd20fd427.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests\distributions_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\distributions_validation-48797b08e7df25eb.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests\factorial_anova_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\factorial_anova_validation-bbd95c7a8d12a1bf.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests\linear_model_edge_cases.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\linear_model_edge_cases-b8ab9d33db4c6603.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+     Running tests\linear_model_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\linear_model_validation-5e884d03786041ba.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests\mixed_levels_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixed_levels_validation-ea98cd0ba346659c.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests\mixed_model_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixed_model_validation-03904e77ff4635a9.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\mixture_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixture_validation-41efadda2a33498e.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\optimal_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optimal_validation-49b6dca91a620d7c.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests\optimization_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optimization_validation-8a60266a69597472.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running tests\power_nonlinear_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\power_nonlinear_validation-3edb85e443356a5e.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests\procedures_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\procedures_validation-e80ba6c41d54a706.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\protimiza_counts.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\protimiza_counts-2f0e3a4e2cf748a9.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests\rcbd_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\rcbd_validation-b5d84584320a1128.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests\selection_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\selection_validation-1e1c59f61ef67238.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests\studentized_range_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\studentized_range_validation-e322136e292fe4d0.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\surface_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\surface_validation-36fa0fe1e9c9ec5d.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_engine-da12022cdb88c29d.exe)
+
+running 14 tests
+test request::export_bindings_bytesrequest ... ok
+test request::export_bindings_designrecommendrequest ... ok
+test request::export_bindings_importxlsxrequest ... ok
+test response::export_bindings_errorcode ... ok
+test response::export_bindings_projectencoderesult ... ok
+test response::export_bindings_engineerror ... ok
+test response::export_bindings_engineinfo ... ok
+test request::export_bindings_projectencoderequest ... ok
+test response::export_bindings_projectdecoderesult ... ok
+test request::export_bindings_enginerequest ... ok
+test request::export_bindings_operation ... ok
+test response::export_bindings_operationresult ... ok
+test response::export_bindings_engineresponse ... ok
+test response::export_bindings_outcome ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.89s
+
+     Running tests\performance.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\performance-2b37c2d3cdd58ac5.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests\protocol_tests.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\protocol_tests-d9e6efd7a9e40af8.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_project-6f215c93ed5348bf.exe)
+
+running 46 tests
+test comment::export_bindings_commenttargetkind ... ok
+test document::export_bindings_entrypath ... ok
+test confirmation::export_bindings_experimentorigin ... ok
+test comment::export_bindings_commentreply ... ok
+test confirmation::export_bindings_confirmationprediction ... ok
+test comment::export_bindings_commenttarget ... ok
+test confirmation::export_bindings_confirmationplan ... ok
+test comment::export_bindings_comment ... ok
+test families::export_bindings_analysisfamily ... ok
+test experiment::export_bindings_responsespec ... ok
+test experiment::export_bindings_rowrecord ... ok
+test experiment::export_bindings_factorspec ... ok
+test families::export_bindings_mixtureselection ... ok
+test experiment::export_bindings_experimentdata ... ok
+test families::export_bindings_pairingsnapshot ... ok
+test families::export_bindings_mixtureinputsnapshot ... ok
+test families::export_bindings_powergoalkind ... ok
+test families::export_bindings_powerkind ... ok
+test families::export_bindings_nonlinearselection ... ok
+test families::export_bindings_nonlinearinputsnapshot ... ok
+test families::export_bindings_repeatedmethod ... ok
+test families::export_bindings_powerselection ... ok
+test families::export_bindings_repeatedselection ... ok
+test analysis::export_bindings_analysisoptions ... ok
+test families::export_bindings_nonlinearrecord ... ok
+test families::export_bindings_powerrecord ... ok
+test families::export_bindings_repeatedinputsnapshot ... ok
+test families::export_bindings_mixturerecord ... ok
+test figure_style::export_bindings_figureannotation ... ok
+test families::export_bindings_repeatedoutput ... ok
+test revision::export_bindings_revisionreason ... ok
+test figure_style::export_bindings_figurestyle ... ok
+test xlsx_writer::export_bindings_exportcell ... ok
+test xlsx_writer::export_bindings_exportsheet ... ok
+test xlsx::export_bindings_sheetdata ... ok
+test revision::export_bindings_revision ... ok
+test families::export_bindings_savednonlinear ... ok
+test xlsx_writer::export_bindings_exportworkbook ... ok
+test families::export_bindings_savedmixture ... ok
+test families::export_bindings_savedpower ... ok
+test families::export_bindings_repeatedrecord ... ok
+test families::export_bindings_savedrepeated ... ok
+test analysis::export_bindings_analysisresult ... ok
+test analysis::export_bindings_analysisrecord ... ok
+test document::export_bindings_experiment ... ok
+test document::export_bindings_projectdocument ... ok
+
+test result: ok. 46 passed; 0 failed; 0 ignored; 0 measured; 44 filtered out; finished in 0.61s
+
+     Running tests\family_storage.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\family_storage-7b915ea27cba690d.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+     Running tests\import_xlsx_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\import_xlsx_validation-14d210beea68e3f5.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests\project_file_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\project_file_validation-382486086eada889.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_wasm-b3dd56dc50a2acd7.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+Gerado D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\src\services\engine\contracts.generated.ts (240 tipos).

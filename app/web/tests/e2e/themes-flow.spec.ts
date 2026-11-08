@@ -2,7 +2,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
+import { openFigureMenu } from "./figureTools";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 import { THEME_LIST } from "./themes";
 
 // Seis temas e logotipo do grupo (ET12): seletor, persistência, logotipo offline e nos seis temas,
@@ -43,7 +45,30 @@ test("o seletor oferece os seis temas, aplica e lembra a escolha; valor desconhe
   await expect(html(page)).toHaveAttribute("data-theme", "soft-light");
 });
 
-test("o logotipo do grupo aparece uma única vez (no cabeçalho), sem rede, nos seis temas", async ({
+test("a troca de tema aplica o texto e o fundo do botão Salvar juntos", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("optima.theme", "organic"));
+  await page.goto("/");
+  const save = page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true });
+  await expect(save).toHaveCSS("background-color", "rgb(53, 66, 45)");
+  await save.evaluate((button) => {
+    const observer = new MutationObserver(() => {
+      const { color, backgroundColor } = getComputedStyle(button);
+      button.setAttribute("data-theme-switch-colors", `${color} / ${backgroundColor}`);
+      observer.disconnect();
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  });
+  await page.getByLabel("Tema").selectOption("clay");
+  await expect(save).toHaveAttribute(
+    "data-theme-switch-colors",
+    "rgb(56, 49, 57) / rgb(246, 163, 202)",
+  );
+});
+
+test("DesvTAG aparece somente no logotipo do cabeçalho, sem rede, nos seis temas", async ({
   page,
 }) => {
   const external: string[] = [];
@@ -57,13 +82,15 @@ test("o logotipo do grupo aparece uma única vez (no cabeçalho), sem rede, nos 
     await page.getByLabel("Tema").selectOption(theme);
     const logo = page.getByTestId("group-logo-header");
     await expect(logo).toBeVisible();
-    await expect(logo).toHaveAttribute("alt", "Logotipo EnziTAG");
-    expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(558);
-    await expect(page.locator("img.group-logo")).toHaveCount(1); // a tela inicial não repete o logotipo
+    await expect(logo).toHaveAttribute("alt", "DesvTAG");
+    expect(await logo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(2172);
+    await expect(page.locator("img.group-logo")).toHaveCount(1);
+    await expect(page.getByRole("heading", { level: 1, name: "DesvTAG" })).toHaveText("");
+    await expect(page.locator(".brand")).toHaveText("");
   }
   expect(external).toEqual([]);
   await page.getByLabel("Idioma").selectOption("en");
-  await expect(page.getByTestId("group-logo-header")).toHaveAttribute("alt", "EnziTAG logo");
+  await expect(page.getByTestId("group-logo-header")).toHaveAttribute("alt", "DesvTAG");
 });
 
 test("a figura exportada é a mesma em qualquer tema", async ({ page }) => {
@@ -77,6 +104,7 @@ test("a figura exportada é a mesma em qualquer tema", async ({ page }) => {
   const figure = page.getByTestId("observed-predicted-chart");
   const exportSvg = async () => {
     const download = page.waitForEvent("download");
+    await openFigureMenu(figure);
     await figure.getByRole("button", { name: /Figura — SVG/ }).click();
     // A data da exportação é o único trecho que muda entre exportações.
     return readFileSync((await (await download).path()) as string, "utf8").replace(
@@ -102,8 +130,7 @@ test("a figura exportada é a mesma em qualquer tema", async ({ page }) => {
 test("a grade de dados com 1 000 linhas continua fluida nos temas novos", async ({ page }) => {
   test.setTimeout(180_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "analyze");
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).first().fill("y");
   await page.getByRole("button", { name: "Avançar" }).click();
@@ -136,13 +163,13 @@ for (const theme of ["industrial", "organic", "clay"]) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
     const transition = await page
-      .getByRole("button", { name: "Salvar", exact: true })
+      .getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true })
       .evaluate((el) => getComputedStyle(el).transitionProperty);
     expect(transition).toBe("none");
     // Alto contraste do Windows: relevo e sombras somem; as bordas reais permanecem.
     await page.emulateMedia({ forcedColors: "active" });
     const forced = await page
-      .getByRole("button", { name: "Salvar", exact: true })
+      .getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true })
       .evaluate((el) => {
         const style = getComputedStyle(el);
         return { shadow: style.boxShadow, border: style.borderTopWidth };

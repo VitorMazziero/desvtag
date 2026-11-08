@@ -1,0 +1,40 @@
+
+Running 2 tests using 2 workers
+
+(node:26460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\et23-columns.spec.ts:97:1 › T02: a factor used as unit cannot merge distinct original labels (2.6s)
+  x  2 [chromium] › tests\e2e\et23-columns.spec.ts:38:1 › T02: unit/time roles survive grid editing, table export and project reopening (4.0s)
+
+
+  1) [chromium] › tests\e2e\et23-columns.spec.ts:38:1 › T02: unit/time roles survive grid editing, table export and project reopening 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "0,50"
+    Received: undefined
+
+      81 |   expect(record.signature).toMatch(/^repeated:v2:/);
+      82 |   expect(experiment.showTimeColumn).toBe(true);
+    > 83 |   expect(experiment.revisions.at(-1).data.rows[0].timeText).toBe("0,50");
+         |                                                             ^
+      84 |   await page.reload();
+      85 |   const chooser = page.waitForEvent("filechooser");
+      86 |   await page.getByRole("button", { name: "Abrir…", exact: true }).click();
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et23-columns.spec.ts:83:61
+
+    Error Context: test-results-et23-columns-second\et23-columns-T02-unit-time-b5a7d-xport-and-project-reopening-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et23-columns-second\et23-columns-T02-unit-time-b5a7d-xport-and-project-reopening-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et23-columns-second\et23-columns-T02-unit-time-b5a7d-xport-and-project-reopening-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\et23-columns.spec.ts:38:1 › T02: unit/time roles survive grid editing, table export and project reopening 
+  1 passed (4.9s)

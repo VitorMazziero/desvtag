@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 use tauri_plugin_updater::UpdaterExt;
 
-const REPOSITORY: &str = "VitorMazziero/enzitag-optima";
+const REPOSITORY: &str = "VitorMazziero/desvtag";
 
 /// Canal escolhido nas preferências.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -89,7 +89,7 @@ mod tests {
         let stable = endpoint(Channel::Stable);
         assert_ne!(experimental, stable);
         for url in [&experimental, &stable] {
-            assert!(url.starts_with("https://github.com/VitorMazziero/enzitag-optima/"));
+            assert!(url.starts_with("https://github.com/VitorMazziero/desvtag/"));
             assert!(url.ends_with("/latest.json"));
             assert!(url.parse::<tauri::Url>().is_ok());
         }

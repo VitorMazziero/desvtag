@@ -1,0 +1,539 @@
+{
+  "seed": 20261104,
+  "numpy": "2.4.3",
+  "scipy": "1.17.1",
+  "method": "Exact noncentral F/t, integer enumeration for minimum n, independent raw-data normal OLS Monte Carlo",
+  "tolerances": {
+    "analyticAbsolute": 1e-09,
+    "monteCarloStandardErrors": 6
+  },
+  "cases": [
+    {
+      "name": "regression_correlated",
+      "request": {
+        "design": {
+          "type": "regression",
+          "predictors": [
+            [
+              -2,
+              1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "coefficients": [
+            0.45,
+            -0.25
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "powerAt",
+          "n": 5
+        }
+      },
+      "expected": {
+        "power": 0.5283573830509785,
+        "n": 5,
+        "total": 25,
+        "df1": 2.0,
+        "df2": 22.0,
+        "noncentrality": 6.076388888888889,
+        "critical": 3.4433567793667215,
+        "halfWidth": null
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 15875,
+        "estimate": 0.5291666666666667,
+        "mcse": 0.0028818356739848737,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "regression_minimum",
+      "request": {
+        "design": {
+          "type": "regression",
+          "predictors": [
+            [
+              -2,
+              1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "coefficients": [
+            0.45,
+            -0.25
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "sampleSizeFor",
+          "power": 0.8
+        }
+      },
+      "expected": {
+        "power": 0.8224422932606605,
+        "n": 9,
+        "total": 45,
+        "df1": 2.0,
+        "df2": 42.0,
+        "noncentrality": 10.9375,
+        "critical": 3.219942293176123,
+        "halfWidth": null
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 24539,
+        "estimate": 0.8179666666666666,
+        "mcse": 0.0022278330195423003,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "contrast_unequal",
+      "request": {
+        "design": {
+          "type": "contrast",
+          "means": [
+            10.0,
+            11.2,
+            12.0
+          ],
+          "weights": [
+            -2.0,
+            1.0,
+            1.0
+          ],
+          "allocation": [
+            1,
+            2,
+            1
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "powerAt",
+          "n": 8
+        }
+      },
+      "expected": {
+        "power": 0.874514032445558,
+        "n": 8,
+        "total": 32,
+        "df1": 29.0,
+        "df2": 0.0,
+        "noncentrality": 3.2161210088294783,
+        "critical": 2.0452296421327043,
+        "halfWidth": 2.034977799920109
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 26192,
+        "estimate": 0.8730666666666667,
+        "mcse": 0.0019219890931204773,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "contrast_one_sided",
+      "request": {
+        "design": {
+          "type": "contrast",
+          "means": [
+            10.0,
+            11.2,
+            12.0
+          ],
+          "weights": [
+            -2.0,
+            1.0,
+            1.0
+          ],
+          "allocation": [
+            1,
+            2,
+            1
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": false,
+        "goal": {
+          "type": "powerAt",
+          "n": 8
+        }
+      },
+      "expected": {
+        "power": 0.9325236396704616,
+        "n": 8,
+        "total": 32,
+        "df1": 29.0,
+        "df2": 0.0,
+        "noncentrality": 3.2161210088294783,
+        "critical": 1.6991270265334977,
+        "halfWidth": 2.034977799920109
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 27922,
+        "estimate": 0.9307333333333333,
+        "mcse": 0.0014659330993779536,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "contrast_precision",
+      "request": {
+        "design": {
+          "type": "contrast",
+          "means": [
+            10.0,
+            11.2,
+            12.0
+          ],
+          "weights": [
+            -2.0,
+            1.0,
+            1.0
+          ],
+          "allocation": [
+            1,
+            2,
+            1
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "precisionFor",
+          "halfWidth": 0.5
+        }
+      },
+      "expected": {
+        "power": 1.0,
+        "n": 123,
+        "total": 492,
+        "df1": 489.0,
+        "df2": 0.0,
+        "noncentrality": 12.610721748984194,
+        "critical": 1.96482708047714,
+        "halfWidth": 0.49857944554468553
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 30000,
+        "estimate": 1.0,
+        "mcse": 0.0,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "factorial_interaction",
+      "request": {
+        "design": {
+          "type": "twoLevel",
+          "factors": 3,
+          "terms": [
+            [
+              0
+            ],
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "effects": [
+            0.8,
+            0.5,
+            0.2,
+            0.9
+          ],
+          "target": 3
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "powerAt",
+          "n": 4
+        }
+      },
+      "expected": {
+        "power": 0.5341426751735758,
+        "n": 4,
+        "total": 32,
+        "df1": 27.0,
+        "df2": 0.0,
+        "noncentrality": 2.121320343559643,
+        "critical": 2.0518305164802846,
+        "halfWidth": 0.8705179632292231
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 16000,
+        "estimate": 0.5333333333333333,
+        "mcse": 0.002880329199292382,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "factorial_minimum",
+      "request": {
+        "design": {
+          "type": "twoLevel",
+          "factors": 3,
+          "terms": [
+            [
+              0
+            ],
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "effects": [
+            0.8,
+            0.5,
+            0.2,
+            0.9
+          ],
+          "target": 3
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "sampleSizeFor",
+          "power": 0.9
+        }
+      },
+      "expected": {
+        "power": 0.9116343555893769,
+        "n": 10,
+        "total": 80,
+        "df1": 75.0,
+        "df2": 0.0,
+        "noncentrality": 3.354101966249685,
+        "critical": 1.992102154002242,
+        "halfWidth": 0.5345371001367321
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 27325,
+        "estimate": 0.9108333333333334,
+        "mcse": 0.0016453568227208569,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "factorial_precision",
+      "request": {
+        "design": {
+          "type": "twoLevel",
+          "factors": 3,
+          "terms": [
+            [
+              0
+            ],
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "effects": [
+            0.8,
+            0.5,
+            0.2,
+            0.9
+          ],
+          "target": 3
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "precisionFor",
+          "halfWidth": 0.4
+        }
+      },
+      "expected": {
+        "power": 0.9939419063630457,
+        "n": 18,
+        "total": 144,
+        "df1": 139.0,
+        "df2": 0.0,
+        "noncentrality": 4.500000000000001,
+        "critical": 1.9771777244903337,
+        "halfWidth": 0.3954355448980667
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 29818,
+        "estimate": 0.9939333333333333,
+        "mcse": 0.000448325113514074,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "regression_null",
+      "request": {
+        "design": {
+          "type": "regression",
+          "predictors": [
+            [
+              -2,
+              1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "coefficients": [
+            0.0,
+            0.0
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "powerAt",
+          "n": 5
+        }
+      },
+      "expected": {
+        "power": 0.05000000000000007,
+        "n": 5,
+        "total": 25,
+        "df1": 2.0,
+        "df2": 22.0,
+        "noncentrality": 0.0,
+        "critical": 3.4433567793667215,
+        "halfWidth": null
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 1526,
+        "estimate": 0.050866666666666664,
+        "mcse": 0.0012685851553192228,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    },
+    {
+      "name": "contrast_null",
+      "request": {
+        "design": {
+          "type": "contrast",
+          "means": [
+            10.0,
+            10.0,
+            10.0
+          ],
+          "weights": [
+            -2.0,
+            1.0,
+            1.0
+          ],
+          "allocation": [
+            1,
+            2,
+            1
+          ]
+        },
+        "sigma": 1.2,
+        "alpha": 0.05,
+        "twoSided": true,
+        "goal": {
+          "type": "powerAt",
+          "n": 8
+        }
+      },
+      "expected": {
+        "power": 0.04999999999999998,
+        "n": 8,
+        "total": 32,
+        "df1": 29.0,
+        "df2": 0.0,
+        "noncentrality": 0.0,
+        "critical": 2.0452296421327043,
+        "halfWidth": 2.034977799920109
+      },
+      "simulation": {
+        "replications": 30000,
+        "rejections": 1487,
+        "estimate": 0.04956666666666667,
+        "mcse": 0.0012531269185817031,
+        "method": "Independent raw normal observations and OLS/group residual variance; NumPy PCG64"
+      }
+    }
+  ]
+}

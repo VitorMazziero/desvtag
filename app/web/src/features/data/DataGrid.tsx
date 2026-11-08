@@ -4,6 +4,7 @@ import { type ClipboardEvent, type KeyboardEvent, useId, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import type { CellError } from "../analysis/buildRequest";
+import { closeMenuOf, Menu } from "../menus/Menu";
 import { gridColumns } from "./columnRoles";
 import { applyPaste, parseClipboard } from "./editing";
 
@@ -17,6 +18,20 @@ export function DataGrid({ cellErrors }: Props) {
   const dispatch = useProjectDispatch();
   const gridId = useId();
   const [ignored, setIgnored] = useState(0);
+  const lastMatrixChange = [...state.revisions]
+    .reverse()
+    .find((revision) => revision.reason === "design" || revision.reason === "import");
+  const generated = Boolean(
+    state.design ||
+      state.crd ||
+      state.rcbd ||
+      state.mixed ||
+      state.mixture ||
+      state.confirmation ||
+      (state.path === "plan" && lastMatrixChange?.reason === "design"),
+  );
+  const [editConditions, setEditConditions] = useState(false);
+  const locked = generated && !editConditions;
   const columns = gridColumns(state);
   const errorAt = new Map(cellErrors.map((e) => [`${e.row}:${e.column}`, e]));
 
@@ -45,13 +60,56 @@ export function DataGrid({ cellErrors }: Props) {
     if (matrix.length === 1 && matrix[0]?.length === 1) return;
     event.preventDefault();
     const out = applyPaste(state, row, column, matrix);
-    dispatch({ type: "setRows", rows: out.rows, counters: out.counters });
+    dispatch({
+      type: "setRows",
+      rows: locked
+        ? out.rows.map((r, i) => ({ ...r, factors: state.rows[i]?.factors ?? r.factors }))
+        : out.rows,
+      counters: out.counters,
+    });
     setIgnored(out.ignoredColumns);
   };
 
   return (
-    <div>
-      <div className="grid-scroll">
+    <div className="data-entry">
+      {generated && (
+        <div className="row">
+          <p className="muted small">
+            {t(locked ? "data.conditionsLocked" : "data.conditionsUnlocked")}
+          </p>
+          <button
+            type="button"
+            className="button secondary small"
+            onClick={() => {
+              if (editConditions || window.confirm(t("data.confirmConditions")))
+                setEditConditions(!editConditions);
+            }}
+          >
+            {t(editConditions ? "data.lockConditions" : "data.editConditions")}
+          </button>
+        </div>
+      )}
+      {cellErrors.length > 0 && (
+        <ul className="error" aria-label={t("data.errorsSummary", { count: cellErrors.length })}>
+          {cellErrors.map((e) => (
+            <li key={`${e.row}:${e.column}`}>
+              <button
+                type="button"
+                className="link-button"
+                onClick={() => focusCell(e.row, e.column)}
+              >
+                {t("data.goCell", {
+                  row: e.row + 1,
+                  name: columns.find((c) => c.index === e.column)?.name ?? e.column,
+                })}
+                : {t(`cellErrors.${e.code}`, { ns: "diagnostics" })}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="muted small">{t("data.missingNote")}</p>
+      <section className="grid-scroll" aria-label={t("data.caption")}>
         <table className="data-grid">
           <caption>{t("data.caption")}</caption>
           <thead>
@@ -59,13 +117,15 @@ export function DataGrid({ cellErrors }: Props) {
               <th scope="col">{t("data.rowLabel")}</th>
               {columns.map((c) => (
                 <th key={c.index} scope="col">
-                  {c.role === "unit" ? t("data.unitColumn") : c.name || `(${c.id})`}
+                  {c.role === "unit"
+                    ? t("data.unitColumn")
+                    : c.role === "time"
+                      ? t("data.timeColumn")
+                      : c.name || `(${c.id})`}
                   {c.unit ? <span className="muted"> [{c.unit}]</span> : null}
                 </th>
               ))}
-              <th scope="col">
-                <span className="sr-only">{t("workflow.step.data")}</span>
-              </th>
+              <th scope="col">{t("data.actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -76,16 +136,23 @@ export function DataGrid({ cellErrors }: Props) {
                   const value =
                     c.role === "unit"
                       ? row.unitId
-                      : c.role === "factor"
-                        ? (row.factors[c.index - 1] ?? "")
-                        : (row.responses[c.index - 1 - state.factors.length] ?? "");
+                      : c.role === "time"
+                        ? (row.timeText ?? "")
+                        : c.role === "factor"
+                          ? (row.factors[c.index - 1] ?? "")
+                          : (row.responses[c.index - 1 - state.factors.length] ?? "");
                   const error = errorAt.get(`${r}:${c.index}`);
-                  const label = `${c.role === "unit" ? t("data.unitColumn") : c.name || c.id} — ${t("data.rowLabel")} ${r + 1}`;
+                  const label = `${c.role === "unit" ? t("data.unitColumn") : c.role === "time" ? t("data.timeColumn") : c.name || c.id} — ${t("data.rowLabel")} ${r + 1}`;
                   return (
-                    <td key={c.index}>
+                    <td
+                      key={c.index}
+                      data-role={c.role}
+                      data-locked={locked && c.role === "factor"}
+                    >
                       <input
                         id={`${gridId}-${r}-${c.index}`}
                         type="text"
+                        readOnly={locked && c.role === "factor"}
                         inputMode={c.role === "response" ? "decimal" : "text"}
                         aria-label={label}
                         aria-invalid={error ? true : undefined}
@@ -116,19 +183,34 @@ export function DataGrid({ cellErrors }: Props) {
                   );
                 })}
                 <td>
-                  <button
-                    type="button"
-                    className="button secondary small"
-                    onClick={() => dispatch({ type: "removeRow", row: r })}
+                  <Menu
+                    label={
+                      <>
+                        <span aria-hidden="true">⋯</span>
+                        <span className="sr-only">{t("data.rowActions", { n: r + 1 })}</span>
+                      </>
+                    }
+                    buttonClassName="button secondary small row-menu-button"
+                    testId={`row-actions-${r + 1}`}
+                    alignEnd
                   >
-                    {t("data.removeRow", { n: r + 1 })}
-                  </button>
+                    <button
+                      type="button"
+                      className="button secondary small"
+                      onClick={(e) => {
+                        closeMenuOf(e.currentTarget);
+                        dispatch({ type: "removeRow", row: r });
+                      }}
+                    >
+                      {t("data.removeRow", { n: r + 1 })}
+                    </button>
+                  </Menu>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </section>
       {state.rows.length === 0 && <p className="muted">{t("data.empty")}</p>}
       {ignored > 0 && (
         <p role="status" className="muted">

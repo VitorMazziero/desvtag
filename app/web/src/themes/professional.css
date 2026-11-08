@@ -25,3 +25,20 @@
   --motion-duration: 160ms;
   --motion-ease: linear;
 }
+
+/* ET27: optical compensation for this font family. */
+:root[data-theme="professional"] {
+  --text-heading: 1.8rem;
+  --text-subheading: 1.4rem;
+  --heading-weight: 600;
+}
+
+/* ET27 T04: work surfaces and scientific roles. */
+:root[data-theme="professional"] {
+  --color-rule: #b2a996;
+  --color-input: #fffefb;
+  --chart-series: #3d5578;
+  --chart-reference: #7e491b;
+  --chart-uncertainty: #8d8396;
+  --chart-grid: #ded7c9;
+}

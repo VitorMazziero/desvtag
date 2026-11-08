@@ -14,10 +14,24 @@ const projectFor: Record<string, object> = {
 
 export default defineConfig({
   testDir: "tests/e2e",
-  timeout: 30_000,
+  timeout: 60_000,
   fullyParallel: true,
   reporter: [["list"]],
-  use: { baseURL: "http://127.0.0.1:4173", trace: "retain-on-failure" },
+  use: {
+    baseURL: "http://127.0.0.1:4173",
+    trace: "retain-on-failure",
+    // Por padrão os testes veem todos os blocos e seções (como antes do percurso guiado, ET29);
+    // os testes do percurso guiado e da barra de seções ativa trocam a preferência para «0».
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: "http://127.0.0.1:4173",
+          localStorage: [{ name: "optima.showAllSections", value: "1" }],
+        },
+      ],
+    },
+  },
   webServer: {
     command: "npm run build && npm run preview -- --host 127.0.0.1",
     url: "http://127.0.0.1:4173",

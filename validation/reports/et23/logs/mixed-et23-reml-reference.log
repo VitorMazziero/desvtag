@@ -1,0 +1,22 @@
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+warning: field `blocks` is never read
+  --> crates\optima-core\src\models\mixed\estimation.rs:19:9
+   |
+15 | pub(super) struct Solution {
+   |                   -------- field in this struct
+...
+19 |     pub blocks: Vec<Block>,
+   |         ^^^^^^
+   |
+   = note: `Solution` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `optima-core` (lib test) generated 1 warning
+    Finished `test` profile [optimized + debuginfo] target(s) in 50.92s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_core-144d256b6bfbf868.exe)
+
+running 1 test
+test models::mixed::reference_tests::reml_covariances_equal_independent_dense_scipy ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 395 filtered out; finished in 0.24s
+

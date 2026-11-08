@@ -11,7 +11,10 @@ export function ResponseEditor() {
       {responses.length === 0 && <p className="muted">{t("variables.noResponses")}</p>}
       {responses.map((response, index) => (
         <fieldset key={response.id} className="editor-card">
-          <legend>{t("variables.responseHeading", { n: index + 1 })}</legend>
+          <legend>
+            {t("variables.responseHeading", { n: index + 1 })}
+            {response.name ? ` — ${response.name}` : ""}
+          </legend>
           <div className="form-grid">
             <label className="field">
               <span>{t("variables.name")}</span>
@@ -31,6 +34,9 @@ export function ResponseEditor() {
               <span>{t("variables.unit")}</span>
               <input
                 type="text"
+                aria-label={t("variables.unitOf", {
+                  name: response.name || t("variables.responseHeading", { n: index + 1 }),
+                })}
                 value={response.unit}
                 onChange={(e) =>
                   dispatch({
@@ -44,7 +50,7 @@ export function ResponseEditor() {
           </div>
           <button
             type="button"
-            className="button secondary"
+            className="button secondary small"
             onClick={() => dispatch({ type: "removeResponse", id: response.id })}
           >
             {t("variables.remove")}

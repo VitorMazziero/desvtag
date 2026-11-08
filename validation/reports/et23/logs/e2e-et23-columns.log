@@ -1,0 +1,23 @@
+
+Running 6 tests using 3 workers
+
+(node:2984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\et23-columns.spec.ts:97:1 › T02: a factor used as unit cannot merge distinct original labels (3.1s)
+(node:29528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\et23-columns.spec.ts:38:1 › T02: unit/time roles survive grid editing, table export and project reopening (4.5s)
+(node:27980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [firefox] › tests\e2e\et23-columns.spec.ts:97:1 › T02: a factor used as unit cannot merge distinct original labels (4.6s)
+(node:22380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [firefox] › tests\e2e\et23-columns.spec.ts:38:1 › T02: unit/time roles survive grid editing, table export and project reopening (8.9s)
+  ok 5 [webkit] › tests\e2e\et23-columns.spec.ts:38:1 › T02: unit/time roles survive grid editing, table export and project reopening (6.8s)
+  ok 6 [webkit] › tests\e2e\et23-columns.spec.ts:97:1 › T02: a factor used as unit cannot merge distinct original labels (3.5s)
+
+  6 passed (13.9s)

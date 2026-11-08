@@ -31,3 +31,7 @@ Grade simples sem virtualização: adequada às dezenas ou centenas de linhas do
 ## Testes
 
 `editing.test.ts` (leitura de números, colagem, reducer) e E2E (digitar, colar com vírgula decimal, célula vazia, erro e correção).
+
+### Extensão ET23 (em conferência)
+
+Tempo/ocasião tem papel próprio, texto bruto e visibilidade opcionais, entra na revisão/hash quando presente e pode ser importado/exportado. Unidade e tempo podem vir da coluna dedicada ou de fator; o mapeamento conserva identidades/rótulos sem colisões. A configuração v2 registra estrutura, tempo, interações, codificação, referências e ajustes; resultados guardam covariância/inferência, EMM e perfis sem recálculo na abertura. Figuras/tabelas e nomes dos comentários usam a origem histórica. [Ficha C14 e proprietários](c14-medidas-repetidas-avancadas.md), [evidências e limites](../../validation/reports/et23/README.md).

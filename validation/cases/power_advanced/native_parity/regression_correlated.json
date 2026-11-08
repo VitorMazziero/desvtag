@@ -1,0 +1,118 @@
+{
+  "request": {
+    "alpha": 0.05,
+    "design": {
+      "coefficients": [
+        0.45,
+        -0.25
+      ],
+      "predictors": [
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ]
+      ],
+      "type": "regression"
+    },
+    "goal": {
+      "n": 5,
+      "type": "powerAt"
+    },
+    "sigma": 1.2,
+    "simulation": {
+      "replications": 50000,
+      "seed": 20261104
+    },
+    "twoSided": true
+  },
+  "result": {
+    "critical": 3.4433567793667224,
+    "curve": [
+      {
+        "n": 1,
+        "power": 0.07842879935784307
+      },
+      {
+        "n": 2,
+        "power": 0.18802423221645329
+      },
+      {
+        "n": 3,
+        "power": 0.30645321905509815
+      },
+      {
+        "n": 4,
+        "power": 0.4219923912624462
+      },
+      {
+        "n": 5,
+        "power": 0.5283573830509782
+      },
+      {
+        "n": 6,
+        "power": 0.6221612370819045
+      },
+      {
+        "n": 7,
+        "power": 0.7021596927543665
+      },
+      {
+        "n": 8,
+        "power": 0.7685588485677987
+      },
+      {
+        "n": 9,
+        "power": 0.8224422932606589
+      },
+      {
+        "n": 10,
+        "power": 0.8653409041708902
+      }
+    ],
+    "df1": 2.0,
+    "df2": 22.0,
+    "halfWidth": {
+      "reason": "notApplicable",
+      "status": "undefined"
+    },
+    "issues": [],
+    "n": 5,
+    "noncentrality": 6.076388888888889,
+    "power": {
+      "status": "defined",
+      "value": 0.5283573830509782
+    },
+    "provenance": {
+      "engineVersion": "0.4.0-dev",
+      "methodId": "power_analysis",
+      "methodVersion": 2
+    },
+    "simulation": {
+      "algorithm": "pcg32-stream54/u32-midpoint/box-muller/marsaglia-tsang/gaussian-statistics-v1",
+      "ciLower": 0.5234021903143514,
+      "ciUpper": 0.5321535413845372,
+      "estimate": 0.52778,
+      "rejections": 26389,
+      "replications": 50000,
+      "seed": 20261104,
+      "standardError": 0.0022326140356093795
+    },
+    "total": 25
+  }
+}

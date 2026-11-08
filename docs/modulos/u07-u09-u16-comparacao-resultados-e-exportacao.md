@@ -54,3 +54,11 @@ Novo gráfico: função em `services/charts/` com `id` único, teste de SVG bem 
 ## 6. Testes e validação
 
 Testes unitários (gráficos, CSV, proteção contra fórmulas, pasta de trabalho, estilo das figuras), ida e volta do XLSX contra o importador do motor, verificação com openpyxl, E2E de exportação (XLSX, CSV Excel, relatório em inglês com interface em português, paleta) e E2E do percurso e do exemplo 01 em PT e EN (Chromium e Firefox) com download de CSV, SVG e PNG verificados byte a byte, axe em três temas, verificação do IPC nativo em Linux.
+
+## Extensão ET22 da v0.4
+
+Os campos opcionais `mixtureResult`, `mixedModelResult`, `nonlinearResult` e `powerResult` guardam configuração em edição e lista de registros com entradas, revisão, assinatura e proveniência. Leitores antigos continuam com a lista `analyses` existente; nenhuma variante desconhecida foi inserida nela. A validação usa as revisões históricas. Resultados guardados são consultáveis sem recálculo, com seções comuns, relatórios HTML/PDF/Word, tabelas CSV/XLSX e comentários vinculados ao registro selecionado. [Decisão e verificação](../decisoes-tecnicas/dt-0030-resultados-persistidos-das-familias.md).
+
+### Extensão ET23 (em conferência)
+
+Tempo/ocasião tem papel próprio, texto bruto e visibilidade opcionais, entra na revisão/hash quando presente e pode ser importado/exportado. Unidade e tempo podem vir da coluna dedicada ou de fator; o mapeamento conserva identidades/rótulos sem colisões. A configuração v2 registra estrutura, tempo, interações, codificação, referências e ajustes; resultados guardam covariância/inferência, EMM e perfis sem recálculo na abertura. Figuras/tabelas e nomes dos comentários usam a origem histórica. [Ficha C14 e proprietários](c14-medidas-repetidas-avancadas.md), [evidências e limites](../../validation/reports/et23/README.md).

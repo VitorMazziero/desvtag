@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { DRIVE_SCOPE, GOOGLE_WEB_CLIENT_ID } from "./config";
 import { WebDriveAuth } from "./webAuth";
 

@@ -1,0 +1,112 @@
+src\services\engine\repeated.parity.test.ts:95:31 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    93 │       expect(result.coefficients).toHaveLength(c.expected.beta.length);
+    94 │       result.coefficients.forEach((value, i) => {
+  > 95 │         close(value.estimate, c.expected.beta[i]!, 1e-5);
+       │                               ^^^^^^^^^^^^^^^^^^^
+    96 │       });
+    97 │       expect(extra.fixedCovariance).toHaveLength(c.expected.fixedCovariance.length);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\services\engine\repeated.parity.test.ts:99:33 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+     97 │       expect(extra.fixedCovariance).toHaveLength(c.expected.fixedCovariance.length);
+     98 │       extra.fixedCovariance.forEach((value, index) => {
+   > 99 │         expect(Math.abs(value - c.expected.fixedCovariance[index]!)).toBeLessThanOrEqual(3e-5);
+        │                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    100 │       });
+    101 │       const tests = c.expected.termTests ?? (c.expected.termTest ? [c.expected.termTest] : []);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+src\services\engine\repeated.parity.test.ts:121:41 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    119 │       expect(extra.marginalMeans).toHaveLength(c.expected.means.length);
+    120 │       extra.marginalMeans.forEach((value, i) => {
+  > 121 │         close(value.inference.estimate, c.expected.means[i]!.estimate, 1e-5);
+        │                                         ^^^^^^^^^^^^^^^^^^^^
+    122 │         if (value.inference.df.status !== "defined") throw new Error("Undefined df");
+    123 │         close(value.inference.df.value, c.expected.means[i]!.df);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    119 119 │         expect(extra.marginalMeans).toHaveLength(c.expected.means.length);
+    120 120 │         extra.marginalMeans.forEach((value, i) => {
+    121     │ - ········close(value.inference.estimate,·c.expected.means[i]!.estimate,·1e-5);
+        121 │ + ········close(value.inference.estimate,·c.expected.means[i]?.estimate,·1e-5);
+    122 122 │           if (value.inference.df.status !== "defined") throw new Error("Undefined df");
+    123 123 │           close(value.inference.df.value, c.expected.means[i]!.df);
+  
+
+src\services\engine\repeated.parity.test.ts:123:41 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    121 │         close(value.inference.estimate, c.expected.means[i]!.estimate, 1e-5);
+    122 │         if (value.inference.df.status !== "defined") throw new Error("Undefined df");
+  > 123 │         close(value.inference.df.value, c.expected.means[i]!.df);
+        │                                         ^^^^^^^^^^^^^^^^^^^^
+    124 │       });
+    125 │       expect(extra.comparisons).toHaveLength(c.expected.comparisons.length);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    121 121 │           close(value.inference.estimate, c.expected.means[i]!.estimate, 1e-5);
+    122 122 │           if (value.inference.df.status !== "defined") throw new Error("Undefined df");
+    123     │ - ········close(value.inference.df.value,·c.expected.means[i]!.df);
+        123 │ + ········close(value.inference.df.value,·c.expected.means[i]?.df);
+    124 124 │         });
+    125 125 │         expect(extra.comparisons).toHaveLength(c.expected.comparisons.length);
+  
+
+src\services\engine\repeated.parity.test.ts:128:43 lint/style/noNonNullAssertion  FIXABLE  ━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    126 │       extra.comparisons.forEach((value, i) => {
+    127 │         if (value.adjustedPValue.status !== "defined") throw new Error("Undefined adjusted p");
+  > 128 │         close(value.adjustedPValue.value, c.expected.comparisons[i]!.adjustedPValue);
+        │                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    129 │       });
+    130 │     }
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+  i Unsafe fix: Replace with optional chain operator ?. This operator includes runtime checks, so it is safer than the compile-only non-null assertion operator
+  
+    126 126 │         extra.comparisons.forEach((value, i) => {
+    127 127 │           if (value.adjustedPValue.status !== "defined") throw new Error("Undefined adjusted p");
+    128     │ - ········close(value.adjustedPValue.value,·c.expected.comparisons[i]!.adjustedPValue);
+        128 │ + ········close(value.adjustedPValue.value,·c.expected.comparisons[i]?.adjustedPValue);
+    129 129 │         });
+    130 130 │       }
+  
+
+Skipped 3 suggested fixes.
+If you wish to apply the suggested (unsafe) fixes, use the command biome check --write --unsafe
+
+Checked 1 file in 21ms. Fixed 1 file.
+Found 5 warnings.

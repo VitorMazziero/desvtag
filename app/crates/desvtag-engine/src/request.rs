@@ -1,0 +1,167 @@
+//! Solicitações da interface ao motor.
+
+use desvtag_core::comparisons::OneWayRequest;
+use desvtag_core::comparisons::paired::PairedRequest;
+use desvtag_core::comparisons::procedures::ProcedureRequest;
+use desvtag_core::descriptive::DescriptiveRequest;
+use desvtag_core::designs::analysis::DesignAnalysisRequest;
+use desvtag_core::designs::completely_randomized::CrdSpec;
+use desvtag_core::designs::mixed_levels::MixedSpec;
+use desvtag_core::designs::mixture::MixtureSpec;
+use desvtag_core::designs::optimal::OptimalSpec;
+use desvtag_core::designs::optimal::model::OptimalModelRequest;
+use desvtag_core::designs::optimal::variance::OptimalVarianceRequest;
+use desvtag_core::designs::randomized_block::RcbdSpec;
+use desvtag_core::designs::spec::DesignSpec;
+use desvtag_core::distributions::DistributionRequest;
+use desvtag_core::models::LinearModelRequest;
+use desvtag_core::models::factorial_anova::{FactorialGeometryRequest, FactorialRequest};
+use desvtag_core::models::mixed::MixedModelRequest;
+use desvtag_core::models::mixture::MixtureAnalysisRequest;
+use desvtag_core::models::nonlinear::NonlinearRequest;
+use desvtag_core::optimization::{
+    ConfirmationCompareRequest, EvaluateRequest, OptimizationGridRequest, OptimizationRequest,
+};
+use desvtag_core::power::PowerRequest;
+use desvtag_core::surface::{GridRequest, SurfaceRequest};
+use desvtag_project::ProjectDocument;
+use desvtag_project::xlsx_writer::ExportWorkbook;
+use serde::{Deserialize, Serialize};
+use ts_rs::TS;
+
+/// Versão do protocolo interface↔motor. Independente da versão do aplicativo
+/// e do esquema do projeto (DT-0002). Incrementar em mudança incompatível.
+pub const PROTOCOL_VERSION: u32 = 1;
+
+/// Operação solicitada. Cada etapa acrescenta suas variantes.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(tag = "type", rename_all = "camelCase")]
+#[ts(export)]
+pub enum Operation {
+    /// Versões e capacidades do motor (`engine.info`).
+    EngineInfo,
+    /// Resumo descritivo de uma resposta, geral e por grupo (`descriptive.summarize`).
+    DescriptiveSummarize(DescriptiveRequest),
+    /// Opções de planejamento para um número de fatores e um orçamento de ensaios (`design.recommend`).
+    DesignRecommend(DesignRecommendRequest),
+    /// Conta os ensaios de um planejamento de dois níveis sem gerá-lo (`design.count`).
+    DesignCount(DesignSpec),
+    /// Gera um planejamento de dois níveis (`design.generate`).
+    DesignGenerate(DesignSpec),
+    /// Gera um delineamento inteiramente casualizado de um fator categórico (`design.crdGenerate`).
+    DesignCrdGenerate(CrdSpec),
+    /// Gera um delineamento em blocos completos casualizados (`design.rcbdGenerate`).
+    DesignRcbdGenerate(RcbdSpec),
+    /// Gera um fatorial completo de níveis mistos (`design.mixedGenerate`).
+    DesignMixedGenerate(MixedSpec),
+    /// Gera um planejamento de misturas (`design.mixtureGenerate`).
+    DesignMixtureGenerate(MixtureSpec),
+    /// Ajusta um modelo de Scheffé (`mixture.analyze`).
+    MixtureAnalyze(Box<MixtureAnalysisRequest>),
+    /// Gera um planejamento D ou I-ótimo (`design.optimalGenerate`).
+    DesignOptimalGenerate(OptimalSpec),
+    /// Fits the exact mixed nominal/numeric optimal model with the shared QR engine.
+    DesignOptimalAnalyze(Box<OptimalModelRequest>),
+    /// Avalia a variância geométrica de um desenho explícito, sem nova busca.
+    DesignOptimalVariance(Box<OptimalVarianceRequest>),
+    /// Compara duas condições pareadas: t pareado e Wilcoxon (`comparison.paired`).
+    ComparisonPaired(PairedRequest),
+    /// Ajusta um modelo linear misto com intercepto aleatório por unidade (`model.mixed`).
+    ModelMixed(Box<MixedModelRequest>),
+    /// Ajusta um modelo de saturação não linear (`model.nonlinear`).
+    ModelNonlinear(Box<NonlinearRequest>),
+    /// Potência, tamanho de amostra e precisão (`power.analyze`).
+    PowerAnalyze(Box<PowerRequest>),
+    /// Analisa um planejamento de dois níveis: efeitos, curvatura, Lenth e gráficos (`design.analyze`).
+    DesignAnalyze(Box<DesignAnalysisRequest>),
+    /// Analisa uma superfície de resposta de segunda ordem (`surface.analyze`).
+    SurfaceAnalyze(Box<SurfaceRequest>),
+    /// Malha de predições e curvas de nível da superfície (`surface.grid`).
+    SurfaceGrid(Box<GridRequest>),
+    /// Escreve tabelas como arquivo XLSX (`export.xlsx`).
+    ExportXlsx(ExportWorkbook),
+    /// Otimização por desejabilidade de uma ou várias respostas (`optimization.run`).
+    OptimizationRun(Box<OptimizationRequest>),
+    /// Previsões e desejabilidade em condições dadas (`optimization.evaluate`).
+    OptimizationEvaluate(Box<EvaluateRequest>),
+    /// Conferência de observado − previsto, sem reajustar o modelo.
+    ConfirmationCompare(ConfirmationCompareRequest),
+    /// Desejabilidade global sobre dois fatores (`optimization.grid`).
+    OptimizationGrid(Box<OptimizationGridRequest>),
+    /// Comparação de tratamentos de um fator: ANOVA, Tukey, letras e diagnósticos (`comparison.oneWay`).
+    ComparisonOneWay(OneWayRequest),
+    /// Procedimentos de comparação múltipla: Games–Howell, Dunnett, Bonferroni, Holm e Kruskal–Wallis/Dunn (`comparison.procedure`).
+    ComparisonProcedure(ProcedureRequest),
+    /// ANOVA multifatorial com blocos, médias marginais e contrastes (`anova.factorial`).
+    AnovaFactorial(Box<FactorialRequest>),
+    /// Sum-coded model geometry before or after response collection; no inference or search.
+    AnovaFactorialGeometry(Box<FactorialGeometryRequest>),
+    /// Métricas de comparação e sequência de eliminação regressiva de termos (`surface.selectModel`).
+    SurfaceSelectModel(Box<SurfaceRequest>),
+    /// Métricas de comparação e eliminação regressiva de termos de planejamentos de dois níveis (`design.selectModel`).
+    DesignSelectModel(Box<DesignAnalysisRequest>),
+    /// Avaliação em lote de `cdf`, cauda superior e quantis (`distribution.evaluate`).
+    DistributionEvaluate(DistributionRequest),
+    /// Ajuste de modelo linear com ANOVA, intervalos e diagnósticos (`model.fitLinear`).
+    ModelFitLinear(Box<LinearModelRequest>),
+    /// Codifica um documento de projeto em bytes `.enzitag` (`project.encode`).
+    ProjectEncode(ProjectEncodeRequest),
+    /// Lê bytes `.enzitag` e devolve o documento no esquema atual (`project.decode`).
+    ProjectDecode(BytesRequest),
+    /// Lê os valores armazenados de uma planilha XLSX como texto (`import.xlsx`).
+    ImportXlsx(ImportXlsxRequest),
+}
+
+/// Pedido de opções de planejamento.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct DesignRecommendRequest {
+    /// Número de fatores.
+    pub factors: u32,
+    /// Orçamento de ensaios do planejamento básico, se houver.
+    pub max_runs: Option<u32>,
+}
+
+/// Pedido de codificação de projeto.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct ProjectEncodeRequest {
+    /// Documento a codificar.
+    pub document: ProjectDocument,
+}
+
+/// Pedido que carrega bytes (em base64, para trafegar em JSON).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct BytesRequest {
+    /// Conteúdo do arquivo em base64.
+    pub bytes_base64: String,
+}
+
+/// Pedido de leitura de planilha.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct ImportXlsxRequest {
+    /// Conteúdo do arquivo em base64.
+    pub bytes_base64: String,
+    /// Planilha a ler; ausente: a primeira.
+    pub sheet: Option<String>,
+}
+
+/// Solicitação com identificador de tarefa. A interface descarta respostas
+/// cujo `task_id` não seja o mais recente da sua categoria.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export)]
+pub struct EngineRequest {
+    /// Versão do protocolo usada pelo cliente.
+    pub protocol_version: u32,
+    /// Identificador da tarefa, devolvido na resposta.
+    pub task_id: String,
+    /// Operação.
+    pub operation: Operation,
+}

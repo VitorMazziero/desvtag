@@ -130,7 +130,7 @@ Somente a conversão decimal→binário descrita acima.
 
 ## Execução
 
-Ver `app/crates/optima-core/tests/descriptive_validation.rs` (nativo) e `app/web/src/services/engine/descriptive.parity.test.ts` (WebAssembly).
+Ver `app/crates/desvtag-core/tests/descriptive_validation.rs` (nativo) e `app/web/src/services/engine/descriptive.parity.test.ts` (WebAssembly).
 """,
             encoding="utf-8",
         )

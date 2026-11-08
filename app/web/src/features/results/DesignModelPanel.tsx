@@ -168,8 +168,10 @@ export function DesignModelPanel({
   return (
     <section className="panel" aria-labelledby="model-panel-title" data-testid="model-panel">
       <h3 id="model-panel-title">{t("design.model.title")}</h3>
-      <p className="muted small">{t("design.model.intro")}</p>
-      <fieldset disabled={busy} className="editor-card">
+      <p className="muted small" data-report-skip>
+        {t("design.model.intro")}
+      </p>
+      <fieldset data-report-skip disabled={busy} className="editor-card">
         <legend>{t("design.model.terms")}</legend>
         <ul className="facts-list term-toggles">
           {all.map((term) => {
@@ -222,6 +224,16 @@ export function DesignModelPanel({
       </fieldset>
       {problems.length > 0 && <ProblemList problems={problems} />}
 
+      <p data-testid="final-model">
+        {t("model.finalTerms", {
+          terms: currentTerms.map((term) => termLabel(term, nameOf)).join(" + "),
+          removed:
+            all
+              .filter((term) => !currentTerms.some((current) => termKey(current) === termKey(term)))
+              .map((term) => termLabel(term, nameOf))
+              .join(", ") || "—",
+        })}
+      </p>
       <div className="grid-scroll">
         <table className="results-table" data-testid="model-compare">
           <caption>{t("model.compareCaption")}</caption>

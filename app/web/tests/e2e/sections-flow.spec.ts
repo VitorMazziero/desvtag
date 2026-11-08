@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { startObjective } from "./startObjective";
 
 // Resultados em seções com barra lateral e seleção de modelos (ET11), com o motor WASM real.
 
@@ -23,7 +24,13 @@ const parameters = (page: Page, column: number) =>
     .nth(column)
     .textContent();
 
-test.use({ locale: "pt-BR", acceptDownloads: true });
+// Estes testes verificam o comportamento PADRÃO da barra de seções (uma seção por vez): partem do
+// armazenamento vazio, sem a preferência «mostrar tudo» que os demais testes recebem da configuração.
+test.use({
+  locale: "pt-BR",
+  acceptDownloads: true,
+  storageState: { cookies: [], origins: [] },
+});
 
 test.describe("resultados em seções", () => {
   test("barra lateral: uma seção por vez, exportação por último, teclado e mostrar tudo", async ({
@@ -69,11 +76,14 @@ test.describe("resultados em seções", () => {
 
   test("seleção de modelos: desligar um termo recalcula e a recomendação é aplicável e reversível", async ({
     page,
-  }) => {
+  }, info) => {
     await openExample(page);
     await page.getByTestId("section-model").click();
     const panel = page.getByTestId("model-panel");
     await expect(panel).toBeVisible();
+    await expect(page.getByTestId("model-compare")).toHaveCount(0);
+    await panel.screenshot({ path: info.outputPath("comparacao-sob-demanda.png") });
+    await panel.getByTestId("model-compare-action").click();
     await expect(page.getByTestId("model-compare")).toBeVisible();
     const full = Number(await parameters(page, 0));
     expect(Number(await parameters(page, 1))).toBe(full);
@@ -81,7 +91,9 @@ test.describe("resultados em seções", () => {
     // Desliga um termo (qualquer quadrático): o modelo atual passa a ter um parâmetro a menos
     // e a tabela de termos acompanha.
     const rowsBefore = await page.getByTestId("surface-terms").locator("tbody tr").count();
-    await panel.getByRole("checkbox", { name: /²/ }).first().uncheck();
+    await panel.getByRole("checkbox", { name: /²/ }).first().click();
+    await expect(page.getByTestId("section-summary")).toHaveAttribute("aria-current", "page");
+    await page.getByTestId("section-model").click();
     await expect.poll(async () => Number(await parameters(page, 1))).toBe(full - 1);
     await expect(page.getByTestId("surface-terms").locator("tbody tr")).toHaveCount(rowsBefore - 1);
 
@@ -92,6 +104,8 @@ test.describe("resultados em seções", () => {
 
     // Voltar ao modelo completo restaura os termos.
     await panel.getByRole("button", { name: "Voltar ao modelo completo" }).click();
+    await expect(page.getByTestId("section-summary")).toHaveAttribute("aria-current", "page");
+    await page.getByTestId("section-model").click();
     await expect.poll(async () => Number(await parameters(page, 1))).toBe(full);
     await expect(page.getByTestId("surface-terms").locator("tbody tr")).toHaveCount(rowsBefore);
 
@@ -100,6 +114,8 @@ test.describe("resultados em seções", () => {
     if (await apply.isEnabled()) {
       const recommended = await parameters(page, 2);
       await apply.click();
+      await expect(page.getByTestId("section-summary")).toHaveAttribute("aria-current", "page");
+      await page.getByTestId("section-model").click();
       await expect.poll(async () => await parameters(page, 1)).toBe(recommended);
     }
   });
@@ -110,10 +126,14 @@ test("comparação de um fator em seções: resumo primeiro, gráficos à parte 
 }) => {
   test.setTimeout(120_000);
   await page.goto("/");
-  await page.getByRole("radio", { name: /Comparar tratamentos/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "compare");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(0).fill("Condição");
+  // Percurso guiado: as respostas ficam no bloco seguinte («Seguir»).
+  await expect(page.getByTestId("variables-blocks")).toHaveAttribute("data-mode", "guided");
+  await expect(page.getByRole("button", { name: "Adicionar resposta" })).toBeHidden();
+  await page.getByTestId("variables-blocks-next").click();
+  await expect(page.getByRole("button", { name: "Adicionar fator" })).toBeHidden();
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
   await page.getByRole("button", { name: "Avançar" }).click();
@@ -134,7 +154,9 @@ test("comparação de um fator em seções: resumo primeiro, gráficos à parte 
     rows.map(([l, v]) => `${l}\t${String(v).replace(".", ",")}`).join("\n"),
   );
   await page.getByRole("button", { name: "Avançar" }).click();
+  await page.getByTestId("analysis-factor-analysis-factor").click();
   await page.getByLabel("Fator que define os grupos").selectOption({ label: "Condição" });
+  await page.getByTestId("analysis-run-analysis-run").click();
   await page.getByRole("button", { name: "Comparar tratamentos" }).click();
 
   const nav = page.getByRole("navigation", { name: "Seções dos resultados" });
@@ -153,7 +175,14 @@ test("comparação de um fator em seções: resumo primeiro, gráficos à parte 
   await page.getByTestId("section-export").click();
   await expect(page.getByTestId("report-pdf-button")).toBeVisible();
   // A seção ativa fica lembrada no dispositivo (vale ao recarregar a página).
-  expect(await page.evaluate(() => localStorage.getItem("optima.activeSection"))).toBe("export");
+  expect(
+    await page.evaluate(() =>
+      Object.keys(sessionStorage).some(
+        (key) =>
+          key.startsWith("optima.activeSection.") && sessionStorage.getItem(key) === "export",
+      ),
+    ),
+  ).toBe(true);
 });
 
 test("um modelo por resposta: cada resposta guarda o seu e a troca é imediata", async ({
@@ -169,14 +198,19 @@ test("um modelo por resposta: cada resposta guarda o seu e a troca é imediata",
   await (await chooser).setFiles(kla);
   await expect(page.getByTestId("results-layout")).toBeVisible();
   await page.getByTestId("section-model").click();
+  await page.getByTestId("model-compare-action").click();
   const select = page.getByTestId("model-response");
   await expect(select).toHaveValue("r1");
   // kLa guarda o modelo recomendado (intercepto, RPM, aeração e RPM²): 4 parâmetros.
   await expect.poll(async () => Number(await parameters(page, 1))).toBe(4);
   // A potência ainda não tem modelo escolhido: usa o completo (6 parâmetros).
   await select.selectOption({ label: "Potência" });
+  await expect(page.getByTestId("section-summary")).toHaveAttribute("aria-current", "page");
+  await page.getByTestId("section-model").click();
   await expect.poll(async () => Number(await parameters(page, 1))).toBe(6);
   // Voltar ao kLa traz o modelo reduzido de novo.
   await select.selectOption({ label: "kLa" });
+  await expect(page.getByTestId("section-summary")).toHaveAttribute("aria-current", "page");
+  await page.getByTestId("section-model").click();
   await expect.poll(async () => Number(await parameters(page, 1))).toBe(4);
 });

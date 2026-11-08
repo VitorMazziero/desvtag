@@ -169,3 +169,21 @@ describe("optimization state", () => {
     expect(new Set(created?.revisions.map((r) => r.id)).size).toBe(created?.revisions.length);
   });
 });
+
+it("confirmation rows keep block coordinates and respect the requested numeric factor order", () => {
+  const state = sample();
+  const first = state.factors[0],
+    second = state.factors[1];
+  if (!first || !second) throw new Error("factors");
+  state.factors = [
+    first,
+    { id: "block", name: "Etapa", kind: "categorical", unit: "", levelsText: "Dia 1;Dia 2" },
+    second,
+  ];
+  state.analysis.surfaceBlock = { factorId: "block", reference: "Dia 2" };
+  expect(confirmationRows(state, [[7, 31]], 1, [second.id, first.id])[0]?.factors).toEqual([
+    "31",
+    "Dia 2",
+    "7",
+  ]);
+});

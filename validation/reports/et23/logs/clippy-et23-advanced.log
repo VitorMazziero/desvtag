@@ -1,0 +1,51 @@
+    Checking optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+warning: this `if` statement can be collapsed
+   --> crates\optima-core\src\models\mixed\estimation.rs:128:13
+    |
+128 | /             if let Some(optimum) = minimize(&objective, &initial, 400).filter(|o| o.converged) {
+129 | |                 if let Some(solution) = evaluate(data, structure, &optimum.theta, boundary) {
+130 | |                     candidates.push(Fit {
+131 | |                         optimum,
+...   |
+136 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#collapsible_if
+    = note: `-W clippy::collapsible-if` implied by `-W clippy::all`
+    = help: to override `-W clippy::all` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+128 ~             if let Some(optimum) = minimize(&objective, &initial, 400).filter(|o| o.converged)
+129 ~                 && let Some(solution) = evaluate(data, structure, &optimum.theta, boundary) {
+130 |                     candidates.push(Fit {
+...
+134 |                     });
+135 ~                 }
+    |
+
+warning: this `if` statement can be collapsed
+   --> crates\optima-core\src\models\mixed\estimation.rs:142:5
+    |
+142 | /     if structure != Structure::Unstructured {
+143 | |         if let Some(zero) = candidates
+144 | |             .into_iter()
+145 | |             .find(|c| c.boundary && c.optimum.value <= best.optimum.value + 1e-7)
+...   |
+149 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+142 ~     if structure != Structure::Unstructured
+143 ~         && let Some(zero) = candidates
+144 |             .into_iter()
+...
+147 |             return Some(zero);
+148 ~         }
+    |
+
+warning: `optima-core` (lib) generated 2 warnings (run `cargo clippy --fix --lib -p optima-core -- ` to apply 2 suggestions)
+    Checking optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+warning: `optima-core` (lib test) generated 2 warnings (2 duplicates)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 19.75s

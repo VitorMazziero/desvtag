@@ -1,4 +1,4 @@
-# P01–P03 — Documento do projeto, arquivo `.enzitag` e migrações
+# P01–P03 — Documento do projeto, contêiner e migrações
 
 **Estado:** implementado; formato validado contra arquivos escritos por Python (Rust, WebAssembly e IPC nativo); migração real inexistente (esquema 1) · **Atualizado em:** 2026-11-01
 
@@ -9,11 +9,11 @@
 | Etapa de criação | ET01 (documento mínimo), ET03 (completo) |
 | Depende de | C01 (`StableId`, `FactorKind`), C05 (`DescriptiveResult`) |
 | Consumido por | E01 (operações `projectEncode`, `projectDecode`, `importXlsx`) |
-| Especificação | [Formato `.enzitag`](../arquitetura/formato-enzitag.md) · [DT-0008](../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md) |
+| Especificação | [Formato do projeto](../arquitetura/formato-enzitag.md) · [DT-0008](../decisoes-tecnicas/dt-0008-formato-enzitag-versoes-recuperacao.md) |
 
 ## 1. Responsabilidade
 
-Definir o **documento** (experimentos, revisões imutáveis, análises vinculadas), **codificá-lo e lê-lo** como bytes `.enzitag` com integridade e limites, e **migrar** versões de esquema. Nunca abre arquivos do sistema: recebe e devolve bytes. Não calcula estatística.
+Definir o **documento** (experimentos, revisões imutáveis, análises vinculadas), **codificá-lo e lê-lo** como contêiner ZIP com integridade e limites, e **migrar** versões de esquema. Nunca abre arquivos do sistema: recebe e devolve bytes. Não calcula estatística.
 
 ## 2. Arquivos
 
@@ -48,3 +48,11 @@ Definir o **documento** (experimentos, revisões imutáveis, análises vinculada
 - Mudança incompatível do documento: incrementar `SCHEMA_VERSION`, escrever `vN_to_vM` em `migrations/`, **manter** um arquivo da versão antiga em `validation/cases/project_file/` e atualizar a [especificação](../arquitetura/formato-enzitag.md).
 - Novo diagnóstico: código em `archive.rs`/`document.rs`, mensagens PT/EN em `diagnostics.json`.
 - Testes: `cargo test -p optima-project`; `npm test` (paridade WASM); `native-smoke.mjs`/`native-cdp.mjs` (IPC).
+
+## Extensão ET22 da v0.4
+
+Os campos opcionais `mixtureResult`, `mixedModelResult`, `nonlinearResult` e `powerResult` guardam configuração em edição e lista de registros com entradas, revisão, assinatura e proveniência. Leitores antigos continuam com a lista `analyses` existente; nenhuma variante desconhecida foi inserida nela. A validação usa as revisões históricas. Resultados guardados são consultáveis sem recálculo, com seções comuns, relatórios HTML/PDF/Word, tabelas CSV/XLSX e comentários vinculados ao registro selecionado. [Decisão e verificação](../decisoes-tecnicas/dt-0030-resultados-persistidos-das-familias.md).
+
+### Extensão ET23 (em conferência)
+
+Tempo/ocasião tem papel próprio, texto bruto e visibilidade opcionais, entra na revisão/hash quando presente e pode ser importado/exportado. Unidade e tempo podem vir da coluna dedicada ou de fator; o mapeamento conserva identidades/rótulos sem colisões. A configuração v2 registra estrutura, tempo, interações, codificação, referências e ajustes; resultados guardam covariância/inferência, EMM e perfis sem recálculo na abertura. Figuras/tabelas e nomes dos comentários usam a origem histórica. [Ficha C14 e proprietários](c14-medidas-repetidas-avancadas.md), [evidências e limites](../../validation/reports/et23/README.md).

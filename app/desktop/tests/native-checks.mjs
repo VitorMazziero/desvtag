@@ -1,9 +1,11 @@
 // Verificações do aplicativo nativo, independentes do mecanismo de automação (WebDriver no
 // Linux, CDP no Windows). Recebem funções para ler o texto de um elemento e para chamar o IPC.
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = (p) => resolve(import.meta.dirname, "../../..", p);
+const expectedVersion = JSON.parse(readFileSync(root("app/web/package.json"), "utf8")).version;
 
 /**
  * @param {{ text: (testId: string) => Promise<string>, invoke: (requestJson: string) => Promise<string> }} io
@@ -20,7 +22,8 @@ export async function runChecks({ text, invoke }) {
   const environment = await text("engine-environment");
   const protocol = await text("engine-protocol");
   console.log({ version, protocol, environment });
-  if (version !== "0.3.0" || protocol !== "1") throw new Error("Versões inesperadas do motor");
+  if (version !== expectedVersion || protocol !== "1")
+    throw new Error(`Motor informou versão ${version} e protocolo ${protocol}. Esperado ${expectedVersion}, protocolo 1.`);
   if (!/Tauri|nativo|native/i.test(environment)) throw new Error("Ambiente não é o nativo Tauri");
   console.log("OK: interface obteve engine.info do motor nativo via comando Tauri.");
 
@@ -55,6 +58,19 @@ export async function runChecks({ text, invoke }) {
   if (decoded.outcome?.status !== "ok") throw new Error(`Falha ao ler o .enzitag: ${JSON.stringify(decoded)}`);
   if (JSON.stringify(decoded.outcome.result.document) !== JSON.stringify(expected)) throw new Error("Documento nativo difere do esperado");
   console.log("OK: arquivo .enzitag escrito em Python lido pelo motor nativo (", decoded.outcome.result.document.name, ").");
+
+  // ET22: exactly the same native-written family archives are checked by the WASM test.
+  const familyDir = root("validation/cases/project_file/families");
+  for (const file of readdirSync(familyDir).filter((name) => name.endsWith(".enzitag"))) {
+    const bytes = readFileSync(resolve(familyDir,file));
+    const decoded = JSON.parse(await invoke(decode(`native-family-${file}`,bytes)));
+    if (decoded.outcome?.status !== "ok") throw new Error(`Native family decode: ${file}`);
+    const expected = JSON.parse(readFileSync(resolve(familyDir,file.replace(".enzitag",".json")),"utf8"));
+    if (JSON.stringify(decoded.outcome.result.document) !== JSON.stringify(expected)) throw new Error(`Native family fields changed: ${file}`);
+    const encoded = JSON.parse(await invoke(JSON.stringify({ protocolVersion: 1, taskId: `native-family-encode-${file}`, operation: { type: "projectEncode", document: decoded.outcome.result.document } })));
+    if (encoded.outcome?.result?.sha256 !== createHash("sha256").update(bytes).digest("hex")) throw new Error(`Native family SHA-256 mismatch: ${file}`);
+  }
+  console.log("OK: ET22 optional families and historical references round-trip with identical native/WASM archive SHA-256.");
 
   // Arquivo adulterado é recusado com o código esperado, sem exceção.
   const tampered = readFileSync(root("validation/cases/project_file/003-tampered.enzitag"));
@@ -645,16 +661,45 @@ export async function runChecks({ text, invoke }) {
           observations: c.real.map((row, i) => ({ id: `o${i + 1}`, unitId: null, factors: row, responses: [c.y[i]] })),
         },
         responseId: "y",
-        spec: { kind: { type: "fullFactorial" }, factors: designFactors, replicates: 1, centerPoints: 0, randomize: false, seed: 1 },
-        terms: [],
+        spec: {
+          kind:
+            c.kind?.type === "fractional"
+              ? { type: "fractional", generators: c.kind.generators }
+              : c.kind?.type === "plackett_burman"
+                ? { type: "plackettBurman", runs: c.kind.runs }
+                : { type: "fullFactorial" },
+          factors: designFactors, replicates: 1, centerPoints: 0, randomize: false, seed: 1,
+        },
+        // Modelo de partida opcional (triagem só com efeitos principais): [tipo, fator, fator].
+        terms: (c.start ?? []).map(([type, a, b]) =>
+          type === "main"
+            ? { type: "main", factorId: `f${a + 1}` }
+            : { type: "interaction", factorIds: [`f${a + 1}`, `f${b + 1}`] },
+        ),
         alpha: c.alpha,
         includeCurvature: c.curvature,
       });
       if (got.steps.length !== c.steps.length) throw new Error(`Seleção ${index}: passos ${got.steps.length} ≠ ${c.steps.length}`);
-      for (const [i, step] of got.steps.entries()) near(val(step.metrics.aic), c.steps[i].metrics.aic, 1e-10, 1e-8, `AIC ${index}.${i}`);
+      for (const [i, step] of got.steps.entries()) {
+        near(val(step.metrics.aic), c.steps[i].metrics.aic, 1e-10, 1e-8, `AIC ${index}.${i}`);
+        // PRESS indefinido (alavanca 1) vem como null na referência e como estado indefinido no motor.
+        if (c.steps[i].metrics.press === null) {
+          if (step.metrics.press.status !== "undefined") throw new Error(`Seleção ${index}.${i}: PRESS deveria ser indefinido`);
+        } else near(val(step.metrics.press), c.steps[i].metrics.press, 1e-8, 1e-10, `PRESS ${index}.${i}`);
+      }
       if (got.stoppedBecause !== c.stopped) throw new Error(`Seleção ${index}: parada ${got.stoppedBecause} ≠ ${c.stopped}`);
     }
     console.log("OK: seleção de modelos de dois níveis igual ao statsmodels no motor nativo.");
+  }
+
+  {
+    const response=JSON.parse(await invoke(JSON.stringify({protocolVersion:1,taskId:"native-confirmation",operation:{type:"confirmationCompare",observations:[
+      {rowId:"o1",responseId:"r1",predicted:10,lower:8,upper:12,observed:11.5},
+      {rowId:"o2",responseId:"r1",predicted:10,lower:8,upper:12,observed:null},
+    ]}})));
+    const comparisons=response.outcome?.result?.comparisons;
+    if(response.outcome?.result?.type!=="confirmationCompare"||comparisons?.[0]?.difference?.value!==1.5||comparisons[0].status!=="within"||comparisons[1].difference.status!=="undefined"||comparisons[1].status!=="missing") throw new Error("Conferência de confirmação nativa divergiu do caso exato.");
+    console.log("OK: confirmação no motor nativo: diferença 1,5, limites inclusivos e observação ausente explícita.");
   }
 
   // Reabertura cruzada: os projetos de exemplo foram escritos pelo motor WebAssembly (navegador) e
@@ -671,13 +716,14 @@ export async function runChecks({ text, invoke }) {
       if (reply.outcome?.status !== "ok" || !doc?.experiments?.length)
         throw new Error(`Exemplo ${folder.name} não abriu no motor nativo: ${JSON.stringify(reply.outcome).slice(0, 300)}`);
       if (reply.outcome.result.migratedFrom !== null) throw new Error(`Exemplo ${folder.name}: migração inesperada`);
-      // Os exemplos 01 a 06 trazem análises guardadas (reabrir não recalcula); a partir do 07 as análises
-      // são calculadas ao pedir (limitação da v0.3), então basta abrir sem migração nem avisos.
+      // Legacy and new-family examples retain their calculated records without recalculation.
       const legacy = Number(folder.name.slice(0, 2)) <= 6;
+      const expectedFamily = ({ "07": "mixtureResult", "08": "nonlinearResult", "11": "mixedModelResult", "12": "powerResult", "15": "mixedModelResult" })[folder.name.slice(0,2)];
+      if (expectedFamily && !doc.experiments.some((e) => e[expectedFamily]?.records?.length > 0)) throw new Error(`Example ${folder.name}: missing saved family`);
       if (legacy && !doc.experiments.some((e) => e.analyses?.length > 0)) throw new Error(`Exemplo ${folder.name}: sem análise guardada`);
       opened += 1;
     }
     if (opened < 4) throw new Error(`Esperava abrir os 4 exemplos, abriu ${opened}`);
-    console.log(`OK: ${opened} projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo; os de 01 a 06 com análises guardadas.`);
+    console.log(`OK: ${opened} projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo; os de 01 a 06 e 07/08/11/12/15 com análises guardadas.`);
   }
 }

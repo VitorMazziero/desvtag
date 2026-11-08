@@ -4,12 +4,12 @@
 
 A resposta verdadeira é `Rendimento = 10·Água + 20·Etanol + 30·Glicerol + 25·Água·Etanol` mais uma perturbação fixa e pequena (`app/web/scripts/make-example-v03.mjs`).
 
-Arquivos: [`projeto.enzitag`](projeto.enzitag) (planejamento e dados) e [`ensaios.csv`](ensaios.csv). A análise de misturas é calculada ao pedir e **não é guardada no projeto**.
+Arquivos: [`projeto.enzitag`](projeto.enzitag) (planejamento e dados) e [`ensaios.csv`](ensaios.csv). O projeto já contém o modelo quadrático e seu resultado, incluindo o gráfico ternário e a revisão usada.
 
 ## Como reproduzir
 
 1. Abra `projeto.enzitag`.
-2. Na análise de misturas, escolha o modelo **quadrático** e use **Ajustar modelo**.
+2. O resultado guardado abre sem cálculo. Para refazer, volte à etapa **Análise**, escolha o modelo **quadrático** e use **Ajustar modelo**.
 
 ## Resultado esperado
 
@@ -29,3 +29,5 @@ As duas interações que não existem na função verdadeira (Água·Glicerol e 
 ## Limites
 
 Só limites inferiores nos componentes; sem otimização no simplex ([método](../../docs/metodos/misturas.md)).
+
+Atualização da ET22: resultados gravados pelo aplicativo real e WASM por `app/web/scripts/save-example-families.mjs`; as referências independentes acima e os dados sintéticos foram preservados. Alterar entradas marca o registro como desatualizado, sem trocar seus rótulos/unidades.

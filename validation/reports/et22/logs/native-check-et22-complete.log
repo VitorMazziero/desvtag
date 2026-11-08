@@ -1,0 +1,46 @@
+Página: about:blank
+{
+  version: '0.4.0-dev',
+  protocol: '1',
+  environment: 'Aplicativo desktop (Tauri, motor nativo)'
+}
+OK: interface obteve engine.info do motor nativo via comando Tauri.
+{
+  taskId: 'native-descriptive',
+  mean: { status: 'defined', value: 5 },
+  variance: { status: 'defined', value: 4.571428571428571 }
+}
+OK: estatística descritiva calculada pelo motor nativo via IPC do Tauri.
+OK: arquivo .enzitag escrito em Python lido pelo motor nativo ( Projeto de referência — açúcar, ß, 日本 ).
+OK: ET22 optional families and historical references round-trip with identical native/WASM archive SHA-256.
+OK: arquivo adulterado recusado com project.integrity_failed.
+OK: planilha XLSX lida pelo motor nativo.
+OK: regressão linear (NIST Norris) calculada pelo motor nativo via IPC do Tauri.
+OK: distribuição t avaliada pelo motor nativo via IPC do Tauri.
+OK: ANOVA, Tukey e letras calculados pelo motor nativo via IPC do Tauri. c,b,a,b
+OK: planejamento aleatorizado igual à referência independente via IPC do Tauri. 19 ensaios
+OK: efeitos e valores-p do planejamento 2³ calculados pelo motor nativo via IPC do Tauri.
+OK: composto central, ajuste de superfície, falta de ajuste e malha calculados pelo motor nativo via IPC do Tauri.
+OK: otimização por desejabilidade (busca com semente) calculada pelo motor nativo via IPC do Tauri. D = 0.538089
+OK: XLSX exportado pelo motor nativo via IPC do Tauri e relido (texto de fórmula preservado como texto).
+OK: DIC aleatorizado (6 casos) idêntico à implementação independente no motor nativo via IPC do Tauri.
+OK: projeto com DIC e personalização por figura codificado e relido pelo motor nativo; bytes idênticos aos do WebAssembly.
+OK: 6 procedimentos de comparação múltipla (Games–Howell, Bonferroni, Holm, Dunnett, Kruskal–Wallis/Dunn) iguais às referências independentes no motor nativo.
+OK: ANOVA multifatorial com blocos (6 casos, tipos I, II e III) igual ao statsmodels no motor nativo.
+OK: DBC aleatorizado (4 casos com semente representável em JavaScript) idêntico à implementação independente no motor nativo.
+OK: níveis mistos (5 casos) idênticos à implementação independente no motor nativo.
+OK: planejamento D e I-ótimo iguais ao ótimo conhecido e à busca exaustiva no motor nativo.
+OK: t pareado e Wilcoxon iguais ao SciPy no motor nativo.
+OK: potência (F e t não centrais) e ajuste não linear iguais ao SciPy no motor nativo.
+OK: seleção de modelos de dois níveis igual ao statsmodels no motor nativo.
+OK: confirmação no motor nativo: diferença 1,5, limites inclusivos e observação ausente explícita.
+OK: 12 projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo; os de 01 a 06 e 07/08/11/12 com análises guardadas.
+OK: PDF da figura gerado no aplicativo nativo (experimento-1-atividade-medias.pdf, 22348 bytes).
+OK: PDF do relatório gerado no aplicativo nativo (experimento-1-relatorio.pdf, 90341 bytes).
+ET27 header after language change: EnziTAG OptimaExperimental design, statistics and optimizationLanguagePortuguês (Brasil)EnglishThemeSoft LightModern DarkProfessionalIndustrialOrganicClayExtrasTools outside the experimental-design workflow.Power and sample-size calculatorSaturation curves (Monod, Haldane, Hill)About and updatesInterface: 0.4.0-devBuild (commit): ee93c060c93e+dirtyVersion historyEach version is a snapshot of the data created when importing, analyzing, saving or restoring. Nothing is deleted automatically.Version v2 current — analysis — 11/3/2026, 9:14:46 AM — 12 row(s)Version v1 — created — 11/3/2026, 9:14:45 AM — 0 row(s)Restore this versionRestoring creates a new version; the current one stays in the history.Saved analysesAnalysis a1 — data from version v2 — 11/3/2026, 9:14:46 AMScientific engineEnvironmentDesktop app (Tauri, native engine)Engine version0.4.0-devProtocol version1Project schema version1Available methodsdescriptive_summary v1, one_way_comparison v1, multiple_comparison_procedures v1, factorial_anova v1, surface_model_selection v1, two_level_model_selection v1, two_level_design v1, completely_randomized_design v1, randomized_block_design v1, mixed_levels_design v1, mixture_design v1, mixture_model v1, optimal_design v1, paired_comparison v1, linear_mixed_model v1, nonlinear_saturation_fit v1, power_analysis v1, two_level_design_analysis v1, response_surface_design v1, response_surface v1, desirability_optimization v1, linear_model v1Update channelExperimentalStableReceives every published version, including the 0.x series. It is the only channel until version 1.0.0 exists.Check for updates
+OK: ET27 English, six themes, neutral preview and embedded Serif PDF verified in real WebView2.
+OK: relatório em Word gerado no aplicativo nativo (356588 bytes, 5 figura(s)).
+OK: comentário escrito no aplicativo nativo e incluído no relatório em Word.
+OK: o comando nativo de atualização respondeu no canal estável: «Não foi possível verificar agora (sem internet ou serviço indisponível).».
+ET22 native dialog: beforeunload
+OK: ET22 native Monod and power calculated from scratch, recovered together with unchanged curve, and exported in HTML/PDF/Word.

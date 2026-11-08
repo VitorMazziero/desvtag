@@ -53,3 +53,17 @@ O teste `mixed_levels_validation.rs` compara execução, ordem padrão, índices
 ## 11. Referências
 
 Montgomery, D. C. *Design and Analysis of Experiments*, cap. 5 (fatoriais gerais); [aleatorização](aleatorizacao.md).
+
+## 12. ET25 T08 — estimabilidade (decisão em preparação)
+
+O gerador existente oferece o fatorial completo. A extensão diagnostica também subconjuntos/frações personalizadas recebidos pela grade/importação e analisados pelo modelo multifatorial suportado; não acrescenta silenciosamente um catálogo de arranjos ortogonais. Fatores numéricos neste fluxo continuam como níveis nomeados, conforme §2, sem pressupor tendência polinomial entre os valores.
+
+A propriedade é do modelo e das linhas informativas: uma função Lβ é estimável se L pertence ao espaço-linha de X, ou se é ortogonal ao núcleo de X. A [referência primária do pacote estimability](https://journal.r-project.org/articles/RJ-2015-016/) fornece esse critério. A [documentação do emmeans](https://rvlenth.github.io/emmeans/articles/FAQs.html) também mostra que comparações podem ser estimáveis mesmo quando as médias individuais não são. Portanto, testar diretamente cada média, diferença e contraste combinado; não somar estimativas arbitrárias nem exigir que as médias isoladas existam antes de avaliar sua diferença.
+
+Registrar posto, número de colunas, graus de liberdade nominais e separáveis por termo e relações de confundimento na codificação usada. Uma coluna retida como pivô no cálculo não implica que seu coeficiente isolado seja identificável. Os termos da ANOVA I/II/III precisam conservar a interpretação de suas projeções/modelos encaixados; um termo confundido não pode ser apresentado como efeito isolado só por receber SQ sequencial. Com zero graus de liberdade identificáveis, não chamar SQ=0 de ausência de efeito.
+
+Reutilizar QR e o teste compartilhado, substituindo a exigência de inversa completa para médias/contrastes. As famílias declaradas dos ajustes permanecem explícitas; funções não estimáveis ficam indefinidas, sem letras ou valores-p inventados. A média uniforme sobre fatores não mostrados deve ser fatorada analiticamente, com referência por enumeração em exemplos pequenos. Células, pares e trabalho acumulado terão orçamento antes da alocação (AU-B21), sem enumerar toda uma grade apenas para promediar seus contrastes.
+
+O diagnóstico da geometria não deve exigir graus de liberdade residuais. A origem planejada (condições antes da coleta) deve ser distinguida da amostra efetivamente usada para uma resposta, excluindo linhas incompletas conforme o modo. A escolha da exposição/configuração no app e dos contratos aditivos será fechada após as referências, mantendo acesso pelo fluxo normal. Resultados novos terão versão/proveniência e origem salvas; históricos anteriores permanecem legíveis, com aviso quando houver deficiência de posto, sem análise automática ao abrir. T08 continua em execução.
+
+As primeiras 13 referências SVD/statsmodels e o teste público reproduzem AU-B20. O caso de três células de um 2×3 aditivo tem posto 3/4: nenhuma média marginal de B é estimável, mas B2−B3 = −4 com EP=√(2/3). Outro teste público reproduz AU-B22: NaN vira 1 no helper Bonferroni/Holm. Preservar a família completa declarada; valores indefinidos não serão publicados como 1 nem usados como evidência de não diferença. As revisões de `factorial_anova` e `multiple_comparison_procedures` serão identificadas, com históricos mantidos e sinalizados quando afetados.

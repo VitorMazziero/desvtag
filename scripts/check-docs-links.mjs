@@ -12,7 +12,9 @@ const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclud
 })
   .split("\n")
   .filter(Boolean)
-  .filter((f) => !f.includes("node_modules/"));
+  .filter((f) => !f.includes("node_modules/"))
+  // A tracked source can have been moved locally before staging its replacement.
+  .filter((f) => existsSync(join(root, f)));
 
 const strip = (text) => text.replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
 const slug = (heading) =>

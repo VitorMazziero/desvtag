@@ -1,0 +1,114 @@
+{
+  "operation": {
+    "type": "powerAnalyze",
+    "simulation": null,
+    "design": {
+      "type": "regression",
+      "predictors": [
+        [
+          -2,
+          1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "coefficients": [
+        0.45,
+        -0.25
+      ]
+    },
+    "sigma": 1.2,
+    "alpha": 0.05,
+    "twoSided": true,
+    "goal": {
+      "type": "powerAt",
+      "n": 5
+    }
+  },
+  "response": {
+    "protocolVersion": 1,
+    "taskId": "et24-benchmark",
+    "outcome": {
+      "status": "ok",
+      "result": {
+        "type": "powerAnalyze",
+        "n": 5,
+        "total": 25,
+        "power": {
+          "status": "defined",
+          "value": 0.5283573830509781
+        },
+        "noncentrality": 6.076388888888888,
+        "df1": 2,
+        "df2": 22,
+        "critical": 3.4433567793667224,
+        "halfWidth": {
+          "status": "undefined",
+          "reason": "notApplicable"
+        },
+        "curve": [
+          {
+            "n": 1,
+            "power": 0.07842879935784305
+          },
+          {
+            "n": 2,
+            "power": 0.18802423221645326
+          },
+          {
+            "n": 3,
+            "power": 0.30645321905509815
+          },
+          {
+            "n": 4,
+            "power": 0.42199239126244625
+          },
+          {
+            "n": 5,
+            "power": 0.5283573830509781
+          },
+          {
+            "n": 6,
+            "power": 0.6221612370819045
+          },
+          {
+            "n": 7,
+            "power": 0.7021596927543664
+          },
+          {
+            "n": 8,
+            "power": 0.7685588485677984
+          },
+          {
+            "n": 9,
+            "power": 0.8224422932606581
+          },
+          {
+            "n": 10,
+            "power": 0.8653409041708909
+          }
+        ],
+        "issues": [],
+        "provenance": {
+          "methodId": "power_analysis",
+          "methodVersion": 2,
+          "engineVersion": "0.4.0-dev"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,798 @@
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+   Compiling optima-wasm v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-wasm)
+warning: linker stdout: Criando biblioteca D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_wasm.dll.lib e objeto D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_wasm.dll.exp
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `optima-wasm` (lib) generated 1 warning
+    Finished `test` profile [optimized + debuginfo] target(s) in 12.37s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_core-3811c66a0ec70be5.exe)
+
+running 390 tests
+test comparisons::letters::tests::letter_names_go_beyond_26 ... ok
+test comparisons::letters::tests::no_difference_gives_one_shared_letter ... ok
+test comparisons::letters::tests::all_different_gives_distinct_letters ... ok
+test comparisons::letters::tests::overlapping_classes_get_shared_letters ... ok
+test comparisons::letters::tests::unknown_pairs_are_treated_as_different_and_flagged ... ok
+test comparisons::letters::tests::invariant_holds_for_random_graphs ... ok
+test comparisons::letters::export_bindings_letters ... ok
+test comparisons::paired::tests::constant_differences_have_an_undefined_t_and_all_zero_has_no_wilcoxon ... ok
+test comparisons::paired::tests::invalid_requests_are_rejected ... ok
+test comparisons::paired::tests::paired_t_matches_a_hand_computation ... ok
+test comparisons::paired::tests::wilcoxon_exact_counts_the_subset_sums ... ok
+test comparisons::paired::tests::zeros_and_ties_use_the_normal_approximation_with_the_tie_correction ... ok
+test comparisons::paired::export_bindings_pairedrequest ... ok
+test comparisons::procedures::export_bindings_adjustment ... ok
+test comparisons::letters::tests::invariant_holds_with_ordered_means_and_more_than_26_groups ... ok
+test comparisons::paired::export_bindings_pairedt ... ok
+test comparisons::paired::export_bindings_wilcoxon ... ok
+test comparisons::procedures::export_bindings_procedure ... ok
+test comparisons::export_bindings_residualpoint ... ok
+test comparisons::procedures::tests::holm_and_bonferroni_adjustments_match_the_definition ... ok
+test comparisons::procedures::tests::median_handles_even_and_odd_sizes ... ok
+test comparisons::procedures::tests::mid_ranks_average_the_ties ... ok
+test comparisons::procedures::export_bindings_globaltest ... ok
+test comparisons::procedures::export_bindings_proceduregroup ... ok
+test comparisons::export_bindings_groupstats ... ok
+test comparisons::tukey::export_bindings_tukeyvariant ... ok
+test comparisons::tukey::tests::no_error_estimate_means_no_comparison ... ok
+test comparisons::export_bindings_onewaydiagnostics ... ok
+test comparisons::procedures::export_bindings_procedurepair ... ok
+test comparisons::tukey::export_bindings_paircomparison ... ok
+test comparisons::paired::export_bindings_pairedresult ... ok
+test comparisons::export_bindings_onewayrequest ... ok
+test comparisons::tukey::export_bindings_tukeyresult ... ok
+test descriptive::grouped::export_bindings_grouplabel ... ok
+test descriptive::summary::export_bindings_stat ... ok
+test descriptive::summary::export_bindings_undefinedreason ... ok
+test descriptive::summary::tests::empty_and_all_missing_are_undefined_with_a_reason ... ok
+test descriptive::summary::export_bindings_summary ... ok
+test descriptive::summary::tests::extreme_magnitudes_become_an_explicit_state ... ok
+test descriptive::summary::tests::large_offset_keeps_the_small_spread ... ok
+test descriptive::summary::tests::missing_values_are_counted_not_substituted ... ok
+test descriptive::summary::tests::constant_data_has_zero_variance_not_nan ... ok
+test descriptive::summary::tests::one_value_has_mean_but_no_variance ... ok
+test descriptive::summary::tests::serializes_status_tagged_stats ... ok
+test descriptive::summary::tests::small_case_that_can_be_checked_by_hand ... ok
+test designs::alias::tests::full_factorial_has_no_resolution ... ok
+test designs::alias::tests::half_fraction_of_four_factors_has_resolution_four ... ok
+test designs::alias::tests::negative_generators_flip_the_sign_of_the_words ... ok
+test designs::alias::tests::products_of_generators_complete_the_defining_relation ... ok
+test descriptive::grouped::export_bindings_groupsummary ... ok
+test comparisons::procedures::export_bindings_procedurerequest ... ok
+test comparisons::tukey::tests::significance_agrees_with_the_simultaneous_interval ... ok
+test descriptive::export_bindings_descriptiverequest ... ok
+test designs::analysis::export_bindings_lenthresult ... ok
+test comparisons::procedures::export_bindings_procedureresult ... ok
+test descriptive::export_bindings_descriptiveresult ... ok
+test designs::analysis::export_bindings_curvaturetest ... ok
+test designs::box_behnken::tests::run_counts_are_two_k_times_k_minus_one ... ok
+test designs::box_behnken::tests::unsupported_sizes_are_refused ... ok
+test designs::box_behnken::tests::every_row_has_exactly_two_nonzero_entries_and_columns_are_balanced ... ok
+test designs::central_composite::tests::axial_points_are_the_last_rows_in_factor_order ... ok
+test designs::central_composite::tests::face_centred_and_custom_alpha ... ok
+test designs::central_composite::tests::fractional_cube_reports_resolution ... ok
+test designs::central_composite::tests::inscribed_places_axial_points_at_one_and_the_cube_at_one_over_alpha ... ok
+test designs::central_composite::tests::rotatable_alpha_is_the_fourth_root_of_the_factorial_points ... ok
+test designs::coding::tests::encode_and_decode_are_inverse_and_exact_at_the_extremes ... ok
+test designs::coding::tests::rejects_degenerate_or_non_finite_levels ... ok
+test designs::analysis::export_bindings_paretobar ... ok
+test designs::analysis::export_bindings_observedpredicted ... ok
+test designs::completely_randomized::tests::a_single_replicate_is_allowed_with_a_warning ... ok
+test designs::completely_randomized::tests::count_matches_generation ... ok
+test designs::completely_randomized::tests::randomized_order_is_a_reproducible_permutation_of_the_standard_list ... ok
+test designs::completely_randomized::tests::rejects_invalid_specifications_with_typed_codes ... ok
+test designs::completely_randomized::tests::standard_order_groups_by_level_and_is_kept_without_randomization ... ok
+test designs::factorial::tests::columns_are_balanced_and_orthogonal ... ok
+test designs::factorial::tests::standard_order_for_three_factors ... ok
+test designs::fractional::tests::catalog_entries_have_the_declared_resolution_and_are_orthogonal ... ok
+test designs::fractional::tests::generated_column_is_the_signed_product ... ok
+test designs::analysis::export_bindings_paretobasis ... ok
+test designs::fractional::tests::syntax_and_letter_errors_are_coded ... ok
+test designs::completely_randomized::export_bindings_crdrun ... ok
+test designs::analysis::export_bindings_effectrow ... ok
+test designs::analysis::export_bindings_pareto ... ok
+test designs::mixed_levels::tests::invalid_specifications_are_rejected_with_codes ... ok
+test designs::mixed_levels::tests::replicates_repeat_the_whole_combination_and_each_run_is_unique ... ok
+test designs::mixed_levels::tests::same_seed_same_order_and_a_different_seed_changes_it ... ok
+test designs::mixed_levels::tests::standard_order_has_the_first_factor_varying_fastest ... ok
+test designs::mixed_levels::tests::too_many_runs_are_refused_before_generating ... ok
+test comparisons::tukey::tests::balanced_and_unbalanced_variants_are_chosen_by_group_sizes ... ok
+test designs::mixed_levels::export_bindings_mixedrun ... ok
+test designs::completely_randomized::export_bindings_crdspec ... ok
+test designs::mixed_levels::export_bindings_mixedfactor ... ok
+test designs::mixture::export_bindings_mixturekind ... ok
+test designs::mixture::tests::centroid_has_two_to_the_q_minus_one_points ... ok
+test designs::mixture::tests::invalid_specifications_are_rejected ... ok
+test designs::mixture::tests::lattice_3_2_has_six_points_in_lexicographic_order ... ok
+test designs::mixture::tests::lower_bounds_shrink_the_simplex_and_keep_the_sum ... ok
+test designs::mixture::tests::replicates_and_extra_centers_are_counted_and_randomized_reproducibly ... ok
+test designs::mixture::export_bindings_mixturerun ... ok
+test designs::mixture::export_bindings_mixturecomponent ... ok
+test designs::mixed_levels::export_bindings_mixedspec ... ok
+test designs::optimal::export_bindings_linearconstraint ... ok
+test designs::optimal::export_bindings_optimalcriterion ... ok
+test comparisons::letters::tests::pathological_graphs_are_declared_unavailable_instead_of_hanging ... ok
+test designs::optimal::export_bindings_optimalmetrics ... ok
+test designs::optimal::export_bindings_optimalmodel ... ok
+test designs::optimal::tests::augmentation_keeps_the_fixed_runs_and_improves_the_criterion ... ok
+test designs::optimal::tests::constraints_are_respected_and_the_region_can_be_empty ... ok
+test designs::optimal::tests::i_optimal_runs_and_reports_the_average_prediction_variance ... ok
+test designs::optimal::tests::invalid_specifications_are_rejected ... ok
+test designs::optimal::export_bindings_optimalrun ... ok
+test designs::optimal::export_bindings_optimalfactor ... ok
+test designs::mixture::export_bindings_mixturespec ... ok
+test designs::completely_randomized::export_bindings_generatedcrd ... ok
+test designs::plackett_burman::tests::design_columns_are_balanced_and_orthogonal_with_dummies ... ok
+test designs::plackett_burman::tests::rejects_too_many_factors_and_zero ... ok
+test designs::plackett_burman::tests::twelve_runs_is_the_cyclic_plackett_burman_design ... ok
+test designs::plackett_burman::tests::unsupported_sizes_are_refused_not_approximated ... ok
+test designs::randomization::tests::bounded_values_stay_in_range_and_cover_it ... ok
+test designs::randomization::tests::matches_the_pcg32_reference_demo_vector ... ok
+test designs::randomization::tests::same_seed_same_permutation_and_it_is_a_permutation ... ok
+test designs::plackett_burman::tests::every_supported_size_is_a_hadamard_matrix ... ok
+test designs::randomization::tests::positions_are_roughly_uniform ... ok
+test comparisons::export_bindings_onewayresult ... ok
+test designs::mixed_levels::export_bindings_generatedmixed ... ok
+test designs::randomized_block::tests::invalid_specifications_are_refused ... ok
+test designs::randomized_block::tests::every_block_has_every_treatment_once_in_a_reproducible_order ... ok
+test designs::randomized_block::tests::without_randomization_the_order_is_the_listed_one ... ok
+test designs::optimal::tests::the_full_factorial_is_d_optimal_for_three_factors_with_interactions ... ok
+test designs::recommend::tests::a_budget_pushes_towards_fractions_with_the_highest_resolution_that_fits ... ok
+test designs::recommend::tests::few_factors_recommend_the_full_factorial ... ok
+test designs::recommend::tests::screening_many_factors_falls_back_to_plackett_burman ... ok
+test designs::recommend::tests::six_factors_offer_two_plackett_burman_sizes_and_the_larger_wins_within_budget ... ok
+test designs::recommend::tests::when_nothing_fits_the_smallest_is_recommended_but_not_within_budget ... ok
+test designs::optimal::tests::same_seed_same_design ... ok
+test designs::randomized_block::export_bindings_rcbdrun ... ok
+test designs::spec::export_bindings_aliasrow ... ok
+test designs::mixture::export_bindings_generatedmixture ... ok
+test designs::spec::export_bindings_axialkind ... ok
+test designs::randomized_block::export_bindings_rcbdspec ... ok
+test designs::analysis::export_bindings_designanalysisrequest ... ok
+test designs::spec::export_bindings_designfactor ... ok
+test designs::recommend::export_bindings_candidate ... ok
+test designs::spec::export_bindings_pointtype ... ok
+test diagnostics::assumptions::tests::degenerate_inputs_are_explicit ... ok
+test diagnostics::assumptions::tests::detects_a_clear_variance_difference_and_not_an_equal_one ... ok
+test diagnostics::assumptions::tests::matches_a_hand_calculation ... ok
+test diagnostics::influence::tests::cook_matches_the_definition ... ok
+test diagnostics::influence::tests::leverages_sum_to_the_rank_and_match_the_closed_form ... ok
+test diagnostics::residuals::tests::external_matches_the_closed_form ... ok
+test diagnostics::residuals::tests::standardizes_by_sigma_and_leverage ... ok
+test distributions::chi_square::tests::classic_critical_values_and_inverse ... ok
+test distributions::chi_square::tests::closed_forms ... ok
+test distributions::chi_square::tests::invalid_arguments_are_not_numbers ... ok
+test designs::spec::export_bindings_runcount ... ok
+test designs::optimal::export_bindings_optimalspec ... ok
+test designs::spec::export_bindings_designkind ... ok
+test designs::recommend::export_bindings_designoptions ... ok
+test designs::spec::export_bindings_designrun ... ok
+test distributions::dunnett::tests::rejects_invalid_input ... ok
+test designs::randomized_block::export_bindings_generatedrcbd ... ok
+test diagnostics::assumptions::export_bindings_brownforsythe ... ok
+test distributions::evaluate::tests::evaluates_in_batch_and_marks_out_of_domain ... ok
+test distributions::evaluate::tests::rejects_invalid_shape_parameters ... ok
+test designs::optimal::export_bindings_generatedoptimal ... ok
+test designs::spec::export_bindings_designspec ... ok
+test distributions::f::tests::classic_critical_values_and_inverse ... ok
+test distributions::f::tests::invalid_arguments_are_not_numbers ... ok
+test distributions::f::tests::relations_with_other_distributions ... ok
+test distributions::noncentral::tests::invalid_arguments_give_nan ... ok
+test distributions::noncentral::tests::with_zero_noncentrality_they_reduce_to_the_central_distributions ... ok
+test distributions::noncentral::tests::known_reference_values ... ok
+test distributions::normal::tests::quantiles_invert_the_cdf_including_far_tails ... ok
+test distributions::normal::tests::standard_values ... ok
+test distributions::student_t::tests::classic_critical_values ... ok
+test distributions::student_t::tests::invalid_arguments_are_not_numbers ... ok
+test distributions::student_t::tests::large_df_approaches_the_normal ... ok
+test distributions::student_t::tests::symmetry_and_the_cauchy_case ... ok
+test distributions::studentized_range::tests::infinite_df_two_groups_is_the_normal_range ... ok
+test distributions::evaluate::export_bindings_distribution ... ok
+test distributions::evaluate::export_bindings_distributionfunction ... ok
+test distributions::evaluate::export_bindings_distributionresult ... ok
+test distributions::evaluate::export_bindings_distributionrequest ... ok
+test domain::dataset::export_bindings_factor ... ok
+test designs::spec::export_bindings_generateddesign ... ok
+test domain::dataset::export_bindings_dataset ... ok
+test designs::analysis::export_bindings_designanalysisresult ... ok
+test domain::dataset::export_bindings_factorvalue ... ok
+test domain::factor::export_bindings_factorkind ... ok
+test domain::dataset::export_bindings_response ... ok
+test domain::dataset::export_bindings_observation ... ok
+test domain::ids::tests::deserialization_validates ... ok
+test domain::ids::tests::rejects_invalid_ids ... ok
+test domain::factor::tests::round_trips_as_camel_case ... ok
+test domain::ids::tests::serializes_as_plain_string ... ok
+test errors::tests::displays_issue_count ... ok
+test domain::ids::export_bindings_stableid ... ok
+test domain::ids::tests::accepts_valid_ids ... ok
+test inference::intervals::tests::critical_values_match_tables ... ok
+test inference::intervals::tests::two_sided_p_is_symmetric ... ok
+test inference::lack_of_fit::export_bindings_lackoffit ... ok
+test inference::lack_of_fit::tests::needs_replicates_and_flags_a_saturated_split ... ok
+test inference::lack_of_fit::tests::splits_the_residual_into_pure_error_and_lack_of_fit ... ok
+test inference::lenth::tests::matches_a_hand_calculation ... ok
+test inference::lenth::tests::refuses_degenerate_inputs ... ok
+test inference::one_way_anova::export_bindings_effectsizes ... ok
+test inference::one_way_anova::tests::classic_three_group_example ... ok
+test inference::one_way_anova::tests::degenerate_cases_are_explicit ... ok
+test inference::one_way_anova::tests::large_offset_does_not_destroy_precision ... ok
+test inference::regression_anova::export_bindings_anovarow ... ok
+test inference::one_way_anova::export_bindings_onewayanova ... ok
+test inference::regression_anova::tests::classic_example_matches_hand_calculation ... ok
+test inference::regression_anova::tests::degenerate_cases_are_explicit_states ... ok
+test interpretation::facts::export_bindings_fact ... ok
+test inference::regression_anova::export_bindings_regressionanova ... ok
+test models::covariance::tests::simple_regression_variances_match_closed_form ... ok
+test models::covariance::tests::aliased_columns_have_no_variance_and_only_estimable_rows_are_accepted ... ok
+test models::design_matrix::export_bindings_exclusionreason ... ok
+test models::design_matrix::export_bindings_excludedobservation ... ok
+test models::factorial_anova::export_bindings_contrastrequest ... ok
+test models::factorial_anova::export_bindings_contrastresult ... ok
+test models::factorial_anova::export_bindings_factorialanovarow ... ok
+test models::factorial_anova::export_bindings_marginalmean ... ok
+test models::factorial_anova::export_bindings_marginalpair ... ok
+test distributions::dunnett::tests::one_comparison_reduces_to_the_two_sided_t ... ok
+test models::factorial_anova::export_bindings_factorialsetup ... ok
+test models::factorial_anova::export_bindings_marginalrequest ... ok
+test models::factorial_anova::export_bindings_factorialrequest ... ok
+test models::factorial_anova::export_bindings_factorialresult ... ok
+test models::factorial_anova::export_bindings_pairwiseadjustment ... ok
+test models::factorial_anova::export_bindings_marginalresult ... ok
+test models::factorial_anova::export_bindings_sumofsquarestype ... ok
+test models::mixed::export_bindings_mixedcoefficient ... ok
+test models::linear::export_bindings_coefficientrow ... ok
+test models::linear::export_bindings_observationdiagnostics ... ok
+test models::mixed::export_bindings_randomeffect ... ok
+test distributions::studentized_range::tests::two_groups_reduce_to_the_t_distribution ... ok
+test models::mixture::export_bindings_mixturegridpoint ... ok
+test models::mixture::export_bindings_mixtureanalysisrequest ... ok
+test models::mixed::export_bindings_mixedmodelrequest ... ok
+test models::linear::export_bindings_linearfit ... ok
+test models::linear::export_bindings_linearmodelrequest ... ok
+test models::mixture::tests::invalid_inputs_are_refused ... ok
+test models::mixed::export_bindings_mixedmodelresult ... ok
+test models::mixture::export_bindings_mixturemodel ... ok
+test models::mixture::tests::the_linear_model_recovers_exact_vertex_coefficients ... ok
+test models::mixture::tests::the_quadratic_model_has_six_columns_and_the_blend_term_is_estimated ... ok
+test distributions::studentized_range::tests::critical_values_match_published_tables ... ok
+test models::nonlinear::tests::a_noise_free_monod_curve_is_recovered_exactly ... ok
+test models::nonlinear::export_bindings_saturationmodel ... ok
+test models::nonlinear::tests::invalid_requests_are_refused ... ok
+test distributions::studentized_range::tests::invalid_parameters_are_rejected ... ok
+test models::nonlinear::tests::a_narrow_substrate_range_is_flagged_as_poorly_identifiable ... ok
+test models::nonlinear::tests::haldane_and_hill_recover_known_parameters ... ok
+test models::terms::export_bindings_categoricalcoding ... ok
+test models::nonlinear::export_bindings_nonlinearparameter ... ok
+test models::mixture::export_bindings_mixtureanalysis ... ok
+test models::nonlinear::export_bindings_nonlinearrequest ... ok
+test models::nonlinear::export_bindings_curvepoint ... ok
+test numeric::integration::tests::composite_rule_integrates_smooth_functions ... ok
+test models::terms::export_bindings_termspec ... ok
+test numeric::integration::tests::nodes_and_weights_satisfy_the_defining_identities ... ok
+test models::prediction::export_bindings_prediction ... ok
+test models::terms::export_bindings_modelspec ... ok
+test numeric::matrix::tests::builds_transposes_and_multiplies ... ok
+test numeric::matrix::tests::rejects_irregular_rows_and_bad_shapes ... ok
+test numeric::qr::tests::a_zero_column_has_no_rank ... ok
+test numeric::qr::tests::detects_a_linearly_dependent_column ... ok
+test numeric::qr::tests::q_is_orthogonal_and_reproduces_the_matrix ... ok
+test models::nonlinear::export_bindings_nonlinearresult ... ok
+test numeric::root_finding::tests::handles_a_root_at_an_endpoint_and_steep_functions ... ok
+test numeric::root_finding::tests::reports_missing_bracket_and_nan ... ok
+test numeric::qr::tests::rank_does_not_depend_on_column_scale ... ok
+test numeric::qr::tests::solves_a_least_squares_problem_exactly_when_the_model_fits ... ok
+test numeric::special_functions::tests::beta_inc_special_cases_have_closed_forms ... ok
+test numeric::qr::tests::xtx_inverse_matches_the_closed_form_for_a_small_case ... ok
+test numeric::root_finding::tests::finds_simple_roots_to_machine_precision ... ok
+test numeric::special_functions::tests::erfc_keeps_relative_precision_in_the_tail ... ok
+test numeric::special_functions::tests::gamma_inc_special_cases_have_closed_forms ... ok
+test numeric::special_functions::tests::invalid_arguments_give_nan_not_a_number_that_looks_valid ... ok
+test numeric::special_functions::tests::ln_gamma_matches_exact_values ... ok
+test numeric::summation::tests::empty_sum_is_zero ... ok
+test numeric::summation::tests::many_small_terms_after_a_large_one ... ok
+test numeric::summation::tests::non_finite_inputs_stay_non_finite ... ok
+test numeric::summation::tests::recovers_a_term_lost_by_naive_summation ... ok
+test numeric::svd::tests::diagonal_and_rank_one_matrices_have_the_expected_singular_values ... ok
+test numeric::svd::tests::matches_high_precision_singular_values_of_a_3x2_matrix ... ok
+test numeric::svd::tests::works_for_wide_matrices ... ok
+test optimization::confirmation::tests::includes_both_limits_and_preserves_the_signed_difference ... ok
+test optimization::confirmation::tests::absent_interval_is_distinct_from_a_point_inside_an_interval ... ok
+test optimization::confirmation::tests::rejects_invalid_bounds_values_and_duplicate_keys ... ok
+test optimization::confirmation::tests::missing_observation_does_not_become_a_zero_difference ... ok
+test optimization::confirmation::tests::subtraction_overflow_is_explicit ... ok
+test optimization::desirability::tests::global_is_the_weighted_geometric_mean_and_zero_if_any_is_zero ... ok
+test optimization::desirability::tests::goals_are_validated ... ok
+test optimization::desirability::tests::maximize_is_zero_below_one_above_and_follows_the_shape_between ... ok
+test optimization::desirability::tests::minimize_mirrors_maximize ... ok
+test optimization::desirability::tests::range_is_all_or_nothing_and_non_finite_values_are_undesirable ... ok
+test optimization::desirability::tests::target_is_one_at_the_target_and_zero_outside_the_limits ... ok
+test optimization::confirmation::export_bindings_confirmationstatus ... ok
+test optimization::confirmation::export_bindings_confirmationobservation ... ok
+test optimization::confirmation::export_bindings_confirmationcomparerequest ... ok
+test optimization::confirmation::export_bindings_confirmationcomparison ... ok
+test optimization::candidates::export_bindings_responseprediction ... ok
+test optimization::objective::export_bindings_factorbounds ... ok
+test optimization::objective::export_bindings_domainspec ... ok
+test optimization::candidates::export_bindings_optimumcandidate ... ok
+test optimization::confirmation::export_bindings_confirmationcomparisons ... ok
+test optimization::objective::export_bindings_goal ... ok
+test optimization::objective::export_bindings_searchoptions ... ok
+test optimization::evaluate::export_bindings_evaluation ... ok
+test optimization::optimize::export_bindings_convergencereport ... ok
+test optimization::objective::export_bindings_responselimit ... ok
+test optimization::optimize::export_bindings_optimizationstatus ... ok
+test optimization::optimize::export_bindings_domainrange ... ok
+test optimization::objective::export_bindings_responsegoal ... ok
+test optimization::optimize::export_bindings_responsetradeoff ... ok
+test optimization::search::tests::nelder_mead_finds_an_interior_minimum_and_respects_bounds ... ok
+test optimization::search::tests::latin_hypercube_stratifies_every_dimension_and_is_reproducible ... ok
+test power::export_bindings_powergoal ... ok
+test power::export_bindings_powerdesign ... ok
+test power::tests::invalid_or_unreachable_requests_are_refused ... ok
+test power::export_bindings_powerpoint ... ok
+test power::tests::t_tests_and_precision_work ... ok
+test power::tests::power_grows_with_n_and_the_sample_size_search_is_minimal ... ok
+test provenance::tests::records_current_core_version ... ok
+test provenance::export_bindings_provenance ... ok
+test registry::capabilities::tests::lists_the_implemented_methods_with_their_real_status ... ok
+test power::export_bindings_powerrequest ... ok
+test optimization::objective::export_bindings_optimizationsetup ... ok
+test registry::status::export_bindings_implementation ... ok
+test registry::status::export_bindings_validation ... ok
+test registry::capabilities::export_bindings_capabilities ... ok
+test registry::methods::export_bindings_methodinfo ... ok
+test surface::contour::tests::a_plane_gives_straight_segments_at_the_exact_position ... ok
+test surface::contour::tests::cells_with_missing_vertices_are_skipped_and_flat_grids_have_no_levels ... ok
+test surface::contour::tests::circle_contour_points_lie_on_the_circle ... ok
+test surface::contour::tests::nice_levels_are_round_and_inside_the_range ... ok
+test optimization::evaluate::export_bindings_evaluaterequest ... ok
+test surface::contour::export_bindings_segment ... ok
+test surface::equation::tests::a_missing_main_effect_still_yields_a_linear_real_term ... ok
+test surface::equation::tests::non_estimable_coefficients_leave_the_real_equation_undefined ... ok
+test surface::equation::tests::real_equation_equals_the_coded_one_at_arbitrary_points ... ok
+test optimization::grid::export_bindings_optimizationgridrequest ... ok
+test power::export_bindings_powerresult ... ok
+test surface::contour::export_bindings_contourlevel ... ok
+test surface::equation::export_bindings_equationtermkind ... ok
+test surface::grid::export_bindings_fixedecho ... ok
+test surface::grid::export_bindings_fixedvalue ... ok
+test optimization::objective::export_bindings_optimizationrequest ... ok
+test surface::equation::export_bindings_equationterm ... ok
+test optimization::optimize::export_bindings_optimizationresult ... ok
+test surface::model::export_bindings_factorrange ... ok
+test surface::equation::export_bindings_equation ... ok
+test surface::model::export_bindings_surfacefitpoint ... ok
+test surface::terms::tests::full_quadratic_has_k_plus_k_plus_pairs_terms ... ok
+test surface::terms::tests::hierarchy_gaps_name_squares_and_interactions_without_their_main_effects ... ok
+test surface::terms::tests::interaction_order_does_not_matter_and_rows_follow_the_terms ... ok
+test surface::terms::tests::rejects_cubes_triple_interactions_unknown_and_duplicates ... ok
+test validation::dataset::tests::detects_duplicate_ids_and_empty_names ... ok
+test validation::dataset::tests::detects_shape_type_level_and_non_finite_problems ... ok
+test validation::dataset::tests::missing_values_are_valid ... ok
+test validation::dataset::tests::valid_dataset_has_no_issues ... ok
+test surface::model::export_bindings_surfacetermrow ... ok
+test validation::issues::export_bindings_issue ... ok
+test validation::issues::tests::builds_with_params_and_serializes_camel_case ... ok
+test validation::issues::tests::warning_is_not_blocking ... ok
+test validation::issues::export_bindings_severity ... ok
+test surface::selection::export_bindings_modelmetrics ... ok
+test visualization::boxplot::tests::far_points_are_listed_with_their_observation ... ok
+test visualization::boxplot::tests::quartiles_match_r_type_7 ... ok
+test surface::selection::export_bindings_selectionstep ... ok
+test surface::grid::export_bindings_surfacegrid ... ok
+test visualization::boxplot::tests::single_value_and_empty ... ok
+test visualization::boxplot::export_bindings_outlier ... ok
+test visualization::boxplot::export_bindings_boxstats ... ok
+test visualization::effects::tests::empty_levels_are_explicit ... ok
+test visualization::effects::tests::means_per_level_and_per_cell_with_center_apart ... ok
+test visualization::residuals::tests::blom_quantiles_are_symmetric_and_sorted ... ok
+test surface::grid::export_bindings_gridrequest ... ok
+test visualization::residuals::tests::non_finite_values_are_dropped ... ok
+test surface::model::export_bindings_surfacerequest ... ok
+test visualization::residuals::export_bindings_qqpoint ... ok
+test surface::selection::export_bindings_selectionresult ... ok
+test visualization::effects::export_bindings_interactionseries ... ok
+test visualization::effects::export_bindings_maineffectseries ... ok
+test surface::model::export_bindings_surfaceresult ... ok
+test distributions::studentized_range::tests::cdf_is_monotone_and_bounded_and_round_trips ... ok
+test distributions::dunnett::tests::critical_value_grows_with_the_number_of_comparisons ... ok
+test distributions::studentized_range::tests::tabulated_kernel_matches_direct_quadrature ... ok
+
+test result: ok. 390 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.33s
+
+     Running tests\comparison_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\comparison_validation-027e6e2eb05277b9.exe)
+
+running 2 tests
+test applied_cases_match_scipy_numpy_and_cliques ... ok
+test nist_anova_against_exact_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.69s
+
+     Running tests\crd_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\crd_validation-7c5b089752384c69.exe)
+
+running 1 test
+test execution_order_equals_the_independent_implementation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\descriptive_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\descriptive_validation-ea5180ff3c4b9fea.exe)
+
+running 2 tests
+test naive_algorithm_would_fail_numacc4_so_the_case_is_discriminating ... ok
+test matches_exact_rational_reference_and_nist_certified_values ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\design_selection_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\design_selection_validation-29adc65c7d894d93.exe)
+
+running 2 tests
+test a_main_effect_stays_while_one_of_its_interactions_remains ... ok
+test metrics_and_backward_sequence_match_statsmodels ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\design_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\design_validation-c0e8412dd20fd427.exe)
+
+running 6 tests
+test counts_are_available_before_generating_and_limits_are_enforced ... ok
+test permutations_equal_the_independent_pcg32_implementation ... ok
+test json_round_trip_of_specs_and_results_is_lossless ... ok
+test generated_designs_equal_the_independent_enumeration ... ok
+test fractional_relation_resolution_and_aliases_equal_brute_force ... ok
+test analysis_cases_match_numpy_scipy_and_lenth ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests\distributions_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\distributions_validation-48797b08e7df25eb.exe)
+
+running 4 tests
+test normal_matches_mpmath ... ok
+test student_t_matches_mpmath ... ok
+test f_matches_mpmath ... ok
+test chi_square_matches_mpmath ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\factorial_anova_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\factorial_anova_validation-bbd95c7a8d12a1bf.exe)
+
+running 1 test
+test anova_marginal_means_and_contrasts_match_statsmodels ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests\linear_model_edge_cases.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\linear_model_edge_cases-b8ab9d33db4c6603.exe)
+
+running 11 tests
+test constant_response_and_intercept_only_are_explicit ... ok
+test invalid_model_specifications_are_reported_by_code ... ok
+test matrix_level_errors_are_blocking_diagnostics ... ok
+test one_observation_has_no_uncertainty ... ok
+test zero_column_is_aliased_not_a_failure ... ok
+test row_order_does_not_change_the_fit ... ok
+test estimates_scale_with_the_data_units ... ok
+test overflowing_scale_is_an_error_not_nan ... ok
+test prediction_matches_scipy ... ok
+test leave_one_out_identity_for_externally_studentized_residuals ... ok
+test missing_values_are_excluded_with_reason_never_imputed ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\linear_model_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\linear_model_validation-5e884d03786041ba.exe)
+
+running 3 tests
+test aliasing_and_saturation_are_explicit_states ... ok
+test model_builder_cases_match_numpy_scipy ... ok
+test nist_strd_linear_regression_against_exact_reference ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests\mixed_levels_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixed_levels_validation-ea98cd0ba346659c.exe)
+
+running 1 test
+test runs_equal_the_independent_implementation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\mixed_model_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixed_model_validation-03904e77ff4635a9.exe)
+
+running 2 tests
+test paired_tests_equal_scipy ... ok
+test mixed_models_equal_statsmodels_and_the_independent_satterthwaite ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\mixture_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixture_validation-41efadda2a33498e.exe)
+
+running 2 tests
+test designs_equal_the_independent_implementation ... ok
+test scheffe_models_equal_statsmodels ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\optimal_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optimal_validation-49b6dca91a620d7c.exe)
+
+running 3 tests
+test worst_cases_timing ... ignored, medição de desempenho; rodar em modo release
+test metrics_equal_numpy_for_given_designs ... ok
+test the_exchange_reaches_the_global_optimum_of_exhaustive_search ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\optimization_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optimization_validation-8a60266a69597472.exe)
+
+running 5 tests
+test extended_domains_flag_extrapolation_and_invalid_setups_are_refused ... ok
+test desirability_grid_matches_the_evaluation_and_marks_extrapolation ... ok
+test predictions_intervals_and_desirabilities_match_numpy_at_probe_points ... ok
+test search_is_at_least_as_good_as_the_exhaustive_grid_and_statuses_match ... ok
+test the_same_seed_gives_the_same_candidates_and_other_seeds_agree_on_the_optimum ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests\power_nonlinear_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\power_nonlinear_validation-3edb85e443356a5e.exe)
+
+running 3 tests
+test noncentral_distributions_equal_scipy ... ok
+test nonlinear_fits_equal_scipy_curve_fit ... ok
+test power_and_sample_size_equal_the_scipy_search ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\procedures_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\procedures_validation-e80ba6c41d54a706.exe)
+
+running 2 tests
+test games_howell_refuses_groups_without_variance ... ok
+test every_procedure_matches_its_independent_reference ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+
+     Running tests\protimiza_counts.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\protimiza_counts-2f0e3a4e2cf748a9.exe)
+
+running 3 tests
+test the_three_counts_of_the_captures_are_reproduced ... ok
+test the_formulas_hold_for_other_sizes_and_repetitions ... ok
+test the_non_randomized_matrix_equals_the_one_shown_in_the_capture ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\rcbd_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\rcbd_validation-b5d84584320a1128.exe)
+
+running 1 test
+test block_orders_equal_the_independent_implementation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\selection_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\selection_validation-1e1c59f61ef67238.exe)
+
+running 1 test
+test metrics_and_backward_sequence_match_statsmodels ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\studentized_range_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\studentized_range_validation-e322136e292fe4d0.exe)
+
+running 2 tests
+test mpmath_confirms_the_reference_and_the_implementation ... ok
+test grid_matches_scipy ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.94s
+
+     Running tests\surface_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\surface_validation-36fa0fe1e9c9ec5d.exe)
+
+running 3 tests
+test central_composite_and_box_behnken_matrices_equal_the_independent_enumeration ... ok
+test invalid_requests_are_refused_with_explicit_diagnostics ... ok
+test response_surface_cases_match_numpy_scipy ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_engine-da12022cdb88c29d.exe)
+
+running 14 tests
+test request::export_bindings_designrecommendrequest ... ok
+test request::export_bindings_bytesrequest ... ok
+test request::export_bindings_importxlsxrequest ... ok
+test response::export_bindings_errorcode ... ok
+test response::export_bindings_projectencoderesult ... ok
+test response::export_bindings_engineerror ... ok
+test response::export_bindings_engineinfo ... ok
+test request::export_bindings_projectencoderequest ... ok
+test response::export_bindings_projectdecoderesult ... ok
+test request::export_bindings_operation ... ok
+test request::export_bindings_enginerequest ... ok
+test response::export_bindings_operationresult ... ok
+test response::export_bindings_outcome ... ok
+test response::export_bindings_engineresponse ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.58s
+
+     Running tests\performance.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\performance-2b37c2d3cdd58ac5.exe)
+
+running 2 tests
+test measure_operations ... ignored, medição sob demanda (ET10-T04)
+test measure_studentized_range_share ... ignored, medição sob demanda (ET10-T04)
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\protocol_tests.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\protocol_tests-d9e6efd7a9e40af8.exe)
+
+running 17 tests
+test malformed_input_is_invalid_request ... ok
+test nan_or_infinity_cannot_reach_the_engine_as_numbers ... ok
+test future_operation_shape_with_wrong_version_is_still_a_version_error ... ok
+test incompatible_protocol_version_is_a_coded_error ... ok
+test project_decode_reports_invalid_files_as_invalid_project ... ok
+test engine_info_returns_versions_and_registered_methods ... ok
+test confirmation_comparison_is_available_over_json_without_refitting ... ok
+test descriptive_summary_reports_blocking_issues_as_invalid_input ... ok
+test model_fit_linear_reports_invalid_models_as_coded_issues ... ok
+test descriptive_summary_works_end_to_end_through_the_protocol ... ok
+test unknown_operation_with_current_version_keeps_task_id ... ok
+test request_round_trips_in_camel_case ... ok
+test project_encode_refuses_an_inconsistent_document ... ok
+test model_fit_linear_returns_the_fit_over_json ... ok
+test project_encode_accepts_revisions_without_hashes_and_fills_them ... ok
+test project_encode_then_decode_returns_the_same_document ... ok
+test import_xlsx_returns_a_text_grid ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_project-6f215c93ed5348bf.exe)
+
+running 89 tests
+test archive::tests::refuses_to_encode_an_inconsistent_document ... ok
+test archive::tests::a_wrong_format_name_is_not_an_enzitag_file ... ok
+test archive::tests::rejects_garbage_and_truncated_files ... ok
+test archive::tests::future_schema_is_refused_without_touching_the_input ... ok
+test archive::tests::detects_tampering_through_the_manifest_hash ... ok
+test archive::tests::encoding_is_reproducible_with_a_fixed_zip_timestamp ... ok
+test archive::tests::encoding_is_deterministic ... ok
+test archive::tests::encoding_recomputes_revision_hashes_so_the_ui_can_send_them_empty ... ok
+test archive::tests::round_trip_preserves_the_document_including_unicode ... ok
+test archive::tests::rejects_foreign_zip_files_and_unsafe_paths ... ok
+test archive::tests::size_limits_are_enforced_before_and_during_reading ... ok
+test comment::tests::accepts_a_normal_comment_and_rejects_empty_or_long_text ... ok
+test comment::tests::analysis_target_requires_the_analysis_id ... ok
+test comment::tests::optional_fields_stay_out_of_the_json ... ok
+test comment::tests::old_comments_default_to_unedited_and_edits_round_trip ... ok
+test archive::tests::unknown_entries_are_ignored_with_a_warning ... ok
+test comment::tests::replies_are_checked_too ... ok
+test archive::tests::highly_compressible_entry_is_rejected_by_the_entry_limit ... ok
+test comment::export_bindings_commenttargetkind ... ok
+test document::export_bindings_entrypath ... ok
+test document::tests::a_project_without_comments_keeps_the_same_json ... ok
+test document::tests::active_experiment_is_optional_for_older_documents ... ok
+test document::tests::comments_must_point_to_existing_revisions_and_analyses ... ok
+test document::tests::current_data_is_the_last_revision ... ok
+test document::tests::detects_structural_problems ... ok
+test document::tests::new_project_is_valid_and_round_trips_through_json ... ok
+test document::tests::with_hashes_fills_missing_hashes_and_fixes_stale_ones ... ok
+test comment::export_bindings_commentreply ... ok
+test confirmation::export_bindings_experimentorigin ... ok
+test confirmation::export_bindings_confirmationprediction ... ok
+test comment::export_bindings_commenttarget ... ok
+test confirmation::export_bindings_confirmationplan ... ok
+test experiment::tests::hash_of_empty_data_matches_an_independent_sha256 ... ok
+test experiment::tests::same_content_same_hash_different_content_different_hash ... ok
+test comment::export_bindings_comment ... ok
+test families::export_bindings_analysisfamily ... ok
+test experiment::export_bindings_responsespec ... ok
+test experiment::export_bindings_rowrecord ... ok
+test experiment::export_bindings_factorspec ... ok
+test families::export_bindings_mixtureselection ... ok
+test experiment::export_bindings_experimentdata ... ok
+test families::export_bindings_pairingsnapshot ... ok
+test families::export_bindings_mixtureinputsnapshot ... ok
+test families::export_bindings_nonlinearselection ... ok
+test families::export_bindings_powergoalkind ... ok
+test families::export_bindings_powerkind ... ok
+test families::export_bindings_nonlinearinputsnapshot ... ok
+test families::export_bindings_repeatedmethod ... ok
+test families::export_bindings_powerselection ... ok
+test families::export_bindings_repeatedselection ... ok
+test families::export_bindings_nonlinearrecord ... ok
+test analysis::export_bindings_analysisoptions ... ok
+test families::export_bindings_powerrecord ... ok
+test families::export_bindings_repeatedinputsnapshot ... ok
+test families::export_bindings_mixturerecord ... ok
+test figure_style::export_bindings_figureannotation ... ok
+test figure_style::tests::default_style_is_empty_and_serializes_to_nothing ... ok
+test figure_style::tests::rejects_overlong_text_and_unknown_scales ... ok
+test figure_style::tests::round_trips_only_the_fields_that_were_set ... ok
+test figure_style::tests::validates_manual_letters_annotations_and_appearance ... ok
+test integrity::tests::sha256_matches_the_standard_test_vectors ... ok
+test integrity::tests::verification_checks_hash_size_and_path ... ok
+test migrations::tests::current_version_passes_unchanged ... ok
+test migrations::tests::future_version_is_refused_with_both_versions_reported ... ok
+test migrations::tests::missing_zero_or_non_numeric_version_is_invalid ... ok
+test families::export_bindings_repeatedoutput ... ok
+test figure_style::export_bindings_figurestyle ... ok
+test revision::export_bindings_revisionreason ... ok
+test xlsx::tests::rejects_non_xlsx_bytes ... ok
+test xlsx_writer::export_bindings_exportcell ... ok
+test xlsx::export_bindings_sheetdata ... ok
+test xlsx_writer::export_bindings_exportsheet ... ok
+test xlsx_writer::tests::column_names_follow_excel ... ok
+test xlsx_writer::tests::column_widths_follow_the_content_within_limits ... ok
+test xlsx_writer::tests::formula_like_text_gets_the_quote_prefix_style_and_numbers_stay_numbers ... ok
+test xlsx_writer::tests::invalid_workbooks_are_refused ... ok
+test xlsx_writer::tests::json_cells_are_numbers_text_or_null ... ok
+test xlsx_writer::tests::round_trips_through_the_project_reader_keeping_text_numbers_and_empties ... ok
+test xlsx_writer::export_bindings_exportworkbook ... ok
+test revision::export_bindings_revision ... ok
+test families::export_bindings_savednonlinear ... ok
+test families::export_bindings_savedpower ... ok
+test families::export_bindings_savedmixture ... ok
+test families::export_bindings_repeatedrecord ... ok
+test families::export_bindings_savedrepeated ... ok
+test analysis::export_bindings_analysisresult ... ok
+test analysis::export_bindings_analysisrecord ... ok
+test document::export_bindings_experiment ... ok
+test document::export_bindings_projectdocument ... ok
+
+test result: ok. 89 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+
+     Running tests\family_storage.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\family_storage-7b915ea27cba690d.exe)
+
+running 8 tests
+test selecting_a_family_without_a_result_is_not_a_valid_saved_state ... ok
+test older_documents_omit_every_new_field ... ok
+test power_preserves_edited_assumptions_separately_from_the_successful_request ... ok
+test missing_revisions_variables_duplicates_and_nonfinite_values_are_refused ... ok
+test nonlinear_keeps_its_fitted_model_and_previous_engine_even_after_selection_changes ... ok
+test repeated_storage_distinguishes_paired_and_mixed_results ... ok
+test historical_variable_references_survive_deletion_from_the_latest_revision ... ok
+test mixture_keeps_the_request_and_all_immutable_records ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\import_xlsx_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\import_xlsx_validation-14d210beea68e3f5.exe)
+
+running 3 tests
+test a_zip_that_is_not_a_workbook_is_rejected ... ok
+test selects_another_sheet_and_reports_unknown_sheets ... ok
+test reads_stored_values_as_text_without_running_formulas ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\project_file_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\project_file_validation-382486086eada889.exe)
+
+running 3 tests
+test rust_written_files_carry_hashes_that_python_computes_identically ... ok
+test reads_the_python_written_file_into_exactly_the_expected_document ... ok
+test invalid_files_are_refused_with_the_expected_codes_and_never_modified ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_wasm-b3dd56dc50a2acd7.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests optima_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests optima_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests optima_project
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests optima_wasm
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -9,7 +9,8 @@ export interface SurfaceChartSpec {
   /** Nome da resposta e unidade (eixo vertical da superfície / legenda das curvas). */
   responseLabel: string;
   /** Pontos do planejamento, na escala real dos dois eixos (projeção). */
-  points?: Array<{ x: number; y: number }>;
+  points?: Array<{ x: number; y: number; label?: string; selected?: boolean }>;
+  colorDomain?: [number, number];
   /** Textos já localizados. */
   texts: { extrapolated: string; points: string; reading: string };
   metadata?: string;

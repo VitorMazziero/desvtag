@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { newProjectId, nowIso } from "../../lib/ids";
+import { PROJECT_EXTENSION, projectFileStem } from "../../lib/projectFileName";
 import { APP_VERSION } from "../../lib/version";
 import { useEngine } from "../../services/engine/EngineContext";
 import type { OpenedFile } from "../../services/storage";
@@ -13,12 +14,12 @@ import { decodeBytes, encodeDocument } from "./projectFile";
 /** Slug de arquivo: sem caracteres inválidos em nomes do Windows. */
 export function suggestedFileName(projectName: string): string {
   const invalid = '<>:"/\\|?*';
-  const cleaned = Array.from(projectName.trim())
+  const cleaned = Array.from(projectFileStem(projectName.trim()))
     .map((ch) => (ch.charCodeAt(0) < 32 || invalid.includes(ch) ? "_" : ch))
     .join("")
     .replace(/\s+/g, " ")
     .slice(0, 80);
-  return `${cleaned || "projeto"}.enzitag`;
+  return `${cleaned || "projeto"}${PROJECT_EXTENSION}`;
 }
 
 export interface ActionNotice {
@@ -56,13 +57,17 @@ export function useProjectActions() {
   }, [confirmDiscard, dispatch, storage, t]);
 
   const loadOpened = useCallback(
-    async (file: OpenedFile) => {
+    async (file: OpenedFile, beforeLoad?: (projectId: string) => void) => {
       const result = await decodeBytes(client, file.bytes, t);
       if (!result.ok) {
         setNotice({ kind: "error", messages: result.messages });
         return;
       }
       const { decoded, warnings } = result.value;
+      if (beforeLoad) {
+        await storage.detach();
+        beforeLoad(decoded.document.projectId);
+      }
       dispatch({
         type: "loadDocument",
         document: decoded.document,
@@ -81,8 +86,9 @@ export function useProjectActions() {
           ? { kind: "info", messages: [t("project.warningsTitle"), ...messages] }
           : null,
       );
+      return decoded.document.projectId;
     },
-    [client, dispatch, t],
+    [client, dispatch, storage, t],
   );
 
   const open = useCallback(async () => {
@@ -121,7 +127,7 @@ export function useProjectActions() {
   const saveWith = useCallback(
     async (
       write: (bytes: Uint8Array, name: string) => Promise<{ name: string } | null>,
-      options: { markAsSaved?: boolean } = {},
+      options: { markAsSaved?: boolean; destination?: "computer" | "drive" } = {},
     ) => {
       setBusy(true);
       setNotice(null);
@@ -138,17 +144,27 @@ export function useProjectActions() {
         if (!saved) return false; // cancelado pelo usuário
         dispatch({ type: "commitAll", reason: "manualSave", now });
         if (options.markAsSaved ?? true) {
-          dispatch({ type: "markSaved", fileName: saved.name, now, seq });
+          dispatch({
+            type: "markSaved",
+            fileName: saved.name,
+            now,
+            seq,
+            destination: options.destination,
+          });
           await clearRecovery();
         }
         return true;
       } catch (error) {
+        const key =
+          typeof error === "string" && error === "project.invalidExtension"
+            ? error
+            : "project.failed";
         setNotice({
           kind: "error",
           messages: [
             error instanceof Error && error.message.startsWith("drive.")
               ? t(`drive.errors.${error.message.slice(6)}`, { defaultValue: t("project.failed") })
-              : t("project.failed"),
+              : t(key),
           ],
         });
         return false;

@@ -1,7 +1,7 @@
 // @vitest-environment node
 // Composto central, Box–Behnken e superfície de resposta no WebAssembly: as mesmas matrizes
 // (enumeração independente em Python) e análises (NumPy/SciPy) do teste nativo
-// (app/crates/optima-core/tests/surface_validation.rs), pelo protocolo JSON.
+// (app/crates/desvtag-core/tests/surface_validation.rs), pelo protocolo JSON.
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -12,12 +12,12 @@ import {
   type SurfaceGrid,
   type SurfaceResult,
 } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases");
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: arquivos JSON de referência com formatos heterogêneos

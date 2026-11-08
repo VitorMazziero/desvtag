@@ -1,0 +1,40 @@
+Página: http://tauri.localhost/
+{
+  version: '0.4.0-dev',
+  protocol: '1',
+  environment: 'Aplicativo desktop (Tauri, motor nativo)'
+}
+OK: interface obteve engine.info do motor nativo via comando Tauri.
+{
+  taskId: 'native-descriptive',
+  mean: { status: 'defined', value: 5 },
+  variance: { status: 'defined', value: 4.571428571428571 }
+}
+OK: estatística descritiva calculada pelo motor nativo via IPC do Tauri.
+OK: arquivo .enzitag escrito em Python lido pelo motor nativo ( Projeto de referência — açúcar, ß, 日本 ).
+OK: arquivo adulterado recusado com project.integrity_failed.
+OK: planilha XLSX lida pelo motor nativo.
+OK: regressão linear (NIST Norris) calculada pelo motor nativo via IPC do Tauri.
+OK: distribuição t avaliada pelo motor nativo via IPC do Tauri.
+OK: ANOVA, Tukey e letras calculados pelo motor nativo via IPC do Tauri. c,b,a,b
+OK: planejamento aleatorizado igual à referência independente via IPC do Tauri. 19 ensaios
+OK: efeitos e valores-p do planejamento 2³ calculados pelo motor nativo via IPC do Tauri.
+OK: composto central, ajuste de superfície, falta de ajuste e malha calculados pelo motor nativo via IPC do Tauri.
+OK: otimização por desejabilidade (busca com semente) calculada pelo motor nativo via IPC do Tauri. D = 0.538089
+OK: XLSX exportado pelo motor nativo via IPC do Tauri e relido (texto de fórmula preservado como texto).
+OK: DIC aleatorizado (6 casos) idêntico à implementação independente no motor nativo via IPC do Tauri.
+OK: projeto com DIC e personalização por figura codificado e relido pelo motor nativo; bytes idênticos aos do WebAssembly.
+OK: 6 procedimentos de comparação múltipla (Games–Howell, Bonferroni, Holm, Dunnett, Kruskal–Wallis/Dunn) iguais às referências independentes no motor nativo.
+OK: ANOVA multifatorial com blocos (6 casos, tipos I, II e III) igual ao statsmodels no motor nativo.
+OK: DBC aleatorizado (4 casos com semente representável em JavaScript) idêntico à implementação independente no motor nativo.
+OK: níveis mistos (5 casos) idênticos à implementação independente no motor nativo.
+OK: planejamento D e I-ótimo iguais ao ótimo conhecido e à busca exaustiva no motor nativo.
+OK: t pareado e Wilcoxon iguais ao SciPy no motor nativo.
+OK: potência (F e t não centrais) e ajuste não linear iguais ao SciPy no motor nativo.
+OK: seleção de modelos de dois níveis igual ao statsmodels no motor nativo.
+OK: 11 projetos de exemplo (escritos pelo WebAssembly) reabertos pelo motor nativo; os de 01 a 06 com análises guardadas.
+OK: PDF da figura gerado no aplicativo nativo (experimento-1-atividade-medias.pdf, 20518 bytes).
+OK: PDF do relatório gerado no aplicativo nativo (experimento-1-relatorio.pdf, 75723 bytes).
+OK: relatório em Word gerado no aplicativo nativo (318202 bytes, 5 figura(s)).
+OK: comentário escrito no aplicativo nativo e incluído no relatório em Word.
+OK: o comando nativo de atualização respondeu no canal estável: «Não foi possível verificar agora (sem internet ou serviço indisponível).».

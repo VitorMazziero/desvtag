@@ -2,7 +2,7 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-**Estrutura de implementação planejada; os arquivos de código listados ainda não existem.** Caminhos relativos à raiz do repositório. Este mapa acompanha o [roteiro do produto](../planos-execucao/roteiro-produto.md), as [decisões aprovadas](../produto/decisoes-aprovadas.md) e a [estrutura do repositório](estrutura-repositorio.md). A etapa da v0.1 que cria ou amplia cada módulo está indicada nos [planos de etapa](../planos-execucao/README.md).
+Mapa de responsabilidades e caminhos relativos à raiz do repositório. O estado de cada implementação é definido pelo plano ativo/concluído e pelos registros de progresso abaixo; entradas planejadas não equivalem a métodos entregues. Este mapa acompanha o [roteiro do produto](../planos-execucao/roteiro-produto.md), as [decisões aprovadas](../produto/decisoes-aprovadas.md) e a [estrutura do repositório](estrutura-repositorio.md). A etapa da v0.1 que cria ou amplia cada módulo está indicada nos [planos de etapa](../planos-execucao/README.md).
 
 ## Convenção para manutenção
 
@@ -46,8 +46,8 @@ Todos os caminhos da tabela abaixo começam em **`app/crates/optima-core/src/`**
 | C11 | `designs/{spec,coding,factorial,fractional,alias,plackett_burman,randomization,generate,recommend,analysis,completely_randomized,randomized_block}.rs` (ET06; réplicas e pontos centrais em `generate.rs`; `randomized_block.rs` — DBC — na ET11) | Fatores + orçamento + semente + estrutura → matriz, codificação, ordem, geradores e confundimento; análise de efeitos, curvatura e Lenth; usa C01–C03, C06–C07 |
 | C12 | `designs/{central_composite,box_behnken}.rs` (ET07; a matriz personalizada não tem arquivo próprio: a análise `surface/model.rs` aceita qualquer matriz quantitativa e verifica posto e estimabilidade, [DT-0012](../decisoes-tecnicas/dt-0012-superficie-de-resposta.md)) | Fatores, níveis e geometria → planejamento de superfície e metadados; usa C11 e C06 para estimabilidade |
 | C13 | `designs/{mixed_levels,mixture,optimal,constraints,augmentation}.rs` | Região admissível + modelo alvo → matriz candidata/expandida e avaliação; usa C03, C06 e C11 |
-| C14 | `models/{mixed,repeated_measures,nonlinear,monod}.rs` | Dados dependentes/não lineares + especificação → ajuste, covariância e convergência; usa C03–C06; estimadores específicos documentados |
-| C15 | `power/{anova,regression,contrasts,simulation}.rs` | Efeito de interesse + estrutura + erro/precisão → potência/tamanho necessário; usa C03–C07 e C14 quando pertinente |
+| C14 | `models/mixed/` e `models/nonlinear/{mod,types,model,optimizer,fitting,profile}.rs` | Dados dependentes/não lineares + especificação → ajuste, covariância e convergência; usa C03–C06; estimadores específicos documentados |
+| C15 | `power/{mod,types,legacy,anova,t_test,advanced,fixed_design,simulation}.rs` (regressão/contrastes/simulação em execução na ET24) | Efeito de interesse + estrutura + erro/precisão → potência/tamanho necessário; usa C03–C07 e C14 quando pertinente |
 | C16 | `visualization/{boxplot,residuals}.rs` (ET05; as barras de médias vêm de `comparisons`); `effects` (efeitos principais e interações), Pareto e observado × predito (em `designs/analysis.rs`) (ET06), `surface/{terms,model,equation,grid,contour}.rs` (ET07: ajuste de segunda ordem, equação, malha, extrapolação e curvas de nível) | Resultado + domínio → séries e malhas científicas sem estilo; usa modelos, diagnósticos e comparações |
 | C17 | `optimization/{objective,constraints,desirability,search,candidates,optimize,evaluate,grid}.rs` (ET08; a proposta de confirmação é montada na interface a partir de `evaluate`, e o vínculo no projeto está em `optima-project/src/confirmation.rs`; a malha de desejabilidade do gráfico está em `grid.rs`) | Modelos + alvos + domínio → candidatos, restrições, compromisso, previsão e avaliação em condições dadas; usa C06, C16 (`surface`) e C11 (PCG32) |
 | C18 | `interpretation/{mod,facts,rules}.rs` (ET02); `recommendations.rs` com as recomendações de método | Dados/resultados/diagnósticos → mensagens por chave, parâmetros e evidência; não gera traduções nem recalcula testes |
@@ -133,3 +133,51 @@ Manutenção típica: corrigir o cálculo do Tukey em `comparisons/tukey.rs`; aj
 - `app/web/tests/e2e/`: percursos reais de importação, cálculo, reabertura e exportação; acrescentar verificação nativa Windows compatível com Tauri.
 
 Módulos Rust em arquivos separados seguem a organização documentada no [Rust Book](https://doc.rust-lang.org/book/ch07-02-defining-modules-to-control-scope-and-privacy.html). O transporte desktop usa os [comandos do Tauri](https://v2.tauri.app/develop/calling-rust/); o navegador terá motor isolado em Worker, apoiado pelo [guia wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen/examples/wasm-in-web-worker.html). Versões de ferramentas serão fixadas na fase de preparação.
+
+## Atualização da ET29 (v0.4 em desenvolvimento)
+
+- **U01/U02/U03:** `features/blocks/GuidedBlocks.tsx` reúne blocos declarados pelos painéis em `GuidedFlow`/`FlowBlock`. Só o coordenador desenha navegação. Conteúdo de etapas visitadas permanece montado; a memória de bloco usa projeto, criação, experimento e etapa na sessão. `features/workflow/Workflow.tsx` coordena a etapa, os bloqueios e a mistura temporária.
+- **U06:** os seis painéis de `features/design/` declaram configuração, geração/busca e matriz. Extremos reais do composto central vêm de `designGenerate` do motor. `DesignPanel` apresenta requisitos por família.
+- **U04/U05:** `features/data/DataGrid.tsx` protege condições geradas, destaca respostas e localiza erros; importação também pode começar em Variáveis, sem cadastro provisório. O mapeamento já oferece unidade experimental.
+- **U07/U08:** `features/analysis/presentation.ts` descreve método, resposta e modelo para revisão, exportação e comentários. Contrastes usam pesos por nível; os cálculos permanecem no Rust.
+- **U09/U16:** `services/charts/layout.ts` compõe títulos/notas pelo espaço disponível e intersecta retas; `svg.ts` fornece recorte das marcas. `effects.ts` usa legendas com amostras, nomes e níveis reais. `services/export` mantém a raiz independente do relatório, exclui ajudas interativas e evita títulos órfãos. Nenhuma inferência foi transferida à interface.
+- **U14:** `features/project/saveLabel.ts` distingue computador e Drive com horário; `workspace.ts` e `optima-project/document.rs` persistem `currentExperimentId` opcional. Arquivos antigos usam o primeiro experimento quando não há seleção válida.
+- **U18/U20:** `features/menus` contém Arquivo/Extras/Sobre, modais nativos e identidade de versão/commit. Etapas recolhíveis no computador e seletor em telas pequenas; blocos acima do conteúdo liberam largura para tabelas. A [DT-0027](../decisoes-tecnicas/dt-0027-percurso-unificado-e-composicao-das-figuras.md) registra a composição.
+
+## Atualização da ET27
+
+- **C17/E01:** `optimization/confirmation.rs` e operação `confirmationCompare` calculam diferença e classificação sem reestimar o modelo; limites, ausências, duplicatas e overflow explícitos.
+- **P01/U20:** `optima-project/comment.rs` recebe `editedAt` opcional; ação `editComment` preserva identidade/revisão/respostas/resolução. `CommentThread` fornece edição, cancelamento e foco.
+- **U08/U17:** `features/results/StatCell.tsx` centraliza células numéricas, valor completo e causas de indefinição; `i18n/format.ts` diferencia estatísticas e valor-p.
+- **U09/U16:** `ChartFigure` reúne menu e prévia; `charts/saturation.ts` e `ternary.ts` integram as famílias. `export/figureFonts.ts`, `pdfFonts.ts` e `fonts/` preservam as fontes licenciadas; `hatching.ts` converte padrões em linhas vetoriais recortadas no PDF. A composição continua nos arquivos de cada família.
+- **U10:** `GoalSummary`, `CandidateSummary`, seleção única e `ConfirmationOrigin` tornam explícitos critério, empate, escala 0–1 e origem histórica. `useConfirmationComparisons` coordena o pedido científico sem calcular na interface.
+- **U18:** tokens por papel e ajustes ópticos dos seis temas; telas estreitas e ampliação não transferem a rolagem das tabelas/figuras à página. [Relatório da ET27](../../validation/reports/et27/README.md).
+
+## Atualização da ET22
+
+- **P01/P03:** `optima-project/families.rs` define configurações e registros aditivos; `family_validation.rs` valida identidades, finitude, tipos e referências contra a revisão original. O esquema continua 1; campos ausentes são compatíveis. O core não faz IO.
+- **U13/U14:** `state/familyActions.ts` captura dados no início da solicitação, cria referências históricas sem perder edições posteriores e conserva registros imutáveis. `workspace.ts` encaminha respostas tardias ao experimento original e rejeita projeto/época substituídos. `revisionOps.ts` contém somente operações estruturais do histórico. A recuperação IndexedDB inclui esses estados.
+- **U07/U08:** `useFamilyRecorder.ts` coordena capturas e `familySignatures.ts` identifica mudanças relevantes. Editores de mistura, repetidas, saturação e potência preservam a configuração; os componentes puros `MixtureResults`, `RepeatedResults`, `NonlinearResults` e `PowerResults` apresentam o registro.
+- **U09/U16:** `savedFamily.ts` resolve atualidade e revisão; `ViewedFamily.tsx` compartilha a consulta transitória entre apresentação, comentários e relatório fora da tela. Um cálculo novo reinicia a consulta e abre Resumo. `familyExportMetadata.ts` preserva solicitação/proveniência e motivos de indefinição nos CSV/XLSX. Nenhum cálculo científico passou ao TypeScript.
+
+A [DT-0030](../decisoes-tecnicas/dt-0030-resultados-persistidos-das-familias.md) e o [plano da ET22](../planos-execucao/concluidos/et22-resultados-das-familias-novas.md) registram os critérios; as variantes metodológicas permanecem nas ET23–ET25.
+
+### ET23 — dados temporais e separação do estimador
+
+`models/mixed/{mod,types,random_intercept}.rs` separa a API, os contratos e o estimador v1, antes das covariâncias/inferências avançadas. `experiment::RowRecord.time_text` é opcional e entra no hash da revisão quando presente. Na interface, `unitIdentities.ts` conserva identidades e rótulos, `DataExportButtons.tsx` exporta unidade/tempo, e `revisionOps.ts` preserva o texto temporal. [Plano e verificação](../planos-execucao/concluidos/et23-modelos-mistos-e-medidas-repetidas-avancados.md).
+
+ET23: a decomposição completa do modelo e os proprietários da interface/persistência estão na [ficha C14](../modulos/c14-medidas-repetidas-avancadas.md).
+
+ET24 concluída localmente. A [ficha de saturação/perfil](../modulos/c14-ajuste-nao-linear.md) registra contratos, estimação e apresentação. O módulo C15 contém potência para regressão, contrastes e efeitos de dois níveis, com simulação e histórico.
+
+ET24: `features/menus/useProblemFocus.ts` compartilha a apresentação/foco de avisos dos Extras; `tool-form` em `app.css` separa grupos, ações e avisos. Só apresentação, sem cálculo ou gravação de resultado.
+
+Integridade ET24: `fixed_design` prepara razões de escala estáveis; `simulation_summary_consistent` no core verifica redundância do resumo sem amostrar. `optima-project/family_power_validation` confere estrutura/gl e chama essa rotina, sem refazer análise. `fitting` representa inferência não linear indisponível explicitamente. Bloco 02 aceito localmente, com reconferência Rust/WASM/navegadores/Windows na §9.7 do plano v0.4; etapa completa ainda aberta.
+
+ET24 bloco 03: `services/engine/taskQueue.ts` coordena duas filas limitadas (cálculo/serviço) compartilhadas pelos adaptadores; `EngineClient` fornece AbortSignal por canal e invalidação de gerações. `wasmClient` reutiliza um worker por fila e encerra apenas a tarefa cancelada; `tauriClient` aguarda o invoke real antes de liberar a vaga. `desktop/jobs::run_engine` impõe uma vaga global por classe antes de criar trabalho bloqueante. `features/analysis/useCalculationTask` vincula potência/saturação ao destino e ciclo de vida. Sem alteração de fórmulas/contratos científicos.
+
+ET24 bloco 04: `services/export/tableBands` compartilha a divisão de colunas entre PDF/Word; `pdfContent` associa títulos/legendas ao cabeçalho repetido e distribui larguras; `docxContent` preserva referência/linhas em 9 pt. `formatSignificant` apresenta extremos sem alterar dados. `PowerAssumptions` separa prosa e tabelas da apresentação; o relatório usa as linhas completas. `LikelihoodProfiles` conserva pontos fonte quando não há curva traçável. Aceite na §9.9 do plano v0.4.
+
+ET24 bloco 05 aceito localmente: `model::{gradient_components,jacobian_into}`, buffers de `optimizer` e preparações de `profile` conservam o multistart; `mixed::Evaluator` compartilha preparação por unidade e separa objetivo de solução/inversa. `power::{advanced,t_test,scale}` usa a semiamplitude como predicado da precisão, com estados parciais v2 validados em `family_power_validation`. Os contadores opcionais `validation_metrics` são exclusivos da feature de observação; `examples/et24_metrics` pode ler fixtures, a biblioteca mantém ausência de I/O. `measure_et24.mjs`, `prepare_et24_metrics_baseline.py` e `compare_et24_work.py` relacionam respostas completas, contagens e ensaios normais, preservando a base anterior em ZIP. Não são um segundo motor científico.
+
+Relatórios: `reportTables` compõe tabelas extensas em partes; `useReportTask` controla uma tarefa cancelável vinculada à origem; `reportWorker`/`workers/report.worker` isolam os mesmos conversores de PDF/Word em contexto temporário. `reportChildren` retém e encerra descendentes da descompressão local do PNG. `tableBands` é compatível com DOM do navegador e LinkeDOM; aliases PostScript em `pdfEngine` preservam famílias e pesos. Nenhuma linha científica é truncada para reduzir custo. Conferências e pendências na §9.10 do plano v0.4.

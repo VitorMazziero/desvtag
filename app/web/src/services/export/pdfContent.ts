@@ -1,3 +1,5 @@
+import { flattenHatching } from "./hatching";
+import { tableBands } from "./tableBands";
 // Converte o DOM limpo do relatório em conteúdo do pdfmake: títulos, parágrafos, listas, tabelas,
 // interpretação e figuras (SVG vetorial). Só leitura do DOM e montagem de objetos; sem biblioteca
 // de PDF aqui, para testar a conversão sem gerar arquivo.
@@ -63,25 +65,18 @@ const GLYPHS: Array<[RegExp, string]> = [[/→/g, "–"]];
 const supported = (text: string): string =>
   GLYPHS.reduce((t, [from, to]) => t.replace(from, to), text);
 
-/** Cor do traço do padrão hachurado `id`: o conversor de PDF não desenha padrões. */
-function hatchColors(svg: string): Map<string, string> {
-  const colors = new Map<string, string>();
-  const pattern = /<pattern id="([^"]+)"[^>]*>(?:(?!<\/pattern>).)*?stroke="([^"]+)"/g;
-  for (const m of svg.matchAll(pattern)) colors.set(m[1] ?? "", m[2] ?? "#9a3412");
-  return colors;
-}
-
-/**
- * Adapta o SVG ao conversor de PDF (svg-to-pdfkit): fonte embutida (Roboto), padrão hachurado como
- * sombreado translúcido e contorno de texto (`paint-order`, sem suporte) como cópia por baixo.
- */
+/** Preserve selected embedded fonts and expand hatching into vector lines. */
 export function pdfSvg(svg: string): string {
-  const colors = hatchColors(svg);
-  let out = supported(svg).replace(/font-family="[^"]*"/g, `font-family="${FONT}"`);
-  out = out.replace(/fill="url\(#([^)"]+)\)"(?: fill-opacity="[\d.]+")?/g, (m, id: string) => {
-    const color = colors.get(id);
-    return color === undefined ? m : `fill="${color}" fill-opacity="0.3"`;
-  });
+  const family = /font-family="([^"]*)"/.exec(svg)?.[1] ?? "";
+  const selectedFont = family.includes("DejaVu Serif")
+    ? "DejaVu Serif"
+    : family.includes("DejaVu Sans Mono")
+      ? "DejaVu Sans Mono"
+      : FONT;
+  let out = supported(flattenHatching(svg))
+    .replace(/font-family="[^"]*"/g, `font-family="${selectedFont}"`)
+    .replace(/<text\b(?![^>]*font-family=)/g, `<text font-family="${selectedFont}"`);
+
   out = out.replace(
     /<text\b([^>]*?)\spaint-order="stroke"([^>]*)>([^<]*)<\/text>/g,
     (_m, before: string, after: string, content: string) => {
@@ -167,12 +162,33 @@ function tableNode(table: HTMLTableElement): PdfNode[] {
   });
   const columns = Math.max(...body.map((r) => r.length));
   for (const row of body) while (row.length < columns) row.push({ text: "" });
-  const out: PdfNode[] = [];
-  const caption = table.querySelector("caption");
-  if (caption?.textContent?.trim())
-    out.push({ text: caption.textContent.trim(), bold: true, fontSize: 9.5, margin: [0, 8, 0, 2] });
-  out.push({
-    table: { headerRows, widths: Array(columns).fill("auto"), body },
+  const available = CONTENT_WIDTH - columns * 7 - 1;
+  const descriptive =
+    columns >= 4 &&
+    rows.slice(headerRows).some((row) => {
+      const first = row.querySelector("th,td");
+      return (
+        first && !first.classList.contains("num") && (first.textContent?.trim().length ?? 0) > 20
+      );
+    });
+  const firstWidth =
+    table.dataset.paperOrdinal === "true"
+      ? 24
+      : descriptive
+        ? Math.max(available / columns, Math.min(available * 0.45, available - (columns - 1) * 72))
+        : available / columns;
+  const widths =
+    columns === 1
+      ? [available]
+      : [firstWidth, ...Array(columns - 1).fill((available - firstWidth) / (columns - 1))];
+  const node: PdfNode = {
+    table: {
+      headerRows,
+      keepWithHeaderRows: headerRows > 0 ? Math.min(2, body.length - headerRows) : 0,
+      dontBreakRows: true,
+      widths,
+      body,
+    },
     layout: {
       hLineWidth: () => 0.5,
       vLineWidth: () => 0.5,
@@ -183,10 +199,37 @@ function tableNode(table: HTMLTableElement): PdfNode[] {
       paddingTop: () => 2,
       paddingBottom: () => 2,
     },
-    fontSize: columns <= 5 ? 9 : columns <= 8 ? 8 : 7,
+    fontSize: 9,
     margin: [0, 2, 0, 8],
-  });
-  return out;
+  };
+  const caption = table.querySelector("caption");
+  if (caption?.textContent?.trim())
+    tableHeading(node, {
+      text: caption.textContent.trim(),
+      bold: true,
+      fontSize: 9.5,
+      margin: [0, 4, 0, 2],
+    });
+  return [node];
+}
+
+/** Table headers are moved/repeated atomically by pdfmake; external captions are not. */
+function tableHeading(node: PdfNode, heading: PdfNode) {
+  const table = node.table as {
+    body: PdfNode[][];
+    headerRows: number;
+    widths: number[];
+    keepWithHeaderRows: number;
+  };
+  const cell = {
+    ...heading,
+    headlineLevel: undefined,
+    colSpan: table.widths.length,
+    border: [false, false, false, false],
+  };
+  table.body.unshift([cell, ...Array.from({ length: table.widths.length - 1 }, () => ({}))]);
+  table.headerRows++;
+  table.keepWithHeaderRows = Math.min(2, table.body.length - table.headerRows);
 }
 
 function listNode(list: Element): PdfNode[] {
@@ -215,6 +258,10 @@ function definitionList(dl: Element): PdfNode[] {
 
 function blockNode(el: Element): PdfNode[] {
   const tag = el.tagName.toUpperCase();
+  if (el.hasAttribute("data-report-keep-together")) {
+    const stack = blocks(el);
+    return stack.length ? [{ stack, unbreakable: true }] : [];
+  }
   const heading = HEADING[tag];
   if (heading) {
     const parts = inline(el, { bold: true });
@@ -231,7 +278,7 @@ function blockNode(el: Element): PdfNode[] {
     case "DL":
       return definitionList(el);
     case "TABLE":
-      return tableNode(el as HTMLTableElement);
+      return tableBands(el as HTMLTableElement).flatMap(tableNode);
     case "SVG":
       return [svgNode(el)];
     case "HR":
@@ -243,6 +290,26 @@ function blockNode(el: Element): PdfNode[] {
     default:
       return blocks(el);
   }
+}
+
+/** Parte do bloco que deve acompanhar o título anterior e o que sobra dele. */
+function headingLead(node: PdfNode): { first: PdfNode; rest?: PdfNode } | undefined {
+  if ("text" in node && !("ol" in node) && !("ul" in node)) return { first: node };
+  for (const kind of ["ol", "ul"] as const) {
+    const items = node[kind];
+    if (!Array.isArray(items) || items.length === 0) continue;
+    const start = typeof node.start === "number" ? node.start : 1;
+    const margin = node.margin;
+    const first = { [kind]: [items[0]], ...(kind === "ol" ? { start } : {}), margin: [0, 2, 0, 0] };
+    if (items.length === 1) return { first: { ...first, margin } };
+    const rest = {
+      [kind]: items.slice(1),
+      ...(kind === "ol" ? { start: start + 1 } : {}),
+      margin: [0, 0, 0, 6],
+    };
+    return { first, rest };
+  }
+  return undefined;
 }
 
 /** Blocos de um elemento: texto solto vira parágrafo; elementos de bloco são convertidos. */
@@ -263,5 +330,30 @@ export function blocks(root: Element): PdfNode[] {
     }
   }
   flush();
-  return out;
+  const bound: PdfNode[] = [];
+  for (const node of out) {
+    const preceding = bound.at(-1);
+    if (node.table && preceding?.headlineLevel) {
+      bound.pop();
+      tableHeading(node, preceding);
+    } else if (preceding?.headlineLevel && node.unbreakable && Array.isArray(node.stack)) {
+      bound.pop();
+      bound.push({ ...node, stack: [preceding, ...node.stack] });
+      continue;
+    } else if (preceding?.headlineLevel) {
+      // Título seguido de parágrafo ou lista: o título nunca fica sozinho no fim da página (o
+      // contêiner da lista «começa» na página do título mesmo quando o primeiro item vai para a
+      // seguinte). Amarra-se ao parágrafo ou ao primeiro item; o restante da lista continua a
+      // numeração (AU-U11).
+      const lead = headingLead(node);
+      if (lead) {
+        bound.pop();
+        bound.push({ stack: [preceding, lead.first], unbreakable: true });
+        if (lead.rest) bound.push(lead.rest);
+        continue;
+      }
+    }
+    bound.push(node);
+  }
+  return bound;
 }

@@ -2,7 +2,7 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-Índice geral da documentação do EnziTAG Optima. Documentos escritos em português; nomes conforme a [convenção de nomenclatura](convencoes/nomenclatura.md).
+Índice geral da documentação do DesvTAG. Documentos escritos em português; nomes conforme a [convenção de nomenclatura](convencoes/nomenclatura.md).
 
 ## Por onde começar
 

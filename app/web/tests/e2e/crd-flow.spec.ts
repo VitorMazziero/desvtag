@@ -2,7 +2,9 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
+import { openFigureMenu } from "./figureTools";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 
 // DIC aleatorizado com o motor Rust real (WebAssembly): definir o fator categórico → gerar a ordem
 // de execução (conferida contra a reimplementação independente em Python) → preencher respostas →
@@ -33,11 +35,11 @@ test.describe("DIC aleatorizado (um fator categórico)", () => {
     test.setTimeout(120_000);
     await page.goto("/");
     await page.getByLabel("Nome do projeto").fill("Enzimas — DIC");
-    await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "plan");
 
     await page.getByRole("button", { name: "Adicionar fator" }).click();
     await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
+    await page.getByLabel("Tipo").first().selectOption("categorical");
     await page.getByLabel("Níveis (opcional)").fill(reference.levels.join("; "));
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).nth(1).fill("Atividade");
@@ -46,6 +48,8 @@ test.describe("DIC aleatorizado (um fator categórico)", () => {
     // Só há fator categórico: o painel do DIC já vem selecionado.
     await expect(page.getByTestId("crd-panel")).toBeVisible();
     await page.getByLabel("Unidades experimentais por nível").fill(String(reference.replicates));
+    if (!(await page.getByLabel("Semente da aleatorização").isVisible()))
+      await page.getByText("Reprodutibilidade (semente do sorteio)", { exact: true }).click();
     await page.getByLabel("Semente da aleatorização").fill(String(reference.seed));
     await expect(page.getByTestId("crd-count")).toContainText("20 ensaios: 4 níveis × 5 unidades.");
     await page.getByRole("button", { name: "Gerar planejamento" }).click();
@@ -98,16 +102,18 @@ test.describe("DIC aleatorizado (um fator categórico)", () => {
     // Personalização da figura: título, sem letras; vale para a tela e para o SVG exportado.
     const means = page.getByTestId("means-chart");
     await expect(means).toContainText("Letras em comum = diferença não detectada");
+    await openFigureMenu(means);
     await means.getByText("Personalizar figura").click();
     await means.getByLabel("Título", { exact: true }).fill("Atividade por condição");
     await means.getByLabel("Mostrar letras de comparação").uncheck();
-    await expect(means.locator("svg title")).toHaveText("Atividade por condição");
+    await expect(means.locator("svg > title")).toHaveText("Atividade por condição");
     await expect(means).not.toContainText("Letras em comum");
     await expect(means.locator('text[data-figure="letters"]')).toHaveCount(0);
     // A tabela de resultados mantém as letras calculadas: só a exibição da figura mudou.
     await expect(page.getByTestId("letters-0")).toBeVisible();
 
     const svgDownload = page.waitForEvent("download");
+    await openFigureMenu(means);
     await means.getByRole("button", { name: /Figura — SVG/ }).click();
     const svg = readFileSync((await (await svgDownload).path()) as string, "utf8");
     expect(svg).toContain("Atividade por condição");
@@ -116,7 +122,7 @@ test.describe("DIC aleatorizado (um fator categórico)", () => {
 
     // Salvar → abrir: o DIC, as unidades e a personalização voltam do arquivo.
     const saveDownload = page.waitForEvent("download");
-    await page.getByRole("button", { name: "Salvar", exact: true }).click();
+    await page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
     const file = await (await saveDownload).path();
     expect(readFileSync(file as string).length).toBeGreaterThan(0);
     await page.reload();
@@ -124,7 +130,7 @@ test.describe("DIC aleatorizado (um fator categórico)", () => {
     await page.getByRole("button", { name: "Abrir…" }).click();
     await (await chooser).setFiles(file as string);
     await expect(page.getByTestId("anova-table")).toBeVisible();
-    await expect(page.getByTestId("means-chart").locator("svg title")).toHaveText(
+    await expect(page.getByTestId("means-chart").locator("svg > title")).toHaveText(
       "Atividade por condição",
     );
     await expect(page.getByTestId("means-chart")).not.toContainText("Letras em comum");
@@ -143,10 +149,10 @@ test.describe("CRD in English", () => {
 
   test("panel, units and count follow the language", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Plan an experiment/ }).check();
-    await page.getByRole("button", { name: "Next" }).click();
+    await startObjective(page, "plan");
     await page.getByRole("button", { name: "Add factor" }).click();
     await page.getByLabel("Name", { exact: true }).first().fill("Condition");
+    await page.getByLabel(/^Type/).first().selectOption("categorical");
     await page.getByLabel("Levels (optional)").fill("A; B; C");
     await page.getByRole("button", { name: "Add response" }).click();
     await page.getByLabel("Name", { exact: true }).nth(1).fill("Activity");

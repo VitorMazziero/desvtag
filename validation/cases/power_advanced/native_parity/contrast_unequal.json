@@ -1,0 +1,131 @@
+{
+  "request": {
+    "alpha": 0.05,
+    "design": {
+      "allocation": [
+        1,
+        2,
+        1
+      ],
+      "means": [
+        10.0,
+        11.2,
+        12.0
+      ],
+      "type": "contrast",
+      "weights": [
+        -2.0,
+        1.0,
+        1.0
+      ]
+    },
+    "goal": {
+      "n": 8,
+      "type": "powerAt"
+    },
+    "sigma": 1.2,
+    "simulation": {
+      "replications": 50000,
+      "seed": 20261106
+    },
+    "twoSided": true
+  },
+  "result": {
+    "critical": 2.045229642132703,
+    "curve": [
+      {
+        "n": 1,
+        "power": 0.07908425634408445
+      },
+      {
+        "n": 2,
+        "power": 0.2586294809843326
+      },
+      {
+        "n": 3,
+        "power": 0.4207213723787593
+      },
+      {
+        "n": 4,
+        "power": 0.5575763145881086
+      },
+      {
+        "n": 5,
+        "power": 0.6690177537935591
+      },
+      {
+        "n": 6,
+        "power": 0.7568145954053327
+      },
+      {
+        "n": 7,
+        "power": 0.8241052060776438
+      },
+      {
+        "n": 8,
+        "power": 0.8745140324457364
+      },
+      {
+        "n": 9,
+        "power": 0.9115578763445352
+      },
+      {
+        "n": 10,
+        "power": 0.9383375974491428
+      },
+      {
+        "n": 11,
+        "power": 0.9574245045308839
+      },
+      {
+        "n": 12,
+        "power": 0.9708604751577493
+      },
+      {
+        "n": 13,
+        "power": 0.9802150925501205
+      },
+      {
+        "n": 14,
+        "power": 0.986664445928026
+      },
+      {
+        "n": 15,
+        "power": 0.9910716630638952
+      },
+      {
+        "n": 16,
+        "power": 0.9940593112994464
+      }
+    ],
+    "df1": 29.0,
+    "df2": 0.0,
+    "halfWidth": {
+      "status": "defined",
+      "value": 2.0349777999201075
+    },
+    "issues": [],
+    "n": 8,
+    "noncentrality": 3.216121008829478,
+    "power": {
+      "status": "defined",
+      "value": 0.8745140324457364
+    },
+    "provenance": {
+      "engineVersion": "0.4.0-dev",
+      "methodId": "power_analysis",
+      "methodVersion": 2
+    },
+    "simulation": {
+      "algorithm": "pcg32-stream54/u32-midpoint/box-muller/marsaglia-tsang/gaussian-statistics-v1",
+      "ciLower": 0.870476829444623,
+      "ciUpper": 0.8763057958613145,
+      "estimate": 0.87342,
+      "rejections": 43671,
+      "replications": 50000,
+      "seed": 20261106,
+      "standardError": 0.0014869936354941133
+    },
+    "total": 32
+  }
+}

@@ -11,7 +11,7 @@ Como o aplicativo e o repositório se organizam.
 | [Estrutura do repositório](estrutura-repositorio.md) | Árvore de pastas e arquivos, o que já existe e a etapa que cria cada parte |
 
 | [Dependências](dependencias.md) | Dependências diretas, papel, licença e compatibilidade WASM |
-| [Formato `.enzitag`](formato-enzitag.md) | Contêiner, manifesto, documento, versões, limites e diagnósticos |
+| [Formato do projeto DesvTAG](formato-enzitag.md) | Contêiner, manifesto, documento, versões, limites e diagnósticos |
 | [Edição simultânea](edicao-simultanea.md) | **Especificação** (sem implementação): operações, conflitos, presença, transporte e verificação (ET20) |
 
 | [Limites operacionais](limites-operacionais.md) | Tempos e memória medidos; limites e comportamento ao excedê-los (ET10) |

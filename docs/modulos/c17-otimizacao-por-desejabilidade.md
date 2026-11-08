@@ -53,3 +53,7 @@ Ver [seção 7 do método](../metodos/busca-otimizacao.md#7-casos-sem-resultado-
 ## 7. Testes e validação
 
 Testes unitários de desejabilidade, hipercubo latino e Nelder–Mead; `tests/optimization_validation.rs` (6 casos contra busca exaustiva, sondagens contra NumPy, semente, domínio estendido, recusas, malha); paridade WebAssembly; testes do cliente (cancelamento); E2E (exemplo 04, limite inviável, domínio estendido, objetivo inválido, cancelamento, confirmação e reabertura); axe nos três temas.
+
+## ET27 — Conferência da confirmação
+
+`optimization/confirmation.rs` expõe `compare_confirmation`: calcula observado−previsto e classifica missing/below/above/within/noInterval com inclusão dos limites. Solicitações repetidas ou não finitas, limites invertidos e excesso de linhas são recusados; subtração com overflow retorna `Stat` indefinido. Não reestima o modelo nem o intervalo. A operação aditiva `confirmationCompare` mantém protocolo 1. [DT-0029](../decisoes-tecnicas/dt-0029-conferencia-de-confirmacao-no-motor.md); testes de unidade, protocolo JSON e verificação nativa.

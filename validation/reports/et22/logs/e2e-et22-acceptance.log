@@ -1,0 +1,41 @@
+
+Running 18 tests using 3 workers
+
+(node:31140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (2.6s)
+  ok  4 [chromium] › tests\e2e\et22-families.spec.ts:223:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (2.0s)
+  ok  2 [chromium] › tests\e2e\et22-families.spec.ts:161:1 › T04: paired and mixed models retain separate immutable records (5.7s)
+  ok  1 [chromium] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (6.9s)
+(node:25084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [chromium] › tests\e2e\et22-families.spec.ts:258:1 › T09: a late family operation remains bound to its original experiment (5.0s)
+  ok  6 [chromium] › tests\e2e\et22-families.spec.ts:325:1 › T09: reload offers recovery of coexisting saved results (4.0s)
+(node:7296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [firefox] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (4.8s)
+  ok  7 [firefox] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (10.1s)
+  ok  9 [firefox] › tests\e2e\et22-families.spec.ts:161:1 › T04: paired and mixed models retain separate immutable records (7.1s)
+  ok 10 [firefox] › tests\e2e\et22-families.spec.ts:223:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (2.9s)
+(node:28584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [firefox] › tests\e2e\et22-families.spec.ts:325:1 › T09: reload offers recovery of coexisting saved results (4.8s)
+  ok 11 [firefox] › tests\e2e\et22-families.spec.ts:258:1 › T09: a late family operation remains bound to its original experiment (5.8s)
+(node:2024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [webkit] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (9.6s)
+  ok 14 [webkit] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (5.3s)
+  ok 15 [webkit] › tests\e2e\et22-families.spec.ts:161:1 › T04: paired and mixed models retain separate immutable records (7.3s)
+  ok 16 [webkit] › tests\e2e\et22-families.spec.ts:223:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (4.7s)
+  ok 17 [webkit] › tests\e2e\et22-families.spec.ts:258:1 › T09: a late family operation remains bound to its original experiment (6.4s)
+  ok 18 [webkit] › tests\e2e\et22-families.spec.ts:325:1 › T09: reload offers recovery of coexisting saved results (4.4s)
+
+  18 passed (37.0s)

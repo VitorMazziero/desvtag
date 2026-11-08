@@ -1,0 +1,18 @@
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+    Finished `test` profile [optimized + debuginfo] target(s) in 28.42s
+     Running tests\mixed_model_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\mixed_model_validation-b4633344621d7580.exe)
+
+running 2 tests
+test paired_tests_equal_scipy ... ok
+test mixed_models_equal_statsmodels_and_the_independent_satterthwaite ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\repeated_covariance_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\repeated_covariance_validation-edba6512d30a53ca.exe)
+
+running 2 tests
+test requested_structure_is_not_replaced_on_invalid_time_or_missing_pairs ... ok
+test advanced_reml_inference_emm_and_profiles_equal_dense_scipy ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+

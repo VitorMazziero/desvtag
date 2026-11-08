@@ -1,0 +1,172 @@
+import AxeBuilder from "@axe-core/playwright";
+import { expect, type Page, test } from "@playwright/test";
+import { startObjective } from "./startObjective";
+import { THEME_LIST } from "./themes";
+
+// ET29: percurso guiado por blocos (Anterior/Seguir, opções dependentes só depois da escolha,
+// «Mostrar tudo»), tela inicial com o «Avançar» junto das opções, menus e área do arquivo.
+
+// Parte do armazenamento vazio: o padrão do aplicativo é o percurso guiado.
+test.use({ locale: "pt-BR", storageState: { cookies: [], origins: [] } });
+
+async function startPlanning(page: Page) {
+  await page.goto("/");
+  await startObjective(page, "plan");
+  for (const [i, name] of ["Temperatura", "pH"].entries()) {
+    await page.getByRole("button", { name: "Adicionar fator" }).click();
+    await page.getByLabel("Nome", { exact: true }).nth(i).fill(name);
+    await page.getByLabel("Tipo").nth(i).selectOption("numeric");
+  }
+  await page.getByTestId("variables-blocks-next").click();
+  await page.getByRole("button", { name: "Adicionar resposta" }).click();
+  await page.getByLabel("Nome", { exact: true }).nth(2).fill("Atividade");
+  await page.getByRole("button", { name: "Avançar" }).click();
+}
+
+test("tela inicial: selecionar um bloco habilita o botão Começar", async ({ page }) => {
+  await page.goto("/");
+  const home = page.locator(".home-start");
+  const start = home.getByRole("button", { name: "Começar", exact: true });
+  await expect(home.getByRole("button")).toHaveCount(1);
+  await expect(start).toBeDisabled();
+  await expect(home.getByRole("radio")).toHaveCount(3);
+  await expect(
+    page.locator(".home-recent").getByRole("button", { name: "Abrir exemplo" }),
+  ).toBeVisible();
+
+  await home.getByText("Planejar experimento", { exact: true }).click();
+  await expect(page.getByTestId("objective-plan")).toBeChecked();
+  await expect(start).toBeEnabled();
+  await home.getByText("Analisar dados existentes", { exact: true }).click();
+  await expect(page.getByTestId("objective-plan")).not.toBeChecked();
+  await expect(page.getByTestId("objective-analyze")).toBeChecked();
+  await start.click();
+  await expect(page.getByRole("button", { name: "Importar arquivo (CSV ou XLSX)…" })).toBeVisible();
+});
+
+test("planejamento em blocos: níveis → objetivo e opções → geração; as opções só aparecem depois dos níveis", async ({
+  page,
+}) => {
+  test.setTimeout(90_000);
+  await startPlanning(page);
+  const blocks = page.getByTestId("data-blocks");
+  await page.getByTestId("data-blocks-next").click();
+  await expect(page.locator(".guided-actions:visible")).toHaveCount(1);
+  // Bloco 1: níveis. O seguinte está bloqueado até os níveis serem válidos.
+  await expect(blocks).toHaveAttribute("data-mode", "guided");
+  await expect(page.getByLabel("Temperatura — Nível baixo")).toBeVisible();
+  await expect(page.getByText("Triagem de fatores (dois níveis)")).toBeHidden();
+  await expect(page.getByTestId("data-blocks-next")).toBeDisabled();
+  await expect(page.getByTestId("twolevel-blocks-goal")).toBeDisabled();
+
+  await page.getByLabel("Temperatura — Nível baixo").fill("20");
+  await page.getByLabel("Temperatura — Nível alto").fill("40");
+  await page.getByLabel("pH — Nível baixo").fill("5");
+  await page.getByLabel("pH — Nível alto").fill("7");
+  await expect(page.getByTestId("data-blocks-next")).toBeEnabled();
+  await page.getByTestId("data-blocks-next").click();
+
+  // Bloco 2: objetivo e opções (as opções de planejamento já refletem os 2 fatores).
+  await expect(page.getByText("Triagem de fatores (dois níveis)")).toBeVisible();
+  await expect(page.getByText(/Fatorial completo — 4 ensaios/)).toBeVisible();
+  await expect(page.getByLabel("Temperatura — Nível baixo")).toBeHidden();
+  await page.getByTestId("data-blocks-next").click();
+
+  // Bloco 3: repetições e geração; ao gerar, a matriz abre sozinha (bloco 4).
+  await page.getByLabel("Pontos centrais").fill("2");
+  await page.getByRole("button", { name: "Gerar planejamento" }).click();
+  await expect(page.getByTestId("run-matrix")).toBeVisible();
+  await expect(page.getByTestId("data-blocks")).toContainText("Matriz de ensaios");
+  // Voltar aos níveis preserva o que foi digitado (os blocos não são desmontados).
+  await page.getByTestId("twolevel-blocks-levels").click();
+  await expect(page.getByLabel("Temperatura — Nível alto")).toHaveValue("40");
+});
+
+test("«Mostrar tudo» exibe todos os blocos e a preferência é lembrada", async ({ page }) => {
+  await startPlanning(page);
+  await expect(page.getByText("Triagem de fatores (dois níveis)")).toBeHidden();
+  await page.locator('[data-testid="show-all-blocks"]:visible').check();
+  await expect(page.getByTestId("data-blocks")).toHaveAttribute("data-mode", "all");
+  await expect(page.getByText("Triagem de fatores (dois níveis)")).toBeVisible();
+  await expect(page.getByLabel("Temperatura — Nível baixo")).toBeVisible();
+  await page.reload();
+  expect(await page.evaluate(() => localStorage.getItem("optima.showAllSections"))).toBe("1");
+});
+
+test("teclado: Tab alcança Anterior e Seguir e Enter troca de bloco", async ({ page }) => {
+  await page.goto("/");
+  await startObjective(page, "plan");
+  await page.getByTestId("variables-blocks-next").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("variables-blocks-responses")).toHaveAttribute(
+    "aria-current",
+    "step",
+  );
+  await page.getByTestId("variables-blocks-prev").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("variables-blocks-factors")).toHaveAttribute(
+    "aria-current",
+    "step",
+  );
+});
+
+test("menus: Extras abre a calculadora de potência; «Sobre e atualizações» traz versões e motor", async ({
+  page,
+}) => {
+  await page.goto("/");
+  // Fora do fluxo: nada de histórico, motor ou calculadora soltos na página.
+  await expect(page.locator("main").getByTestId("power-calculator")).toHaveCount(0);
+  await page.getByTestId("extras-menu").locator(":scope > summary").click();
+  await page.getByTestId("open-power").click();
+  await expect(page.getByTestId("power-dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByTestId("power-dialog")).toBeHidden();
+  await page.getByTestId("about-menu").locator(":scope > summary").click();
+  await page.locator(".engine-status > summary").click();
+  await expect(page.getByTestId("engine-version")).toBeVisible();
+  await expect(page.getByTestId("update-check")).toHaveCount(0); // só no aplicativo Windows
+  await page.keyboard.press("Escape");
+  await expect(page.getByTestId("engine-version")).toBeHidden();
+});
+
+test("área do arquivo: uma linha com nome, ações e um único indicador de estado", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1400, height: 800 });
+  await page.goto("/");
+  const bar = page.locator(".file-bar");
+  await expect(bar.getByRole("button", { name: "Novo projeto" })).toBeVisible();
+  await expect(bar.getByRole("button", { name: "Abrir…" })).toBeVisible();
+  await expect(
+    bar.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }),
+  ).toBeVisible();
+  const heights = await bar
+    .locator("input:visible, button:visible, summary:visible")
+    .evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+  expect(Math.max(...heights) - Math.min(...heights)).toBeLessThan(24); // tudo na mesma linha
+  await expect(page.getByTestId("save-details")).toContainText("Arquivo ainda não baixado");
+  await page.getByLabel("Nome do projeto").fill("Outro nome");
+  await expect(page.getByTestId("save-details")).toContainText("Alterações após o último arquivo");
+});
+
+for (const theme of THEME_LIST) {
+  test(`axe: percurso guiado e menus no tema ${theme}`, async ({ page }) => {
+    await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
+    await startPlanning(page);
+    const scan = async (label: string) => {
+      const result = await new AxeBuilder({ page }).analyze();
+      expect(result.violations, `${theme}/${label}`).toEqual([]);
+    };
+    await scan("escolha da família");
+    await page.getByTestId("data-blocks-next").click();
+    await scan("bloco 1");
+    await page.getByLabel("Temperatura — Nível baixo").fill("20");
+    await page.getByLabel("Temperatura — Nível alto").fill("40");
+    await page.getByLabel("pH — Nível baixo").fill("5");
+    await page.getByLabel("pH — Nível alto").fill("7");
+    await page.getByTestId("data-blocks-next").click();
+    await scan("bloco 2");
+    await page.getByTestId("file-menu").locator(":scope > summary").click();
+    await scan("menu do arquivo");
+  });
+}

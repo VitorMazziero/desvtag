@@ -1,6 +1,6 @@
 // @vitest-environment node
 // Distribuições no WebAssembly: os mesmos pontos de referência (mpmath, 60 dígitos) e as mesmas
-// tolerâncias do teste nativo (app/crates/optima-core/tests/distributions_validation.rs), pelo
+// tolerâncias do teste nativo (app/crates/desvtag-core/tests/distributions_validation.rs), pelo
 // protocolo JSON da operação `distributionEvaluate`.
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -11,12 +11,12 @@ import {
   type EngineResponse,
   PROTOCOL_VERSION,
 } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases/distributions");
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: pontos de referência com campos distintos por distribuição

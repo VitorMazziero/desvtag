@@ -2,11 +2,108 @@
 
 Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/). O produto segue versionamento semântico; a `0.x` é o **canal experimental**.
 
-## Planejado (ainda não implementado)
+## Pendências e escopo da verificação
 
-- [Plano da v0.4](docs/planos-execucao/plano-v0.4.md) (ET22–ET28): resultados das famílias novas guardados no projeto e nos relatórios; modelos mistos, não linear, potência, misturas e planejamentos ótimos avançados; Google Drive no Windows e verificado com contas reais; acabamento da interface; Safari real, canal de atualização ponta a ponta, domínio próprio e edição simultânea.
-- Medição das operações novas no limite de tamanho (Dunnett com muitos tratamentos).
+- Aceite do Google Drive com contas reais em web e Windows, publicação da nova URL e verificação dos canais de atualização. As decisões sobre edição simultânea e cobertura do Protimiza seguem no [plano da v0.4](docs/planos-execucao/plano-v0.4.md).
 - Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
+
+## [0.4.0] — em desenvolvimento
+
+- A identidade da versão passa a ser **DesvTAG**. O cabeçalho, a aba do navegador, Sobre e os novos relatórios e exportações usam a nova marca. Novos arquivos de projeto usam `.desvtag`, e a abertura de arquivos históricos `.enzitag` continua disponível. Sobre credita o desenvolvimento a Vítor Teixeira Mazziero.
+- Sessões não salvas da v0.3 restauram também a análise arquivada, com os campos de navegação ausentes preenchidos na abertura.
+- Dunnett reaproveita a integral comum às comparações. No ensaio WASM de 64 tratamentos, o tempo caiu de 51,3 s para 31 ms no caso balanceado e de 44,5 s para 151 ms no desbalanceado.
+- Dunnett refina a quadratura para controles pequenos frente aos tratamentos. O ajuste corrige valores-p ajustados e intervalos simultâneos em desbalanceamento extremo.
+
+### Integridade dos planejamentos ótimos (ET25)
+
+- Trocas D/I em desenhos saturados avaliam a informação do desenho substituído quando a remoção isolada é singular.
+- A avaliação pública de desenhos recusa dimensões incorretas, valores não finitos e pontos fora da região. Pontos admissíveis fora da malha continuam aceitos.
+- O resultado distingue término sem troca melhor de limite de passagens e informa tentativas, sucessos, falhas, recuperações e avaliações. Resultados anteriores continuam legíveis.
+- Campos numéricos do painel seguem a altura comum dos controles. Cartões, rótulos e explicações das restrições se adaptam a telas estreitas e texto ampliado.
+
+### Misturas e planejamentos ótimos avançados (ET25)
+
+- Misturas aceitam limites superiores e incluem traços de Cox e otimização de desejabilidade no simplex restrito.
+- Ampliação de superfícies preserva blocos. Planejamentos D/I aceitam fatores categóricos e apresentam variância de predição e diagnóstico de estimabilidade e confundimento.
+- Novos exemplos incluem mistura limitada e ótimo de níveis mistos em blocos. Os projetos preservam revisões, previsões e referências para relatórios e figuras.
+
+### Google Drive (ET26)
+
+- O Windows autoriza no navegador e guarda a credencial no cofre do sistema. A fila de gravação persiste entre sessões e retoma o envio quando a conexão volta.
+- É possível abrir arquivos compartilhados, compartilhar para leitura, salvar cópia e recuperar alterações em caso de conflito ou arquivo remoto removido.
+- Os fluxos foram verificados com simulação em web e Windows. O aceite com contas reais segue o [roteiro da ET26](docs/planos-execucao/ativos/et26-google-drive-completo-e-verificado.md#10-roteiro-de-aceite-com-contas-reais-t07--t08).
+
+### Interface e exportação (ET24)
+
+- Tela inicial adapta cartões e recentes à largura disponível e ao tamanho do texto; resumo de potência prioriza o resultado e separa prosa de números.
+- Perfis inconclusivos sem pontos suficientes preservam os dados fonte sem desenhar painéis vazios; aviso de inferência indisponível aparece no resumo.
+- Relatórios preservam todas as linhas e colunas; PDF/Word dividem tabelas largas em partes com referências de linha, fonte de pelo menos 9 pt e cabeçalhos legíveis. PDF mantém títulos e legendas com a primeira linha.
+- Apresentação de números extremos usa notação científica; valores completos permanecem nos arquivos de dados e nas dicas. Plurais de potência corrigidos em português e inglês.
+
+### Execução e cancelamento (ET24)
+
+- Cancelamento por canal preserva operações independentes de arquivo; duas filas limitam concorrência e permitem recuperar o worker após falha.
+- Windows limita globalmente a execução por classe e aguarda o término real do cálculo antes do próximo, mesmo após descartar a resposta cancelada.
+- Potência e saturação mostram falhas de execução, preservam o histórico e cancelam ao fechar ou trocar de destino.
+
+### Integridade científica (ET24)
+
+- Ajuste não linear exato preserva estimativas e curva e informa inferência indisponível, com correlação vazia serializável.
+- Potência avançada preserva resultados em mudanças extremas de unidade; arquivos recusam contagens, erros/intervalos de Monte Carlo e graus de liberdade contraditórios, sem recalcular ao abrir.
+- Tabelas de resultados com rolagem recebem foco pelo teclado.
+
+### Desempenho e limites de execução (ET24)
+
+- Perfis não lineares reutilizam inícios e buffers. A estimação REML reutiliza a preparação por unidade e calcula a inversa completa onde ela é necessária.
+- A busca por precisão usa a semiamplitude. Uma precisão válida permanece disponível quando a potência analítica ou a simulação fica indisponível.
+- Novos ajustes não lineares e mistos avançados têm limites de dimensão e trabalho. O aplicativo distingue um ajuste incompleto de um ajuste concluído com inferência parcial. Projetos históricos acima dos novos limites abrem com seus resultados salvos.
+- PDF e Word são gerados em worker, com cancelamento. Relatórios extensos montam as tabelas em partes e preservam as células.
+- Graus polinomiais fora da faixa suportada recebem erro explícito.
+
+### Não linear avançado (ET24)
+
+- Corrigidas caudas não centrais para efeitos extremos e orçamento explícito: falha numérica preserva o resultado anterior; espaçamento entre campos, ação e avisos dos Extras reconferido nos três navegadores.
+- Inícios/limites positivos editáveis, validação por campo e domínio validado no Rust; opções/resultados preservados no histórico.
+- Perfis de verossimilhança gaussianos com IC LR assintótico, estados de cada extremo, pontos fonte e figuras exportáveis. Unimodalidade conferida na região examinada; faixa delta/Wald da curva identificada separadamente.
+- Referência NIST Misra1d e quatro perfis independentes, incluindo Monod/Haldane/Hill, com paridade WASM. [Verificação e aceite local](validation/reports/et24/README.md).
+
+- Dois exemplos criados pelo aplicativo e preservados no formato de projeto: NIST Misra1d com perfil e potência de contraste com simulação.
+
+### Medidas repetidas avançadas (ET23)
+
+- Colunas e papéis de unidade/tempo em importação, grade, CSV/XLSX e revisões; identidades sem colisões e ordem temporal explícita.
+- Extensão científica v2 no Rust: REML CS/AR(1)/UN, hipóteses conjuntas e graus de liberdade de Fai–Cornelius, médias marginais/ajustes, referências de covariáveis e perfis com IC. UN marginal não recebe ICC/BLUP redundantes; falhas não trocam a estrutura pedida.
+- Configuração, resultados históricos, fontes das figuras e relatórios persistidos; nomes dos alvos de comentários compartilhados entre tela e relatório. Exemplo sintético 15 produzido pelo app real.
+- Sete casos independentes NumPy/SciPy, testes de entradas adversas, WASM/nativo e percursos nos três navegadores/seis temas. [Evidências e limites da verificação](validation/reports/et23/README.md).
+
+### ET29 — interface e confiabilidade
+
+- Percurso com um só conjunto de blocos e ações por etapa, memória de navegação na sessão e cálculo novo abrindo o Resumo; painéis de todas as famílias divididos em configuração, geração e matriz.
+- Objetivo tem blocos selecionáveis que habilitam um único botão **Começar**. A área Arquivo mostra destino e horário de salvamento. O seletor de experimentos preserva a seleção em projetos compatíveis.
+- Condições geradas protegidas, grade com largura útil e ações compactas, importação desde Variáveis, contraste por nível e revisão do método/modelo antes do cálculo.
+- Recorte de marcas e reta Q–Q; títulos/notas que ganham espaço; Pareto com margem pelos nomes e interações com legenda própria e níveis reais. Relatórios sem ajuda interativa, com método/termos, identidade de versão/commit e comentários reconhecíveis.
+- Espaçamentos e alinhamentos revistos a partir dos comentários no navegador; etapas compactas, tabelas roláveis e modais com rolagem isolada em telas pequenas.
+- Resultados antigos sinalizados, validação da potência, mensagens do motor traduzidas, contexto na importação, equação codificada e seletor de unidade experimental.
+
+Registro de implementação, avaliação por tarefa e limites no [relatório da ET29](validation/reports/et29/README.md).
+
+### Acabamento visual, figuras e confirmação (ET27)
+
+- Hierarquia e espaçamento ajustados nos seis temas; números com valor completo acessível e estados de indefinição distintos; tabelas sem quebra de números/intervalos.
+- Menu Figura com prévia neutra, exportação e personalização; fontes Serif/Mono incorporadas e hachura vetorial preservada no PDF. Ternário e saturação usam as mesmas ações.
+- Figuras com unidades, observações/n, eixos iguais no observado×predito, escala de cor e malha 3D legível. Otimização explicita critério, contagem/empates e candidatos no mapa 0–1; uma tabela também seleciona a confirmação.
+- Origem da confirmação consultável na revisão original e diferença observado−previsto calculada pelo motor. Comentários editáveis com histórico preservado e horário da edição.
+
+Avaliação ampliada e nativa concluída, com falhas iniciais, reconferências e limites registrados no [relatório da ET27](validation/reports/et27/README.md).
+
+### Resultados guardados das famílias novas (ET22)
+
+- Mistura, pareado/modelo misto, saturação e potência guardam entradas, revisão, assinatura, proveniência e resultados; abrir o projeto não recalcula. Configurações em edição ficam separadas dos registros calculados, inclusive quando inválidas.
+- A etapa Resultados permite alternar entre famílias e consultar cálculos anteriores. Figuras, tabelas, comentários e relatórios usam o registro consultado e seus nomes/unidades históricos. Um novo cálculo abre no Resumo.
+- HTML/PDF/Word completos, CSV/XLSX com precisão do motor e motivos de indefinição; coeficientes, componentes de variância e efeitos previstos por unidade. Exemplos 07/08/11/12 passam a trazer resultados.
+- Resposta tardia permanece no experimento de origem; época do projeto evita gravar em um projeto substituído. O instante de criação da interface usa a hora real. A inicialização preserva a recuperação anterior até o usuário decidir.
+
+Verificação por requisito, regressões, falhas corrigidas e Windows 10/WebView2 no [relatório da ET22](validation/reports/et22/README.md).
 
 ## [0.3.0] — 2026-11-02
 

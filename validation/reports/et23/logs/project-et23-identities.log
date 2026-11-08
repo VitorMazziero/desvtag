@@ -1,0 +1,136 @@
+   Compiling optima-project v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-project)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 06s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_project-a4cf74ae66c2bab4.exe)
+
+running 90 tests
+test archive::tests::refuses_to_encode_an_inconsistent_document ... ok
+test archive::tests::a_wrong_format_name_is_not_an_enzitag_file ... ok
+test archive::tests::rejects_garbage_and_truncated_files ... ok
+test archive::tests::encoding_recomputes_revision_hashes_so_the_ui_can_send_them_empty ... ok
+test archive::tests::encoding_is_deterministic ... ok
+test archive::tests::detects_tampering_through_the_manifest_hash ... ok
+test archive::tests::rejects_foreign_zip_files_and_unsafe_paths ... ok
+test archive::tests::encoding_is_reproducible_with_a_fixed_zip_timestamp ... ok
+test archive::tests::future_schema_is_refused_without_touching_the_input ... ok
+test archive::tests::round_trip_preserves_the_document_including_unicode ... ok
+test comment::tests::accepts_a_normal_comment_and_rejects_empty_or_long_text ... ok
+test comment::tests::analysis_target_requires_the_analysis_id ... ok
+test archive::tests::size_limits_are_enforced_before_and_during_reading ... ok
+test comment::tests::optional_fields_stay_out_of_the_json ... ok
+test comment::tests::old_comments_default_to_unedited_and_edits_round_trip ... ok
+test comment::tests::replies_are_checked_too ... ok
+test archive::tests::unknown_entries_are_ignored_with_a_warning ... ok
+test archive::tests::highly_compressible_entry_is_rejected_by_the_entry_limit ... ok
+test comment::export_bindings_commenttargetkind ... ok
+test document::export_bindings_entrypath ... ok
+test document::tests::a_project_without_comments_keeps_the_same_json ... ok
+test document::tests::active_experiment_is_optional_for_older_documents ... ok
+test document::tests::comments_must_point_to_existing_revisions_and_analyses ... ok
+test document::tests::current_data_is_the_last_revision ... ok
+test document::tests::detects_structural_problems ... ok
+test document::tests::new_project_is_valid_and_round_trips_through_json ... ok
+test document::tests::with_hashes_fills_missing_hashes_and_fixes_stale_ones ... ok
+test comment::export_bindings_commentreply ... ok
+test confirmation::export_bindings_confirmationprediction ... ok
+test confirmation::export_bindings_experimentorigin ... ok
+test comment::export_bindings_commenttarget ... ok
+test confirmation::export_bindings_confirmationplan ... ok
+test experiment::tests::hash_of_empty_data_matches_an_independent_sha256 ... ok
+test experiment::tests::same_content_same_hash_different_content_different_hash ... ok
+test experiment::tests::time_is_optional_and_changes_the_data_revision_hash ... ok
+test comment::export_bindings_comment ... ok
+test families::export_bindings_analysisfamily ... ok
+test experiment::export_bindings_responsespec ... ok
+test experiment::export_bindings_rowrecord ... ok
+test experiment::export_bindings_factorspec ... ok
+test families::export_bindings_mixtureselection ... ok
+test families::export_bindings_pairingsnapshot ... ok
+test families::export_bindings_mixtureinputsnapshot ... ok
+test experiment::export_bindings_experimentdata ... ok
+test families::export_bindings_powergoalkind ... ok
+test families::export_bindings_powerkind ... ok
+test families::export_bindings_nonlinearselection ... ok
+test families::export_bindings_nonlinearinputsnapshot ... ok
+test families::export_bindings_repeatedmethod ... ok
+test families::export_bindings_powerselection ... ok
+test families::export_bindings_repeatedselection ... ok
+test analysis::export_bindings_analysisoptions ... ok
+test families::export_bindings_nonlinearrecord ... ok
+test families::export_bindings_powerrecord ... ok
+test families::export_bindings_repeatedinputsnapshot ... ok
+test families::export_bindings_mixturerecord ... ok
+test figure_style::export_bindings_figureannotation ... ok
+test families::export_bindings_repeatedoutput ... ok
+test figure_style::tests::default_style_is_empty_and_serializes_to_nothing ... ok
+test figure_style::tests::rejects_overlong_text_and_unknown_scales ... ok
+test figure_style::tests::round_trips_only_the_fields_that_were_set ... ok
+test figure_style::tests::validates_manual_letters_annotations_and_appearance ... ok
+test integrity::tests::sha256_matches_the_standard_test_vectors ... ok
+test integrity::tests::verification_checks_hash_size_and_path ... ok
+test migrations::tests::current_version_passes_unchanged ... ok
+test migrations::tests::future_version_is_refused_with_both_versions_reported ... ok
+test migrations::tests::missing_zero_or_non_numeric_version_is_invalid ... ok
+test revision::export_bindings_revisionreason ... ok
+test figure_style::export_bindings_figurestyle ... ok
+test xlsx::tests::rejects_non_xlsx_bytes ... ok
+test xlsx_writer::export_bindings_exportcell ... ok
+test xlsx::export_bindings_sheetdata ... ok
+test xlsx_writer::export_bindings_exportsheet ... ok
+test xlsx_writer::tests::column_names_follow_excel ... ok
+test xlsx_writer::tests::column_widths_follow_the_content_within_limits ... ok
+test xlsx_writer::tests::formula_like_text_gets_the_quote_prefix_style_and_numbers_stay_numbers ... ok
+test xlsx_writer::tests::invalid_workbooks_are_refused ... ok
+test xlsx_writer::tests::json_cells_are_numbers_text_or_null ... ok
+test xlsx_writer::tests::round_trips_through_the_project_reader_keeping_text_numbers_and_empties ... ok
+test xlsx_writer::export_bindings_exportworkbook ... ok
+test revision::export_bindings_revision ... ok
+test families::export_bindings_savednonlinear ... ok
+test families::export_bindings_savedpower ... ok
+test families::export_bindings_savedmixture ... ok
+test families::export_bindings_repeatedrecord ... ok
+test families::export_bindings_savedrepeated ... ok
+test analysis::export_bindings_analysisrecord ... ok
+test analysis::export_bindings_analysisresult ... ok
+test document::export_bindings_projectdocument ... ok
+test document::export_bindings_experiment ... ok
+
+test result: ok. 90 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+
+     Running tests\family_storage.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\family_storage-929fed74c68c82df.exe)
+
+running 8 tests
+test selecting_a_family_without_a_result_is_not_a_valid_saved_state ... ok
+test older_documents_omit_every_new_field ... ok
+test power_preserves_edited_assumptions_separately_from_the_successful_request ... ok
+test missing_revisions_variables_duplicates_and_nonfinite_values_are_refused ... ok
+test repeated_storage_distinguishes_paired_and_mixed_results ... ok
+test historical_variable_references_survive_deletion_from_the_latest_revision ... ok
+test nonlinear_keeps_its_fitted_model_and_previous_engine_even_after_selection_changes ... ok
+test mixture_keeps_the_request_and_all_immutable_records ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\import_xlsx_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\import_xlsx_validation-c0641169d28412b5.exe)
+
+running 3 tests
+test a_zip_that_is_not_a_workbook_is_rejected ... ok
+test selects_another_sheet_and_reports_unknown_sheets ... ok
+test reads_stored_values_as_text_without_running_formulas ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\project_file_validation.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\project_file_validation-8ad13d78ddaed2fe.exe)
+
+running 3 tests
+test reads_the_python_written_file_into_exactly_the_expected_document ... ok
+test invalid_files_are_refused_with_the_expected_codes_and_never_modified ... ok
+test rust_written_files_carry_hashes_that_python_computes_identically ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests optima_project
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

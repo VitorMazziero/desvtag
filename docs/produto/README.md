@@ -2,7 +2,7 @@
 
 **Estado:** vigente · **Atualizado em:** 2026-11-01
 
-O que o EnziTAG Optima deve ser e por quê. Estes documentos definem requisitos; não descrevem implementação existente.
+O que o DesvTAG deve ser e por quê. Estes documentos definem requisitos; não descrevem implementação existente.
 
 | Documento | Conteúdo |
 |---|---|

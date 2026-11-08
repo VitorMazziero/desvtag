@@ -8,7 +8,7 @@ import {
 } from "./contracts.generated";
 
 /** Transporte de texto: envia a solicitação JSON e devolve a resposta JSON. */
-export type Transport = (requestJson: string) => Promise<string>;
+export type Transport = (requestJson: string, signal: AbortSignal) => Promise<string>;
 
 /** Ambiente em que o cliente executa o motor. */
 export type EngineKind = "wasm" | "tauri";
@@ -23,7 +23,8 @@ export interface EngineClient {
   /**
    * Cancela a tarefa em andamento do canal: a resposta, quando e se chegar, é descartada com
    * {@link StaleResponseError}. No navegador o Worker é encerrado e recriado (interrompe o cálculo);
-   * no Windows o comando nativo termina sozinho e apenas o resultado é descartado.
+   * no Windows o comando nativo termina sozinho e mantém ocupada sua vaga na fila.
+   * Operações de arquivo usam uma fila independente; cancelar não interrompe outros canais.
    */
   cancel(channel: string): void;
   dispose(): void;
@@ -79,37 +80,51 @@ export function createEngineClient(
   kind: EngineKind,
   transport: Transport,
   dispose: () => void = () => {},
-  abort: () => void = () => {},
+  abort: (channel: string) => void = () => {},
 ): EngineClient {
   const latestByChannel = new Map<string, string>();
+  const controllers = new Map<string, AbortController>();
+  let disposed = false;
   return {
     kind,
     async request(operation, options) {
+      if (disposed) throw new Error("Engine client disposed");
       const channel = options?.channel ?? "default";
       const taskId = nextTaskId();
       latestByChannel.set(channel, taskId);
+      controllers.get(channel)?.abort();
+      const controller = new AbortController();
+      controllers.set(channel, controller);
       const request: EngineRequest = { protocolVersion: PROTOCOL_VERSION, taskId, operation };
-      let text: string;
       try {
-        text = await transport(JSON.stringify(request));
-      } catch (error) {
-        // Tarefa cancelada ou substituída: o erro de transporte é irrelevante.
+        let text: string;
+        try {
+          text = await transport(JSON.stringify(request), controller.signal);
+        } catch (error) {
+          if (latestByChannel.get(channel) !== taskId) throw new StaleResponseError(taskId);
+          throw error;
+        }
         if (latestByChannel.get(channel) !== taskId) throw new StaleResponseError(taskId);
-        throw error;
+        const response = parseResponse(text);
+        if (response.taskId !== taskId)
+          throw new ProtocolError(`Response task id ${response.taskId} does not match ${taskId}`);
+        return response;
+      } finally {
+        if (controllers.get(channel) === controller) controllers.delete(channel);
       }
-      const response = parseResponse(text);
-      if (response.taskId !== taskId) {
-        throw new ProtocolError(`Response task id ${response.taskId} does not match ${taskId}`);
-      }
-      if (latestByChannel.get(channel) !== taskId) {
-        throw new StaleResponseError(taskId);
-      }
-      return response;
     },
     cancel(channel) {
       latestByChannel.set(channel, `cancelled-${nextTaskId()}`);
-      abort();
+      controllers.get(channel)?.abort();
+      controllers.delete(channel);
+      abort(channel);
     },
-    dispose,
+    dispose() {
+      disposed = true;
+      latestByChannel.clear();
+      for (const controller of controllers.values()) controller.abort();
+      controllers.clear();
+      dispose();
+    },
   };
 }

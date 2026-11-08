@@ -1,0 +1,17 @@
+   Compiling optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 02s
+     Running unittests src\lib.rs (D:/Arquivos_de_Programas/Rust/target\debug\deps\optima_core-144d256b6bfbf868.exe)
+
+running 10 tests
+test optimization::confirmation::tests::includes_both_limits_and_preserves_the_signed_difference ... ok
+test optimization::confirmation::tests::rejects_invalid_bounds_values_and_duplicate_keys ... ok
+test optimization::confirmation::tests::missing_observation_does_not_become_a_zero_difference ... ok
+test optimization::confirmation::tests::subtraction_overflow_is_explicit ... ok
+test optimization::confirmation::tests::absent_interval_is_distinct_from_a_point_inside_an_interval ... ok
+test optimization::confirmation::export_bindings_confirmationstatus ... ok
+test optimization::confirmation::export_bindings_confirmationobservation ... ok
+test optimization::confirmation::export_bindings_confirmationcomparerequest ... ok
+test optimization::confirmation::export_bindings_confirmationcomparisons ... ok
+test optimization::confirmation::export_bindings_confirmationcomparison ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 380 filtered out; finished in 0.03s

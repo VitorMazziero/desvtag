@@ -1,7 +1,7 @@
 // @vitest-environment node
 // Planejamentos de dois níveis no WebAssembly: as mesmas matrizes (enumeração independente em
 // Python, PCG32 reimplementado) e análises (NumPy/SciPy) do teste nativo
-// (app/crates/optima-core/tests/design_validation.rs), pelo protocolo JSON. A igualdade exata das
+// (app/crates/desvtag-core/tests/design_validation.rs), pelo protocolo JSON. A igualdade exata das
 // ordens aleatórias entre Python, Rust nativo e WebAssembly é a verificação de que a mesma semente
 // produz a mesma ordem de execução nos dois alvos.
 import { readFileSync } from "node:fs";
@@ -13,12 +13,12 @@ import {
   type GeneratedDesign,
   PROTOCOL_VERSION,
 } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases");
 
 beforeAll(() => {
-  initSync({ module: readFileSync(resolve(__dirname, "wasm/optima_wasm_bg.wasm")) });
+  initSync({ module: readFileSync(resolve(__dirname, "wasm/desvtag_wasm_bg.wasm")) });
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: arquivos JSON de referência com formatos heterogêneos

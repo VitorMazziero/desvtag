@@ -1,0 +1,13 @@
+
+> @enzitag/optima-web@0.4.0-dev test
+> vitest run src/services/engine/repeated.parity.test.ts
+
+
+ RUN  v5.0.5 D:/OneDrive/PosDoc_Fapesp/_Automacao_e_Controle/Estatistica/EnziTAG Optima/app/web
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  12:47:51
+   Duration  679ms (setup 50%, tests 40%, transform 8%, import 2%, worker 1%)
+

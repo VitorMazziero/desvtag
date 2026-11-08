@@ -4,17 +4,16 @@ import { useEffect, useId, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { contourChart, surface3dChart, type View3d } from "../../services/charts";
-import type { SurfaceGrid, SurfaceResult } from "../../services/engine";
+import type { SurfaceGrid, SurfaceRequest, SurfaceResult } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useStorage } from "../../services/storage/context";
-import { useProject } from "../../state/ProjectContext";
-import { buildDataset, buildSurfaceRequest } from "../analysis";
 import { ChartFigure } from "./ChartFigure";
 import { TableExportButtons } from "./TableExportButtons";
 import { useFigureFormat } from "./useFigureFormat";
 
 interface Props {
+  surfaceRequest: SurfaceRequest;
   result: SurfaceResult;
   responseName: string;
   responseUnit: string;
@@ -28,6 +27,7 @@ interface Props {
 const STEPS = [21, 31, 41, 61];
 
 export function SurfaceView({
+  surfaceRequest,
   result,
   responseName,
   responseUnit,
@@ -38,12 +38,21 @@ export function SurfaceView({
 }: Props) {
   const { t } = useTranslation("results");
   const { t: tc } = useTranslation();
-  const state = useProject();
   const { client } = useEngine();
   const instance = useId();
   const fmt = useFigureFormat(language);
   const _storage = useStorage();
   const ranges = result.ranges;
+  const tableMetadata = {
+    ...csvMetadata,
+    ...(result.block
+      ? {
+          blockName: result.block.context.name,
+          blockReference: result.block.context.reference,
+          blockFactorId: result.block.context.factorId,
+        }
+      : {}),
+  };
   const [xIndex, setXIndex] = useState(0);
   const [yIndex, setYIndex] = useState(Math.min(1, ranges.length - 1));
   const [fixedText, setFixedText] = useState<Record<string, string>>({});
@@ -66,7 +75,7 @@ export function SurfaceView({
 
   // Pontos do planejamento, na escala real dos dois eixos.
   const points = useMemo(() => {
-    const { dataset } = buildDataset(state);
+    const dataset = surfaceRequest.dataset;
     const xi = dataset.factors.findIndex((f) => f.id === x?.id);
     const yi = dataset.factors.findIndex((f) => f.id === y?.id);
     return dataset.observations.flatMap((o) => {
@@ -74,16 +83,17 @@ export function SurfaceView({
       const py = o.factors[yi];
       return typeof px === "number" && typeof py === "number" ? [{ x: px, y: py }] : [];
     });
-  }, [state, x?.id, y?.id]);
+  }, [surfaceRequest, x?.id, y?.id]);
 
   // `key` resume os valores que definem a malha (eixos, resolução e valores fixados).
   // biome-ignore lint/correctness/useExhaustiveDependencies: dependências resumidas em `key`
   useEffect(() => {
     if (!x || !y || xIndex === yIndex || !fixedValid) return;
-    const responseId = result.responseId;
-    const { dataset } = buildDataset(state);
-    const surface = buildSurfaceRequest(state, dataset, responseId);
+    const surface = { ...surfaceRequest };
     surface.alpha = result.alpha;
+    surface.block = result.block
+      ? { factorId: result.block.context.factorId, reference: result.block.context.reference }
+      : undefined;
     let live = true;
     setLoading(true);
     const timer = setTimeout(() => {
@@ -92,6 +102,18 @@ export function SurfaceView({
           {
             type: "surfaceGrid",
             surface,
+            fitted: {
+              responseId: result.responseId,
+              observationIds: result.fit.observations.flatMap((row) =>
+                row.observationId ? [row.observationId] : [],
+              ),
+              coefficients: result.fit.coefficients,
+              rank: result.fit.rank,
+              ranges: result.ranges,
+              maxLeverage: result.maxLeverage,
+              block: result.block?.context ?? null,
+              provenance: result.provenance,
+            },
             xFactor: x.id,
             yFactor: y.id,
             fixed: fixedValues.map((f) => ({ factorId: f.id, value: f.value })),
@@ -133,20 +155,32 @@ export function SurfaceView({
           title: t(kind === "contour" ? "surface.view.contourTitle" : "surface.view.surfaceTitle", {
             response: responseName,
           }),
-          description: t(
-            kind === "contour"
-              ? "surface.view.contourDescription"
-              : "surface.view.surfaceDescription",
-          ),
-          grid,
+          description:
+            t(
+              kind === "contour"
+                ? "surface.view.contourDescription"
+                : "surface.view.surfaceDescription",
+            ) +
+            (grid.block
+              ? ` ${tc("blocking.assumption", { name: grid.block.name, reference: grid.block.reference })}`
+              : ""),
+          grid: {
+            ...grid,
+            xName: `${grid.xName}${surfaceRequest.factors.find((f) => f.id === x?.id)?.unit ? ` [${surfaceRequest.factors.find((f) => f.id === x?.id)?.unit}]` : ""}`,
+            yName: `${grid.yName}${surfaceRequest.factors.find((f) => f.id === y?.id)?.unit ? ` [${surfaceRequest.factors.find((f) => f.id === y?.id)?.unit}]` : ""}`,
+          },
           responseLabel: label,
           points: kind === "contour" ? points : undefined,
           texts: {
             extrapolated: t("surface.view.extrapolated"),
             points: t("surface.view.points"),
-            reading: t(
-              kind === "contour" ? "surface.view.readingContour" : "surface.view.readingSurface",
-            ),
+            reading:
+              t(
+                kind === "contour" ? "surface.view.readingContour" : "surface.view.readingSurface",
+              ) +
+              (grid.block
+                ? ` ${tc("blocking.assumption", { name: grid.block.name, reference: grid.block.reference })}`
+                : ""),
           },
           metadata: withMetadata ? metadataText : undefined,
         }
@@ -157,7 +191,7 @@ export function SurfaceView({
       return {
         header: [] as string[],
         rows: [] as (string | number | null)[][],
-        meta: csvMetadata,
+        meta: tableMetadata,
       };
     const header = [grid.xName, grid.yName, responseName, "extrapolation"];
     const rows = grid.y.flatMap((yv, iy) =>
@@ -187,7 +221,9 @@ export function SurfaceView({
       data-loading={loading || undefined}
     >
       <h3 id="surface-view-title">{t("surface.view.title")}</h3>
-      <p className="muted">{t("surface.view.intro")}</p>
+      <p className="muted" data-report-skip>
+        {t("surface.view.intro")}
+      </p>
       <div className="row">
         <label className="field">
           <span>{t("surface.view.xAxis")}</span>

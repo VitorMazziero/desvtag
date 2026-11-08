@@ -5,7 +5,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-const REPO = "https://github.com/VitorMazziero/enzitag-optima";
+const REPO = "https://github.com/VitorMazziero/desvtag";
 
 /** Seção da versão no CHANGELOG, sem o título da seção; `null` se não existir. */
 export function sectionOf(changelog, version) {
@@ -35,7 +35,7 @@ export function truncateAtBlock(text, limit, moreUrl) {
 
 export function notesFor(changelog, version, limit = 4000) {
   const section = sectionOf(changelog, version);
-  if (section === null) return `EnziTAG Optima ${version} (canal experimental).`;
+  if (section === null) return `DesvTAG ${version} (canal experimental).`;
   // Links relativos do repositório viram links absolutos da etiqueta (o aplicativo e o GitHub os abrem).
   const absolute = section.replace(
     /\]\((?!https?:|#|mailto:)([^)\s]+)\)/g,

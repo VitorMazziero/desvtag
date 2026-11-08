@@ -1,0 +1,491 @@
+    Checking optima-core v0.4.0-dev (D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\crates\optima-core)
+error[E0425]: cannot find type `Issue` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:24:25
+   |
+24 | fn error(code: &str) -> Issue {
+   |                         ^^^^^ not found in this scope
+   |
+help: consider importing this struct through its public re-export
+   |
+21 + use crate::validation::Issue;
+   |
+
+error[E0433]: cannot find type `Issue` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:25:5
+   |
+25 |     Issue::new(code, Severity::Error)
+   |     ^^^^^ use of undeclared type `Issue`
+   |
+help: consider importing this struct through its public re-export
+   |
+21 + use crate::validation::Issue;
+   |
+
+error[E0433]: cannot find type `Severity` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:25:22
+   |
+25 |     Issue::new(code, Severity::Error)
+   |                      ^^^^^^^^ use of undeclared type `Severity`
+   |
+help: consider importing this enum through its public re-export
+   |
+21 + use crate::validation::Severity;
+   |
+
+error[E0425]: cannot find type `UndefinedReason` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:28:34
+   |
+28 | fn finite_or(value: f64, reason: UndefinedReason) -> Stat {
+   |                                  ^^^^^^^^^^^^^^^ not found in this scope
+   |
+help: consider importing this enum through its public re-export
+   |
+21 + use crate::descriptive::UndefinedReason;
+   |
+
+error[E0425]: cannot find type `Stat` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:28:54
+   |
+28 | fn finite_or(value: f64, reason: UndefinedReason) -> Stat {
+   |                                                      ^^^^ not found in this scope
+   |
+help: consider importing this enum through its public re-export
+   |
+21 + use crate::descriptive::Stat;
+   |
+
+error[E0433]: cannot find type `Stat` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:30:9
+   |
+30 |         Stat::finite(value)
+   |         ^^^^ use of undeclared type `Stat`
+   |
+help: consider importing this enum through its public re-export
+   |
+21 + use crate::descriptive::Stat;
+   |
+
+error[E0433]: cannot find type `Stat` in this scope
+  --> crates\optima-core\src\models\mixed\random_intercept.rs:32:9
+   |
+32 |         Stat::undefined(reason)
+   |         ^^^^ use of undeclared type `Stat`
+   |
+help: consider importing this enum through its public re-export
+   |
+21 + use crate::descriptive::Stat;
+   |
+
+error[E0425]: cannot find type `MixedModelRequest` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:250:22
+    |
+250 | pub fn fit(request: &MixedModelRequest) -> Result<MixedModelResult, CoreError> {
+    |                      ^^^^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::MixedModelRequest;
+    |
+
+error[E0425]: cannot find type `MixedModelResult` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:250:51
+    |
+250 | pub fn fit(request: &MixedModelRequest) -> Result<MixedModelResult, CoreError> {
+    |                                                   ^^^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::MixedModelResult;
+    |
+
+error[E0425]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:250:69
+    |
+250 | pub fn fit(request: &MixedModelRequest) -> Result<MixedModelResult, CoreError> {
+    |                                                                     ^^^^^^^^^ not found in this scope
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0425]: cannot find function `build` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:251:18
+    |
+251 |     let design = build(&request.dataset, &request.spec).map_err(CoreError::InvalidInput)?;
+    |                  ^^^^^ not found in this scope
+    |
+help: consider importing one of these functions
+    |
+ 21 + use crate::inference::regression_anova::build;
+    |
+ 21 + use crate::models::design_matrix::build;
+    |
+ 21 + use crate::surface::equation::build;
+    |
+
+error[E0433]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:251:65
+    |
+251 |     let design = build(&request.dataset, &request.spec).map_err(CoreError::InvalidInput)?;
+    |                                                                 ^^^^^^^^^ use of undeclared type `CoreError`
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0433]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:293:20
+    |
+293 |         return Err(CoreError::InvalidInput(issues));
+    |                    ^^^^^^^^^ use of undeclared type `CoreError`
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0433]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:300:20
+    |
+300 |         return Err(CoreError::InvalidInput(vec![error(
+    |                    ^^^^^^^^^ use of undeclared type `CoreError`
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0433]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:314:24
+    |
+314 |         .ok_or_else(|| CoreError::InvalidInput(vec![error("model.rank_deficient")]))?;
+    |                        ^^^^^^^^^ use of undeclared type `CoreError`
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0433]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:318:24
+    |
+318 |         .ok_or_else(|| CoreError::InvalidInput(vec![error("model.rank_deficient")]))?;
+    |                        ^^^^^^^^^ use of undeclared type `CoreError`
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0433]: cannot find type `CoreError` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:321:24
+    |
+321 |         .ok_or_else(|| CoreError::InvalidInput(vec![error("model.rank_deficient")]))?;
+    |                        ^^^^^^^^^ use of undeclared type `CoreError`
+    |
+help: consider importing this enum
+    |
+ 21 + use crate::errors::CoreError;
+    |
+
+error[E0425]: cannot find type `MixedCoefficient` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:325:27
+    |
+325 |     let coefficients: Vec<MixedCoefficient> = (0..p)
+    |                           ^^^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::MixedCoefficient;
+    |
+
+error[E0425]: cannot find function `t_critical` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:340:24
+    |
+340 |             let crit = t_critical(level, df_value).unwrap_or(f64::NAN);
+    |                        ^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this function
+    |
+ 21 + use crate::inference::intervals::t_critical;
+    |
+
+error[E0422]: cannot find struct, variant or union type `MixedCoefficient` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:341:13
+    |
+341 |             MixedCoefficient {
+    |             ^^^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::MixedCoefficient;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:344:49
+    |
+344 |                 std_error: finite_or(std_error, UndefinedReason::NonFiniteResult),
+    |                                                 ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:345:41
+    |
+345 |                 df: finite_or(df_value, UndefinedReason::NonFiniteResult),
+    |                                         ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:346:39
+    |
+346 |                 t_value: finite_or(t, UndefinedReason::NonFiniteResult),
+    |                                       ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find module or crate `student_t` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:348:28
+    |
+348 |                     (2.0 * student_t::sf(t.abs(), df_value)).min(1.0),
+    |                            ^^^^^^^^^ use of unresolved module or unlinked crate `student_t`
+    |
+    = help: if you wanted to use a crate named `student_t`, use `cargo add student_t` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 21 + use crate::distributions::student_t;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:349:21
+    |
+349 |                     UndefinedReason::NonFiniteResult,
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:353:21
+    |
+353 |                     UndefinedReason::NonFiniteResult,
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:357:21
+    |
+357 |                     UndefinedReason::NonFiniteResult,
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find type `Issue` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:363:21
+    |
+363 |         issues.push(Issue::new("mixed.boundary_variance", Severity::Warning));
+    |                     ^^^^^ use of undeclared type `Issue`
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::validation::Issue;
+    |
+
+error[E0433]: cannot find type `Severity` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:363:59
+    |
+363 |         issues.push(Issue::new("mixed.boundary_variance", Severity::Warning));
+    |                                                           ^^^^^^^^ use of undeclared type `Severity`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::validation::Severity;
+    |
+
+error[E0433]: cannot find type `Issue` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:366:21
+    |
+366 |         issues.push(Issue::new("mixed.df_fallback", Severity::Warning));
+    |                     ^^^^^ use of undeclared type `Issue`
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::validation::Issue;
+    |
+
+error[E0433]: cannot find type `Severity` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:366:53
+    |
+366 |         issues.push(Issue::new("mixed.df_fallback", Severity::Warning));
+    |                                                     ^^^^^^^^ use of undeclared type `Severity`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::validation::Severity;
+    |
+
+error[E0433]: cannot find type `Issue` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:370:21
+    |
+370 |         issues.push(Issue::new("mixed.unbalanced", Severity::Info));
+    |                     ^^^^^ use of undeclared type `Issue`
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::validation::Issue;
+    |
+
+error[E0433]: cannot find type `Severity` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:370:52
+    |
+370 |         issues.push(Issue::new("mixed.unbalanced", Severity::Info));
+    |                                                    ^^^^^^^^ use of undeclared type `Severity`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::validation::Severity;
+    |
+
+error[E0425]: cannot find type `RandomEffect` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:374:29
+    |
+374 |     let random_effects: Vec<RandomEffect> = data
+    |                             ^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::RandomEffect;
+    |
+
+error[E0422]: cannot find struct, variant or union type `RandomEffect` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:391:13
+    |
+391 |             RandomEffect {
+    |             ^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::RandomEffect;
+    |
+
+error[E0422]: cannot find struct, variant or union type `MixedModelResult` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:399:8
+    |
+399 |     Ok(MixedModelResult {
+    |        ^^^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this struct through its public re-export
+    |
+ 21 + use crate::models::mixed::MixedModelResult;
+    |
+
+error[E0433]: cannot find type `Stat` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:403:24
+    |
+403 |         variance_unit: Stat::finite(su),
+    |                        ^^^^ use of undeclared type `Stat`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::Stat;
+    |
+
+error[E0433]: cannot find type `Stat` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:404:28
+    |
+404 |         variance_residual: Stat::finite(se),
+    |                            ^^^^ use of undeclared type `Stat`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::Stat;
+    |
+
+error[E0433]: cannot find type `UndefinedReason` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:405:40
+    |
+405 |         icc: finite_or(su / (su + se), UndefinedReason::NonFiniteResult),
+    |                                        ^^^^^^^^^^^^^^^ use of undeclared type `UndefinedReason`
+    |
+help: consider importing this enum through its public re-export
+    |
+ 21 + use crate::descriptive::UndefinedReason;
+    |
+
+error[E0433]: cannot find type `Provenance` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:411:21
+    |
+411 |         provenance: Provenance::current(METHOD_ID, METHOD_VERSION),
+    |                     ^^^^^^^^^^ use of undeclared type `Provenance`
+    |
+help: consider importing this struct
+    |
+ 21 + use crate::provenance::Provenance;
+    |
+
+error[E0425]: cannot find value `METHOD_ID` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:411:41
+    |
+411 |         provenance: Provenance::current(METHOD_ID, METHOD_VERSION),
+    |                                         ^^^^^^^^^ not found in this scope
+    |
+help: consider importing one of these constants
+    |
+ 21 + use crate::comparisons::METHOD_ID;
+    |
+ 21 + use crate::comparisons::paired::METHOD_ID;
+    |
+ 21 + use crate::comparisons::procedures::METHOD_ID;
+    |
+ 21 + use crate::descriptive::METHOD_ID;
+    |
+    = and 17 other candidates
+
+error[E0425]: cannot find value `METHOD_VERSION` in this scope
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:411:52
+    |
+411 |         provenance: Provenance::current(METHOD_ID, METHOD_VERSION),
+    |                                                    ^^^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing one of these constants
+    |
+ 21 + use crate::comparisons::METHOD_VERSION;
+    |
+ 21 + use crate::comparisons::paired::METHOD_VERSION;
+    |
+ 21 + use crate::comparisons::procedures::METHOD_VERSION;
+    |
+ 21 + use crate::descriptive::METHOD_VERSION;
+    |
+    = and 17 other candidates
+
+error[E0689]: can't call method `min` on ambiguous numeric type `{float}`
+   --> crates\optima-core\src\models\mixed\random_intercept.rs:348:62
+    |
+348 |                     (2.0 * student_t::sf(t.abs(), df_value)).min(1.0),
+    |                                                              ^^^
+
+Some errors have detailed explanations: E0422, E0425, E0433, E0689.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `optima-core` (lib) due to 43 previous errors

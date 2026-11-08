@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { openAbout } from "./menus";
+import { startObjective } from "./startObjective";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const cases = resolve(here, "../../../../validation/cases");
@@ -19,8 +21,7 @@ async function paste(page: Page, label: string, text: string) {
 
 /** Cria objetivo, fator, resposta e três observações no experimento atual. */
 async function buildProject(page: Page) {
-  await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "analyze");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).first().fill("Condição");
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
@@ -54,10 +55,44 @@ test.describe("recuperação após dois segundos de pausa", () => {
     await banner.getByRole("button", { name: "Restaurar" }).click();
     await expect(page.getByLabel("Nome do projeto")).toHaveValue("Meu ensaio — açúcar");
     // O fluxo reabre na primeira etapa pendente (análise); os dados estão na etapa anterior.
-    await expect(page.getByRole("heading", { name: "Análise: resumo descritivo" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Dados", exact: true })).toBeVisible();
     await page.getByRole("button", { name: /Planejamento e dados/ }).click();
     await expect(page.getByLabel("Atividade — Obs. 3")).toHaveValue("20");
     await expect(page.getByLabel("Condição — Obs. 1")).toHaveValue("Água");
+  });
+
+  test("restaura a ANOVA de uma sessão não salva criada pela v0.3", async ({ page }) => {
+    const snapshot = JSON.parse(
+      readFileSync(resolve(cases, "project_file/recovery-v03.json"), "utf8"),
+    );
+    await page.goto("/");
+    await page.evaluate(
+      (legacy) =>
+        new Promise<void>((resolve, reject) => {
+          const request = indexedDB.open("enzitag-optima", 1);
+          request.onupgradeneeded = () => request.result.createObjectStore("recovery");
+          request.onerror = () => reject(request.error);
+          request.onsuccess = () => {
+            const db = request.result;
+            const transaction = db.transaction("recovery", "readwrite");
+            transaction.objectStore("recovery").put(legacy, "workspace");
+            transaction.oncomplete = () => {
+              db.close();
+              resolve();
+            };
+            transaction.onerror = () => {
+              db.close();
+              reject(transaction.error);
+            };
+          };
+        }),
+      snapshot,
+    );
+    await page.reload();
+    await page.getByTestId("recovery-banner").getByRole("button", { name: "Restaurar" }).click();
+    await expect(page.getByLabel("Nome do projeto")).toHaveValue(snapshot.workspace.name);
+    await page.getByRole("button", { name: /^Resultados/ }).click();
+    await expect(page.getByTestId("anova-table")).toBeVisible();
   });
 
   test("descartar remove a recuperação", async ({ page }) => {
@@ -75,7 +110,18 @@ test.describe("recuperação após dois segundos de pausa", () => {
 });
 
 test.describe("salvar e abrir (estados distintos)", () => {
-  test("salvar baixa um .enzitag; abrir restaura dados, experimentos e histórico", async ({
+  test("menu Arquivo salva .desvtag na tela compacta", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 892 });
+    await page.goto("/");
+    await page.getByLabel("Nome do projeto").fill("Projeto");
+    const menu = page.getByTestId("file-menu");
+    await menu.locator(":scope > summary").click();
+    const pending = page.waitForEvent("download");
+    await menu.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
+    expect((await pending).suggestedFilename()).toBe("Projeto.desvtag");
+  });
+
+  test("salvar baixa um .desvtag; abrir restaura dados, experimentos e histórico", async ({
     page,
     browserName,
   }) => {
@@ -83,24 +129,24 @@ test.describe("salvar e abrir (estados distintos)", () => {
     await page.getByLabel("Nome do projeto").fill("Projeto salvo");
     await buildProject(page);
     await page.getByRole("button", { name: "Avançar" }).click(); // análise
-    await page.getByLabel("Condição").check();
+    await page.getByRole("checkbox", { name: "Condição", exact: true }).check();
     await page.getByRole("button", { name: "Calcular resumo" }).click();
     await expect(page.getByTestId("descriptive-table")).toBeVisible();
 
     const download = page.waitForEvent("download");
-    await page.getByRole("button", { name: "Salvar", exact: true }).click();
+    await page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
     const file = await download;
     // O WebKit do Linux troca o espaço do nome sugerido por «_».
     const suggested = file.suggestedFilename();
     expect(browserName === "webkit" ? suggested.replace(/_/g, " ") : suggested).toBe(
-      "Projeto salvo.enzitag",
+      "Projeto salvo.desvtag",
     );
     const path = await file.path();
     expect(readFileSync(path).subarray(0, 2).toString()).toBe("PK"); // contêiner ZIP
 
     // Três estados distintos: arquivo baixado, sem alterações pendentes, recuperação desligada.
     await expect(page.getByTestId("status-file")).toContainText(
-      "baixado como «Projeto salvo.enzitag»",
+      "baixado como «Projeto salvo.desvtag»",
     );
     await expect(page.getByTestId("status-changes")).toHaveAttribute("data-unsaved", "false");
     await expect(page.getByTestId("status-recovery")).toHaveAttribute("data-state", "idle");
@@ -114,7 +160,10 @@ test.describe("salvar e abrir (estados distintos)", () => {
     page.once("dialog", (d) => d.accept());
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: "Abrir…" }).click();
-    await (await chooser).setFiles(path);
+    const input = await chooser;
+    expect(await input.element().getAttribute("accept")).toBe(".desvtag,.enzitag");
+    await input.setFiles(path);
+    await page.getByRole("button", { name: /^Resultados/ }).click();
     await expect(page.getByLabel("Nome do projeto")).toHaveValue("Projeto salvo");
     await expect(page.getByTestId("status-changes")).toHaveAttribute("data-unsaved", "false");
     // O resultado guardado reaparece sem recalcular e está atual (a edição 99 não estava no arquivo).
@@ -123,6 +172,7 @@ test.describe("salvar e abrir (estados distintos)", () => {
       page.getByTestId("descriptive-table").getByRole("row", { name: /Condição: Água/ }),
     ).toContainText("11");
     // Histórico: versões e análise guardadas.
+    await openAbout(page);
     await page.getByTestId("history").locator("summary").click();
     await expect(page.getByTestId("revision").first()).toContainText("atual");
     await expect(page.getByTestId("analysis-record")).toHaveCount(1);
@@ -159,17 +209,19 @@ test.describe("salvar e abrir (estados distintos)", () => {
     await expect(page.getByLabel("Nome do projeto")).toHaveValue(
       "Projeto de referência — açúcar, ß, 日本",
     );
-    await expect(page.getByRole("button", { name: "Experimento: Quatro condições" })).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Experimento: Segundo experimento" }),
-    ).toBeVisible();
+      page.getByLabel("Experimento ativo").getByRole("option", { name: "Quatro condições" }),
+    ).toHaveCount(1);
+    await expect(
+      page.getByLabel("Experimento ativo").getByRole("option", { name: "Segundo experimento" }),
+    ).toHaveCount(1);
     // Abre direto nos resultados: tudo satisfeito e o resultado guardado coincide com os dados.
     const table = page.getByTestId("descriptive-table");
     await expect(table).toBeVisible();
     await expect(table.getByRole("row", { name: /Todas as observações/ })).toContainText("27,25");
     await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
     // Trocar de experimento mostra o outro, vazio.
-    await page.getByRole("button", { name: "Experimento: Segundo experimento" }).click();
+    await page.getByLabel("Experimento ativo").selectOption({ label: "Segundo experimento" });
     await expect(page.getByRole("group", { name: "O que você quer fazer?" })).toBeVisible();
   });
 });
@@ -177,8 +229,7 @@ test.describe("salvar e abrir (estados distintos)", () => {
 test.describe("importação", () => {
   async function importFile(page: Page, path: string) {
     await page.goto("/");
-    await page.getByRole("radio", { name: /Analisar dados existentes/ }).check();
-    await page.getByRole("button", { name: "Avançar" }).click();
+    await startObjective(page, "analyze");
     await page.getByRole("button", { name: "Adicionar resposta" }).click();
     await page.getByLabel("Nome", { exact: true }).first().fill("Provisório");
     await page.getByRole("button", { name: "Avançar" }).click();
@@ -200,6 +251,7 @@ test.describe("importação", () => {
     await expect(page.getByLabel("Atividade (U/mL) — Obs. 4")).toHaveValue(""); // ausente preservado
     await expect(page.getByLabel("Condição — Obs. 3")).toHaveValue("Ácido");
     // A grade mostra a coluna de unidade? Só nas opções avançadas; os dados chegaram à tabela.
+    await openAbout(page);
     await page.getByTestId("history").locator("summary").click();
     await expect(page.getByTestId("revision").first()).toContainText("importação");
     await expect(page.getByTestId("revision").nth(1)).toContainText("alterações"); // dados anteriores preservados

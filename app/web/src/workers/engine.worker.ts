@@ -1,7 +1,7 @@
 // Worker do navegador: carrega o WASM uma vez e responde a solicitações em texto.
 // O cálculo roda aqui, fora da thread da interface.
-import init, { handleRequest } from "../services/engine/wasm/optima_wasm.js";
-import wasmUrl from "../services/engine/wasm/optima_wasm_bg.wasm?url";
+import init, { handleRequest } from "../services/engine/wasm/desvtag_wasm.js";
+import wasmUrl from "../services/engine/wasm/desvtag_wasm_bg.wasm?url";
 
 export interface WorkerRequest {
   id: number;

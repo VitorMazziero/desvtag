@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 import { strFromU8, unzipSync } from "fflate";
+import { clickAfterFocus } from "./clickAfterFocus";
+import { openFigureMenu } from "./figureTools";
 import { showAllSections } from "./showAll";
 import { THEME_LIST } from "./themes";
 
@@ -35,9 +37,10 @@ test("comentários na figura e no experimento sobrevivem a salvar e reabrir e v�
 
   // Comentário na primeira figura.
   const figure = page.getByTestId("observed-predicted-chart");
+  await openFigureMenu(figure);
   const thread = figure.locator("details.comments");
   await expect(thread.locator("summary")).toContainText("Comentários (0; 0 em aberto)");
-  await thread.locator("summary").click();
+  await clickAfterFocus(thread.locator("summary"));
   await thread.getByLabel("Novo comentário").fill("Conferir o ponto central\ndesta superfície.");
   await thread.getByLabel("Seu nome").fill("Ana");
   await thread.getByRole("button", { name: "Comentar" }).click();
@@ -48,7 +51,7 @@ test("comentários na figura e no experimento sobrevivem a salvar e reabrir e v�
 
   // Comentário sobre o experimento, resposta e resolução, no painel.
   const panel = page.getByTestId("comments-panel");
-  await panel.locator("summary").click();
+  await clickAfterFocus(panel.locator("summary"));
   await expect(panel.getByTestId("comment-c1")).toBeVisible(); // o da figura também aparece aqui
   await panel.getByLabel("Novo comentário").fill("Repetir com mais um ponto central.");
   await panel.getByRole("button", { name: "Comentar" }).click();
@@ -64,7 +67,7 @@ test("comentários na figura e no experimento sobrevivem a salvar e reabrir e v�
 
   // Salvar e reabrir: nada se perde.
   const download = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Salvar", exact: true }).click();
+  await page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
   const saved = await (await download).path();
   const entries = unzipSync(new Uint8Array(readFileSync(saved as string)));
   const projectJson = Object.entries(entries).find(([name]) => name.endsWith(".json"));
@@ -82,7 +85,7 @@ test("comentários na figura e no experimento sobrevivem a salvar e reabrir e v�
   await expect(page.getByTestId("comments-panel")).toBeVisible();
   const reopened = page.getByTestId("comments-panel");
   await expect(reopened.locator("summary")).toContainText("2; 1 em aberto");
-  await reopened.locator("summary").click();
+  await clickAfterFocus(reopened.locator("summary"));
   await expect(reopened.getByTestId("comment-c1")).toContainText("Conferir o ponto central");
   await expect(reopened.getByTestId("comment-c2")).toContainText("Combinado.");
 
@@ -115,12 +118,12 @@ test("comentário numa tabela de resultados aparece no painel com o alvo «Tabel
   test.setTimeout(120_000);
   await openExample(page);
   const thread = page.getByTestId("comments-table-coeficientes");
-  await thread.locator("summary").click();
+  await clickAfterFocus(thread.locator("summary"));
   await thread.getByLabel("Novo comentário").fill("Conferir os coeficientes desta tabela.");
   await thread.getByRole("button", { name: "Comentar" }).click();
   await expect(thread.locator("summary")).toContainText("Comentários (1; 1 em aberto)");
   const panel = page.getByTestId("comments-panel");
-  await panel.locator("summary").click();
+  await clickAfterFocus(panel.locator("summary"));
   await expect(panel.getByTestId("comment-c1")).toContainText("Tabela");
   await expect(panel.getByTestId("comment-c1")).toContainText("Conferir os coeficientes");
 });
@@ -128,7 +131,7 @@ test("comentário numa tabela de resultados aparece no painel com o alvo «Tabel
 test("excluir um comentário pede confirmação", async ({ page }) => {
   await openExample(page);
   const panel = page.getByTestId("comments-panel");
-  await panel.locator("summary").click();
+  await clickAfterFocus(panel.locator("summary"));
   await panel.getByLabel("Novo comentário").fill("Provisório");
   await panel.getByRole("button", { name: "Comentar" }).click();
   await expect(panel.getByTestId("comment-c1")).toBeVisible();
@@ -145,7 +148,7 @@ for (const theme of THEME_LIST) {
     await page.addInitScript((t) => localStorage.setItem("optima.theme", t), theme);
     await openExample(page);
     const panel = page.getByTestId("comments-panel");
-    await panel.locator("summary").click();
+    await panel.locator("summary").press("Enter");
     await panel.getByLabel("Novo comentário").fill("Revisar");
     await panel.getByRole("button", { name: "Comentar" }).click();
     await panel.getByRole("button", { name: "Responder" }).click();

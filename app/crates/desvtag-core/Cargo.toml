@@ -1,0 +1,23 @@
+[package]
+name = "desvtag-core"
+description = "Núcleo científico do DesvTAG: dados, validação e procedimentos (sem I/O)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[features]
+# Deterministic observation for validation tools; never enabled in the app adapters.
+validation-metrics = []
+
+[dependencies]
+serde = { workspace = true }
+ts-rs = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+
+[lints]
+workspace = true

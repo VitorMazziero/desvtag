@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { parseNumberCell } from "../data/editing";
 
 interface Props {
   label: string;
+  visibleLabel?: string;
   value: number | null;
   onChange: (value: number | null) => void;
   /** Aceita campo vazio como "sem valor" (limites opcionais). */
@@ -9,13 +12,25 @@ interface Props {
   help?: string;
 }
 
-const parse = (text: string): number => Number(text.trim().replace(",", "."));
+const parse = (text: string): number => {
+  const p = parseNumberCell(text);
+  return p.ok && p.value !== null ? p.value : Number.NaN;
+};
 
 /** Campo numérico em texto: aceita vírgula ou ponto; só confirma valores válidos. */
-export function NumberField({ label, value, onChange, optional = false, help }: Props) {
+export function NumberField({
+  label,
+  visibleLabel,
+  value,
+  onChange,
+  optional = false,
+  help,
+}: Props) {
+  const { t } = useTranslation();
+  const id = useId();
   const show = (v: number | null) => (v === null ? "" : String(v));
   const [text, setText] = useState(show(value));
-  const invalid = text.trim() !== "" && !Number.isFinite(parse(text));
+  const invalid = text.trim() === "" ? !optional : !Number.isFinite(parse(text));
   // biome-ignore lint/correctness/useExhaustiveDependencies: o texto é o estado local; só o valor externo dispara
   useEffect(() => {
     // Sincroniza apenas quando o valor externo difere do que o texto representa.
@@ -24,8 +39,10 @@ export function NumberField({ label, value, onChange, optional = false, help }: 
   }, [value]);
   return (
     <label className="field">
-      <span>{label}</span>
+      <span>{visibleLabel ?? label}</span>
       <input
+        aria-label={label}
+        aria-describedby={invalid ? `${id}-error` : help ? `${id}-help` : undefined}
         type="text"
         inputMode="decimal"
         value={text}
@@ -41,7 +58,16 @@ export function NumberField({ label, value, onChange, optional = false, help }: 
           if (Number.isFinite(n)) onChange(n);
         }}
       />
-      {help && <small className="muted">{help}</small>}
+      {invalid && (
+        <small className="error" id={`${id}-error`}>
+          {t("optimization.decision.invalidNumber")}
+        </small>
+      )}
+      {help && (
+        <small className="muted" id={`${id}-help`}>
+          {help}
+        </small>
+      )}
     </label>
   );
 }

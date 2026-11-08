@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { useProject } from "../../state/ProjectContext";
+import type { AnalysisFamily } from "../../services/engine";
+import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { ExportSettingsPanel } from "../export";
 import { OptimizationPanel, OptimizationReport } from "../optimization";
 import { resultIsCurrent } from "../workflow/guards";
@@ -9,18 +10,17 @@ import { DescriptiveTable } from "./DescriptiveTable";
 import { DesignResults } from "./DesignResults";
 import { FactorialResults } from "./FactorialResults";
 import { Interpretation } from "./Interpretation";
+import { OptimalModelResults } from "./OptimalModelResults";
+import { OptimalVarianceReport } from "./OptimalVarianceReport";
 import { ProcedureResults } from "./ProcedureResults";
+import { SavedFamilyResults } from "./SavedFamilyResults";
 import { SectionedResults } from "./SectionedResults";
 import { SurfaceResults } from "./SurfaceResults";
+import { resultFamilies } from "./savedFamily";
+import { FamilyResultScope } from "./ViewedFamily";
 
 /** `report`: versão para o relatório HTML (sem editores de otimização). */
-export function ResultsView({
-  language,
-  report = false,
-}: {
-  language: Language;
-  report?: boolean;
-}) {
+function LegacyResultsView({ language, report = false }: { language: Language; report?: boolean }) {
   const { t } = useTranslation("results");
   const state = useProject();
   const stored = state.result;
@@ -94,6 +94,12 @@ export function ResultsView({
               result={stored.result}
               signature={stored.signature}
               language={language}
+              report
+            />
+            <OptimalVarianceReport
+              signature={stored.signature}
+              language={language}
+              surface={stored.result}
             />
             <OptimizationReport language={language} />
           </>
@@ -114,6 +120,39 @@ export function ResultsView({
         )}
       </section>
     );
+  if (stored.kind === "optimal") {
+    const body = (
+      <OptimalModelResults
+        result={stored.result}
+        signature={stored.signature}
+        language={language}
+        report={report}
+      />
+    );
+    return (
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">{t("optimalModel.title")}</h2>
+        {!resultIsCurrent(state) && (
+          <p role="status" className="error">
+            {t("stale")}
+          </p>
+        )}
+        {report ? (
+          <>
+            {body}
+            <OptimalVarianceReport signature={stored.signature} language={language} />
+          </>
+        ) : (
+          <SectionedResults>
+            {body}
+            <div data-section="export">
+              <ExportSettingsPanel />
+            </div>
+          </SectionedResults>
+        )}
+      </section>
+    );
+  }
   if (stored.kind === "procedure" || stored.kind === "factorial") {
     const body =
       stored.kind === "procedure" ? (
@@ -167,5 +206,45 @@ export function ResultsView({
         language={language}
       />
     </section>
+  );
+}
+
+export function ResultsView({
+  language,
+  report = false,
+}: {
+  language: Language;
+  report?: boolean;
+}) {
+  const state = useProject();
+  const dispatch = useProjectDispatch();
+  const { t } = useTranslation();
+  const families = resultFamilies(state);
+  return (
+    <FamilyResultScope>
+      {!report && families.length > 1 && (
+        <label className="field" data-report-skip>
+          <span>{t("family.select")}</span>
+          <select
+            data-testid="result-family"
+            value={state.activeFamily}
+            onChange={(e) =>
+              dispatch({ type: "selectFamily", family: e.target.value as AnalysisFamily })
+            }
+          >
+            {families.map((family) => (
+              <option key={family} value={family}>
+                {t(`family.${family}`)}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+      {state.activeFamily === "legacy" ? (
+        <LegacyResultsView language={language} report={report} />
+      ) : (
+        <SavedFamilyResults language={language} report={report} />
+      )}
+    </FamilyResultScope>
   );
 }

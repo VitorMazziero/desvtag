@@ -1,7 +1,9 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
+import { openFigureMenu } from "./figureTools";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 
 // Percurso de planejamento com o motor Rust real (WebAssembly): escolher → contar → gerar →
 // preencher respostas → analisar (efeitos, curvatura, Pareto) → exportar → salvar → reabrir.
@@ -20,13 +22,15 @@ async function addNumericFactor(page: Page, index: number, name: string, unit: s
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(index).fill(name);
   await page.getByLabel("Tipo").nth(index).selectOption("numeric");
-  await page.getByLabel("Unidade (opcional)").nth(index).fill(unit);
+  await page
+    .getByLabel(/^Unidade de /)
+    .nth(index)
+    .fill(unit);
 }
 
 async function startPlanning(page: Page, factors: Array<[string, string]>) {
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "plan");
   for (const [i, [name, unit]] of factors.entries()) await addNumericFactor(page, i, name, unit);
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   await page.getByLabel("Nome", { exact: true }).nth(factors.length).fill("Atividade");
@@ -120,12 +124,18 @@ test.describe("planejamento fatorial 2³ com pontos centrais", () => {
     const effectOf = (f: (i: number) => number) =>
       mean(factorial.filter((_, i) => f(i) > 0)) - mean(factorial.filter((_, i) => f(i) < 0));
     const effectA = effectOf((i) => coded(i)[0] as number);
-    const shown = new Intl.NumberFormat("pt-BR", {
-      maximumSignificantDigits: 5,
-      useGrouping: false,
-    }).format(effectA);
     // Linha 0 = intercepto; linha 1 = Temperatura.
-    await expect(effects.locator("tbody tr").nth(1)).toContainText(shown);
+    expect(
+      Number(
+        await effects
+          .locator("tbody tr")
+          .nth(1)
+          .locator("td")
+          .nth(1)
+          .locator("[data-full-value]")
+          .getAttribute("data-full-value"),
+      ),
+    ).toBeCloseTo(effectA, 10);
     // Coeficiente e efeito são colunas distintas; o efeito é o dobro do coeficiente.
     await expect(effects).toContainText("Coeficiente");
     await expect(effects).toContainText("Efeito (2 × coeficiente)");
@@ -149,6 +159,7 @@ test.describe("planejamento fatorial 2³ com pontos centrais", () => {
     expect(text).toContain("# methodId: two_level_design_analysis");
     expect(text).toContain("term,order,coefficient,effect");
     const svgDownload = page.waitForEvent("download");
+    await openFigureMenu(page.getByTestId("pareto-chart"));
     await page
       .getByTestId("pareto-chart")
       .getByRole("button", { name: /Figura — SVG/ })
@@ -159,7 +170,7 @@ test.describe("planejamento fatorial 2³ com pontos centrais", () => {
 
     // Salvar → editar → abrir: o planejamento e o resultado voltam sem recálculo.
     const saveDownload = page.waitForEvent("download");
-    await page.getByRole("button", { name: "Salvar", exact: true }).click();
+    await page.getByRole("button", { name: "Salvar (baixar .desvtag)", exact: true }).click();
     const file = await (await saveDownload).path();
     await page.getByRole("button", { name: /Planejamento e dados/ }).click();
     await page.getByRole("textbox", { name: "Atividade — Obs. 1", exact: true }).fill("99");
@@ -167,6 +178,7 @@ test.describe("planejamento fatorial 2³ com pontos centrais", () => {
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: "Abrir…" }).click();
     await (await chooser).setFiles(file as string);
+    await page.getByRole("button", { name: /^Resultados/ }).click();
     await expect(page.getByTestId("effects-table")).toBeVisible();
     await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
     await page.getByRole("button", { name: /Planejamento e dados/ }).click();
@@ -257,6 +269,60 @@ test.describe("fracionário e Plackett–Burman", () => {
     await expect(page.getByTestId("alias-list")).toContainText("AB +CD");
   });
 
+  test("fracionário 2^(4−1) com repetições: a seleção de modelos separa as interações confundidas", async ({
+    page,
+  }, info) => {
+    test.setTimeout(120_000);
+    await startPlanning(page, [
+      ["A1", ""],
+      ["B1", ""],
+      ["C1", ""],
+      ["D1", ""],
+    ]);
+    for (const n of ["A1", "B1", "C1", "D1"]) await setLevels(page, n, "0", "1");
+    await page.getByLabel("Orçamento máximo de ensaios (opcional)").fill("8");
+    await page.getByLabel("Repetições do planejamento").fill("2");
+    await page.getByLabel("Aleatorizar a ordem de execução").uncheck();
+    await page.getByRole("button", { name: "Gerar planejamento" }).click();
+    await expect(page.getByTestId("design-resolution")).toContainText("Resolução 4");
+    await expect(page.getByTestId("matrix-table").locator("tbody tr")).toHaveCount(16);
+    // y = 20 + 4A − 2B + 3AB, com ruído pequeno e determinístico; AB está confundida com CD.
+    const noise = [0.1, -0.2, 0.15, -0.05, 0.2, -0.1, 0.05, -0.15];
+    const coded = (i: number) => {
+      const [a, b, c] = [i & 1 ? 1 : -1, i & 2 ? 1 : -1, i & 4 ? 1 : -1];
+      return { a, b, c, d: a * b * c };
+    };
+    const y = Array.from({ length: 16 }, (_, i) => {
+      const { a, b } = coded(i % 8);
+      return 20 + 4 * a - 2 * b + 3 * a * b + (noise[(i * 3 + (i >= 8 ? 1 : 0)) % 8] as number);
+    });
+    await paste(
+      page,
+      "Atividade — Obs. 1",
+      y.map((v) => String(v).replace(".", ",")).join(String.fromCharCode(10)),
+    );
+    await page.getByRole("button", { name: "Avançar" }).click();
+    await page.getByLabel("Efeitos principais e interações de dois fatores").check();
+    await page.getByRole("button", { name: "Analisar planejamento" }).click();
+    const panel = page.getByTestId("model-panel");
+    await expect(panel).toBeVisible();
+    await expect(panel.getByTestId("model-compare")).toContainText("R² ajustado");
+    // Intercepto, 4 efeitos principais e 6 interações; as três interações confundidas em pares
+    // (AB~CD, AC~BD, AD~BC) mostram só uma estimativa por par e a outra fica «n.e.».
+    const effects = page.getByTestId("effects-table");
+    await expect(effects.locator("tbody tr")).toHaveCount(11);
+    await expect(effects.getByRole("row", { name: /^A1:B1/ })).not.toContainText("n.e.");
+    await expect(effects.getByRole("row", { name: /^C1:D1/ })).toContainText("n.e.");
+    await panel.getByTestId("apply-recommendation").click();
+    await expect(panel.getByTestId("final-model")).toBeVisible();
+    await expect(panel.getByRole("checkbox", { name: /^A1 × B1/ })).toBeChecked();
+    // Interações aliasadas (n.e.) nunca são candidatas e continuam no modelo; pela hierarquia elas
+    // seguram C1 e D1, então o modelo recomendado não os elimina (limite registrado em selecao-de-modelos).
+    await expect(panel.getByRole("checkbox", { name: /^C1 × D1/ })).toBeChecked();
+    await panel.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: info.outputPath("fractional-selection.png"), fullPage: true });
+  });
+
   test("Plackett–Burman de 12 ensaios com 5 fatores: colunas fictícias e aviso de triagem", async ({
     page,
   }) => {
@@ -318,8 +384,28 @@ test("abre o exemplo 02 (triagem Plackett–Burman) com os efeitos conferidos de
   await expect(effects).toBeVisible();
   // Efeitos e curvatura da regressão independente (NumPy): glicose 4,2833; curvatura 11 (coef. 5,5).
   await expect(effects.locator("tbody tr").nth(1)).toContainText("Glicose");
-  await expect(effects.locator("tbody tr").nth(1)).toContainText("4,2833");
-  await expect(effects.locator("tbody tr").nth(4)).toContainText("-2,6833");
+  expect(
+    Number(
+      await effects
+        .locator("tbody tr")
+        .nth(1)
+        .locator("td")
+        .nth(1)
+        .locator("[data-full-value]")
+        .getAttribute("data-full-value"),
+    ),
+  ).toBeCloseTo(4.2833, 3);
+  expect(
+    Number(
+      await effects
+        .locator("tbody tr")
+        .nth(4)
+        .locator("td")
+        .nth(1)
+        .locator("[data-full-value]")
+        .getAttribute("data-full-value"),
+    ),
+  ).toBeCloseTo(-2.6833, 3);
   await expect(page.getByTestId("curvature")).toContainText("5,5");
   await expect(page.getByTestId("curvature")).toContainText("4,581");
   await expect(page.getByTestId("interpretation")).toContainText(
@@ -350,11 +436,31 @@ test("abre o exemplo 03 (DCCR) com coeficientes, falta de ajuste e superfícies 
   const terms = page.getByTestId("surface-terms");
   await expect(terms).toBeVisible();
   await expect(terms.locator("tbody tr").nth(1)).toContainText("Glicose");
-  await expect(terms.locator("tbody tr").nth(1)).toContainText("5,0158");
-  await expect(terms.locator("tbody tr").nth(4)).toContainText("-5,7833");
+  expect(
+    Number(
+      await terms
+        .locator("tbody tr")
+        .nth(1)
+        .locator("td")
+        .nth(0)
+        .locator("[data-full-value]")
+        .getAttribute("data-full-value"),
+    ),
+  ).toBeCloseTo(5.0158, 3);
+  expect(
+    Number(
+      await terms
+        .locator("tbody tr")
+        .nth(4)
+        .locator("td")
+        .nth(0)
+        .locator("[data-full-value]")
+        .getAttribute("data-full-value"),
+    ),
+  ).toBeCloseTo(-5.7833, 3);
   await expect(page.getByTestId("fit-measures")).toContainText("0,98776");
   await expect(page.getByTestId("lack-of-fit")).toContainText("0,6918");
-  await expect(page.getByTestId("equation-coded")).toContainText("119,4 + 5,0158·Glicose");
+  await expect(page.getByTestId("equation-coded")).toContainText("119,4 + 5,0158·z₁");
   await expect(page.getByTestId("equation-real")).toContainText("2,1753 + 3,6059·Glicose");
   await expect(page.getByText("Os dados ou as opções mudaram")).toHaveCount(0);
   // Superfície 3D e contorno vêm da malha do motor; a região extrapolada é identificada.

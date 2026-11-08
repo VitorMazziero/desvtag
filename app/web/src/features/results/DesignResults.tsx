@@ -1,3 +1,4 @@
+import { StatCell } from "./StatCell";
 // Resultados da análise de um planejamento de dois níveis (U08/U09/U16): explicação curta,
 // efeitos e coeficientes (separados), ANOVA, curvatura, falta de ajuste, Lenth, gráficos de
 // triagem e exportação com proveniência.
@@ -20,24 +21,6 @@ import { TableExportButtons } from "./TableExportButtons";
 import { useFigureFormat } from "./useFigureFormat";
 
 const val = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
-
-function StatCell({ stat, language, p = false }: { stat: Stat; language: Language; p?: boolean }) {
-  const { t } = useTranslation("results");
-  if (stat.status === "defined")
-    return (
-      <td className="num">
-        {p ? formatP(stat.value, language) : formatSignificant(stat.value, language, 5)}
-      </td>
-    );
-  return (
-    <td className="num undefined" title={t(`undefinedReason.${stat.reason}`)}>
-      <span aria-hidden="true">—</span>
-      <span className="sr-only">
-        {t("table.undefined")}: {t(`undefinedReason.${stat.reason}`)}
-      </span>
-    </td>
-  );
-}
 
 function slug(text: string): string {
   return (
@@ -107,6 +90,10 @@ export function DesignResults({ result, signature, language }: Props) {
 
   // Séries.
   const names = result.factorNames;
+  const displayNames = names.map((name, i) => {
+    const unit = state.factors.find((f) => f.id === state.design?.factors[i]?.id)?.unit;
+    return unit ? `${name} [${unit}]` : name;
+  });
   const paretoSpec = (withMetadata: boolean) => ({
     id: "pareto",
     title: t("design.charts.paretoTitle", { response: responseName }),
@@ -145,7 +132,13 @@ export function DesignResults({ result, signature, language }: Props) {
     centerLabel: t("design.charts.center"),
     legend: t("design.charts.mainLegend"),
     panels: result.mainEffects.map((m) => ({
-      title: names[m.factor] ?? String(m.factor),
+      title: displayNames[m.factor] ?? String(m.factor),
+      lowLabel: state.design?.factors[m.factor]
+        ? fmt(state.design.factors[m.factor]!.low)
+        : t("design.charts.low"),
+      highLabel: state.design?.factors[m.factor]
+        ? fmt(state.design.factors[m.factor]!.high)
+        : t("design.charts.high"),
       series: [{ name: names[m.factor] ?? "", low: val(m.lowMean), high: val(m.highMean) }],
       center: m.centerMean,
     })),
@@ -162,18 +155,34 @@ export function DesignResults({ result, signature, language }: Props) {
     legend: t("design.charts.interactionLegend"),
     panels: result.interactions.map((i) => {
       const [ll, hl, lh, hh] = i.cellMeans.map(val);
-      const a = names[i.factorA] ?? "A";
-      const b = names[i.factorB] ?? "B";
+      const a = displayNames[i.factorA] ?? "A";
+      const b = displayNames[i.factorB] ?? "B";
       return {
         title: `${a} × ${b}`,
+        lowLabel: state.design?.factors[i.factorA]
+          ? fmt(state.design.factors[i.factorA]!.low)
+          : t("design.charts.low"),
+        highLabel: state.design?.factors[i.factorA]
+          ? fmt(state.design.factors[i.factorA]!.high)
+          : t("design.charts.high"),
         series: [
           {
-            name: t("design.charts.atLevel", { factor: b, level: t("design.charts.low") }),
+            name: t("design.charts.atLevel", {
+              factor: b,
+              level: state.design?.factors[i.factorB]
+                ? fmt(state.design.factors[i.factorB]!.low)
+                : t("design.charts.low"),
+            }),
             low: ll ?? null,
             high: hl ?? null,
           },
           {
-            name: t("design.charts.atLevel", { factor: b, level: t("design.charts.high") }),
+            name: t("design.charts.atLevel", {
+              factor: b,
+              level: state.design?.factors[i.factorB]
+                ? fmt(state.design.factors[i.factorB]!.high)
+                : t("design.charts.high"),
+            }),
             low: lh ?? null,
             high: hh ?? null,
             dashed: true,
@@ -188,9 +197,13 @@ export function DesignResults({ result, signature, language }: Props) {
     id: "observed-predicted",
     title: t("design.charts.opTitle", { response: responseName }),
     description: t("design.charts.opDescription"),
-    xLabel: t("design.charts.opX"),
-    yLabel: t("design.charts.opY"),
-    points: result.observedVsPredicted.map((p) => ({ x: p.predicted, y: p.observed })),
+    xLabel: `${t("design.charts.opX")} — ${responseName}${response?.unit ? ` [${response.unit}]` : ""}`,
+    yLabel: `${t("design.charts.opY")} — ${responseName}${response?.unit ? ` [${response.unit}]` : ""}`,
+    points: result.observedVsPredicted.map((p) => ({
+      x: p.predicted,
+      y: p.observed,
+      label: p.observationId,
+    })),
     reference: "identity" as const,
     legend: t("design.charts.opLegend"),
     metadata: withMetadata ? metadataText : undefined,
@@ -346,7 +359,9 @@ export function DesignResults({ result, signature, language }: Props) {
             </tbody>
           </table>
         </div>
-        <p className="muted small">{t("design.effects.help")}</p>
+        <p className="muted small" data-report-skip>
+          {t("design.effects.help")}
+        </p>
 
         <div className="grid-scroll">
           <table className="results-table" data-testid="design-anova">

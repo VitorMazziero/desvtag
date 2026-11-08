@@ -2,15 +2,15 @@
 // Paridade e validação no WebAssembly do modelo linear: os mesmos casos de
 // validation/cases/linear_model (NIST StRD contra a referência exata e o construtor de modelos
 // contra NumPy/SciPy), pelo mesmo protocolo JSON, com as mesmas exigências do teste nativo
-// (app/crates/optima-core/tests/linear_model_validation.rs).
+// (app/crates/desvtag-core/tests/linear_model_validation.rs).
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { type EngineResponse, type LinearFit, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases/linear_model");
-const wasmFile = resolve(__dirname, "wasm/optima_wasm_bg.wasm");
+const wasmFile = resolve(__dirname, "wasm/desvtag_wasm_bg.wasm");
 
 beforeAll(() => {
   initSync({ module: readFileSync(wasmFile) });

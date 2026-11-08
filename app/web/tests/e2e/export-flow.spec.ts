@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 import { strFromU8, unzipSync } from "fflate";
+import { openFigureMenu } from "./figureTools";
 import { showAllSections } from "./showAll";
 
 // Exportação essencial (ET09) com o motor Rust real: tabelas em CSV (dois formatos) e XLSX,
@@ -71,7 +72,7 @@ test.describe("exportação", () => {
     expect(html.startsWith("<!doctype html>")).toBe(true);
     expect(html).toContain('<html lang="en">');
     // Crédito do grupo: logotipo embutido (sem arquivo externo), com texto alternativo no idioma do relatório.
-    expect(html).toContain('alt="EnziTAG logo"');
+    expect(html).toContain('alt="DesvTAG"');
     expect(html).toMatch(/<img src="data:image\/png;base64,/);
     expect(html).toContain("Provenance");
     expect(html).toContain("Response surface");
@@ -96,8 +97,12 @@ test.describe("exportação", () => {
 
   test("PDF do relatório e da figura: arquivo válido, fontes embutidas e figuras vetoriais", async ({
     page,
-  }) => {
+  }, info) => {
     test.setTimeout(120_000);
+    const fontWarnings: string[] = [];
+    page.on("console", (message) => {
+      if (message.text().includes("failed to open font")) fontWarnings.push(message.text());
+    });
     await openExample(page);
     await page.getByLabel("Idioma dos arquivos exportados").selectOption("en");
     const report = page.waitForEvent("download");
@@ -109,18 +114,22 @@ test.describe("exportação", () => {
     expect(bytes.length).toBeGreaterThan(30_000);
     expect(bytes.toString("latin1")).toContain("%%EOF");
     expect(bytes.toString("latin1")).toContain("Roboto");
+    writeFileSync(info.outputPath("relatorio.pdf"), bytes);
     const keep = process.env.ENZITAG_KEEP_DIR;
     if (keep) writeFileSync(`${keep}/relatorio.pdf`, bytes);
 
     const figure = page.getByTestId("surface-contour").first();
     const target = (await figure.count()) > 0 ? figure : page.locator("figure.chart").first();
     const figureDownload = page.waitForEvent("download");
+    await openFigureMenu(target);
     await target.getByRole("button", { name: /Figura — PDF/ }).click();
     const figureFile = await figureDownload;
     expect(figureFile.suggestedFilename()).toMatch(/\.pdf$/);
     const figureBytes = readFileSync((await figureFile.path()) as string);
     expect(figureBytes.subarray(0, 5).toString("latin1")).toBe("%PDF-");
     expect(figureBytes.toString("latin1")).toContain("%%EOF");
+    expect(fontWarnings).toEqual([]);
+    writeFileSync(info.outputPath("figura.pdf"), figureBytes);
     if (keep) writeFileSync(`${keep}/figura.pdf`, figureBytes);
   });
 
@@ -207,6 +216,7 @@ test.describe("exportação", () => {
     const figure = page.getByTestId("observed-predicted-chart").first();
     await expect(figure).toBeVisible();
     const svgDownload = page.waitForEvent("download");
+    await openFigureMenu(figure);
     await figure.getByRole("button", { name: /Figura — SVG/ }).click();
     const svg = readFileSync((await (await svgDownload).path()) as string, "utf8");
     expect(svg).toContain("#0072B2");

@@ -56,8 +56,32 @@ A tela mostra a tabela de parâmetros com intervalos, `σ`, `R²`, em quantos in
 
 Bates e Watts, *Nonlinear Regression Analysis and Its Applications*; Seber e Wild, *Nonlinear Regression*; Moré (1978) para o Levenberg–Marquardt; Andrews (1968) para a inibição pelo substrato.
 
-## Limitações desta versão
+## Limitações do percurso v1 (histórico; extensão ET24 abaixo)
 
 - **Sem intervalos por verossimilhança perfilada** (só Wald) e **sem os conjuntos NIST StRD** (a referência é o SciPy e a recuperação de parâmetros conhecidos).
 - Só os três modelos de saturação; sem Hill com limites informados na interface, sem ajuste global de vários experimentos e sem modelos dinâmicos (equações diferenciais).
-- O resultado é calculado ao pedir e **não é guardado no projeto**.
+- A ET22 guarda configuração em edição e resultado calculado, com entradas/revisão/proveniência. Abrir não recalcula; HTML/PDF/Word e CSV/XLSX usam o registro consultado. As variantes avançadas desta especificação continuam na ET24.
+
+## Extensão ET24 — perfil de verossimilhança
+
+[DT-0033](../decisoes-tecnicas/dt-0033-perfil-de-verossimilhanca-e-dominio-nao-linear.md). `profile: true` produz método v2 e `profiles`; ausente conserva o contrato e a proveniência v1. Os resultados guardados não são recalculados ao abrir. O motor valida inícios positivos dentro do domínio e limites finitos positivos estritamente ordenados antes de projetar; não há limite superior padrão.
+
+Para erros normais independentes com variância comum desconhecida, `LR(θ_j)=n ln[SQR(θ_j, θ̂_−j)/SQR(θ̂)]`, maximizando a variância em cada ajuste. Corte assintótico `χ²₁(1−α)`. O otimizador retira a coordenada fixada do sistema, executa vários inícios e explora ambos os lados em escala logarítmica, refinando cruzamentos por 36 bisseções. O perfil t do R usa outro corte e não é declarado equivalente.
+
+São registrados pontos e estados dos extremos: `crossing`, `domainBound`, `searchLimit`, `failed`, `resourceLimit`. Somente cruzamentos recebem estatística finita de IC. Queda material de LR ao afastar-se do mínimo ou mínimo condicional melhor invalida a certificação numérica; ajuste exato (SQR < 1e−24) ou não convergido não recebe IC inventado. A unimodalidade refere-se **à região examinada**, nunca a uma prova global. A busca tem até 52 passos geométricos por lado, deslocamento logarítmico máximo 32, e examina três pontos adicionais depois do cruzamento. Incerteza indefinida fica explícita. A faixa da curva continua sendo delta/Wald.
+
+[NIST Misra1d e perfis independentes](../../validation/cases/nonlinear_profile/profile.json): valores certificados com `Vmax=b1`, `K=1/b2` e `SE(b2)=SE(K)/K²` na aproximação linear. Dois inícios publicados são testados. Os certificados cobrem estimativas, erro-padrão e SQR; os IC por perfil são referência **SciPy independente**, não valores certificados NIST. Casos sintéticos Monod/Haldane/Hill têm semente 20261103. Tolerâncias: estimativas relativas 2e−5 (NIST 1e−7), SQR 2e−7 (NIST 2e−8), limites por perfil 3e−4. Gerador e versões no arquivo, contrato WASM repetindo os quatro casos. Apenas o problema NIST compatível com o modelo disponível é declarado coberto.
+
+O [relatório ET24](../../validation/reports/et24/README.md) reúne o aceite local do perfil, das referências e da potência avançada. O [exemplo Misra1d](../../examples/16-perfil-de-saturacao/README.md) inclui o projeto com resultado salvo.
+
+### Integridade do ajuste exato (AU-B02)
+
+SQR exatamente zero ou ausência de convergência preservam estimativas, resíduos e curva; erro-padrão, t, p, IC de Wald e faixa delta passam a `Stat::Undefined(CovarianceInformationUnavailable)`. Correlação indefinida usa matriz vazia, conforme o contrato existente; nunca uma matriz com null ou correlação zero substituta. Correlações são normalizadas dividindo separadamente pelos desvios, evitando o produto das variâncias. Avisos discriminam inferência indisponível, condição do ajuste e parâmetro no limite. O aviso de baixa precisão exige um erro-padrão definido.
+
+Testes existentes ampliados em `models/nonlinear/tests.rs`: ajuste exato com serialização/desserialização tipada, posto deficiente e limite imposto; teste real `et24-integrity.spec.ts`: tela, reabertura sem cálculo e HTML/PDF/Word/CSV/XLSX. Evidências e revisão final no relatório ET24.
+
+### Orçamento operacional qualificado no bloco 05 (AU-P05)
+
+A implementação v0.4 admite até 4.096 pares por novo ajuste e compartilha 100 milhões de unidades de linha entre estimação e perfil; previsão/resíduo e gradiente são cobrados antes de cada lote. Se o multistart principal não terminar, retorna `nonlinear.work_budget`, sem publicar um ótimo incompleto. Se somente o perfil não terminar, mantém parâmetros, Wald, curva e resíduos do ajuste concluído; os dois limites do parâmetro com perfil incompleto ficam indefinidos/`resourceLimit`, com `nonlinear.profile_budget`. Perfis integralmente concluídos conservam seus limites; pontos de coordenadas cujo multistart não terminou são descartados. O estado e o aviso integram projeto e relatórios.
+
+É um envelope operacional, não hipótese estatística, SLA ou limite matemático. Arquivos antigos maiores continuam legíveis sem recalcular ou truncar. As medidas, referência de trabalho, testes das fronteiras e aceite web/nativo são controlados na [§9.10 do plano v0.4](../planos-execucao/plano-v0.4.md#910-execução-do-bloco-05--custo-2026-11-04); o aceite global de carga permanece na ET28.

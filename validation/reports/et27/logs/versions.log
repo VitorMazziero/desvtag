@@ -1,0 +1,9 @@
+┌───────────────────────────────────────┬─────────────┐
+│ (index)                               │ Values      │
+├───────────────────────────────────────┼─────────────┤
+│ app/Cargo.toml [workspace.package]    │ '0.4.0-dev' │
+│ app/web/package.json                  │ '0.4.0-dev' │
+│ app/desktop/src-tauri/Cargo.toml      │ '0.4.0-dev' │
+│ app/desktop/src-tauri/tauri.conf.json │ '0.4.0-dev' │
+└───────────────────────────────────────┴─────────────┘
+Versão única: 0.4.0-dev

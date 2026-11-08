@@ -2,15 +2,15 @@
 // Paridade e validação no WebAssembly: os mesmos casos de referência independente
 // (validation/cases/descriptive_summary) executados pelo motor compilado para WASM,
 // pelo mesmo protocolo JSON usado no navegador, com as mesmas tolerâncias do teste nativo
-// (app/crates/optima-core/tests/descriptive_validation.rs).
+// (app/crates/desvtag-core/tests/descriptive_validation.rs).
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import { type EngineResponse, PROTOCOL_VERSION } from "./contracts.generated";
-import { handleRequest, initSync } from "./wasm/optima_wasm.js";
+import { handleRequest, initSync } from "./wasm/desvtag_wasm.js";
 
 const casesDir = resolve(__dirname, "../../../../../validation/cases/descriptive_summary");
-const wasmFile = resolve(__dirname, "wasm/optima_wasm_bg.wasm");
+const wasmFile = resolve(__dirname, "wasm/desvtag_wasm_bg.wasm");
 
 beforeAll(() => {
   initSync({ module: readFileSync(wasmFile) });

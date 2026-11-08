@@ -1,0 +1,45 @@
+src\features\analysis\RepeatedMeasures.tsx:20:3 lint/correctness/noUnusedFunctionParameters ━━━━━━━━━━
+
+  ! This parameter language is unused.
+  
+    19 │ export function RepeatedMeasures({
+  > 20 │   language,
+       │   ^^^^^^^^
+    21 │   embedded = false,
+    22 │   onShowUnits,
+  
+  i Unused parameters might be the result of an incomplete refactoring.
+  
+
+tests\e2e\et23-configuration.spec.ts:73:13 lint/suspicious/useIterableCallbackReturn ━━━━━━━━━━━━━━━
+
+  × This callback passed to forEach() iterable method should not return a value.
+  
+    71 │     .evaluateAll((elements) => elements.map((e) => Number(e.getAttribute("data-full-value"))));
+    72 │   expect(rawValues).toHaveLength(3);
+  > 73 │   rawValues.forEach((value, i) => expect(value).toBeCloseTo(source.expected.means[i].estimate, 4));
+       │             ^^^^^^^
+    74 │   for (const format of ["CSV", "XLSX"]) {
+    75 │     const event = page.waitForEvent("download");
+  
+  i Either remove this return or remove the returned value.
+  
+    71 │     .evaluateAll((elements) => elements.map((e) => Number(e.getAttribute("data-full-value"))));
+    72 │   expect(rawValues).toHaveLength(3);
+  > 73 │   rawValues.forEach((value, i) => expect(value).toBeCloseTo(source.expected.means[i].estimate, 4));
+       │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    74 │   for (const format of ["CSV", "XLSX"]) {
+    75 │     const event = page.waitForEvent("download");
+  
+
+Skipped 2 suggested fixes.
+If you wish to apply the suggested (unsafe) fixes, use the command biome check --write --unsafe
+
+Checked 3 files in 41ms. Fixed 3 files.
+Found 1 error.
+Found 1 warning.
+check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while applying fixes.
+  
+

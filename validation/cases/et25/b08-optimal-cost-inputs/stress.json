@@ -1,0 +1,375 @@
+[
+  {
+    "name": "mixed-d-1500-starts5",
+    "operation": {
+      "type": "designOptimalGenerate",
+      "model": "quadratic",
+      "criterion": "d",
+      "runs": 60,
+      "levels": 5,
+      "starts": 5,
+      "fixedRuns": [],
+      "constraints": [],
+      "randomize": false,
+      "seed": 2,
+      "factors": [
+        {
+          "id": "f0",
+          "name": "F0",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f1",
+          "name": "F1",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f2",
+          "name": "F2",
+          "low": -1.0,
+          "high": 1.0
+        }
+      ],
+      "categories": {
+        "factors": [
+          {
+            "id": "c0",
+            "name": "C0",
+            "levels": [
+              "L0",
+              "L1",
+              "L2"
+            ]
+          },
+          {
+            "id": "c1",
+            "name": "C1",
+            "levels": [
+              "L0",
+              "L1",
+              "L2",
+              "L3"
+            ]
+          }
+        ],
+        "fixedRuns": []
+      }
+    }
+  },
+  {
+    "name": "mixed-i-1500-starts5",
+    "operation": {
+      "type": "designOptimalGenerate",
+      "model": "quadratic",
+      "criterion": "i",
+      "runs": 60,
+      "levels": 5,
+      "starts": 5,
+      "fixedRuns": [],
+      "constraints": [],
+      "randomize": false,
+      "seed": 2,
+      "factors": [
+        {
+          "id": "f0",
+          "name": "F0",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f1",
+          "name": "F1",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f2",
+          "name": "F2",
+          "low": -1.0,
+          "high": 1.0
+        }
+      ],
+      "categories": {
+        "factors": [
+          {
+            "id": "c0",
+            "name": "C0",
+            "levels": [
+              "L0",
+              "L1",
+              "L2"
+            ]
+          },
+          {
+            "id": "c1",
+            "name": "C1",
+            "levels": [
+              "L0",
+              "L1",
+              "L2",
+              "L3"
+            ]
+          }
+        ],
+        "fixedRuns": []
+      }
+    }
+  },
+  {
+    "name": "numeric-i-typical-starts50",
+    "operation": {
+      "type": "designOptimalGenerate",
+      "model": "quadratic",
+      "criterion": "i",
+      "runs": 12,
+      "levels": 5,
+      "starts": 50,
+      "fixedRuns": [],
+      "constraints": [],
+      "randomize": false,
+      "seed": 2,
+      "factors": [
+        {
+          "id": "f0",
+          "name": "F0",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f1",
+          "name": "F1",
+          "low": -1.0,
+          "high": 1.0
+        }
+      ]
+    }
+  },
+  {
+    "name": "mixed-i-1500-eight-blocks",
+    "operation": {
+      "type": "designOptimalGenerate",
+      "model": "quadratic",
+      "criterion": "i",
+      "runs": 60,
+      "levels": 5,
+      "starts": 2,
+      "fixedRuns": [
+        [
+          -0.75,
+          0.5,
+          0.25
+        ],
+        [
+          -0.55,
+          -0.5,
+          0.25
+        ],
+        [
+          -0.35,
+          0.5,
+          -0.25
+        ],
+        [
+          -0.1499999999999999,
+          -0.5,
+          -0.25
+        ],
+        [
+          0.050000000000000044,
+          0.5,
+          0.25
+        ],
+        [
+          0.25,
+          -0.5,
+          0.25
+        ],
+        [
+          0.4500000000000002,
+          0.5,
+          -0.25
+        ],
+        [
+          0.6500000000000001,
+          -0.5,
+          -0.25
+        ]
+      ],
+      "constraints": [],
+      "randomize": false,
+      "seed": 2,
+      "factors": [
+        {
+          "id": "f0",
+          "name": "F0",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f1",
+          "name": "F1",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f2",
+          "name": "F2",
+          "low": -1.0,
+          "high": 1.0
+        }
+      ],
+      "categories": {
+        "factors": [
+          {
+            "id": "c0",
+            "name": "C0",
+            "levels": [
+              "L0",
+              "L1",
+              "L2"
+            ]
+          },
+          {
+            "id": "c1",
+            "name": "C1",
+            "levels": [
+              "L0",
+              "L1",
+              "L2",
+              "L3"
+            ]
+          }
+        ],
+        "fixedRuns": [
+          [
+            "L0",
+            "L0"
+          ],
+          [
+            "L1",
+            "L1"
+          ],
+          [
+            "L2",
+            "L2"
+          ],
+          [
+            "L0",
+            "L3"
+          ],
+          [
+            "L1",
+            "L0"
+          ],
+          [
+            "L2",
+            "L1"
+          ],
+          [
+            "L0",
+            "L2"
+          ],
+          [
+            "L1",
+            "L3"
+          ]
+        ]
+      },
+      "blocks": {
+        "labels": [
+          "B1",
+          "B2",
+          "B3",
+          "B4",
+          "B5",
+          "B6",
+          "B7",
+          "B8"
+        ],
+        "fixedBlocks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "newRuns": [
+          7,
+          7,
+          7,
+          7,
+          6,
+          6,
+          6,
+          6
+        ]
+      }
+    }
+  },
+  {
+    "name": "mixed-i-over-candidates",
+    "operation": {
+      "type": "designOptimalGenerate",
+      "model": "quadratic",
+      "criterion": "i",
+      "runs": 60,
+      "levels": 5,
+      "starts": 1,
+      "fixedRuns": [],
+      "constraints": [],
+      "randomize": false,
+      "seed": 2,
+      "factors": [
+        {
+          "id": "f0",
+          "name": "F0",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f1",
+          "name": "F1",
+          "low": -1.0,
+          "high": 1.0
+        },
+        {
+          "id": "f2",
+          "name": "F2",
+          "low": -1.0,
+          "high": 1.0
+        }
+      ],
+      "categories": {
+        "factors": [
+          {
+            "id": "c0",
+            "name": "C0",
+            "levels": [
+              "L0",
+              "L1",
+              "L2"
+            ]
+          },
+          {
+            "id": "c1",
+            "name": "C1",
+            "levels": [
+              "L0",
+              "L1",
+              "L2",
+              "L3",
+              "L4"
+            ]
+          }
+        ],
+        "fixedRuns": []
+      }
+    },
+    "expectedIssue": "design.optimal_too_many_candidates"
+  }
+]

@@ -1,0 +1,298 @@
+
+Running 51 tests using 3 workers
+
+(node:24532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (3.2s)
+  ok  4 [chromium] › tests\e2e\et22-families.spec.ts:218:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (2.4s)
+  ok  1 [chromium] › tests\e2e\et22-families.spec.ts:156:1 › T04: paired and mixed models retain separate immutable records (6.8s)
+  x   2 [chromium] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (6.6s)
+(node:12028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (12.4s)
+  ok  7 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (12.1s)
+  x   5 [chromium] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (16.0s)
+(node:3792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (9.1s)
+  ok  9 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (9.5s)
+  ok 10 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (10.0s)
+  ok 11 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (9.8s)
+  ok 12 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (9.8s)
+  ok 13 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (9.8s)
+  ok 14 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (10.3s)
+  ok 15 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (10.2s)
+(node:24432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (9.9s)
+(node:9960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 19 [firefox] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (5.2s)
+  ok 17 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (10.4s)
+(node:29708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  18 [firefox] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (8.8s)
+(node:30772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [firefox] › tests\e2e\et22-families.spec.ts:218:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (4.3s)
+  ok 20 [firefox] › tests\e2e\et22-families.spec.ts:156:1 › T04: paired and mixed models retain separate immutable records (6.2s)
+  ok 23 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (15.4s)
+  x  22 [firefox] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (18.2s)
+  ok 24 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (15.1s)
+(node:33504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 26 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (13.0s)
+  ok 25 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (13.4s)
+  ok 27 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (14.4s)
+  ok 28 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (13.5s)
+  ok 29 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (13.4s)
+  ok 30 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (13.4s)
+  ok 31 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (14.0s)
+  ok 32 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (14.2s)
+(node:12308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 33 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (14.1s)
+(node:8144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 36 [webkit] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (6.4s)
+  x  35 [webkit] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (8.3s)
+(node:12304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 34 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (13.1s)
+(node:10000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 38 [webkit] › tests\e2e\et22-families.spec.ts:218:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (4.9s)
+  ok 37 [webkit] › tests\e2e\et22-families.spec.ts:156:1 › T04: paired and mixed models retain separate immutable records (7.4s)
+  x  39 [webkit] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (16.4s)
+(node:17024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 40 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (21.0s)
+  ok 41 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (21.1s)
+  ok 42 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (16.6s)
+  ok 43 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (16.5s)
+  ok 44 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (16.8s)
+  ok 45 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (16.0s)
+  ok 46 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (15.5s)
+  ok 47 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (15.5s)
+  ok 48 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (16.2s)
+  ok 49 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (16.3s)
+  ok 50 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (14.8s)
+  ok 51 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (12.8s)
+
+
+  1) [chromium] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "# undefinedStates:"
+    Received string:    "﻿# app: EnziTAG Optima·
+    # method: mixture_model v1·
+    # engine: 0.4.0-dev·
+    # model: quadratic·
+    # analysis: a2·
+    # revision: v4·
+    # signature: mixture:v1:[[{\"id\":\"f1\",\"name\":\"Água\",\"lower\":0},{\"id\":\"f2\",\"name\":\"Etanol\",\"lower\":0},{\"id\":\"f3\",\"name\":\"Glicerol\",\"lower\":0}],[{\"id\":\"f1\",\"name\":\"Água\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"},{\"id\":\"f2\",\"name\":\"Etanol\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"},{\"id\":\"f3\",\"name\":\"Glicerol\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"}],{\"id\":\"r1\",\"name\":\"Rendimento\",\"unit\":\"\"},[[\"o1\",[\"0\",\"0\",\"1\"],\"30,02\"],[\"o2\",[\"0\",\"0.5\",\"0.5\"],\"24,97\"],[\"o3\",[\"0\",\"1\",\"0\"],\"20,01\"],[\"o4\",[\"0.5\",\"0\",\"0.5\"],\"20,04\"],[\"o5\",[\"0.5\",\"0.5\",\"0\"],\"21,23\"],[\"o6\",[\"1\",\"0\",\"0\"],\"10,03\"],[\"o7\",[\"0\",\"0\",\"1\"],\"29,99\"],[\"o8\",[\"0\",\"0.5\",\"0.5\"],\"25,02\"],[\"o9\",[\"0\",\"1\",\"0\"],\"19,96\"],[\"o10\",[\"0.5\",\"0\",\"0.5\"],\"20,01\"],[\"o11\",[\"0.5\",\"0.5\",\"0\"],\"21,28\"],[\"o12\",[\"1\",\"0\",\"0\"],\"9,98\"],[\"o13\",[\"0.3333333333\",\"0.3333333333\",\"0.3333333333\"],\"22,7778\"]],\"quadratic\",0.05]·
+    # export_language: pt-BR·
+    # csv_format: technical (, e ponto decimal)···
+    term,estimate,std_error,t,p_value,ci_lower,ci_upper·
+    Água,10.005492018671067,0.020658694806674094,484.3235311961066,4.224602881511548e-17,9.956641967924952,10.054342069417181·
+    Etanol,19.98549201867106,0.020658694806674097,967.4131016357553,3.330284548736719e-19,19.936641967924945,20.034342069417175·
+    Glicerol,30.005492018671067,0.020658694806674104,1452.4389028186495,1.9368037118531444e-20,29.956641967924952,30.05434206941718·
+    Água·Etanol,25.03015962657639,0.09739520818376741,256.9958018812274,3.565741081246244e-15,24.799856555316126,25.26046269783665·
+    Água·Glicerol,0.07015962657638437,0.0973952081837674,0.7203601479449139,0.49464899585890176,-0.16014344468388003,0.3004626978366488·
+    Etanol·Glicerol,-0.009840373423579369,0.09739520818376743,-0.10103549863574741,0.9223553302301005,-0.24014344468384388,0.22046269783668512·
+    "
+
+      109 |   expect(csv).toContain(String(exactEstimate));
+      110 |   expect(csv).toContain(`# analysis: ${historical.id}`);
+    > 111 |   expect(csv).toContain("# undefinedStates:");
+          |               ^
+      112 |   const workbook = unzipSync(
+      113 |     new Uint8Array(readFileSync(info.outputPath("T03-coefficients.xlsx"))),
+      114 |   );
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:111:15
+
+    Error Context: test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment 
+
+    TimeoutError: locator.inputValue: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Experimento ativo', { exact: true })
+
+
+      267 |   });
+      268 |   await open(page, "08-saturacao-monod");
+    > 269 |   const old = await page.getByLabel("Experimento ativo", { exact: true }).inputValue();
+          |                                                                           ^
+      270 |   const tool = await openSaturationTool(page);
+      271 |   await tool.getByRole("button", { name: "Ajustar curva", exact: true }).click();
+      272 |   await page.keyboard.press("Escape");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:269:75
+
+    Error Context: test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [firefox] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "# undefinedStates:"
+    Received string:    "﻿# app: EnziTAG Optima·
+    # method: mixture_model v1·
+    # engine: 0.4.0-dev·
+    # model: quadratic·
+    # analysis: a2·
+    # revision: v4·
+    # signature: mixture:v1:[[{\"id\":\"f1\",\"name\":\"Água\",\"lower\":0},{\"id\":\"f2\",\"name\":\"Etanol\",\"lower\":0},{\"id\":\"f3\",\"name\":\"Glicerol\",\"lower\":0}],[{\"id\":\"f1\",\"name\":\"Água\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"},{\"id\":\"f2\",\"name\":\"Etanol\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"},{\"id\":\"f3\",\"name\":\"Glicerol\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"}],{\"id\":\"r1\",\"name\":\"Rendimento\",\"unit\":\"\"},[[\"o1\",[\"0\",\"0\",\"1\"],\"30,02\"],[\"o2\",[\"0\",\"0.5\",\"0.5\"],\"24,97\"],[\"o3\",[\"0\",\"1\",\"0\"],\"20,01\"],[\"o4\",[\"0.5\",\"0\",\"0.5\"],\"20,04\"],[\"o5\",[\"0.5\",\"0.5\",\"0\"],\"21,23\"],[\"o6\",[\"1\",\"0\",\"0\"],\"10,03\"],[\"o7\",[\"0\",\"0\",\"1\"],\"29,99\"],[\"o8\",[\"0\",\"0.5\",\"0.5\"],\"25,02\"],[\"o9\",[\"0\",\"1\",\"0\"],\"19,96\"],[\"o10\",[\"0.5\",\"0\",\"0.5\"],\"20,01\"],[\"o11\",[\"0.5\",\"0.5\",\"0\"],\"21,28\"],[\"o12\",[\"1\",\"0\",\"0\"],\"9,98\"],[\"o13\",[\"0.3333333333\",\"0.3333333333\",\"0.3333333333\"],\"22,7778\"]],\"quadratic\",0.05]·
+    # export_language: pt-BR·
+    # csv_format: technical (, e ponto decimal)···
+    term,estimate,std_error,t,p_value,ci_lower,ci_upper·
+    Água,10.005492018671067,0.020658694806674094,484.3235311961066,4.224602881511548e-17,9.956641967924952,10.054342069417181·
+    Etanol,19.98549201867106,0.020658694806674097,967.4131016357553,3.330284548736719e-19,19.936641967924945,20.034342069417175·
+    Glicerol,30.005492018671067,0.020658694806674104,1452.4389028186495,1.9368037118531444e-20,29.956641967924952,30.05434206941718·
+    Água·Etanol,25.03015962657639,0.09739520818376741,256.9958018812274,3.565741081246244e-15,24.799856555316126,25.26046269783665·
+    Água·Glicerol,0.07015962657638437,0.0973952081837674,0.7203601479449139,0.49464899585890176,-0.16014344468388003,0.3004626978366488·
+    Etanol·Glicerol,-0.009840373423579369,0.09739520818376743,-0.10103549863574741,0.9223553302301005,-0.24014344468384388,0.22046269783668512·
+    "
+
+      109 |   expect(csv).toContain(String(exactEstimate));
+      110 |   expect(csv).toContain(`# analysis: ${historical.id}`);
+    > 111 |   expect(csv).toContain("# undefinedStates:");
+          |               ^
+      112 |   const workbook = unzipSync(
+      113 |     new Uint8Array(readFileSync(info.outputPath("T03-coefficients.xlsx"))),
+      114 |   );
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:111:15
+
+    Error Context: test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [firefox] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment 
+
+    TimeoutError: locator.inputValue: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Experimento ativo', { exact: true })
+
+
+      267 |   });
+      268 |   await open(page, "08-saturacao-monod");
+    > 269 |   const old = await page.getByLabel("Experimento ativo", { exact: true }).inputValue();
+          |                                                                           ^
+      270 |   const tool = await openSaturationTool(page);
+      271 |   await tool.getByRole("button", { name: "Ajustar curva", exact: true }).click();
+      272 |   await page.keyboard.press("Escape");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:269:75
+
+    Error Context: test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "# undefinedStates:"
+    Received string:    "﻿# app: EnziTAG Optima·
+    # method: mixture_model v1·
+    # engine: 0.4.0-dev·
+    # model: quadratic·
+    # analysis: a2·
+    # revision: v4·
+    # signature: mixture:v1:[[{\"id\":\"f1\",\"name\":\"Água\",\"lower\":0},{\"id\":\"f2\",\"name\":\"Etanol\",\"lower\":0},{\"id\":\"f3\",\"name\":\"Glicerol\",\"lower\":0}],[{\"id\":\"f1\",\"name\":\"Água\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"},{\"id\":\"f2\",\"name\":\"Etanol\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"},{\"id\":\"f3\",\"name\":\"Glicerol\",\"kind\":\"numeric\",\"unit\":\"\",\"levelsText\":\"\"}],{\"id\":\"r1\",\"name\":\"Rendimento\",\"unit\":\"\"},[[\"o1\",[\"0\",\"0\",\"1\"],\"30,02\"],[\"o2\",[\"0\",\"0.5\",\"0.5\"],\"24,97\"],[\"o3\",[\"0\",\"1\",\"0\"],\"20,01\"],[\"o4\",[\"0.5\",\"0\",\"0.5\"],\"20,04\"],[\"o5\",[\"0.5\",\"0.5\",\"0\"],\"21,23\"],[\"o6\",[\"1\",\"0\",\"0\"],\"10,03\"],[\"o7\",[\"0\",\"0\",\"1\"],\"29,99\"],[\"o8\",[\"0\",\"0.5\",\"0.5\"],\"25,02\"],[\"o9\",[\"0\",\"1\",\"0\"],\"19,96\"],[\"o10\",[\"0.5\",\"0\",\"0.5\"],\"20,01\"],[\"o11\",[\"0.5\",\"0.5\",\"0\"],\"21,28\"],[\"o12\",[\"1\",\"0\",\"0\"],\"9,98\"],[\"o13\",[\"0.3333333333\",\"0.3333333333\",\"0.3333333333\"],\"22,7778\"]],\"quadratic\",0.05]·
+    # export_language: pt-BR·
+    # csv_format: technical (, e ponto decimal)···
+    term,estimate,std_error,t,p_value,ci_lower,ci_upper·
+    Água,10.005492018671067,0.020658694806674094,484.3235311961066,4.224602881511548e-17,9.956641967924952,10.054342069417181·
+    Etanol,19.98549201867106,0.020658694806674097,967.4131016357553,3.330284548736719e-19,19.936641967924945,20.034342069417175·
+    Glicerol,30.005492018671067,0.020658694806674104,1452.4389028186495,1.9368037118531444e-20,29.956641967924952,30.05434206941718·
+    Água·Etanol,25.03015962657639,0.09739520818376741,256.9958018812274,3.565741081246244e-15,24.799856555316126,25.26046269783665·
+    Água·Glicerol,0.07015962657638437,0.0973952081837674,0.7203601479449139,0.49464899585890176,-0.16014344468388003,0.3004626978366488·
+    Etanol·Glicerol,-0.009840373423579369,0.09739520818376743,-0.10103549863574741,0.9223553302301005,-0.24014344468384388,0.22046269783668512·
+    "
+
+      109 |   expect(csv).toContain(String(exactEstimate));
+      110 |   expect(csv).toContain(`# analysis: ${historical.id}`);
+    > 111 |   expect(csv).toContain("# undefinedStates:");
+          |               ^
+      112 |   const workbook = unzipSync(
+      113 |     new Uint8Array(readFileSync(info.outputPath("T03-coefficients.xlsx"))),
+      114 |   );
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:111:15
+
+    Error Context: test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-report-final\et22-families-T03-mixture--8be27-ts-and-exports-from-Results-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment 
+
+    TimeoutError: locator.inputValue: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Experimento ativo', { exact: true })
+
+
+      267 |   });
+      268 |   await open(page, "08-saturacao-monod");
+    > 269 |   const old = await page.getByLabel("Experimento ativo", { exact: true }).inputValue();
+          |                                                                           ^
+      270 |   const tool = await openSaturationTool(page);
+      271 |   await tool.getByRole("button", { name: "Ajustar curva", exact: true }).click();
+      272 |   await page.keyboard.press("Escape");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:269:75
+
+    Error Context: test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-report-final\et22-families-T09-a-late-f-d57a5--to-its-original-experiment-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results 
+    [chromium] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment 
+    [firefox] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results 
+    [firefox] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment 
+    [webkit] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results 
+    [webkit] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment 
+  45 passed (3.6m)

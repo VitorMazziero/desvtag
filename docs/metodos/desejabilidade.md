@@ -37,11 +37,15 @@ O expoente `s` vale 1 (linear), maior que 1 (exige chegar mais perto do alvo) ou
 
 ## 5. Algoritmo numérico
 
+Quando a diferença entre limites finitos transborda, o motor divide os três valores por dois antes de calcular a razão. Isso preserva a posição relativa no intervalo. A revisão aparece na proveniência como versão 3 da otimização por desejabilidade e versão 5 da análise de mistura. Os valores já gravados conservam a proveniência original.
+
 Cálculo direto em ponto flutuante (potência e logaritmo). A busca do ótimo está em [busca e otimização](busca-otimizacao.md).
 
 ## 6. Saídas
 
 Por candidato: desejabilidade individual de cada resposta, global, e a perda em relação ao melhor que cada resposta alcançaria sozinha (compromisso).
+
+A busca arquiva um ajuste por resposta na ordem dos objetivos. A malha usa os coeficientes arquivados e a geometria dos ensaios usados por cada modelo para reproduzir a predição, as restrições e a marcação de extrapolação. Abrir o resultado com esses ajustes permite desenhar a malha sem ajustar novamente as respostas. Nos projetos anteriores, os candidatos continuam disponíveis e a reconstrução da figura exige uma ação explícita com os dados e a configuração do resultado original.
 
 ## 7. Casos sem resultado válido
 

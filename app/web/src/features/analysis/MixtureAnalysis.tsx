@@ -1,92 +1,157 @@
 // Análise de misturas (v0.3): modelos de Scheffé (linear, quadrático, cúbico especial) sem
 // intercepto, ANOVA centrada na média, previsões sobre o triângulo (três componentes). O cálculo é
-// do motor (`mixture.analyze`); o resultado é calculado ao pedir e **não é guardado no projeto**.
-import { useState } from "react";
+// do motor (`mixture.analyze`); o resultado é calculado ao pedir e é guardado com as entradas e a revisão do cálculo.
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
-import { formatP, formatSignificant } from "../../i18n/format";
-import type { MixtureAnalysis as Analysis, MixtureModel, Stat } from "../../services/engine";
+import { type MixtureModel, StaleResponseError } from "../../services/engine";
 import { useEngine } from "../../services/engine/EngineContext";
 import { engineErrorMessages } from "../../services/errors/presentation";
 import { useProject, useProjectDispatch } from "../../state/ProjectContext";
 import { parseNumberCell } from "../data/editing";
-import { TableExportButtons } from "../results/TableExportButtons";
-import { TernaryPlot } from "../results/TernaryPlot";
+import { mixtureSignature } from "./familySignatures";
+import { MixtureOptimizationOptions, mixtureGoalFieldKeys } from "./MixtureOptimizationOptions";
+import {
+  collectMixtureResponse,
+  defaultMixtureOptimization,
+  parseMixtureOptimization,
+} from "./mixtureOptimizationSetup";
+import { useFamilyRecorder } from "./useFamilyRecorder";
 
-const num = (s: Stat): number | null => (s.status === "defined" ? s.value : null);
-
-export function MixtureAnalysis({ language }: { language: Language }) {
+export function MixtureAnalysis({
+  language,
+  onCurrent,
+  onCalculated,
+}: {
+  language: Language;
+  onCurrent?: (current: boolean) => void;
+  onCalculated?: () => void;
+}) {
   const { t } = useTranslation();
   const state = useProject();
   const dispatch = useProjectDispatch();
   const { client } = useEngine();
   const spec = state.mixture;
   const responses = state.responses.filter((r) => r.name.trim() !== "");
-  const [responseId, setResponseId] = useState(state.analysis.responseId ?? responses[0]?.id ?? "");
+  const selection = state.mixtureResult?.selection ?? {
+    responseId: state.analysis.responseId ?? responses[0]?.id ?? null,
+  };
+  const responseId = selection.responseId ?? "";
+  const setResponseId = (responseId: string) =>
+    dispatch({
+      type: "setFamilySelection",
+      family: "mixture",
+      selection: { ...selection, responseId },
+    });
   const [busy, setBusy] = useState(false);
-  const [problems, setProblems] = useState<string[]>([]);
-  const [result, setResult] = useState<Analysis | null>(null);
+  const root = useRef<HTMLElement>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [problems, setProblems] = useState<string[]>([]);
+  const record = state.mixtureResult?.records.at(-1);
+  const signature = mixtureSignature(state, selection);
+  const capture = useFamilyRecorder();
+  const result = record?.result ?? null;
+  const resultSignature = record?.signature;
+  const current = result !== null && signature === resultSignature;
+  useEffect(() => {
+    onCurrent?.(current);
+  }, [onCurrent, current]);
+
   if (!spec) return null;
 
-  const fmt = (v: number | null, digits = 6) =>
-    v === null ? "—" : formatSignificant(v, language, digits);
   const names = spec.components.map((c) => c.name);
 
   const fit = async () => {
-    const responseIndex = state.responses.findIndex((r) => r.id === responseId);
-    if (responseIndex < 0) return;
-    const proportions: number[][] = [];
-    const response: number[] = [];
-    const bad: number[] = [];
-    state.rows.forEach((row, i) => {
-      const y = parseNumberCell(row.responses[responseIndex] ?? "");
-      if (!y.ok) bad.push(i + 1);
-      if (!y.ok || y.value === null) return;
-      const p = spec.components.map((c) => {
-        const k = state.factors.findIndex((f) => f.id === c.id);
-        const parsed = parseNumberCell(row.factors[k] ?? "");
-        return parsed.ok && parsed.value !== null ? parsed.value : Number.NaN;
-      });
-      proportions.push(p);
-      response.push(y.value);
-    });
-    if (bad.length > 0) {
-      setProblems([t("mixture.analysis.badCells", { rows: bad.slice(0, 5).join(", ") })]);
+    const invalid = root.current?.querySelector<HTMLInputElement>('input[aria-invalid="true"]');
+    if (invalid) {
+      const details = invalid.closest("details");
+      if (details) details.open = true;
+      invalid.focus();
+      setProblems([t("optimization.decision.invalidNumber")]);
       return;
     }
+    const collected = collectMixtureResponse(state, responseId);
+    if (!collected.known) {
+      setProblems([t("issues.request.unknown_response", { ns: "diagnostics" })]);
+      return;
+    }
+    if (collected.bad.length) {
+      setProblems([t("mixture.analysis.badCells", { rows: collected.bad.slice(0, 5).join(", ") })]);
+      return;
+    }
+    const { proportions, response } = collected.data;
+    const coxReference = selection.coxReference?.map((text) => {
+      const parsed = parseNumberCell(text);
+      return parsed.ok ? parsed.value : null;
+    });
+    if (coxReference?.some((value) => value === null)) {
+      setProblems([t("mixture.analysis.coxNumericReference")]);
+      return;
+    }
+    const parsedOptimization = selection.optimization
+      ? parseMixtureOptimization(state, selection.optimization, (key, name) => {
+          const label = t(mixtureGoalFieldKeys[key] ?? key);
+          return name ? `${name} — ${label}` : label;
+        })
+      : null;
+    if (parsedOptimization?.invalid.length) {
+      setProblems([
+        t("mixture.analysis.optimInvalid", { fields: parsedOptimization.invalid.join("; ") }),
+      ]);
+      return;
+    }
+    const request = {
+      optimization: parsedOptimization?.spec ?? undefined,
+      coxReference: coxReference as number[] | undefined,
+      componentNames: names,
+      lowerBounds: spec.components.map((c) => c.lower),
+      upperBounds: spec.upperBounds,
+      proportions,
+      response,
+      model: state.mixtureModel,
+      alpha: state.analysis.alpha,
+    };
+    const save = capture(signature);
     setBusy(true);
     setProblems([]);
+    setNotice(null);
     try {
       const r = await client.request(
-        {
-          type: "mixtureAnalyze",
-          componentNames: names,
-          lowerBounds: spec.components.map((c) => c.lower),
-          proportions,
-          response,
-          model: state.mixtureModel,
-          alpha: state.analysis.alpha,
-        },
+        { type: "mixtureAnalyze", ...request },
         { channel: "mixture-analysis" },
       );
       if (r.outcome.status === "ok" && r.outcome.result.type === "mixtureAnalyze") {
-        setResult(r.outcome.result as unknown as Analysis);
+        const { type: _type, ...result } = r.outcome.result;
+        save({
+          family: "mixture",
+          selection,
+          input: { responseId, componentIds: spec.components.map((c) => c.id), request },
+          result,
+        });
+        onCalculated?.();
       } else if (r.outcome.status === "error") {
-        setResult(null);
         setProblems(engineErrorMessages(t, r.outcome.error));
       }
-    } catch {
-      // resposta obsoleta ou falha de transporte: o resultado atual permanece
+    } catch (error) {
+      if (!(error instanceof StaleResponseError))
+        setProblems([t("engine.unavailable", { ns: "diagnostics" })]);
     } finally {
       setBusy(false);
     }
   };
 
-  const a = result?.fit.anova;
-  const rows = result?.fit.coefficients ?? [];
   return (
-    <section aria-labelledby="mixture-analysis-title" data-testid="mixture-analysis">
+    <section
+      ref={root}
+      className="mixture-analysis"
+      aria-labelledby="mixture-analysis-title"
+      data-testid="mixture-analysis"
+    >
+      {!current && result && (
+        <p className="error" role="status">
+          {t("stale", { ns: "results" })}
+        </p>
+      )}
       <h2 id="mixture-analysis-title">{t("mixture.analysis.title")}</h2>
       <p className="muted">{t("mixture.analysis.intro")}</p>
       <div className="row">
@@ -116,137 +181,116 @@ export function MixtureAnalysis({ language }: { language: Language }) {
             )}
           </select>
         </label>
-        <button type="button" className="button" disabled={busy || !responseId} onClick={fit}>
-          {t("mixture.analysis.fit")}
-        </button>
       </div>
+      <fieldset className="editor-card" data-testid="cox-reference">
+        <legend>{t("mixture.analysis.coxTitle")}</legend>
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={selection.coxReference !== undefined}
+            onChange={(event) =>
+              dispatch({
+                type: "setFamilySelection",
+                family: "mixture",
+                selection: {
+                  ...selection,
+                  coxReference: event.target.checked ? spec.components.map(() => "") : undefined,
+                },
+              })
+            }
+          />
+          <span>{t("mixture.analysis.coxEnable")}</span>
+        </label>
+        {selection.coxReference && (
+          <>
+            <p className="muted">{t("mixture.analysis.coxHelp")}</p>
+            <div className="form-grid">
+              {spec.components.map((component, index) => (
+                <label className="field" key={component.id}>
+                  <span>
+                    {t("mixture.analysis.coxReferenceLabel", { component: component.name })}
+                  </span>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={selection.coxReference?.[index] ?? ""}
+                    onChange={(event) =>
+                      dispatch({
+                        type: "setFamilySelection",
+                        family: "mixture",
+                        selection: {
+                          ...selection,
+                          coxReference: spec.components.map((_, i) =>
+                            i === index ? event.target.value : (selection.coxReference?.[i] ?? ""),
+                          ),
+                        },
+                      })
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+          </>
+        )}
+      </fieldset>
+      <fieldset className="editor-card" data-testid="mixture-optimization-config">
+        <legend>{t("mixture.analysis.optimTitle")}</legend>
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={selection.optimization !== undefined}
+            disabled={!responseId}
+            onChange={(event) =>
+              dispatch({
+                type: "setFamilySelection",
+                family: "mixture",
+                selection: {
+                  ...selection,
+                  optimization: event.target.checked
+                    ? defaultMixtureOptimization(state, responseId)
+                    : undefined,
+                },
+              })
+            }
+          />
+          <span>{t("mixture.analysis.optimEnable")}</span>
+        </label>
+        {selection.optimization && (
+          <MixtureOptimizationOptions
+            draft={selection.optimization}
+            onChange={(optimization) =>
+              dispatch({
+                type: "setFamilySelection",
+                family: "mixture",
+                selection: { ...selection, optimization },
+              })
+            }
+          />
+        )}
+      </fieldset>
+      <button type="button" className="button" disabled={busy || !responseId} onClick={fit}>
+        {t(selection.optimization ? "mixture.analysis.fitOptimize" : "mixture.analysis.fit")}
+      </button>
+      {busy && (
+        <button
+          type="button"
+          className="button secondary"
+          onClick={() => {
+            client.cancel("mixture-analysis");
+            setBusy(false);
+            setNotice(t("optimization.run.cancelled"));
+          }}
+        >
+          {t("optimization.run.cancel")}
+        </button>
+      )}
+      {notice && <p role="status">{notice}</p>}
       {problems.length > 0 && (
         <div role="alert" className="error">
           {problems.map((p) => (
             <p key={p}>{p}</p>
           ))}
         </div>
-      )}
-      {result && a && (
-        <>
-          <p className="muted small">{t("mixture.analysis.note")}</p>
-          <h3>{t("mixture.analysis.coefficients")}</h3>
-          <TableExportButtons
-            label={t("mixture.analysis.exportCsv")}
-            suffix="de-scheffe"
-            sheet={t("mixture.analysis.coefficients")}
-            header={["term", "estimate", "std_error", "t", "p_value", "ci_lower", "ci_upper"]}
-            rows={rows.map((r) => [
-              r.label,
-              num(r.estimate),
-              num(r.stdError),
-              num(r.tValue),
-              num(r.pValue),
-              num(r.ciLower),
-              num(r.ciUpper),
-            ])}
-            metadata={{
-              app: "EnziTAG Optima",
-              method: `${result.provenance.methodId} v${result.provenance.methodVersion}`,
-              engine: result.provenance.engineVersion,
-              model: result.model,
-            }}
-            fileBase="coeficientes-scheffe"
-            onDone={setNotice}
-          />
-          {notice && (
-            <p role="status" className="muted small">
-              {notice}
-            </p>
-          )}
-          <div className="grid-scroll">
-            <table className="results-table" data-testid="scheffe-coefficients">
-              <thead>
-                <tr>
-                  <th scope="col">{t("mixture.analysis.term")}</th>
-                  <th scope="col">{t("mixture.analysis.estimate")}</th>
-                  <th scope="col">{t("mixture.analysis.se")}</th>
-                  <th scope="col">t</th>
-                  <th scope="col">p</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => (
-                  <tr key={r.label}>
-                    <th scope="row">{r.label}</th>
-                    <td>{fmt(num(r.estimate))}</td>
-                    <td>{fmt(num(r.stdError))}</td>
-                    <td>{fmt(num(r.tValue), 4)}</td>
-                    <td>
-                      {num(r.pValue) === null ? "—" : formatP(num(r.pValue) as number, language)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <h3>{t("mixture.analysis.anova")}</h3>
-          <div className="grid-scroll">
-            <table className="results-table" data-testid="scheffe-anova">
-              <thead>
-                <tr>
-                  <th scope="col">{t("mixture.analysis.source")}</th>
-                  <th scope="col">GL</th>
-                  <th scope="col">SQ</th>
-                  <th scope="col">QM</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(
-                  [
-                    ["model", a.model],
-                    ["residual", a.residual],
-                    ["total", a.total],
-                  ] as const
-                ).map(([key, row]) => (
-                  <tr key={key}>
-                    <th scope="row">{t(`mixture.analysis.${key === "model" ? "model_" : key}`)}</th>
-                    <td>{row.df}</td>
-                    <td>{fmt(num(row.sumSquares))}</td>
-                    <td>{fmt(num(row.meanSquare))}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p data-testid="scheffe-fit-stats">
-            F = {fmt(num(a.f), 5)} · p ={" "}
-            {num(a.pValue) === null ? "—" : formatP(num(a.pValue) as number, language)} · R² ={" "}
-            {fmt(num(a.rSquared), 5)} · R² {t("mixture.analysis.adjusted")} ={" "}
-            {fmt(num(a.adjustedRSquared), 5)}
-          </p>
-          {result.fit.issues.map((i) => (
-            <p key={i.code} role="status" className="muted">
-              {t(`issues.${i.code}`, { ns: "diagnostics", defaultValue: i.code })}
-            </p>
-          ))}
-          {result.grid.length > 0 && (
-            <TernaryPlot
-              names={names}
-              grid={result.grid}
-              points={state.rows.flatMap((row) => {
-                const p = spec.components.map((c) => {
-                  const k = state.factors.findIndex((f) => f.id === c.id);
-                  const parsed = parseNumberCell(row.factors[k] ?? "");
-                  return parsed.ok && parsed.value !== null ? parsed.value : Number.NaN;
-                });
-                const scale = 1 - spec.components.reduce((s, c) => s + c.lower, 0);
-                const pseudo = p.map((x, k) => (x - (spec.components[k]?.lower ?? 0)) / scale);
-                return pseudo.every(Number.isFinite) ? [pseudo] : [];
-              })}
-              label={t("mixture.analysis.ternaryLabel", {
-                response: state.responses.find((r) => r.id === responseId)?.name ?? "",
-              })}
-              minLabel={t("mixture.analysis.min")}
-              maxLabel={t("mixture.analysis.max")}
-            />
-          )}
-        </>
       )}
     </section>
   );

@@ -48,3 +48,8 @@ Fórmulas detalhadas ficam nas [especificações de métodos](../metodos/README.
 | U17 — idiomas | [u17-idiomas.md](u17-idiomas.md) | implementado (ET02) |
 | U18 — temas e acessibilidade | [u18-temas-e-acessibilidade.md](u18-temas-e-acessibilidade.md) | implementado (ET02) |
 | U19 — erros e diagnósticos | [u19-erros-e-diagnosticos.md](u19-erros-e-diagnosticos.md) | implementado |
+| C14 — medidas repetidas avançadas | [c14-medidas-repetidas-avancadas.md](c14-medidas-repetidas-avancadas.md) | v1 entregue; v2 em verificação ET23 |
+
+## Extensão não linear da ET24
+
+[C14 — ajuste não linear, contratos, perfil e apresentação](c14-ajuste-nao-linear.md) (em verificação; potência avançada permanece na etapa).

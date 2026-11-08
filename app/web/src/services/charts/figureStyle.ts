@@ -49,8 +49,8 @@ export function computedLetters(svg: string): string[] {
 
 export const FONT_FAMILIES: Record<string, string> = {
   sans: "sans-serif",
-  serif: "Georgia, 'Times New Roman', serif",
-  mono: "Consolas, 'Courier New', monospace",
+  serif: "DejaVu Serif, Georgia, serif",
+  mono: "DejaVu Sans Mono, Consolas, monospace",
 };
 
 export interface ApplyOptions {
@@ -107,7 +107,7 @@ export function applyFigureStyle(
   }
   if (style.primaryColor) {
     out = out
-      .replace(/var\(--color-action, #005a99\)/g, style.primaryColor)
+      .replace(/var\(--(?:color-action|chart-series), #005a99\)/g, style.primaryColor)
       .replace(/#005a99/g, style.primaryColor);
   }
   if (style.background === "transparent") {

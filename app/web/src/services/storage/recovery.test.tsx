@@ -36,6 +36,15 @@ describe("recovery storage", () => {
 });
 
 describe("useAutosave", () => {
+  it("preserves the previous session while a clean initial workspace offers recovery", async () => {
+    await writeRecovery({ version: RECOVERY_VERSION, savedAt: T, workspace: edited() });
+    const { result } = renderHook(() => useAutosave(createWorkspace("new", "", "E", T), 20));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 60));
+    });
+    expect(result.current.state).toBe("idle");
+    expect((await readRecovery())?.workspace.name).toBe("Alterado");
+  });
   it("does nothing while there are no unsaved changes", async () => {
     const { result } = renderHook(() => useAutosave(createWorkspace("p", "", "E", T), 20));
     await new Promise((r) => setTimeout(r, 60));

@@ -1,0 +1,223 @@
+{
+  "operation": {
+    "type": "powerAnalyze",
+    "simulation": null,
+    "design": {
+      "type": "contrast",
+      "means": [
+        10,
+        11.2,
+        12
+      ],
+      "weights": [
+        -2,
+        1,
+        1
+      ],
+      "allocation": [
+        1,
+        2,
+        1
+      ]
+    },
+    "sigma": 1.2,
+    "alpha": 0.05,
+    "twoSided": true,
+    "goal": {
+      "type": "precisionFor",
+      "halfWidth": 0.5
+    }
+  },
+  "response": {
+    "protocolVersion": 1,
+    "taskId": "et24-benchmark",
+    "outcome": {
+      "status": "ok",
+      "result": {
+        "type": "powerAnalyze",
+        "n": 123,
+        "total": 492,
+        "power": {
+          "status": "defined",
+          "value": 1
+        },
+        "noncentrality": 12.610721748984194,
+        "df1": 489,
+        "df2": 0,
+        "critical": 1.9648270804771357,
+        "halfWidth": {
+          "status": "defined",
+          "value": 0.4985794455446845
+        },
+        "curve": [
+          {
+            "n": 1,
+            "power": 0.07908425634408445
+          },
+          {
+            "n": 7,
+            "power": 0.8241052060776437
+          },
+          {
+            "n": 13,
+            "power": 0.9802150925501205
+          },
+          {
+            "n": 19,
+            "power": 0.9983066946129991
+          },
+          {
+            "n": 26,
+            "power": 0.9999222536278259
+          },
+          {
+            "n": 32,
+            "power": 0.9999951161762882
+          },
+          {
+            "n": 38,
+            "power": 0.9999997188117278
+          },
+          {
+            "n": 44,
+            "power": 0.9999999848918791
+          },
+          {
+            "n": 51,
+            "power": 0.9999999995354655
+          },
+          {
+            "n": 57,
+            "power": 0.9999999999776689
+          },
+          {
+            "n": 63,
+            "power": 0.9999999999989682
+          },
+          {
+            "n": 70,
+            "power": 0.9999999999999727
+          },
+          {
+            "n": 76,
+            "power": 0.9999999999999988
+          },
+          {
+            "n": 82,
+            "power": 1
+          },
+          {
+            "n": 88,
+            "power": 1
+          },
+          {
+            "n": 95,
+            "power": 1
+          },
+          {
+            "n": 101,
+            "power": 1
+          },
+          {
+            "n": 107,
+            "power": 1
+          },
+          {
+            "n": 114,
+            "power": 1
+          },
+          {
+            "n": 120,
+            "power": 1
+          },
+          {
+            "n": 126,
+            "power": 1
+          },
+          {
+            "n": 132,
+            "power": 1
+          },
+          {
+            "n": 139,
+            "power": 1
+          },
+          {
+            "n": 145,
+            "power": 1
+          },
+          {
+            "n": 151,
+            "power": 1
+          },
+          {
+            "n": 158,
+            "power": 1
+          },
+          {
+            "n": 164,
+            "power": 1
+          },
+          {
+            "n": 170,
+            "power": 1
+          },
+          {
+            "n": 176,
+            "power": 1
+          },
+          {
+            "n": 183,
+            "power": 1
+          },
+          {
+            "n": 189,
+            "power": 1
+          },
+          {
+            "n": 195,
+            "power": 1
+          },
+          {
+            "n": 202,
+            "power": 1
+          },
+          {
+            "n": 208,
+            "power": 1
+          },
+          {
+            "n": 214,
+            "power": 1
+          },
+          {
+            "n": 220,
+            "power": 1
+          },
+          {
+            "n": 227,
+            "power": 1
+          },
+          {
+            "n": 233,
+            "power": 1
+          },
+          {
+            "n": 239,
+            "power": 1
+          },
+          {
+            "n": 246,
+            "power": 1
+          }
+        ],
+        "issues": [],
+        "provenance": {
+          "methodId": "power_analysis",
+          "methodVersion": 2,
+          "engineVersion": "0.4.0-dev"
+        }
+      }
+    }
+  }
+}

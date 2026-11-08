@@ -2,6 +2,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
 import { showAllSections } from "./showAll";
+import { startObjective } from "./startObjective";
 import { THEME_LIST } from "./themes";
 
 // Espaçamento e tamanho dos controles (ET21): mede os botões de cada tela principal, nos seis temas
@@ -75,8 +76,7 @@ async function screens(page: Page): Promise<void> {
   // Tela inicial.
   expect(problems(await controls(page))).toEqual([]);
   // Variáveis (etapa 2).
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await startObjective(page, "plan");
   await page.getByRole("button", { name: "Adicionar fator" }).click();
   await page.getByRole("button", { name: "Adicionar resposta" }).click();
   expect(problems(await controls(page))).toEqual([]);
@@ -94,19 +94,43 @@ for (const width of [1200, 375]) {
   });
 }
 
+test("os menus do cabeçalho e do arquivo cabem em 375 px", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 375, height: 892 });
+  await page.goto("/");
+  const header = page.locator(".app-header");
+  for (const language of ["pt-BR", "en"]) {
+    await header.getByRole("combobox").nth(0).selectOption(language);
+    for (const theme of THEME_LIST) {
+      await header.getByRole("combobox").nth(1).selectOption(theme);
+      for (const id of ["extras-menu", "about-menu", "file-menu"]) {
+        const menu = page.getByTestId(id);
+        const toggle = menu.locator(":scope > summary");
+        await toggle.click();
+        const box = await menu.locator(":scope > .menu-panel").boundingBox();
+        expect(box, `${language}/${theme}/${id}`).not.toBeNull();
+        expect(box?.x ?? -Infinity).toBeGreaterThanOrEqual(0);
+        expect(box ? box.x + box.width : Infinity).toBeLessThanOrEqual(376);
+        await toggle.press("Escape");
+      }
+    }
+  }
+});
+
 test("ao avançar de etapa, a página volta ao topo e o foco vai ao título", async ({ page }) => {
   await page.setViewportSize({ width: 1200, height: 500 });
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  const before = await page.evaluate(() => window.scrollY);
-  expect(before).toBeGreaterThan(0);
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await expect(page.getByTestId("objective-start")).toBeVisible();
+  await page.evaluate(() =>
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }),
+  );
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+  await startObjective(page, "plan");
   await expect(page.getByRole("heading", { name: /Fatores e respostas|variáveis/i })).toBeVisible();
   // A rolagem é suave: aguarda chegar ao topo do fluxo.
   await expect
-    .poll(async () => page.evaluate(() => window.scrollY), { timeout: 5000 })
-    .toBeLessThan(before);
+    .poll(async () => Math.abs((await page.locator(".workflow").boundingBox())?.y ?? Infinity))
+    .toBeLessThan(2);
   const focused = await page.evaluate(() => document.activeElement?.tagName);
   expect(focused).toBe("H2");
 });
@@ -115,9 +139,11 @@ test("com movimento reduzido a rolagem é imediata", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 1200, height: 500 });
   await page.goto("/");
-  await page.getByRole("radio", { name: /Planejar experimento/ }).check();
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  await page.getByRole("button", { name: "Avançar" }).click();
+  await expect(page.getByTestId("objective-start")).toBeVisible();
+  await page.evaluate(() =>
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }),
+  );
+  await startObjective(page, "plan");
   await expect(page.locator("h2:focus")).toHaveCount(1);
   const top = await page.evaluate(
     () => document.querySelector(".workflow")?.getBoundingClientRect().top ?? 0,
@@ -139,17 +165,27 @@ for (const width of [1200, 375]) {
     await showAllSections(page);
     await page.goto("/");
     const chooser = page.waitForEvent("filechooser");
-    await page.getByRole("button", { name: "Abrir…" }).click();
+    if (width <= 800) {
+      await page.getByTestId("file-menu").locator(":scope > summary").click();
+      await page
+        .getByTestId("file-menu")
+        .getByRole("button", { name: "Abrir…", exact: true })
+        .click();
+    } else {
+      await page.locator(".file-actions > button").filter({ hasText: "Abrir…" }).click();
+    }
     await (await chooser).setFiles(
       resolve(here, "../../../../examples/01-enzimas-quatro-condicoes/projeto.enzitag"),
     );
     await expect(page.getByTestId("anova-table")).toBeVisible();
     expect(problems(await controls(page))).toEqual([]);
     // Etapa de dados (grade, importação).
-    await page
-      .getByRole("button", { name: /Planejamento e dados|Dados/ })
-      .first()
-      .click();
+    if (width <= 800) await page.getByLabel("Etapa do experimento").selectOption("data");
+    else
+      await page
+        .getByRole("button", { name: /Planejamento e dados|Dados/ })
+        .first()
+        .click();
     expect(problems(await controls(page))).toEqual([]);
   });
 }

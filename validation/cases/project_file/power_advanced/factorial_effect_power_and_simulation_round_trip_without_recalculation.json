@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "projectId": "p1",
+  "name": "Saved families",
+  "createdAt": "2026-11-03T10:00:00Z",
+  "modifiedAt": "2026-11-03T10:00:00Z",
+  "appVersion": "0.4.0-dev",
+  "experiments": [
+    {
+      "id": "e1",
+      "name": "Historical experiment",
+      "entryPath": null,
+      "showUnitColumn": false,
+      "powerResult": {
+        "selection": {
+          "kind": "twoLevel",
+          "goal": "sampleSizeFor",
+          "means": "10; 12",
+          "difference": "1",
+          "sigma": "1,5",
+          "alpha": "2",
+          "target": "0,8",
+          "n": "10",
+          "halfWidth": "",
+          "twoSided": true,
+          "advanced": {
+            "predictors": "uncompleted draft",
+            "coefficients": "",
+            "weights": "",
+            "allocation": "",
+            "factorCount": "",
+            "terms": "",
+            "effects": "",
+            "targetTerm": ""
+          },
+          "simulation": {
+            "seed": "42",
+            "replications": "invalid edit"
+          }
+        },
+        "records": [
+          {
+            "id": "advanced-power-1",
+            "createdAt": "2026-11-03T10:00:00Z",
+            "revisionId": "v1",
+            "signature": "power:v2:advanced",
+            "input": {
+              "design": {
+                "type": "twoLevel",
+                "factors": 3,
+                "terms": [
+                  [
+                    0
+                  ],
+                  [
+                    1
+                  ],
+                  [
+                    2
+                  ],
+                  [
+                    0,
+                    1
+                  ]
+                ],
+                "effects": [
+                  0.8,
+                  0.5,
+                  0.2,
+                  0.9
+                ],
+                "target": 3
+              },
+              "sigma": 1.2,
+              "alpha": 0.05,
+              "twoSided": true,
+              "goal": {
+                "type": "powerAt",
+                "n": 4
+              },
+              "simulation": {
+                "seed": 42,
+                "replications": 10000
+              }
+            },
+            "result": {
+              "n": 4,
+              "total": 32,
+              "power": {
+                "status": "defined",
+                "value": 0.5341426751736678
+              },
+              "noncentrality": 2.121320343559643,
+              "df1": 27.0,
+              "df2": 0.0,
+              "critical": 2.0518305164802872,
+              "halfWidth": {
+                "status": "defined",
+                "value": 0.8705179632292244
+              },
+              "curve": [
+                {
+                  "n": 1,
+                  "power": 0.11892555080455836
+                },
+                {
+                  "n": 2,
+                  "power": 0.27824383679569964
+                },
+                {
+                  "n": 3,
+                  "power": 0.4147121788660221
+                },
+                {
+                  "n": 4,
+                  "power": 0.5341426751736678
+                },
+                {
+                  "n": 5,
+                  "power": 0.6354544200740854
+                },
+                {
+                  "n": 6,
+                  "power": 0.7189519783078612
+                },
+                {
+                  "n": 7,
+                  "power": 0.7861359609255116
+                },
+                {
+                  "n": 8,
+                  "power": 0.8391250803932475
+                },
+                {
+                  "n": 9,
+                  "power": 0.8802202151841962
+                },
+                {
+                  "n": 10,
+                  "power": 0.9116343555896235
+                }
+              ],
+              "issues": [],
+              "provenance": {
+                "methodId": "power_analysis",
+                "methodVersion": 2,
+                "engineVersion": "0.4.0-dev"
+              },
+              "simulation": {
+                "seed": 42,
+                "replications": 10000,
+                "rejections": 5343,
+                "estimate": 0.5343,
+                "standardError": 0.00498822122604842,
+                "ciLower": 0.5245119633373699,
+                "ciUpper": 0.5440616943744015,
+                "algorithm": "pcg32-stream54/u32-midpoint/box-muller/marsaglia-tsang/gaussian-statistics-v1"
+              }
+            }
+          }
+        ]
+      },
+      "activeFamily": "power",
+      "analysisSelection": {
+        "responseId": null,
+        "groupBy": []
+      },
+      "revisions": [
+        {
+          "id": "v1",
+          "parent": null,
+          "createdAt": "2026-11-03T10:00:00Z",
+          "reason": "created",
+          "data": {
+            "factors": [],
+            "responses": [
+              {
+                "id": "y",
+                "name": "Activity",
+                "unit": "U/mL"
+              }
+            ],
+            "rows": []
+          },
+          "contentHash": "fad783d94fea755f287b78bec076fc589b7401cc078cae01fcb1c5cc94b8e266"
+        }
+      ],
+      "analyses": [],
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+
+Running 18 tests using 3 workers
+
+(node:18440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › tests\e2e\et22-families.spec.ts:110:1 › T05: nonlinear and power coexist and reopening does not refit either (3.0s)
+  ok  4 [chromium] › tests\e2e\et22-families.spec.ts:204:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (1.9s)
+  ok  3 [chromium] › tests\e2e\et22-families.spec.ts:63:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (6.5s)
+  ok  6 [chromium] › tests\e2e\et22-storage.spec.ts:47:1 › T02: first project and initial revision use the actual creation time (509ms)
+  ok  5 [chromium] › tests\e2e\et22-storage.spec.ts:18:1 › T02: browser loads and saves every optional family without losing recorded inputs (2.5s)
+(node:8668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [firefox] › tests\e2e\et22-families.spec.ts:110:1 › T05: nonlinear and power coexist and reopening does not refit either (4.5s)
+  ok  7 [firefox] › tests\e2e\et22-families.spec.ts:63:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (8.3s)
+  ok 10 [firefox] › tests\e2e\et22-families.spec.ts:204:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (2.8s)
+  ok 11 [firefox] › tests\e2e\et22-storage.spec.ts:18:1 › T02: browser loads and saves every optional family without losing recorded inputs (2.7s)
+  ok 12 [firefox] › tests\e2e\et22-storage.spec.ts:47:1 › T02: first project and initial revision use the actual creation time (690ms)
+(node:30592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [webkit] › tests\e2e\et22-families.spec.ts:63:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (8.0s)
+  ok 14 [webkit] › tests\e2e\et22-families.spec.ts:110:1 › T05: nonlinear and power coexist and reopening does not refit either (4.9s)
+  x   1 [chromium] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records (2.0m)
+(node:33368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [webkit] › tests\e2e\et22-families.spec.ts:204:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (4.3s)
+  ok 17 [webkit] › tests\e2e\et22-storage.spec.ts:18:1 › T02: browser loads and saves every optional family without losing recorded inputs (4.9s)
+  ok 18 [webkit] › tests\e2e\et22-storage.spec.ts:47:1 › T02: first project and initial revision use the actual creation time (786ms)
+  x   9 [firefox] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records (2.0m)
+  x  15 [webkit] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records (2.0m)
+
+
+  1) [chromium] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByTestId('comments-table-paired-statistics').getByRole('button', { name: 'Adicionar comentário', exact: true })
+
+
+      169 |     .getByLabel("Novo comentário", { exact: true })
+      170 |     .fill("Conferir o resultado pareado histórico");
+    > 171 |   await thread.getByRole("button", { name: "Adicionar comentário", exact: true }).click();
+          |                                                                                   ^
+      172 |   for (const [button, filename] of [
+      173 |     ["report-button", "T07-paired.html"],
+      174 |     ["report-pdf-button", "T07-paired.pdf"],
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:171:83
+
+    Error Context: test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByTestId('comments-table-paired-statistics').getByRole('button', { name: 'Adicionar comentário', exact: true })
+
+
+      169 |     .getByLabel("Novo comentário", { exact: true })
+      170 |     .fill("Conferir o resultado pareado histórico");
+    > 171 |   await thread.getByRole("button", { name: "Adicionar comentário", exact: true }).click();
+          |                                                                                   ^
+      172 |   for (const [button, filename] of [
+      173 |     ["report-button", "T07-paired.html"],
+      174 |     ["report-pdf-button", "T07-paired.pdf"],
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:171:83
+
+    Error Context: test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.click: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByTestId('comments-table-paired-statistics').getByRole('button', { name: 'Adicionar comentário', exact: true })
+
+
+      169 |   await thread
+      170 |     .getByLabel("Novo comentário", { exact: true })
+    > 171 |     .fill("Conferir o resultado pareado histórico");
+          |                                                     ^
+      172 |   await thread.getByRole("button", { name: "Comentar", exact: true }).click();
+      173 |   for (const [button, filename] of [
+      174 |     ["report-button", "T07-paired.html"],
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:171:83
+
+    Error Context: test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-history\et22-families-T04-paired-a-37064--separate-immutable-records-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records 
+    [firefox] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records 
+    [webkit] › tests\e2e\et22-families.spec.ts:144:1 › T04: paired and mixed models retain separate immutable records 
+  15 passed (2.6m)

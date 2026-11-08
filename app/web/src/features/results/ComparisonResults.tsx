@@ -1,3 +1,4 @@
+import { parseNumberCell } from "../data/editing";
 // Resultados da comparação de tratamentos de um fator (U08/U09/U16): explicação curta, tabelas,
 // gráficos com incerteza nomeada e letras, diagnósticos e exportação com proveniência.
 
@@ -76,6 +77,17 @@ export function ComparisonResults({ result, signature, language }: Props) {
         : null,
     [record, revision, workspace.name, state.name],
   );
+  const rawValues = (label: string) => {
+    const data = revision?.data;
+    if (!data) return [];
+    const fi = data.factors.findIndex((f) => f.id === result.factorId);
+    const ri = data.responses.findIndex((r) => r.id === result.responseId);
+    return data.rows.flatMap((row) => {
+      if ((row.factors[fi] ?? "").trim() !== label) return [];
+      const y = parseNumberCell(row.responses[ri] ?? "");
+      return y.ok && y.value !== null ? [{ value: y.value, id: row.id }] : [];
+    });
+  };
   const metadataText = metadata ? JSON.stringify(metadata) : "";
   const fmt = useFigureFormat(language);
   const levelPercent = formatSignificant((1 - result.alpha) * 100, language, 4);
@@ -85,6 +97,7 @@ export function ComparisonResults({ result, signature, language }: Props) {
     title: t("comparison.charts.meansTitle", { response: responseName, factor: factorName }),
     description: t("comparison.charts.meansDescription"),
     yLabel: unit ? `${responseName} [${unit}]` : responseName,
+    rawPointsLabel: t("figure.rawPoints"),
     uncertaintyName:
       uncertainty === "ci"
         ? t("comparison.charts.uncertaintyCi", { level: levelPercent })
@@ -97,14 +110,22 @@ export function ComparisonResults({ result, signature, language }: Props) {
         })
       : "",
     groups: result.groups.map((g, i) => {
-      const mean = val(g.mean) ?? 0;
+      const mean = val(g.mean);
       const [lower, upper] =
         uncertainty === "ci"
           ? [val(g.ciLower), val(g.ciUpper)]
           : uncertainty === "sd"
             ? [val(g.sdLower), val(g.sdUpper)]
             : [val(g.seLower), val(g.seUpper)];
-      return { label: g.label, mean, lower, upper, letters: result.letters?.letters[i] ?? "" };
+      return {
+        label: g.label,
+        n: g.n,
+        values: rawValues(g.label),
+        mean,
+        lower,
+        upper,
+        letters: result.letters?.letters[i] ?? "",
+      };
     }),
     metadata: withMetadata ? metadataText : undefined,
   });
@@ -114,11 +135,19 @@ export function ComparisonResults({ result, signature, language }: Props) {
     description: t("comparison.charts.boxDescription"),
     yLabel: unit ? `${responseName} [${unit}]` : responseName,
     legend: t("comparison.charts.boxLegend"),
-    groups: result.groups.map((g) => ({ label: g.label, box: g.boxplot })),
+    rawPointsLabel: t("figure.rawPoints"),
+    groups: result.groups.map((g) => ({
+      label: g.label,
+      n: g.n,
+      values: rawValues(g.label),
+      box: g.boxplot,
+    })),
     metadata: withMetadata ? metadataText : undefined,
   });
   const residualPoints = result.diagnostics.residuals.flatMap((r) =>
-    r.standardized.status === "defined" ? [{ x: r.fitted, y: r.standardized.value }] : [],
+    r.standardized.status === "defined"
+      ? [{ x: r.fitted, y: r.standardized.value, label: r.observationId }]
+      : [],
   );
   const residualSpec = (withMetadata: boolean) => ({
     id: "residuals",

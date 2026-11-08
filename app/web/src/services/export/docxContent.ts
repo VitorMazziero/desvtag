@@ -14,6 +14,8 @@ import {
   TextRun,
   WidthType,
 } from "docx";
+import { svgPixelBox } from "./svgSize";
+import { tableBands } from "./tableBands";
 
 export type DocxBlock = Paragraph | Table;
 
@@ -155,15 +157,8 @@ function paragraph(el: Node): Paragraph {
   return new Paragraph({ children: inline(el), spacing: { after: 100 } });
 }
 
-function pixelBox(svg: Element): { width: number; height: number } {
-  const box = /^[\d.]+\s+[\d.]+\s+([\d.]+)\s+([\d.]+)$/.exec(
-    (svg.getAttribute("viewBox") ?? "").trim().replace(/\s+/g, " "),
-  );
-  return { width: Number(box?.[1] ?? CONTENT_PX), height: Number(box?.[2] ?? 380) };
-}
-
 async function figure(svg: Element, ctx: DocxContext): Promise<DocxBlock[]> {
-  const { width, height } = pixelBox(svg);
+  const { width, height } = svgPixelBox(svg);
   const source = new XMLSerializer().serializeToString(svg);
   const raster = await ctx.rasterize(source, width, height);
   const scale = Math.min(1, CONTENT_PX / width);
@@ -196,8 +191,7 @@ function table(el: HTMLTableElement): DocxBlock[] {
   const headerRows = rows.filter(
     (tr) => tr.parentElement?.tagName.toUpperCase() === "THEAD",
   ).length;
-  const widest = Math.max(...rows.map((tr) => tr.children.length));
-  const size = widest <= 5 ? 18 : widest <= 8 ? 16 : 14;
+  const size = 18;
   const built = rows.map((tr, rowIndex) => {
     const header = rowIndex < headerRows;
     const cells: TableCell[] = [];
@@ -219,6 +213,7 @@ function table(el: HTMLTableElement): DocxBlock[] {
           children: [
             new Paragraph({
               alignment: cell.classList.contains("num") ? AlignmentType.RIGHT : AlignmentType.LEFT,
+              keepNext: header,
               children: inline(cell, { bold: header, size }),
             }),
           ],
@@ -319,7 +314,7 @@ async function blockNode(el: Element, ctx: DocxContext): Promise<DocxBlock[]> {
     case "DL":
       return definitionList(el);
     case "TABLE":
-      return table(el as HTMLTableElement);
+      return tableBands(el as HTMLTableElement).flatMap(table);
     case "SVG":
       return figure(el, ctx);
     case "HR":

@@ -10,7 +10,7 @@ const lock = JSON.parse(readFileSync("package-lock.json", "utf8"));
 const lines = [];
 const add = (...x) => lines.push(...x);
 
-add("EnziTAG Optima — avisos de software de terceiros", "");
+add("DesvTAG — avisos de software de terceiros", "");
 add("O aplicativo (MIT) inclui os componentes abaixo, sob as licenças indicadas.", "");
 
 add("== Pacotes npm de produção ==", "");

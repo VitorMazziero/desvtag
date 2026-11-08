@@ -9,6 +9,6 @@
 
 ## Uso
 
-Abra `Meio_01.enzitag`: os resultados da superfície e da otimização voltam sem recálculo. Depois da correção da v0.4, exportar o relatório (HTML, PDF ou Word) **com a barra de seções ativa** deve trazer o resumo, o modelo, a ANOVA, as figuras e a otimização.
+Abra `Meio_01.enzitag`: os resultados da superfície e da otimização voltam sem recálculo. Corrigido na v0.4 (ET29-T01; teste `report-sections.spec.ts` com este projeto): exportar o relatório (HTML, PDF ou Word) **com a barra de seções ativa** deve trazer o resumo, o modelo, a ANOVA, as figuras e a otimização.
 
 Não há resultado de referência independente para este exemplo: ele serve para reproduzir o percurso real e o defeito do relatório, não para validar números.

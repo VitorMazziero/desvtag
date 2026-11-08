@@ -573,5 +573,587 @@
     "evaluated": 1479
    }
   }
+ ],
+ "exchangeCases": [
+  {
+   "name": "saturated-linear-d",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 2,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": 1.3862943611198906
+    }
+   ],
+   "best": 1.3862943611198906
+  },
+  {
+   "name": "saturated-linear-i",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "linear",
+    "criterion": "i",
+    "runs": 2,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": -0.8333333333333333
+    }
+   ],
+   "best": -0.8333333333333333
+  },
+  {
+   "name": "near-saturated-linear-fixed-d",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "linear",
+    "criterion": "d",
+    "runs": 3,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      0.0
+     ]
+    ],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": 1.791759469228055
+    }
+   ],
+   "best": 1.791759469228055
+  },
+  {
+   "name": "near-saturated-linear-fixed-i",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "linear",
+    "criterion": "i",
+    "runs": 3,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      0.0
+     ]
+    ],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": -0.6666666666666666
+    }
+   ],
+   "best": -0.6666666666666666
+  },
+  {
+   "name": "saturated-interactions-d",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     },
+     {
+      "name": "X2",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 4,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0,
+       -1.0
+      ],
+      [
+       1.0,
+       -1.0
+      ],
+      [
+       -1.0,
+       1.0
+      ],
+      [
+       1.0,
+       1.0
+      ]
+     ],
+     "value": 5.545177444479562
+    }
+   ],
+   "best": 5.545177444479562
+  },
+  {
+   "name": "saturated-interactions-i",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     },
+     {
+      "name": "X2",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "interactions",
+    "criterion": "i",
+    "runs": 4,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0,
+       -1.0
+      ],
+      [
+       1.0,
+       -1.0
+      ],
+      [
+       -1.0,
+       1.0
+      ],
+      [
+       1.0,
+       1.0
+      ]
+     ],
+     "value": -0.6944444444444444
+    }
+   ],
+   "best": -0.6944444444444444
+  },
+  {
+   "name": "saturated-interactions-off-grid-d",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     },
+     {
+      "name": "X2",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "interactions",
+    "criterion": "d",
+    "runs": 4,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      0.25,
+      -0.25
+     ]
+    ],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0,
+       -1.0
+      ],
+      [
+       -1.0,
+       1.0
+      ],
+      [
+       1.0,
+       1.0
+      ]
+     ],
+     "value": 3.66516292749662
+    }
+   ],
+   "best": 3.66516292749662
+  },
+  {
+   "name": "saturated-interactions-off-grid-i",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     },
+     {
+      "name": "X2",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "interactions",
+    "criterion": "i",
+    "runs": 4,
+    "levels": 3,
+    "constraints": [],
+    "fixedRuns": [
+     [
+      0.25,
+      -0.25
+     ]
+    ],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0,
+       -1.0
+      ],
+      [
+       -1.0,
+       1.0
+      ],
+      [
+       1.0,
+       1.0
+      ]
+     ],
+     "value": -1.7177777777777778
+    }
+   ],
+   "best": -1.7177777777777778
+  },
+  {
+   "name": "saturated-quadratic-restricted-d",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "d",
+    "runs": 3,
+    "levels": 5,
+    "constraints": [
+     {
+      "coefficients": [
+       1.0
+      ],
+      "upper": 0.6
+     }
+    ],
+    "fixedRuns": [
+     [
+      -1.0
+     ]
+    ],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -0.5
+      ],
+      [
+       0.5
+      ]
+     ],
+     "value": -0.5753641449035618
+    },
+    {
+     "freeRuns": [
+      [
+       0.0
+      ],
+      [
+       0.5
+      ]
+     ],
+     "value": -0.5753641449035618
+    }
+   ],
+   "best": -0.5753641449035618
+  },
+  {
+   "name": "saturated-quadratic-restricted-i",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "i",
+    "runs": 3,
+    "levels": 5,
+    "constraints": [
+     {
+      "coefficients": [
+       1.0
+      ],
+      "upper": 0.6
+     }
+    ],
+    "fixedRuns": [
+     [
+      -1.0
+     ]
+    ],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -0.5
+      ],
+      [
+       0.5
+      ]
+     ],
+     "value": -1.0555555555555556
+    },
+    {
+     "freeRuns": [
+      [
+       0.0
+      ],
+      [
+       0.5
+      ]
+     ],
+     "value": -1.0555555555555556
+    }
+   ],
+   "best": -1.0555555555555556
+  },
+  {
+   "name": "near-saturated-quadratic-d",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "d",
+    "runs": 4,
+    "levels": 5,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       -1.0
+      ],
+      [
+       0.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": 2.0794415416798357
+    },
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       0.0
+      ],
+      [
+       0.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": 2.0794415416798357
+    },
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       0.0
+      ],
+      [
+       1.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": 2.0794415416798357
+    }
+   ],
+   "best": 2.0794415416798357
+  },
+  {
+   "name": "near-saturated-quadratic-i",
+   "spec": {
+    "factors": [
+     {
+      "name": "X1",
+      "low": -1,
+      "high": 1
+     }
+    ],
+    "model": "quadratic",
+    "criterion": "i",
+    "runs": 4,
+    "levels": 5,
+    "constraints": [],
+    "fixedRuns": [],
+    "starts": 1,
+    "randomize": false,
+    "seed": 11
+   },
+   "stationary": [
+    {
+     "freeRuns": [
+      [
+       -1.0
+      ],
+      [
+       0.0
+      ],
+      [
+       0.0
+      ],
+      [
+       1.0
+      ]
+     ],
+     "value": -0.675
+    }
+   ],
+   "best": -0.675
+  }
  ]
 }

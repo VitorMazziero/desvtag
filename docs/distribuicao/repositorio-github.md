@@ -1,10 +1,10 @@
 # Repositório GitHub
 
-**Estado:** vigente · **Atualizado em:** 2026-11-01
+**Estado:** vigente · **Atualizado em:** 2026-11-06
 
 ## Estado atual
 
-- Produto: **EnziTAG Optima**.
+- Produto: **DesvTAG** na v0.4. A versão publicada 0.3.0 usa **EnziTAG Optima**.
 - Conta: **VitorMazziero**.
 - Repositório: [VitorMazziero/enzitag-optima](https://github.com/VitorMazziero/enzitag-optima).
 - Visibilidade: **público** desde 2026-11-01, por decisão do usuário (PD-15); antes disso foi privado por solicitação do usuário.
@@ -14,7 +14,7 @@
 
 O repositório foi criado e recebeu os arquivos locais de documentação, planejamento, referências de temas e estrutura reservada ao aplicativo. Após a criação inicialmente pública, sua visibilidade foi alterada para privada a pedido do usuário e verificada no GitHub. Em 2026-11-01 o usuário decidiu tornar o repositório público (PD-15); antes da mudança foi feita a varredura de credenciais, chaves, e-mails e caminhos pessoais em todo o histórico (nada encontrado).
 
-Ainda não existem aplicativo executável, métodos implementados, configuração de compilação ou publicação do app no Pages/Releases. A disponibilidade do repositório não equivale à disponibilidade da versão web ou de um instalador.
+Pages e Releases disponibilizam a v0.3.0. A v0.4 está em `feat/v0.4` local, com diretório `DesvTAG`. A mudança para `VitorMazziero/desvtag` e para o caminho web `/desvtag/` depende da janela de publicação descrita no [roteiro](publicacao.md#troca-do-endereço-para-desvtag).
 
 ## Materiais preservados apenas localmente
 

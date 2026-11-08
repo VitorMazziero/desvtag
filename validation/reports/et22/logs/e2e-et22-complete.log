@@ -1,0 +1,187 @@
+
+Running 54 tests using 3 workers
+
+(node:3964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (3.7s)
+  ok  4 [chromium] › tests\e2e\et22-families.spec.ts:218:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (2.6s)
+  ok  3 [chromium] › tests\e2e\et22-families.spec.ts:156:1 › T04: paired and mixed models retain separate immutable records (7.3s)
+  ok  2 [chromium] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (9.3s)
+  ok  5 [chromium] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (5.3s)
+  x   6 [chromium] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results (6.5s)
+(node:28040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (18.9s)
+  ok  9 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (14.8s)
+  ok  8 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (19.8s)
+  ok 10 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (13.7s)
+  ok 11 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (13.9s)
+  ok 12 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (13.4s)
+  ok 13 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (11.9s)
+  ok 14 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (11.5s)
+  ok 15 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (12.0s)
+  ok 16 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (11.0s)
+(node:7960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 17 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (10.7s)
+(node:23532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 18 [chromium] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (10.7s)
+(node:18324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 20 [firefox] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (5.7s)
+  ok 22 [firefox] › tests\e2e\et22-families.spec.ts:218:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (3.0s)
+  ok 21 [firefox] › tests\e2e\et22-families.spec.ts:156:1 › T04: paired and mixed models retain separate immutable records (8.0s)
+  ok 19 [firefox] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (11.8s)
+  ok 23 [firefox] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (5.9s)
+  x  24 [firefox] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results (7.0s)
+(node:28580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 25 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (18.1s)
+  ok 26 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (19.2s)
+  ok 27 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (16.1s)
+  ok 28 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (14.3s)
+  ok 29 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (14.6s)
+  ok 30 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (14.6s)
+  ok 31 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (15.4s)
+  ok 32 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (15.8s)
+  ok 33 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (15.2s)
+  ok 34 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (15.5s)
+(node:23148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 35 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (14.7s)
+  ok 36 [firefox] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (15.2s)
+(node:9456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 38 [webkit] › tests\e2e\et22-families.spec.ts:122:1 › T05: nonlinear and power coexist and reopening does not refit either (6.5s)
+  ok 37 [webkit] › tests\e2e\et22-families.spec.ts:64:1 › T03: mixture is saved, keeps old names/points after edits and exports from Results (11.7s)
+  ok 39 [webkit] › tests\e2e\et22-families.spec.ts:156:1 › T04: paired and mixed models retain separate immutable records (8.2s)
+  ok 40 [webkit] › tests\e2e\et22-families.spec.ts:218:1 › T06: invalid edited power assumptions survive reopening without replacing the old result (5.1s)
+  ok 41 [webkit] › tests\e2e\et22-families.spec.ts:253:1 › T09: a late family operation remains bound to its original experiment (6.9s)
+  x  42 [webkit] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results (7.3s)
+(node:31728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 45 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark pt-BR (17.4s)
+  ok 43 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light pt-BR (24.4s)
+  ok 44 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results soft-light en (24.6s)
+  ok 46 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results modern-dark en (16.7s)
+  ok 47 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional pt-BR (17.1s)
+  ok 48 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results professional en (16.9s)
+  ok 49 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial pt-BR (17.6s)
+  ok 50 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results industrial en (18.1s)
+  ok 51 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic pt-BR (18.7s)
+  ok 52 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results organic en (17.6s)
+  ok 53 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay pt-BR (17.1s)
+  ok 54 [webkit] › tests\e2e\et22-matrix.spec.ts:10:5 › T07–T09: saved results clay en (15.9s)
+
+
+  1) [chromium] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('recovery-banner')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('recovery-banner') with timeout 5000ms
+      - waiting for getByTestId('recovery-banner')
+
+
+      351 |   await page.reload();
+      352 |   const recovery = page.getByTestId("recovery-banner");
+    > 353 |   await expect(recovery).toBeVisible();
+          |                          ^
+      354 |   await recovery.getByRole("button", { name: "Restaurar", exact: true }).click();
+      355 |   await expect(page.getByTestId("power-summary")).toContainText("37 por grupo");
+      356 |   await page.getByTestId("result-family").selectOption("nonlinear");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:353:26
+
+    Error Context: test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('recovery-banner')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('recovery-banner') with timeout 5000ms
+      - waiting for getByTestId('recovery-banner')
+
+
+      351 |   await page.reload();
+      352 |   const recovery = page.getByTestId("recovery-banner");
+    > 353 |   await expect(recovery).toBeVisible();
+          |                          ^
+      354 |   await recovery.getByRole("button", { name: "Restaurar", exact: true }).click();
+      355 |   await expect(page.getByTestId("power-summary")).toContainText("37 por grupo");
+      356 |   await page.getByTestId("result-family").selectOption("nonlinear");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:353:26
+
+    Error Context: test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-firefox\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-firefox\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-firefox\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('recovery-banner')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('recovery-banner') with timeout 5000ms
+      - waiting for getByTestId('recovery-banner')
+
+
+      351 |   await page.reload();
+      352 |   const recovery = page.getByTestId("recovery-banner");
+    > 353 |   await expect(recovery).toBeVisible();
+          |                          ^
+      354 |   await recovery.getByRole("button", { name: "Restaurar", exact: true }).click();
+      355 |   await expect(page.getByTestId("power-summary")).toContainText("37 por grupo");
+      356 |   await page.getByTestId("result-family").selectOption("nonlinear");
+        at D:\OneDrive\PosDoc_Fapesp\_Automacao_e_Controle\Estatistica\EnziTAG Optima\app\web\tests\e2e\et22-families.spec.ts:353:26
+
+    Error Context: test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-webkit\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-webkit\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results-et22-complete\et22-families-T09-reload-o-80c0f-of-coexisting-saved-results-webkit\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results 
+    [firefox] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results 
+    [webkit] › tests\e2e\et22-families.spec.ts:320:1 › T09: reload offers recovery of coexisting saved results 
+  51 passed (4.0m)

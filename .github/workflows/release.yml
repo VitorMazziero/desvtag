@@ -36,12 +36,22 @@ jobs:
         run: node scripts/check-versions.mjs
       - run: npm ci
         working-directory: app/web
+      - name: Aviso se a credencial do Drive para Windows não estiver disponível
+        shell: pwsh
+        env:
+          GOOGLE_DESKTOP_CLIENT_SECRET: ${{ secrets.GOOGLE_DESKTOP_CLIENT_SECRET }}
+        run: |
+          if (-not $env:GOOGLE_DESKTOP_CLIENT_SECRET) {
+            Write-Warning "GOOGLE_DESKTOP_CLIENT_SECRET ausente: o instalador sairá com o Google Drive do Windows indisponível (o restante funciona)."
+          }
       - name: Build do instalador NSIS (assinado com a chave do atualizador)
         run: npm --prefix ../web exec -- tauri build
         working-directory: app/desktop
         env:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          # Lido em tempo de compilação (`option_env!`); nunca vai para o repositório nem para o log.
+          GOOGLE_DESKTOP_CLIENT_SECRET: ${{ secrets.GOOGLE_DESKTOP_CLIENT_SECRET }}
       - name: Manifesto do atualizador e nomes sem espaços
         shell: pwsh
         run: |
@@ -72,4 +82,4 @@ jobs:
           Set-Content release/NOTES.md ($intro) -Encoding utf8
           # Só a seção desta versão (o CHANGELOG inteiro fica no repositório).
           node scripts/release-notes.mjs "${{ github.ref_name }}" | Add-Content release/NOTES.md -Encoding utf8
-          gh release create "${{ github.ref_name }}" --draft --title "EnziTAG Optima ${{ github.ref_name }} (canal experimental)" --notes-file release/NOTES.md (Get-ChildItem release -Exclude NOTES.md | ForEach-Object FullName)
+          gh release create "${{ github.ref_name }}" --draft --title "DesvTAG ${{ github.ref_name }} (canal experimental)" --notes-file release/NOTES.md (Get-ChildItem release -Exclude NOTES.md | ForEach-Object FullName)

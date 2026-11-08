@@ -37,10 +37,22 @@ export async function saveToDrive(
   name: string,
   link: DriveLink | null,
   now: Date = new Date(),
+  createId?: string,
+  retry = false,
 ): Promise<SaveOutcome> {
-  if (link === null) {
+  const create = async (filename: string): Promise<DriveFileInfo> => {
     const folderId = await client.ensureFolder();
-    const info = await client.upload(name, bytes, { folderId });
+    try {
+      return await client.upload(filename, bytes, { folderId, createId });
+    } catch (error) {
+      if (!createId || !(error instanceof DriveError) || error.status !== 409) throw error;
+      const info = await client.metadata(createId);
+      if (!(await matchesRemote(client, info, bytes))) throw error;
+      return info;
+    }
+  };
+  if (link === null) {
+    const info = await create(name);
     return {
       kind: "saved",
       created: true,
@@ -53,8 +65,7 @@ export async function saveToDrive(
   } catch (error) {
     // Arquivo apagado ou fora do alcance: não se perde o trabalho local, cria-se um novo.
     if (error instanceof DriveError && error.code === "notFound") {
-      const folderId = await client.ensureFolder();
-      const info = await client.upload(name, bytes, { folderId });
+      const info = await create(name);
       return {
         kind: "saved",
         created: true,
@@ -64,8 +75,14 @@ export async function saveToDrive(
     throw error;
   }
   if (remote.version !== link.version) {
-    const folderId = await client.ensureFolder();
-    const copy = await client.upload(conflictCopyName(name, now), bytes, { folderId });
+    if (retry && remote.name === name && (await matchesRemote(client, remote, bytes))) {
+      return {
+        kind: "saved",
+        created: false,
+        link: { fileId: remote.id, name: remote.name, version: remote.version },
+      };
+    }
+    const copy = await create(conflictCopyName(name, now));
     return { kind: "conflict", remote, copy };
   }
   const info = await client.upload(name, bytes, { fileId: link.fileId });
@@ -74,4 +91,12 @@ export async function saveToDrive(
     created: false,
     link: { fileId: info.id, name: info.name, version: info.version },
   };
+}
+
+async function matchesRemote(client: DriveClient, info: DriveFileInfo, bytes: Uint8Array) {
+  if (info.size !== bytes.byteLength) return false;
+  const actual = await client.download(info.id);
+  if (actual.byteLength !== bytes.byteLength || !actual.every((byte, i) => byte === bytes[i]))
+    return false;
+  return (await client.metadata(info.id)).version === info.version;
 }

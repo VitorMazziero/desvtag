@@ -1,0 +1,11 @@
+ordem,X,Condição,Lote,Atividade
+1,-1,B,Antes,1.5
+2,1,B,Antes,2.55
+3,-1,A,Antes,4.45
+4,1,A,Antes,11.5
+5,-1,A,Antes,4.55
+6,1,A,Antes,11.45
+7,-1,B,Depois,3.5
+8,1,B,Depois,4.55
+9,1,A,Depois,13.45
+10,-1,A,Depois,6.5

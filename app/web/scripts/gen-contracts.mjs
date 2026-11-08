@@ -23,9 +23,9 @@ if (run.status !== 0) {
   process.exit(run.status ?? 1);
 }
 
-const requestSource = readFileSync(join(appDir, "crates/optima-engine/src/request.rs"), "utf8");
+const requestSource = readFileSync(join(appDir, "crates/desvtag-engine/src/request.rs"), "utf8");
 const protocol = /pub const PROTOCOL_VERSION: u32 = (\d+);/.exec(requestSource);
-const projectSource = readFileSync(join(appDir, "crates/optima-project/src/document.rs"), "utf8");
+const projectSource = readFileSync(join(appDir, "crates/desvtag-project/src/document.rs"), "utf8");
 const schema = /pub const SCHEMA_VERSION: u32 = (\d+);/.exec(projectSource);
 if (!protocol || !schema) {
   console.error("Não foi possível ler PROTOCOL_VERSION/SCHEMA_VERSION do código Rust.");
@@ -39,6 +39,7 @@ const parts = files.map((name) => {
   const text = readFileSync(join(bindings, name), "utf8").replace(/\r\n/g, "\n");
   return text
     .split("\n")
+    .map((line) => line.trimEnd())
     .filter(
       (line) => !line.startsWith("// This file was generated") && !line.startsWith("import type"),
     )
@@ -49,10 +50,10 @@ const parts = files.map((name) => {
 const content = `// GERADO por scripts/gen-contracts.mjs a partir dos tipos Rust (ts-rs).
 // NÃO EDITAR. Regenerar com \`npm run gen:contracts\`.
 
-/** Versão do protocolo interface↔motor (optima-engine). */
+/** Versão do protocolo interface↔motor (desvtag-engine). */
 export const PROTOCOL_VERSION = ${protocol[1]};
 
-/** Versão do esquema do documento do projeto (optima-project). */
+/** Versão do esquema do documento do projeto (desvtag-project). */
 export const PROJECT_SCHEMA_VERSION = ${schema[1]};
 
 ${parts.join("\n\n")}

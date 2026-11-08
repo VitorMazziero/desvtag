@@ -17,6 +17,26 @@ describe("looksLikeHeader / guessMapping", () => {
     expect(m[0]).toMatchObject({ role: "factor", kind: "categorical", name: "Condição" });
     expect(m[1]).toMatchObject({ role: "response", name: "Atividade (U/mL)" });
   });
+  it("gives priority to the names of existing responses and factors over the last numeric column (UX23)", () => {
+    const g = [
+      ["Tratamento", "Biomassa (g)", "Replicata"],
+      ["A", "1,5", "1"],
+      ["B", "2,5", "2"],
+    ];
+    const m = guessMapping(g, true, {
+      factors: [{ name: "Tratamento", kind: "categorical" }],
+      responses: [{ name: "biomassa" }],
+    });
+    expect(m.map((c) => c.role)).toEqual(["factor", "response", "factor"]);
+    // Sem nada cadastrado, a heurística antiga escolhe a última coluna numérica.
+    expect(guessMapping(g, true).map((c) => c.role)).toEqual(["factor", "factor", "response"]);
+    // Com um fator cadastrado, ele não vira resposta pela heurística.
+    const onlyFactor = guessMapping(g, true, {
+      factors: [{ name: "Replicata", kind: "numeric" }],
+      responses: [],
+    });
+    expect(onlyFactor.map((c) => c.role)).toEqual(["factor", "response", "factor"]);
+  });
   it("names columns when there is no header", () => {
     expect(
       guessMapping(
@@ -95,5 +115,52 @@ describe("buildExperimentData", () => {
   it("requires at least one factor or response column", () => {
     const m: ColumnMapping[] = [{ role: "ignore", kind: "categorical", name: "x" }];
     expect(buildExperimentData([["x"], ["1"]], true, m).issues[0]?.code).toBe("import.no_columns");
+  });
+});
+
+describe("dedicated unit and time roles", () => {
+  it("does not choose the last numeric time column as the response", () => {
+    const rows = [
+      ["unit_id", "Condição", "Resposta", "time"],
+      ["A B", "Antes", "1,5", "0,50"],
+      ["A B", "Depois", "2,5", "1"],
+    ];
+    const mapping = guessMapping(rows, true);
+    expect(mapping.map((m) => m.role)).toEqual(["unit", "factor", "response", "time"]);
+    const result = buildExperimentData(rows, true, mapping);
+    expect(result.issues).toEqual([]);
+    expect(result.data.factors.map((f) => f.name)).toEqual(["Condição"]);
+    expect(result.data.rows.map((r) => [r.unitId, r.responses[0], r.timeText])).toEqual([
+      ["A B", "1,5", "0,50"],
+      ["A B", "2,5", "1"],
+    ]);
+  });
+  it("keeps an existing time factor in its registered role and rejects duplicate identity columns", () => {
+    const rows = [
+      ["Tempo", "Resposta"],
+      ["0", "1"],
+    ];
+    const mapping = guessMapping(rows, true, {
+      factors: [{ name: "Tempo", kind: "numeric" }],
+      responses: [{ name: "Resposta" }],
+    });
+    expect(mapping.map((m) => m.role)).toEqual(["factor", "response"]);
+    const result = buildExperimentData(
+      [
+        ["A", "B", "Y"],
+        ["0", "1", "2"],
+      ],
+      true,
+      [
+        { role: "time", kind: "numeric", name: "A" },
+        { role: "time", kind: "numeric", name: "B" },
+        { role: "response", kind: "numeric", name: "Y" },
+      ],
+    );
+    expect(result.issues).toContainEqual({
+      code: "import.multiple_identifier_columns",
+      columns: [1, 2],
+      rows: [],
+    });
   });
 });

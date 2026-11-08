@@ -20,7 +20,7 @@ if (!/^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(tag)) {
   process.exit(2);
 }
 const version = tag.slice(1);
-const repo = process.env.GITHUB_REPOSITORY ?? "VitorMazziero/enzitag-optima";
+const repo = process.env.GITHUB_REPOSITORY ?? "VitorMazziero/desvtag";
 const signature = readFileSync(signaturePath, "utf8").trim();
 if (signature === "") {
   console.error("assinatura vazia");
@@ -29,7 +29,7 @@ if (signature === "") {
 
 // Notas: só a seção da versão no CHANGELOG (cortada em limite de bloco, não no meio de uma frase);
 // sem seção, uma frase padrão.
-let notes = `EnziTAG Optima ${version} (canal experimental).`;
+let notes = `DesvTAG ${version} (canal experimental).`;
 try {
   const changelog = readFileSync(new URL("../CHANGELOG.md", import.meta.url), "utf8");
   notes = notesFor(changelog, version, 4000);

@@ -20,7 +20,7 @@ Erros independentes, de variância constante e aproximadamente normais (usados n
 
 ## 3. Entradas e opções
 
-Dados com os valores **reais** dos fatores, resposta, fatores (`id`, nome, `low`, `high`: os níveis definem a codificação), termos do modelo e `α` (significância, `0 < α < 1`). Termos aceitos: efeito principal, quadrático (`Power`, grau 2) e interação de **dois** fatores distintos; lista vazia = **modelo completo** (principais, quadráticos e interações de dois fatores). Ao menos dois fatores. **Nenhum termo é eliminado automaticamente**; o usuário escolhe os termos e cada ajuste fica guardado como análise distinta.
+Dados com os valores **reais** dos fatores, resposta, fatores (`id`, nome, `low`, `high`: os níveis definem a codificação), termos do modelo e `α` (significância, `0 < α < 1`). Termos aceitos: efeito principal, quadrático (`Power`, grau 2) e interação de **dois** fatores distintos; lista vazia = **modelo completo** (principais, quadráticos e interações de dois fatores). Ao menos um fator quantitativo para o ajuste; contornos e superfície 3D exigem dois eixos quantitativos. **Nenhum termo é eliminado automaticamente**; o usuário escolhe os termos e cada ajuste fica guardado como análise distinta.
 
 ## 4. Fórmulas
 
@@ -51,7 +51,7 @@ QR com pivoteamento e colunas normalizadas (núcleo); formas quadráticas pelo f
 
 | Situação | Comportamento |
 |---|---|
-| Menos de 2 fatores, fator não quantitativo, níveis iguais, `α` inválido | Erro `surface.*` |
+| Nenhum fator, fator não quantitativo, níveis iguais, `α` inválido | Erro `surface.*` |
 | Termo não suportado (grau ≠ 2, interação de ≠ 2 fatores), repetido ou fora do modelo | Erro `surface.unsupported_term`, `surface.duplicate_term`, `surface.term_not_in_design` |
 | Sem graus de liberdade do erro | `surface.saturated`: erros-padrão, `t` e `p` indefinidos (estado explícito) |
 | Termos não estimáveis (planejamento não os separa) | Marcados `não estimáveis`; equação real indisponível |
@@ -76,3 +76,9 @@ Seis casos aplicados contra NumPy (`lstsq`, `(XᵀX)⁻¹`) e SciPy (`t`, `F`): 
 - Myers, R. H.; Montgomery, D. C.; Anderson-Cook, C. M. (2016). *Response Surface Methodology*, 4ª ed. Wiley.
 - Montgomery, D. C.; Peck, E. A.; Vining, G. G. (2012). *Introduction to Linear Regression Analysis*, 5ª ed. Wiley (extrapolação oculta, §3.8).
 - Box, G. E. P.; Draper, N. R. (2007). *Response Surfaces, Mixtures, and Ridge Analyses*, 2ª ed. Wiley.
+
+## ET25 T06 — bloco fixo aditivo
+
+Seleção opcional de coluna categórica e nível de referência explícito. O ajuste acrescenta B−1 indicadores de tratamento ao polinômio; os coeficientes de bloco são apresentados em separado. Sem interação com bloco e sem efeito aleatório. Equação, malha, otimização e intervalos são condicionais ao bloco de referência. A interpretação não prevê o deslocamento de um bloco futuro desconhecido. O erro puro agrupa apenas condições dentro do mesmo bloco (a identidade numérica de réplicas será reforçada em AU-B19/ET28).
+
+Cinco ajustes independentes com statsmodels conferem coeficientes, erros-padrão, IC, SSE, erro puro e previsões/intervalos: um e dois fatores, dois e três blocos e mudança de referência. Ao abrir uma análise salva ou trocar a fatia, a figura usa os coeficientes, a maior alavancagem e o bloco arquivados. O motor reconstrói a matriz de desenho da revisão vinculada com o centro e a meia-amplitude salvos e a fatora para conferir posto, estimabilidade e extrapolação. Isso evita a perda de precisão ao reconstruir os limites decimais. Os coeficientes permanecem os do ajuste original. Se as observações, os termos ou a codificação não corresponderem ao ajuste, a malha retorna um diagnóstico. Chamadores do protocolo que omitem o ajuste arquivado mantêm o comportamento de cálculo completo.

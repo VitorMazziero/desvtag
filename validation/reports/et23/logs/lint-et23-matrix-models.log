@@ -1,0 +1,55 @@
+tests\e2e\et23-matrix.spec.ts:4:10 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Several of these imports are unused.
+  
+    2 │ import { expect, test } from "@playwright/test";
+    3 │ import { openFigureMenu } from "./figureTools";
+  > 4 │ import { runRepeated, setupRepeated } from "./repeatedTools";
+      │          ^^^^^^^^^^^
+    5 │ import { THEME_LIST } from "./themes";
+    6 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    4 │ import·{·runRepeated,·setupRepeated·}·from·"./repeatedTools";
+      │          -------------                                       
+
+tests\e2e\et23-models.spec.ts:51:17 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    49 │     await download.saveAs(path);
+    50 │     const doc = JSON.parse(
+  > 51 │       strFromU8(unzipSync(new Uint8Array(readFileSync(path)))["project.json"]!),
+       │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    52 │     );
+    53 │     const record = doc.experiments[0].mixedModelResult.records.at(-1);
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+tests\e2e\et23-models.spec.ts:71:30 lint/style/noNonNullAssertion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Forbidden non-null assertion.
+  
+    69 │     ]) {
+    70 │       const event = page.waitForEvent("download");
+  > 71 │       await page.getByTestId(id!).click();
+       │                              ^^^
+    72 │       await (await event).saveAs(info.outputPath(`${name}.${extension}`));
+    73 │     }
+  
+  i A non-null assertion tells TypeScript to ignore a possible null or undefined value. If the value is missing at runtime, the code fails with an error that the compiler could not catch.
+  
+  i Check that the value is defined before using it, for example with an if statement or optional chaining, instead of asserting it.
+  
+
+Skipped 2 suggested fixes.
+If you wish to apply the suggested (unsafe) fixes, use the command biome check --write --unsafe
+
+Checked 3 files in 93ms. Fixed 3 files.
+Found 3 warnings.
