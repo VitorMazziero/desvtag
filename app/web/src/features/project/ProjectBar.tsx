@@ -7,6 +7,7 @@ import { useProjectDispatch, useWorkspace } from "../../state/ProjectContext";
 import { hasUnsavedChanges } from "../../state/workspace";
 import { DrivePanel } from "../drive/DrivePanel";
 import { closeMenuOf, Menu } from "../menus/Menu";
+import { RecentFiles } from "./RecentFiles";
 import { SaveStatus } from "./SaveStatus";
 import { saveLabel } from "./saveLabel";
 import { useProjectActions } from "./useProjectActions";
@@ -120,6 +121,7 @@ export function ProjectBar({ recovery }: { recovery: RecoveryStatus }) {
             ) : (
               <p className="muted small">{t("project.saveBrowserHelp")}</p>
             )}
+            <RecentFiles />
             <section aria-label="Google Drive">
               <h2 className="menu-heading">Google Drive</h2>
               <DrivePanel actions={actions} />

@@ -760,6 +760,8 @@ A árvore Git de `9175ba7` tem 4.636 arquivos e 386.054.714 bytes em blobs na re
 
 ### 11.7 Acervo final das evidências v0.4
 
+**Atualização de 2026-11-09:** a maior parte do acervo descrito nesta seção foi reduzida (traces, capturas não citadas e duplicatas removidos; resultados em texto compactados). Ficaram os arquivos citados por documentos versionados e os registros da candidata final. Ver [Retenção de evidências](../convencoes/retencao-de-evidencias.md).
+
 Os arquivos brutos das rodadas v0.4 e da auditoria de interface foram transferidos para `DesvTAG-acervo-v0.4/evidencias-rastreadas-7c5e311`, ao lado da raiz do projeto. Os caminhos citados como «acervo» são relativos a esse diretório. Para rodadas transferidas nos lotes anteriores, localizar o nome original nos manifestos das §§11.4–11.6.
 
 Foram arquivados 2.953 arquivos rastreados e 344.060.317 bytes após verificação SHA-256 da cópia. O manifesto `sha256.csv` tem SHA-256 `b6ad542d35d4d53c94dcf06c1105d2c2320d04d79ac2aaaee4f0a7f0c95b5857`. Os índices autorais, as imagens de documentação corrente e os recursos de marca permanecem no Git. Os links que antes abriam evidências brutas passaram a indicar o caminho no acervo.
@@ -788,7 +790,7 @@ A rodada integrada anterior usou a interface e o WASM de `ba0578c` e a configura
 | Windows 10 e arquivos | WebView2 conferido com a matriz da ET25, referências científicas, 17 exemplos e relatórios PDF/Word. O ensaio M08 abriu `.enzitag` e `.desvtag`. A gravação pelo diálogo «Salvar como» segue pendente de inspeção. O NSIS passou na instalação, atualização e desinstalação em namespace isolado. |
 | Drive e decisões de escopo | Executar a ET26 T08 com duas contas reais. Validar primeiro a candidata web na origem local autorizada. No Windows, testar o instalador do rascunho com o Picker no novo Pages, antes da publicação do release do instalador. Registrar as decisões de edição simultânea (PD-14) e a cobertura do Protimiza (PD-05). |
 | PR e CI | Selecionar a ramificação de revisão após conferir o inventário do histórico. Enviar a revisão escolhida, abrir o PR e verificar o CI no commit enviado. |
-| Distribuição | Coordenar a troca do endereço do repositório e do Pages. Preparar a revisão `0.4.0` e verificar artefatos assinados e atualização 0.3.0 → 0.4.0 pelos canais aplicáveis. Etiqueta, release e Pages dependem da decisão expressa de publicação. [Roteiro](../distribuicao/publicacao.md#preparação-da-publicação-da-v040-nada-foi-publicado) |
+| Distribuição | Coordenar a troca do endereço do repositório e do Pages. Preparar a revisão `0.4.0` e verificar artefatos assinados e atualização 0.3.0 → 0.4.0 pelos canais aplicáveis. Etiqueta, release e Pages dependem da decisão expressa de publicação. [Roteiro](../distribuicao/publicacao.md#preparação-da-publicação-da-v040-registro-histórico-publicada-em-2026-11-08) |
 
 ### 12.1 Desempenho do Dunnett na ET28
 

@@ -1,7 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { expect, type Page, test } from "@playwright/test";
 import { expectedVersion } from "./expectedVersion";
-import { openPowerTool } from "./menus";
+import { openExamplesTool, openPowerTool } from "./menus";
 
 const example = (name: string) =>
   fileURLToPath(
@@ -47,7 +47,8 @@ test("Avaliação T17: ações próprias, arquivo e experimento", async ({ page 
   await page.getByTestId("file-menu").locator(":scope > summary").click();
   await shot(page, "T17-arquivo.png", (f) => info.outputPath(f));
   await page.keyboard.press("Escape");
-  await page.getByRole("button", { name: "Abrir exemplo" }).click();
+  const examples = await openExamplesTool(page);
+  await examples.getByTestId("open-example-01").click();
   await expect(page.getByTestId("results-layout")).toBeVisible();
   await shot(page, "T17-exemplo.png", (f) => info.outputPath(f));
 });

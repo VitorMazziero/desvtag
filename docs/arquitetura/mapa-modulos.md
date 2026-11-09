@@ -73,7 +73,7 @@ Todos os caminhos abaixo começam em **`app/web/src/`**, salvo indicação contr
 
 | ID | Arquivos de entrada e suporte | Responsabilidade |
 |---|---|---|
-| U01 | `app/App.tsx` (`AppShell` e `Router` não criados: [DT-0007](../decisoes-tecnicas/dt-0007-decisoes-et02-interface.md)), `features/home/{index.ts,availability.ts,RecentProjects,StartActions}` | Estrutura principal, projetos recentes e três entradas |
+| U01 | `app/App.tsx` (`AppShell` e `Router` não criados: [DT-0007](../decisoes-tecnicas/dt-0007-decisoes-et02-interface.md)), `features/home/{index.ts,availability.ts,StartActions}`, `features/examples`, `features/project/RecentFiles.tsx` | Estrutura principal, três entradas, exemplos (Extras) e recentes (Arquivo) |
 | U02 | `features/workflow/{index.ts,Workflow.tsx,steps.ts,guards.ts}` | Cinco etapas, navegação contextual e etapas satisfeitas/invalidadas |
 | U03 | `features/experiment/{index.ts,FactorEditor.tsx,ResponseEditor.tsx}` (ET02); `StructureEditor.tsx` na ET03 | Fatores, respostas, unidades experimentais, blocos, tempos e réplicas |
 | U04 | `features/data/{index.ts,DataGrid.tsx,columnRoles.ts,editing.ts}` | Tabela, edição e erros por célula; alterações geram revisão e invalidam resultados dependentes |

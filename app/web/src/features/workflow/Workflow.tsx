@@ -11,7 +11,7 @@ import { DataExportButtons, DataGrid } from "../data";
 import { DesignPanel } from "../design";
 import { FactorEditor, ResponseEditor } from "../experiment";
 import { ExportSettingsPanel } from "../export";
-import { RecentProjects, StartActions } from "../home";
+import { StartActions } from "../home";
 import { ImportButton } from "../import";
 import { ConfirmationCheck } from "../optimization";
 import { ResultsView } from "../results";
@@ -170,7 +170,6 @@ export function Workflow({ language }: { language: Language }) {
                 }}
               />
             </section>
-            <RecentProjects />
           </div>
         )}
         {(visited.includes("variables") || step === "variables") && (

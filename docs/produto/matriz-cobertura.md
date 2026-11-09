@@ -134,6 +134,7 @@ Fonte única da versão-alvo e da situação de cada item do [catálogo funciona
 | Fluxo de planejamento, coleta, importação e análise | Defaults por intenção, faixas pelo motor, condições protegidas, erro focável, importação direta, pesos por nível e resumo | `design-flow`, `crd-flow`, `collection-flow`, `methods-flow`, `et29-audit` |
 | Integridade gráfica | Recorte comum, interseção Q–Q, notas/títulos por largura, margem Pareto, legendas de interação | `charts/layout.test.ts`; PNG/PDF Pareto e Q–Q |
 | Relatório e identidade | Ajuda excluída, método/termos, títulos sem quebra órfã, resumo de exportação, comentários e versão/commit | `export-flow`, `report-sections`, `comments-flow`, verificação nativa Word/PDF |
+| Exemplos em Extras e recentes em Arquivo | Cartão «Projetos recentes» removido; janela com os 18 exemplos empacotados sem `data:` (CSP do Windows); recentes do Windows no menu Arquivo | `examples/catalog.test.ts`, `examples-dialog`, `guided-flow`, `et29-review`; Windows nativo não reverificado |
 | Componentes nos seis temas e telas pequenas | Espaços, alinhamento do experimento, largura da grade, modais e seletores compactos | `accessibility`, `layout-flow`, `themes-flow`, `et29-review`; [relatório e limites](../../validation/reports/et29/README.md) |
 
 Este complemento não encerra as ET22–ET28 nem reclassifica pendências metodológicas ou testes com serviços/equipamentos externos.

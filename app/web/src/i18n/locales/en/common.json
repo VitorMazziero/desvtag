@@ -61,14 +61,9 @@
         "compare": "comparison (ANOVA and Tukey)"
       }
     },
-    "recentTitle": "Recent projects",
-    "recentEmpty": "No recent projects. Open a file or try an example.",
-    "open": "Open project",
     "startTitle": "Start an experiment",
     "readyHint": "Ready: use “Next” to continue with the chosen option.",
-    "recentHint": "Or continue a project you already saved.",
-    "startAction": "Start",
-    "openExample": "Open example"
+    "startAction": "Start"
   },
   "workflow": {
     "navLabel": "Workflow steps",
@@ -310,6 +305,7 @@
     }
   },
   "project": {
+    "recent": "Recent",
     "bar": "Project",
     "name": "Project name",
     "namePlaceholder": "Untitled project",
@@ -1277,6 +1273,85 @@
       "optimal-model-residuals": "Optimal-model residuals"
     }
   },
+  "examples": {
+    "intro": "Example projects with synthetic or authorized data. Opening an example replaces the current project.",
+    "open": "Open",
+    "failed": "The example could not be opened. Try again.",
+    "items": {
+      "01": {
+        "title": "Four enzyme reaction conditions",
+        "description": "Five replicates per condition: ANOVA, Tukey and group letters."
+      },
+      "02": {
+        "title": "Culture-medium component screening",
+        "description": "12-run Plackett–Burman with centre points; effects and curvature."
+      },
+      "03": {
+        "title": "Culture-medium response surface",
+        "description": "Three-factor CCRD (glucose, peptone, NaCl) with a quadratic model."
+      },
+      "04": {
+        "title": "Two-response optimization and confirmation",
+        "description": "Global desirability for activity and by-product, with confirmation runs."
+      },
+      "06": {
+        "title": "Synthetic kLa: one model per response",
+        "description": "Face-centred central composite with RPM and aeration, two responses."
+      },
+      "07": {
+        "title": "Mixtures: simplex-lattice and Scheffé model",
+        "description": "Water, ethanol and glycerol; yield fitted with the Scheffé model."
+      },
+      "08": {
+        "title": "Monod saturation curve",
+        "description": "Reaction rate versus substrate; Vmax and Km."
+      },
+      "09": {
+        "title": "Mixed levels: 3 strains × 2 pH",
+        "description": "Full factorial with factors of different numbers of levels."
+      },
+      "10": {
+        "title": "Constrained D-optimal design",
+        "description": "Nine runs from Fedorov exchange, with a linear constraint on temperature and pH."
+      },
+      "11": {
+        "title": "Repeated measures: paired, Wilcoxon and mixed model",
+        "description": "Six units measured before and after, with both methods available."
+      },
+      "12": {
+        "title": "Power and sample size",
+        "description": "Hypotheses and calculator result, with no observation table."
+      },
+      "13": {
+        "title": "Collection sheet",
+        "description": "2² factorial with centre points: export the matrix, fill it outside and import it."
+      },
+      "14": {
+        "title": "A. oryzae culture medium",
+        "description": "CCRD with desirability optimization and a confirmation experiment (fictitious data)."
+      },
+      "15": {
+        "title": "Time profiles and AR(1)",
+        "description": "Repeated measures with AR(1) covariance, joint tests and marginal means."
+      },
+      "16": {
+        "title": "Saturation profile with NIST Misra1d data",
+        "description": "Likelihood profile and interval for the saturation curve."
+      },
+      "17": {
+        "title": "Power of a planned contrast",
+        "description": "Analytic and simulated power for three groups with unequal allocation."
+      },
+      "18": {
+        "title": "Constrained solvent mixture",
+        "description": "Restricted region, Cox trace and trade-off between two responses."
+      },
+      "19": {
+        "title": "Optimal design in two batches",
+        "description": "D/I with a categorical factor, blocks and saved variance profiles."
+      }
+    }
+  },
   "menus": {
     "extras": "Extras",
     "extrasHelp": "Tools outside the experimental-design workflow.",
@@ -1285,7 +1360,8 @@
     "about": "About and updates",
     "close": "Close",
     "powerShort": "Power and sample size",
-    "saturationShort": "Saturation curves"
+    "saturationShort": "Saturation curves",
+    "examples": "Examples"
   },
   "blocks": {
     "label": "Step blocks",

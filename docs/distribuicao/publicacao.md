@@ -6,7 +6,21 @@
 >
 > **v0.2.0 (2026-11-02):** versão web **publicada**, etiqueta `v0.2.0` criada e **release publicado** pelo usuário; a atualização a partir da v0.1.0 foi verificada. Registro nas seções [Publicação da v0.2.0](#publicação-da-v020) e [Publicação dos releases e atualização](#publicação-dos-releases-e-atualização-2026-11-02).
 
-## Preparação da publicação da v0.4.0 (nada foi publicado)
+## Preparação da publicação da v0.4.1 (nada foi publicado)
+
+Estado em 2026-11-09. A **v0.4.0 já está publicada**: etiqueta `v0.4.0` no merge do PR 9 (`af0a157`), release publicado como *Latest* em 2026-11-08, instalador `DesvTAG_0.4.0_x64-setup.exe`, assinatura minisign conferida contra a chave pública do `tauri.conf.json` e `latest.json` com a versão 0.4.0. A CI de `main` e da etiqueta ficou vermelha por um único teste E2E do Firefox (`collection-flow.spec.ts:187`, tempo esgotado); a mesma árvore passou na CI de `review/v0.4.0`. Não se reescreve a etiqueta nem o release da 0.4.0.
+
+A **v0.4.1** leva a decisão de 2026-11-09 ([decisões aprovadas §18, item 12](../produto/decisoes-aprovadas.md)): a tela inicial perde o cartão «Projetos recentes», os exemplos abrem por **Extras → Exemplos** e os recentes do Windows passam ao menu **Arquivo**. A candidata está na ramificação `review/v0.4.1`, criada a partir de `main`, com a versão `0.4.1` nos manifestos e nos lockfiles. Verificado localmente: lint, tipos, testes unitários, build, `check-versions` e os E2E dos arquivos afetados no Chromium. **Não verificado:** Firefox, WebKit, o executável do Windows e a atualização 0.4.0 → 0.4.1 no aplicativo instalado.
+
+| Passo | Quem | Resultado esperado / o que registrar |
+|---|---|---|
+| 1. Abrir o PR de `review/v0.4.1` para `main` e conferir a CI (matriz de navegadores e Windows) | Agente prepara; usuário autoriza a fusão | Registrar o SHA, o número do PR e as execuções. Se o teste do Firefox reprovar de novo, registrar e reexecutar antes de decidir |
+| 2. Etiquetar `v0.4.1` (o fluxo cria o **rascunho** com instalador assinado e `latest.json`) | Usuário autoriza | `check-versions` com `GITHUB_REF_TYPE=tag` aceita `v0.4.1`; conferir a assinatura e o manifesto |
+| 3. Publicar o rascunho como release normal | Usuário | Conferir `channels.yml` e o Pages |
+| 4. Atualizar 0.4.0 → 0.4.1 no aplicativo instalado | Usuário | Registrar a oferta de atualização e a instalação |
+| 5. Atualizar `tests/public/published.spec.ts` (`EXPECTED_VERSION`) para `0.4.1` | Agente | Só depois da publicação do Pages |
+
+## Preparação da publicação da v0.4.0 (registro histórico; publicada em 2026-11-08)
 
 Estado em 2026-11-07. A candidata local é `7097c6e`, com versão `0.4.0`. A matriz integral cobriu 1.560 cenários, com quatro aprovações em segunda tentativa no Firefox. Após ajustar o posicionamento dos cliques na suíte, passaram 48 repetições no Firefox e os 201 testes dos arquivos afetados nos três navegadores, sobre o mesmo build. Os passos de publicação e de migração do repositório aguardam a decisão expressa do usuário.
 

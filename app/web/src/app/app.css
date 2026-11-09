@@ -577,13 +577,7 @@
   min-inline-size: 0;
   max-inline-size: 100%;
 }
-.home-recent {
-  flex: 1 1 16rem;
-  min-inline-size: 0;
-  max-inline-size: 100%;
-}
-.home-start h2,
-.home-recent h2 {
+.home-start h2 {
   margin-bottom: var(--space-2);
 }
 .home-next {
@@ -595,9 +589,6 @@
   margin-top: var(--space-4);
   padding-top: var(--space-3);
   border-top: 1px solid var(--color-rule);
-}
-.home-recent {
-  background: var(--color-panel);
 }
 .choice-grid {
   display: grid;
@@ -1877,4 +1868,35 @@ h3,
 
 .optimal-variance > :is(h4, h5, p) {
   margin-block: 0;
+}
+
+/* Lista de exemplos (menu Extras). */
+.examples-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.example-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-panel);
+}
+.example-item > div {
+  flex: 1 1 18rem;
+  min-inline-size: 0;
+}
+.example-item h3 {
+  margin: 0 0 var(--space-1);
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.example-item p {
+  margin: 0;
 }
