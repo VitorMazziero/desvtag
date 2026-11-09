@@ -1,14 +1,15 @@
 // Menu «Extras» (ET29): ferramentas que não fazem parte do percurso de um planejamento (outro
-// objetivo, outra abordagem): calculadora de potência e ajuste de curvas de saturação.
+// objetivo, outra abordagem): calculadora de potência, ajuste de curvas de saturação e exemplos prontos.
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../../i18n";
 import { SaturationFit } from "../analysis/SaturationFit";
+import { ExamplesDialog } from "../examples";
 import { PowerCalculator } from "../home/PowerCalculator";
 import { closeMenuOf, Menu } from "./Menu";
 import { Modal } from "./Modal";
 
-type Tool = "power" | "saturation" | null;
+type Tool = "power" | "saturation" | "examples" | null;
 
 export function ExtrasMenu({ language }: { language: Language }) {
   const { t } = useTranslation();
@@ -44,6 +45,19 @@ export function ExtrasMenu({ language }: { language: Language }) {
               {t("menus.saturation")}
             </button>
           </li>
+          <li>
+            <button
+              type="button"
+              className="button secondary"
+              data-testid="open-examples"
+              onClick={(e) => {
+                closeMenuOf(e.currentTarget);
+                setTool("examples");
+              }}
+            >
+              {t("menus.examples")}
+            </button>
+          </li>
         </ul>
       </Menu>
       <Modal
@@ -61,6 +75,14 @@ export function ExtrasMenu({ language }: { language: Language }) {
         testId="saturation-dialog"
       >
         <SaturationFit language={language} embedded onCalculated={() => setTool(null)} />
+      </Modal>
+      <Modal
+        open={tool === "examples"}
+        title={t("menus.examples")}
+        onClose={() => setTool(null)}
+        testId="examples-dialog"
+      >
+        <ExamplesDialog onOpened={() => setTool(null)} />
       </Modal>
     </>
   );

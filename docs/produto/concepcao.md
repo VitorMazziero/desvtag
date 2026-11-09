@@ -48,7 +48,7 @@ As instruções e recomendações nas telas pertencem ao produto de referência.
 
 ## Fluxo, arquivos e políticas aprovados
 
-- Tela inicial com projetos recentes, abrir e três caminhos: planejar experimento, analisar dados existentes e comparar tratamentos.
+- Tela inicial com três caminhos (os projetos recentes ficam no menu Arquivo e os exemplos em Extras → Exemplos, decisão de 2026-11-09): planejar experimento, analisar dados existentes e comparar tratamentos.
 - Fluxo guiado de objetivo, fatores/respostas, planejamento/dados, análise e resultados, com opções avançadas e explicações curtas.
 - Digitação, colagem, CSV, XLSX e matrizes externas; papéis das colunas, réplicas, unidades experimentais, blocos e tempos explícitos.
 - Vários experimentos no mesmo arquivo de projeto, com dados originais, revisões, análises, modelos, gráficos e observações preservados.

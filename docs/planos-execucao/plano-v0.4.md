@@ -788,7 +788,7 @@ A rodada integrada anterior usou a interface e o WASM de `ba0578c` e a configura
 | Windows 10 e arquivos | WebView2 conferido com a matriz da ET25, referências científicas, 17 exemplos e relatórios PDF/Word. O ensaio M08 abriu `.enzitag` e `.desvtag`. A gravação pelo diálogo «Salvar como» segue pendente de inspeção. O NSIS passou na instalação, atualização e desinstalação em namespace isolado. |
 | Drive e decisões de escopo | Executar a ET26 T08 com duas contas reais. Validar primeiro a candidata web na origem local autorizada. No Windows, testar o instalador do rascunho com o Picker no novo Pages, antes da publicação do release do instalador. Registrar as decisões de edição simultânea (PD-14) e a cobertura do Protimiza (PD-05). |
 | PR e CI | Selecionar a ramificação de revisão após conferir o inventário do histórico. Enviar a revisão escolhida, abrir o PR e verificar o CI no commit enviado. |
-| Distribuição | Coordenar a troca do endereço do repositório e do Pages. Preparar a revisão `0.4.0` e verificar artefatos assinados e atualização 0.3.0 → 0.4.0 pelos canais aplicáveis. Etiqueta, release e Pages dependem da decisão expressa de publicação. [Roteiro](../distribuicao/publicacao.md#preparação-da-publicação-da-v040-nada-foi-publicado) |
+| Distribuição | Coordenar a troca do endereço do repositório e do Pages. Preparar a revisão `0.4.0` e verificar artefatos assinados e atualização 0.3.0 → 0.4.0 pelos canais aplicáveis. Etiqueta, release e Pages dependem da decisão expressa de publicação. [Roteiro](../distribuicao/publicacao.md#preparação-da-publicação-da-v040-registro-histórico-publicada-em-2026-11-08) |
 
 ### 12.1 Desempenho do Dunnett na ET28
 

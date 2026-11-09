@@ -7,7 +7,11 @@ Formato inspirado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/)
 - Aceite do Google Drive com contas reais em web e Windows, publicação da nova URL e verificação dos canais de atualização. As decisões sobre edição simultânea e cobertura do Protimiza seguem no [plano da v0.4](docs/planos-execucao/plano-v0.4.md).
 - Windows 11: a validação não será realizada (decisão do usuário, 2026-11-02).
 
-## [0.4.0] — em desenvolvimento
+## [0.4.1] — em preparação
+
+- A tela inicial deixa de ter o cartão «Projetos recentes». Os exemplos (01–04 e 06–19) abrem por **Extras → Exemplos**, em uma janela com título e descrição de cada um. No Windows, os projetos recentes passam para o menu **Arquivo**.
+
+## [0.4.0] — 2026-11-08
 
 - A identidade da versão passa a ser **DesvTAG**. O cabeçalho, a aba do navegador, Sobre e os novos relatórios e exportações usam a nova marca. Novos arquivos de projeto usam `.desvtag`, e a abertura de arquivos históricos `.enzitag` continua disponível. Sobre credita o desenvolvimento a Vítor Teixeira Mazziero.
 - Sessões não salvas da v0.3 restauram também a análise arquivada, com os campos de navegação ausentes preenchidos na abertura.

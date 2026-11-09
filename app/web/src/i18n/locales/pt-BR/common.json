@@ -61,14 +61,9 @@
         "compare": "de comparação (ANOVA e Tukey)"
       }
     },
-    "recentTitle": "Projetos recentes",
-    "recentEmpty": "Nenhum projeto recente. Abra um arquivo ou experimente um exemplo.",
-    "open": "Abrir projeto",
     "startTitle": "Começar um experimento",
     "readyHint": "Pronto: use «Avançar» para seguir com a opção escolhida.",
-    "recentHint": "Ou continue um projeto que você já salvou.",
-    "startAction": "Começar",
-    "openExample": "Abrir exemplo"
+    "startAction": "Começar"
   },
   "workflow": {
     "navLabel": "Etapas do fluxo",
@@ -310,6 +305,7 @@
     }
   },
   "project": {
+    "recent": "Recentes",
     "bar": "Projeto",
     "name": "Nome do projeto",
     "namePlaceholder": "Projeto sem nome",
@@ -1278,6 +1274,85 @@
       "optimal-model-residuals": "Resíduos do modelo do ótimo"
     }
   },
+  "examples": {
+    "intro": "Projetos de exemplo com dados sintéticos ou autorizados. Abrir um exemplo substitui o projeto atual.",
+    "open": "Abrir",
+    "failed": "Não foi possível abrir o exemplo. Tente novamente.",
+    "items": {
+      "01": {
+        "title": "Quatro condições de reação enzimática",
+        "description": "Cinco réplicas por condição: ANOVA, Tukey e letras de grupos."
+      },
+      "02": {
+        "title": "Triagem de componentes do meio de cultivo",
+        "description": "Plackett–Burman de 12 ensaios com pontos centrais; efeitos e curvatura."
+      },
+      "03": {
+        "title": "Superfície de resposta do meio de cultivo",
+        "description": "DCCR de três fatores (glicose, peptona e NaCl) com modelo quadrático."
+      },
+      "04": {
+        "title": "Otimização de duas respostas e confirmação",
+        "description": "Desejabilidade global para atividade e subproduto, com ensaios de confirmação."
+      },
+      "06": {
+        "title": "kLa sintético: um modelo por resposta",
+        "description": "Composto central de face centrada com RPM e aeração e duas respostas."
+      },
+      "07": {
+        "title": "Misturas: simplex-lattice e modelo de Scheffé",
+        "description": "Água, etanol e glicerol; rendimento ajustado pelo modelo de Scheffé."
+      },
+      "08": {
+        "title": "Curva de saturação de Monod",
+        "description": "Velocidade de reação em função do substrato; Vmax e Km."
+      },
+      "09": {
+        "title": "Níveis mistos: 3 cepas × 2 pH",
+        "description": "Fatorial completo com fatores de números de níveis diferentes."
+      },
+      "10": {
+        "title": "Planejamento D-ótimo com restrição",
+        "description": "Nove ensaios por troca de Fedorov, com restrição linear em temperatura e pH."
+      },
+      "11": {
+        "title": "Medidas repetidas: pareado, Wilcoxon e modelo misto",
+        "description": "Seis unidades medidas antes e depois, com dois métodos consultáveis."
+      },
+      "12": {
+        "title": "Potência e tamanho de amostra",
+        "description": "Hipóteses e resultado da calculadora, sem tabela de observações."
+      },
+      "13": {
+        "title": "Planilha de coleta",
+        "description": "Fatorial 2² com pontos centrais: exportar a matriz, preencher fora e importar."
+      },
+      "14": {
+        "title": "Meio de cultivo de A. oryzae",
+        "description": "DCCR com otimização por desejabilidade e experimento de confirmação (dados fictícios)."
+      },
+      "15": {
+        "title": "Perfis temporais e AR(1)",
+        "description": "Medidas repetidas com covariância AR(1), testes conjuntos e médias marginais."
+      },
+      "16": {
+        "title": "Perfil de saturação com dados NIST Misra1d",
+        "description": "Perfil de verossimilhança e intervalo para a curva de saturação."
+      },
+      "17": {
+        "title": "Potência de um contraste planejado",
+        "description": "Potência analítica e por simulação para três grupos com alocação desigual."
+      },
+      "18": {
+        "title": "Mistura de solventes com limites",
+        "description": "Região restrita, traço de Cox e compromisso entre duas respostas."
+      },
+      "19": {
+        "title": "Planejamento ótimo em dois lotes",
+        "description": "D/I com fator categórico, blocos e perfis de variância salvos."
+      }
+    }
+  },
   "menus": {
     "extras": "Extras",
     "extrasHelp": "Ferramentas fora do percurso de um planejamento.",
@@ -1286,7 +1361,8 @@
     "about": "Sobre e atualizações",
     "close": "Fechar",
     "powerShort": "Potência e amostra",
-    "saturationShort": "Curvas de saturação"
+    "saturationShort": "Curvas de saturação",
+    "examples": "Exemplos"
   },
   "blocks": {
     "label": "Blocos da etapa",

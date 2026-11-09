@@ -30,9 +30,7 @@ test("tela inicial: selecionar um bloco habilita o botão Começar", async ({ pa
   await expect(home.getByRole("button")).toHaveCount(1);
   await expect(start).toBeDisabled();
   await expect(home.getByRole("radio")).toHaveCount(3);
-  await expect(
-    page.locator(".home-recent").getByRole("button", { name: "Abrir exemplo" }),
-  ).toBeVisible();
+  await expect(page.locator(".home-recent")).toHaveCount(0);
 
   await home.getByText("Planejar experimento", { exact: true }).click();
   await expect(page.getByTestId("objective-plan")).toBeChecked();

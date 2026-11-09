@@ -28,5 +28,13 @@ export async function openSaturationTool(page: Page) {
   return page.getByTestId("saturation-dialog").getByTestId("saturation-fit");
 }
 
+/** Abre a janela de exemplos pelo menu «Extras». */
+export async function openExamplesTool(page: Page) {
+  await openMenu(page, "extras-menu");
+  await page.getByTestId("open-examples").click();
+  await expect(page.getByTestId("examples-dialog")).toBeVisible();
+  return page.getByTestId("examples-dialog").getByTestId("examples-list");
+}
+
 /** Abre o menu «Mais» da barra do arquivo (Google Drive, salvar como…). */
 export const openFileMenu = (page: Page) => openMenu(page, "file-menu");

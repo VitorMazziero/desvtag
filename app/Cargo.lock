@@ -130,7 +130,7 @@ checksum = "7eed2c4702fa172d1ce21078faa7c5203e69f5394d48cc436d25928394a867a2"
 
 [[package]]
 name = "desvtag-core"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -139,7 +139,7 @@ dependencies = [
 
 [[package]]
 name = "desvtag-engine"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "base64",
  "desvtag-core",
@@ -151,7 +151,7 @@ dependencies = [
 
 [[package]]
 name = "desvtag-project"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "base64",
  "calamine",
@@ -165,7 +165,7 @@ dependencies = [
 
 [[package]]
 name = "desvtag-wasm"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "desvtag-engine",
  "wasm-bindgen",
