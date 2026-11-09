@@ -760,6 +760,8 @@ A árvore Git de `9175ba7` tem 4.636 arquivos e 386.054.714 bytes em blobs na re
 
 ### 11.7 Acervo final das evidências v0.4
 
+**Atualização de 2026-11-09:** a maior parte do acervo descrito nesta seção foi reduzida (traces, capturas não citadas e duplicatas removidos; resultados em texto compactados). Ficaram os arquivos citados por documentos versionados e os registros da candidata final. Ver [Retenção de evidências](../convencoes/retencao-de-evidencias.md).
+
 Os arquivos brutos das rodadas v0.4 e da auditoria de interface foram transferidos para `DesvTAG-acervo-v0.4/evidencias-rastreadas-7c5e311`, ao lado da raiz do projeto. Os caminhos citados como «acervo» são relativos a esse diretório. Para rodadas transferidas nos lotes anteriores, localizar o nome original nos manifestos das §§11.4–11.6.
 
 Foram arquivados 2.953 arquivos rastreados e 344.060.317 bytes após verificação SHA-256 da cópia. O manifesto `sha256.csv` tem SHA-256 `b6ad542d35d4d53c94dcf06c1105d2c2320d04d79ac2aaaee4f0a7f0c95b5857`. Os índices autorais, as imagens de documentação corrente e os recursos de marca permanecem no Git. Os links que antes abriam evidências brutas passaram a indicar o caminho no acervo.
